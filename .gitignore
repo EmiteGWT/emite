@@ -1,0 +1,9 @@
+war/examplexmppsession
+.svn
+**/.svn
+war/WEB-INF/classes
+war/com.*/*
+war/emite.*/*
+
+
+
