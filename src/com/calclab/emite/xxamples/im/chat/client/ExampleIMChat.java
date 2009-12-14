@@ -1,8 +1,8 @@
-package com.calclab.emite.example.im.chat.client;
+package com.calclab.emite.xxamples.im.chat.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import com.calclab.emite.browser.client.DomAssist;
+import com.calclab.emite.browser.client.PageAssist;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -31,10 +31,9 @@ public class ExampleIMChat implements EntryPoint{
 	createUI();
 	
 	log("Example IM Chat");
-	DomAssist assist = Suco.get(DomAssist.class);
-	String self = assist.getMeta("emite.user", "test1@localhost");
+	String self = PageAssist.getMeta("emite.user");
 	log("Current user: " + self);
-	final String user = assist.getMeta("emite.chat", "test2@localhost");
+	final String user = PageAssist.getMeta("emite.chat");
 	log("Chat with user: " + user);
 
 	Session session = Suco.get(Session.class);

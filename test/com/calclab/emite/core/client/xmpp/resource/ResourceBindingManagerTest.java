@@ -25,7 +25,8 @@ public class ResourceBindingManagerTest {
     public void shouldEventIfBindedSucceed() {
 	final MockedListener<XmppURI> onBindedListener = new MockedListener<XmppURI>();
 	manager.onBinded(onBindedListener);
-	helper.simulateReception("<iq type='result' id='bind-resource'><bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>"
+	helper.simulateReception("<iq type='result' id='bind-resource'>" +
+			"<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>"
 		+ "<jid>somenode@example.com/someresource</jid></bind></iq>");
 
 	assertTrue(onBindedListener.isCalledWithEquals(uri("somenode@example.com/someresource")));
