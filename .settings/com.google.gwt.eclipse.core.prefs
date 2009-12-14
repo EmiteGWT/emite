@@ -1,3 +1,4 @@
-#Mon Dec 14 06:00:17 CET 2009
+#Mon Dec 14 06:43:10 CET 2009
 eclipse.preferences.version=1
 entryPointModules=com.calclab.emite.example.im.chat.ExampleIMChat|com.calclab.emite.example.core.xmpp.session.ExampleXmppSession
+filesCopiedToWebInfLib=gwt-servlet.jar

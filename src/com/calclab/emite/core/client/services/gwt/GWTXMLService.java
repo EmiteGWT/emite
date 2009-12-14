@@ -22,11 +22,13 @@
 package com.calclab.emite.core.client.services.gwt;
 
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.gwt.GWTPacket;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.XMLParser;
+import com.google.gwt.xml.client.impl.DOMParseException;
 
 public class GWTXMLService {
 
@@ -35,9 +37,12 @@ public class GWTXMLService {
     }
 
     public static IPacket toXML(final String xml) {
-	final Document parsed = XMLParser.parse(xml);
-	final Node body = parsed.getChildNodes().item(0);
-	return new GWTPacket((Element) body);
+	try {
+	    final Document parsed = XMLParser.parse(xml);
+	    final Node body = parsed.getChildNodes().item(0);
+	    return new GWTPacket((Element) body);
+	} catch (DOMParseException exception) {
+	    return NoPacket.INSTANCE;
+	}
     }
-
 }

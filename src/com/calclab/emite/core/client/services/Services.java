@@ -32,6 +32,11 @@ public interface Services {
 
     String toString(IPacket iPacket);
 
+    /**
+     * Convert xml to IPacket
+     * @param xml text
+     * @return IPacket or NoPacket.INSTANCE if problems
+     */
     IPacket toXML(String xml);
 
 }
