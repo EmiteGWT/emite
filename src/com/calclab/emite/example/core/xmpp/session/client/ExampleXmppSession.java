@@ -1,4 +1,4 @@
-package com.calclab.emite.example.core.client.xmpp.session.client;
+package com.calclab.emite.example.core.xmpp.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
