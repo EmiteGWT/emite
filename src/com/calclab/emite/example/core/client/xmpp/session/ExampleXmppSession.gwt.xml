@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='examplexmppsession'>
+	<inherits name='com.google.gwt.user.User' />
+
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+	<!-- Other module inherits                                      -->
+	<inherits name='com.calclab.emite.core.EmiteCore' />
+
+	<!-- Specify the app entry point class.                         -->
+	<entry-point
+		class='com.calclab.emite.example.core.client.xmpp.session.client.ExampleXmppSession' />
+
+	<!-- Specify the paths for translatable code                    -->
+	<source path='client' />
+
+</module>
