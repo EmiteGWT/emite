@@ -1,15 +1,9 @@
 package com.calclab.emite.xfunctional.client;
 
-import com.calclab.emite.core.client.bosh.Connection;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.xfunctional.client.tests.TestConnection;
-import com.calclab.emite.xfunctional.client.tests.TestSearchRetrieveSearchFields;
+import com.calclab.emite.xfunctional.client.tests.TestDiscovery;
+import com.calclab.emite.xfunctional.client.tests.TestSearchRetrieveFields;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerPanel;
-import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -21,44 +15,10 @@ public class TestRunnerApp implements EntryPoint {
 
 	// add tests here
 	runner.addTest(new TestConnection());
-	runner.addTest(new TestSearchRetrieveSearchFields());
-
-	setConnectionListeners(runner);
-	setSessionListeners(runner);
-	runner.setStatus("Click over a test to run.");
+	runner.addTest(new TestSearchRetrieveFields());
+	runner.addTest(new TestDiscovery());
 
 	RootLayoutPanel.get().add(runner);
-    }
-
-    private void setConnectionListeners(final TestRunnerPanel runner) {
-	final Session session = Suco.get(Session.class);
-	Connection connection = Suco.get(Connection.class);
-	connection.onStanzaReceived(new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(IPacket stanza) {
-		Level level = session.getState() == Session.State.ready ? Level.stanzas : Level.debug;
-		runner.print(level, "RECEIVED: " + stanza.toString());
-	    }
-	});
-
-	connection.onStanzaSent(new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(IPacket stanza) {
-		Level level = session.getState() == Session.State.ready ? Level.stanzas : Level.debug;
-		runner.print(level, "SENT: " + stanza.toString());
-	    }
-	});
-    }
-
-    private void setSessionListeners(final TestRunnerPanel runner) {
-	Session session = Suco.get(Session.class);
-	session.onStateChanged(new Listener<State>() {
-	    @Override
-	    public void onEvent(State state) {
-		runner.setSessionState(state.toString());
-	    }
-	});
-	runner.setSessionState(session.getState().toString());
     }
 
 }

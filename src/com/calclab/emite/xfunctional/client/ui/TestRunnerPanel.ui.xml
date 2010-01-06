@@ -17,13 +17,12 @@
 		}
 		
 		.box {
-			border: 3px solid #efefef;
+			border: 3px solid gray;
 			background-color: white;
 		}
 		
 		.boxHeader {
 			background-color: #efefef;
-			font-weight: bold;
 		}
 		
 		.action {
@@ -46,11 +45,8 @@
 		</g:north>
 		<g:north size="2">
 			<g:FlowPanel>
-				<g:Button ui:field="btnRunAll" styleName="{style.action}">Run all</g:Button>
-				<g:Button ui:field="btnClear" styleName="{style.action}">Clear all</g:Button>
-				<g:Label styleName="{style.action}">Log level:</g:Label>
-				<g:ListBox ui:field='logLevel' visibleItemCount='1'
-					styleName="{style.action}" />
+				<g:Button ui:field="btnLogin" styleName="{style.action}">Login</g:Button>
+				<g:Button ui:field="btnLogout" styleName="{style.action}">Logout</g:Button>
 				<g:Label styleName="{style.action}">Session state:</g:Label>
 				<g:Label ui:field="sessionState" styleName="{style.action}"></g:Label>
 			</g:FlowPanel>
@@ -62,8 +58,11 @@
 
 		<g:west size='16'>
 			<g:DockLayoutPanel unit="EM" styleName="{style.box}">
-				<g:north size="2">
-					<g:Label styleName="{style.boxHeader}">Tests</g:Label>
+				<g:north size="2.1">
+					<g:FlowPanel styleName="{style.boxHeader}">
+						<g:Label styleName="{style.action}">Tests</g:Label>
+						<g:Button ui:field="btnRunAll" styleName="{style.action}">Run all</g:Button>
+					</g:FlowPanel>
 				</g:north>
 				<g:center>
 					<g:FlowPanel ui:field="tests" styleName="{style.output}">
@@ -76,8 +75,14 @@
 
 		<g:center>
 			<g:DockLayoutPanel unit="EM" styleName="{style.box}">
-				<g:north size="2">
-					<g:Label styleName="{style.boxHeader}">Output</g:Label>
+				<g:north size="2.1">
+					<g:FlowPanel styleName="{style.boxHeader}">
+						<g:Label styleName="{style.action}">Output</g:Label>
+						<g:Button ui:field="btnClear" styleName="{style.action}">Clear all</g:Button>
+						<g:Label styleName="{style.action}">Log level:</g:Label>
+						<g:ListBox ui:field='logLevel' visibleItemCount='1'
+							styleName="{style.action}" />
+					</g:FlowPanel>
 				</g:north>
 				<g:center>
 					<g:FlowPanel ui:field="output" styleName="{style.output}">

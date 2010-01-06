@@ -23,8 +23,10 @@ package com.calclab.emite.xep.disco.client;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.SessionComponent;
+import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
+import com.google.gwt.core.client.EntryPoint;
 
 /**
  * Implements XEP-0030: Service Discovery
@@ -37,7 +39,7 @@ import com.calclab.suco.client.ioc.module.Factory;
  *      NOT IMPLEMENTED
  * 
  */
-public class DiscoveryModule extends AbstractModule {
+public class DiscoveryModule extends AbstractModule implements EntryPoint {
 
     public DiscoveryModule() {
 	super();
@@ -52,4 +54,12 @@ public class DiscoveryModule extends AbstractModule {
 	    }
 	});
     }
+
+    @Override
+    public void onModuleLoad() {
+	Suco.install(this);
+	// FIXME: Suco container events
+	Suco.get(DiscoveryManager.class);
+    }
+
 }

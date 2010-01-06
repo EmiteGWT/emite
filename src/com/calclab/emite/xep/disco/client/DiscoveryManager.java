@@ -55,6 +55,14 @@ public class DiscoveryManager {
 	});
     }
 
+    public ArrayList<Feature> getFeatures() {
+	return features;
+    }
+
+    public ArrayList<Identity> getIdentities() {
+	return identities;
+    }
+
     public void onReady(final Listener<DiscoveryManager> listener) {
 	onReady.add(listener);
     }
@@ -67,6 +75,7 @@ public class DiscoveryManager {
 		final IPacket query = response.getFirstChild(filterQuery);
 		processIdentity(query.getChildren(MatcherFactory.byName("identity")));
 		processFeatures(query.getChildren(MatcherFactory.byName("features")));
+		onReady.fire(DiscoveryManager.this);
 	    }
 	});
     }

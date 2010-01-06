@@ -1,9 +1,11 @@
 package com.calclab.emite.xfunctional.client.ui;
 
+import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.xfunctional.client.FunctionalTest;
 import com.calclab.emite.xfunctional.client.TestResult;
 import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult.State;
+import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -41,15 +43,14 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 
     private final TestRunner runner;
 
+    private final Session session;
+
     public TestRunnerPanel() {
 	initWidget(uiBinder.createAndBindUi(this));
-	logLevel.addItem("Results");
-	logLevel.addItem("Info");
-	logLevel.addItem("Stanzas");
-	logLevel.addItem("All");
-	logLevel.setSelectedIndex(2);
-	this.currentLevel = logLevel.getItemText(logLevel.getSelectedIndex());
+	this.session = Suco.get(Session.class);
+	initLogLevels();
 	this.runner = new TestRunner(this);
+	new TestRunnerLogic(this);
     }
 
     public void addTest(final FunctionalTest test) {
@@ -94,6 +95,10 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	output.clear();
     }
 
+    @UiHandler("btnLogin")
+    public void onLogin(ClickEvent e) {
+    }
+
     @UiHandler("logLevel")
     public void onLogLevelChanged(ChangeEvent e) {
 	currentLevel = logLevel.getItemText(logLevel.getSelectedIndex());
@@ -101,6 +106,11 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	for (int index = 0; index < total; index++) {
 	    changeWidgetVisibility((OutputMessage) output.getWidget(index));
 	}
+    }
+
+    @UiHandler("btnLogout")
+    public void onLogout(ClickEvent e) {
+	session.logout();
     }
 
     @UiHandler("btnRunAll")
@@ -135,5 +145,14 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	    visibility = (Level.fail == level || Level.success == level);
 	}
 	message.setVisible(visibility);
+    }
+
+    private void initLogLevels() {
+	logLevel.addItem("Results");
+	logLevel.addItem("Info");
+	logLevel.addItem("Stanzas");
+	logLevel.addItem("All");
+	logLevel.setSelectedIndex(2);
+	this.currentLevel = logLevel.getItemText(logLevel.getSelectedIndex());
     }
 }

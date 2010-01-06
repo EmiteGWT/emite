@@ -1,15 +1,12 @@
 package com.calclab.emite.xfunctional.client.tests;
 
-import java.util.List;
-
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.xep.search.client.SearchManager;
+import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xfunctional.client.Context;
 import com.calclab.emite.xfunctional.client.FunctionalTest;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 
-public class TestSearchRetrieveSearchFields implements FunctionalTest {
+public class TestDiscovery implements FunctionalTest {
 
     @Override
     public void afterLogin(Context ctx) {
@@ -21,21 +18,18 @@ public class TestSearchRetrieveSearchFields implements FunctionalTest {
 
     @Override
     public void duringLogin(final Context ctx) {
-	final Session session = ctx.getSession();
-	SearchManager search = Suco.get(SearchManager.class);
-	search.requestSearchFields(new Listener<List<String>>() {
+	DiscoveryManager discovery = Suco.get(DiscoveryManager.class);
+
+	discovery.onReady(new Listener<DiscoveryManager>() {
 	    @Override
-	    public void onEvent(List<String> parameter) {
-		ctx.success("Search fields retrieved");
-		session.logout();
+	    public void onEvent(DiscoveryManager manager) {
+		ctx.success("Discovery features received");
 	    }
 	});
-
     }
 
     @Override
     public String getName() {
-	return "Retrieve Search Fields test";
+	return "Discovery test";
     }
-
 }

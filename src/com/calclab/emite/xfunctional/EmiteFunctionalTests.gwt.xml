@@ -6,6 +6,8 @@
 	<inherits name='com.calclab.emite.core.EmiteCore' />
 	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 	<inherits name='com.calclab.emite.xep.search.EmiteSearch' />
+	<inherits name='com.calclab.emite.xep.disco.EmiteDiscovery' />
+	
 
 	<source path="client" />
 	<entry-point

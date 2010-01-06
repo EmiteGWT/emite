@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<inherits name="com.calclab.emite.core.EmiteCore" />
-	<entry-point class="com.calclab.emite.xep.search.client.SearchModule" />
+	<entry-point class="com.calclab.emite.xep.disco.client.DiscoveryModule" />
 	<source path="client" />
 </module>
