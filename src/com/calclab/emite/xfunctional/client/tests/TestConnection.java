@@ -14,14 +14,14 @@ public class TestConnection implements FunctionalTest {
     @Override
     public void beforeLogin(Context ctx) {
 	Session session = ctx.getSession();
-	ctx.equal("State should be disconnected", Session.State.disconnected, session.getState());
+	ctx.assertEquals("State should be disconnected", Session.State.disconnected, session.getState());
 
     }
 
     @Override
     public void duringLogin(Context ctx) {
 	Session session = ctx.getSession();
-	ctx.equal("State should be connected", Session.State.ready, session.getState());
+	ctx.assertEquals("State should be connected", Session.State.ready, session.getState());
 	session.logout();
     }
 

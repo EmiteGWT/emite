@@ -9,7 +9,7 @@ import com.calclab.emite.xfunctional.client.FunctionalTest;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 
-public class TestSearch implements FunctionalTest {
+public class TestSearchRetrieveSearchFields implements FunctionalTest {
 
     @Override
     public void afterLogin(Context ctx) {
@@ -20,12 +20,13 @@ public class TestSearch implements FunctionalTest {
     }
 
     @Override
-    public void duringLogin(Context ctx) {
+    public void duringLogin(final Context ctx) {
 	final Session session = ctx.getSession();
 	SearchManager search = Suco.get(SearchManager.class);
 	search.requestSearchFields(new Listener<List<String>>() {
 	    @Override
 	    public void onEvent(List<String> parameter) {
+		ctx.success("Search fields retrieved");
 		session.logout();
 	    }
 	});
@@ -34,7 +35,7 @@ public class TestSearch implements FunctionalTest {
 
     @Override
     public String getName() {
-	return "Search test";
+	return "Retrieve Search Fields test";
     }
 
 }

@@ -31,12 +31,9 @@ public class TestRunner implements Context {
     }
 
     @Override
-    public void equal(String description, Object expected, Object actual) {
+    public void assertEquals(String description, Object expected, Object actual) {
 	boolean isValid = expected.equals(actual);
-	currentTest.addAssertion(isValid);
-	Level level = isValid ? Level.success : Level.fail;
-	String prefix = isValid ? "OK: " : "FAIL :";
-	view.print(level, prefix + description);
+	addAssertion(description, isValid);
     }
 
     @Override
@@ -49,6 +46,18 @@ public class TestRunner implements Context {
 	currentTest.start();
 	test.getTest().beforeLogin(this);
 	session.login(XmppURI.jid(view.getUserJID()), view.getUserPassword());
+    }
+
+    @Override
+    public void success(String description) {
+	addAssertion(description, true);
+    }
+
+    private void addAssertion(String description, boolean isValid) {
+	currentTest.addAssertion(isValid);
+	Level level = isValid ? Level.success : Level.fail;
+	String prefix = isValid ? "OK: " : "FAIL :";
+	view.print(level, prefix + description);
     }
 
     private void endTest() {

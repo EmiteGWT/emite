@@ -1,10 +1,9 @@
 package com.calclab.emite.xfunctional.client.ui;
 
-
 public interface TestRunnerView {
 
     enum Level {
-	info, debug, fail, success
+	info, debug, fail, success, stanzas
     }
 
     String getUserJID();

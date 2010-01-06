@@ -1,8 +1,8 @@
 package com.calclab.emite.xfunctional.client.ui;
 
 import com.calclab.emite.xfunctional.client.FunctionalTest;
-import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult;
+import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult.State;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
@@ -45,8 +45,10 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	initWidget(uiBinder.createAndBindUi(this));
 	logLevel.addItem("Results");
 	logLevel.addItem("Info");
+	logLevel.addItem("Stanzas");
 	logLevel.addItem("All");
-	this.currentLevel = "Results";
+	logLevel.setSelectedIndex(2);
+	this.currentLevel = logLevel.getItemText(logLevel.getSelectedIndex());
 	this.runner = new TestRunner(this);
     }
 
@@ -125,12 +127,13 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	boolean visibility = false;
 	if ("All".equals(currentLevel)) {
 	    visibility = true;
-	} else if ("Info".equals(currentLevel)) {
+	} else if ("Stanzas".equals(currentLevel)) {
 	    visibility = (Level.debug != level);
+	} else if ("Info".equals(currentLevel)) {
+	    visibility = (Level.debug != level || Level.stanzas != level);
 	} else if ("Results".equals(currentLevel)) {
 	    visibility = (Level.fail == level || Level.success == level);
 	}
 	message.setVisible(visibility);
     }
-
 }

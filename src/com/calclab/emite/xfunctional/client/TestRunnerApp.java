@@ -5,7 +5,7 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.xfunctional.client.tests.TestConnection;
-import com.calclab.emite.xfunctional.client.tests.TestSearch;
+import com.calclab.emite.xfunctional.client.tests.TestSearchRetrieveSearchFields;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerPanel;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
@@ -21,7 +21,7 @@ public class TestRunnerApp implements EntryPoint {
 
 	// add tests here
 	runner.addTest(new TestConnection());
-	runner.addTest(new TestSearch());
+	runner.addTest(new TestSearchRetrieveSearchFields());
 
 	setConnectionListeners(runner);
 	setSessionListeners(runner);
@@ -31,18 +31,21 @@ public class TestRunnerApp implements EntryPoint {
     }
 
     private void setConnectionListeners(final TestRunnerPanel runner) {
+	final Session session = Suco.get(Session.class);
 	Connection connection = Suco.get(Connection.class);
 	connection.onStanzaReceived(new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(IPacket stanza) {
-		runner.print(Level.debug, "RECEIVED: " + stanza.toString());
+		Level level = session.getState() == Session.State.ready ? Level.stanzas : Level.debug;
+		runner.print(level, "RECEIVED: " + stanza.toString());
 	    }
 	});
 
 	connection.onStanzaSent(new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(IPacket stanza) {
-		runner.print(Level.debug, "SENT: " + stanza.toString());
+		Level level = session.getState() == Session.State.ready ? Level.stanzas : Level.debug;
+		runner.print(level, "SENT: " + stanza.toString());
 	    }
 	});
     }

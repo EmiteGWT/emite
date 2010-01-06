@@ -17,8 +17,12 @@
 		.succeed {
 			color: #0c0;
 		}
+		
+		.name {
+			cursor: pointer;
+		}
 	</ui:style>
 	<g:FlowPanel>
-		<g:Label ui:field="name"></g:Label>
+		<g:Label ui:field="name" styleName="{style.name}"></g:Label>
 	</g:FlowPanel>
 </ui:UiBinder> 
