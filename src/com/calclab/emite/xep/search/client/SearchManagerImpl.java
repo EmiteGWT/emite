@@ -25,7 +25,7 @@ public class SearchManagerImpl implements SearchManager {
         this.filterQuery = MatcherFactory.byNameAndXMLNS("query", IQ_SEARCH);
     }
 
-    public void reqSearchFields(final XmppURI from, final XmppURI to, final Listener<List<String>> onResult) {
+    public void requestSearchFields(final XmppURI from, final XmppURI to, final Listener<List<String>> onResult) {
         final IQ iq = new IQ(Type.get, to);
         iq.setFrom(from);
         iq.setAttribute(XML_LANG, "en");

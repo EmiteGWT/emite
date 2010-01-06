@@ -28,7 +28,7 @@ public class SearchManagerTest {
     }
 
     @Test
-    public void testEmptyResult() {
+    public void shouldReturnAnEmptyListIfNotResultFounded() {
         final MockedListener<List<Item>> listener = new MockedListener<List<Item>>();
         manager.search(session.getCurrentUser(), HOST, new HashMap<String, String>(), listener);
         session.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
@@ -38,10 +38,13 @@ public class SearchManagerTest {
         assertTrue(list.isEmpty());
     }
 
+    /**
+     * @see http://xmpp.org/extensions/xep-0055.html#usecases-search
+     */
     @Test
-    public void testReqSearchFields() {
+    public void shouldRequestAndReceiveSearchFields() {
         final MockedListener<List<String>> listener = new MockedListener<List<String>>();
-        manager.reqSearchFields(session.getCurrentUser(), HOST, listener);
+        manager.requestSearchFields(session.getCurrentUser(), HOST, listener);
         session.verifyIQSent("<iq type='get' from='romeo@montague.net/home' to='characters.shakespeare.lit'"
                 + "xml:lang='en'> <query xmlns='jabber:iq:search'/> </iq>");
         session.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search1' xml:lang='en'>"

@@ -10,7 +10,7 @@ import com.calclab.emite.testing.MockitoEmiteHelper;
 public class ItemTest {
 
     @Test
-    public void onlyJid() {
+    public void itemsShouldHaveJIDIfPresent() {
         final Item result = Item.parse(MockitoEmiteHelper.toXML("<item jid='juliet@capulet.com'>" + "</item>"));
         assertEquals("juliet@capulet.com", result.getJid().toString());
         assertNull(result.getEmail());
@@ -20,7 +20,7 @@ public class ItemTest {
     }
 
     @Test
-    public void onlyJidAndFirst() {
+    public void itemsShouldHaveFirstIfPresent() {
         final Item result = Item.parse(MockitoEmiteHelper.toXML("<item jid='juliet@capulet.com'>"
                 + "<first>Juliet</first></item>"));
         assertEquals("juliet@capulet.com", result.getJid().toString());
@@ -31,7 +31,7 @@ public class ItemTest {
     }
 
     @Test
-    public void onlyJidAndLast() {
+    public void itemsShouldHaveLastIfPresent() {
         final Item result = Item.parse(MockitoEmiteHelper.toXML("<item jid='juliet@capulet.com'>"
                 + "<last>Capulet</last></item>"));
         assertEquals("juliet@capulet.com", result.getJid().toString());

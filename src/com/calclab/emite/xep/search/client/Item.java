@@ -33,6 +33,7 @@ public class Item {
         }
         return item;
     }
+    
     private final XmppURI jid;
     private String first;
     private String last;

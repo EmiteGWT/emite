@@ -15,7 +15,6 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.ConnectionTestHelper;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
@@ -35,7 +34,6 @@ public class SessionTest {
     private SASLManager saslManager;
     private ResourceBindingManager bindingManager;
     private ConnectionTestHelper helper;
-    private Connection connection;
     private IMSessionManager iMSessionManager;
 
     @Before
@@ -45,8 +43,7 @@ public class SessionTest {
 	saslManager = mock(SASLManager.class);
 	bindingManager = mock(ResourceBindingManager.class);
 	iMSessionManager = mock(IMSessionManager.class);
-	connection = helper.connection;
-	session = new SessionImpl(connection, saslManager, bindingManager, iMSessionManager);
+	session = new SessionImpl(helper.connection, saslManager, bindingManager, iMSessionManager);
 
     }
 
@@ -118,10 +115,10 @@ public class SessionTest {
     @Test
     public void shouldQueueOutcomingStanzas() {
 	session.send(new Message("the Message", uri("other@domain")));
-	verify(connection, never()).send((IPacket) anyObject());
+	verify(helper.connection, never()).send((IPacket) anyObject());
 	createSession(uri("name@domain/resource"));
 	session.setReady();
-	verify(connection).send((IPacket) anyObject());
+	verify(helper.connection).send((IPacket) anyObject());
     }
 
     @SuppressWarnings("unchecked")
