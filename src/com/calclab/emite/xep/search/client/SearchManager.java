@@ -8,13 +8,16 @@ import com.calclab.suco.client.events.Listener;
 
 /**
  * Search information repositories on the Jabber network.
- *
+ * 
  * Implements XEP-0055: Jabber Search
  * 
  * @see http://xmpp.org/extensions/xep-0055.html
  */
 public interface SearchManager {
 
+    void requestSearchFields(Listener<List<String>> listener);
+
+    @Deprecated
     /**
      * Request search fields
      * TODO
@@ -26,8 +29,7 @@ public interface SearchManager {
     void requestSearchFields(final XmppURI from, final XmppURI to, Listener<List<String>> onResult);
 
     /**
-     * Perform search
-     * TODO
+     * Perform search TODO
      * 
      * @param from
      * @param to

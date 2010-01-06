@@ -1,0 +1,82 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.title {
+			font-size: 200%;
+			padding: 0.2em;
+		}
+		
+		.app {
+			margin: 1em solid #efefef;
+		}
+		
+		.output {
+			margin: 0.5em solid white;
+			overflow: auto;
+		}
+		
+		.box {
+			border: 3px solid #efefef;
+			background-color: white;
+		}
+		
+		.boxHeader {
+			background-color: #efefef;
+			font-weight: bold;
+		}
+		
+		.action {
+			float: left;
+			margin-left: 0.5em;
+		}
+	</ui:style>
+	<g:DockLayoutPanel unit='EM' styleName="{style.app}">
+		<g:north size='3'>
+			<g:Label styleName="{style.title}">Emite Functional Test Runner Application
+				v.0.1</g:Label>
+		</g:north>
+		<g:north size="2">
+			<g:FlowPanel>
+				<g:Button ui:field="btnRunAll" styleName="{style.action}">Run all</g:Button>
+				<g:Button ui:field="btnClear" styleName="{style.action}">Clear all</g:Button>
+				<g:Label styleName="{style.action}">Log level:</g:Label>
+				<g:ListBox ui:field='logLevel' visibleItemCount='1'
+					styleName="{style.action}" />
+				<g:Label styleName="{style.action}">Session state:</g:Label>
+				<g:Label ui:field="sessionState" styleName="{style.action}"></g:Label>
+			</g:FlowPanel>
+		</g:north>
+		<g:south size="2">
+			<g:Label ui:field="status">Emite Functional Test Runner Application</g:Label>
+		</g:south>
+
+
+		<g:west size='16'>
+			<g:DockLayoutPanel unit="EM" styleName="{style.box}">
+				<g:north size="2">
+					<g:Label styleName="{style.boxHeader}">Tests</g:Label>
+				</g:north>
+				<g:center>
+					<g:FlowPanel ui:field="tests" styleName="{style.output}">
+					</g:FlowPanel>
+				</g:center>
+			</g:DockLayoutPanel>
+		</g:west>
+
+
+
+		<g:center>
+			<g:DockLayoutPanel unit="EM" styleName="{style.box}">
+				<g:north size="2">
+					<g:Label styleName="{style.boxHeader}">Output</g:Label>
+				</g:north>
+				<g:center>
+					<g:FlowPanel ui:field="output" styleName="{style.output}">
+					</g:FlowPanel>
+				</g:center>
+			</g:DockLayoutPanel>
+		</g:center>
+
+	</g:DockLayoutPanel>
+</ui:UiBinder> 

@@ -1,4 +1,4 @@
-package com.calclab.emite.xfunctional.client.tests.core;
+package com.calclab.emite.xfunctional.client.tests;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;

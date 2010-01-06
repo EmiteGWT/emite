@@ -20,22 +20,22 @@ import com.google.gwt.core.client.EntryPoint;
 public class SearchModule extends AbstractModule implements EntryPoint {
 
     public SearchModule() {
-        super();
+	super();
     }
 
     @Override
     public void onModuleLoad() {
-        Suco.install(this);
+	Suco.install(this);
     }
 
     @Override
     protected void onInstall() {
-        register(Singleton.class, new Factory<SearchManagerImpl>(SearchManagerImpl.class) {
-            @Override
-            public SearchManagerImpl create() {
-                return new SearchManagerImpl($(Session.class));
-            }
-        });
+	register(Singleton.class, new Factory<SearchManager>(SearchManager.class) {
+	    @Override
+	    public SearchManager create() {
+		return new SearchManagerImpl($(Session.class));
+	    }
+	});
     }
 
 }
