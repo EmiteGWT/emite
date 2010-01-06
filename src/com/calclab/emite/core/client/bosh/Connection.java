@@ -24,6 +24,9 @@ package com.calclab.emite.core.client.bosh;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.suco.client.events.Listener;
 
+/**
+ * A connection to a xmpp server.
+ */
 public interface Connection {
 
     public abstract void connect();
@@ -40,6 +43,13 @@ public interface Connection {
 
     public abstract void onStanzaSent(final Listener<IPacket> listener);
 
+    /**
+     * Pause the connection and return a stream settings object that can be
+     * serialized to restore the session
+     * 
+     * @return StreamSettings object if the connection if a stream is present
+     *         (the connection is active), null otherwise
+     */
     public abstract StreamSettings pause();
 
     public abstract void removeOnStanzaReceived(Listener<IPacket> listener);

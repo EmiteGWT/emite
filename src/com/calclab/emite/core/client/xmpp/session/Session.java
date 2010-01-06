@@ -167,7 +167,8 @@ public interface Session {
      * 
      * @see http://www.xmpp.org/extensions/xep-0124.html#inactive
      * @see Session.resume
-     * @return
+     * @return The StreamSettings object if the session was ready, null
+     *         otherwise
      */
     public abstract StreamSettings pause();
 
