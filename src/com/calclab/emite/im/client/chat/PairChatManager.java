@@ -42,13 +42,15 @@ import com.calclab.suco.client.events.Listener;
 public class PairChatManager implements ChatManager {
     protected final HashSet<Chat> chats;
     protected final Event<Chat> onChatCreated;
-    protected Event<Chat> onChatClosed;
+    protected final Event<Chat> onChatOpened;
+    protected final Event<Chat> onChatClosed;
     protected final Session session;
 
     public PairChatManager(final Session session) {
 	this.session = session;
-	this.onChatCreated = new Event<Chat>("chatManager:onChatCreated");
-	this.onChatClosed = new Event<Chat>("chatManager:onChatClosed");
+	this.onChatCreated = new Event<Chat>("chatManager.onChatCreated");
+	this.onChatClosed = new Event<Chat>("chatManager.onChatClosed");
+	this.onChatOpened = new Event<Chat>("chatManager.onChatOpened");
 	this.chats = new HashSet<Chat>();
 
 	session.onMessage(new Listener<Message>() {
@@ -77,12 +79,40 @@ public class PairChatManager implements ChatManager {
 	onChatCreated.add(listener);
     }
 
+    @Override
+    public void onChatOpened(Listener<Chat> listener) {
+	onChatOpened.add(listener);
+    }
+
     public Chat open(final XmppURI uri) {
 	Chat chat = findChat(uri);
 	if (chat == null) {
 	    chat = createChat(uri, session.getCurrentUser());
 	}
+	onChatOpened.fire(chat);
 	return chat;
+    }
+
+    private <T> Chat createChat(final XmppURI toURI, final XmppURI starterURI) {
+	final PairChat pairChat = new PairChat(session, toURI, starterURI, null);
+	chats.add(pairChat);
+	onChatCreated.fire(pairChat);
+	pairChat.setState(Chat.State.ready);
+	return pairChat;
+    }
+
+    /**
+     * Find a chat using the given uri.
+     */
+
+    private Chat findChat(final XmppURI uri) {
+	for (final Chat chat : chats) {
+	    final XmppURI chatTargetURI = chat.getURI();
+	    if (uri.equalsNoResource(chatTargetURI)) {
+		return chat;
+	    }
+	}
+	return null;
     }
 
     /**
@@ -107,32 +137,6 @@ public class PairChatManager implements ChatManager {
 	    }
 	    break;
 	}
-    }
-
-    protected Chat openChat(final XmppURI jid, final XmppURI currentUser) {
-	return null;
-    }
-
-    private <T> Chat createChat(final XmppURI toURI, final XmppURI starterURI) {
-	final PairChat pairChat = new PairChat(session, toURI, starterURI, null);
-	chats.add(pairChat);
-	onChatCreated.fire(pairChat);
-	pairChat.setState(Chat.State.ready);
-	return pairChat;
-    }
-
-    /**
-     * Find a chat using the given uri.
-     */
-
-    private Chat findChat(final XmppURI uri) {
-	for (final Chat chat : chats) {
-	    final XmppURI chatTargetURI = chat.getURI();
-	    if (uri.equalsNoResource(chatTargetURI)) {
-		return chat;
-	    }
-	}
-	return null;
     }
 
 }

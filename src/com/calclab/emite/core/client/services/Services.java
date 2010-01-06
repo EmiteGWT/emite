@@ -34,7 +34,9 @@ public interface Services {
 
     /**
      * Convert xml to IPacket
-     * @param xml text
+     * 
+     * @param xml
+     *            text
      * @return IPacket or NoPacket.INSTANCE if problems
      */
     IPacket toXML(String xml);

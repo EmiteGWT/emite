@@ -65,7 +65,7 @@ public class BoshConnection implements Connection {
 
 	    public void onError(final String request, final Throwable throwable) {
 		if (running) {
-		    GWT.log("Connection error (total: " + errors + ")" , throwable);
+		    GWT.log("Connection error (total: " + errors + ")", throwable);
 		    errors++;
 		    if (errors > 2) {
 			running = false;
@@ -144,7 +144,7 @@ public class BoshConnection implements Connection {
     }
 
     public StreamSettings pause() {
-	if (stream.sid != null) {
+	if (stream != null && stream.sid != null) {
 	    createBody();
 	    body.setAttribute("pause", stream.maxPause);
 	    sendBody();

@@ -58,8 +58,6 @@ public class DiscoveryModule extends AbstractModule implements EntryPoint {
     @Override
     public void onModuleLoad() {
 	Suco.install(this);
-	// FIXME: Suco container events
-	Suco.get(DiscoveryManager.class);
     }
 
 }

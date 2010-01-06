@@ -47,7 +47,7 @@ public interface Roster {
      * @param name
      *            the item name
      * @param groups
-     *            the groups you want to put the groups in
+     *            <b>(optional!)</b> the groups you want to put the groups in
      */
     void addItem(XmppURI jid, String name, String... groups);
 

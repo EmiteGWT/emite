@@ -32,8 +32,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
@@ -74,7 +74,13 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	    chats.add(room);
 	    onChatCreated.fire(room);
 	}
+	onChatOpened.fire(room);
 	return room;
+    }
+
+    private void handleRoomInvitation(final XmppURI roomURI, final Stanza invitation) {
+	onInvitationReceived.fire(new RoomInvitation(invitation.getFrom(), roomURI, invitation.getFirstChild("reason")
+		.getText()));
     }
 
     @Override
@@ -89,11 +95,6 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	    handleRoomInvitation(message.getFrom(), new BasicStanza(child));
 	}
 
-    }
-
-    private void handleRoomInvitation(final XmppURI roomURI, final Stanza invitation) {
-	onInvitationReceived.fire(new RoomInvitation(invitation.getFrom(), roomURI, invitation.getFirstChild("reason")
-		.getText()));
     }
 
 }
