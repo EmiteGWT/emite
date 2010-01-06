@@ -59,11 +59,11 @@ public class AutoConfig {
     }
 
     private void initialize() {
+	PageAssist.configureFromMeta(connection);
 	String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
 	if (sessionBehaviour != null) {
 	    GWT.log("PageController - initializing...", null);
 	    prepareOnCloseAction(sessionBehaviour);
-	    PageAssist.configureFromMeta(connection);
 	    prepareOnOpenAction(sessionBehaviour);
 	    GWT.log("PageController - done.", null);
 	}

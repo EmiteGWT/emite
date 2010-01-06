@@ -38,6 +38,14 @@
 		</g:north>
 		<g:north size="2">
 			<g:FlowPanel>
+				<g:Label styleName="{style.action}">Credentials for test - User JID:</g:Label>
+				<g:TextBox ui:field="userJID" styleName="{style.action}">test1@localhost</g:TextBox>
+				<g:Label styleName="{style.action}">Password:</g:Label>
+				<g:TextBox ui:field="userPassword" styleName="{style.action}">test1</g:TextBox>
+			</g:FlowPanel>
+		</g:north>
+		<g:north size="2">
+			<g:FlowPanel>
 				<g:Button ui:field="btnRunAll" styleName="{style.action}">Run all</g:Button>
 				<g:Button ui:field="btnClear" styleName="{style.action}">Clear all</g:Button>
 				<g:Label styleName="{style.action}">Log level:</g:Label>

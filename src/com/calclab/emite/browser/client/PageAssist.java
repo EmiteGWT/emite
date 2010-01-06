@@ -49,6 +49,7 @@ public class PageAssist {
      *         PARAM_HOST are present), false otherwise
      */
     public static final boolean configureFromMeta(Connection connection) {
+	GWT.log("Configuring connection...", null);
 	String httpBase = getMeta(PARAM_HTTPBASE);
 	String host = getMeta(PARAM_HOST);
 	if (host != null && httpBase != null) {

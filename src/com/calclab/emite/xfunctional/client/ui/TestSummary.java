@@ -1,8 +1,8 @@
 package com.calclab.emite.xfunctional.client.ui;
 
-import com.calclab.emite.xfunctional.client.FunctionalTest;
-import com.calclab.emite.xfunctional.client.TestOutput;
-import com.calclab.emite.xfunctional.client.FunctionalTest.State;
+import com.calclab.emite.xfunctional.client.TestRunner;
+import com.calclab.emite.xfunctional.client.TestResult;
+import com.calclab.emite.xfunctional.client.TestResult.State;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
@@ -37,20 +37,19 @@ public class TestSummary extends Composite {
     @UiField
     Styles style;
 
-    private final TestOutput helper;
+    private final TestResult test;
+    private final TestRunner runner;
 
-    private final FunctionalTest test;
-
-    public TestSummary(FunctionalTest test, TestOutput helper) {
-	this.test = test;
-	this.helper = helper;
+    public TestSummary(TestResult testResult, TestRunner runner) {
+	this.test = testResult;
+	this.runner = runner;
 	initWidget(uiBinder.createAndBindUi(this));
-	name.setText(test.getName());
+	name.setText(testResult.getTest().getName());
     }
 
     @UiHandler("name")
     public void onExecute(ClickEvent event) {
-	test.run(helper);
+	runner.run(test);
     }
 
     public void setState(State state) {

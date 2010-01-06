@@ -1,8 +1,9 @@
 package com.calclab.emite.xfunctional.client.ui;
 
 import com.calclab.emite.xfunctional.client.FunctionalTest;
-import com.calclab.emite.xfunctional.client.TestOutput;
-import com.calclab.emite.xfunctional.client.FunctionalTest.State;
+import com.calclab.emite.xfunctional.client.TestRunner;
+import com.calclab.emite.xfunctional.client.TestResult;
+import com.calclab.emite.xfunctional.client.TestResult.State;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -14,11 +15,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class TestRunner extends Composite implements TestOutput {
+public class TestRunnerPanel extends Composite implements TestRunnerView {
 
-    interface EmiteTesterPanelUiBinder extends UiBinder<Widget, TestRunner> {
+    interface EmiteTesterPanelUiBinder extends UiBinder<Widget, TestRunnerPanel> {
     }
 
     private static EmiteTesterPanelUiBinder uiBinder = GWT.create(EmiteTesterPanelUiBinder.class);
@@ -32,33 +34,57 @@ public class TestRunner extends Composite implements TestOutput {
     @UiField
     Label status, sessionState;
 
+    @UiField
+    TextBox userJID, userPassword;
+
     private String currentLevel;
 
-    public TestRunner() {
+    private final TestRunner runner;
+
+    public TestRunnerPanel() {
 	initWidget(uiBinder.createAndBindUi(this));
-	logLevel.addItem("All");
-	logLevel.addItem("Info");
 	logLevel.addItem("Results");
-	this.currentLevel = "All";
+	logLevel.addItem("Info");
+	logLevel.addItem("All");
+	this.currentLevel = "Results";
+	this.runner = new TestRunner(this);
     }
 
     public void addTest(final FunctionalTest test) {
-	final TestSummary summary = new TestSummary(test, this);
-	test.onStateChanged(new Listener<FunctionalTest.State>() {
+	final TestResult testResult = new TestResult(test);
+	final TestSummary summary = new TestSummary(testResult, runner);
+	testResult.onStateChanged(new Listener<State>() {
 	    @Override
-	    public void onEvent(FunctionalTest.State state) {
+	    public void onEvent(State state) {
 		if (state == State.running) {
-		    setStatus("Running '" + test.getName() + "'...");
+		    String msg = "Running '" + test.getName() + "'...";
+		    print(Level.info, msg);
+		    setStatus(msg);
 		} else if (state == State.failed) {
+		    String msg = "FAIL: '" + test.getName() + "' -" + testResult.getSummary();
+		    print(Level.fail, msg);
 		    setStatus(test.getName() + " failed.");
 		} else if (state == State.succeed) {
+		    String msg = "SUCCESS: '" + test.getName() + "' -" + testResult.getSummary();
+		    print(Level.success, msg);
 		    setStatus(test.getName() + " succeed.");
 		}
 		summary.setState(state);
+
 	    }
 	});
-	summary.setState(test.getState());
+	summary.setState(testResult.getState());
 	tests.add(summary);
+    }
+
+    @Override
+    public String getUserJID() {
+	return userJID.getText();
+    }
+
+    @Override
+    public String getUserPassword() {
+	return userPassword.getText();
     }
 
     @UiHandler("btnClear")

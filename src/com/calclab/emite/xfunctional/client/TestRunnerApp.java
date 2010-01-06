@@ -4,10 +4,10 @@ import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
-import com.calclab.emite.xfunctional.client.TestOutput.Level;
 import com.calclab.emite.xfunctional.client.tests.TestConnection;
 import com.calclab.emite.xfunctional.client.tests.TestSearch;
-import com.calclab.emite.xfunctional.client.ui.TestRunner;
+import com.calclab.emite.xfunctional.client.ui.TestRunnerPanel;
+import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.EntryPoint;
@@ -17,7 +17,7 @@ public class TestRunnerApp implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	final TestRunner runner = new TestRunner();
+	final TestRunnerPanel runner = new TestRunnerPanel();
 
 	// add tests here
 	runner.addTest(new TestConnection());
@@ -30,7 +30,7 @@ public class TestRunnerApp implements EntryPoint {
 	RootLayoutPanel.get().add(runner);
     }
 
-    private void setConnectionListeners(final TestRunner runner) {
+    private void setConnectionListeners(final TestRunnerPanel runner) {
 	Connection connection = Suco.get(Connection.class);
 	connection.onStanzaReceived(new Listener<IPacket>() {
 	    @Override
@@ -47,7 +47,7 @@ public class TestRunnerApp implements EntryPoint {
 	});
     }
 
-    private void setSessionListeners(final TestRunner runner) {
+    private void setSessionListeners(final TestRunnerPanel runner) {
 	Session session = Suco.get(Session.class);
 	session.onStateChanged(new Listener<State>() {
 	    @Override

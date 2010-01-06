@@ -1,6 +1,6 @@
 package com.calclab.emite.xfunctional.client.ui;
 
-import com.calclab.emite.xfunctional.client.TestOutput.Level;
+import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
