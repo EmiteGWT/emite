@@ -1,7 +1,7 @@
 package com.calclab.emite.xfunctional.client.ui;
 
-import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult;
+import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult.State;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -44,7 +44,7 @@ public class TestSummary extends Composite {
 	this.test = testResult;
 	this.runner = runner;
 	initWidget(uiBinder.createAndBindUi(this));
-	name.setText(testResult.getTest().getName());
+	name.setText(testResult.getName());
     }
 
     @UiHandler("name")

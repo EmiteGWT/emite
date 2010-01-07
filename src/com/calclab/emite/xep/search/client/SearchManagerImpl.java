@@ -32,10 +32,9 @@ public class SearchManagerImpl implements SearchManager {
     public void requestSearchFields(final Listener<SearchResult<List<String>>> listener) {
 	if (session.getState() == State.ready) {
 	    final XmppURI from = session.getCurrentUser();
-	    final IQ iq = new IQ(Type.get, host);
-	    iq.setFrom(from);
-	    iq.setAttribute(XML_LANG, "en");
+	    final IQ iq = new IQ(Type.get, host).From(from).With(XML_LANG, "en");
 	    iq.addQuery(IQ_SEARCH);
+
 	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
 		public void onEvent(final IPacket received) {
 		    final IQ response = new IQ(received);
@@ -54,15 +53,23 @@ public class SearchManagerImpl implements SearchManager {
 	}
     }
 
+    @Override
+    public void search(HashMap<String, String> query, Listener<SearchResult<List<Item>>> onResult) {
+	if (session.getState() == State.ready) {
+	    search(session.getCurrentUser(), host, query, onResult);
+	} else {
+	    throw new RuntimeException("You should be connected before use this service.");
+	}
+    }
+
     public void search(final XmppURI from, final XmppURI to, final HashMap<String, String> query,
 	    final Listener<SearchResult<List<Item>>> onResult) {
-	final IQ iq = new IQ(Type.set, to);
-	iq.setFrom(from);
-	iq.setAttribute(XML_LANG, "en");
+	final IQ iq = new IQ(Type.set, to).From(from).With(XML_LANG, "en");
 	final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
 	for (final String field : query.keySet()) {
 	    queryPacket.addChild(field, null).setText(query.get(field));
 	}
+
 	session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
 	    public void onEvent(final IPacket received) {
 		final IQ response = new IQ(received);

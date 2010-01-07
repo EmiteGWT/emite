@@ -1,6 +1,9 @@
 package com.calclab.emite.xfunctional.client.ui;
 
+import java.util.HashMap;
+
 import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.xfunctional.client.FunctionalTest;
 import com.calclab.emite.xfunctional.client.FunctionalTestSuite;
 import com.calclab.emite.xfunctional.client.TestResult;
 import com.calclab.emite.xfunctional.client.TestRunner;
@@ -53,31 +56,11 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	new TestRunnerLogic(this);
     }
 
-    public void addTest(final FunctionalTestSuite test) {
-	final TestResult testResult = new TestResult(test);
-	final TestSummary summary = new TestSummary(testResult, runner);
-	testResult.onStateChanged(new Listener<State>() {
-	    @Override
-	    public void onEvent(State state) {
-		if (state == State.running) {
-		    String msg = "Running '" + test.getName() + "'...";
-		    print(Level.info, msg);
-		    setStatus(msg);
-		} else if (state == State.failed) {
-		    String msg = "FAIL: '" + test.getName() + "' -" + testResult.getSummary();
-		    print(Level.fail, msg);
-		    setStatus(test.getName() + " failed.");
-		} else if (state == State.succeed) {
-		    String msg = "SUCCESS: '" + test.getName() + "' -" + testResult.getSummary();
-		    print(Level.success, msg);
-		    setStatus(test.getName() + " succeed.");
-		}
-		summary.setState(state);
-
-	    }
-	});
-	summary.setState(testResult.getState());
-	tests.add(summary);
+    public void addTestSuite(String name, FunctionalTestSuite testSuite) {
+	HashMap<String, FunctionalTest> tests = testSuite.getTests();
+	for (String testName : tests.keySet()) {
+	    addTest(name + ": " + testName, tests.get(testName), testSuite);
+	}
     }
 
     @Override
@@ -130,6 +113,35 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 
     public void setStatus(String message) {
 	status.setText(message);
+    }
+
+    private void addTest(String name, FunctionalTest test, FunctionalTestSuite suite) {
+	// assert test != null;
+	GWT.log("adding: " + name, null);
+	final TestResult result = new TestResult(name, test, suite);
+	final TestSummary summary = new TestSummary(result, runner);
+	result.onStateChanged(new Listener<State>() {
+	    @Override
+	    public void onEvent(State state) {
+		if (state == State.running) {
+		    String msg = "Running '" + result.getName() + "'...";
+		    print(Level.info, msg);
+		    setStatus(msg);
+		} else if (state == State.failed) {
+		    String msg = "FAIL: '" + result.getName() + "' -" + result.getSummary();
+		    print(Level.fail, msg);
+		    setStatus(result.getName() + " failed.");
+		} else if (state == State.succeed) {
+		    String msg = "SUCCESS: '" + result.getName() + "' -" + result.getSummary();
+		    print(Level.success, msg);
+		    setStatus(result.getName() + " succeed.");
+		}
+		summary.setState(state);
+
+	    }
+	});
+	summary.setState(result.getState());
+	tests.add(summary);
     }
 
     private void changeWidgetVisibility(OutputMessage message) {

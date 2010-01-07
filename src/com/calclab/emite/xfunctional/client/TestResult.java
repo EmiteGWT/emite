@@ -8,7 +8,7 @@ public class TestResult {
     public static enum State {
 	notRunned, running, failed, succeed
     }
-    private final FunctionalTestSuite test;
+    private final FunctionalTest test;
     private long beginTime;
     private int assertions;
     private int failures;
@@ -16,9 +16,13 @@ public class TestResult {
     private long endTime;
     private final Event<State> stateChanged;
     private State state;
+    private final FunctionalTestSuite suite;
+    private final String name;
 
-    public TestResult(FunctionalTestSuite test) {
+    public TestResult(String name, FunctionalTest test, FunctionalTestSuite suite) {
+	this.name = name;
 	this.test = test;
+	this.suite = suite;
 	this.stateChanged = new Event<State>("testResult.stateChanged");
 	setState(State.notRunned);
     }
@@ -36,8 +40,16 @@ public class TestResult {
 	setState(failures > 0 ? State.failed : State.succeed);
     }
 
+    public String getName() {
+	return name;
+    }
+
     public State getState() {
 	return state;
+    }
+
+    public FunctionalTestSuite getSuite() {
+	return suite;
     }
 
     public String getSummary() {
@@ -49,7 +61,7 @@ public class TestResult {
 	return summary;
     }
 
-    public FunctionalTestSuite getTest() {
+    public FunctionalTest getTest() {
 	return test;
     }
 

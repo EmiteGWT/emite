@@ -67,6 +67,11 @@ public class IQ extends BasicStanza {
 	return query;
     }
 
+    public IQ From(final XmppURI fromURI) {
+	setFrom(fromURI);
+	return this;
+    }
+
     public Type getType() {
 	try {
 	    return Type.valueOf(getAttribute(TYPE));
@@ -83,6 +88,11 @@ public class IQ extends BasicStanza {
     public IQ To(final XmppURI toURI) {
 	setTo(toURI);
 	return this;
+    }
+
+    @Override
+    public IQ With(String name, String value) {
+	return (IQ) super.With(name, value);
     }
 
     public IQ WithQuery(final String xmlns) {

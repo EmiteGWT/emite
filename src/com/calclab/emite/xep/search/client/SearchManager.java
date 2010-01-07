@@ -25,16 +25,30 @@ public interface SearchManager {
      */
     public void setHost(XmppURI host);
 
-    void requestSearchFields(Listener<SearchResult<List<String>>> listener);
+    /**
+     * Request available search fields using simple search
+     * 
+     * @param onResult
+     *            A SearchResult with a list of string with the available name
+     *            fields
+     * 
+     * @see SearchResult
+     */
+    void requestSearchFields(Listener<SearchResult<List<String>>> onResult);
 
     /**
-     * Perform search TODO
+     * Peform a simple search
      * 
-     * @param from
-     * @param to
      * @param query
+     *            A HashMap with names and values
      * @param onResult
+     *            A SearchResult with a list of returned items
+     * 
+     * @see SearchResult
      */
+    void search(HashMap<String, String> query, Listener<SearchResult<List<Item>>> onResult);
+
+    @Deprecated
     void search(final XmppURI from, final XmppURI to, HashMap<String, String> query,
 	    Listener<SearchResult<List<Item>>> onResult);
 

@@ -4,14 +4,13 @@ import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView;
-import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener0;
 
-public class TestRunner implements Context {
+public class TestRunner {
     private final Session session;
-    private TestResult currentTest;
     private final TestRunnerView view;
+    private Context ctx;
 
     public TestRunner(TestRunnerView view) {
 	this.view = view;
@@ -21,66 +20,30 @@ public class TestRunner implements Context {
 	    @Override
 	    public void onEvent() {
 		State state = session.getState();
-		if (state == State.ready && currentTest != null) {
+		if (state == State.ready && ctx != null) {
 		    performTest();
-		} else if (state == State.disconnected && currentTest != null) {
+		} else if (state == State.disconnected && ctx != null) {
 		    endTest();
 		}
-
 	    }
 	});
     }
 
-    @Override
-    public void assertEquals(String description, Object expected, Object actual) {
-	boolean isValid = expected.equals(actual);
-	addAssertion(description, isValid);
-    }
-
-    public void fail(String description) {
-	addAssertion(description, false);
-    }
-
-    @Override
-    public Session getSession() {
-	return session;
-    }
-
-    @Override
-    public void info(String message) {
-	view.print(Level.info, message);
-    }
-
     public void run(TestResult test) {
-	this.currentTest = test;
-	currentTest.start();
-	test.getTest().beforeLogin(this);
+	this.ctx = new Context(session, test, view);
+	ctx.getTestResult().start();
+	test.getSuite().beforeLogin(ctx);
 	session.login(XmppURI.jid(view.getUserJID()), view.getUserPassword());
     }
 
-    @Override
-    public void success(String description) {
-	addAssertion(description, true);
-    }
-
-    private void addAssertion(String description, boolean isValid) {
-	if (currentTest != null) {
-	    currentTest.addAssertion(isValid);
-	} else {
-	    view.print(Level.fail, "error interno - no tenemos test!");
-	}
-
-	Level level = isValid ? Level.success : Level.fail;
-	String prefix = isValid ? "OK: " : "FAIL :";
-	view.print(level, prefix + description);
-    }
-
     private void endTest() {
-	currentTest.getTest().afterLogin(this);
+	ctx.getTestResult().getSuite().afterLogin(ctx);
     }
 
     private void performTest() {
-	currentTest.getTest().duringLogin(this);
-	currentTest.finish();
+	TestResult testResult = ctx.getTestResult();
+	FunctionalTest test = testResult.getTest();
+	test.run(ctx);
+	testResult.finish();
     }
 }
