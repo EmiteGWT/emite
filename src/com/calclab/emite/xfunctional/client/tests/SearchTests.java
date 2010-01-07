@@ -4,17 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.calclab.emite.browser.client.PageAssist;
+import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.search.client.Item;
+import com.calclab.emite.xep.search.client.SearchFields;
 import com.calclab.emite.xep.search.client.SearchManager;
-import com.calclab.emite.xep.search.client.SearchResult;
-import com.calclab.emite.xep.search.client.SearchResult.Status;
 import com.calclab.emite.xfunctional.client.Context;
 import com.calclab.emite.xfunctional.client.FunctionalTest;
 import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.events.Listener;
 
 public class SearchTests extends BasicTestSuite {
 
@@ -23,23 +22,25 @@ public class SearchTests extends BasicTestSuite {
 	public void run(final Context ctx) {
 	    ctx.info("Requesting fields...");
 
-	    search.requestSearchFields(new Listener<SearchResult<List<String>>>() {
+	    search.requestSearchFields(new ResultListener<SearchFields>() {
 		@Override
-		public void onEvent(SearchResult<List<String>> result) {
+		public void onFailure(String message) {
 		    ctx.success("Search fields retrieved");
+		    ctx.info("No fields retrieved");
+		    session.logout();
+		}
 
-		    if (result.status == Status.success) {
-			for (String name : result.data) {
-			    ctx.info("Field retrieved: " + name);
-			}
-		    } else {
-			ctx.info("No fields retrieved");
+		@Override
+		public void onSuccess(SearchFields fields) {
+		    ctx.success("Search fields retrieved");
+		    for (String name : fields.getFieldNames()) {
+			ctx.info("Field retrieved: " + name);
 		    }
-
 		    session.logout();
 		}
 	    });
 	}
+
     };
 
     FunctionalTest performSearch = new FunctionalTest() {
@@ -49,19 +50,27 @@ public class SearchTests extends BasicTestSuite {
 
 	    HashMap<String, String> query = new HashMap<String, String>();
 	    query.put("nick", "test*");
-	    search.search(query, new Listener<SearchResult<List<Item>>>() {
-		@Override
-		public void onEvent(SearchResult<List<Item>> result) {
-		    ctx.success("Search result retrieved");
 
-		    if (result.status == Status.success) {
-			for (Item item : result.data) {
-			    ctx.info("Result: " + item.getNick());
-			}
-		    }
+	    search.search(query, new ResultListener<List<Item>>() {
+
+		@Override
+		public void onFailure(String message) {
+		    ctx.success("Search result retrieved");
 		    session.logout();
+
+		}
+
+		@Override
+		public void onSuccess(List<Item> items) {
+		    ctx.success("Search result retrieved");
+		    session.logout();
+		    for (Item item : items) {
+			ctx.info("Result: " + item.getNick());
+		    }
+
 		}
 	    });
+
 	}
     };
 

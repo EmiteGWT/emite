@@ -3,8 +3,8 @@ package com.calclab.emite.xep.search.client;
 import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Listener;
 
 /**
  * Search information repositories on the Jabber network.
@@ -34,7 +34,7 @@ public interface SearchManager {
      * 
      * @see SearchResult
      */
-    void requestSearchFields(Listener<SearchResult<List<String>>> onResult);
+    void requestSearchFields(ResultListener<SearchFields> listener);
 
     /**
      * Peform a simple search
@@ -46,10 +46,6 @@ public interface SearchManager {
      * 
      * @see SearchResult
      */
-    void search(HashMap<String, String> query, Listener<SearchResult<List<Item>>> onResult);
-
-    @Deprecated
-    void search(final XmppURI from, final XmppURI to, HashMap<String, String> query,
-	    Listener<SearchResult<List<Item>>> onResult);
+    void search(HashMap<String, String> query, ResultListener<List<Item>> listener);
 
 }
