@@ -25,21 +25,7 @@ public interface SearchManager {
      */
     public void setHost(XmppURI host);
 
-    void requestSearchFields(Listener<List<String>> listener);
-
-    /**
-     * Request search fields TODO
-     * 
-     * (creo que deprecated porque no hace falta pasar los dos primeros
-     * parámetros: el user siempre es el de la sessión y el to se puede
-     * especificar una vez para todas)
-     * 
-     * @param from
-     * @param to
-     * @param onResult
-     */
-    @Deprecated
-    void requestSearchFields(final XmppURI from, final XmppURI to, Listener<List<String>> onResult);
+    void requestSearchFields(Listener<SearchResult<List<String>>> listener);
 
     /**
      * Perform search TODO
@@ -49,6 +35,7 @@ public interface SearchManager {
      * @param query
      * @param onResult
      */
-    void search(final XmppURI from, final XmppURI to, HashMap<String, String> query, Listener<List<Item>> onResult);
+    void search(final XmppURI from, final XmppURI to, HashMap<String, String> query,
+	    Listener<SearchResult<List<Item>>> onResult);
 
 }

@@ -2,11 +2,11 @@ package com.calclab.emite.xfunctional.client.tests;
 
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xfunctional.client.Context;
-import com.calclab.emite.xfunctional.client.FunctionalTest;
+import com.calclab.emite.xfunctional.client.FunctionalTestSuite;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 
-public class TestDiscovery implements FunctionalTest {
+public class TestDiscovery implements FunctionalTestSuite {
 
     @Override
     public void afterLogin(Context ctx) {

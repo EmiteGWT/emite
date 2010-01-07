@@ -25,6 +25,7 @@ public class SearchManagerTest {
     public void setUp() {
 	session = new MockedSession();
 	manager = new SearchManagerImpl(session);
+	manager.setHost(XmppURI.uri("search.service"));
 	session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));
 	session.setState(State.ready);
     }
@@ -34,9 +35,9 @@ public class SearchManagerTest {
      */
     @Test
     public void shouldRequestAndReceiveSearchFields() {
-	final MockedListener<List<String>> listener = new MockedListener<List<String>>();
+	final MockedListener<SearchResult<List<String>>> listener = new MockedListener<SearchResult<List<String>>>();
 	manager.requestSearchFields(listener);
-	session.verifyIQSent("<iq type='get' from='romeo@montague.net/home' to='montague.net'"
+	session.verifyIQSent("<iq type='get' from='romeo@montague.net/home' to='search.service'"
 		+ "xml:lang='en'> <query xmlns='jabber:iq:search'/> </iq>");
 	session
 		.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search1' xml:lang='en'>"
@@ -44,7 +45,7 @@ public class SearchManagerTest {
 			+ " Fill in one or more fields to search for any matching Jabber users."
 			+ " </instructions> <first/> <last/> <nick/> <email/>" + " </query></iq>");
 	assertTrue(listener.isCalledOnce());
-	final List<String> fields = listener.getValue(0);
+	final List<String> fields = listener.getValue(0).data;
 	assertTrue(fields.contains("first"));
 	assertTrue(fields.contains("last"));
 	assertTrue(fields.contains("nick"));
@@ -54,19 +55,19 @@ public class SearchManagerTest {
 
     @Test
     public void shouldReturnAnEmptyListIfNotResultFounded() {
-	final MockedListener<List<Item>> listener = new MockedListener<List<Item>>();
+	final MockedListener<SearchResult<List<Item>>> listener = new MockedListener<SearchResult<List<Item>>>();
 	manager.search(session.getCurrentUser(), HOST, new HashMap<String, String>(), listener);
 	session
 		.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
 			+ "<query xmlns='jabber:iq:search'/></iq>");
 	assertTrue(listener.isCalledOnce());
-	final List<Item> list = listener.getValue(0);
+	final List<Item> list = listener.getValue(0).data;
 	assertTrue(list.isEmpty());
     }
 
     @Test
     public void testSearch() {
-	final MockedListener<List<Item>> listener = new MockedListener<List<Item>>();
+	final MockedListener<SearchResult<List<Item>>> listener = new MockedListener<SearchResult<List<Item>>>();
 	final HashMap<String, String> query = new HashMap<String, String>();
 	query.put("last", "Capulet");
 	manager.search(session.getCurrentUser(), HOST, query, listener);
@@ -82,7 +83,7 @@ public class SearchManagerTest {
 			+ "<last>Capulet</last><nick>ty</nick>"
 			+ "<email>tybalt@shakespeare.lit</email></item></query></iq>");
 	assertTrue(listener.isCalledOnce());
-	final List<Item> list = listener.getValue(0);
+	final List<Item> list = listener.getValue(0).data;
 	final Item item1 = list.get(0);
 	final Item item2 = list.get(1);
 	assertEquals(2, list.size());

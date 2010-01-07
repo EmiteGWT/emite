@@ -12,8 +12,8 @@ import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.xep.search.client.SearchResult.Status;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
 
 public class SearchManagerImpl implements SearchManager {
     private static final String XML_LANG = "xml:lang";
@@ -29,33 +29,33 @@ public class SearchManagerImpl implements SearchManager {
     }
 
     @Override
-    public void requestSearchFields(Listener<List<String>> listener) {
+    public void requestSearchFields(final Listener<SearchResult<List<String>>> listener) {
 	if (session.getState() == State.ready) {
-	    XmppURI from = session.getCurrentUser();
-	    requestSearchFields(from, host, listener);
+	    final XmppURI from = session.getCurrentUser();
+	    final IQ iq = new IQ(Type.get, host);
+	    iq.setFrom(from);
+	    iq.setAttribute(XML_LANG, "en");
+	    iq.addQuery(IQ_SEARCH);
+	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
+		public void onEvent(final IPacket received) {
+		    final IQ response = new IQ(received);
+		    SearchResult<List<String>> result = new SearchResult<List<String>>();
+		    if (IQ.isSuccess(response)) {
+			result.status = Status.success;
+			result.data = processFieldsResults(from, response.getFirstChild(filterQuery));
+		    } else {
+			result.status = Status.fail;
+		    }
+		    listener.onEvent(result);
+		}
+	    });
 	} else {
 	    throw new RuntimeException("You should be connected before use this service.");
 	}
     }
 
-    public void requestSearchFields(final XmppURI from, final XmppURI to, final Listener<List<String>> onResult) {
-	final IQ iq = new IQ(Type.get, to);
-	iq.setFrom(from);
-	iq.setAttribute(XML_LANG, "en");
-	iq.addQuery(IQ_SEARCH);
-	session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
-	    public void onEvent(final IPacket received) {
-		GWT.log("Tenemos fields!! o algo...", null);
-		final IQ result = new IQ(received);
-		if (IQ.isSuccess(result)) {
-		    onResult.onEvent(processFieldsResults(from, result.getFirstChild(filterQuery)));
-		}
-	    }
-	});
-    }
-
     public void search(final XmppURI from, final XmppURI to, final HashMap<String, String> query,
-	    final Listener<List<Item>> onResult) {
+	    final Listener<SearchResult<List<Item>>> onResult) {
 	final IQ iq = new IQ(Type.set, to);
 	iq.setFrom(from);
 	iq.setAttribute(XML_LANG, "en");
@@ -65,10 +65,15 @@ public class SearchManagerImpl implements SearchManager {
 	}
 	session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
 	    public void onEvent(final IPacket received) {
-		final IQ result = new IQ(received);
-		if (IQ.isSuccess(result)) {
-		    onResult.onEvent(processResults(from, result.getFirstChild(filterQuery)));
+		final IQ response = new IQ(received);
+		SearchResult<List<Item>> result = new SearchResult<List<Item>>();
+		if (IQ.isSuccess(response)) {
+		    result.status = Status.success;
+		    result.data = processResults(from, response.getFirstChild(filterQuery));
+		} else {
+		    result.status = Status.fail;
 		}
+		onResult.onEvent(result);
 	    }
 	});
     }

@@ -1,6 +1,6 @@
 package com.calclab.emite.xfunctional.client;
 
-public interface FunctionalTest {
+public interface FunctionalTestSuite {
     void afterLogin(Context ctx);
 
     void beforeLogin(Context ctx);

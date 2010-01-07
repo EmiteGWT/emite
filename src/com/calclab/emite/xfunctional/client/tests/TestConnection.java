@@ -3,10 +3,10 @@ package com.calclab.emite.xfunctional.client.tests;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xfunctional.client.Context;
-import com.calclab.emite.xfunctional.client.FunctionalTest;
+import com.calclab.emite.xfunctional.client.FunctionalTestSuite;
 import com.calclab.suco.client.Suco;
 
-public class TestConnection implements FunctionalTest {
+public class TestConnection implements FunctionalTestSuite {
 
     @Override
     public void afterLogin(Context ctx) {

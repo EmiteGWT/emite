@@ -1,7 +1,7 @@
 package com.calclab.emite.xfunctional.client.ui;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.xfunctional.client.FunctionalTest;
+import com.calclab.emite.xfunctional.client.FunctionalTestSuite;
 import com.calclab.emite.xfunctional.client.TestResult;
 import com.calclab.emite.xfunctional.client.TestRunner;
 import com.calclab.emite.xfunctional.client.TestResult.State;
@@ -53,7 +53,7 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	new TestRunnerLogic(this);
     }
 
-    public void addTest(final FunctionalTest test) {
+    public void addTest(final FunctionalTestSuite test) {
 	final TestResult testResult = new TestResult(test);
 	final TestSummary summary = new TestSummary(testResult, runner);
 	testResult.onStateChanged(new Listener<State>() {

@@ -2,7 +2,7 @@ package com.calclab.emite.xfunctional.client;
 
 import com.calclab.emite.xfunctional.client.tests.TestConnection;
 import com.calclab.emite.xfunctional.client.tests.TestDiscovery;
-import com.calclab.emite.xfunctional.client.tests.TestSearchRetrieveFields;
+import com.calclab.emite.xfunctional.client.tests.TestSearch;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -17,7 +17,7 @@ public class TestRunnerApp implements EntryPoint {
 
 	// add tests here
 	runner.addTest(new TestConnection());
-	runner.addTest(new TestSearchRetrieveFields());
+	runner.addTest(new TestSearch());
 	runner.addTest(new TestDiscovery());
 
 	RootLayoutPanel.get().add(runner);
