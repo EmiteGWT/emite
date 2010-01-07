@@ -37,6 +37,10 @@ public class TestRunner implements Context {
 	addAssertion(description, isValid);
     }
 
+    public void fail(String description) {
+	addAssertion(description, false);
+    }
+
     @Override
     public Session getSession() {
 	return session;
@@ -60,7 +64,12 @@ public class TestRunner implements Context {
     }
 
     private void addAssertion(String description, boolean isValid) {
-	currentTest.addAssertion(isValid);
+	if (currentTest != null) {
+	    currentTest.addAssertion(isValid);
+	} else {
+	    view.print(Level.fail, "error interno - no tenemos test!");
+	}
+
 	Level level = isValid ? Level.success : Level.fail;
 	String prefix = isValid ? "OK: " : "FAIL :";
 	view.print(level, prefix + description);
@@ -73,6 +82,5 @@ public class TestRunner implements Context {
     private void performTest() {
 	currentTest.getTest().duringLogin(this);
 	currentTest.finish();
-	currentTest = null;
     }
 }

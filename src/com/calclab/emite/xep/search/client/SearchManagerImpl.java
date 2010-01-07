@@ -13,6 +13,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
 
 public class SearchManagerImpl implements SearchManager {
     private static final String XML_LANG = "xml:lang";
@@ -20,6 +21,7 @@ public class SearchManagerImpl implements SearchManager {
     private static final String IQ_SEARCH = "jabber:iq:search";
     private final Session session;
     private final PacketMatcher filterQuery;
+    private XmppURI host;
 
     public SearchManagerImpl(final Session session) {
 	this.session = session;
@@ -30,8 +32,7 @@ public class SearchManagerImpl implements SearchManager {
     public void requestSearchFields(Listener<List<String>> listener) {
 	if (session.getState() == State.ready) {
 	    XmppURI from = session.getCurrentUser();
-	    XmppURI to = from.getHostURI();
-	    requestSearchFields(from, to, listener);
+	    requestSearchFields(from, host, listener);
 	} else {
 	    throw new RuntimeException("You should be connected before use this service.");
 	}
@@ -44,6 +45,7 @@ public class SearchManagerImpl implements SearchManager {
 	iq.addQuery(IQ_SEARCH);
 	session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
 	    public void onEvent(final IPacket received) {
+		GWT.log("Tenemos fields!! o algo...", null);
 		final IQ result = new IQ(received);
 		if (IQ.isSuccess(result)) {
 		    onResult.onEvent(processFieldsResults(from, result.getFirstChild(filterQuery)));
@@ -69,6 +71,11 @@ public class SearchManagerImpl implements SearchManager {
 		}
 	    }
 	});
+    }
+
+    @Override
+    public void setHost(XmppURI host) {
+	this.host = host;
     }
 
     private List<String> processFieldsResults(final XmppURI from, final IPacket query) {

@@ -42,16 +42,18 @@ public class DiscoveryManager {
     private ArrayList<Identity> identities;
     private final Session session;
     private boolean isReady;
+    private boolean isActive;
 
     public DiscoveryManager(final Session session) {
 	this.session = session;
 	this.onReady = new Event<DiscoveryManager>("discoveryManager:onReady");
 	this.filterQuery = MatcherFactory.byNameAndXMLNS("query", "http://jabber.org/protocol/disco#info");
+	this.isActive = false;
 
 	session.onStateChanged(new Listener0() {
 	    @Override
 	    public void onEvent() {
-		if (session.getState() == Session.State.loggedIn) {
+		if (isActive && session.getState() == Session.State.loggedIn) {
 		    sendDiscoQuery(session.getCurrentUser());
 		}
 	    }
@@ -92,6 +94,10 @@ public class DiscoveryManager {
 		onReady.fire(DiscoveryManager.this);
 	    }
 	});
+    }
+
+    public void setActive(boolean isActive) {
+	this.isActive = isActive;
     }
 
     private void processFeatures(final List<? extends IPacket> children) {

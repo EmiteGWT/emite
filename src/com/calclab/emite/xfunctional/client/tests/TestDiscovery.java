@@ -14,6 +14,8 @@ public class TestDiscovery implements FunctionalTest {
 
     @Override
     public void beforeLogin(Context ctx) {
+	DiscoveryManager discoveryManager = Suco.get(DiscoveryManager.class);
+	discoveryManager.setActive(true);
     }
 
     @Override
