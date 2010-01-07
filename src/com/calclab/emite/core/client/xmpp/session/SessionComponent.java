@@ -25,6 +25,7 @@ import com.calclab.suco.client.ioc.Container;
 import com.calclab.suco.client.ioc.Provider;
 import com.calclab.suco.client.ioc.decorator.ProviderCollection;
 import com.calclab.suco.client.ioc.decorator.Singleton;
+import com.google.gwt.core.client.GWT;
 
 /**
  * All the providers/factories decorated by SessionComponent are called when a
@@ -39,6 +40,7 @@ public class SessionComponent extends ProviderCollection {
     }
 
     public void createAll() {
+	GWT.log("SESSION COMPONENTS!", null);
 	for (final Provider<?> p : getProviders()) {
 	    p.get();
 	}

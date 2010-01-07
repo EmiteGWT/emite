@@ -4,12 +4,12 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 	<inherits name='com.calclab.emite.core.EmiteCore' />
-	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 	<inherits name='com.calclab.emite.xep.search.EmiteSearch' />
 	<inherits name='com.calclab.emite.xep.disco.EmiteDiscovery' />
-	
+	<inherits name='com.calclab.emite.im.EmiteIM' />
+	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
+
 
 	<source path="client" />
-	<entry-point
-		class="com.calclab.emite.xfunctional.client.TestRunnerApp" />
+	<entry-point class="com.calclab.emite.xfunctional.client.TestRunnerApp" />
 </module>

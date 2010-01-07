@@ -41,6 +41,11 @@ public class TestRunner implements Context {
 	return session;
     }
 
+    @Override
+    public void info(String message) {
+	view.print(Level.info, message);
+    }
+
     public void run(TestResult test) {
 	this.currentTest = test;
 	currentTest.start();

@@ -8,5 +8,7 @@ public interface Context {
 
     Session getSession();
 
-    void success(String string);
+    void info(String message);
+
+    void success(String message);
 }

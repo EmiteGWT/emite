@@ -140,7 +140,7 @@ public class TestRunnerPanel extends Composite implements TestRunnerView {
 	} else if ("Stanzas".equals(currentLevel)) {
 	    visibility = (Level.debug != level);
 	} else if ("Info".equals(currentLevel)) {
-	    visibility = (Level.debug != level || Level.stanzas != level);
+	    visibility = (Level.debug != level && Level.stanzas != level);
 	} else if ("Results".equals(currentLevel)) {
 	    visibility = (Level.fail == level || Level.success == level);
 	}

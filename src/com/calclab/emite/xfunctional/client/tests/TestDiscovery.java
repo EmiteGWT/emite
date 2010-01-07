@@ -18,12 +18,14 @@ public class TestDiscovery implements FunctionalTest {
 
     @Override
     public void duringLogin(final Context ctx) {
+	ctx.info("Discovery test started!");
 	DiscoveryManager discovery = Suco.get(DiscoveryManager.class);
 
 	discovery.onReady(new Listener<DiscoveryManager>() {
 	    @Override
 	    public void onEvent(DiscoveryManager manager) {
 		ctx.success("Discovery features received");
+		ctx.getSession().logout();
 	    }
 	});
     }

@@ -40,6 +40,7 @@ public class DiscoveryManager {
     private ArrayList<Feature> features;
     private ArrayList<Identity> identities;
     private final Session session;
+    private boolean isReady;
 
     public DiscoveryManager(final Session session) {
 	this.session = session;
@@ -53,6 +54,8 @@ public class DiscoveryManager {
 		}
 	    }
 	});
+
+	this.isReady = false;
     }
 
     public ArrayList<Feature> getFeatures() {
@@ -63,8 +66,16 @@ public class DiscoveryManager {
 	return identities;
     }
 
+    /**
+     * Add listener to the ready event. <b>Every listener is called once and
+     * only once</b>
+     * 
+     * @param listener
+     */
     public void onReady(final Listener<DiscoveryManager> listener) {
 	onReady.add(listener);
+	if (isReady)
+	    listener.onEvent(this);
     }
 
     public void sendDiscoQuery(final XmppURI uri) {
@@ -75,6 +86,7 @@ public class DiscoveryManager {
 		final IPacket query = response.getFirstChild(filterQuery);
 		processIdentity(query.getChildren(MatcherFactory.byName("identity")));
 		processFeatures(query.getChildren(MatcherFactory.byName("features")));
+		isReady = true;
 		onReady.fire(DiscoveryManager.this);
 	    }
 	});

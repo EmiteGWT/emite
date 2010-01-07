@@ -8,14 +8,14 @@ public class TestConnection implements FunctionalTest {
 
     @Override
     public void afterLogin(Context ctx) {
-
+	Session session = ctx.getSession();
+	ctx.assertEquals("State should be disconnected", Session.State.disconnected, session.getState());
     }
 
     @Override
     public void beforeLogin(Context ctx) {
 	Session session = ctx.getSession();
 	ctx.assertEquals("State should be disconnected", Session.State.disconnected, session.getState());
-
     }
 
     @Override
