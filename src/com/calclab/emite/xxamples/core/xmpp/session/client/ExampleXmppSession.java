@@ -5,10 +5,12 @@ import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import com.calclab.emite.core.client.bosh.BoshSettings;
 import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -36,8 +38,10 @@ public class ExampleXmppSession implements EntryPoint {
 	 * We track session state changes. We can only send messages when the
 	 * state == loggedIn.
 	 */
-	session.onStateChanged(new Listener<Session.State>() {
-	    public void onEvent(final Session.State state) {
+	session.onStateChanged(new Listener0() {
+	    @Override
+	    public void onEvent() {
+		State state = session.getState();
 		if (state == Session.State.loggedIn) {
 		    log("We are now online");
 		    sendHelloWorldMessage(session);
@@ -70,15 +74,15 @@ public class ExampleXmppSession implements EntryPoint {
 	session.login(uri("test1@localhost"), "test1");
     }
 
+    private void log(String text) {
+	panel.add(new Label(text));
+    }
+
     /**
      * The simplest way to send a message using the Session object
      */
     private void sendHelloWorldMessage(final Session session) {
 	final Message message = new Message("hello world!", uri("everybody@world.org"));
 	session.send(message);
-    }
-
-    private void log(String text) {
-	panel.add(new Label(text));
     }
 }

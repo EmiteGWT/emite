@@ -6,7 +6,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 
 public class TestRunner implements Context {
     private final Session session;
@@ -17,9 +17,10 @@ public class TestRunner implements Context {
 	this.view = view;
 
 	this.session = Suco.get(Session.class);
-	session.onStateChanged(new Listener<State>() {
+	session.onStateChanged(new Listener0() {
 	    @Override
-	    public void onEvent(State state) {
+	    public void onEvent() {
+		State state = session.getState();
 		if (state == State.ready && currentTest != null) {
 		    performTest();
 		} else if (state == State.disconnected && currentTest != null) {

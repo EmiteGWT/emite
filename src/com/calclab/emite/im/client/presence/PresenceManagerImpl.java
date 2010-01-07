@@ -24,6 +24,7 @@ package com.calclab.emite.im.client.presence;
 import java.util.Collection;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
@@ -31,6 +32,7 @@ import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.RosterItem;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.GWT;
 
 /**
@@ -71,8 +73,10 @@ public class PresenceManagerImpl implements PresenceManager {
 	    }
 	});
 
-	session.onStateChanged(new Listener<Session.State>() {
-	    public void onEvent(final Session.State state) {
+	session.onStateChanged(new Listener0() {
+	    @Override
+	    public void onEvent() {
+		State state = session.getState();
 		if (state == Session.State.loggingOut) {
 		    logOut(session.getCurrentUser());
 		} else if (state == Session.State.disconnected) {
@@ -80,6 +84,7 @@ public class PresenceManagerImpl implements PresenceManager {
 		}
 	    }
 	});
+
     }
 
     /**

@@ -40,6 +40,7 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 import com.calclab.suco.client.events.Listener2;
 
 /**
@@ -80,8 +81,10 @@ public class Room extends AbstractChat implements Chat {
 	    }
 	});
 
-	session.onStateChanged(new Listener<Session.State>() {
-	    public void onEvent(final Session.State state) {
+	session.onStateChanged(new Listener0() {
+	    @Override
+	    public void onEvent() {
+		Session.State state = session.getState();
 		if (Session.State.loggedIn == state) {
 		} else if (Session.State.loggingOut == state) {
 		    close();
@@ -214,18 +217,6 @@ public class Room extends AbstractChat implements Chat {
 	return "ROOM: " + uri;
     }
 
-    @Override
-    protected void receive(final Message message) {
-	final String subject = message.getSubject();
-	if (subject != null) {
-	    onBeforeReceive.fire(message);
-	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), subject);
-	}
-	if (message.getBody() != null) {
-	    super.receive(message);
-	}
-    }
-
     private void handlePresence(final XmppURI occupantURI, final Presence presence) {
 	if (presence.hasAttribute("type", "unavailable")) {
 	    this.removeOccupant(occupantURI);
@@ -262,5 +253,17 @@ public class Room extends AbstractChat implements Chat {
 		}
 	    }
 	});
+    }
+
+    @Override
+    protected void receive(final Message message) {
+	final String subject = message.getSubject();
+	if (subject != null) {
+	    onBeforeReceive.fire(message);
+	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), subject);
+	}
+	if (message.getBody() != null) {
+	    super.receive(message);
+	}
     }
 }

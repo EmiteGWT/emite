@@ -10,6 +10,7 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -30,14 +31,15 @@ public class ExampleEcho implements EntryPoint {
 	final String user = PageAssist.getMeta("emite.chat");
 	log("Chat with user: " + user);
 
-	Session session = Suco.get(Session.class);
-	session.onStateChanged(new Listener<State>() {
+	final Session session = Suco.get(Session.class);
+	session.onStateChanged(new Listener0() {
 	    @Override
-	    public void onEvent(State state) {
+	    public void onEvent() {
+		State state = session.getState();
 		log("Current state: " + state);
 	    }
 	});
-	
+
 	ChatManager chatManager = Suco.get(ChatManager.class);
 	final Chat chat = chatManager.open(uri(user));
 	chat.onMessageReceived(new Listener<Message>() {

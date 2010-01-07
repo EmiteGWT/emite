@@ -23,16 +23,19 @@ package com.calclab.emite.j2se.swing;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
-import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 
 public class ClientControl {
     public ClientControl(final Session session, final ClientPanel clientPanel) {
 	clientPanel.showTabs(false);
-	session.onStateChanged(new Listener<Session.State>() {
-	    public void onEvent(final State state) {
+	session.onStateChanged(new Listener0() {
+	    @Override
+	    public void onEvent() {
+		State state = session.getState();
 		clientPanel.showTabs(state == State.ready);
 	    }
 	});
+
     }
 
 }

@@ -10,6 +10,7 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -19,33 +20,30 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ExampleIMChat implements EntryPoint{
+public class ExampleIMChat implements EntryPoint {
 
     private VerticalPanel output;
     private TextBox input;
 
-    
-    
     @Override
     public void onModuleLoad() {
 	createUI();
-	
+
 	log("Example IM Chat");
 	String self = PageAssist.getMeta("emite.user");
 	log("Current user: " + self);
 	final String user = PageAssist.getMeta("emite.chat");
 	log("Chat with user: " + user);
 
-	Session session = Suco.get(Session.class);
-	session.onStateChanged(new Listener<State>() {
+	final Session session = Suco.get(Session.class);
+	session.onStateChanged(new Listener0() {
 	    @Override
-	    public void onEvent(State state) {
+	    public void onEvent() {
+		State state = session.getState();
 		log("Current state: " + state);
 	    }
 	});
-	
-	
-	
+
 	final ChatManager chatManager = Suco.get(ChatManager.class);
 	input.addChangeHandler(new ChangeHandler() {
 	    @Override
@@ -57,7 +55,7 @@ public class ExampleIMChat implements EntryPoint{
 		input.setText("");
 	    }
 	});
-	
+
 	Chat chat = chatManager.open(uri(user));
 	chat.onMessageReceived(new Listener<Message>() {
 	    @Override
@@ -65,7 +63,7 @@ public class ExampleIMChat implements EntryPoint{
 		log("Message received: " + msg.getBody());
 	    }
 	});
-	
+
     }
 
     private void createUI() {

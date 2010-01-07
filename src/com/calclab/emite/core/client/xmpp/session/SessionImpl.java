@@ -181,14 +181,6 @@ public class SessionImpl extends AbstractSession implements Session {
 	}
     }
 
-    void setState(final Session.State newState) {
-	this.state = newState;
-	if (state == State.ready) {
-	    sendQueuedStanzas();
-	}
-	onStateChanged.fire(state);
-    }
-
     private void disconnect() {
 	connection.disconnect();
 	setState(State.disconnected);
@@ -205,6 +197,15 @@ public class SessionImpl extends AbstractSession implements Session {
     private void setLoggedIn(final XmppURI userURI) {
 	this.userURI = userURI;
 	setState(Session.State.loggedIn);
+    }
+
+    void setState(final Session.State newState) {
+	this.state = newState;
+	if (state == State.ready) {
+	    sendQueuedStanzas();
+	}
+	onStateChanged.fire(state);
+	onState.fire();
     }
 
 }

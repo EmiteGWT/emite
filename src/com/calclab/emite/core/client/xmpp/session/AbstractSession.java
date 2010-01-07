@@ -25,7 +25,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.suco.client.events.Event;
+import com.calclab.suco.client.events.Event0;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 
 /**
  * Session event plumbing.
@@ -36,8 +38,10 @@ public abstract class AbstractSession implements Session {
     protected final Event<Presence> onPresence;
     protected final Event<Message> onMessage;
     protected final Event<IQ> onIQ;
+    protected final Event0 onState;
 
     public AbstractSession() {
+	this.onState = new Event0("session.onStateChanged");
 	this.onStateChanged = new Event<Session.State>("session:onStateChanged");
 	this.onPresence = new Event<Presence>("session:onPresence");
 	this.onMessage = new Event<Message>("session:onMessage");
@@ -58,6 +62,11 @@ public abstract class AbstractSession implements Session {
 
     public void onStateChanged(final Listener<Session.State> listener) {
 	onStateChanged.add(listener);
+    }
+
+    @Override
+    public void onStateChanged(Listener0 listener) {
+	onState.add(listener);
     }
 
 }

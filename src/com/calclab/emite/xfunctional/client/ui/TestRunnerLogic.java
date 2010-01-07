@@ -7,7 +7,7 @@ import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
+import com.calclab.suco.client.events.Listener0;
 
 public class TestRunnerLogic {
 
@@ -29,11 +29,10 @@ public class TestRunnerLogic {
 	    }
 	});
 
-	session.onStateChanged(new Listener<State>() {
+	session.onStateChanged(new Listener0() {
 	    @Override
-	    public void onEvent(State state) {
-		GWT.log("SESSION!" + state + ":" + session.getState(), null);
-		runner.setSessionState(state.toString());
+	    public void onEvent() {
+		runner.setSessionState(session.getState().toString());
 	    }
 	});
 	runner.setSessionState(session.getState().toString());

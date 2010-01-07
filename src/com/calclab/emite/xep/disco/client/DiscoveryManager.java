@@ -33,6 +33,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
 
 public class DiscoveryManager {
     private final Event<DiscoveryManager> onReady;
@@ -47,9 +48,10 @@ public class DiscoveryManager {
 	this.onReady = new Event<DiscoveryManager>("discoveryManager:onReady");
 	this.filterQuery = MatcherFactory.byNameAndXMLNS("query", "http://jabber.org/protocol/disco#info");
 
-	session.onStateChanged(new Listener<Session.State>() {
-	    public void onEvent(final Session.State state) {
-		if (state == Session.State.loggedIn) {
+	session.onStateChanged(new Listener0() {
+	    @Override
+	    public void onEvent() {
+		if (session.getState() == Session.State.loggedIn) {
 		    sendDiscoQuery(session.getCurrentUser());
 		}
 	    }
