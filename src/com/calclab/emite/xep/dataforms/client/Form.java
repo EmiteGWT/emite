@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 
 /**
  * 
@@ -44,42 +42,17 @@ public class Form {
 
     public static Form parse(final IPacket packet) {
         final Form form = new Form();
-        /**
-         * The <x/> element qualified by the 'jabber:x:data' namespace SHOULD be
-         * included either directly as a first-level child of a <message/>
-         * stanza or as a second-level child of an <iq/> stanza (where the
-         * first-level child is an element qualified by a "wrapper" namespace);
-         */
-
-        final PacketMatcher xMatcher = MatcherFactory.byNameAndXMLNS("x", DATA_XMLS);
-        IPacket x = packet.getFirstChild(xMatcher);
-        if (x instanceof NoPacket) {
-            for (final IPacket child : packet.getChildren()) {
-                // Seems that can be in any child wrapper
-                // FIXME I don't like this but I don't know a better way to do
-                // it
-                x = child.getFirstChild(xMatcher);
-                if (!(x instanceof NoPacket)) {
-                    break;
-                }
-            }
+        final IPacket x = packet.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS("x", DATA_XMLS));
+        form.setTitle(x.getFirstChild("title").getText());
+        form.setType(Type.valueOf(x.getAttribute("type")));
+        final List<String> instructions = new ArrayList<String>();
+        for (final IPacket instruction : x.getChildren(MatcherFactory.byName("instructions"))) {
+            instructions.add(instruction.getText());
         }
-        if (x instanceof NoPacket) {
-            throw new RuntimeException("Seems it's not a data form");
-        }
-        final IPacket title = x.getFirstChild("title");
-        if (title != null) {
-            form.setTitle(title.getText());
-        }
-        final String type = x.getAttribute("type");
-        if (type != null) {
-            form.setType(Type.valueOf(type));
-        }
-        final List<? extends IPacket> instructions = x.getChildren(MatcherFactory.byName("instructions"));
-        for (final IPacket instruction : instructions) {
-            form.getInstructions().add(instruction.getText());
-        }
-
+        form.setInstructions(instructions);
+        form.setFields(Field.parseList(x));
+        form.setReported(Reported.parse(x.getFirstChild(MatcherFactory.byName("reported"))));
+        form.setItems(Item.parse(x.getChildren(MatcherFactory.byName("item"))));
         return form;
     }
 
@@ -101,8 +74,7 @@ public class Form {
     private List<Item> items;
 
     public Form() {
-        fields = new ArrayList<Field>();
-        instructions = new ArrayList<String>();
+
     }
 
     public List<Field> getFields() {

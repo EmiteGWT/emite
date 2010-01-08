@@ -1,7 +1,8 @@
 package com.calclab.emite.xep.dataforms.client;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.calclab.emite.core.client.packet.IPacket;
 
 /**
  * 
@@ -14,5 +15,19 @@ import java.util.List;
  * 
  */
 public class Reported {
-    private final List<Field> fields = new ArrayList<Field>();
+    public static Reported parse(final IPacket packet) {
+        final Reported reported = new Reported();
+        reported.setFields(Field.parseList(packet));
+        return reported;
+    }
+
+    private List<Field> fields;
+
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(final List<Field> fields) {
+        this.fields = fields;
+    }
 }

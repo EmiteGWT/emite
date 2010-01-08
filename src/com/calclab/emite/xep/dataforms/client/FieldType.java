@@ -11,7 +11,7 @@ public final class FieldType {
      * The field enables an entity to gather or provide an either-or choice
      * between two options. The default value is "false".
      */
-    public static final String TYPE_BOOLEAN = "boolean";
+    public static final String BOOLEAN = "boolean";
 
     /**
      * The field is intended for data description (e.g., human-readable text
@@ -20,7 +20,7 @@ public final class FieldType {
      * instead an application SHOULD generate multiple fixed fields, each with
      * one <value/> child.
      */
-    public static final String TYPE_FIXED = "fixed";
+    public static final String FIXED = "fixed";
 
     /**
      * The field is not shown to the form-submitting entity, but instead is
@@ -28,7 +28,7 @@ public final class FieldType {
      * value of a hidden field, but MAY do so if such behavior is defined for
      * the "using protocol".
      */
-    public static final String TYPE_HIDDEN = "hidden";
+    public static final String HIDDEN = "hidden";
 
     /**
      * The field enables an entity to gather or provide multiple Jabber IDs.
@@ -37,10 +37,10 @@ public final class FieldType {
      * of Stringprep as specified in XMPP Core), and duplicate JIDs MUST be
      * ignored.
      */
-    public static final String TYPE_JID_MULTI = "jid-multi";
+    public static final String JID_MULTI = "jid-multi";
 
     /** The field enables an entity to gather or provide a single Jabber ID. */
-    public static final String TYPE_JID_SINGLE = "jid-single";
+    public static final String JID_SINGLE = "jid-single";
 
     /**
      * The field enables an entity to gather or provide one or more options from
@@ -50,26 +50,26 @@ public final class FieldType {
      * items as received from the form-processing entity, since the order of
      * items MAY be significant.
      */
-    public static final String TYPE_LIST_MULTI = "list-multi";
+    public static final String LIST_MULTI = "list-multi";
 
     /**
      * The field enables an entity to gather or provide one option from among
      * many. A form-submitting entity chooses one item from among the options
      * presented by the form-processing entity and MUST NOT insert new options.
      */
-    public static final String TYPE_LIST_SINGLE = "list-single";
+    public static final String LIST_SINGLE = "list-single";
 
     /**
      * The field enables an entity to gather or provide multiple lines of text.
      */
-    public static final String TYPE_TEXT_MULTI = "text-multi";
+    public static final String TEXT_MULTI = "text-multi";
 
     /**
      * The field enables an entity to gather or provide a single line or word of
      * text, which shall be obscured in an interface (e.g., with multiple
      * instances of the asterisk character).
      */
-    public static final String TYPE_TEXT_PRIVATE = "text-private";
+    public static final String TEXT_PRIVATE = "text-private";
 
     /**
      * The field enables an entity to gather or provide a single line or word of
@@ -77,7 +77,7 @@ public final class FieldType {
      * and MUST be assumed if a form-submitting entity receives a field type it
      * does not understand.
      */
-    public static final String TYPE_TEXT_SINGLE = "text-single";
+    public static final String TEXT_SINGLE = "text-single";
 
     FieldType() {
         // Final...

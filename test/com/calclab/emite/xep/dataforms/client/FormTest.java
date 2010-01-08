@@ -2,6 +2,8 @@ package com.calclab.emite.xep.dataforms.client;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import com.calclab.emite.testing.MockitoEmiteHelper;
@@ -14,6 +16,29 @@ public class FormTest {
     private static final String XEP_0004_5_2_SAMPLE_6 = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search1'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='executing'> <x xmlns='jabber:x:data' type='form'> <title>Joogle Search</title> <instructions>Fill out this form to search for information!</instructions> <field type='text-single' var='search_request'> <required/> </field> </x> </command> </iq>";
     private static final String XEP_0004_5_2_SAMPLE_7 = "<iq from='juliet@capulet.com/chamber' to='joogle@botster.shakespeare.lit' type='get' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search'> <x xmlns='jabber:x:data' type='submit'> <field type='text-single' var='search_request'> <value>verona</value> </field> </x> </command> </iq>";
     private static final String XEP_0004_5_2_SAMPLE_8 = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='completed'> <x xmlns='jabber:x:data' type='result'> <title>Joogle Search: verona</title> <reported> <field var='name'/> <field var='url'/> </reported> <item> <field var='name'> <value>Comune di Verona - Benvenuti nel sito ufficiale</value> </field> <field var='url'> <value>http://www.comune.verona.it/</value> </field> </item> <item> <field var='name'> <value>benvenuto!</value> </field> <field var='url'> <value>http://www.hellasverona.it/</value> </field> </item> <item> <field var='name'> <value>Universita degli Studi di Verona - Home Page</value> </field> <field var='url'> <value>http://www.univr.it/</value> </field> </item> <item> <field var='name'> <value>Aeroporti del Garda</value> </field> <field var='url'> <value>http://www.aeroportoverona.it/</value> </field> </item> <item> <field var='name'> <value>Veronafiere - fiera di Verona</value> </field> <field var='url'> <value>http://www.veronafiere.it/</value> </field> </item> </x> </command> </iq>";
+    private static final String XEP_0154_5_3_SAMPLE_13 = "<message to='francisco@denmark.lit' from='hamlet@denmark.lit/elsinore' type='headline' id='foo'> <event xmlns='http://jabber.org/protocol/pubsub#event'> <items node='urn:xmpp:tmp:profile'> <item> <profile xmlns='urn:xmpp:tmp:profile'> <x xmlns='jabber:x:data' type='result'> <field var='weblog'> <value>http://www.denmark.lit/blogs/princely_musings</value> </field> </x> </profile> </item> </items> </event> </message>";
+    private static final String SEVERAL_INSTRUCTIONS = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='completed'> <x xmlns='jabber:x:data'type='form'> <title/> <instructions>First</instructions> <instructions>Second</instructions> <field var='test'type='boelean'label='description'> <desc/> <required/> <value>somevalue</value> <option label='option-label'><value>some-option-value</value></option> <option label='option-label'><value>some-option-value</value></option> </field> </x></command> </iq>";
+
+    @Test
+    public void parseFieldsInIQ() {
+        final Form result = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_1_SAMPLE_2));
+        final List<Field> fields = result.getFields();
+        assertEquals(12, fields.size());
+        assertEquals("hidden", fields.get(0).getType());
+        assertEquals("FORM_TYPE", fields.get(0).getVar());
+        assertEquals("jabber:bot", fields.get(0).getValues().get(0));
+        assertEquals("Tell all your friends about your new bot!", fields.get(11).getDesc());
+    }
+
+    @Test
+    public void parseFieldsInMessage() {
+        final Form result = Form.parse(MockitoEmiteHelper.toXML(XEP_0154_5_3_SAMPLE_13));
+        final List<Field> fields = result.getFields();
+        assertEquals(1, fields.size());
+        assertEquals(null, fields.get(0).getType());
+        assertEquals("weblog", fields.get(0).getVar());
+        assertEquals("http://www.denmark.lit/blogs/princely_musings", fields.get(0).getValues().get(0));
+    }
 
     @Test
     public void parseInstructions() {
@@ -23,6 +48,32 @@ public class FormTest {
         assertEquals("Fill out this form to configure your new bot!", result1.getInstructions().get(0));
         assertEquals(0, result2.getInstructions().size());
         assertEquals("Fill out this form to search for information!", result4.getInstructions().get(0));
+    }
+
+    @Test
+    public void parseReported() {
+        final Form result = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_2_SAMPLE_8));
+        final Reported reported = result.getReported();
+        final List<Field> fields = reported.getFields();
+        assertEquals(2, fields.size());
+        assertEquals("name", fields.get(0).getVar());
+        assertEquals("url", fields.get(1).getVar());
+    }
+
+    @Test
+    public void parseSearchResults() {
+        final Form result = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_2_SAMPLE_8));
+        final List<Item> items = result.getItems();
+        assertEquals(5, items.size());
+        final List<Field> fields1 = items.get(0).getFields();
+        assertEquals(2, fields1.size());
+        assertEquals("name", fields1.get(0).getVar());
+        assertEquals("url", fields1.get(1).getVar());
+        assertEquals("Comune di Verona - Benvenuti nel sito ufficiale", fields1.get(0).getValues().get(0));
+        assertEquals("http://www.comune.verona.it/", fields1.get(1).getValues().get(0));
+        final List<Field> fields4 = items.get(4).getFields();
+        assertEquals("Veronafiere - fiera di Verona", fields4.get(0).getValues().get(0));
+        assertEquals("http://www.veronafiere.it/", fields4.get(1).getValues().get(0));
     }
 
     @Test
@@ -49,12 +100,14 @@ public class FormTest {
         final Form result4 = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_2_SAMPLE_6));
         final Form result5 = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_2_SAMPLE_7));
         final Form result6 = Form.parse(MockitoEmiteHelper.toXML(XEP_0004_5_2_SAMPLE_8));
+        final Form result7 = Form.parse(MockitoEmiteHelper.toXML(XEP_0154_5_3_SAMPLE_13));
         assertEquals(Form.Type.form, result1.getType());
         assertEquals(Form.Type.submit, result2.getType());
         assertEquals(Form.Type.result, result3.getType());
         assertEquals(Form.Type.form, result4.getType());
         assertEquals(Form.Type.submit, result5.getType());
         assertEquals(Form.Type.result, result6.getType());
+        assertEquals(Form.Type.result, result7.getType());
     }
 
     /**
@@ -68,5 +121,9 @@ public class FormTest {
      */
     @Test
     public void testMultipleInstructions() {
+        final Form result = Form.parse(MockitoEmiteHelper.toXML(SEVERAL_INSTRUCTIONS));
+        assertEquals("First", result.getInstructions().get(0));
+        assertEquals("Second", result.getInstructions().get(1));
+        assertEquals(2, result.getInstructions().size());
     }
 }
