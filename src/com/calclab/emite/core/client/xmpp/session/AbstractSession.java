@@ -43,6 +43,7 @@ public abstract class AbstractSession implements Session {
     public AbstractSession() {
 	this.onState = new Event0("session.onStateChanged");
 	this.onStateChanged = new Event<Session.State>("session:onStateChanged");
+
 	this.onPresence = new Event<Presence>("session:onPresence");
 	this.onMessage = new Event<Message>("session:onMessage");
 	this.onIQ = new Event<IQ>("session:onIQ");

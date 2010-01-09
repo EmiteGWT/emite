@@ -136,6 +136,7 @@ public class MockedSession extends AbstractSession {
     public void setState(final Session.State state) {
 	this.state = state;
 	onStateChanged.fire(state);
+	onState.fire();
     }
 
     public Listener<IPacket> verifyIQSent(final IPacket iq) {
