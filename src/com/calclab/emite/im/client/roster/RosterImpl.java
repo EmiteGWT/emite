@@ -38,7 +38,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 
 /**
  * @see Roster
@@ -66,9 +65,9 @@ public class RosterImpl implements Roster {
 
 	this.onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		if (session.getState() == Session.State.loggedIn) {
 		    requestRoster(session.getCurrentUser());
 		}

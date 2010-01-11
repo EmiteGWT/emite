@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.j2se.services.TigaseXMLService;
+import com.calclab.emite.testing.services.TigaseXMLService;
 
 @SuppressWarnings("unchecked")
 public class MockitoEmiteHelper {

@@ -7,19 +7,20 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.bosh.ConnectionTestHelper;
+import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.testing.ConnectionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class SASLManagerTest {
     private SASLManager manager;
     private MockedListener<AuthorizationTransaction> listener;
-    private ConnectionTestHelper helper;
+    private ConnectionTester connection;
 
     @Before
     public void beforeTests() {
-	helper = new ConnectionTestHelper();
-	manager = new SASLManager(helper.getConnection());
+	connection = new ConnectionTester();
+	manager = new SASLManager(connection);
 	listener = new MockedListener<AuthorizationTransaction>();
 	manager.onAuthorized(listener);
     }
@@ -27,7 +28,7 @@ public class SASLManagerTest {
     @Test
     public void shouldHandleSuccessWhenAuthorizationSent() {
 	manager.sendAuthorizationRequest(new AuthorizationTransaction(uri("me@domain"), "password"));
-	helper.simulateReception("<success xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"/>");
+	connection.receives("<success xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"/>");
 	assertTrue(listener.isCalledOnce());
 	assertSame(AuthorizationTransaction.State.succeed, listener.getValue(0).getState());
     }
@@ -35,7 +36,7 @@ public class SASLManagerTest {
     @Test
     public void shouldHanonStanzadleFailure() {
 	manager.sendAuthorizationRequest(new AuthorizationTransaction(uri("node@domain"), "password"));
-	helper.simulateReception("<failure xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"><not-authorized/></failure>");
+	connection.receives("<failure xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"><not-authorized/></failure>");
 	assertTrue(listener.isCalledOnce());
 	assertSame(AuthorizationTransaction.State.failed, listener.getValue(0).getState());
     }
@@ -43,19 +44,22 @@ public class SASLManagerTest {
     @Test
     public void shouldSendAnonymousIfAnonymousProvided() {
 	manager.sendAuthorizationRequest(new AuthorizationTransaction(SASLManager.ANONYMOUS, null));
-	helper.verifySentLike(new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "ANONYMOUS"));
+	IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "ANONYMOUS");
+	assertTrue(connection.hasSent(packet));
     }
 
     @Test
     public void shouldSendPlainAuthorizationUnlessAnonymous() {
 	manager.sendAuthorizationRequest(new AuthorizationTransaction(uri("node@domain/resource"), "password"));
-	helper.verifySentLike(new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN"));
+	IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN");
+	assertTrue(connection.hasSent(packet));
     }
 
     @Test
     public void shouldSendPlainAuthorizationWithoutNode() {
 	manager.sendAuthorizationRequest(new AuthorizationTransaction(uri("domain/resource"), null));
-	helper.verifySentLike(new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN"));
+	IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN");
+	assertTrue(connection.hasSent(packet));
     }
 
 }

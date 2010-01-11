@@ -18,18 +18,18 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.RosterItem;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class PresenceManagerTest {
 
     private PresenceManager manager;
-    private MockedSession session;
+    private SessionTester session;
     private Roster roster;
 
     @Before
     public void beforeTest() {
-	session = new MockedSession();
+	session = new SessionTester();
 	roster = mock(Roster.class);
 	manager = new PresenceManagerImpl(session, roster);
     }

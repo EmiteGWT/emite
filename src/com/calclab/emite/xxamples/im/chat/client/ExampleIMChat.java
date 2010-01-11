@@ -10,7 +10,6 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -36,9 +35,9 @@ public class ExampleIMChat implements EntryPoint {
 	log("Chat with user: " + user);
 
 	final Session session = Suco.get(Session.class);
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		State state = session.getState();
 		log("Current state: " + state);
 	    }

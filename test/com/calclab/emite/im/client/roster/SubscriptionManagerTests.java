@@ -14,12 +14,12 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener2;
 
 public class SubscriptionManagerTests {
 
-    private MockedSession session;
+    private SessionTester session;
     private SubscriptionManager manager;
     private Roster roster;
 
@@ -39,7 +39,7 @@ public class SubscriptionManagerTests {
 
     @Before
     public void beforeTests() {
-	session = new MockedSession();
+	session = new SessionTester();
 	roster = mock(Roster.class);
 	manager = new SubscriptionManagerImpl(session, roster);
 	session.login(uri("user@local"), "anything");

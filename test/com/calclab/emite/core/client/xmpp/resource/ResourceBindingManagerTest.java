@@ -6,27 +6,26 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.bosh.ConnectionTestHelper;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.testing.ConnectionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class ResourceBindingManagerTest {
     private ResourceBindingManager manager;
-    private ConnectionTestHelper helper;
+    private ConnectionTester connection;
 
     @Before
     public void beforeTests() {
-	helper = new ConnectionTestHelper();
-	manager = new ResourceBindingManager(helper.getConnection());
+	connection = new ConnectionTester();
+	manager = new ResourceBindingManager(connection);
     }
 
     @Test
     public void shouldEventIfBindedSucceed() {
 	final MockedListener<XmppURI> onBindedListener = new MockedListener<XmppURI>();
 	manager.onBinded(onBindedListener);
-	helper.simulateReception("<iq type='result' id='bind-resource'>" +
-			"<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>"
+	connection.receives("<iq type='result' id='bind-resource'>" + "<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>"
 		+ "<jid>somenode@example.com/someresource</jid></bind></iq>");
 
 	assertTrue(onBindedListener.isCalledWithEquals(uri("somenode@example.com/someresource")));
@@ -36,6 +35,6 @@ public class ResourceBindingManagerTest {
     @Test
     public void shouldPerformBinding() {
 	manager.bindResource("resource");
-	helper.verifySentLike(new IQ(IQ.Type.set).Includes("bind", "urn:ietf:params:xml:ns:xmpp-bind"));
+	assertTrue(connection.hasSent(new IQ(IQ.Type.set).Includes("bind", "urn:ietf:params:xml:ns:xmpp-bind")));
     }
 }

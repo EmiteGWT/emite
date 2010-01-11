@@ -4,16 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 
 public class PrivacyListManagerTests {
 
-    private MockedSession session;
+    private SessionTester session;
     private PrivacyListsManager manager;
 
     @Before
     public void beforeTests() {
-	session = new MockedSession();
+	session = new SessionTester();
 	manager = new PrivacyListsManager(session);
     }
 

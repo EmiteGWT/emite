@@ -17,7 +17,7 @@ import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.Chat.State;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 import com.calclab.suco.testing.events.MockedListener2;
 
@@ -26,13 +26,13 @@ public class RoomTest extends AbstractChatTest {
     private Room room;
     private XmppURI userURI;
     private XmppURI roomURI;
-    private MockedSession session;
+    private SessionTester session;
 
     @Before
     public void beforeTests() {
 	userURI = uri("user@domain/res");
 	roomURI = uri("room@domain/nick");
-	session = new MockedSession(userURI);
+	session = new SessionTester(userURI);
 	room = new Room(session, roomURI, userURI);
     }
 

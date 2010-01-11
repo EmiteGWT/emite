@@ -40,7 +40,6 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 import com.calclab.suco.client.events.Listener2;
 
 /**
@@ -81,9 +80,9 @@ public class Room extends AbstractChat implements Chat {
 	    }
 	});
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		Session.State state = session.getState();
 		if (Session.State.loggedIn == state) {
 		} else if (Session.State.loggingOut == state) {

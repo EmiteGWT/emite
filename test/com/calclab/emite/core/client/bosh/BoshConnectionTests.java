@@ -5,16 +5,16 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.test.services.MockServices;
 import com.calclab.emite.testing.IsPacketLike;
+import com.calclab.emite.testing.services.ServicesTester;
 
-public class Bosh3ConnectionTests {
+public class BoshConnectionTests {
 
-    private final MockServices services;
+    private final ServicesTester services;
     private final BoshConnection connection;
 
-    public Bosh3ConnectionTests() {
-	services = new MockServices();
+    public BoshConnectionTests() {
+	services = new ServicesTester();
 	connection = new BoshConnection(services);
     }
 

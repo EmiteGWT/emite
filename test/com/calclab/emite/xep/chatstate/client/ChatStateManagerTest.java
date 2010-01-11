@@ -9,7 +9,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.PairChatManager;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.suco.testing.events.MockedListener;
 
@@ -21,11 +21,11 @@ public class ChatStateManagerTest {
     private MockedListener<ChatState> stateListener;
     private Chat chat;
     private ChatStateManager chatStateManager;
-    private MockedSession session;
+    private SessionTester session;
 
     @Before
     public void beforeTests() {
-	session = new MockedSession();
+	session = new SessionTester();
 	chatManager = new PairChatManager(session);
 	session.setLoggedIn(MYSELF);
 	final StateManager stateManager = new StateManager(chatManager);

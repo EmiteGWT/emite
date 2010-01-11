@@ -29,47 +29,25 @@ import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
-import com.calclab.suco.client.events.Event;
-import com.calclab.suco.client.events.Event0;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 
-public class BoshConnection implements Connection {
+public class BoshConnection extends AbstractConnection {
     private int activeConnections;
-    private Packet body;
     private final Services services;
     private final ConnectorCallback listener;
-    private boolean running;
-    private StreamSettings stream;
-    private final Event<String> onError;
-    private final Event<String> onDisconnected;
-    private final Event0 onConnected;
-    private final Event<IPacket> onStanzaReceived;
-    private final Event<IPacket> onStanzaSent;
     private boolean shouldCollectResponses;
-    private BoshSettings userSettings;
-    private int errors;
-    private final Event<String> onResponse;
 
     public BoshConnection(final Services services) {
 	this.services = services;
-	this.onError = new Event<String>("bosh:onError");
-	this.onDisconnected = new Event<String>("bosh:onDisconnected");
-	this.onConnected = new Event0("bosh:onConnected");
-	this.onStanzaReceived = new Event<IPacket>("bosh:onReceived");
-	this.onResponse = new Event<String>("bosh:onResponse");
-	this.onStanzaSent = new Event<IPacket>("bosh:onSent");
-	this.errors = 0;
 
 	this.listener = new ConnectorCallback() {
 
 	    public void onError(final String request, final Throwable throwable) {
-		if (running) {
-		    GWT.log("Connection error (total: " + errors + ")", throwable);
-		    errors++;
-		    if (errors > 2) {
-			running = false;
-			onError.fire("Connection error: " + throwable.toString());
+		if (isActive()) {
+		    GWT.log("Connection error", throwable);
+		    if (incrementErrors() > 2) {
+			setActive(false);
+			fireError("Connection error: " + throwable.toString());
 		    } else {
 			GWT.log("Error retry: " + throwable, null);
 			send(request);
@@ -78,21 +56,21 @@ public class BoshConnection implements Connection {
 	    }
 
 	    public void onResponseReceived(final int statusCode, final String content) {
-		errors = 0;
+		clearErrors();
 		activeConnections--;
-		if (running) {
+		if (isActive()) {
 		    // TODO: check if is the same code in other than FF and make
 		    // tests
 		    if (statusCode != 200 && statusCode != 0) {
-			running = false;
-			onError.fire("Bad status: " + statusCode);
+			setActive(false);
+			fireError("Bad status: " + statusCode);
 		    } else {
-			onResponse.fire(content);
+			fireResponse(content);
 			final IPacket response = services.toXML(content);
 			if (response != null && "body".equals(response.getName())) {
 			    handleResponse(response);
 			} else {
-			    onError.fire("Bad response: " + content);
+			    fireError("Bad response: " + content);
 			}
 		    }
 		}
@@ -102,13 +80,13 @@ public class BoshConnection implements Connection {
     }
 
     public void connect() {
-	assert userSettings != null;
+	assert getUserSettings() != null;
 
-	if (!running) {
-	    this.running = true;
-	    this.stream = new StreamSettings();
+	if (!isActive()) {
+	    this.setActive(true);
+	    this.setStream(new StreamSettings());
 	    this.activeConnections = 0;
-	    createInitialBody(userSettings);
+	    createInitialBody(getUserSettings());
 	    sendBody();
 	}
     }
@@ -116,84 +94,60 @@ public class BoshConnection implements Connection {
     public void disconnect() {
 	GWT.log("BoshConnection - Disconnected called.", null);
 	createBody();
-	body.setAttribute("type", "terminate");
+	getCurrentBody().setAttribute("type", "terminate");
 	sendBody();
-	running = false;
-	stream.sid = null;
-	onDisconnected.fire("logged out");
+	setActive(false);
+	getStream().sid = null;
+	fireDisconnected("logged out");
     }
 
     public boolean isConnected() {
-	return stream != null;
-    }
-
-    public void onError(final Listener<String> listener) {
-	onError.add(listener);
-    }
-
-    public void onResponse(final Listener<String> listener) {
-	onResponse.add(listener);
-    }
-
-    public void onStanzaReceived(final Listener<IPacket> listener) {
-	onStanzaReceived.add(listener);
-    }
-
-    public void onStanzaSent(final Listener<IPacket> listener) {
-	onStanzaSent.add(listener);
+	return getStream() != null;
     }
 
     public StreamSettings pause() {
-	if (stream != null && stream.sid != null) {
+	if (getStream() != null && getStream().sid != null) {
 	    createBody();
-	    body.setAttribute("pause", stream.maxPause);
+	    getCurrentBody().setAttribute("pause", getStream().maxPause);
 	    sendBody();
-	    return stream;
+	    return getStream();
 	}
 	return null;
     }
 
-    public void removeOnStanzaReceived(final Listener<IPacket> listener) {
-	onStanzaReceived.remove(listener);
-    }
-
     public void restartStream() {
 	createBody();
-	body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
-	body.setAttribute("xmpp:restart", "true");
-	body.setAttribute("to", userSettings.hostName);
-	body.setAttribute("xml:lang", "en");
+	getCurrentBody().setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
+	getCurrentBody().setAttribute("xmpp:restart", "true");
+	getCurrentBody().setAttribute("to", getUserSettings().hostName);
+	getCurrentBody().setAttribute("xml:lang", "en");
     }
 
     public boolean resume(final StreamSettings settings) {
-	running = true;
-	stream = settings;
+	setActive(true);
+	setStream(settings);
 	continueConnection(null);
-	return running;
+	return isActive();
     }
 
     public void send(final IPacket packet) {
 	createBody();
-	body.addChild(packet);
+	getCurrentBody().addChild(packet);
 	sendBody();
-	onStanzaSent.fire(packet);
-    }
-
-    public void setSettings(final BoshSettings settings) {
-	this.userSettings = settings;
+	fireStanzaSent(packet);
     }
 
     private void continueConnection(final String ack) {
 	if (isConnected() && activeConnections == 0) {
-	    if (body != null) {
+	    if (getCurrentBody() != null) {
 		sendBody();
 	    } else {
-		final long currentRID = stream.rid;
+		final long currentRID = getStream().rid;
 		// FIXME: hardcoded
 		final int msecs = 6000;
 		services.schedule(msecs, new ScheduledAction() {
 		    public void run() {
-			if (body == null && stream.rid == currentRID) {
+			if (getCurrentBody() == null && getStream().rid == currentRID) {
 			    createBody();
 			    sendBody();
 			}
@@ -204,18 +158,19 @@ public class BoshConnection implements Connection {
     }
 
     private void createBody() {
-	if (body == null) {
-	    this.body = new Packet("body");
+	if (getCurrentBody() == null) {
+	    Packet body = new Packet("body");
 	    body.With("xmlns", "http://jabber.org/protocol/httpbind");
-	    body.With("rid", stream.getNextRid());
-	    if (stream != null) {
-		body.With("sid", stream.sid);
+	    body.With("rid", getStream().getNextRid());
+	    if (getStream() != null) {
+		body.With("sid", getStream().sid);
 	    }
+	    this.setCurrentBody(body);
 	}
     }
 
     private void createInitialBody(final BoshSettings userSettings) {
-	this.body = new Packet("body");
+	Packet body = new Packet("body");
 	body.setAttribute("content", "text/xml; charset=utf-8");
 	body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
 	body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
@@ -224,25 +179,26 @@ public class BoshConnection implements Connection {
 	body.setAttribute("xml:lang", "en");
 	body.setAttribute("ack", "1");
 	body.setAttribute("secure", "true");
-	body.setAttribute("rid", stream.getNextRid());
+	body.setAttribute("rid", getStream().getNextRid());
 	body.setAttribute("to", userSettings.hostName);
 	body.With("hold", userSettings.hold);
 	body.With("wait", userSettings.wait);
+	this.setCurrentBody(body);
     }
 
     private void handleResponse(final IPacket response) {
 	if (isTerminate(response.getAttribute("type"))) {
-	    stream.sid = null;
-	    onDisconnected.fire("disconnected by server");
+	    getStream().sid = null;
+	    fireDisconnected("disconnected by server");
 	} else {
-	    if (stream.sid == null) {
+	    if (getStream().sid == null) {
 		initStream(response);
-		onConnected.fire();
+		fireConnected();
 	    }
 	    shouldCollectResponses = true;
 	    final List<? extends IPacket> stanzas = response.getChildren();
 	    for (final IPacket stanza : stanzas) {
-		onStanzaReceived.fire(stanza);
+		fireStanzaReceived(stanza);
 	    }
 	    shouldCollectResponses = false;
 	    continueConnection(response.getAttribute("ack"));
@@ -250,6 +206,7 @@ public class BoshConnection implements Connection {
     }
 
     private void initStream(final IPacket response) {
+	StreamSettings stream = getStream();
 	stream.sid = response.getAttribute("sid");
 	stream.wait = response.getAttribute("wait");
 	stream.inactivity = response.getAttribute("inactivity");
@@ -269,8 +226,8 @@ public class BoshConnection implements Connection {
     private void send(final String request) {
 	try {
 	    activeConnections++;
-	    services.send(userSettings.httpBase, request, listener);
-	    stream.lastRequestTime = services.getCurrentTime();
+	    services.send(getUserSettings().httpBase, request, listener);
+	    getStream().lastRequestTime = services.getCurrentTime();
 	} catch (final ConnectorException e) {
 	    activeConnections--;
 	    e.printStackTrace();
@@ -279,9 +236,10 @@ public class BoshConnection implements Connection {
 
     private void sendBody() {
 	if (!shouldCollectResponses) {
-	    final String request = services.toString(body);
-	    body = null;
+	    final String request = services.toString(getCurrentBody());
+	    setCurrentBody(null);
 	    send(request);
 	}
     }
+
 }

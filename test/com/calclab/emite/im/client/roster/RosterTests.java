@@ -16,12 +16,12 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class RosterTests {
 
-    private MockedSession session;
+    private SessionTester session;
     private Roster roster;
 
     @Test
@@ -51,7 +51,7 @@ public class RosterTests {
 
     @Before
     public void beforeTests() {
-	session = new MockedSession();
+	session = new SessionTester();
 	roster = new RosterImpl(session);
     }
 

@@ -1,16 +1,15 @@
-package com.calclab.emite.core.client.bosh;
+package com.calclab.emite.testing;
 
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.mockito.Mockito;
 
+import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.j2se.services.TigaseXMLService;
-import com.calclab.emite.testing.IsPacketLike;
+import com.calclab.emite.testing.services.TigaseXMLService;
 import com.calclab.suco.client.events.Listener;
 
 public class ConnectionTestHelper {
@@ -59,7 +58,7 @@ public class ConnectionTestHelper {
 
     public ConnectionTestHelper() {
 	xmler = new TigaseXMLService();
-	connection = mock(BoshConnection.class);
+	connection = new ConnectionTester();
     }
 
     public Connection getConnection() {

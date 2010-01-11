@@ -10,7 +10,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -38,9 +37,9 @@ public class ExampleXmppSession implements EntryPoint {
 	 * We track session state changes. We can only send messages when the
 	 * state == loggedIn.
 	 */
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		State state = session.getState();
 		if (state == Session.State.loggedIn) {
 		    log("We are now online");

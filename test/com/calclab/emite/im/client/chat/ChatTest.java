@@ -10,18 +10,18 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat.State;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class ChatTest extends AbstractChatTest {
     private static final XmppURI CHAT_URI = uri("other@domain/other");
     private static final XmppURI USER_URI = uri("self@domain/res");
     private PairChat pairChat;
-    private MockedSession session;
+    private SessionTester session;
 
     @Before
     public void beforeTests() {
-	session = new MockedSession(USER_URI);
+	session = new SessionTester(USER_URI);
 	pairChat = new PairChat(session, CHAT_URI, USER_URI, "theThread");
     }
 

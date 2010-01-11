@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.j2se.services;
+package com.calclab.emite.testing.services;
 
 import com.calclab.emite.core.client.services.ScheduledAction;
 

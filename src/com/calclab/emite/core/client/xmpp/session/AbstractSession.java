@@ -25,28 +25,30 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.suco.client.events.Event;
-import com.calclab.suco.client.events.Event0;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 
 /**
  * Session event plumbing.
  */
 public abstract class AbstractSession implements Session {
 
-    protected final Event<Session.State> onStateChanged;
-    protected final Event<Presence> onPresence;
-    protected final Event<Message> onMessage;
-    protected final Event<IQ> onIQ;
-    protected final Event0 onState;
+    private final Event<Session> onStateChanged;
+    private final Event<Presence> onPresence;
+    private final Event<Message> onMessage;
+    private final Event<IQ> onIQ;
+    private State state;
 
     public AbstractSession() {
-	this.onState = new Event0("session.onStateChanged");
-	this.onStateChanged = new Event<Session.State>("session:onStateChanged");
-
+	this.onStateChanged = new Event<Session>("session:onStateChanged");
 	this.onPresence = new Event<Presence>("session:onPresence");
 	this.onMessage = new Event<Message>("session:onMessage");
 	this.onIQ = new Event<IQ>("session:onIQ");
+
+	state = State.disconnected;
+    }
+
+    public Session.State getState() {
+	return state;
     }
 
     public void onIQ(final Listener<IQ> listener) {
@@ -61,13 +63,26 @@ public abstract class AbstractSession implements Session {
 	onPresence.add(listener);
     }
 
-    public void onStateChanged(final Listener<Session.State> listener) {
+    public void onStateChanged(final Listener<Session> listener) {
 	onStateChanged.add(listener);
     }
 
-    @Override
-    public void onStateChanged(Listener0 listener) {
-	onState.add(listener);
+    protected void fireIQ(IQ iq) {
+	onIQ.fire(iq);
+    }
+
+    protected void fireMessage(Message message) {
+	onMessage.fire(message);
+    }
+
+    protected void firePresence(Presence presence) {
+	onPresence.fire(presence);
+    }
+
+    protected void setState(State state) {
+	this.state = state;
+	onStateChanged.fire(this);
+
     }
 
 }

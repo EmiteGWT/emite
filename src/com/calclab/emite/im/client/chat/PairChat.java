@@ -26,7 +26,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 
 /**
  * <p>
@@ -53,9 +52,9 @@ public class PairChat extends AbstractChat {
 
 	setStateFromSessionState(session);
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		setStateFromSessionState(session);
 	    }
 	});

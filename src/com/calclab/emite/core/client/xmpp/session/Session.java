@@ -29,7 +29,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 
 /**
  * The most important object in Xmpp emite module. You can login, send and
@@ -160,10 +159,7 @@ public interface Session {
      * 
      * @param listener
      */
-    @Deprecated
-    public abstract void onStateChanged(final Listener<State> listener);
-
-    public abstract void onStateChanged(final Listener0 listener);
+    public abstract void onStateChanged(final Listener<Session> listener);
 
     /**
      * Call this method to pause the session. You can use the given object

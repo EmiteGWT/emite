@@ -16,26 +16,32 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.j2se.services.TigaseXMLService;
+import com.calclab.emite.testing.services.TigaseXMLService;
 import com.calclab.suco.client.events.Listener;
 
-public class MockedSession extends AbstractSession {
+/**
+ * Object of this class are used to test against session (any emite component).
+ * 
+ * This sessions allow you to simulate reception of stanzas. It also allows to
+ * ask (and query) about the stazas that had been send.
+ * 
+ */
+public class SessionTester extends AbstractSession {
     private XmppURI currentUser;
-    private Session.State state;
     private final TigaseXMLService xmler;
     private final ArrayList<IPacket> sent;
     private IPacket lastIQSent;
     private Listener<IPacket> lastIQListener;
 
-    public MockedSession() {
+    public SessionTester() {
 	this((XmppURI) null);
     }
 
-    public MockedSession(final String user) {
+    public SessionTester(final String user) {
 	this(XmppURI.uri(user));
     }
 
-    public MockedSession(final XmppURI user) {
+    public SessionTester(final XmppURI user) {
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
 	if (user != null) {
@@ -59,10 +65,6 @@ public class MockedSession extends AbstractSession {
 	return currentUser;
     }
 
-    public Session.State getState() {
-	return state;
-    }
-
     public boolean isLoggedIn() {
 	return currentUser != null;
     }
@@ -82,22 +84,22 @@ public class MockedSession extends AbstractSession {
     }
 
     public void receives(final Message message) {
-	onMessage.fire(message);
+	fireMessage(message);
     }
 
     public void receives(final Presence presence) {
-	onPresence.fire(presence);
+	firePresence(presence);
     }
 
     public void receives(final String received) {
 	final IPacket stanza = xmler.toXML(received);
 	final String name = stanza.getName();
 	if (name.equals("message")) {
-	    onMessage.fire(new Message(stanza));
+	    fireMessage(new Message(stanza));
 	} else if (name.equals("presence")) {
-	    onPresence.fire(new Presence(stanza));
+	    firePresence(new Presence(stanza));
 	} else if (name.equals("iq") && (stanza.hasAttribute("type", "set") || stanza.hasAttribute("type", "get"))) {
-	    onIQ.fire(new IQ(stanza));
+	    fireIQ(new IQ(stanza));
 	} else {
 	    throw new RuntimeException("Not valid received: " + received);
 	}
@@ -133,10 +135,9 @@ public class MockedSession extends AbstractSession {
 	setState(State.ready);
     }
 
-    public void setState(final Session.State state) {
-	this.state = state;
-	onStateChanged.fire(state);
-	onState.fire();
+    @Override
+    public void setState(State state) {
+	super.setState(state);
     }
 
     public Listener<IPacket> verifyIQSent(final IPacket iq) {

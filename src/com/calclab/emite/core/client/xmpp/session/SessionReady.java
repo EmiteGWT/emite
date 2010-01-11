@@ -23,7 +23,7 @@ package com.calclab.emite.core.client.xmpp.session;
 
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.suco.client.events.Listener0;
+import com.calclab.suco.client.events.Listener;
 
 /**
  * A simple component that sets the session ready after logged in. This
@@ -33,9 +33,9 @@ public class SessionReady {
 
     public SessionReady(final Session session) {
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		State state = session.getState();
 		if (state == State.loggedIn) {
 		    session.send(new Presence());

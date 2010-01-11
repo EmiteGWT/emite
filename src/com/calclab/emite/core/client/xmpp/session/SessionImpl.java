@@ -41,7 +41,6 @@ import com.google.gwt.core.client.GWT;
  * Default Session implementation. Use Session interface instead.
  */
 public class SessionImpl extends AbstractSession implements Session {
-    private State state;
     private XmppURI userURI;
     private final Connection connection;
     private AuthorizationTransaction transaction;
@@ -51,7 +50,6 @@ public class SessionImpl extends AbstractSession implements Session {
     public SessionImpl(final Connection connection, final SASLManager saslManager,
 	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager) {
 	this.connection = connection;
-	state = State.disconnected;
 	this.iqManager = new IQManager();
 	this.queuedStanzas = new ArrayList<IPacket>();
 
@@ -59,13 +57,13 @@ public class SessionImpl extends AbstractSession implements Session {
 	    public void onEvent(final IPacket stanza) {
 		final String name = stanza.getName();
 		if (name.equals("message")) {
-		    onMessage.fire(new Message(stanza));
+		    fireMessage(new Message(stanza));
 		} else if (name.equals("presence")) {
-		    onPresence.fire(new Presence(stanza));
+		    firePresence(new Presence(stanza));
 		} else if (name.equals("iq")) {
 		    final String type = stanza.getAttribute("type");
 		    if ("get".equals(type) || "set".equals(type)) {
-			onIQ.fire(new IQ(stanza));
+			fireIQ(new IQ(stanza));
 		    } else {
 			iqManager.handle(stanza);
 		    }
@@ -116,10 +114,6 @@ public class SessionImpl extends AbstractSession implements Session {
 	return userURI;
     }
 
-    public Session.State getState() {
-	return state;
-    }
-
     public boolean isLoggedIn() {
 	return userURI != null;
     }
@@ -131,7 +125,7 @@ public class SessionImpl extends AbstractSession implements Session {
 	    uri = XmppURI.uri(uri.getNode(), uri.getHost(), "" + new Date().getTime());
 	}
 
-	if (state == Session.State.disconnected) {
+	if (getState() == Session.State.disconnected) {
 	    setState(Session.State.connecting);
 	    connection.connect();
 	    transaction = new AuthorizationTransaction(uri, password);
@@ -140,7 +134,7 @@ public class SessionImpl extends AbstractSession implements Session {
     }
 
     public void logout() {
-	if (state != State.disconnected && userURI != null) {
+	if (getState() != State.disconnected && userURI != null) {
 	    setState(State.loggingOut);
 	    userURI = null;
 	    connection.disconnect();
@@ -160,7 +154,7 @@ public class SessionImpl extends AbstractSession implements Session {
     }
 
     public void send(final IPacket packet) {
-	if (state == State.loggedIn || state == State.ready || state == State.loggingOut) {
+	if (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut) {
 	    packet.setAttribute("from", userURI.toString());
 	    connection.send(packet);
 	} else {
@@ -199,13 +193,12 @@ public class SessionImpl extends AbstractSession implements Session {
 	setState(Session.State.loggedIn);
     }
 
-    void setState(final Session.State newState) {
-	this.state = newState;
-	if (state == State.ready) {
+    @Override
+    protected void setState(final Session.State newState) {
+	if (newState == State.ready) {
 	    sendQueuedStanzas();
 	}
-	onStateChanged.fire(state);
-	onState.fire();
+	super.setState(newState);
     }
 
 }

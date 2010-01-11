@@ -7,7 +7,6 @@ import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.xfunctional.client.ui.TestRunnerView.Level;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 
 public class TestRunnerLogic {
 
@@ -29,9 +28,9 @@ public class TestRunnerLogic {
 	    }
 	});
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		runner.setSessionState(session.getState().toString());
 	    }
 	});

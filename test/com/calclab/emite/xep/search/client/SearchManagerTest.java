@@ -13,16 +13,16 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 
 public class SearchManagerTest {
 
-    private MockedSession session;
+    private SessionTester session;
     private SearchManager manager;
 
     @Before
     public void setUp() {
-	session = new MockedSession();
+	session = new SessionTester();
 	manager = new SearchManagerImpl(session);
 	manager.setHost(XmppURI.uri("search.service"));
 	session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));

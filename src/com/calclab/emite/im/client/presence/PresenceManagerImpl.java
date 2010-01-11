@@ -32,7 +32,6 @@ import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.RosterItem;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener0;
 import com.google.gwt.core.client.GWT;
 
 /**
@@ -73,9 +72,9 @@ public class PresenceManagerImpl implements PresenceManager {
 	    }
 	});
 
-	session.onStateChanged(new Listener0() {
+	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent() {
+	    public void onEvent(Session session) {
 		State state = session.getState();
 		if (state == Session.State.loggingOut) {
 		    logOut(session.getCurrentUser());

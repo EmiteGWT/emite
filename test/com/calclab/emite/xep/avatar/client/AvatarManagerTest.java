@@ -9,17 +9,17 @@ import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class AvatarManagerTest {
     private AvatarManager avatarManager;
-    private MockedSession session;
+    private SessionTester session;
 
     @Before
     public void aaaCreateManager() {
-	session = new MockedSession();
+	session = new SessionTester();
 	avatarManager = new AvatarManager(session);
     }
 

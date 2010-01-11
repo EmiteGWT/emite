@@ -30,9 +30,11 @@ import com.calclab.emite.im.client.presence.PresenceManager;
 import com.calclab.emite.im.client.presence.PresenceManagerImpl;
 import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.RosterImpl;
+import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
 import com.calclab.emite.im.client.roster.SubscriptionManagerImpl;
 import com.calclab.suco.client.Suco;
+import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
@@ -86,6 +88,13 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 	    @Override
 	    public PresenceManager create() {
 		return new PresenceManagerImpl($(Session.class), $(Roster.class));
+	    }
+	});
+
+	register(Singleton.class, new Factory<SubscriptionHandler>(SubscriptionHandler.class) {
+	    @Override
+	    public SubscriptionHandler create() {
+		return new SubscriptionHandler($(SubscriptionManager.class));
 	    }
 	});
 

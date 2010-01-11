@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat.State;
-import com.calclab.emite.testing.MockedSession;
+import com.calclab.emite.testing.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public abstract class AbstractChatTest {
-    protected final MockedSession session;
+    protected final SessionTester session;
 
     public AbstractChatTest() {
-	session = new MockedSession();
+	session = new SessionTester();
     }
 
     public abstract AbstractChat getChat();

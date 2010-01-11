@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.test.services;
+package com.calclab.emite.testing.services;
 
 import java.util.ArrayList;
 
@@ -28,9 +28,12 @@ import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
-import com.calclab.emite.j2se.services.TigaseXMLService;
 
-public class MockServices implements Services {
+/**
+ * Object of this classes are used to test against services
+ * 
+ */
+public class ServicesTester implements Services {
     public static class Request {
 	public final String httpBase;
 	public final String request;
@@ -47,7 +50,7 @@ public class MockServices implements Services {
     private final TigaseXMLService xmler;
     private final ArrayList<Request> requests;
 
-    public MockServices() {
+    public ServicesTester() {
 	xmler = TigaseXMLService.getSingleton();
 	this.requests = new ArrayList<Request>();
     }
