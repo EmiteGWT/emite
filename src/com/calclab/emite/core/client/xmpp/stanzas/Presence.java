@@ -29,23 +29,44 @@ import com.calclab.emite.core.client.packet.IPacket;
 public class Presence extends BasicStanza {
 
     /**
+     * 
+     * 2.2.2.1. Show
+     * 
+     * <p>
+     * If 'show' element is notSpecified, the entity is assumed to be online and
+     * available.
+     * </p>
+     * 
+     * <p>
+     * If provided, the XML character data value MUST be one of the following
+     * (additional availability types could be defined through a
+     * properly-namespaced child element of the presence stanza):
+     * </p>
+     * 
+     * @see http://xmpp.org/rfcs/rfc3920.html
      * @see http://www.xmpp.org/rfcs/rfc3921.html#stanzas
-     * 
-     *      2.2.2.1. Show
-     * 
-     *      <p>
-     *      If no 'show' element is provided, the entity is assumed to be online
-     *      and available.
-     *      </p>
-     * 
-     *      <p>
-     *      If provided, the XML character data value MUST be one of the
-     *      following (additional availability types could be defined through a
-     *      properly-namespaced child element of the presence stanza):
-     *      </p>
      */
     public static enum Show {
-	away, chat, dnd, xa, notSpecified, unknown
+	/** The entity or resource is temporarily away */
+	away,
+	/** The entity or resource is actively interested in chatting */
+	chat,
+	/** The entity or resource is busy (dnd = "Do Not Disturb") */
+	dnd,
+	/**
+	 * The entity or resource is away for an extended period (xa =
+	 * "eXtended Away")
+	 */
+	xa,
+	/**
+	 * If 'show' element is notSpecified, the entity is assumed to be online
+	 * and available
+	 */
+	notSpecified,
+	/**
+	 * Unknown
+	 */
+	unknown
     }
 
     public enum Type {

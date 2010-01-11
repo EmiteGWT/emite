@@ -26,7 +26,6 @@ import com.calclab.emite.core.client.xmpp.session.Session;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 
 /**
@@ -46,8 +45,6 @@ import com.google.gwt.user.client.Window;
 public class AutoConfig {
 
     private static final String PARAM_SESSION = "emite.session";
-
-    private static final String PAUSE_COOKIE = "emite.pause";
 
     private final Connection connection;
     private final Session session;
@@ -74,11 +71,9 @@ public class AutoConfig {
 	Window.addCloseHandler(new CloseHandler<Window>() {
 	    public void onClose(final CloseEvent<Window> arg0) {
 		if ("resume".equals(sessionBehaviour) || "resumeOrLogin".equals(sessionBehaviour)) {
-		    PageAssist.pause(session);
+		    PageAssist.pauseSession(session);
 		} else if ("login".equals(sessionBehaviour)) {
-		    Cookies.removeCookie(PAUSE_COOKIE);
-		    session.logout();
-		    GWT.log("Logged out!", null);
+		    PageAssist.closeSession(session);
 		}
 	    }
 	});
@@ -89,9 +84,9 @@ public class AutoConfig {
 	if (sessionBehaviour.equals("login")) {
 	    PageAssist.loginFromMeta(session);
 	} else if (sessionBehaviour.equals("resume")) {
-	    PageAssist.resume(session);
+	    PageAssist.resumeSession(session);
 	} else if (sessionBehaviour.equals("loginOrResume")) {
-	    if (!PageAssist.resume(session)) {
+	    if (!PageAssist.resumeSession(session)) {
 		PageAssist.loginFromMeta(session);
 	    }
 	}
