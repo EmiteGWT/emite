@@ -1,4 +1,4 @@
-package com.calclab.emite.xtesting.matchers;
+package com.calclab.emite.xtesting;
 
 import static com.calclab.emite.xtesting.matchers.EmiteAsserts.assertNotPacketLike;
 import static com.calclab.emite.xtesting.matchers.EmiteAsserts.assertPacketLike;

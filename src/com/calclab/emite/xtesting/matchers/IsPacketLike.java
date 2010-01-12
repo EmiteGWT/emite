@@ -7,12 +7,10 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.mockito.ArgumentMatcher;
-
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
-public class IsPacketLike extends ArgumentMatcher<IPacket> {
+public class IsPacketLike {
     public static IsPacketLike build(final String xml) {
 	final IPacket packet = TigaseXMLService.toPacket(xml);
 	return new IsPacketLike(packet);
@@ -28,11 +26,6 @@ public class IsPacketLike extends ArgumentMatcher<IPacket> {
 	final String result = areEquals(original, actual);
 	out.print(result);
 	return result == null;
-    }
-
-    @Override
-    public boolean matches(final Object argument) {
-	return areEquals(original, (IPacket) argument) == null;
     }
 
     private String areContained(final IPacket expectedChild, final List<? extends IPacket> children) {
