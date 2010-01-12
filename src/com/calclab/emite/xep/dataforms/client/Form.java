@@ -5,13 +5,14 @@ import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
  * 
  * XEP-0004 Form
  * 
  */
-public class Form {
+public class Form extends BasicStanza {
 
     public enum Type {
         /**
@@ -40,26 +41,35 @@ public class Form {
 
     private static final String DATA_XMLS = "jabber:x:data";
 
-    public static Form parse(final IPacket packet) {
-        final Form form = new Form();
-        final IPacket x = packet.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS("x", DATA_XMLS));
-        form.setTitle(x.getFirstChild("title").getText());
-        form.setType(Type.valueOf(x.getAttribute("type")));
-        final List<String> instructions = new ArrayList<String>();
-        for (final IPacket instruction : x.getChildren(MatcherFactory.byName("instructions"))) {
-            instructions.add(instruction.getText());
+    public static List<Field> parseList(final IPacket packet) {
+        final List<Field> fields = new ArrayList<Field>();
+        for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName("field"))) {
+            fields.add(new Field(fieldPacket));
         }
-        form.setInstructions(instructions);
-        form.setFields(Field.parseList(x));
-        form.setReported(Reported.parse(x.getFirstChild(MatcherFactory.byName("reported"))));
-        form.setItems(Item.parse(x.getChildren(MatcherFactory.byName("item"))));
-        return form;
+        return fields;
     }
 
-    private Type type;
-    private String title;
-    private List<String> instructions;
-    private List<Field> fields;
+    private IPacket x;
+
+    public Form(final IPacket stanza) {
+        super(stanza);
+    }
+
+    public List<Field> getFields() {
+        return parseList(x());
+    }
+
+    public List<String> getInstructions() {
+        final List<String> instructions = new ArrayList<String>();
+        for (final IPacket instruction : x().getChildren(MatcherFactory.byName("instructions"))) {
+            instructions.add(instruction.getText());
+        }
+        return instructions;
+    }
+
+    public List<Item> getItems() {
+        return Item.parse(x().getChildren(MatcherFactory.byName("item")));
+    }
 
     /**
      *In some contexts (e.g., the results of a search request), it may be
@@ -70,58 +80,46 @@ public class Form {
      * elements, which can be understood as "table cells" containing data (if
      * any) that matches the request.
      */
-    private Reported reported;
-    private List<Item> items;
-
-    public Form() {
-
-    }
-
-    public List<Field> getFields() {
-        return fields;
-    }
-
-    public List<String> getInstructions() {
-        return instructions;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
     public Reported getReported() {
-        return reported;
+        return Reported.parse(x().getFirstChild(MatcherFactory.byName("reported")));
     }
 
     public String getTitle() {
-        return title;
+        return x().getFirstChild("title").getText();
     }
 
     public Type getType() {
-        return type;
+        return Type.valueOf(x().getAttribute("type"));
     }
 
     public void setFields(final List<Field> fields) {
-        this.fields = fields;
+        // FIXME
     }
 
     public void setInstructions(final List<String> instructions) {
-        this.instructions = instructions;
+        // FIXME
     }
 
     public void setItems(final List<Item> items) {
-        this.items = items;
+        // FIXME
     }
 
     public void setReported(final Reported reported) {
-        this.reported = reported;
+        // FIXME
     }
 
     public void setTitle(final String title) {
-        this.title = title;
+        super.setAttribute("type", title);
     }
 
     public void setType(final Type type) {
-        this.type = type;
+        super.setAttribute("type", type.toString());
+    }
+
+    public IPacket x() {
+        if (x == null) {
+            x = super.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS("x", DATA_XMLS));
+        }
+        return x;
     }
 }

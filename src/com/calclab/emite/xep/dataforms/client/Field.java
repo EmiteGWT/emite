@@ -6,6 +6,7 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
  * 
@@ -14,112 +15,121 @@ import com.calclab.emite.core.client.packet.NoPacket;
  * SHOULD NOT contain any <field/> elements.
  * 
  */
-public class Field {
+
+public class Field extends BasicStanza {
 
     public static List<Field> parseList(final IPacket packet) {
         final List<Field> fields = new ArrayList<Field>();
         for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName("field"))) {
-            fields.add(singleParse(fieldPacket));
+            fields.add(new Field(fieldPacket));
         }
         return fields;
     }
 
-    public static Field singleParse(final IPacket packet) {
-        final Field field = new Field();
-        field.setType(packet.getAttribute("type"));
-        field.setLabel(packet.getAttribute("label"));
-        field.setVar(packet.getAttribute("var"));
-        field.setDesc(packet.getFirstChild("desc").getText());
-        field.setRequired(packet.getFirstChild("required") != NoPacket.INSTANCE);
+    public Field(final IPacket stanza) {
+        super(stanza);
+    }
+
+    public String getDesc() {
+        return super.getFirstChild("desc").getText();
+    }
+
+    public String getLabel() {
+        return super.getAttribute("label");
+    }
+
+    public List<Option> getOptions() {
+        final List<Option> optionsList = new ArrayList<Option>();
+        for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName("option"))) {
+            optionsList.add(new Option(optionPacket.getAttribute("label"),
+                    optionPacket.getFirstChild("value").getText()));
+        }
+        return optionsList;
+    }
+
+    public String getType() {
+        return super.getAttribute("type");
+    }
+
+    public List<String> getValues() {
         final List<String> valuesList = new ArrayList<String>();
-        for (final IPacket valuePacket : packet.getChildren(MatcherFactory.byName("value"))) {
+        for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName("value"))) {
             valuesList.add(valuePacket.getText());
         }
-        field.setValues(valuesList);
-        final List<Option> optionsList = new ArrayList<Option>();
-        for (final IPacket optionPacket : packet.getChildren(MatcherFactory.byName("option"))) {
-            optionsList.add(Option.parse(optionPacket));
+        return valuesList;
+    }
+
+    public String getVar() {
+        return super.getAttribute("var");
+    }
+
+    public boolean isRequired() {
+        return super.getFirstChild("required") != NoPacket.INSTANCE;
+    }
+
+    public void setDesc(final String desc) {
+        IPacket child = super.getFirstChild("desc");
+        if (child == NoPacket.INSTANCE) {
+            child = super.addChild("desc", "");
         }
-        field.setOptions(optionsList);
-        return field;
+        child.setText(desc);
+    }
+
+    /**
+     * The <field/> element MAY possess a 'label' attribute that defines a
+     * human-readable name for the field.
+     */
+
+    public void setLabel(final String label) {
+        super.setAttribute("label", label);
+    }
+
+    public void setOptions(final List<Option> options) {
+        for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName("option"))) {
+            super.removeChild(optionPacket);
+        }
+        for (final Option option : options) {
+            super.addChild("option", null).With("label", option.getLabel()).addChild("value", null).setText(
+                    option.getValue());
+        }
+    }
+
+    public void setRequired(final boolean required) {
+        final IPacket requiredP = super.getFirstChild("required");
+        if (required && requiredP == NoPacket.INSTANCE) {
+            super.addChild("required", null);
+        }
+        if (!required && requiredP != NoPacket.INSTANCE) {
+            super.removeChild(requiredP);
+        }
     }
 
     /**
      * element SHOULD possess a 'type' attribute that defines the data "type" of
      * the field data (if no 'type' is specified, the default is "text-single")
      */
-    private String type;
 
-    /**
-     * The <field/> element MAY possess a 'label' attribute that defines a
-     * human-readable name for the field.
-     */
-    private String label;
-    private String desc;
-    private String var;
-    private boolean required;
+    @Override
+    public void setType(final String type) {
+        super.setAttribute("type", type);
+    }
 
     /**
      * Fields of type list-multi, jid-multi, text-multi, and hidden MAY contain
      * more than one <value/> and this field is only for the other types
      */
-    private List<String> values;
-    private List<Option> options;
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public List<Option> getOptions() {
-        return options;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public List<String> getValues() {
-        return values;
-    }
-
-    public String getVar() {
-        return var;
-    }
-
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setDesc(final String desc) {
-        this.desc = desc;
-    }
-
-    public void setLabel(final String label) {
-        this.label = label;
-    }
-
-    public void setOptions(final List<Option> options) {
-        this.options = options;
-    }
-
-    public void setRequired(final boolean required) {
-        this.required = required;
-    }
-
-    public void setType(final String type) {
-        this.type = type;
-    }
 
     public void setValues(final List<String> values) {
-        this.values = values;
+        for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName("value"))) {
+            super.removeChild(valuePacket);
+        }
+        for (final String value : values) {
+            super.addChild("value", value);
+        }
     }
 
     public void setVar(final String var) {
-        this.var = var;
+        super.setAttribute("var", var);
     }
 
 }
