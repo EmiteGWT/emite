@@ -45,8 +45,9 @@ public class Packet extends AbstractPacket {
         parent = null;
     }
 
-    public void addChild(final IPacket child) {
+    public IPacket addChild(final IPacket child) {
         children.add(child);
+        return child;
     }
 
     public IPacket addChild(final String name, final String xmlns) {

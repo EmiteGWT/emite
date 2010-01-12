@@ -31,6 +31,10 @@ public class DelegatedPacket implements IPacket {
         this.delegate = delegate;
     }
 
+    public IPacket addChild(final IPacket child) {
+        return delegate.addChild(child);
+    }
+
     public final IPacket addChild(final String nodeName, final String xmlns) {
         return delegate.addChild(nodeName, xmlns);
     }
@@ -103,6 +107,25 @@ public class DelegatedPacket implements IPacket {
         delegate.setText(text);
     }
 
+    /**
+     * Add a child with a specified text. Create the child if not exists. If the
+     * text is null, then removes the child
+     * 
+     * @param nodeName
+     * @param text
+     */
+    public void setTextToChild(final String nodeName, final String text) {
+        if (text != null) {
+            IPacket node = getFirstChild(nodeName);
+            if (node == NoPacket.INSTANCE) {
+                node = this.addChild(nodeName, null);
+            }
+            node.setText(text);
+        } else {
+            removeChild(getFirstChild(nodeName));
+        }
+    }
+
     @Override
     public String toString() {
         return delegate.toString();
@@ -112,5 +135,4 @@ public class DelegatedPacket implements IPacket {
         delegate.With(name, value);
         return this;
     }
-
 }

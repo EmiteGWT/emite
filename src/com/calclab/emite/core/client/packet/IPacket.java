@@ -26,26 +26,13 @@ import java.util.List;
 
 public interface IPacket {
 
-    public HashMap<String, String> getAttributes();
-
-    public int getChildrenCount();
-
-    public boolean hasAttribute(String name);
-
-    public boolean hasAttribute(String name, String value);
-
-    /**
-     * Removes a single instance of the specified child from this packet, if it
-     * is present (optional operation).
-     * 
-     * @param child
-     * @return true if the list contained the specified element.
-     */
-    public boolean removeChild(IPacket child);
+    IPacket addChild(IPacket child);
 
     IPacket addChild(String nodeName, String xmlns);
 
     String getAttribute(String name);
+
+    HashMap<String, String> getAttributes();
 
     List<? extends IPacket> getChildren();
 
@@ -56,6 +43,8 @@ public interface IPacket {
      * @return
      */
     List<? extends IPacket> getChildren(PacketMatcher matcher);
+
+    int getChildrenCount();
 
     /**
      * Returns the first children that matches the matcher
@@ -99,7 +88,20 @@ public interface IPacket {
 
     String getText();
 
+    boolean hasAttribute(String name);
+
+    boolean hasAttribute(String name, String value);
+
     boolean hasChild(String name);
+
+    /**
+     * Removes a single instance of the specified child from this packet, if it
+     * is present (optional operation).
+     * 
+     * @param child
+     * @return true if the list contained the specified element.
+     */
+    boolean removeChild(IPacket child);
 
     void setAttribute(String name, String value);
 
