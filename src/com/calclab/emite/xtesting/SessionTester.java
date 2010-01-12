@@ -76,9 +76,11 @@ public class SessionTester extends AbstractSession {
     }
 
     public void logout() {
-	setState(Session.State.loggingOut);
-	currentUser = null;
-	setState(Session.State.disconnected);
+	if (currentUser != null) {
+	    setState(Session.State.loggingOut);
+	    currentUser = null;
+	    setState(Session.State.disconnected);
+	}
     }
 
     public StreamSettings pause() {
