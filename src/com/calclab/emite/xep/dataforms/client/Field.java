@@ -3,10 +3,10 @@ package com.calclab.emite.xep.dataforms.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
  * 
@@ -16,7 +16,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
  * 
  */
 
-public class Field extends BasicStanza {
+public class Field extends DelegatedPacket {
 
     public static List<Field> parseList(final IPacket packet) {
         final List<Field> fields = new ArrayList<Field>();
@@ -109,7 +109,6 @@ public class Field extends BasicStanza {
      * the field data (if no 'type' is specified, the default is "text-single")
      */
 
-    @Override
     public void setType(final String type) {
         super.setAttribute("type", type);
     }

@@ -21,6 +21,8 @@ public class Reported {
         return reported;
     }
 
+    @Deprecated
+    // ?
     private List<Field> fields;
 
     public List<Field> getFields() {

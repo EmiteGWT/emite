@@ -29,6 +29,8 @@ public class Item {
     /**
      * Each of these elements MUST contain one or more <field/> children.
      */
+    @Deprecated
+    // ?
     private List<Field> fields;
 
     public List<Field> getFields() {
