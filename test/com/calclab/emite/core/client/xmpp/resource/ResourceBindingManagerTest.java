@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.ConnectionTester;
+import com.calclab.emite.xtesting.ConnectionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class ResourceBindingManagerTest {

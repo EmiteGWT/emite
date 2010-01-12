@@ -1,4 +1,4 @@
-package com.calclab.emite.testing;
+package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,8 @@ import com.calclab.emite.core.client.bosh.AbstractConnection;
 import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.testing.services.TigaseXMLService;
+import com.calclab.emite.xtesting.matchers.IsPacketLike;
+import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 /**
  * Object of this class are used to test against connection (for example, to

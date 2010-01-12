@@ -3,7 +3,7 @@ package com.calclab.emite.xep.disco.client;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.testing.SessionTester;
+import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class DiscoveryManagerTest {

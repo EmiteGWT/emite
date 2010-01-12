@@ -1,4 +1,4 @@
-package com.calclab.emite.testing.services;
+package com.calclab.emite.xtesting.services;
 
 import org.junit.Test;
 

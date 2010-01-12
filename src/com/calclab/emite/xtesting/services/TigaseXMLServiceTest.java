@@ -1,4 +1,4 @@
-package com.calclab.emite.testing.services;
+package com.calclab.emite.xtesting.services;
 
 import static org.junit.Assert.assertEquals;
 

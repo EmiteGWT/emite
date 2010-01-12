@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.SessionTester;
+import com.calclab.emite.xtesting.SessionTester;
 
 public class SearchManagerTest {
 

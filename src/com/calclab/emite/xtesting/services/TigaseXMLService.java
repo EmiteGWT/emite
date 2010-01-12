@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.testing.services;
+package com.calclab.emite.xtesting.services;
 
 import java.util.Queue;
 
@@ -30,12 +30,10 @@ import tigase.xml.SimpleParser;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public class TigaseXMLService {
-    private static TigaseXMLService instance;
+    public static final TigaseXMLService instance = new TigaseXMLService();
 
-    public static TigaseXMLService getSingleton() {
-	if (instance == null)
-	    instance = new TigaseXMLService();
-	return instance;
+    public static final IPacket toPacket(String xml) {
+	return instance.toXML(xml);
     }
 
     private final SimpleParser parser;

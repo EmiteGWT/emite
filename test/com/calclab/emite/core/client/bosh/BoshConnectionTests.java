@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.testing.IsPacketLike;
-import com.calclab.emite.testing.services.ServicesTester;
+import com.calclab.emite.xtesting.ServicesTester;
+import com.calclab.emite.xtesting.matchers.IsPacketLike;
 
 public class BoshConnectionTests {
 

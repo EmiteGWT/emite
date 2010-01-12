@@ -9,8 +9,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.PairChatManager;
-import com.calclab.emite.testing.SessionTester;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class ChatStateManagerTest {

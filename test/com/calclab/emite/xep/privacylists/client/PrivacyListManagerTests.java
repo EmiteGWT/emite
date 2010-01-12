@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.SessionTester;
+import com.calclab.emite.xtesting.SessionTester;
 
 public class PrivacyListManagerTests {
 

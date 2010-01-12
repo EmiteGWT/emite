@@ -1,4 +1,4 @@
-package com.calclab.emite.testing;
+package com.calclab.emite.xtesting;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,7 +16,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.testing.services.TigaseXMLService;
+import com.calclab.emite.xtesting.matchers.EmiteAsserts;
+import com.calclab.emite.xtesting.matchers.IsPacketLike;
+import com.calclab.emite.xtesting.services.TigaseXMLService;
 import com.calclab.suco.client.events.Listener;
 
 /**

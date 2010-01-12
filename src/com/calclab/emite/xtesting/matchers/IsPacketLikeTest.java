@@ -1,7 +1,7 @@
-package com.calclab.emite.testing;
+package com.calclab.emite.xtesting.matchers;
 
-import static com.calclab.emite.testing.EmiteAsserts.assertNotPacketLike;
-import static com.calclab.emite.testing.EmiteAsserts.assertPacketLike;
+import static com.calclab.emite.xtesting.matchers.EmiteAsserts.assertNotPacketLike;
+import static com.calclab.emite.xtesting.matchers.EmiteAsserts.assertPacketLike;
 
 import org.junit.Test;
 

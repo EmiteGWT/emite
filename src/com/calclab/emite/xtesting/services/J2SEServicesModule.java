@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.testing.services;
+package com.calclab.emite.xtesting.services;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.services.ConnectorCallback;

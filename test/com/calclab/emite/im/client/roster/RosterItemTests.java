@@ -9,8 +9,8 @@ import org.junit.Test;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.testing.EmiteAsserts;
-import com.calclab.emite.testing.services.TigaseXMLService;
+import com.calclab.emite.xtesting.matchers.EmiteAsserts;
+import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class RosterItemTests {
 
@@ -37,7 +37,7 @@ public class RosterItemTests {
     }
 
     private IPacket p(final String xml) {
-	final IPacket packet = TigaseXMLService.getSingleton().toXML(xml);
+	final IPacket packet = TigaseXMLService.toPacket(xml);
 	return packet;
     }
 }

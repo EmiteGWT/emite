@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.testing.services.TigaseXMLService;
+import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class IdentityTest {
     private TigaseXMLService xmler;

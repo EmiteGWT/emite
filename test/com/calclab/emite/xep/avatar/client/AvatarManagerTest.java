@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.testing.SessionTester;
+import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.testing.events.MockedListener;
 

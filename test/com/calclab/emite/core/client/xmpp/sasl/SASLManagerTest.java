@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.testing.ConnectionTester;
+import com.calclab.emite.xtesting.ConnectionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class SASLManagerTest {

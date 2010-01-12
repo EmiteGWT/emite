@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.calclab.emite.testing;
+package com.calclab.emite.xtesting.matchers;
 
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -10,11 +10,11 @@ import java.util.List;
 import org.mockito.ArgumentMatcher;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.testing.services.TigaseXMLService;
+import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class IsPacketLike extends ArgumentMatcher<IPacket> {
     public static IsPacketLike build(final String xml) {
-	final IPacket packet = TigaseXMLService.getSingleton().toXML(xml);
+	final IPacket packet = TigaseXMLService.toPacket(xml);
 	return new IsPacketLike(packet);
     }
 

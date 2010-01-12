@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.testing.SessionTester;
+import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.suco.testing.events.MockedListener2;
 
 public class SubscriptionManagerTests {
