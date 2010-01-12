@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
+import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
@@ -40,35 +41,67 @@ public class Form extends BasicStanza {
     }
 
     private static final String DATA_XMLS = "jabber:x:data";
+    private static final String X = "x";
+    private static final String TYPE = "type";
+    private static final String TITLE = "title";
+    private static final String INSTRUCTIONS = "instructions";
 
-    public static List<Field> parseList(final IPacket packet) {
-        final List<Field> fields = new ArrayList<Field>();
-        for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName("field"))) {
-            fields.add(new Field(fieldPacket));
-        }
-        return fields;
-    }
-
+    List<String> instructions;
     private IPacket x;
+    List<Field> fields;
+    List<Item> items;
+    Reported reported;
 
     public Form(final IPacket stanza) {
         super(stanza);
     }
 
+    public Form(final Type type) {
+        super(X, DATA_XMLS);
+        setType(type);
+    }
+
+    public void addField(final Field field) {
+        parseFields();
+        fields.add(field);
+        super.addChild(field);
+    }
+
+    public void addInstruction(final String instruction) {
+        parseInstructions();
+        instructions.add(instruction);
+        super.addChild(INSTRUCTIONS).setText(instruction);
+    }
+
+    public void addItem(final Item item) {
+        parseItems();
+        items.add(item);
+        super.addChild(item);
+    }
+
+    public void addToReported(final Field field) {
+        parseReported();
+        IPacket reportedPacket = getReportedPacket();
+        if (reportedPacket == NoPacket.INSTANCE) {
+            reportedPacket = super.addChild(Reported.REPORTED);
+        }
+        reportedPacket.addChild(field);
+        reported.addChild(field);
+    }
+
     public List<Field> getFields() {
-        return parseList(x());
+        parseFields();
+        return fields;
     }
 
     public List<String> getInstructions() {
-        final List<String> instructions = new ArrayList<String>();
-        for (final IPacket instruction : x().getChildren(MatcherFactory.byName("instructions"))) {
-            instructions.add(instruction.getText());
-        }
+        parseInstructions();
         return instructions;
     }
 
     public List<Item> getItems() {
-        return Item.parse(x().getChildren(MatcherFactory.byName("item")));
+        parseItems();
+        return items;
     }
 
     /**
@@ -81,45 +114,67 @@ public class Form extends BasicStanza {
      * any) that matches the request.
      */
     public Reported getReported() {
-        return Reported.parse(x().getFirstChild(MatcherFactory.byName("reported")));
+        parseReported();
+        return reported;
     }
 
     public String getTitle() {
-        return x().getFirstChild("title").getText();
+        return x().getFirstChild(TITLE).getText();
     }
 
     public Type getType() {
-        return Type.valueOf(x().getAttribute("type"));
-    }
-
-    public void setFields(final List<Field> fields) {
-        // FIXME
-    }
-
-    public void setInstructions(final List<String> instructions) {
-        // FIXME
-    }
-
-    public void setItems(final List<Item> items) {
-        // FIXME
-    }
-
-    public void setReported(final Reported reported) {
-        // FIXME
+        return Type.valueOf(x().getAttribute(TYPE));
     }
 
     public void setTitle(final String title) {
-        super.setAttribute("type", title);
+        setTextToChild(TITLE, title);
     }
 
     public void setType(final Type type) {
-        super.setAttribute("type", type.toString());
+        super.setAttribute(TYPE, type.toString());
+    }
+
+    public Form WithField(final Field field) {
+        addField(field);
+        return this;
     }
 
     public IPacket x() {
         if (x == null) {
-            x = super.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS("x", DATA_XMLS));
+            x = super.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS(X, DATA_XMLS));
         }
         return x;
+    }
+
+    private IPacket getReportedPacket() {
+        return x().getFirstChild(MatcherFactory.byName(Reported.REPORTED));
+    }
+
+    private void parseFields() {
+        fields = Field.parseFields(fields, x());
+    }
+
+    private void parseInstructions() {
+        if (instructions == null) {
+            instructions = new ArrayList<String>();
+            for (final IPacket instruction : x().getChildren(MatcherFactory.byName(INSTRUCTIONS))) {
+                instructions.add(instruction.getText());
+            }
+        }
+    }
+
+    private void parseItems() {
+        if (items == null) {
+            items = new ArrayList<Item>();
+            for (final IPacket itemPacket : x().getChildren(MatcherFactory.byName(Item.ITEM))) {
+                items.add(new Item(itemPacket));
+            }
+        }
+    }
+
+    private void parseReported() {
+        if (reported == null) {
+            reported = new Reported(getReportedPacket());
+        }
     }
 }

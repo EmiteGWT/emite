@@ -7,6 +7,7 @@ import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.packet.Packet;
 
 /**
  * 
@@ -18,61 +19,103 @@ import com.calclab.emite.core.client.packet.NoPacket;
 
 public class Field extends DelegatedPacket {
 
+    public static final String FIELD = "field";
+    private static final String LABEL = "label";
+    private static final String DESC = "desc";
+    private static final String VALUE = "value";
+    private static final String TYPE = "type";
+    private static final String VAR = "var";
+    private static final String REQUIRED = "required";
+
+    public static List<Field> parseFields(final List<Field> fields, final IPacket packet) {
+        if (fields == null) {
+            final List<Field> fieldsTmp = new ArrayList<Field>();
+            for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(Field.FIELD))) {
+                fieldsTmp.add(new Field(fieldPacket));
+            }
+            return fieldsTmp;
+        }
+        return fields;
+    }
+
     public static List<Field> parseList(final IPacket packet) {
         final List<Field> fields = new ArrayList<Field>();
-        for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName("field"))) {
+        for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(FIELD))) {
             fields.add(new Field(fieldPacket));
         }
         return fields;
     }
 
+    private List<Option> options;
+    private List<String> values;
+
+    public Field() {
+        this(new Packet(FIELD));
+    }
+
     public Field(final IPacket stanza) {
         super(stanza);
+
+    }
+
+    public Field(final String type) {
+        this();
+        setType(type);
+    }
+
+    public void addOption(final Option option) {
+        parseOptions();
+        options.add(option);
+        super.addChild(option);
+    }
+
+    /**
+     * Fields of type list-multi, jid-multi, text-multi, and hidden MAY contain
+     * more than one <value/> and this field is only for the other types
+     */
+    public void addValue(final String value) {
+        parseValues();
+        values.add(value);
+        setTextToChild(VALUE, value);
     }
 
     public String getDesc() {
-        return super.getFirstChild("desc").getText();
+        return super.getFirstChild(DESC).getText();
     }
 
     public String getLabel() {
-        return super.getAttribute("label");
+        return super.getAttribute(LABEL);
     }
 
     public List<Option> getOptions() {
-        final List<Option> optionsList = new ArrayList<Option>();
-        for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName("option"))) {
-            optionsList.add(new Option(optionPacket.getAttribute("label"),
-                    optionPacket.getFirstChild("value").getText()));
-        }
-        return optionsList;
+        parseOptions();
+        return options;
     }
 
     public String getType() {
-        return super.getAttribute("type");
+        return super.getAttribute(TYPE);
     }
 
     public List<String> getValues() {
-        final List<String> valuesList = new ArrayList<String>();
-        for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName("value"))) {
-            valuesList.add(valuePacket.getText());
-        }
-        return valuesList;
+        parseValues();
+        return values;
     }
 
     public String getVar() {
-        return super.getAttribute("var");
+        return super.getAttribute(VAR);
     }
 
     public boolean isRequired() {
-        return super.getFirstChild("required") != NoPacket.INSTANCE;
+        return super.getFirstChild(REQUIRED) != NoPacket.INSTANCE;
+    }
+
+    public Field Required(final boolean required) {
+        setRequired(required);
+        return this;
     }
 
     public void setDesc(final String desc) {
-        IPacket child = super.getFirstChild("desc");
-        if (child == NoPacket.INSTANCE) {
-            child = super.addChild("desc", "");
-        }
-        child.setText(desc);
+        super.setTextToChild(DESC, desc);
     }
 
     /**
@@ -81,54 +124,51 @@ public class Field extends DelegatedPacket {
      */
 
     public void setLabel(final String label) {
-        super.setAttribute("label", label);
-    }
-
-    public void setOptions(final List<Option> options) {
-        for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName("option"))) {
-            super.removeChild(optionPacket);
-        }
-        for (final Option option : options) {
-            super.addChild("option", null).With("label", option.getLabel()).addChild("value", null).setText(
-                    option.getValue());
-        }
+        super.setAttribute(LABEL, label);
     }
 
     public void setRequired(final boolean required) {
-        final IPacket requiredP = super.getFirstChild("required");
-        if (required && requiredP == NoPacket.INSTANCE) {
-            super.addChild("required", null);
-        }
-        if (!required && requiredP != NoPacket.INSTANCE) {
-            super.removeChild(requiredP);
-        }
+        super.setTextToChild(REQUIRED, required ? "" : null);
     }
 
     /**
      * element SHOULD possess a 'type' attribute that defines the data "type" of
      * the field data (if no 'type' is specified, the default is "text-single")
      */
-
     public void setType(final String type) {
-        super.setAttribute("type", type);
-    }
-
-    /**
-     * Fields of type list-multi, jid-multi, text-multi, and hidden MAY contain
-     * more than one <value/> and this field is only for the other types
-     */
-
-    public void setValues(final List<String> values) {
-        for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName("value"))) {
-            super.removeChild(valuePacket);
-        }
-        for (final String value : values) {
-            super.addChild("value", value);
-        }
+        super.setAttribute(TYPE, type);
     }
 
     public void setVar(final String var) {
-        super.setAttribute("var", var);
+        super.setAttribute(VAR, var);
+    }
+
+    public Field Value(final String value) {
+        addValue(value);
+        return this;
+    }
+
+    public Field Var(final String var) {
+        setVar(var);
+        return this;
+    }
+
+    private void parseOptions() {
+        if (options == null) {
+            options = new ArrayList<Option>();
+            for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName(Option.OPTION))) {
+                options.add(new Option(optionPacket));
+            }
+        }
+    }
+
+    private void parseValues() {
+        if (values == null) {
+            values = new ArrayList<String>();
+            for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName(VALUE))) {
+                values.add(valuePacket.getText());
+            }
+        }
     }
 
 }

@@ -51,6 +51,10 @@ public class GWTPacket extends AbstractPacket {
         return child;
     }
 
+    public IPacket addChild(final String nodeName) {
+        return addChild(nodeName, null);
+    }
+
     public IPacket addChild(final String nodeName, final String xmlns) {
         final Element child = element.getOwnerDocument().createElement(nodeName);
         element.appendChild(child);

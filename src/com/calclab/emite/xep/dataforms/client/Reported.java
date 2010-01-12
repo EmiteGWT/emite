@@ -1,7 +1,5 @@
 package com.calclab.emite.xep.dataforms.client;
 
-import java.util.List;
-
 import com.calclab.emite.core.client.packet.IPacket;
 
 /**
@@ -14,22 +12,16 @@ import com.calclab.emite.core.client.packet.IPacket;
  * addition to the 'var' attribute, and SHOULD NOT contain a <value/> element.
  * 
  */
-public class Reported {
-    public static Reported parse(final IPacket packet) {
-        final Reported reported = new Reported();
-        reported.setFields(Field.parseList(packet));
-        return reported;
+public class Reported extends AbstractItem {
+
+    static final String REPORTED = "reported";
+
+    public Reported() {
+        super(REPORTED);
     }
 
-    @Deprecated
-    // ?
-    private List<Field> fields;
-
-    public List<Field> getFields() {
-        return fields;
+    public Reported(final IPacket packet) {
+        super(packet);
     }
 
-    public void setFields(final List<Field> fields) {
-        this.fields = fields;
-    }
 }

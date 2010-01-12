@@ -50,6 +50,10 @@ public class Packet extends AbstractPacket {
         return child;
     }
 
+    public IPacket addChild(final String name) {
+        return addChild(name, null);
+    }
+
     public IPacket addChild(final String name, final String xmlns) {
         final Packet child = new Packet(name, xmlns);
         child.parent = this;

@@ -35,6 +35,10 @@ public class DelegatedPacket implements IPacket {
         return delegate.addChild(child);
     }
 
+    public final IPacket addChild(final String nodeName) {
+        return delegate.addChild(nodeName);
+    }
+
     public final IPacket addChild(final String nodeName, final String xmlns) {
         return delegate.addChild(nodeName, xmlns);
     }

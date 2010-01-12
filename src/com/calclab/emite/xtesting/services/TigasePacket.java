@@ -51,6 +51,10 @@ public class TigasePacket extends AbstractPacket {
         return child;
     }
 
+    public IPacket addChild(final String nodeName) {
+        return addChild(nodeName, null);
+    }
+
     public IPacket addChild(final String nodeName, final String xmlns) {
         final TigasePacket child = new TigasePacket(nodeName);
         child.setAttribute("xmlns", xmlns);

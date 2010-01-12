@@ -28,6 +28,8 @@ public interface IPacket {
 
     IPacket addChild(IPacket child);
 
+    IPacket addChild(String nodeName);
+
     IPacket addChild(String nodeName, String xmlns);
 
     String getAttribute(String name);

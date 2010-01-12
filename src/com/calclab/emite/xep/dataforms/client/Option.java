@@ -1,44 +1,45 @@
 package com.calclab.emite.xep.dataforms.client;
 
+import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.packet.Packet;
 
 /**
  * A XEP-0004 field option
  * 
  */
-public class Option {
-    public static Option parse(final IPacket packet) {
-        final Option option = new Option();
-        option.setLabel(packet.getAttribute("label"));
-        option.setValue(packet.getFirstChild("value").getText());
-        return option;
-    }
-    private String label;
+public class Option extends DelegatedPacket {
 
-    private String value;
+    public static final String OPTION = "option";
+    private static final String LABEL = "label";
+    private static final String VALUE = "value";
 
     public Option() {
+        super((new Packet(OPTION)));
     }
 
-    public Option(final String label, final String value) {
-        this.label = label;
-        this.value = value;
+    public Option(final IPacket stanza) {
+        super(stanza);
     }
 
     public String getLabel() {
-        return label;
+        return super.getAttribute(LABEL);
     }
 
     public String getValue() {
-        return value;
+        return super.getFirstChild(VALUE).getText();
     }
 
     public void setLabel(final String label) {
-        this.label = label;
+        super.setAttribute(LABEL, label);
     }
 
     public void setValue(final String value) {
-        this.value = value;
+        IPacket child = super.getFirstChild(VALUE);
+        if (child == NoPacket.INSTANCE) {
+            child = super.addChild(VALUE, null);
+        }
+        child.setText(value);
     }
-
 }

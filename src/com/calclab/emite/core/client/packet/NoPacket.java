@@ -41,6 +41,10 @@ public class NoPacket implements IPacket {
         return this;
     }
 
+    public IPacket addChild(final String nodeName) {
+        return this;
+    }
+
     public IPacket addChild(final String nodeName, final String xmlns) {
         return this;
     }

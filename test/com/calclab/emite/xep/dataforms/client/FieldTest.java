@@ -40,6 +40,15 @@ public class FieldTest {
         assertEquals("none", options.get(5).getValue());
     }
 
+    @Test
+    public void testRequired() {
+        final Field field = new Field(FieldType.FIXED);
+        field.setRequired(true);
+        assertEquals(true, field.isRequired());
+        field.setRequired(false);
+        assertEquals(false, field.isRequired());
+    }
+
     private Field parse(final String stanza) {
         return new Field(TigaseXMLService.toPacket(stanza));
     }
