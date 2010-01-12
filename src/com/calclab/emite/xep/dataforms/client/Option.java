@@ -2,7 +2,6 @@ package com.calclab.emite.xep.dataforms.client;
 
 import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.Packet;
 
 /**
@@ -36,10 +35,6 @@ public class Option extends DelegatedPacket {
     }
 
     public void setValue(final String value) {
-        IPacket child = super.getFirstChild(VALUE);
-        if (child == NoPacket.INSTANCE) {
-            child = super.addChild(VALUE, null);
-        }
-        child.setText(value);
+        setTextToChild(VALUE, value);
     }
 }

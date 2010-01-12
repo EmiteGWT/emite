@@ -38,14 +38,6 @@ public class Field extends DelegatedPacket {
         return fields;
     }
 
-    public static List<Field> parseList(final IPacket packet) {
-        final List<Field> fields = new ArrayList<Field>();
-        for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(FIELD))) {
-            fields.add(new Field(fieldPacket));
-        }
-        return fields;
-    }
-
     private List<Option> options;
     private List<String> values;
 
@@ -55,7 +47,6 @@ public class Field extends DelegatedPacket {
 
     public Field(final IPacket stanza) {
         super(stanza);
-
     }
 
     public Field(final String type) {
@@ -66,7 +57,7 @@ public class Field extends DelegatedPacket {
     public void addOption(final Option option) {
         parseOptions();
         options.add(option);
-        super.addChild(option);
+        addChild(option);
     }
 
     /**
@@ -76,15 +67,15 @@ public class Field extends DelegatedPacket {
     public void addValue(final String value) {
         parseValues();
         values.add(value);
-        addChild(VALUE, null).setText(value);
+        addChild(VALUE).setText(value);
     }
 
     public String getDesc() {
-        return super.getFirstChild(DESC).getText();
+        return getFirstChild(DESC).getText();
     }
 
     public String getLabel() {
-        return super.getAttribute(LABEL);
+        return getAttribute(LABEL);
     }
 
     public List<Option> getOptions() {
@@ -93,7 +84,7 @@ public class Field extends DelegatedPacket {
     }
 
     public String getType() {
-        return super.getAttribute(TYPE);
+        return getAttribute(TYPE);
     }
 
     public List<String> getValues() {
