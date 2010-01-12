@@ -33,9 +33,9 @@ public abstract class AbstractChat implements Chat {
 
     protected final XmppURI uri;
     protected State state;
-    protected final Event<State> onStateChanged;
-    protected final Event<Message> onBeforeReceive;
-    protected final Session session;
+    private final Event<State> onStateChanged;
+    private final Event<Message> onBeforeReceive;
+    private final Session session;
     private final HashMap<Class<?>, Object> data;
     private final Event<Message> onMessageSent;
     private final Event<Message> onMessageReceived;
@@ -102,6 +102,10 @@ public abstract class AbstractChat implements Chat {
     @SuppressWarnings("unchecked")
     public <T> T setData(final Class<T> type, final T value) {
 	return (T) data.put(type, value);
+    }
+
+    protected void fireBeforeReceive(Message message) {
+	onBeforeReceive.fire(message);
     }
 
     protected void receive(final Message message) {

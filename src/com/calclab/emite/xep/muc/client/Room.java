@@ -54,6 +54,7 @@ public class Room extends AbstractChat implements Chat {
     private final Event<Occupant> onOccupantModified;
     private final Event<Collection<Occupant>> onOccupantsChanged;
     private final Event2<Occupant, String> onSubjectChanged;
+    private final Session session;
 
     /**
      * Create a new room. The roomURI MUST include the nick (as the resource)
@@ -65,6 +66,7 @@ public class Room extends AbstractChat implements Chat {
      */
     Room(final Session session, final XmppURI roomURI, final XmppURI starter) {
 	super(session, roomURI, starter);
+	this.session = session;
 	this.occupantsByURI = new HashMap<XmppURI, Occupant>();
 	this.onOccupantModified = new Event<Occupant>("room:onOccupantModified");
 	this.onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
@@ -258,7 +260,7 @@ public class Room extends AbstractChat implements Chat {
     protected void receive(final Message message) {
 	final String subject = message.getSubject();
 	if (subject != null) {
-	    onBeforeReceive.fire(message);
+	    fireBeforeReceive(message);
 	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), subject);
 	}
 	if (message.getBody() != null) {

@@ -1,6 +1,7 @@
 package com.calclab.emite.im.client.chat;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -31,7 +32,7 @@ public class ChatManagerTest extends AbstractChatManagerTest {
 	final MockedListener<Chat> listener = addOnChatCreatedListener();
 	session.receives(new Message(uri("source@domain/resource1"), MYSELF, "message 1"));
 	session.receives(new Message(uri("source@domain/resource1"), MYSELF, "message 2"));
-	assertTrue(listener.isCalledOnce());
+	assertEquals(1, listener.getCalledTimes());
     }
 
     @Test
@@ -132,15 +133,15 @@ public class ChatManagerTest extends AbstractChatManagerTest {
 	assertTrue(listener.isCalled(1));
     }
 
-    @Override
-    protected PairChatManager createChatManager() {
-	final PairChatManager chatManagerDefault = new PairChatManager(session);
-	return chatManagerDefault;
-    }
-
     private MockedListener<Chat> addOnChatCreatedListener() {
 	final MockedListener<Chat> listener = new MockedListener<Chat>();
 	manager.onChatCreated(listener);
 	return listener;
+    }
+
+    @Override
+    protected PairChatManager createChatManager() {
+	final PairChatManager chatManagerDefault = new PairChatManager(session);
+	return chatManagerDefault;
     }
 }

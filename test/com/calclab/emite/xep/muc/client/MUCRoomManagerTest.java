@@ -54,7 +54,7 @@ public class MUCRoomManagerTest extends AbstractChatManagerTest {
 	chat.onMessageReceived(listener);
 	session.receives("<message from='room@rooms.domain/other' to='user@domain/resource' "
 		+ "type='groupchat'><body>the message body</body></message>");
-	assertTrue(listener.isCalledOnce());
+	assertEquals(1, listener.getCalledTimes());
     }
 
     @Test

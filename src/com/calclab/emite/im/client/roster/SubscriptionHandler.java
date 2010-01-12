@@ -9,7 +9,8 @@ import com.google.gwt.core.client.GWT;
  * created by default, so you have to explicity create:
  * 
  * <pre>
- * Suco.get(SubscriptionHandler.class).setBehaviour(Behaviour.acceptAll);
+ * SubscriptionHandler handler = Suco.get(SubscriptionHandler.class);
+ * handler.setBehaviour(Behaviour.acceptAll);
  * </pre>
  * 
  * The default behaviour is none: do nothing
