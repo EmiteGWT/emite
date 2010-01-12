@@ -76,7 +76,7 @@ public class Field extends DelegatedPacket {
     public void addValue(final String value) {
         parseValues();
         values.add(value);
-        setTextToChild(VALUE, value);
+        addChild(VALUE, null).setText(value);
     }
 
     public String getDesc() {
