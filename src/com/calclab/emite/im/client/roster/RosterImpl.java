@@ -93,12 +93,6 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	});
     }
 
-    public void addItem(final XmppURI jid, final String name, final String... groups) {
-	if (getItemByJID(jid) == null) {
-	    addOrUpdateItem(jid, name, null, groups);
-	}
-    }
-
     public void removeItem(final XmppURI uri) {
 	final RosterItem item = getItemByJID(uri.getJID());
 	if (item != null) {
@@ -109,6 +103,12 @@ public class RosterImpl extends AbstractRoster implements Roster {
 		public void onEvent(final IPacket parameter) {
 		}
 	    });
+	}
+    }
+
+    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
+	if (getItemByJID(jid) == null) {
+	    addOrUpdateItem(jid, name, null, groups);
 	}
     }
 

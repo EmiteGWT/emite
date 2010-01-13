@@ -26,7 +26,7 @@ public class RosterTests {
 
     @Test
     public void addRosterStep1_shouldRequestAddItem() {
-	roster.addItem(uri("friend@domain/anyResource"), "MyFriend", "Group1", "Group2");
+	roster.requestAddItem(uri("friend@domain/anyResource"), "MyFriend", "Group1", "Group2");
 	session.verifyIQSent("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend'><group>Group1</group><group>Group2</group>"
 		+ "</item></query></iq>");

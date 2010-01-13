@@ -29,6 +29,11 @@ public abstract class AbstractRoster implements Roster {
 	this.onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
     }
 
+    @Deprecated
+    public final void addItem(final XmppURI jid, final String name, final String... groups) {
+	requestAddItem(jid, name, groups);
+    }
+
     public Set<String> getGroups() {
 	return itemsByGroup.keySet();
     }
@@ -98,16 +103,16 @@ public abstract class AbstractRoster implements Roster {
 	itemsByGroup.put(group, items);
     }
 
-    protected void storeItem(RosterItem item) {
-	itemsByJID.put(item.getJID(), item);
-
+    protected void remove(XmppURI jid) {
+	itemsByJID.remove(jid);
     }
 
     protected void removeFromGroup(String groupName) {
 	itemsByGroup.remove(groupName);
     }
 
-    protected void remove(XmppURI jid) {
-	itemsByJID.remove(jid);
+    protected void storeItem(RosterItem item) {
+	itemsByJID.put(item.getJID(), item);
+
     }
 }

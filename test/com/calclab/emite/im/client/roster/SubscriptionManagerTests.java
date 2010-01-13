@@ -51,7 +51,7 @@ public class SubscriptionManagerTests {
 	when(roster.getItemByJID(eq(otherEntityJID))).thenReturn(null);
 
 	manager.approveSubscriptionRequest(otherEntityJID, "nick");
-	verify(roster).addItem(eq(otherEntityJID), eq("nick"));
+	verify(roster).requestAddItem(eq(otherEntityJID), eq("nick"));
 	session.verifySent("<presence type='subscribed' to='other@domain' />");
 	session.verifySent("<presence type='subscribe' to='other@domain' />");
     }

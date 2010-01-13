@@ -35,20 +35,9 @@ import com.calclab.suco.client.events.Listener;
 public interface Roster {
 
     /**
-     * Request add a item to the Roster. No listener is called until the item is
-     * really added to the roster. When the item is effectively added, the
-     * Roster sends a subscription to the roster item's presence
-     * 
-     * If a item with a same JID is already present in the roster, nothing is
-     * done.
-     * 
-     * @param jid
-     *            the user JID (resource ignored)
-     * @param name
-     *            the item name
-     * @param groups
-     *            <b>(optional!)</b> the groups you want to put the groups in
+     * renamed to requestAddItem
      */
+    @Deprecated
     void addItem(XmppURI jid, String name, String... groups);
 
     Set<String> getGroups();
@@ -123,6 +112,23 @@ public interface Roster {
      *            the jid (resource ignored) of the roster item to be removed
      */
     void removeItem(XmppURI jid);
+
+    /**
+     * Request add a item to the Roster. No listener is called until the item is
+     * really added to the roster. When the item is effectively added, the
+     * Roster sends a subscription to the roster item's presence
+     * 
+     * If a item with a same JID is already present in the roster, nothing is
+     * done.
+     * 
+     * @param jid
+     *            the user JID (resource ignored)
+     * @param name
+     *            the item name
+     * @param groups
+     *            <b>(optional!)</b> the groups you want to put the groups in
+     */
+    void requestAddItem(XmppURI jid, String name, String... groups);
 
     /**
      * Request to update a item to the Roster. If the item.jid is not in the

@@ -75,7 +75,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	final RosterItem item = roster.getItemByJID(jid);
 	if (item == null) {
 	    // add the item to the roster
-	    roster.addItem(jid, nick);
+	    roster.requestAddItem(jid, nick);
 	    // request a subscription to that entity of the roster
 	    requestSubscribe(jid);
 	}
