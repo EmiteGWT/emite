@@ -8,7 +8,7 @@ import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
-import com.calclab.emite.xep.search.client.Item;
+import com.calclab.emite.xep.search.client.SearchResultItem;
 import com.calclab.emite.xep.search.client.SearchFields;
 import com.calclab.emite.xep.search.client.SearchManager;
 import com.calclab.emite.xfunctional.client.Context;
@@ -51,7 +51,7 @@ public class SearchTests extends BasicTestSuite {
 	    HashMap<String, String> query = new HashMap<String, String>();
 	    query.put("nick", "test*");
 
-	    search.search(query, new ResultListener<List<Item>>() {
+	    search.search(query, new ResultListener<List<SearchResultItem>>() {
 
 		@Override
 		public void onFailure(String message) {
@@ -61,11 +61,11 @@ public class SearchTests extends BasicTestSuite {
 		}
 
 		@Override
-		public void onSuccess(List<Item> items) {
+		public void onSuccess(List<SearchResultItem> searchResultItems) {
 		    ctx.success("Search result retrieved");
 		    session.logout();
-		    for (Item item : items) {
-			ctx.info("Result: " + item.getNick());
+		    for (SearchResultItem searchResultItem : searchResultItems) {
+			ctx.info("Result: " + searchResultItem.getNick());
 		    }
 
 		}

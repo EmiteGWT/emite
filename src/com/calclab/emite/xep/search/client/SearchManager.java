@@ -46,6 +46,6 @@ public interface SearchManager {
      * 
      * @see SearchResult
      */
-    void search(HashMap<String, String> query, ResultListener<List<Item>> listener);
+    void search(HashMap<String, String> query, ResultListener<List<SearchResultItem>> listener);
 
 }

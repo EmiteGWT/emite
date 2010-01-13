@@ -8,30 +8,30 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  * 
  * See: http://xmpp.org/extensions/xep-0055.html#schema
  */
-public class Item {
-    public static Item parse(final IPacket child) {
+public class SearchResultItem {
+    public static SearchResultItem parse(final IPacket child) {
         final XmppURI jid = XmppURI.jid(child.getAttribute("jid"));
         if (jid == null) {
             throw new RuntimeException("a item should have a jid");
         }
-        final Item item = new Item(jid);
+        final SearchResultItem searchResultItem = new SearchResultItem(jid);
         final IPacket firstChild = child.getFirstChild("first");
         if (firstChild != null) {
-            item.setFirst(firstChild.getText());
+            searchResultItem.setFirst(firstChild.getText());
         }
         final IPacket lastChild = child.getFirstChild("last");
         if (lastChild != null) {
-            item.setLast(lastChild.getText());
+            searchResultItem.setLast(lastChild.getText());
         }
         final IPacket nickChild = child.getFirstChild("nick");
         if (nickChild != null) {
-            item.setNick(nickChild.getText());
+            searchResultItem.setNick(nickChild.getText());
         }
         final IPacket emailChild = child.getFirstChild("email");
         if (emailChild != null) {
-            item.setEmail(emailChild.getText());
+            searchResultItem.setEmail(emailChild.getText());
         }
-        return item;
+        return searchResultItem;
     }
     
     private final XmppURI jid;
@@ -47,7 +47,7 @@ public class Item {
      *            jid of the result (is a required field)
      * 
      */
-    public Item(final XmppURI jid) {
+    public SearchResultItem(final XmppURI jid) {
         this.jid = jid;
     }
 

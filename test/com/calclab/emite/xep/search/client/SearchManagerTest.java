@@ -61,13 +61,13 @@ public class SearchManagerTest {
     @Test
     public void shouldReturnAnEmptyListIfNotResultFounded() {
 
-	manager.search(new HashMap<String, String>(), new ResultListener<List<Item>>() {
+	manager.search(new HashMap<String, String>(), new ResultListener<List<SearchResultItem>>() {
 	    @Override
 	    public void onFailure(String message) {
 	    }
 
 	    @Override
-	    public void onSuccess(List<Item> list) {
+	    public void onSuccess(List<SearchResultItem> list) {
 		assertTrue(list.isEmpty());
 	    }
 	});
@@ -82,22 +82,22 @@ public class SearchManagerTest {
 	final HashMap<String, String> query = new HashMap<String, String>();
 	query.put("last", "Capulet");
 
-	manager.search(query, new ResultListener<List<Item>>() {
+	manager.search(query, new ResultListener<List<SearchResultItem>>() {
 	    @Override
 	    public void onFailure(String message) {
 	    }
 
 	    @Override
-	    public void onSuccess(List<Item> list) {
-		final Item item1 = list.get(0);
-		final Item item2 = list.get(1);
+	    public void onSuccess(List<SearchResultItem> list) {
+		final SearchResultItem searchResultItem1 = list.get(0);
+		final SearchResultItem searchResultItem2 = list.get(1);
 		assertEquals(2, list.size());
-		assertEquals("Juliet", item1.getFirst());
-		assertEquals("Capulet", item1.getLast());
-		assertEquals("JuliC", item1.getNick());
-		assertEquals("juliet@shakespeare.lit", item1.getEmail());
-		assertEquals("juliet@capulet.com", item1.getJid().toString());
-		assertEquals("tybalt@shakespeare.lit", item2.getJid().toString());
+		assertEquals("Juliet", searchResultItem1.getFirst());
+		assertEquals("Capulet", searchResultItem1.getLast());
+		assertEquals("JuliC", searchResultItem1.getNick());
+		assertEquals("juliet@shakespeare.lit", searchResultItem1.getEmail());
+		assertEquals("juliet@capulet.com", searchResultItem1.getJid().toString());
+		assertEquals("tybalt@shakespeare.lit", searchResultItem2.getJid().toString());
 	    }
 	});
 

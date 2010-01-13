@@ -26,3 +26,4 @@
 		<g:Label ui:field="name" styleName="{style.name}"></g:Label>
 	</g:FlowPanel>
 </ui:UiBinder> 
+

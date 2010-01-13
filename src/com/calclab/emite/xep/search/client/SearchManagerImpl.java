@@ -52,7 +52,7 @@ public class SearchManagerImpl implements SearchManager {
     }
 
     @Override
-    public void search(HashMap<String, String> query, ResultListener<List<Item>> listener) {
+    public void search(HashMap<String, String> query, ResultListener<List<SearchResultItem>> listener) {
 	if (session.getState() == State.ready) {
 	    search(session.getCurrentUser(), host, query, listener);
 	} else {
@@ -78,7 +78,7 @@ public class SearchManagerImpl implements SearchManager {
     }
 
     private void search(final XmppURI from, final XmppURI to, final HashMap<String, String> query,
-	    final ResultListener<List<Item>> listener) {
+	    final ResultListener<List<SearchResultItem>> listener) {
 	final IQ iq = new IQ(Type.set, to).From(from).With(XML_LANG, "en");
 	final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
 	for (final String field : query.keySet()) {
@@ -98,12 +98,12 @@ public class SearchManagerImpl implements SearchManager {
 	});
     }
 
-    protected List<Item> processResults(final XmppURI from, final IPacket query) {
-	final List<Item> result = new ArrayList<Item>();
+    protected List<SearchResultItem> processResults(final XmppURI from, final IPacket query) {
+	final List<SearchResultItem> result = new ArrayList<SearchResultItem>();
 	for (final IPacket child : query.getChildren()) {
 	    if (child.getName().equals("item")) {
-		final Item item = Item.parse(child);
-		result.add(item);
+		final SearchResultItem searchResultItem = SearchResultItem.parse(child);
+		result.add(searchResultItem);
 	    }
 	}
 	return result;
