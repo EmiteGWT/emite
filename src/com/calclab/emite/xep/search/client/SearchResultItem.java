@@ -16,7 +16,7 @@ public class SearchResultItem {
 	final IPacket lastChild = child.getFirstChild("last");
 	final IPacket nickChild = child.getFirstChild("nick");
 	final IPacket emailChild = child.getFirstChild("email");
-	return new SearchResultItem(jid, firstChild.getText(), lastChild.getText(), nickChild.getText(), emailChild
+	return new SearchResultItem(jid, nickChild.getText(), firstChild.getText(), lastChild.getText(), emailChild
 		.getText());
     }
 
