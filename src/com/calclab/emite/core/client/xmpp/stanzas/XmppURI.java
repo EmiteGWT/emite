@@ -22,6 +22,7 @@
 package com.calclab.emite.core.client.xmpp.stanzas;
 
 /**
+ * Defines a XMPP URI.
  * 
  * http://www.xmpp.org/drafts/attic/draft-saintandre-xmpp-uri-00.html
  * 
@@ -29,15 +30,43 @@ package com.calclab.emite.core.client.xmpp.stanzas;
  * 
  */
 public class XmppURI {
-    private static final XmppURICache factory = new XmppURICache();
+    private static final XmppURIFactory factory = new XmppURIFactory();
 
+    /**
+     * Parse the string and return a JID (a uri without resource)
+     * 
+     * @param jid
+     *            the string to be parsed
+     * @return a XmppURI object if the jid is a valid JID string, null otherwise
+     */
     public static XmppURI jid(final String jid) {
 	return uri(jid).getJID();
     }
 
+    /**
+     * Parse a string and return a complete XmppURI object
+     * 
+     * @param xmppUri
+     *            the string to be parsed
+     * @return a XmppURI object if the string is a valid XmppURI string, null
+     *         otherwise
+     * 
+     */
     public static XmppURI uri(final String xmppUri) {
 	return factory.parse(xmppUri);
     }
+
+    /**
+     * Create a new XmppURI object with the given attributes
+     * 
+     * @param node
+     *            the node of the uri
+     * @param host
+     *            the host of the uri
+     * @param resource
+     *            the resource of the uri
+     * @return a XmppURI object, never null
+     */
 
     public static XmppURI uri(final String node, final String host, final String resource) {
 	final XmppURI xmppURI = new XmppURI(node, host, resource);
@@ -87,10 +116,16 @@ public class XmppURI {
 	return host.equals(other.host) && (node == null || node.equals(other.node));
     }
 
+    /**
+     * @return the uri's host
+     */
     public String getHost() {
 	return host;
     }
 
+    /**
+     * @return a new XmppURI object with the same host as this one
+     */
     public XmppURI getHostURI() {
 	return uri(null, host, null);
     }
@@ -104,10 +139,16 @@ public class XmppURI {
 	return uri(node, host, null);
     }
 
+    /**
+     * @return uri's node
+     */
     public String getNode() {
 	return node;
     }
 
+    /**
+     * @return uri's resource
+     */
     public String getResource() {
 	return resource;
     }
@@ -117,10 +158,16 @@ public class XmppURI {
 	return representation.hashCode();
     }
 
+    /**
+     * @return true if this uri has node, false otherwise
+     */
     public boolean hasNode() {
 	return node != null;
     }
 
+    /**
+     * @return true if this uri has resource, false otherwise
+     */
     public boolean hasResource() {
 	return resource != null;
     }

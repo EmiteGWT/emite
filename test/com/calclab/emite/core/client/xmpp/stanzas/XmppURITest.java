@@ -48,34 +48,28 @@ public class XmppURITest {
 	assertEquals("res", uri.getResource());
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithOnlyAtFails() {
-	uri("xmpp:@");
+	assertNull(uri("xmpp:@"));
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithOnlyHostFails() {
-	uri("xmpp:@example");
+	assertNull(uri("xmpp:@example"));
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithOnlyNodeFails() {
-	uri("xmpp:test@");
+	assertNull(uri("xmpp:test@"));
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithOnlySlashFails() {
-	uri("xmpp:/");
+	assertNull(uri("xmpp:/"));
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithoutHost() {
-	uri("xmpp:test@/res");
+	assertNull(uri("xmpp:test@/res"));
     }
 
-    @Test(expected = RuntimeException.class)
     public void checkUriFormatWithoutNodeFails() {
-	uri("xmpp:@example/res");
+	assertNull(uri("xmpp:@example/res"));
     }
 
     @Test
