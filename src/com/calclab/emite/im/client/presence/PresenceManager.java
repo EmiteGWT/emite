@@ -49,5 +49,5 @@ public interface PresenceManager {
     /**
      * Change the current user presence
      */
-    void setOwnPresence(Presence presence);
+    void changeOwnPresence(Presence presence);
 }

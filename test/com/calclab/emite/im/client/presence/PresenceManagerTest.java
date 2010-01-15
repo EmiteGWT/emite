@@ -37,7 +37,7 @@ public class PresenceManagerTest {
     @Test
     public void shouldBroadcastPresenceIfLoggedin() {
 	session.setLoggedIn("myself@domain");
-	manager.setOwnPresence(Presence.build("this is my new status", Show.away));
+	manager.changeOwnPresence(Presence.build("this is my new status", Show.away));
 	session.verifySent("<presence><show>away</show>" + "<status>this is my new status</status></presence>");
 	final Presence current = manager.getOwnPresence();
 	assertEquals(Show.away, current.getShow());
@@ -49,7 +49,7 @@ public class PresenceManagerTest {
 	session.setLoggedIn(uri("myself@domain"));
 	final MockedListener<Presence> listener = new MockedListener<Presence>();
 	manager.onOwnPresenceChanged(listener);
-	manager.setOwnPresence(Presence.build("status", Show.away));
+	manager.changeOwnPresence(Presence.build("status", Show.away));
 	assertTrue(listener.isCalledOnce());
 	assertEquals("status", listener.getValue(0).getStatus());
 	assertEquals(Show.away, listener.getValue(0).getShow());
@@ -63,7 +63,7 @@ public class PresenceManagerTest {
     @Test
     public void shouldResetOwnPresenceWhenLoggedOut() {
 	session.setLoggedIn(uri("myself@domain"));
-	manager.setOwnPresence(Presence.build("status", Show.away));
+	manager.changeOwnPresence(Presence.build("status", Show.away));
 	assertEquals("status", manager.getOwnPresence().getStatus());
 	session.logout();
 	assertEquals(Type.unavailable, manager.getOwnPresence().getType());
@@ -88,7 +88,7 @@ public class PresenceManagerTest {
     @Test
     public void shouldSendPresenceIfLoggedIn() {
 	session.setLoggedIn(uri("myself@domain"));
-	manager.setOwnPresence(new Presence().With(Presence.Show.dnd));
+	manager.changeOwnPresence(new Presence().With(Presence.Show.dnd));
 	session.verifySent("<presence><show>dnd</show></presence>");
 
     }
