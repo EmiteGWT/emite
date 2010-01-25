@@ -10,8 +10,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 public class RoomOccupantTest {
 
     @Test
-    public void should() {
-	final Occupant occupant = new Occupant(uri("valid@uri"), "not valid affiliation", "not valid role", "not valid show", "message");
+    public void shouldAnswerUnknownStatusWhenNotValid() {
+	final Occupant occupant = new Occupant(uri("valid@uri"), "not valid affiliation",
+		"not valid role", "not valid show", "message");
 	assertEquals(Occupant.Affiliation.none, occupant.getAffiliation());
 	assertEquals(Occupant.Role.unknown, occupant.getRole());
 	assertEquals(Show.unknown, occupant.getShow());

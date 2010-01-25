@@ -40,21 +40,24 @@ public class Occupant {
     private Show show;
     private String statusMessage;
 
-    public Occupant(final XmppURI uri, final String affiliation, final String role, final Show show, final String statusMessage) {
-    	this.uri = uri;
-    	setAffiliation(affiliation);
-    	setRole(role);
-    	setShow(show);
-    	setStatusMessage(statusMessage);
+    public Occupant(final XmppURI uri, final String affiliation, final String role,
+	    final Show show, final String statusMessage) {
+	this.uri = uri;
+	setAffiliation(affiliation);
+	setRole(role);
+	setShow(show);
+	setStatusMessage(statusMessage);
     }
-    public Occupant(final XmppURI uri, final String affiliation, final String role, final String show, final String statusMessage) {
-    	this.uri = uri;
-    	setAffiliation(affiliation);
-    	setRole(role);
-    	setShow(show);
-    	setStatusMessage(statusMessage);
+
+    public Occupant(final XmppURI uri, final String affiliation, final String role,
+	    final String show, final String statusMessage) {
+	this.uri = uri;
+	setAffiliation(affiliation);
+	setRole(role);
+	setShow(show);
+	setStatusMessage(statusMessage);
     }
-    
+
     public Affiliation getAffiliation() {
 	return affiliation;
     }
@@ -67,18 +70,18 @@ public class Occupant {
 	return role;
     }
 
+    public Show getShow() {
+	return show;
+    }
+
+    public String getStatusMessage() {
+	return statusMessage;
+    }
+
     public XmppURI getURI() {
 	return uri;
     }
 
-    public Show getShow() {
-		return show;
-	}
-    
-    public String getStatusMessage() {
-		return statusMessage;
-	}
-    
     public void setAffiliation(final String affiliation) {
 	try {
 	    this.affiliation = Affiliation.valueOf(affiliation);
@@ -98,27 +101,28 @@ public class Occupant {
 	    this.role = Role.unknown;
 	}
     }
-    
+
     public void setShow(Show show) {
-		this.show = show;
-	}
+	this.show = show;
+    }
 
     public void setShow(String show) {
-   	try {
-   	    this.show = Show.valueOf(show);
-   	} catch (final IllegalArgumentException e) {
-   	    this.show = Show.unknown;
-   	} catch (final NullPointerException e) {
-   	    this.show = Show.unknown;
-   	}
+	try {
+	    this.show = Show.valueOf(show);
+	} catch (final IllegalArgumentException e) {
+	    this.show = Show.unknown;
+	} catch (final NullPointerException e) {
+	    this.show = Show.unknown;
 	}
-    
+    }
+
     public void setStatusMessage(String statusMessage) {
-		this.statusMessage = statusMessage;
-	}
-    
+	this.statusMessage = statusMessage;
+    }
+
     @Override
     public String toString() {
-	return uri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage +")";
+	return uri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage
+		+ ")";
     }
 }
