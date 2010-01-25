@@ -1,0 +1,227 @@
+Index: test/com/calclab/emite/xep/muc/client/RoomOccupantTest.java
+===================================================================
+--- test/com/calclab/emite/xep/muc/client/RoomOccupantTest.java	(revision 1094)
++++ test/com/calclab/emite/xep/muc/client/RoomOccupantTest.java	(working copy)
+@@ -5,12 +5,15 @@
+ 
+ import org.junit.Test;
+ 
++import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
++
+ public class RoomOccupantTest {
+ 
+     @Test
+     public void should() {
+-	final Occupant occupant = new Occupant(uri("valid@uri"), "not valid affiliation", "not valid role");
++	final Occupant occupant = new Occupant(uri("valid@uri"), "not valid affiliation", "not valid role", "not valid show", "message");
+ 	assertEquals(Occupant.Affiliation.none, occupant.getAffiliation());
+ 	assertEquals(Occupant.Role.unknown, occupant.getRole());
++	assertEquals(Show.unknown, occupant.getShow());
+     }
+ }
+Index: test/com/calclab/emite/xep/muc/client/RoomTest.java
+===================================================================
+--- test/com/calclab/emite/xep/muc/client/RoomTest.java	(revision 1094)
++++ test/com/calclab/emite/xep/muc/client/RoomTest.java	(working copy)
+@@ -13,6 +13,7 @@
+ 
+ import com.calclab.emite.core.client.xmpp.stanzas.Message;
+ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
++import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+ import com.calclab.emite.im.client.chat.AbstractChat;
+ import com.calclab.emite.im.client.chat.AbstractChatTest;
+ import com.calclab.emite.im.client.chat.Chat;
+@@ -46,7 +47,7 @@
+ 	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
+ 	room.onOccupantsChanged(listener);
+ 	final XmppURI uri = uri("room@domain/name");
+-	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role");
++	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role", Show.unknown, null);
+ 	assertTrue(listener.isCalledOnce());
+ 	final Occupant result = room.getOccupantByURI(uri);
+ 	assertEquals(occupant, result);
+@@ -104,7 +105,7 @@
+ 	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
+ 	room.onOccupantsChanged(listener);
+ 	final XmppURI uri = uri("room@domain/name");
+-	room.setOccupantPresence(uri, "owner", "participant");
++	room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
+ 	assertEquals(1, room.getOccupantsCount());
+ 	room.removeOccupant(uri);
+ 	assertEquals(0, room.getOccupantsCount());
+@@ -130,8 +131,8 @@
+ 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
+ 	room.onOccupantModified(listener);
+ 	final XmppURI uri = uri("room@domain/name");
+-	final Occupant occupant = room.setOccupantPresence(uri, "owner", "participant");
+-	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator");
++	final Occupant occupant = room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
++	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator", Show.notSpecified, null);
+ 	assertEquals(1, listener.getCalledTimes());
+ 	assertSame(occupant, occupant2);
+     }
+Index: src/com/calclab/emite/xep/muc/client/Occupant.java
+===================================================================
+--- src/com/calclab/emite/xep/muc/client/Occupant.java	(revision 1094)
++++ src/com/calclab/emite/xep/muc/client/Occupant.java	(working copy)
+@@ -22,6 +22,7 @@
+ package com.calclab.emite.xep.muc.client;
+ 
+ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
++import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+ 
+ public class Occupant {
+ 
+@@ -36,13 +37,24 @@
+     private Affiliation affiliation;
+     private Role role;
+     private final XmppURI uri;
++    private Show show;
++    private String statusMessage;
+ 
+-    public Occupant(final XmppURI uri, final String affiliation, final String role) {
+-	this.uri = uri;
+-	setAffiliation(affiliation);
+-	setRole(role);
++    public Occupant(final XmppURI uri, final String affiliation, final String role, final Show show, final String statusMessage) {
++    	this.uri = uri;
++    	setAffiliation(affiliation);
++    	setRole(role);
++    	setShow(show);
++    	setStatusMessage(statusMessage);
+     }
+-
++    public Occupant(final XmppURI uri, final String affiliation, final String role, final String show, final String statusMessage) {
++    	this.uri = uri;
++    	setAffiliation(affiliation);
++    	setRole(role);
++    	setShow(show);
++    	setStatusMessage(statusMessage);
++    }
++    
+     public Affiliation getAffiliation() {
+ 	return affiliation;
+     }
+@@ -59,6 +71,14 @@
+ 	return uri;
+     }
+ 
++    public Show getShow() {
++		return show;
++	}
++    
++    public String getStatusMessage() {
++		return statusMessage;
++	}
++    
+     public void setAffiliation(final String affiliation) {
+ 	try {
+ 	    this.affiliation = Affiliation.valueOf(affiliation);
+@@ -78,9 +98,27 @@
+ 	    this.role = Role.unknown;
+ 	}
+     }
++    
++    public void setShow(Show show) {
++		this.show = show;
++	}
+ 
++    public void setShow(String show) {
++   	try {
++   	    this.show = Show.valueOf(show);
++   	} catch (final IllegalArgumentException e) {
++   	    this.show = Show.unknown;
++   	} catch (final NullPointerException e) {
++   	    this.show = Show.unknown;
++   	}
++	}
++    
++    public void setStatusMessage(String statusMessage) {
++		this.statusMessage = statusMessage;
++	}
++    
+     @Override
+     public String toString() {
+-	return uri.toString() + "(" + affiliation + "," + role + ")";
++	return uri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage +")";
+     }
+ }
+Index: src/com/calclab/emite/xep/muc/client/Room.java
+===================================================================
+--- src/com/calclab/emite/xep/muc/client/Room.java	(revision 1094)
++++ src/com/calclab/emite/xep/muc/client/Room.java	(working copy)
+@@ -23,6 +23,7 @@
+ 
+ import java.util.Collection;
+ import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.List;
+ 
+ import com.calclab.emite.core.client.packet.IPacket;
+@@ -34,6 +35,7 @@
+ import com.calclab.emite.core.client.xmpp.stanzas.Message;
+ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
++import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+ import com.calclab.emite.im.client.chat.AbstractChat;
+ import com.calclab.emite.im.client.chat.Chat;
+@@ -67,7 +69,7 @@
+     Room(final Session session, final XmppURI roomURI, final XmppURI starter) {
+ 	super(session, roomURI, starter);
+ 	this.session = session;
+-	this.occupantsByURI = new HashMap<XmppURI, Occupant>();
++	this.occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
+ 	this.onOccupantModified = new Event<Occupant>("room:onOccupantModified");
+ 	this.onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
+ 	this.onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
+@@ -184,15 +186,17 @@
+ 	session.send(message);
+     }
+ 
+-    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role) {
++    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role, final Show show, final String statusMessage) {
+ 	Occupant occupant = getOccupantByURI(uri);
+ 	if (occupant == null) {
+-	    occupant = new Occupant(uri, affiliation, role);
++	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
+ 	    occupantsByURI.put(occupant.getURI(), occupant);
+ 	    onOccupantsChanged.fire(occupantsByURI.values());
+ 	} else {
+ 	    occupant.setAffiliation(affiliation);
+ 	    occupant.setRole(role);
++	    occupant.setShow(show);
++	    occupant.setStatusMessage(statusMessage);
+ 	    onOccupantModified.fire(occupant);
+ 	}
+ 	return occupant;
+@@ -213,6 +217,20 @@
+ 	session.send(message);
+     }
+ 
++    /**
++     * Update my status to other occupants.
++     * 
++     * @param statusMessage
++     * @param show
++     */
++	public void setStatus(String statusMessage, Show show){
++		final Presence presence = Presence.build(statusMessage, show);
++		presence.setTo(uri);
++		//presence.addChild("x", "http://jabber.org/protocol/muc");
++		//presence.setPriority(0);
++		session.send(presence);
++	}
++
+     @Override
+     public String toString() {
+ 	return "ROOM: " + uri;
+@@ -227,7 +245,7 @@
+ 		final IPacket item = child.getFirstChild("item");
+ 		final String affiliation = item.getAttribute("affiliation");
+ 		final String role = item.getAttribute("role");
+-		this.setOccupantPresence(occupantURI, affiliation, role);
++		this.setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
+ 		if (isNewRoom(child)) {
+ 		    requestCreateInstantRoom();
+ 		} else {

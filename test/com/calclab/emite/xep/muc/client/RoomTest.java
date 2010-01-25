@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.Chat;
@@ -46,7 +47,7 @@ public class RoomTest extends AbstractChatTest {
 	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
 	room.onOccupantsChanged(listener);
 	final XmppURI uri = uri("room@domain/name");
-	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role");
+	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role", Show.unknown, null);
 	assertTrue(listener.isCalledOnce());
 	final Occupant result = room.getOccupantByURI(uri);
 	assertEquals(occupant, result);
@@ -104,7 +105,7 @@ public class RoomTest extends AbstractChatTest {
 	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
 	room.onOccupantsChanged(listener);
 	final XmppURI uri = uri("room@domain/name");
-	room.setOccupantPresence(uri, "owner", "participant");
+	room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
 	assertEquals(1, room.getOccupantsCount());
 	room.removeOccupant(uri);
 	assertEquals(0, room.getOccupantsCount());
@@ -130,8 +131,8 @@ public class RoomTest extends AbstractChatTest {
 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
 	room.onOccupantModified(listener);
 	final XmppURI uri = uri("room@domain/name");
-	final Occupant occupant = room.setOccupantPresence(uri, "owner", "participant");
-	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator");
+	final Occupant occupant = room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
+	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator", Show.notSpecified, null);
 	assertEquals(1, listener.getCalledTimes());
 	assertSame(occupant, occupant2);
     }

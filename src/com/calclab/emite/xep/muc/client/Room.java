@@ -23,6 +23,7 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
@@ -34,6 +35,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.Chat;
@@ -67,7 +69,7 @@ public class Room extends AbstractChat implements Chat {
     Room(final Session session, final XmppURI roomURI, final XmppURI starter) {
 	super(session, roomURI, starter);
 	this.session = session;
-	this.occupantsByURI = new HashMap<XmppURI, Occupant>();
+	this.occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
 	this.onOccupantModified = new Event<Occupant>("room:onOccupantModified");
 	this.onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
 	this.onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
@@ -184,15 +186,17 @@ public class Room extends AbstractChat implements Chat {
 	session.send(message);
     }
 
-    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role) {
+    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role, final Show show, final String statusMessage) {
 	Occupant occupant = getOccupantByURI(uri);
 	if (occupant == null) {
-	    occupant = new Occupant(uri, affiliation, role);
+	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
 	    occupantsByURI.put(occupant.getURI(), occupant);
 	    onOccupantsChanged.fire(occupantsByURI.values());
 	} else {
 	    occupant.setAffiliation(affiliation);
 	    occupant.setRole(role);
+	    occupant.setShow(show);
+	    occupant.setStatusMessage(statusMessage);
 	    onOccupantModified.fire(occupant);
 	}
 	return occupant;
@@ -213,6 +217,20 @@ public class Room extends AbstractChat implements Chat {
 	session.send(message);
     }
 
+    /**
+     * Update my status to other occupants.
+     * 
+     * @param statusMessage
+     * @param show
+     */
+	public void setStatus(String statusMessage, Show show){
+		final Presence presence = Presence.build(statusMessage, show);
+		presence.setTo(uri);
+		//presence.addChild("x", "http://jabber.org/protocol/muc");
+		//presence.setPriority(0);
+		session.send(presence);
+	}
+
     @Override
     public String toString() {
 	return "ROOM: " + uri;
@@ -227,7 +245,7 @@ public class Room extends AbstractChat implements Chat {
 		final IPacket item = child.getFirstChild("item");
 		final String affiliation = item.getAttribute("affiliation");
 		final String role = item.getAttribute("role");
-		this.setOccupantPresence(occupantURI, affiliation, role);
+		this.setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
 		if (isNewRoom(child)) {
 		    requestCreateInstantRoom();
 		} else {
