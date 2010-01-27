@@ -92,7 +92,8 @@ public class XmppURI {
 	this.node = node;
 	this.host = host;
 	this.resource = resource;
-	this.representation = (node != null ? node + "@" : "") + host + (resource != null ? "/" + resource : "");
+	this.representation = (node != null ? node + "@" : "") + host
+		+ (resource != null ? "/" + resource : "");
     }
 
     @Override
@@ -151,6 +152,15 @@ public class XmppURI {
      */
     public String getResource() {
 	return resource;
+    }
+
+    /**
+     * Return the node or the host if node is null
+     * 
+     * @return an never null short name representation
+     */
+    public String getShortName() {
+	return node == null ? host : node;
     }
 
     @Override
