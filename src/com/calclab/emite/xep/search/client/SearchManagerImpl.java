@@ -1,6 +1,7 @@
 package com.calclab.emite.xep.search.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class SearchManagerImpl implements SearchManager {
 
     @Override
     public void search(final Form searchForm, final ResultListener<Form> listener) {
-        searchGeneric(new Listener<IPacket>() {
+        searchGeneric(Arrays.asList((IPacket) searchForm), new Listener<IPacket>() {
             @Override
             public void onEvent(final IPacket received) {
                 final IQ response = new IQ(received);
@@ -92,18 +93,18 @@ public class SearchManagerImpl implements SearchManager {
                     listener.onFailure(null);
                 }
             }
-        }, searchForm);
+        });
     }
 
     @Override
     public void search(final HashMap<String, String> query, final ResultListener<List<SearchResultItem>> listener) {
-        final List<Packet> queryPacket = new ArrayList<Packet>();
+        final List<IPacket> queryPacket = new ArrayList<IPacket>();
         for (final String field : query.keySet()) {
             final Packet child = new Packet(field);
             child.setText(query.get(field));
             queryPacket.add(child);
         }
-        searchGeneric(new Listener<IPacket>() {
+        searchGeneric(queryPacket, new Listener<IPacket>() {
             @Override
             public void onEvent(final IPacket received) {
                 final IQ response = new IQ(received);
@@ -114,7 +115,7 @@ public class SearchManagerImpl implements SearchManager {
                     listener.onFailure(null);
                 }
             }
-        }, queryPacket.toArray(new Packet[query.size()]));
+        });
     }
 
     @Override
@@ -161,7 +162,7 @@ public class SearchManagerImpl implements SearchManager {
         }
     }
 
-    private void searchGeneric(final Listener<IPacket> onResult, final IPacket... queryChilds) {
+    private void searchGeneric(final List<IPacket> queryChilds, final Listener<IPacket> onResult) {
         if (session.getState() == State.ready) {
             final IQ iq = new IQ(Type.set, host).From(session.getCurrentUser()).With(XML_LANG, "en");
             final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
