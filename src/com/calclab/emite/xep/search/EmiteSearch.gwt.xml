@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module>
-	<inherits name="com.calclab.emite.core.EmiteCore" />
-	<entry-point class="com.calclab.emite.xep.search.client.SearchModule" />
-	<source path="client" />
+<module rename-to='emite.xep.search'>
+  <inherits name="com.calclab.emite.core.EmiteCore" />
+  <inherits name="com.calclab.emite.xep.dataforms.EmiteDataForms" />
+  <entry-point class="com.calclab.emite.xep.search.client.SearchModule" />
+  <source path="client" />
 </module>

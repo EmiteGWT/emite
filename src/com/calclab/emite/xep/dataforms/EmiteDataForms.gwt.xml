@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='emite.xep.dataforms'>
+    <inherits name="com.calclab.emite.core.EmiteCore" />
+    <source path="client" />
+    <entry-point class="com.calclab.emite.xep.dataforms.client.DataFormsEntryPoint" />
+</module>
