@@ -7,6 +7,9 @@ import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
 
+/**
+ * VCard java representation
+ */
 public class VCard extends VCardData {
 
     public static enum Data {
