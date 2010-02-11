@@ -17,8 +17,10 @@ public abstract class AbstractRoster implements Roster {
     private final Event<RosterItem> onItemAdded;
     private final Event<RosterItem> onItemChanged;
     private final Event<RosterItem> onItemRemoved;
+    private boolean rosterReady;
 
     public AbstractRoster() {
+	this.rosterReady = false;
 	itemsByJID = new HashMap<XmppURI, RosterItem>();
 	itemsByGroup = new HashMap<String, List<RosterItem>>();
 
@@ -27,6 +29,11 @@ public abstract class AbstractRoster implements Roster {
 	this.onItemRemoved = new Event<RosterItem>("roster:onItemRemoved");
 
 	this.onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
+    }
+
+    @Override
+    public boolean isRosterReady() {
+	return rosterReady;
     }
 
     @Deprecated
@@ -88,6 +95,7 @@ public abstract class AbstractRoster implements Roster {
     }
 
     protected void fireRosterReady(Collection<RosterItem> collection) {
+	rosterReady = true;
 	onRosterReady.fire(collection);
     }
 

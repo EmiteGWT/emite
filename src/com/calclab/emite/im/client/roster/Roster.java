@@ -35,6 +35,13 @@ import com.calclab.suco.client.events.Listener;
 public interface Roster {
 
     /**
+     * Checks if a valid roster has been received in the login process
+     * 
+     * @return true if has a roster
+     */
+    boolean isRosterReady();
+
+    /**
      * renamed to requestAddItem
      */
     @Deprecated
