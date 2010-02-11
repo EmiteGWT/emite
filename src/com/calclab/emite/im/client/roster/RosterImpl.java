@@ -40,7 +40,8 @@ import com.calclab.suco.client.events.Listener;
  */
 public class RosterImpl extends AbstractRoster implements Roster {
 
-    private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
+    private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query",
+	    "jabber:iq:roster");
     private final Session session;
 
     public RosterImpl(final Session session) {
@@ -79,14 +80,15 @@ public class RosterImpl extends AbstractRoster implements Roster {
 
 	session.onIQ(new Listener<IQ>() {
 	    public void onEvent(final IQ iq) {
-		if (IQ.isSet(iq)) {
+		if (iq.isType(IQ.Type.set)) {
 		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
 		    if (query != null) {
 			for (final IPacket child : query.getChildren()) {
 			    handleRosterIQSet(RosterItem.parse(child));
 			}
 		    }
-		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
+		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id",
+			    iq.getId()));
 		}
 	    }
 
@@ -137,8 +139,8 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	}
     }
 
-    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
-	    final String... groups) {
+    private void addOrUpdateItem(final XmppURI jid, final String name,
+	    final SubscriptionState subscriptionState, final String... groups) {
 	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
 	item.setGroups(groups);
 	final IQ iq = new IQ(Type.set);
@@ -160,7 +162,8 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	    if (subscriptionState == SubscriptionState.remove) {
 		fireItemRemoved(item);
 	    } else {
-		if (subscriptionState == SubscriptionState.to || subscriptionState == SubscriptionState.both) {
+		if (subscriptionState == SubscriptionState.to
+			|| subscriptionState == SubscriptionState.both) {
 		    // already subscribed, preserve available/show/status
 		    item.setAvailable(old.isAvailable());
 		    item.setShow(old.getShow());
@@ -188,19 +191,21 @@ public class RosterImpl extends AbstractRoster implements Roster {
     }
 
     private void requestRoster(final XmppURI user) {
-	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
-	    public void onEvent(final IPacket received) {
-		if (IQ.isSuccess(received)) {
-		    clearitemsByJID();
-		    final List<? extends IPacket> children = received.getFirstChild("query").getChildren();
-		    for (final IPacket child : children) {
-			final RosterItem item = RosterItem.parse(child);
-			addItem(item);
+	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"),
+		new Listener<IPacket>() {
+		    public void onEvent(final IPacket received) {
+			if (IQ.isSuccess(received)) {
+			    clearitemsByJID();
+			    final List<? extends IPacket> children = received
+				    .getFirstChild("query").getChildren();
+			    for (final IPacket child : children) {
+				final RosterItem item = RosterItem.parse(child);
+				addItem(item);
+			    }
+			    fireRosterReady(getItems());
+			}
 		    }
-		    fireRosterReady(getItems());
-		}
-	    }
 
-	});
+		});
     }
 }

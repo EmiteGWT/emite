@@ -39,10 +39,22 @@ public class SessionTester extends AbstractSession {
 	this((XmppURI) null);
     }
 
+    /**
+     * Create a new SessionTester and login if user provided
+     * 
+     * @param user
+     *            optional user to login
+     */
     public SessionTester(final String user) {
 	this(XmppURI.uri(user));
     }
 
+    /**
+     * Create a new SessionTester and login if user provided
+     * 
+     * @param user
+     *            optional user to login
+     */
     public SessionTester(final XmppURI user) {
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
@@ -102,10 +114,10 @@ public class SessionTester extends AbstractSession {
 	    fireMessage(new Message(stanza));
 	} else if (name.equals("presence")) {
 	    firePresence(new Presence(stanza));
-	} else if (name.equals("iq") && (stanza.hasAttribute("type", "set") || stanza.hasAttribute("type", "get"))) {
+	} else if (name.equals("iq")) {
 	    fireIQ(new IQ(stanza));
 	} else {
-	    throw new RuntimeException("Not valid received: " + received);
+	    throw new RuntimeException("WHAT IS THIS? (" + name + "): " + stanza.toString());
 	}
 
     }
@@ -187,7 +199,8 @@ public class SessionTester extends AbstractSession {
 	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
     }
 
-    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
+    private boolean contains(final IPacket expected, final ArrayList<IPacket> list,
+	    final StringBuffer buffer) {
 	boolean isContained = false;
 	final IsPacketLike matcher = new IsPacketLike(expected);
 	for (final IPacket packet : list) {

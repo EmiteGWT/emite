@@ -4,9 +4,6 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-	<welcome-file-list>
-		<welcome-file>ExampleXmppSession.html</welcome-file>
-	</welcome-file-list>
 	<servlet>
 		<servlet-name>Proxy</servlet-name>
 		<servlet-class>de.spieleck.servlets.ProxyServlet

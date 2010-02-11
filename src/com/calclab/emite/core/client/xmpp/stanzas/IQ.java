@@ -30,12 +30,28 @@ public class IQ extends BasicStanza {
 
     private static final String NAME = "iq";
 
+    public static Type getType(IPacket packet) {
+	try {
+	    return Type.valueOf(packet.getAttribute(TYPE));
+	} catch (final IllegalArgumentException e) {
+	    return null;
+	}
+    }
+
+    /**
+     * Use isType
+     */
+    @Deprecated
     public static boolean isSet(final IPacket iq) {
 	return iq.hasAttribute(TYPE, "set");
     }
 
     public static boolean isSuccess(final IPacket iq) {
 	return iq.hasAttribute(TYPE, "result");
+    }
+
+    public static boolean isType(Type type, final IPacket iq) {
+	return iq.hasAttribute(TYPE, type.toString());
     }
 
     public IQ(final IPacket stanza) {
@@ -73,16 +89,16 @@ public class IQ extends BasicStanza {
     }
 
     public Type getType() {
-	try {
-	    return Type.valueOf(getAttribute(TYPE));
-	} catch (final IllegalArgumentException e) {
-	    return null;
-	}
+	return getType(this);
     }
 
     public IPacket Includes(final String name, final String xmlns) {
 	addChild(name, xmlns);
 	return this;
+    }
+
+    public boolean isType(Type type) {
+	return IQ.isType(type, this);
     }
 
     public IQ To(final XmppURI toURI) {
