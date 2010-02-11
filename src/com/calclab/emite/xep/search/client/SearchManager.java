@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.xep.dataforms.client.Form;
 
 /**
  * Search information repositories on the Jabber network.
@@ -37,7 +38,28 @@ public interface SearchManager {
     void requestSearchFields(ResultListener<SearchFields> listener);
 
     /**
-     * Peform a simple search
+     * Request available search fields using extended search
+     * 
+     * @param onResult
+     *            A SearchResult with a search form
+     * 
+     * @see SearchResult
+     */
+
+    void requestSearchForm(ResultListener<Form> listener);
+
+    /**
+     * Perform a extended search
+     * 
+     * @param searchForm
+     *            the search form
+     * @param listener
+     *            the listener with a form with the results
+     */
+    void search(Form searchForm, ResultListener<Form> listener);
+
+    /**
+     * Perform a simple search
      * 
      * @param query
      *            A HashMap with names and values

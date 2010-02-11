@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form.Type;
@@ -23,6 +24,7 @@ public class FormTest {
     private static final String XEP_0004_5_2_SAMPLE_8 = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='completed'> <x xmlns='jabber:x:data' type='result'> <title>Joogle Search: verona</title> <reported> <field var='name'/> <field var='url'/> </reported> <item> <field var='name'> <value>Comune di Verona - Benvenuti nel sito ufficiale</value> </field> <field var='url'> <value>http://www.comune.verona.it/</value> </field> </item> <item> <field var='name'> <value>benvenuto!</value> </field> <field var='url'> <value>http://www.hellasverona.it/</value> </field> </item> <item> <field var='name'> <value>Universita degli Studi di Verona - Home Page</value> </field> <field var='url'> <value>http://www.univr.it/</value> </field> </item> <item> <field var='name'> <value>Aeroporti del Garda</value> </field> <field var='url'> <value>http://www.aeroportoverona.it/</value> </field> </item> <item> <field var='name'> <value>Veronafiere - fiera di Verona</value> </field> <field var='url'> <value>http://www.veronafiere.it/</value> </field> </item> </x> </command> </iq>";
     private static final String XEP_0154_5_3_SAMPLE_13 = "<message to='francisco@denmark.lit' from='hamlet@denmark.lit/elsinore' type='headline' id='foo'> <event xmlns='http://jabber.org/protocol/pubsub#event'> <items node='urn:xmpp:tmp:profile'> <item> <profile xmlns='urn:xmpp:tmp:profile'> <x xmlns='jabber:x:data' type='result'> <field var='weblog'> <value>http://www.denmark.lit/blogs/princely_musings</value> </field> </x> </profile> </item> </items> </event> </message>";
     private static final String SEVERAL_INSTRUCTIONS = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='completed'> <x xmlns='jabber:x:data'type='form'> <title/> <instructions>First</instructions> <instructions>Second</instructions> <field var='test'type='boelean'label='description'> <desc/> <required/> <value>somevalue</value> <option label='option-label'><value>some-option-value</value></option> <option label='option-label'><value>some-option-value</value></option> </field> </x></command> </iq>";
+    private static final String XEP_0055_2_1_SAMPLE_1 = "<iq type='get' from='romeo@montague.net/home' to='characters.shakespeare.lit' id='search1' xml:lang='en'>  <query xmlns='jabber:iq:search'/></iq>";
 
     private SessionTester session;
 
@@ -81,6 +83,12 @@ public class FormTest {
         final List<Field> fields4 = items.get(4).getFields();
         assertEquals("Veronafiere - fiera di Verona", fields4.get(0).getValues().get(0));
         assertEquals("http://www.veronafiere.it/", fields4.get(1).getValues().get(0));
+    }
+
+    @Test
+    public void parseSearchWithoutForm() {
+        final Form form = parse(XEP_0055_2_1_SAMPLE_1);
+        assertEquals(form.x(), NoPacket.INSTANCE);
     }
 
     @Test
