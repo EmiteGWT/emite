@@ -12,57 +12,60 @@ public class VCardManager {
     private final Session session;
     private final Event<VCardResponse> onVCardResponse;
 
-    public VCardManager(Session session) {
+    public VCardManager(final Session session) {
 	this.session = session;
 	this.onVCardResponse = new Event<VCardResponse>("vcard.response");
     }
 
-    public void addOnVCardReceived(Listener<VCardResponse> listener) {
+    public void addOnVCardReceived(final Listener<VCardResponse> listener) {
 	onVCardResponse.add(listener);
     }
 
-    public void getUserVCard(XmppURI userJid, final Listener<VCardResponse> listener) {
-	IQ iq = null;
+    public void getUserVCard(final XmppURI userJid, final Listener<VCardResponse> listener) {
+	final IQ iq = new IQ(IQ.Type.get);
+	iq.addChild("vCard", "vcard-temp");
+	iq.setFrom(session.getCurrentUser());
+	iq.setTo(userJid);
 	session.sendIQ("vcard", iq, new Listener<IPacket>() {
 	    @Override
-	    public void onEvent(IPacket parameter) {
+	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
 	    }
 	});
     }
 
     public void requestOwnVCard(final Listener<VCardResponse> listener) {
-	IQ iq = new IQ(IQ.Type.get);
+	final IQ iq = new IQ(IQ.Type.get);
 	iq.addChild("vCard", "vcard-temp");
 	iq.setFrom(session.getCurrentUser());
 	session.sendIQ("vcard", iq, new Listener<IPacket>() {
 	    @Override
-	    public void onEvent(IPacket parameter) {
+	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
 	    }
 	});
     }
 
     public void updateOwnVCard(final VCard vcard, final Listener<VCardResponse> listener) {
-	IQ iq = null;
+	final IQ iq = null;
 	session.sendIQ("vcard", iq, new Listener<IPacket>() {
 	    @Override
-	    public void onEvent(IPacket parameter) {
+	    public void onEvent(final IPacket parameter) {
 		handleUpdateVCard(vcard, parameter, listener);
 	    }
 	});
 
     }
 
-    protected void handleUpdateVCard(VCard vcard, IPacket parameter,
-	    Listener<VCardResponse> listener) {
+    protected void handleUpdateVCard(final VCard vcard, final IPacket parameter, final Listener<VCardResponse> listener) {
 
     }
 
-    protected void handleVCard(IPacket result, Listener<VCardResponse> listener) {
-	VCardResponse response = new VCardResponse(result);
-	if (listener != null)
+    protected void handleVCard(final IPacket result, final Listener<VCardResponse> listener) {
+	final VCardResponse response = new VCardResponse(result);
+	if (listener != null) {
 	    listener.onEvent(response);
+	}
 	onVCardResponse.fire(response);
     }
 }

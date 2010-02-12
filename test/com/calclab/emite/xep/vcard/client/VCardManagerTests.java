@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.suco.testing.events.MockedListener;
@@ -54,6 +55,8 @@ public class VCardManagerTests {
 	    + "Rz4915hhVQiOzS9nGxn5bO3Gc/OCfvU9Ff/Z</BINVAL>\n" + "</PHOTO>\n" + "<NICKNAME>ad</NICKNAME>\n"
 	    + "<FN>adminnnn</FN>\n" + "</vCard>\n" + "</iq>";
 
+    String OTHER_VCARD = "<iq from='test@domain' to='test2@domain'" + "type='get'><vCard xmlns='vcard-temp'/></iq>";
+
     private SessionTester session;
     private VCardManager manager;
 
@@ -71,6 +74,13 @@ public class VCardManagerTests {
     @Test
     public void shouldParseVCard() {
 	shouldParseVCardImpl(VALID_VCARD);
+    }
+
+    @Test
+    public void shouldRequestVCard() {
+	final MockedListener<VCardResponse> listener = new MockedListener<VCardResponse>();
+	manager.getUserVCard(XmppURI.uri("test2@domain"), listener);
+	session.verifyIQSent(OTHER_VCARD);
     }
 
     @Test
