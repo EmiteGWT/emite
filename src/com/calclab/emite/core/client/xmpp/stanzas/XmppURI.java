@@ -92,8 +92,7 @@ public class XmppURI {
 	this.node = node;
 	this.host = host;
 	this.resource = resource;
-	this.representation = (node != null ? node + "@" : "") + host
-		+ (resource != null ? "/" + resource : "");
+	representation = (node != null ? node + "@" : "") + host + (resource != null ? "/" + resource : "");
     }
 
     @Override
@@ -180,6 +179,14 @@ public class XmppURI {
      */
     public boolean hasResource() {
 	return resource != null;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String toDebugString() {
+	return representation.replaceAll("[@/\\.]", "-");
     }
 
     @Override

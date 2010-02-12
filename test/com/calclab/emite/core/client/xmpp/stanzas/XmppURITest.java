@@ -105,6 +105,12 @@ public class XmppURITest {
     }
 
     @Test
+    public void shouldGetDebugRepresentation() {
+	final XmppURI uri = uri("name@localhost.net/resource");
+	assertEquals("name-localhost-net-resource", uri.toDebugString());
+    }
+
+    @Test
     public void shouldParseNull() {
 	assertNull(uri(null));
     }

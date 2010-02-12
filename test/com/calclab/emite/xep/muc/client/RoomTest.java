@@ -118,7 +118,7 @@ public class RoomTest extends AbstractChatTest {
 	room.sendInvitationTo(uri("otherUser@domain/resource"), "this is the reason");
 	session.verifySent("<message from='" + userURI + "' to='" + roomURI.getJID()
 		+ "'><x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<invite to='otherUser@domain/resource'><reason>this is the reason</reason></invite></x></message>");
+		+ "<invite to='otheruser@domain/resource'><reason>this is the reason</reason></invite></x></message>");
     }
 
     @Test
