@@ -29,6 +29,8 @@ public abstract class AbstractChatManager implements ChatManager {
 	fireChatClosed(chat);
     }
 
+    public abstract Chat getChat(XmppURI uri);
+
     public Collection<? extends Chat> getChats() {
 	return chats;
     }
@@ -46,7 +48,7 @@ public abstract class AbstractChatManager implements ChatManager {
     }
 
     public Chat open(final XmppURI uri) {
-	Chat chat = findChat(uri);
+	Chat chat = getChat(uri);
 	if (chat == null) {
 	    chat = createChat(uri, session.getCurrentUser());
 	    addChat(chat);
@@ -61,8 +63,6 @@ public abstract class AbstractChatManager implements ChatManager {
     }
 
     protected abstract Chat createChat(XmppURI uri, XmppURI currentUser);
-
-    protected abstract Chat findChat(XmppURI uri);
 
     protected void fireChatClosed(final Chat chat) {
 	onChatClosed.fire(chat);

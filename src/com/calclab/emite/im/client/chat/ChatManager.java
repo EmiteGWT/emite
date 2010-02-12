@@ -33,7 +33,6 @@ import com.calclab.suco.client.events.Listener;
  * and many-to-many conversations (RoomManagerImpl)
  */
 public interface ChatManager {
-
     /**
      * Close the given conversation. If a conversation is closed, a new
      * onChatCreated event will be throw when opened
@@ -79,5 +78,13 @@ public interface ChatManager {
      * @return the Chat object
      */
     public Chat open(XmppURI uri);
+
+    /**
+     * Get a chat by uri. Can be null
+     * 
+     * @param uri
+     * @return
+     */
+    Chat getChat(XmppURI uri);
 
 }

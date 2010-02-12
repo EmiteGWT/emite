@@ -53,6 +53,20 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
     }
 
     /**
+     * Find a chat using the given uri.
+     */
+    @Override
+    public Chat getChat(final XmppURI uri) {
+	for (final Chat chat : getChats()) {
+	    final XmppURI chatTargetURI = chat.getURI();
+	    if (uri.equalsNoResource(chatTargetURI)) {
+		return chat;
+	    }
+	}
+	return null;
+    }
+
+    /**
      * Create a new chat
      * 
      * @param toURI
@@ -81,7 +95,7 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
 	    if (body != NoPacket.INSTANCE) {
 		final XmppURI from = message.getFrom();
 
-		Chat chat = findChat(from);
+		Chat chat = getChat(from);
 		if (chat == null) {
 		    chat = createChat(from, from);
 		    addChat(chat);
@@ -90,20 +104,6 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
 	    }
 	    break;
 	}
-    }
-
-    /**
-     * Find a chat using the given uri.
-     */
-    @Override
-    protected Chat findChat(final XmppURI uri) {
-	for (final Chat chat : getChats()) {
-	    final XmppURI chatTargetURI = chat.getURI();
-	    if (uri.equalsNoResource(chatTargetURI)) {
-		return chat;
-	    }
-	}
-	return null;
     }
 
 }

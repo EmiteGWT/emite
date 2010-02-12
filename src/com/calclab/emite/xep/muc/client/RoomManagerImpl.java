@@ -68,6 +68,11 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	}
     }
 
+    @Override
+    public Chat getChat(final XmppURI uri) {
+	return rooms.get(uri.getJID());
+    }
+
     public void onInvitationReceived(final Listener<RoomInvitation> listener) {
 	onInvitationReceived.add(listener);
     }
@@ -100,11 +105,6 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	    handleRoomInvitation(message.getFrom(), new BasicStanza(child));
 	}
 
-    }
-
-    @Override
-    protected Chat findChat(final XmppURI uri) {
-	return rooms.get(uri.getJID());
     }
 
 }
