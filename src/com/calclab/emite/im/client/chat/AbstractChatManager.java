@@ -13,14 +13,14 @@ public abstract class AbstractChatManager implements ChatManager {
     private final Event<Chat> onChatCreated;
     private final Event<Chat> onChatOpened;
     private final Event<Chat> onChatClosed;
-    private final Session session;
+    protected final Session session;
 
-    public AbstractChatManager(Session session) {
+    public AbstractChatManager(final Session session) {
 	this.session = session;
-	this.onChatCreated = new Event<Chat>("chatManager.onChatCreated");
-	this.onChatClosed = new Event<Chat>("chatManager.onChatClosed");
-	this.onChatOpened = new Event<Chat>("chatManager.onChatOpened");
-	this.chats = new HashSet<Chat>();
+	onChatCreated = new Event<Chat>("chatManager.onChatCreated");
+	onChatClosed = new Event<Chat>("chatManager.onChatClosed");
+	onChatOpened = new Event<Chat>("chatManager.onChatOpened");
+	chats = new HashSet<Chat>();
     }
 
     @Override
@@ -41,14 +41,14 @@ public abstract class AbstractChatManager implements ChatManager {
 	onChatCreated.add(listener);
     }
 
-    public void onChatOpened(Listener<Chat> listener) {
+    public void onChatOpened(final Listener<Chat> listener) {
 	onChatOpened.add(listener);
     }
 
     public Chat open(final XmppURI uri) {
 	Chat chat = findChat(uri);
 	if (chat == null) {
-	    chat = createChat(uri, getSession().getCurrentUser());
+	    chat = createChat(uri, session.getCurrentUser());
 	    addChat(chat);
 	    fireChatCreated(chat);
 	}
@@ -56,7 +56,7 @@ public abstract class AbstractChatManager implements ChatManager {
 	return chat;
     }
 
-    protected void addChat(Chat chat) {
+    protected void addChat(final Chat chat) {
 	chats.add(chat);
     }
 
@@ -64,19 +64,15 @@ public abstract class AbstractChatManager implements ChatManager {
 
     protected abstract Chat findChat(XmppURI uri);
 
-    protected void fireChatClosed(Chat chat) {
+    protected void fireChatClosed(final Chat chat) {
 	onChatClosed.fire(chat);
     }
 
-    protected void fireChatCreated(Chat chat) {
+    protected void fireChatCreated(final Chat chat) {
 	onChatCreated.fire(chat);
     }
 
-    protected void fireChatOpened(Chat chat) {
+    protected void fireChatOpened(final Chat chat) {
 	onChatOpened.fire(chat);
-    }
-
-    protected Session getSession() {
-	return session;
     }
 }

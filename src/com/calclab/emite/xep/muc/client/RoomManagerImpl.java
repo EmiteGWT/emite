@@ -47,9 +47,16 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     public RoomManagerImpl(final Session session) {
 	super(session);
-	this.onInvitationReceived = new Event<RoomInvitation>("roomManager:onInvitationReceived");
-	this.rooms = new HashMap<XmppURI, Room>();
+	onInvitationReceived = new Event<RoomInvitation>("roomManager:onInvitationReceived");
+	rooms = new HashMap<XmppURI, Room>();
 
+    }
+
+    @Override
+    public void acceptRoomInvitation(final RoomInvitation invitation) {
+	final XmppURI roomURI = invitation.getRoomURI();
+	final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUser().getNode());
+	open(uri);
     }
 
     @Override
@@ -71,14 +78,14 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     }
 
     @Override
-    protected void addChat(Chat chat) {
+    protected void addChat(final Chat chat) {
 	rooms.put(chat.getURI().getJID(), (Room) chat);
 	super.addChat(chat);
     }
 
     @Override
-    protected Chat createChat(XmppURI roomURI, XmppURI starterURI) {
-	return new Room(getSession(), roomURI, starterURI);
+    protected Chat createChat(final XmppURI roomURI, final XmppURI starterURI) {
+	return new Room(session, roomURI, starterURI);
     }
 
     @Override
@@ -96,7 +103,7 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     }
 
     @Override
-    protected Chat findChat(XmppURI uri) {
+    protected Chat findChat(final XmppURI uri) {
 	return rooms.get(uri.getJID());
     }
 

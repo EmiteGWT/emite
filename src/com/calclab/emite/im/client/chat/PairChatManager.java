@@ -61,7 +61,7 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
      */
     @Override
     protected Chat createChat(final XmppURI toURI, final XmppURI starterURI) {
-	final PairChat pairChat = new PairChat(getSession(), toURI, starterURI, null);
+	final PairChat pairChat = new PairChat(session, toURI, starterURI, null);
 	pairChat.setState(Chat.State.ready);
 	return pairChat;
     }

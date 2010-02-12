@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.Chat;
@@ -20,7 +21,22 @@ import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
 import com.calclab.suco.testing.events.MockedListener;
 
-public class MUCRoomManagerTest extends AbstractChatManagerTest {
+public class RoomManagerTest extends AbstractChatManagerTest {
+
+    @Test
+    public void shouldAcceptInvitations() {
+	final RoomManager rooms = (RoomManager) manager;
+	final MockedListener<Chat> listener = new MockedListener<Chat>();
+	rooms.onChatCreated(listener);
+
+	final String reason = "theReason";
+	final XmppURI invitor = uri("friend@host/resource");
+	final XmppURI roomURI = uri("room@room.service");
+	rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason));
+	assertTrue(listener.isCalledOnce());
+	final Chat room = listener.getValue(0);
+	assertEquals("room@room.service/self", room.getURI().toString());
+    }
 
     @Test
     public void shouldAcceptRoomPresenceWithAvatar() {

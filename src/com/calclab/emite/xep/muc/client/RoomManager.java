@@ -25,10 +25,18 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.events.Listener;
 
 /**
- * RoomManager
+ * RoomManager: room related methods
  * 
  * @see ChatManager
  */
 public interface RoomManager extends ChatManager {
+    void acceptRoomInvitation(RoomInvitation invitation);
+
+    /**
+     * Notify when a room invitation arrives
+     * 
+     * @param listener
+     *            the listener to be informed
+     */
     void onInvitationReceived(Listener<RoomInvitation> listener);
 }
