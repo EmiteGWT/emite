@@ -35,18 +35,16 @@ import com.calclab.suco.client.events.Listener;
 public interface Roster {
 
     /**
-     * Checks if a valid roster has been received in the login process
-     * 
-     * @return true if has a roster
-     */
-    boolean isRosterReady();
-
-    /**
      * renamed to requestAddItem
      */
     @Deprecated
     void addItem(XmppURI jid, String name, String... groups);
 
+    /**
+     * Return the group names of this roster
+     * 
+     * @return
+     */
     Set<String> getGroups();
 
     /**
@@ -73,6 +71,13 @@ public interface Roster {
      * @return a collection of items
      */
     Collection<RosterItem> getItemsByGroup(String groupName);
+
+    /**
+     * Checks if a valid roster has been received in the login process
+     * 
+     * @return true if has a roster
+     */
+    boolean isRosterReady();
 
     /**
      * Add a listener if fired when a item is added to the roster

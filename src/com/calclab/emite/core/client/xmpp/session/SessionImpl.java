@@ -50,8 +50,8 @@ public class SessionImpl extends AbstractSession implements Session {
     public SessionImpl(final Connection connection, final SASLManager saslManager,
 	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager) {
 	this.connection = connection;
-	this.iqManager = new IQManager();
-	this.queuedStanzas = new ArrayList<IPacket>();
+	iqManager = new IQManager();
+	queuedStanzas = new ArrayList<IPacket>();
 
 	connection.onStanzaReceived(new Listener<IPacket>() {
 	    public void onEvent(final IPacket stanza) {
@@ -108,6 +108,11 @@ public class SessionImpl extends AbstractSession implements Session {
 
 	});
 
+    }
+
+    private void disconnect() {
+	connection.disconnect();
+	setState(State.disconnected);
     }
 
     public XmppURI getCurrentUser() {
@@ -169,17 +174,6 @@ public class SessionImpl extends AbstractSession implements Session {
 	send(iq);
     }
 
-    public void setReady() {
-	if (isLoggedIn()) {
-	    setState(State.ready);
-	}
-    }
-
-    private void disconnect() {
-	connection.disconnect();
-	setState(State.disconnected);
-    }
-
     private void sendQueuedStanzas() {
 	GWT.log("Sending queued stanzas....", null);
 	for (final IPacket packet : queuedStanzas) {
@@ -190,7 +184,14 @@ public class SessionImpl extends AbstractSession implements Session {
 
     private void setLoggedIn(final XmppURI userURI) {
 	this.userURI = userURI;
+	GWT.log("SESSION LOGGED IN");
 	setState(Session.State.loggedIn);
+    }
+
+    public void setReady() {
+	if (isLoggedIn()) {
+	    setState(State.ready);
+	}
     }
 
     @Override

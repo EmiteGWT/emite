@@ -24,6 +24,7 @@ package com.calclab.emite.core.client.xmpp.session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
 
 /**
  * A simple component that sets the session ready after logged in. This
@@ -35,8 +36,9 @@ public class SessionReady {
 
 	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent(Session session) {
-		State state = session.getState();
+	    public void onEvent(final Session session) {
+		GWT.log("SESSION READY: no roster");
+		final State state = session.getState();
 		if (state == State.loggedIn) {
 		    session.send(new Presence());
 		    session.setReady();

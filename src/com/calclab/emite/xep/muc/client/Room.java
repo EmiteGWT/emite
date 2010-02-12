@@ -69,10 +69,10 @@ public class Room extends AbstractChat implements Chat {
     Room(final Session session, final XmppURI roomURI, final XmppURI starter) {
 	super(session, roomURI, starter);
 	this.session = session;
-	this.occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
-	this.onOccupantModified = new Event<Occupant>("room:onOccupantModified");
-	this.onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
-	this.onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
+	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
+	onOccupantModified = new Event<Occupant>("room:onOccupantModified");
+	onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
+	onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
 
 	// @see http://www.xmpp.org/extensions/xep-0045.html#createroom
 	session.onPresence(new Listener<Presence>() {
@@ -86,8 +86,8 @@ public class Room extends AbstractChat implements Chat {
 
 	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent(Session session) {
-		Session.State state = session.getState();
+	    public void onEvent(final Session session) {
+		final Session.State state = session.getState();
 		if (Session.State.loggedIn == state) {
 		} else if (Session.State.loggingOut == state) {
 		    close();
@@ -174,19 +174,20 @@ public class Room extends AbstractChat implements Chat {
      * @param reasonText
      *            reason for the invitation
      */
-    public void sendInvitationTo(final String userJid, final String reasonText) {
+    public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
 	final BasicStanza message = new BasicStanza("message", null);
 	message.setFrom(session.getCurrentUser());
 	message.setTo(getURI().getJID());
 	final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
 	final IPacket invite = x.addChild("invite", null);
-	invite.setAttribute("to", userJid);
+	invite.setAttribute("to", userJid.toString());
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
 	session.send(message);
     }
 
-    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role, final Show show, final String statusMessage) {
+    public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role,
+	    final Show show, final String statusMessage) {
 	Occupant occupant = getOccupantByURI(uri);
 	if (occupant == null) {
 	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
@@ -200,6 +201,20 @@ public class Room extends AbstractChat implements Chat {
 	    onOccupantModified.fire(occupant);
 	}
 	return occupant;
+    }
+
+    /**
+     * Update my status to other occupants.
+     * 
+     * @param statusMessage
+     * @param show
+     */
+    public void setStatus(final String statusMessage, final Show show) {
+	final Presence presence = Presence.build(statusMessage, show);
+	presence.setTo(uri);
+	// presence.addChild("x", "http://jabber.org/protocol/muc");
+	// presence.setPriority(0);
+	session.send(presence);
     }
 
     /**
@@ -217,20 +232,6 @@ public class Room extends AbstractChat implements Chat {
 	session.send(message);
     }
 
-    /**
-     * Update my status to other occupants.
-     * 
-     * @param statusMessage
-     * @param show
-     */
-	public void setStatus(String statusMessage, Show show){
-		final Presence presence = Presence.build(statusMessage, show);
-		presence.setTo(uri);
-		//presence.addChild("x", "http://jabber.org/protocol/muc");
-		//presence.setPriority(0);
-		session.send(presence);
-	}
-
     @Override
     public String toString() {
 	return "ROOM: " + uri;
@@ -238,19 +239,19 @@ public class Room extends AbstractChat implements Chat {
 
     private void handlePresence(final XmppURI occupantURI, final Presence presence) {
 	if (presence.hasAttribute("type", "unavailable")) {
-	    this.removeOccupant(occupantURI);
+	    removeOccupant(occupantURI);
 	} else {
 	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
 	    for (final IPacket child : children) {
 		final IPacket item = child.getFirstChild("item");
 		final String affiliation = item.getAttribute("affiliation");
 		final String role = item.getAttribute("role");
-		this.setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
+		setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
 		if (isNewRoom(child)) {
 		    requestCreateInstantRoom();
 		} else {
 		    if (state != State.ready) {
-			this.setState(Chat.State.ready);
+			setState(Chat.State.ready);
 		    }
 		}
 	    }
@@ -263,7 +264,7 @@ public class Room extends AbstractChat implements Chat {
     }
 
     private void requestCreateInstantRoom() {
-	final IQ iq = new IQ(IQ.Type.set, this.getURI().getJID());
+	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
 	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
 	session.sendIQ("rooms", iq, new Listener<IPacket>() {
 	    public void onEvent(final IPacket received) {
