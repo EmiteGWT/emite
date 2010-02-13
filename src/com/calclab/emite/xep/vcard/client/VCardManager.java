@@ -23,10 +23,10 @@ public class VCardManager {
 
     public void getUserVCard(final XmppURI userJid, final Listener<VCardResponse> listener) {
 	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild("vCard", "vcard-temp");
+	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 	iq.setFrom(session.getCurrentUser());
 	iq.setTo(userJid);
-	session.sendIQ("vcard", iq, new Listener<IPacket>() {
+	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
@@ -36,9 +36,9 @@ public class VCardManager {
 
     public void requestOwnVCard(final Listener<VCardResponse> listener) {
 	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild("vCard", "vcard-temp");
+	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 	iq.setFrom(session.getCurrentUser());
-	session.sendIQ("vcard", iq, new Listener<IPacket>() {
+	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
@@ -48,7 +48,7 @@ public class VCardManager {
 
     public void updateOwnVCard(final VCard vcard, final Listener<VCardResponse> listener) {
 	final IQ iq = null;
-	session.sendIQ("vcard", iq, new Listener<IPacket>() {
+	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
 		handleUpdateVCard(vcard, parameter, listener);

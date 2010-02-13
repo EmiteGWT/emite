@@ -38,83 +38,83 @@ public class NoPacket implements IPacket {
     }
 
     public IPacket addChild(final IPacket child) {
-        return this;
+	return this;
     }
 
     public IPacket addChild(final String nodeName) {
-        return this;
+	return this;
     }
 
     public IPacket addChild(final String nodeName, final String xmlns) {
-        return this;
+	return this;
     }
 
     public String getAttribute(final String name) {
-        return null;
+	return null;
     }
 
     public HashMap<String, String> getAttributes() {
-        return EMPTY_ATTRIBUTTES;
+	return EMPTY_ATTRIBUTTES;
     }
 
     public List<? extends IPacket> getChildren() {
-        return EMPTY_CHILDREN;
+	return EMPTY_CHILDREN;
     }
 
     public List<? extends IPacket> getChildren(final PacketMatcher filter) {
-        return EMPTY_CHILDREN;
+	return EMPTY_CHILDREN;
     }
 
     public List<? extends IPacket> getChildren(final String name) {
-        return EMPTY_CHILDREN;
+	return EMPTY_CHILDREN;
     }
 
     public int getChildrenCount() {
-        return 0;
+	return 0;
     }
 
     public IPacket getFirstChild(final PacketMatcher filter) {
-        return this;
+	return this;
     }
 
     public IPacket getFirstChild(final String childName) {
-        return this;
+	return this;
     }
 
     public IPacket getFirstChildInDeep(final PacketMatcher filter) {
-        return this;
+	return this;
     }
 
     public IPacket getFirstChildInDeep(final String name) {
-        return this;
+	return this;
     }
 
     public String getName() {
-        return null;
+	return null;
     }
 
     public IPacket getParent() {
-        return this;
+	return this;
     }
 
     public String getText() {
-        return null;
+	return null;
     }
 
     public boolean hasAttribute(final String name) {
-        return false;
+	return false;
     }
 
     public boolean hasAttribute(final String name, final String value) {
-        return false;
+	return false;
     }
 
     public boolean hasChild(final String name) {
-        return false;
+	return false;
     }
 
     public boolean removeChild(final IPacket child) {
-        return false;
+	return false;
     }
 
     public void render(final StringBuffer buffer) {
@@ -126,20 +126,23 @@ public class NoPacket implements IPacket {
     public void setText(final String text) {
     }
 
+    public void setTextToChild(final String nodeName, final String text) {
+    }
+
     public IPacket With(final IPacket child) {
-        return this;
+	return this;
     }
 
     public IPacket With(final String name, final long value) {
-        return this;
+	return this;
     }
 
     public IPacket With(final String name, final String value) {
-        return this;
+	return this;
     }
 
     public IPacket WithText(final String text) {
-        return this;
+	return this;
     }
 
 }

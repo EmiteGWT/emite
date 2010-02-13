@@ -110,6 +110,15 @@ public interface IPacket {
     void setText(String text);
 
     /**
+     * Add a child with a specified text. Create the child if not exists. If the
+     * text is null, then removes the child
+     * 
+     * @param nodeName
+     * @param text
+     */
+    void setTextToChild(final String nodeName, final String text);
+
+    /**
      * Chain-able method to add a attribute
      * 
      * @param name
