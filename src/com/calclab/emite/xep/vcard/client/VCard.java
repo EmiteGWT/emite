@@ -95,6 +95,10 @@ public class VCard extends VCardData {
 	return getName(Name.MIDDLE);
     }
 
+    public String getName(final Name name) {
+	return getN().getFirstChild(byName(name.toString())).getText();
+    }
+
     public String getNickName() {
 	return getValue(Data.NICKNAME);
     }
@@ -120,11 +124,29 @@ public class VCard extends VCardData {
 	setValue(Data.URL, text);
     }
 
+    public String getValue(final Data data) {
+	return getValue(data.toString());
+    }
+
+    public void removeAddresses() {
+	for (final VCardAddress address : addresses) {
+	    removeChild(address);
+	}
+	addresses.clear();
+    }
+
     public void removeEmails() {
 	for (final VCardEmail email : emails) {
 	    removeChild(email);
 	}
 	emails.clear();
+    }
+
+    public void removeTelephones() {
+	for (final VCardTelephone telephone : telephones) {
+	    removeChild(telephone);
+	}
+	telephones.clear();
     }
 
     public void setDescription(final String text) {
@@ -151,6 +173,13 @@ public class VCard extends VCardData {
 	setName(Name.MIDDLE, text);
     }
 
+    public void setName(final Name subname, final String text) {
+	if (getN() == NoPacket.INSTANCE) {
+	    nameChild = addChild(N);
+	}
+	nameChild.setTextToChild(subname.toString(), text);
+    }
+
     public void setNickName(final String text) {
 	setValue(Data.NICKNAME, text);
     }
@@ -164,19 +193,15 @@ public class VCard extends VCardData {
 	setValue(Data.TITLE, text);
     }
 
+    public void setValue(final Data data, final String text) {
+	setValue(data.toString(), text);
+    }
+
     private IPacket getN() {
 	if (this.nameChild == null) {
 	    this.nameChild = getFirstChild(byName(N));
 	}
 	return nameChild;
-    }
-
-    private String getName(final Name name) {
-	return getN().getFirstChild(byName(name.toString())).getText();
-    }
-
-    private String getValue(final Data data) {
-	return getValue(data.toString());
     }
 
     private void parseAddresses() {
@@ -207,16 +232,5 @@ public class VCard extends VCardData {
 		telephones.add(new VCardTelephone(child));
 	    }
 	}
-    }
-
-    private void setName(final Name subname, final String text) {
-	if (getN() == NoPacket.INSTANCE) {
-	    nameChild = addChild(N);
-	}
-	nameChild.setTextToChild(subname.toString(), text);
-    }
-
-    private void setValue(final Data data, final String text) {
-	setValue(data.toString(), text);
     }
 }
