@@ -10,14 +10,13 @@ import com.calclab.suco.client.ioc.module.Factory;
  */
 public class PrivateStorageModule extends AbstractModule {
 
-	@Override
-	protected void onInstall() {
-		register(Singleton.class, new Factory<PrivateStorageManager>(
-				PrivateStorageManager.class) {
-			@Override
-			public PrivateStorageManager create() {
-				return new PrivateStorageManager($(Session.class));
-			}
-		});
-	}
+    @Override
+    protected void onInstall() {
+	register(Singleton.class, new Factory<PrivateStorageManager>(PrivateStorageManager.class) {
+	    @Override
+	    public PrivateStorageManager create() {
+		return new PrivateStorageManager($(Session.class));
+	    }
+	});
+    }
 }

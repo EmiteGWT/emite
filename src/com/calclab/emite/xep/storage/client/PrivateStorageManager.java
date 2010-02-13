@@ -1,24 +1,29 @@
 package com.calclab.emite.xep.storage.client;
 
+import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.suco.client.events.Listener;
 
 /**
  * Implements http://xmpp.org/extensions/xep-0049.html
  */
-public class PrivateStorageManager {
-    private final Session session;
+public class PrivateStorageManager extends AbstractIQManager {
+    private static final String XMLNS = "jabber:iq:private";
+    private static final String ID = "priv";
 
-    public PrivateStorageManager(Session session) {
-	this.session = session;
+    public PrivateStorageManager(final Session session) {
+	super(XMLNS, ID, session);
     }
 
-    public void retrieve(String namespace, Listener<SimpleStorageData> listener) {
-
+    public void retrieve(final SimpleStorageData data, final Listener<IQResponse> listener) {
+	final Packet query = new Packet("query", XMLNS);
+	query.addChild(data);
+	get(listener, query);
     }
 
-    public void store(SimpleStorageData data, Listener<IQ.Type> listener) {
-	session.getClass();
+    public void store(final SimpleStorageData data, final Listener<IQResponse> listener) {
+	final Packet query = new Packet("query", XMLNS);
+	query.addChild(data);
+	set(listener, query);
     }
 }
