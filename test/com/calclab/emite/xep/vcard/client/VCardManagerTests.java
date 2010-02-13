@@ -56,6 +56,7 @@ public class VCardManagerTests {
 	    + "<FN>adminnnn</FN>\n" + "</vCard>\n" + "</iq>";
 
     String OTHER_VCARD = "<iq from='test@domain' to='test2@domain'" + "type='get'><vCard xmlns='vcard-temp'/></iq>";
+    String VCARD_SETTED = "<iq type='set'><vCard xmlns='vcard-temp'><FN>Peter Saint-Andre</FN><N><FAMILY>Saint-Andre</FAMILY><GIVEN>Peter</GIVEN><MIDDLE/></N><NICKNAME>stpeter</NICKNAME></vCard></iq>";
 
     private SessionTester session;
     private VCardManager manager;
@@ -89,6 +90,19 @@ public class VCardManagerTests {
 	final IQ iq = new IQ(IQ.Type.get).With("from", "test@domain");
 	iq.addChild("vCard", "vcard-temp");
 	session.verifyIQSent(iq);
+    }
+
+    @Test
+    public void shouldSetOwnVCard() {
+	final MockedListener<VCardResponse> listener = new MockedListener<VCardResponse>();
+	final VCard vCard = new VCard();
+	vCard.setDisplayName("Peter Saint-Andre");
+	vCard.setFamilyName("Saint-Andre");
+	vCard.setGivenName("Peter");
+	vCard.setMiddleName("");
+	vCard.setNickName("stpeter");
+	manager.updateOwnVCard(vCard, listener);
+	session.verifyIQSent(VCARD_SETTED);
     }
 
     private void shouldParseVCardImpl(final String vcard) {

@@ -9,6 +9,7 @@ import com.calclab.suco.client.events.Listener;
 
 public class VCardManager {
 
+    private static final String ID_PREFIX = "vcard";
     private final Session session;
     private final Event<VCardResponse> onVCardResponse;
 
@@ -26,7 +27,7 @@ public class VCardManager {
 	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 	iq.setFrom(session.getCurrentUser());
 	iq.setTo(userJid);
-	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
+	session.sendIQ(ID_PREFIX, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
@@ -38,7 +39,7 @@ public class VCardManager {
 	final IQ iq = new IQ(IQ.Type.get);
 	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 	iq.setFrom(session.getCurrentUser());
-	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
+	session.sendIQ(ID_PREFIX, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
 		handleVCard(parameter, listener);
@@ -47,17 +48,15 @@ public class VCardManager {
     }
 
     public void updateOwnVCard(final VCard vcard, final Listener<VCardResponse> listener) {
-	final IQ iq = null;
-	session.sendIQ(VCard.VCARD, iq, new Listener<IPacket>() {
+	final IQ iq = new IQ(IQ.Type.set);
+	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
+	iq.addChild(vcard);
+	session.sendIQ(ID_PREFIX, iq, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket parameter) {
-		handleUpdateVCard(vcard, parameter, listener);
+		handleVCard(parameter, listener);
 	    }
 	});
-
-    }
-
-    protected void handleUpdateVCard(final VCard vcard, final IPacket parameter, final Listener<VCardResponse> listener) {
 
     }
 

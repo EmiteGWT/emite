@@ -9,7 +9,7 @@ public class VCardResponse {
     private final IPacket result;
     private VCard vcard;
 
-    public VCardResponse(IPacket result) {
+    public VCardResponse(final IPacket result) {
 	this.result = result;
     }
 
@@ -19,7 +19,7 @@ public class VCardResponse {
 
     public VCard getVCard() {
 	if (vcard == null && isSuccess()) {
-	    IPacket vcardChild = result.getFirstChild(byName("vCard"));
+	    final IPacket vcardChild = result.getFirstChild(byName(VCard.VCARD));
 	    if (vcardChild.getChildrenCount() > 0) {
 		vcard = new VCard(vcardChild);
 	    }

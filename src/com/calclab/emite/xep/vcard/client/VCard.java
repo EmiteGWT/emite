@@ -120,6 +120,13 @@ public class VCard extends VCardData {
 	setValue(Data.URL, text);
     }
 
+    public void removeEmails() {
+	for (final VCardEmail email : emails) {
+	    removeChild(email);
+	}
+	emails.clear();
+    }
+
     public void setDescription(final String text) {
 	setValue(Data.DESC.toString(), text);
     }

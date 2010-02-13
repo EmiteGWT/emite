@@ -51,6 +51,8 @@ public class VCardTests {
 	final VCardEmail first = emails.get(0);
 	assertEquals("some@example.com", first.get());
 	assertFalse(first.isPref());
+	vCard.removeEmails();
+	assertEquals(0, vCard.getEmails().size());
     }
 
     @Test
