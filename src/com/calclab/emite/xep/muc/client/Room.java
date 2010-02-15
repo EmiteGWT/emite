@@ -21,6 +21,7 @@
  */
 package com.calclab.emite.xep.muc.client;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -124,7 +125,11 @@ public class Room extends AbstractChat implements Chat {
 	return occupantsByURI.get(uri);
     }
 
-    public Object getOccupantsCount() {
+    public Collection<Occupant> getOccupants() {
+	return occupantsByURI.values();
+    }
+
+    public int getOccupantsCount() {
 	return occupantsByURI.size();
     }
 
