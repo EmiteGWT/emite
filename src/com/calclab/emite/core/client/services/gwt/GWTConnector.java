@@ -44,7 +44,7 @@ public class GWTConnector {
 
 		public void onResponseReceived(final Request req, final Response res) {
 		    GWT.log(("GWT CONNECTOR RECEIVED: " + res.getText()), null);
-		    listener.onResponseReceived(res.getStatusCode(), res.getText());
+		    listener.onResponseReceived(res.getStatusCode(), res.getText(), request);
 		}
 	    });
 	} catch (final RequestException e) {

@@ -82,6 +82,12 @@ public class SessionImpl extends AbstractSession implements Session {
 	    }
 	});
 
+	connection.onDisconnected(new Listener<String>() {
+	    public void onEvent(String parameter) {
+		setState(State.disconnected);
+	    }
+	});
+
 	saslManager.onAuthorized(new Listener<AuthorizationTransaction>() {
 	    public void onEvent(final AuthorizationTransaction ticket) {
 		if (ticket.getState() == AuthorizationTransaction.State.succeed) {
@@ -112,7 +118,8 @@ public class SessionImpl extends AbstractSession implements Session {
 
     private void disconnect() {
 	connection.disconnect();
-	setState(State.disconnected);
+	// Done now with the connection's onDisconnected listener :
+	// setState(State.disconnected);
     }
 
     public XmppURI getCurrentUser() {
@@ -202,4 +209,8 @@ public class SessionImpl extends AbstractSession implements Session {
 	super.setState(newState);
     }
 
+    @Override
+    public String toString() {
+	return "Session in " + getState() + " con=" + connection.toString();
+    }
 }

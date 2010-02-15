@@ -4,7 +4,11 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event0;
+import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
+import com.calclab.suco.client.events.Listener2;
+import com.google.gwt.core.client.GWT;
 
 /**
  * An abstract connection. It has all the boilerplate
@@ -12,6 +16,7 @@ import com.calclab.suco.client.events.Listener;
  */
 public abstract class AbstractConnection implements Connection {
     private final Event<String> onError;
+    private final Event2<Integer, Integer> onRetry;
     private final Event<String> onDisconnected;
     private final Event0 onConnected;
     private final Event<IPacket> onStanzaReceived;
@@ -20,11 +25,12 @@ public abstract class AbstractConnection implements Connection {
     private boolean active;
     private StreamSettings stream;
     private Packet currentBody;
-    private int errors;
+    protected int errors;
     private BoshSettings userSettings;
 
     public AbstractConnection() {
 	this.onError = new Event<String>("bosh:onError");
+	this.onRetry = new Event2<Integer, Integer>("bosh:onRetry");
 	this.onDisconnected = new Event<String>("bosh:onDisconnected");
 	this.onConnected = new Event0("bosh:onConnected");
 	this.onStanzaReceived = new Event<IPacket>("bosh:onReceived");
@@ -38,6 +44,7 @@ public abstract class AbstractConnection implements Connection {
 
     public int incrementErrors() {
 	errors++;
+	GWT.log("ERROR Count : " + errors, null);
 	return errors;
     }
 
@@ -45,8 +52,20 @@ public abstract class AbstractConnection implements Connection {
 	onError.add(listener);
     }
 
+    public void onRetry(final Listener2<Integer, Integer> listener) {
+	onRetry.add(listener);
+    }
+
     public void onResponse(final Listener<String> listener) {
 	onResponse.add(listener);
+    }
+
+    public void onConnected(final Listener0 listener) {
+	onConnected.add(listener);
+    }
+
+    public void onDisconnected(final Listener<String> listener) {
+	onDisconnected.add(listener);
     }
 
     public void onStanzaReceived(final Listener<IPacket> listener) {
@@ -75,6 +94,10 @@ public abstract class AbstractConnection implements Connection {
 
     protected void fireError(String error) {
 	onError.fire(error);
+    }
+
+    protected void fireRetry(Integer attempt, Integer scedTime) {
+	onRetry.fire(attempt, scedTime);
     }
 
     protected void fireResponse(String response) {

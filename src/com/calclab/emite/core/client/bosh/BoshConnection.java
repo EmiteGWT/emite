@@ -45,32 +45,48 @@ public class BoshConnection extends AbstractConnection {
 	    public void onError(final String request, final Throwable throwable) {
 		if (isActive()) {
 		    GWT.log("Connection error", throwable);
-		    if (incrementErrors() > 2) {
+		    final int e = incrementErrors();
+		    // With e = 8, 500 + (8-1)*8*550 = 31300
+		    // TODO : customize reties and timings
+		    if (e > 8) {
 			setActive(false);
 			fireError("Connection error: " + throwable.toString());
 		    } else {
-			GWT.log("Error retry: " + throwable, null);
-			send(request);
+			// Exponentialy try
+			// TODO : being able to cutomize it
+			final int scedTime = 500 + (e - 1) * e * 550;
+			fireRetry(e, scedTime);
+			services.schedule(scedTime, new ScheduledAction() {
+			    public void run() {
+				GWT.log("Error retry: "+e, throwable);
+				send(request);
+			    }
+			});
 		    }
 		}
 	    }
 
-	    public void onResponseReceived(final int statusCode, final String content) {
-		clearErrors();
+	    public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
 		activeConnections--;
 		if (isActive()) {
 		    // TODO: check if is the same code in other than FF and make
 		    // tests
-		    if (statusCode != 200 && statusCode != 0) {
+		    if (statusCode == 404) {
 			setActive(false);
-			fireError("Bad status: " + statusCode);
+			fireError("404 Connection Error (session removed ?) : " + content);
+		    } else if (statusCode != 200 && statusCode != 0) {
+			// setActive(false);
+			// fireError("Bad status: " + statusCode);
+			onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
 		    } else {
-			fireResponse(content);
 			final IPacket response = services.toXML(content);
 			if (response != null && "body".equals(response.getName())) {
+			    clearErrors();
+			    fireResponse(content);
 			    handleResponse(response);
 			} else {
-			    fireError("Bad response: " + content);
+			    onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
+			    // fireError("Bad response: " + content);
 			}
 		    }
 		}
@@ -81,6 +97,7 @@ public class BoshConnection extends AbstractConnection {
 
     public void connect() {
 	assert getUserSettings() != null;
+	clearErrors();
 
 	if (!isActive()) {
 	    this.setActive(true);
@@ -144,7 +161,7 @@ public class BoshConnection extends AbstractConnection {
 	    } else {
 		final long currentRID = getStream().rid;
 		// FIXME: hardcoded
-		final int msecs = 6000;
+		final int msecs = 200;
 		services.schedule(msecs, new ScheduledAction() {
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
@@ -189,6 +206,7 @@ public class BoshConnection extends AbstractConnection {
     private void handleResponse(final IPacket response) {
 	if (isTerminate(response.getAttribute("type"))) {
 	    getStream().sid = null;
+	    setActive(false);
 	    fireDisconnected("disconnected by server");
 	} else {
 	    if (getStream().sid == null) {
@@ -235,11 +253,17 @@ public class BoshConnection extends AbstractConnection {
     }
 
     private void sendBody() {
-	if (!shouldCollectResponses) {
+	if (!shouldCollectResponses && isActive() && activeConnections < getUserSettings().maxRequests && errors == 0) {
 	    final String request = services.toString(getCurrentBody());
 	    setCurrentBody(null);
 	    send(request);
+	} else {
+	    GWT.log("Send body simply queued", null);
 	}
     }
 
+    @Override
+    public String toString() {
+	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
+    }
 }

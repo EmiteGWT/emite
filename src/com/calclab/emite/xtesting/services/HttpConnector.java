@@ -72,7 +72,7 @@ public class HttpConnector {
 		if (status == HttpStatus.SC_OK) {
 		    System.out.println("RECEIVED: " + response);
 		    debug("Connector [{0}] receive: {1}", id, response);
-		    callback.onResponseReceived(status, response);
+		    callback.onResponseReceived(status, response, xml);
 		} else {
 		    debug("Connector [{0}] bad status: {1}", id, status);
 		    callback.onError(xml, new Exception("bad http status " + status));

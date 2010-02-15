@@ -23,6 +23,8 @@ package com.calclab.emite.core.client.bosh;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
+import com.calclab.suco.client.events.Listener2;
 
 /**
  * A connection to a xmpp server.
@@ -37,11 +39,17 @@ public interface Connection {
 
     public abstract void onError(final Listener<String> listener);
 
+    public abstract void onRetry(final Listener2<Integer, Integer> listener);
+
     public abstract void onResponse(final Listener<String> listener);
 
     public abstract void onStanzaReceived(final Listener<IPacket> listener);
 
     public abstract void onStanzaSent(final Listener<IPacket> listener);
+
+    public abstract void onConnected(final Listener0 listener);
+
+    public abstract void onDisconnected(final Listener<String> listener);
 
     /**
      * Pause the connection and return a stream settings object that can be
