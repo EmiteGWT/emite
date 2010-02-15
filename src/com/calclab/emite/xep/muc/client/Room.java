@@ -317,13 +317,9 @@ public class Room extends AbstractChat implements Chat {
      * WARNING : breaking change, need to check (message.getBody() != null)
      */
     protected void receive(final Message message) {
-	final String subject = message.getSubject();
-	if (subject != null) {
-	    fireBeforeReceive(message);
-	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), subject);
-	} else {
-	    // if (message.getBody() != null) {
-	    super.receive(message);
+	if (message.getSubject() != null) {
+	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
 	}
+	super.receive(message);
     }
 }

@@ -1,5 +1,6 @@
 package com.calclab.emite.im.client.roster;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -20,20 +21,15 @@ public abstract class AbstractRoster implements Roster {
     private boolean rosterReady;
 
     public AbstractRoster() {
-	this.rosterReady = false;
+	rosterReady = false;
 	itemsByJID = new HashMap<XmppURI, RosterItem>();
 	itemsByGroup = new HashMap<String, List<RosterItem>>();
 
-	this.onItemAdded = new Event<RosterItem>("roster:onItemAdded");
-	this.onItemChanged = new Event<RosterItem>("roster:onItemChanged");
-	this.onItemRemoved = new Event<RosterItem>("roster:onItemRemoved");
+	onItemAdded = new Event<RosterItem>("roster:onItemAdded");
+	onItemChanged = new Event<RosterItem>("roster:onItemChanged");
+	onItemRemoved = new Event<RosterItem>("roster:onItemRemoved");
 
-	this.onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
-    }
-
-    @Override
-    public boolean isRosterReady() {
-	return rosterReady;
+	onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
     }
 
     @Deprecated
@@ -50,11 +46,16 @@ public abstract class AbstractRoster implements Roster {
     }
 
     public Collection<RosterItem> getItems() {
-	return itemsByJID.values();
+	return new ArrayList<RosterItem>(itemsByJID.values());
     }
 
     public Collection<RosterItem> getItemsByGroup(final String groupName) {
 	return itemsByGroup.get(groupName);
+    }
+
+    @Override
+    public boolean isRosterReady() {
+	return rosterReady;
     }
 
     public void onItemAdded(final Listener<RosterItem> listener) {
@@ -82,24 +83,24 @@ public abstract class AbstractRoster implements Roster {
 	itemsByJID.clear();
     }
 
-    protected void fireItemAdded(RosterItem item) {
+    protected void fireItemAdded(final RosterItem item) {
 	onItemAdded.fire(item);
     }
 
-    protected void fireItemChanged(RosterItem item) {
+    protected void fireItemChanged(final RosterItem item) {
 	onItemChanged.fire(item);
     }
 
-    protected void fireItemRemoved(RosterItem item) {
+    protected void fireItemRemoved(final RosterItem item) {
 	onItemRemoved.fire(item);
     }
 
-    protected void fireRosterReady(Collection<RosterItem> collection) {
+    protected void fireRosterReady(final Collection<RosterItem> collection) {
 	rosterReady = true;
 	onRosterReady.fire(collection);
     }
 
-    protected List<RosterItem> getGroupItems(String group) {
+    protected List<RosterItem> getGroupItems(final String group) {
 	return itemsByGroup.get(group);
     }
 
@@ -107,19 +108,19 @@ public abstract class AbstractRoster implements Roster {
 	return itemsByGroup.keySet();
     }
 
-    protected void putitemsByGroup(String group, List<RosterItem> items) {
+    protected void putitemsByGroup(final String group, final List<RosterItem> items) {
 	itemsByGroup.put(group, items);
     }
 
-    protected void remove(XmppURI jid) {
+    protected void remove(final XmppURI jid) {
 	itemsByJID.remove(jid);
     }
 
-    protected void removeFromGroup(String groupName) {
+    protected void removeFromGroup(final String groupName) {
 	itemsByGroup.remove(groupName);
     }
 
-    protected void storeItem(RosterItem item) {
+    protected void storeItem(final RosterItem item) {
 	itemsByJID.put(item.getJID(), item);
 
     }

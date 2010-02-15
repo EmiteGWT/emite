@@ -85,8 +85,6 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldFireListenersWhenSubjectChange() {
-	final MockedListener<Message> messageListener = new MockedListener<Message>();
-	room.onMessageReceived(messageListener);
 	final MockedListener2<Occupant, String> subjectListener = new MockedListener2<Occupant, String>();
 	room.onSubjectChanged(subjectListener);
 
@@ -95,7 +93,6 @@ public class RoomTest extends AbstractChatTest {
 	assertEquals(1, subjectListener.getCalledTimes());
 	final Occupant occupant = room.getOccupantByURI(occupantURI);
 	assertTrue(subjectListener.isCalledWithSame(occupant, "the subject"));
-	assertEquals(0, messageListener.getCalledTimes());
     }
 
     @Test
