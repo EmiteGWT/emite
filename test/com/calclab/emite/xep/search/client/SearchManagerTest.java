@@ -129,7 +129,7 @@ public class SearchManagerTest {
 	final ResultListener<List<SearchResultItem>> result = Mockito.mock(ResultListener.class);
 	manager.search(query, result);
 
-	session.verifyIQSent("<iq type='get' from='romeo@montague.net/home' to='search.service' xml:lang='en'>"
+	session.verifyIQSent("<iq type='set' from='romeo@montague.net/home' to='search.service' xml:lang='en'>"
 		+ "<query xmlns='jabber:iq:search'> <last>Capulet</last> </query></iq>");
 	session
 		.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"

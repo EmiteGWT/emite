@@ -82,7 +82,7 @@ public class SearchManagerImpl implements SearchManager {
 
     @Override
     public void search(final Form searchForm, final ResultListener<Form> listener) {
-	searchGeneric(IQ.Type.set, Arrays.asList((IPacket) searchForm), new Listener<IPacket>() {
+	searchGeneric(Arrays.asList((IPacket) searchForm), new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket received) {
 		final IQ response = new IQ(received);
@@ -104,7 +104,7 @@ public class SearchManagerImpl implements SearchManager {
 	    child.setText(query.get(field));
 	    queryPacket.add(child);
 	}
-	searchGeneric(IQ.Type.get, queryPacket, new Listener<IPacket>() {
+	searchGeneric(queryPacket, new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket received) {
 		final IQ response = new IQ(received);
@@ -151,9 +151,9 @@ public class SearchManagerImpl implements SearchManager {
 	}
     }
 
-    private void searchGeneric(final IQ.Type type, final List<IPacket> queryChilds, final Listener<IPacket> onResult) {
+    private void searchGeneric(final List<IPacket> queryChilds, final Listener<IPacket> onResult) {
 	if (session.getState() == State.ready) {
-	    final IQ iq = new IQ(type, host).From(session.getCurrentUser()).With(XML_LANG, "en");
+	    final IQ iq = new IQ(IQ.Type.set, host).From(session.getCurrentUser()).With(XML_LANG, "en");
 	    final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
 	    for (final IPacket child : queryChilds) {
 		queryPacket.addChild(child);
