@@ -31,151 +31,151 @@ public class SearchManagerImpl implements SearchManager {
     private XmppURI host;
 
     public SearchManagerImpl(final Session session) {
-        this.session = session;
-        this.filterQuery = MatcherFactory.byNameAndXMLNS("query", IQ_SEARCH);
+	this.session = session;
+	filterQuery = MatcherFactory.byNameAndXMLNS("query", IQ_SEARCH);
     }
 
     @Override
     public void requestSearchFields(final ResultListener<SearchFields> listener) {
-        requestGenericSearchFields(new Listener<IPacket>() {
-            @Override
-            public void onEvent(final IPacket ipacket) {
-                final IQ response = new IQ(ipacket);
-                if (IQ.isSuccess(response)) {
-                    listener.onSuccess(processFieldsResults(session.getCurrentUser(),
-                            response.getFirstChild(filterQuery)));
-                } else {
-                    // TODO
-                    listener.onFailure(null);
-                }
-            }
-        });
+	requestGenericSearchFields(new Listener<IPacket>() {
+	    @Override
+	    public void onEvent(final IPacket ipacket) {
+		final IQ response = new IQ(ipacket);
+		if (IQ.isSuccess(response)) {
+		    listener.onSuccess(processFieldsResults(session.getCurrentUser(), response
+			    .getFirstChild(filterQuery)));
+		} else {
+		    // TODO
+		    listener.onFailure(null);
+		}
+	    }
+	});
     }
 
     @Override
     public void requestSearchForm(final ResultListener<Form> listener) {
-        requestGenericSearchFields(new Listener<IPacket>() {
-            @Override
-            public void onEvent(final IPacket received) {
-                final IQ response = new IQ(received);
-                if (IQ.isSuccess(response)) {
-                    Form form = new Form(received);
-                    if (form.x().equals(NoPacket.INSTANCE)) {
-                        // This is not a extended search. Try to create a form
-                        // with returned fields
-                        final SearchFields fieldResults = processFieldsResults(session.getCurrentUser(),
-                                response.getFirstChild(filterQuery));
-                        form = new Form(Form.Type.form);
-                        form.addInstruction(fieldResults.getInstructions());
-                        for (final String fieldName : fieldResults.getFieldNames()) {
-                            form.addField(new Field(FieldType.TEXT_SINGLE).Var(fieldName));
-                        }
-                    }
-                    listener.onSuccess(form);
-                } else {
-                    // TODO
-                    listener.onFailure(null);
-                }
-            }
-        });
+	requestGenericSearchFields(new Listener<IPacket>() {
+	    @Override
+	    public void onEvent(final IPacket received) {
+		final IQ response = new IQ(received);
+		if (IQ.isSuccess(response)) {
+		    Form form = new Form(received);
+		    if (form.x().equals(NoPacket.INSTANCE)) {
+			// This is not a extended search. Try to create a form
+			// with returned fields
+			final SearchFields fieldResults = processFieldsResults(session.getCurrentUser(), response
+				.getFirstChild(filterQuery));
+			form = new Form(Form.Type.form);
+			form.addInstruction(fieldResults.getInstructions());
+			for (final String fieldName : fieldResults.getFieldNames()) {
+			    form.addField(new Field(FieldType.TEXT_SINGLE).Var(fieldName));
+			}
+		    }
+		    listener.onSuccess(form);
+		} else {
+		    // TODO
+		    listener.onFailure(null);
+		}
+	    }
+	});
     }
 
     @Override
     public void search(final Form searchForm, final ResultListener<Form> listener) {
-        searchGeneric(Arrays.asList((IPacket) searchForm), new Listener<IPacket>() {
-            @Override
-            public void onEvent(final IPacket received) {
-                final IQ response = new IQ(received);
-                if (IQ.isSuccess(response)) {
-                    listener.onSuccess(new Form(response));
-                } else {
-                    // TODO
-                    listener.onFailure(null);
-                }
-            }
-        });
+	searchGeneric(IQ.Type.set, Arrays.asList((IPacket) searchForm), new Listener<IPacket>() {
+	    @Override
+	    public void onEvent(final IPacket received) {
+		final IQ response = new IQ(received);
+		if (IQ.isSuccess(response)) {
+		    listener.onSuccess(new Form(response));
+		} else {
+		    // TODO
+		    listener.onFailure(null);
+		}
+	    }
+	});
     }
 
     @Override
     public void search(final HashMap<String, String> query, final ResultListener<List<SearchResultItem>> listener) {
-        final List<IPacket> queryPacket = new ArrayList<IPacket>();
-        for (final String field : query.keySet()) {
-            final Packet child = new Packet(field);
-            child.setText(query.get(field));
-            queryPacket.add(child);
-        }
-        searchGeneric(queryPacket, new Listener<IPacket>() {
-            @Override
-            public void onEvent(final IPacket received) {
-                final IQ response = new IQ(received);
-                if (IQ.isSuccess(response)) {
-                    listener.onSuccess(processResults(session.getCurrentUser(), response.getFirstChild(filterQuery)));
-                } else {
-                    // TODO
-                    listener.onFailure(null);
-                }
-            }
-        });
+	final List<IPacket> queryPacket = new ArrayList<IPacket>();
+	for (final String field : query.keySet()) {
+	    final Packet child = new Packet(field);
+	    child.setText(query.get(field));
+	    queryPacket.add(child);
+	}
+	searchGeneric(IQ.Type.get, queryPacket, new Listener<IPacket>() {
+	    @Override
+	    public void onEvent(final IPacket received) {
+		final IQ response = new IQ(received);
+		if (IQ.isSuccess(response)) {
+		    listener.onSuccess(processResults(session.getCurrentUser(), response.getFirstChild(filterQuery)));
+		} else {
+		    // TODO
+		    listener.onFailure(null);
+		}
+	    }
+	});
     }
 
     @Override
     public void setHost(final XmppURI host) {
-        this.host = host;
-    }
-
-    protected List<SearchResultItem> processResults(final XmppURI from, final IPacket query) {
-        final List<SearchResultItem> result = new ArrayList<SearchResultItem>();
-        for (final IPacket child : query.getChildren()) {
-            if (child.getName().equals("item")) {
-                final SearchResultItem searchResultItem = SearchResultItem.parse(child);
-                result.add(searchResultItem);
-            }
-        }
-        return result;
+	this.host = host;
     }
 
     private SearchFields processFieldsResults(final XmppURI from, final IPacket query) {
-        final SearchFields fields = new SearchFields();
-        for (final IPacket child : query.getChildren()) {
-            if (!child.getName().equals("instructions")) {
-                fields.add(child.getName());
-            } else {
-                fields.setInstructions(child.getText());
-            }
-        }
-        return fields;
+	final SearchFields fields = new SearchFields();
+	for (final IPacket child : query.getChildren()) {
+	    if (!child.getName().equals("instructions")) {
+		fields.add(child.getName());
+	    } else {
+		fields.setInstructions(child.getText());
+	    }
+	}
+	return fields;
     }
 
     private void requestGenericSearchFields(final Listener<IPacket> onResult) {
-        if (session.getState() == State.ready) {
-            final XmppURI from = session.getCurrentUser();
-            final IQ iq = new IQ(Type.get, host).From(from).With(XML_LANG, "en");
-            iq.addQuery(IQ_SEARCH);
+	if (session.getState() == State.ready) {
+	    final XmppURI from = session.getCurrentUser();
+	    final IQ iq = new IQ(Type.get, host).From(from).With(XML_LANG, "en");
+	    iq.addQuery(IQ_SEARCH);
 
-            session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
-                public void onEvent(final IPacket received) {
-                    onResult.onEvent(received);
-                }
-            });
-        } else {
-            throw new RuntimeException(SHOULD_BE_CONNECTED);
-        }
+	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
+		public void onEvent(final IPacket received) {
+		    onResult.onEvent(received);
+		}
+	    });
+	} else {
+	    throw new RuntimeException(SHOULD_BE_CONNECTED);
+	}
     }
 
-    private void searchGeneric(final List<IPacket> queryChilds, final Listener<IPacket> onResult) {
-        if (session.getState() == State.ready) {
-            final IQ iq = new IQ(Type.set, host).From(session.getCurrentUser()).With(XML_LANG, "en");
-            final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
-            for (final IPacket child : queryChilds) {
-                queryPacket.addChild(child);
-            }
-            session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
-                public void onEvent(final IPacket received) {
-                    onResult.onEvent(received);
-                }
-            });
-        } else {
-            throw new RuntimeException(SHOULD_BE_CONNECTED);
-        }
+    private void searchGeneric(final IQ.Type type, final List<IPacket> queryChilds, final Listener<IPacket> onResult) {
+	if (session.getState() == State.ready) {
+	    final IQ iq = new IQ(type, host).From(session.getCurrentUser()).With(XML_LANG, "en");
+	    final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
+	    for (final IPacket child : queryChilds) {
+		queryPacket.addChild(child);
+	    }
+	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
+		public void onEvent(final IPacket received) {
+		    onResult.onEvent(received);
+		}
+	    });
+	} else {
+	    throw new RuntimeException(SHOULD_BE_CONNECTED);
+	}
+    }
+
+    protected List<SearchResultItem> processResults(final XmppURI from, final IPacket query) {
+	final List<SearchResultItem> result = new ArrayList<SearchResultItem>();
+	for (final IPacket child : query.getChildren()) {
+	    if (child.getName().equals("item")) {
+		final SearchResultItem searchResultItem = SearchResultItem.parse(child);
+		result.add(searchResultItem);
+	    }
+	}
+	return result;
     }
 }

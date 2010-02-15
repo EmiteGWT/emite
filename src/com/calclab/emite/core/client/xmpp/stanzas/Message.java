@@ -127,6 +127,15 @@ public class Message extends BasicStanza {
 	}
     }
 
+    /**
+     * Return true if Message has a body
+     * 
+     * @return
+     */
+    public boolean hasBody() {
+	return hasChild("body");
+    }
+
     public void setBody(final String msg) {
 	if (msg != null) {
 	    final IPacket body = addChild("body", null);
