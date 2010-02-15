@@ -100,14 +100,14 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldRemoveOccupant() {
-	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
-	room.onOccupantRemoved(listener);
+	final MockedListener<Occupant> occupantRemoved = new MockedListener<Occupant>();
+	room.onOccupantRemoved(occupantRemoved);
 	final XmppURI uri = uri("room@domain/name");
 	room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
 	assertEquals(1, room.getOccupantsCount());
 	room.removeOccupant(uri);
 	assertEquals(0, room.getOccupantsCount());
-	assertEquals(2, listener.getCalledTimes());
+	assertEquals(1, occupantRemoved.getCalledTimes());
 	assertNull(room.getOccupantByURI(uri));
     }
 

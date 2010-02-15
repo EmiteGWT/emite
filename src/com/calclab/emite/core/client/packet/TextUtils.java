@@ -21,9 +21,6 @@
  */
 package com.calclab.emite.core.client.packet;
 
-import java.util.Date;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class TextUtils {
 
@@ -66,24 +63,5 @@ public class TextUtils {
 	result = result.replaceAll("&lt;", "<");
 	result = result.replaceAll("&gt;", ">");
 	return result;
-    }
-
-    /*
-     * CCYY-MM-DDThh:mm:ss[.sss]TZD
-     */
-    public static final DateTimeFormat dtf = DateTimeFormat.getFormat("yyyy-MM-ddTHH:mm:ss[.sss]Z");
-
-    /**
-     * http://xmpp.org/extensions/xep-0082.html
-     */
-    public static String formatXMPPDateTime(Date dateTime) {
-	return dtf.format(dateTime);
-    }
-
-    /**
-     * http://xmpp.org/extensions/xep-0082.html
-     */
-    public static Date parseXMPPDateTime(String dateTime) {
-	return dtf.parse(dateTime);
     }
 }

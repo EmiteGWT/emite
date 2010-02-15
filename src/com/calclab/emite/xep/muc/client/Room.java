@@ -28,7 +28,7 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.packet.TextUtils;
+import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -103,29 +103,6 @@ public class Room extends AbstractChat implements Chat {
 	session.send(createEnterPresence(historyOptions));
     }
 
-    public void reEnter(HistoryOptions historyOptions) {
-	if (getState() == State.locked)
-	    session.send(createEnterPresence(historyOptions));
-    }
-
-    private Presence createEnterPresence(HistoryOptions historyOptions) {
-	final Presence presence = new Presence(null, null, getURI());
-	IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
-	presence.setPriority(0);
-	if (historyOptions != null) {
-	    IPacket h = x.addChild("history");
-	    if (historyOptions.maxchars >= 0)
-		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
-	    if (historyOptions.maxstanzas >= 0)
-		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
-	    if (historyOptions.seconds >= 0)
-		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
-	    if (historyOptions.since != null)
-		h.setAttribute("since", TextUtils.formatXMPPDateTime(historyOptions.since));
-	}
-	return presence;
-    }
-
     /**
      * Exit and locks the current room. This is done automatically when the
      * session logouts
@@ -177,6 +154,12 @@ public class Room extends AbstractChat implements Chat {
 
     public void onSubjectChanged(final Listener2<Occupant, String> listener) {
 	onSubjectChanged.add(listener);
+    }
+
+    public void reEnter(final HistoryOptions historyOptions) {
+	if (getState() == State.locked) {
+	    session.send(createEnterPresence(historyOptions));
+	}
     }
 
     public void removeOccupant(final XmppURI uri) {
@@ -265,11 +248,31 @@ public class Room extends AbstractChat implements Chat {
 	return "ROOM: " + uri;
     }
 
+    private Presence createEnterPresence(final HistoryOptions historyOptions) {
+	final Presence presence = new Presence(null, null, getURI());
+	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
+	presence.setPriority(0);
+	if (historyOptions != null) {
+	    final IPacket h = x.addChild("history");
+	    if (historyOptions.maxchars >= 0) {
+		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
+	    }
+	    if (historyOptions.maxstanzas >= 0) {
+		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
+	    }
+	    if (historyOptions.seconds >= 0) {
+		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
+	    }
+	    if (historyOptions.since != null) {
+		h.setAttribute("since", XmppDateTime.formatXMPPDateTime(historyOptions.since));
+	    }
+	}
+	return presence;
+    }
+
     private void handlePresence(final XmppURI occupantURI, final Presence presence) {
-	Type type = presence.getType();
-	if (type == Type.error ||
-	// Kicked ?
-		(type == Type.unavailable && occupantURI.equals(getURI()))) {
+	final Type type = presence.getType();
+	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
 	    // TODO : add an error/out state ?
 	    setState(State.locked);
 	} else if (type == Type.unavailable) {

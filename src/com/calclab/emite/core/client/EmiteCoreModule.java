@@ -25,6 +25,7 @@ import com.calclab.emite.core.client.bosh.BoshConnection;
 import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.gwt.GWTServices;
+import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.session.IMSessionManager;
@@ -99,6 +100,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
     }
 
     public void onModuleLoad() {
+	XmppDateTime.useGWT();
 	Suco.install(this);
     }
 
