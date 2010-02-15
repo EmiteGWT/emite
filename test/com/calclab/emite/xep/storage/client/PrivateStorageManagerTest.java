@@ -38,11 +38,11 @@ public class PrivateStorageManagerTest {
     @Test
     public void shoulGet() {
 	final MockedListener<IQResponse> listener = new MockedListener<IQResponse>();
-	manager.retrieve(new SimpleStorageData(TigaseXMLService.toPacket(dataToRetrieve)), listener);
+	manager.retrieve(new SimpleStorageData("exodus", "exodus:prefs"), listener);
 	session.verifyIQSent(retriveData);
 	session.answer(retrieveResponse);
 	listener.isCalledOnce();
-	assertEquals("Hamlet", listener.getValue(0).getFirstChild("query").getFirstChild("exodus").getFirstChild(
+	assertEquals("Hamlet", SimpleStorageData.parse(listener.getValue(0)).getFirstChild("exodus").getFirstChild(
 		"defaultnick").getText());
     }
 }
