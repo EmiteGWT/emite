@@ -41,26 +41,6 @@ public class RosterItem {
 
     private static final PacketMatcher GROUP_FILTER = MatcherFactory.byName("group");
 
-    /**
-     * Create a new RosterItem based on given a <item> stanza
-     * 
-     * @param packet
-     *            the stanza
-     * @return a new roster item instance
-     */
-    static RosterItem parse(final IPacket packet) {
-	final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet
-		.getAttribute("subscription")), packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
-	final List<? extends IPacket> groups = packet.getChildren(GROUP_FILTER);
-
-	String groupName;
-	for (final IPacket group : groups) {
-	    groupName = group.getText();
-	    item.addGroup(groupName);
-	}
-	return item;
-    }
-
     private static Type parseAsk(final String ask) {
 	Type type;
 	try {
@@ -81,6 +61,26 @@ public class RosterItem {
 	return subscriptionState;
     }
 
+    /**
+     * Create a new RosterItem based on given a <item> stanza
+     * 
+     * @param packet
+     *            the stanza
+     * @return a new roster item instance
+     */
+    static RosterItem parse(final IPacket packet) {
+	final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet
+		.getAttribute("subscription")), packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
+	final List<? extends IPacket> groups = packet.getChildren(GROUP_FILTER);
+
+	String groupName;
+	for (final IPacket group : groups) {
+	    groupName = group.getText();
+	    item.addToGroup(groupName);
+	}
+	return item;
+    }
+
     private final ArrayList<String> groups;
     private final XmppURI jid;
     private final String name;
@@ -91,15 +91,37 @@ public class RosterItem {
     private final Type ask;
     private boolean isAvailable;
 
+    /**
+     * Create a RosterItem object
+     * 
+     * @param jid
+     *            the item jabber id
+     * @param subscriptionState
+     *            the subscription state
+     * @param name
+     *            the name in the roster
+     * @param ask
+     * 
+     */
     public RosterItem(final XmppURI jid, final SubscriptionState subscriptionState, final String name, final Type ask) {
 	this.ask = ask;
 	this.jid = jid.getJID();
 	this.subscriptionState = subscriptionState;
 	this.name = name;
-	this.groups = new ArrayList<String>();
-	this.show = Show.unknown;
-	this.isAvailable = false;
-	this.status = null;
+	groups = new ArrayList<String>();
+	show = Show.unknown;
+	isAvailable = false;
+	status = null;
+    }
+
+    /**
+     * Add the item to a group
+     * 
+     * @param group
+     *            the group name to be added this item in
+     */
+    public void addToGroup(final String group) {
+	groups.add(group);
     }
 
     public Type getAsk() {
@@ -140,6 +162,36 @@ public class RosterItem {
 	return isAvailable;
     }
 
+    /**
+     * Checks if the given item is in the given group
+     * 
+     * @param groupName
+     *            the name of the group to be check
+     * @return true if is included in the group, false otherwise
+     */
+    public boolean isInGroup(final String groupName) {
+	for (final String name : groups) {
+	    if (name.equals(groupName)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    /**
+     * Removes the item from a group. This apply this in server side you have to
+     * call roster.updateItem
+     * 
+     * @param groupName
+     *            the group name to be removed from
+     * @return true if removed
+     * 
+     * @see roster
+     */
+    public boolean removeFromGroup(final String groupName) {
+	return groups.remove(groupName);
+    }
+
     public void setAvailable(final boolean isAvailable) {
 	this.isAvailable = isAvailable;
     }
@@ -153,11 +205,7 @@ public class RosterItem {
     }
 
     public void setSubscriptionState(final SubscriptionState state) {
-	this.subscriptionState = state;
-    }
-
-    void addGroup(final String group) {
-	groups.add(group);
+	subscriptionState = state;
     }
 
     /**
@@ -179,7 +227,7 @@ public class RosterItem {
     void setGroups(final String... groups) {
 	this.groups.clear();
 	for (final String group : groups) {
-	    addGroup(group);
+	    addToGroup(group);
 	}
     }
 

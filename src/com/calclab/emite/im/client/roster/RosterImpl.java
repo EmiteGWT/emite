@@ -42,6 +42,7 @@ import com.google.gwt.core.client.GWT;
 public class RosterImpl extends AbstractRoster implements Roster {
 
     private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
+
     private final Session session;
 
     public RosterImpl(final Session session) {
@@ -94,20 +95,30 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	});
     }
 
-    /**
-     * Add item either to itemsByGroup and itemsById
-     * 
-     * @param item
-     */
-    private void addItem(final RosterItem item) {
-	storeItem(item);
-	for (final String group : item.getGroups()) {
-	    List<RosterItem> items = getGroupItems(group);
-	    if (items == null) {
-		items = new ArrayList<RosterItem>();
-		super.putitemsByGroup(group, items);
-	    }
-	    items.add(item);
+    public void removeItem(final XmppURI uri) {
+	final RosterItem item = getItemByJID(uri.getJID());
+	if (item != null) {
+	    final IQ iq = new IQ(Type.set);
+	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
+	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
+	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
+		public void onEvent(final IPacket parameter) {
+		}
+	    });
+	}
+    }
+
+    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
+	if (getItemByJID(jid) == null) {
+	    addOrUpdateItem(jid, name, null, groups);
+	}
+    }
+
+    public void updateItem(final XmppURI jid, final String name, final String... groups) {
+	final RosterItem oldItem = getItemByJID(jid);
+	if (oldItem != null) {
+	    final String newName = name == null ? oldItem.getName() : name;
+	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
 	}
     }
 
@@ -126,7 +137,7 @@ public class RosterImpl extends AbstractRoster implements Roster {
     private void handleRosterIQSet(final RosterItem item) {
 	final RosterItem old = getItemByJID(item.getJID());
 	if (old == null) { // new item
-	    addItem(item);
+	    storeItem(item);
 	    fireItemAdded(item);
 	} else { // update or remove
 	    removeItem(old);
@@ -140,7 +151,7 @@ public class RosterImpl extends AbstractRoster implements Roster {
 		    item.setShow(old.getShow());
 		    item.setStatus(old.getStatus());
 		}
-		addItem(item);
+		storeItem(item);
 		fireItemChanged(item);
 	    }
 	}
@@ -161,25 +172,6 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	}
     }
 
-    public void removeItem(final XmppURI uri) {
-	final RosterItem item = getItemByJID(uri.getJID());
-	if (item != null) {
-	    final IQ iq = new IQ(Type.set);
-	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
-	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
-	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
-    }
-
-    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
-	if (getItemByJID(jid) == null) {
-	    addOrUpdateItem(jid, name, null, groups);
-	}
-    }
-
     private void requestRoster(final XmppURI user) {
 	GWT.log("Request roster");
 	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
@@ -189,20 +181,12 @@ public class RosterImpl extends AbstractRoster implements Roster {
 		    final List<? extends IPacket> children = received.getFirstChild("query").getChildren();
 		    for (final IPacket child : children) {
 			final RosterItem item = RosterItem.parse(child);
-			addItem(item);
+			storeItem(item);
 		    }
 		    fireRosterReady(getItems());
 		}
 	    }
 
 	});
-    }
-
-    public void updateItem(final XmppURI jid, final String name, final String... groups) {
-	final RosterItem oldItem = getItemByJID(jid);
-	if (oldItem != null) {
-	    final String newName = name == null ? oldItem.getName() : name;
-	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
-	}
     }
 }

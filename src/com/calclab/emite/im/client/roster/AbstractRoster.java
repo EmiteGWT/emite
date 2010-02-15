@@ -11,6 +11,8 @@ import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
 public abstract class AbstractRoster implements Roster {
+    private static final String[] EMPTY_GROUPS = new String[0];
+
     private final HashMap<XmppURI, RosterItem> itemsByJID;
     private final HashMap<String, List<RosterItem>> itemsByGroup;
 
@@ -79,6 +81,17 @@ public abstract class AbstractRoster implements Roster {
 	onRosterReady.add(listener);
     }
 
+    /**
+     * Updates a roster item in server side
+     * 
+     * @param item
+     *            the roster item to be updated
+     */
+    @Override
+    public void updateItem(final RosterItem item) {
+	updateItem(item.getJID(), item.getName(), item.getGroups().toArray(EMPTY_GROUPS));
+    }
+
     protected void clearitemsByJID() {
 	itemsByJID.clear();
     }
@@ -108,10 +121,6 @@ public abstract class AbstractRoster implements Roster {
 	return itemsByGroup.keySet();
     }
 
-    protected void putitemsByGroup(final String group, final List<RosterItem> items) {
-	itemsByGroup.put(group, items);
-    }
-
     protected void remove(final XmppURI jid) {
 	itemsByJID.remove(jid);
     }
@@ -122,6 +131,14 @@ public abstract class AbstractRoster implements Roster {
 
     protected void storeItem(final RosterItem item) {
 	itemsByJID.put(item.getJID(), item);
+	for (final String group : item.getGroups()) {
+	    List<RosterItem> items = itemsByGroup.get(group);
+	    if (items == null) {
+		items = new ArrayList<RosterItem>();
+		itemsByGroup.put(group, items);
+	    }
+	    items.add(item);
+	}
 
     }
 }

@@ -143,6 +143,16 @@ public interface Roster {
     void requestAddItem(XmppURI jid, String name, String... groups);
 
     /**
+     * Request to update a item to the Roster. Utility method to update a roster
+     * item
+     * 
+     * @param item
+     *            the roster item to be updated
+     * @see updateItem
+     */
+    void updateItem(RosterItem item);
+
+    /**
      * Request to update a item to the Roster. If the item.jid is not in the
      * roster, nothing is done. Notice that the subscription mode is IGNORED
      * (you should use SubscriptionManager instead)

@@ -17,8 +17,8 @@ public class RosterItemTests {
     @Test
     public void shouldConvertToStanza() {
 	final RosterItem item = new RosterItem(uri("name@domain/RESOURCE"), null, "TheName", null);
-	item.addGroup("group1");
-	item.addGroup("group2");
+	item.addToGroup("group1");
+	item.addToGroup("group2");
 	EmiteAsserts.assertPacketLike("<item jid='name@domain' name='TheName'>"
 		+ "<group>group1</group><group>group2</group></item>", item.addStanzaTo(new Packet("all")));
     }
