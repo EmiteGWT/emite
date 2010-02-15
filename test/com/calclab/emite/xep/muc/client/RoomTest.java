@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,7 +32,7 @@ public class RoomTest extends AbstractChatTest {
 	userURI = uri("user@domain/res");
 	roomURI = uri("room@domain/nick");
 	session = new SessionTester(userURI);
-	room = new Room(session, roomURI, userURI);
+	room = new Room(session, roomURI, userURI, null);
     }
 
     @Override
@@ -44,8 +42,8 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldAddOccupantAndFireListeners() {
-	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
-	room.onOccupantsChanged(listener);
+	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
+	room.onOccupantAdded(listener);
 	final XmppURI uri = uri("room@domain/name");
 	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role", Show.unknown, null);
 	assertTrue(listener.isCalledOnce());
@@ -102,8 +100,8 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldRemoveOccupant() {
-	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
-	room.onOccupantsChanged(listener);
+	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
+	room.onOccupantRemoved(listener);
 	final XmppURI uri = uri("room@domain/name");
 	room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
 	assertEquals(1, room.getOccupantsCount());

@@ -21,6 +21,7 @@
  */
 package com.calclab.emite.xep.muc.client;
 
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.events.Listener;
 
@@ -39,4 +40,11 @@ public interface RoomManager extends ChatManager {
      *            the listener to be informed
      */
     void onInvitationReceived(Listener<RoomInvitation> listener);
+
+    Room open(final XmppURI uri, HistoryOptions historyOptions);
+
+    HistoryOptions getDefaultHistoryOptions();
+
+    void setDefaultHistoryOptions(HistoryOptions historyOptions);
+
 }

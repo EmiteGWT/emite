@@ -21,6 +21,10 @@
  */
 package com.calclab.emite.core.client.packet;
 
+import java.util.Date;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
+
 public class TextUtils {
 
     // FIXME this utils are commont to kune, emiteui and emitelib
@@ -35,16 +39,16 @@ public class TextUtils {
      * This method escape only some dangerous html chars
      */
     public static String escape(final String source) {
-        if (source == null) {
-            return null;
-        }
-        String result = source;
-        result = result.replaceAll("&", "&amp;");
-        result = result.replaceAll("\"", "&quot;");
-        // text = text.replaceAll("\'", "&#039;");
-        result = result.replaceAll("<", "&lt;");
-        result = result.replaceAll(">", "&gt;");
-        return result;
+	if (source == null) {
+	    return null;
+	}
+	String result = source;
+	result = result.replaceAll("&", "&amp;");
+	result = result.replaceAll("\"", "&quot;");
+	// text = text.replaceAll("\'", "&#039;");
+	result = result.replaceAll("<", "&lt;");
+	result = result.replaceAll(">", "&gt;");
+	return result;
     }
 
     /*
@@ -52,15 +56,34 @@ public class TextUtils {
      * widget for instance
      */
     public static String unescape(final String source) {
-        if (source == null) {
-            return null;
-        }
-        String result = source;
-        result = result.replaceAll("&amp;", "&");
-        result = result.replaceAll("&quot;", "\"");
-        result = result.replaceAll("&#039;", "\'");
-        result = result.replaceAll("&lt;", "<");
-        result = result.replaceAll("&gt;", ">");
-        return result;
+	if (source == null) {
+	    return null;
+	}
+	String result = source;
+	result = result.replaceAll("&amp;", "&");
+	result = result.replaceAll("&quot;", "\"");
+	result = result.replaceAll("&#039;", "\'");
+	result = result.replaceAll("&lt;", "<");
+	result = result.replaceAll("&gt;", ">");
+	return result;
+    }
+
+    /*
+     * CCYY-MM-DDThh:mm:ss[.sss]TZD
+     */
+    public static final DateTimeFormat dtf = DateTimeFormat.getFormat("yyyy-MM-ddTHH:mm:ss[.sss]Z");
+
+    /**
+     * http://xmpp.org/extensions/xep-0082.html
+     */
+    public static String formatXMPPDateTime(Date dateTime) {
+	return dtf.format(dateTime);
+    }
+
+    /**
+     * http://xmpp.org/extensions/xep-0082.html
+     */
+    public static Date parseXMPPDateTime(String dateTime) {
+	return dtf.parse(dateTime);
     }
 }

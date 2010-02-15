@@ -6,8 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -83,8 +81,8 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldIgnoreLetterCaseInURIS() {
 	final Room room = (Room) manager.open(uri("ROOM@domain/nick"));
-	final MockedListener<Collection<Occupant>> listener = new MockedListener<Collection<Occupant>>();
-	room.onOccupantsChanged(listener);
+	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
+	room.onOccupantAdded(listener);
 	session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='ROom@domain/otherUser'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<item role='moderator' affiliation='owner' /></x></presence>");

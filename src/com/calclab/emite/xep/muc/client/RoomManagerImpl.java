@@ -44,6 +44,7 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     private static final PacketMatcher FILTER_INVITE = MatcherFactory.byName("invite");
     private final HashMap<XmppURI, Room> rooms;
     private final Event<RoomInvitation> onInvitationReceived;
+    private HistoryOptions defaultHistoryOptions;
 
     public RoomManagerImpl(final Session session) {
 	super(session);
@@ -90,7 +91,19 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     @Override
     protected Chat createChat(final XmppURI roomURI, final XmppURI starterURI) {
-	return new Room(session, roomURI, starterURI);
+	return new Room(session, roomURI, starterURI, defaultHistoryOptions);
+    }
+
+    @Override
+    public Room open(XmppURI uri, HistoryOptions historyOptions) {
+	Chat chat = getChat(uri);
+	if (chat == null) {
+	    chat = new Room(session, uri, session.getCurrentUser(), historyOptions);
+	    addChat(chat);
+	    fireChatCreated(chat);
+	}
+	fireChatOpened(chat);
+	return (Room) chat;
     }
 
     @Override
@@ -107,4 +120,11 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     }
 
+    public HistoryOptions getDefaultHistoryOptions() {
+	return defaultHistoryOptions;
+    }
+
+    public void setDefaultHistoryOptions(HistoryOptions defaultHistoryOptions) {
+	this.defaultHistoryOptions = defaultHistoryOptions;
+    }
 }

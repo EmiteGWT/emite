@@ -21,7 +21,6 @@
  */
 package com.calclab.emite.xep.muc.client;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +28,7 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
+import com.calclab.emite.core.client.packet.TextUtils;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -53,8 +53,9 @@ public class Room extends AbstractChat implements Chat {
     private static final PacketMatcher ROOM_CREATED = MatcherFactory.byNameAndXMLNS("x",
 	    "http://jabber.org/protocol/muc#user");
     private final HashMap<XmppURI, Occupant> occupantsByURI;
+    private final Event<Occupant> onOccupantAdded;
     private final Event<Occupant> onOccupantModified;
-    private final Event<Collection<Occupant>> onOccupantsChanged;
+    private final Event<Occupant> onOccupantRemoved;
     private final Event2<Occupant, String> onSubjectChanged;
     private final Session session;
 
@@ -66,12 +67,13 @@ public class Room extends AbstractChat implements Chat {
      * @param roomURI
      *            the room uri with the nick specified in the resource part
      */
-    Room(final Session session, final XmppURI roomURI, final XmppURI starter) {
+    Room(final Session session, final XmppURI roomURI, final XmppURI starter, final HistoryOptions historyOptions) {
 	super(session, roomURI, starter);
 	this.session = session;
 	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
+	onOccupantAdded = new Event<Occupant>("room:onOccupantAdded");
 	onOccupantModified = new Event<Occupant>("room:onOccupantModified");
-	onOccupantsChanged = new Event<Collection<Occupant>>("room:onOccupantsChanged");
+	onOccupantRemoved = new Event<Occupant>("room:onOccupantRemoved");
 	onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
 
 	// @see http://www.xmpp.org/extensions/xep-0045.html#createroom
@@ -91,15 +93,37 @@ public class Room extends AbstractChat implements Chat {
 		if (Session.State.loggedIn == state) {
 		} else if (Session.State.loggingOut == state) {
 		    close();
+		} else if (Session.State.disconnected == state) {
+		    // TODO : add an error/out state ?
+		    setState(State.locked);
 		}
 	    }
 	});
 
-	final Presence presence = new Presence(null, null, roomURI);
-	presence.addChild("x", "http://jabber.org/protocol/muc");
-	presence.setPriority(0);
-	session.send(presence);
+	session.send(createEnterPresence(historyOptions));
+    }
 
+    public void reEnter(HistoryOptions historyOptions) {
+	if (getState() == State.locked)
+	    session.send(createEnterPresence(historyOptions));
+    }
+
+    private Presence createEnterPresence(HistoryOptions historyOptions) {
+	final Presence presence = new Presence(null, null, getURI());
+	IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
+	presence.setPriority(0);
+	if (historyOptions != null) {
+	    IPacket h = x.addChild("history");
+	    if (historyOptions.maxchars >= 0)
+		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
+	    if (historyOptions.maxstanzas >= 0)
+		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
+	    if (historyOptions.seconds >= 0)
+		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
+	    if (historyOptions.since != null)
+		h.setAttribute("since", TextUtils.formatXMPPDateTime(historyOptions.since));
+	}
+	return presence;
     }
 
     /**
@@ -139,12 +163,16 @@ public class Room extends AbstractChat implements Chat {
 	return myNick.equals(messageNick);
     }
 
+    public void onOccupantAdded(final Listener<Occupant> listener) {
+	onOccupantAdded.add(listener);
+    }
+
     public void onOccupantModified(final Listener<Occupant> listener) {
 	onOccupantModified.add(listener);
     }
 
-    public void onOccupantsChanged(final Listener<Collection<Occupant>> listener) {
-	onOccupantsChanged.add(listener);
+    public void onOccupantRemoved(final Listener<Occupant> listener) {
+	onOccupantRemoved.add(listener);
     }
 
     public void onSubjectChanged(final Listener2<Occupant, String> listener) {
@@ -154,7 +182,7 @@ public class Room extends AbstractChat implements Chat {
     public void removeOccupant(final XmppURI uri) {
 	final Occupant occupant = occupantsByURI.remove(uri);
 	if (occupant != null) {
-	    onOccupantsChanged.fire(occupantsByURI.values());
+	    onOccupantRemoved.fire(occupant);
 	}
     }
 
@@ -192,7 +220,7 @@ public class Room extends AbstractChat implements Chat {
 	if (occupant == null) {
 	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
 	    occupantsByURI.put(occupant.getURI(), occupant);
-	    onOccupantsChanged.fire(occupantsByURI.values());
+	    onOccupantAdded.fire(occupant);
 	} else {
 	    occupant.setAffiliation(affiliation);
 	    occupant.setRole(role);
@@ -238,7 +266,13 @@ public class Room extends AbstractChat implements Chat {
     }
 
     private void handlePresence(final XmppURI occupantURI, final Presence presence) {
-	if (presence.hasAttribute("type", "unavailable")) {
+	Type type = presence.getType();
+	if (type == Type.error ||
+	// Kicked ?
+		(type == Type.unavailable && occupantURI.equals(getURI()))) {
+	    // TODO : add an error/out state ?
+	    setState(State.locked);
+	} else if (type == Type.unavailable) {
 	    removeOccupant(occupantURI);
 	} else {
 	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
@@ -276,13 +310,16 @@ public class Room extends AbstractChat implements Chat {
     }
 
     @Override
+    /**
+     * WARNING : breaking change, need to check (message.getBody() != null)
+     */
     protected void receive(final Message message) {
 	final String subject = message.getSubject();
 	if (subject != null) {
 	    fireBeforeReceive(message);
 	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), subject);
-	}
-	if (message.getBody() != null) {
+	} else {
+	    // if (message.getBody() != null) {
 	    super.receive(message);
 	}
     }
