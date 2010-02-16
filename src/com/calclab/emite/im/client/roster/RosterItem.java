@@ -35,7 +35,10 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 
 /**
- * Represents a item in the Roster
+ * Represents a item (contact) in the Roster. Usually you don't create this
+ * objects: you can retrieve it from the roster.
+ * 
+ * @see roster.getRoster();
  */
 public class RosterItem {
 
@@ -83,7 +86,7 @@ public class RosterItem {
 
     private final ArrayList<String> groups;
     private final XmppURI jid;
-    private final String name;
+    private String name;
     private String status;
     private Presence.Show show;
 
@@ -124,10 +127,20 @@ public class RosterItem {
 	groups.add(group);
     }
 
+    /**
+     * Get the ask status of this item
+     * 
+     * @return the ask status
+     */
     public Type getAsk() {
 	return ask;
     }
 
+    /**
+     * Get the name of all the groups this items belongs to.
+     * 
+     * @return the list of group names
+     */
     public List<String> getGroups() {
 	return groups;
     }
@@ -142,14 +155,29 @@ public class RosterItem {
 	return jid;
     }
 
+    /**
+     * Get the name of the item in this roster
+     * 
+     * @return the name of the item
+     */
     public String getName() {
 	return name;
     }
 
+    /**
+     * Get the current show of this item
+     * 
+     * @return the show of the item
+     */
     public Presence.Show getShow() {
 	return show;
     }
 
+    /**
+     * Get the current status of this item
+     * 
+     * @return the status message
+     */
     public String getStatus() {
 	return status;
     }
@@ -158,6 +186,11 @@ public class RosterItem {
 	return subscriptionState;
     }
 
+    /**
+     * Know if a item is available or not
+     * 
+     * @return true if contact is available
+     */
     public boolean isAvailable() {
 	return isAvailable;
     }
@@ -192,18 +225,60 @@ public class RosterItem {
 	return groups.remove(groupName);
     }
 
+    /**
+     * Change the current available state of this item. Does NOT have any effect
+     * on server side. This method is called by the roster to reflect the state
+     * change of the items: usually you don't call this method.
+     * 
+     * @param status
+     *            the new status
+     */
     public void setAvailable(final boolean isAvailable) {
 	this.isAvailable = isAvailable;
     }
 
+    /**
+     * Change the name of this item. To apply this change in server side you
+     * MUST call roster.updateItem
+     * 
+     * @param name
+     */
+    public void setName(final String name) {
+	this.name = name;
+    }
+
+    /**
+     * Change the show of this item. Does NOT have any effect on server side.
+     * This method is called by the roster to reflect the state change of the
+     * items: usually you don't call this method.
+     * 
+     * @param show
+     *            the new presence show state
+     */
     public void setShow(final Presence.Show show) {
 	this.show = show;
     }
 
+    /**
+     * Change the current status of this item. Does NOT have any effect on
+     * server side. This method is called by the roster to reflect the state
+     * change of the items: usually you don't call this method.
+     * 
+     * @param status
+     *            the new status
+     */
     public void setStatus(final String status) {
 	this.status = status;
     }
 
+    /**
+     * Change the current substription state of this item. Does NOT have any
+     * effect on server side. This method is called by the roster to reflect the
+     * state change of the items: usually you don't call this method.
+     * 
+     * @param status
+     *            the new status
+     */
     public void setSubscriptionState(final SubscriptionState state) {
 	subscriptionState = state;
     }
