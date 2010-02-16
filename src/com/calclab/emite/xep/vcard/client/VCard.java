@@ -199,6 +199,10 @@ public class VCard extends VCardData {
 	setValue(Data.TITLE, text);
     }
 
+    public void setURL(String url) {
+	setValue(Data.URL, url);
+    }
+
     public void setValue(final Data data, final String text) {
 	setValue(data.toString(), text);
     }
