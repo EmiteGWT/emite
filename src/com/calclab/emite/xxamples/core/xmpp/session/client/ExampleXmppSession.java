@@ -2,8 +2,6 @@ package com.calclab.emite.xxamples.core.xmpp.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import com.calclab.emite.core.client.bosh.BoshSettings;
-import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -26,7 +24,6 @@ public class ExampleXmppSession implements EntryPoint {
 	RootPanel.get("app").add(panel);
 	log("Emite example: xmpp sessions");
 
-	Suco.get(Connection.class).setSettings(new BoshSettings("/proxy", "localhost"));
 	/*
 	 * We get the Session object. The most important object of Emite Core
 	 * module.
@@ -39,8 +36,8 @@ public class ExampleXmppSession implements EntryPoint {
 	 */
 	session.onStateChanged(new Listener<Session>() {
 	    @Override
-	    public void onEvent(Session session) {
-		State state = session.getState();
+	    public void onEvent(final Session session) {
+		final State state = session.getState();
 		if (state == Session.State.loggedIn) {
 		    log("We are now online");
 		    sendHelloWorldMessage(session);
@@ -70,10 +67,9 @@ public class ExampleXmppSession implements EntryPoint {
 	    }
 	});
 
-	session.login(uri("test1@localhost"), "test1");
     }
 
-    private void log(String text) {
+    private void log(final String text) {
 	panel.add(new Label(text));
     }
 

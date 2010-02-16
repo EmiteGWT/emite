@@ -57,7 +57,7 @@ public class AutoConfig {
 
     private void initialize() {
 	PageAssist.configureFromMeta(connection);
-	String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
+	final String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
 	if (sessionBehaviour != null) {
 	    GWT.log("PageController - initializing...", null);
 	    prepareOnCloseAction(sessionBehaviour);
@@ -71,15 +71,17 @@ public class AutoConfig {
 	Window.addCloseHandler(new CloseHandler<Window>() {
 	    public void onClose(final CloseEvent<Window> arg0) {
 		if ("resume".equals(sessionBehaviour) || "resumeOrLogin".equals(sessionBehaviour)) {
+		    GWT.log("PAUSING SESSION...");
 		    PageAssist.pauseSession(session);
 		} else if ("login".equals(sessionBehaviour)) {
+		    GWT.log("LOGGIN OUT SESSION...");
 		    PageAssist.closeSession(session);
 		}
 	    }
 	});
     }
 
-    private void prepareOnOpenAction(String sessionBehaviour) {
+    private void prepareOnOpenAction(final String sessionBehaviour) {
 	GWT.log("PageController - trying to resume...", null);
 	if (sessionBehaviour.equals("login")) {
 	    PageAssist.loginFromMeta(session);

@@ -15,7 +15,7 @@ import com.calclab.emite.core.client.packet.Packet;
 public class VCard extends VCardData {
 
     public static enum Data {
-	DESC, FN, JABBERID, NICKNAME, TITLE, URL
+	FN, NICKNAME, URL, BDAY, TITLE, ROLE, JABBERID, DESC
     }
 
     public static enum Name {
@@ -37,59 +37,30 @@ public class VCard extends VCardData {
 
     public VCard() {
 	super(new Packet(VCARD, DATA_XMLS));
+	createRequiredFields();
     }
 
     public VCard(final IPacket packet) {
 	super(packet);
+	createRequiredFields();
     }
 
     public void addAddresses(final VCardAddress address) {
-	parseAddresses();
 	addresses.add(address);
 	addChild(address);
     }
 
     public void addEmail(final VCardEmail email) {
-	parseEmails();
 	emails.add(email);
 	addChild(email);
     }
 
     public void addTelephone(final VCardTelephone telefone) {
-	parseTelephones();
 	telephones.add(telefone);
 	addChild(telefone);
     }
 
-    public void clearAddresses() {
-	if (addresses != null) {
-	    for (final VCardAddress address : addresses) {
-		removeChild(address);
-	    }
-	    addresses.clear();
-	}
-    }
-
-    public void clearEmails() {
-	if (emails != null) {
-	    for (final VCardEmail email : emails) {
-		removeChild(email);
-	    }
-	    emails.clear();
-	}
-    }
-
-    public void clearTelephones() {
-	if (telephones != null) {
-	    for (final VCardTelephone telephone : telephones) {
-		removeChild(telephone);
-	    }
-	    telephones.clear();
-	}
-    }
-
     public List<VCardAddress> getAddresses() {
-	parseAddresses();
 	return addresses;
     }
 
@@ -102,7 +73,6 @@ public class VCard extends VCardData {
     }
 
     public List<VCardEmail> getEmails() {
-	parseEmails();
 	return emails;
     }
 
@@ -135,7 +105,6 @@ public class VCard extends VCardData {
     }
 
     public List<VCardTelephone> getTelephones() {
-	parseTelephones();
 	return telephones;
     }
 
@@ -199,12 +168,26 @@ public class VCard extends VCardData {
 	setValue(Data.TITLE, text);
     }
 
-    public void setURL(String url) {
+    public void setURL(final String url) {
 	setValue(Data.URL, url);
     }
 
     public void setValue(final Data data, final String text) {
 	setValue(data.toString(), text);
+    }
+
+    /**
+     * Currently there is no method for partial updates of a vCard, and the
+     * entire vCard must be sent to the server in order to update any part of
+     * the vCard.
+     */
+    private void createRequiredFields() {
+	for (final Data data : Data.values()) {
+	    getOrCreateChild(data.toString());
+	}
+	parseAddresses();
+	parseEmails();
+	parseTelephones();
     }
 
     private IPacket getN() {
@@ -215,32 +198,26 @@ public class VCard extends VCardData {
     }
 
     private void parseAddresses() {
-	if (addresses == null) {
-	    addresses = new ArrayList<VCardAddress>();
-	    final List<? extends IPacket> children = getChildren(byName(ADR));
-	    for (final IPacket child : children) {
-		addresses.add(new VCardAddress(child));
-	    }
+	addresses = new ArrayList<VCardAddress>();
+	final List<? extends IPacket> children = getChildren(byName(ADR));
+	for (final IPacket child : children) {
+	    addresses.add(new VCardAddress(child));
 	}
     }
 
     private void parseEmails() {
-	if (emails == null) {
-	    emails = new ArrayList<VCardEmail>();
-	    final List<? extends IPacket> children = getChildren(byName(EMAIL));
-	    for (final IPacket child : children) {
-		emails.add(new VCardEmail(child));
-	    }
+	emails = new ArrayList<VCardEmail>();
+	final List<? extends IPacket> children = getChildren(byName(EMAIL));
+	for (final IPacket child : children) {
+	    emails.add(new VCardEmail(child));
 	}
     }
 
     private void parseTelephones() {
-	if (telephones == null) {
-	    telephones = new ArrayList<VCardTelephone>();
-	    final List<? extends IPacket> children = getChildren(byName(TEL));
-	    for (final IPacket child : children) {
-		telephones.add(new VCardTelephone(child));
-	    }
+	telephones = new ArrayList<VCardTelephone>();
+	final List<? extends IPacket> children = getChildren(byName(TEL));
+	for (final IPacket child : children) {
+	    telephones.add(new VCardTelephone(child));
 	}
     }
 }

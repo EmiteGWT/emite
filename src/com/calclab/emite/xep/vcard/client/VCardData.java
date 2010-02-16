@@ -4,6 +4,7 @@ import static com.calclab.emite.core.client.packet.MatcherFactory.byName;
 
 import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.packet.NoPacket;
 
 public abstract class VCardData extends DelegatedPacket {
 
@@ -12,11 +13,19 @@ public abstract class VCardData extends DelegatedPacket {
     }
 
     public String getValue(final String nodeName) {
-	return getFirstChild(byName(nodeName)).getText();
+	return getOrCreateChild(nodeName).getText();
     }
 
     public void setValue(final String nodeName, final String text) {
 	setTextToChild(nodeName, text);
+    }
+
+    protected IPacket getOrCreateChild(final String nodeName) {
+	IPacket firstChild = getFirstChild(byName(nodeName));
+	if (firstChild == NoPacket.INSTANCE) {
+	    firstChild = addChild(nodeName);
+	}
+	return firstChild;
     }
 
 }

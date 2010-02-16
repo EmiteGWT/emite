@@ -5,6 +5,7 @@
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 
 	<inherits name='com.calclab.emite.core.EmiteCore' />
+	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 
 	<entry-point
 		class='com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession' />

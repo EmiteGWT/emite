@@ -40,53 +40,37 @@ public class BoshConnection extends AbstractConnection {
     public BoshConnection(final Services services) {
 	this.services = services;
 
-	this.listener = new ConnectorCallback() {
+	listener = new ConnectorCallback() {
 
 	    public void onError(final String request, final Throwable throwable) {
 		if (isActive()) {
 		    GWT.log("Connection error", throwable);
-		    final int e = incrementErrors();
-		    // With e = 8, 500 + (8-1)*8*550 = 31300
-		    // TODO : customize reties and timings
-		    if (e > 8) {
+		    if (incrementErrors() > 2) {
 			setActive(false);
 			fireError("Connection error: " + throwable.toString());
 		    } else {
-			// Exponentialy try
-			// TODO : being able to cutomize it
-			final int scedTime = 500 + (e - 1) * e * 550;
-			fireRetry(e, scedTime);
-			services.schedule(scedTime, new ScheduledAction() {
-			    public void run() {
-				GWT.log("Error retry: "+e, throwable);
-				send(request);
-			    }
-			});
+			GWT.log("Error retry: " + throwable, null);
+			send(request);
 		    }
 		}
 	    }
 
 	    public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
+		clearErrors();
 		activeConnections--;
 		if (isActive()) {
 		    // TODO: check if is the same code in other than FF and make
 		    // tests
-		    if (statusCode == 404) {
+		    if (statusCode != 200 && statusCode != 0) {
 			setActive(false);
-			fireError("404 Connection Error (session removed ?) : " + content);
-		    } else if (statusCode != 200 && statusCode != 0) {
-			// setActive(false);
-			// fireError("Bad status: " + statusCode);
-			onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
+			fireError("Bad status: " + statusCode);
 		    } else {
+			fireResponse(content);
 			final IPacket response = services.toXML(content);
 			if (response != null && "body".equals(response.getName())) {
-			    clearErrors();
-			    fireResponse(content);
 			    handleResponse(response);
 			} else {
-			    onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
-			    // fireError("Bad response: " + content);
+			    fireError("Bad response: " + content);
 			}
 		    }
 		}
@@ -97,12 +81,11 @@ public class BoshConnection extends AbstractConnection {
 
     public void connect() {
 	assert getUserSettings() != null;
-	clearErrors();
 
 	if (!isActive()) {
-	    this.setActive(true);
-	    this.setStream(new StreamSettings());
-	    this.activeConnections = 0;
+	    setActive(true);
+	    setStream(new StreamSettings());
+	    activeConnections = 0;
 	    createInitialBody(getUserSettings());
 	    sendBody();
 	}
@@ -161,7 +144,7 @@ public class BoshConnection extends AbstractConnection {
 	    } else {
 		final long currentRID = getStream().rid;
 		// FIXME: hardcoded
-		final int msecs = 200;
+		final int msecs = 6000;
 		services.schedule(msecs, new ScheduledAction() {
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
@@ -176,18 +159,18 @@ public class BoshConnection extends AbstractConnection {
 
     private void createBody() {
 	if (getCurrentBody() == null) {
-	    Packet body = new Packet("body");
+	    final Packet body = new Packet("body");
 	    body.With("xmlns", "http://jabber.org/protocol/httpbind");
 	    body.With("rid", getStream().getNextRid());
 	    if (getStream() != null) {
 		body.With("sid", getStream().sid);
 	    }
-	    this.setCurrentBody(body);
+	    setCurrentBody(body);
 	}
     }
 
     private void createInitialBody(final BoshSettings userSettings) {
-	Packet body = new Packet("body");
+	final Packet body = new Packet("body");
 	body.setAttribute("content", "text/xml; charset=utf-8");
 	body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
 	body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
@@ -200,13 +183,12 @@ public class BoshConnection extends AbstractConnection {
 	body.setAttribute("to", userSettings.hostName);
 	body.With("hold", userSettings.hold);
 	body.With("wait", userSettings.wait);
-	this.setCurrentBody(body);
+	setCurrentBody(body);
     }
 
     private void handleResponse(final IPacket response) {
 	if (isTerminate(response.getAttribute("type"))) {
 	    getStream().sid = null;
-	    setActive(false);
 	    fireDisconnected("disconnected by server");
 	} else {
 	    if (getStream().sid == null) {
@@ -224,7 +206,7 @@ public class BoshConnection extends AbstractConnection {
     }
 
     private void initStream(final IPacket response) {
-	StreamSettings stream = getStream();
+	final StreamSettings stream = getStream();
 	stream.sid = response.getAttribute("sid");
 	stream.wait = response.getAttribute("wait");
 	stream.inactivity = response.getAttribute("inactivity");
@@ -253,17 +235,11 @@ public class BoshConnection extends AbstractConnection {
     }
 
     private void sendBody() {
-	if (!shouldCollectResponses && isActive() && activeConnections < getUserSettings().maxRequests && errors == 0) {
+	if (!shouldCollectResponses) {
 	    final String request = services.toString(getCurrentBody());
 	    setCurrentBody(null);
 	    send(request);
-	} else {
-	    GWT.log("Send body simply queued", null);
 	}
     }
 
-    @Override
-    public String toString() {
-	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
-    }
 }
