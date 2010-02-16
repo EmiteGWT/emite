@@ -12,20 +12,22 @@ public class VCardEmail extends VCardData {
     private static final String PREF = "PREF";
     private static final String USERID = "USERID";
 
-    public VCardEmail() {
-	this(new Packet(VCard.EMAIL).addChild(new Packet(USERID)));
-	setType(Type.INTERNET);
-    }
-
     public VCardEmail(final IPacket packet) {
 	super(packet);
     }
 
-    public String get() {
+    public VCardEmail(final String email, final boolean preferred) {
+	this(new Packet(VCard.EMAIL).addChild(new Packet(USERID)));
+	setType(Type.INTERNET);
+	setUserId(email);
+	setPreferred(preferred);
+    }
+
+    public String getUserId() {
 	return getValue(USERID);
     }
 
-    public boolean isPref() {
+    public boolean isPreferred() {
 	return hasChild(PREF);
     }
 
@@ -33,13 +35,11 @@ public class VCardEmail extends VCardData {
 	return hasChild(type.toString());
     }
 
-    public void set(final String email) {
-	setValue(USERID, email);
-    }
-
-    public void setPref() {
-	if (!isPref()) {
+    public void setPreferred(final boolean preferred) {
+	if (preferred && !isPreferred()) {
 	    addChild(PREF);
+	} else if (!preferred && isPreferred()) {
+	    removeChild(getFirstChild(PREF));
 	}
     }
 
@@ -47,6 +47,10 @@ public class VCardEmail extends VCardData {
 	if (!hasChild(type.toString())) {
 	    addChild(type.toString());
 	}
+    }
+
+    public void setUserId(final String email) {
+	setValue(USERID, email);
     }
 
 }

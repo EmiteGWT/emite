@@ -61,6 +61,33 @@ public class VCard extends VCardData {
 	addChild(telefone);
     }
 
+    public void clearAddresses() {
+	if (addresses != null) {
+	    for (final VCardAddress address : addresses) {
+		removeChild(address);
+	    }
+	    addresses.clear();
+	}
+    }
+
+    public void clearEmails() {
+	if (emails != null) {
+	    for (final VCardEmail email : emails) {
+		removeChild(email);
+	    }
+	    emails.clear();
+	}
+    }
+
+    public void clearTelephones() {
+	if (telephones != null) {
+	    for (final VCardTelephone telephone : telephones) {
+		removeChild(telephone);
+	    }
+	    telephones.clear();
+	}
+    }
+
     public List<VCardAddress> getAddresses() {
 	parseAddresses();
 	return addresses;
@@ -128,27 +155,6 @@ public class VCard extends VCardData {
 	return getValue(data.toString());
     }
 
-    public void removeAddresses() {
-	for (final VCardAddress address : addresses) {
-	    removeChild(address);
-	}
-	addresses.clear();
-    }
-
-    public void removeEmails() {
-	for (final VCardEmail email : emails) {
-	    removeChild(email);
-	}
-	emails.clear();
-    }
-
-    public void removeTelephones() {
-	for (final VCardTelephone telephone : telephones) {
-	    removeChild(telephone);
-	}
-	telephones.clear();
-    }
-
     public void setDescription(final String text) {
 	setValue(Data.DESC.toString(), text);
     }
@@ -198,8 +204,8 @@ public class VCard extends VCardData {
     }
 
     private IPacket getN() {
-	if (this.nameChild == null) {
-	    this.nameChild = getFirstChild(byName(N));
+	if (nameChild == null) {
+	    nameChild = getFirstChild(byName(N));
 	}
 	return nameChild;
     }

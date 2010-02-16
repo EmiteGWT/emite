@@ -1,6 +1,8 @@
 package com.calclab.emite.xep.vcard.client;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -42,16 +44,15 @@ public class VCardTests {
 
     @Test
     public void shouldAddEmails() {
-	final VCardEmail newEmail = new VCardEmail();
-	newEmail.set("some@example.com");
+	final VCardEmail newEmail = new VCardEmail("some@example.com", false);
 	final VCard vCard = new VCard();
 	vCard.addEmail(newEmail);
 	final List<VCardEmail> emails = vCard.getEmails();
 	assertEquals(1, emails.size());
 	final VCardEmail first = emails.get(0);
-	assertEquals("some@example.com", first.get());
-	assertFalse(first.isPref());
-	vCard.removeEmails();
+	assertEquals("some@example.com", first.getUserId());
+	assertFalse(first.isPreferred());
+	vCard.clearEmails();
 	assertEquals(0, vCard.getEmails().size());
     }
 
@@ -69,9 +70,9 @@ public class VCardTests {
 	final List<VCardEmail> emails = vCard.getEmails();
 	assertEquals(1, emails.size());
 	final VCardEmail first = emails.get(0);
-	assertTrue(first.isPref());
+	assertTrue(first.isPreferred());
 	assertTrue(first.isType(VCardEmail.Type.INTERNET));
-	assertEquals("stpeter@jabber.org", first.get());
+	assertEquals("stpeter@jabber.org", first.getUserId());
     }
 
     @Test
