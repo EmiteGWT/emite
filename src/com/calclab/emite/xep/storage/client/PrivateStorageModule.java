@@ -1,8 +1,7 @@
 package com.calclab.emite.xep.storage.client;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.suco.client.ioc.Decorator;
-import com.calclab.suco.client.ioc.Provider;
+import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
@@ -15,13 +14,7 @@ public class PrivateStorageModule extends AbstractModule implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-    }
-
-    @Override
-    public <T> Provider<T> register(final Class<? extends Decorator> decoratorType, final Class<T> componentType,
-	    final Provider<T> provider) {
-	// TODO Auto-generated method stub
-	return null;
+	Suco.install(this);
     }
 
     @Override

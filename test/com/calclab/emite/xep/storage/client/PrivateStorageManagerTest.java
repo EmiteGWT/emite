@@ -42,7 +42,7 @@ public class PrivateStorageManagerTest {
 	session.verifyIQSent(retriveData);
 	session.answer(retrieveResponse);
 	listener.isCalledOnce();
-	assertEquals("Hamlet", SimpleStorageData.parse(listener.getValue(0)).getFirstChild("exodus").getFirstChild(
+	assertEquals("Hamlet", listener.getValue(0).getFirstChild("query").getFirstChild("exodus").getFirstChild(
 		"defaultnick").getText());
     }
 }
