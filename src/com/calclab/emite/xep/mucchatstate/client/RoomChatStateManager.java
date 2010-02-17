@@ -31,6 +31,7 @@ import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
@@ -43,35 +44,34 @@ import com.google.gwt.user.client.Timer;
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
 public class RoomChatStateManager {
-    public static enum ChatState {
-	active, composing, pause, inactive
-	// , gone
-	/*
-	 * http://xmpp.org/extensions/xep-0085.html#bizrules-groupchat # A
-	 * client SHOULD NOT generate <gone/> notifications. # A client SHOULD
-	 * ignore <gone/> notifications received from other room occupants.
-	 */
-    }
+
+    /*
+     * REUSING ChatStateManager.ChatState
+     * http://xmpp.org/extensions/xep-0085.html#bizrules-groupchat # A client
+     * SHOULD NOT generate <gone/> notifications. # A client SHOULD ignore
+     * <gone/> notifications received from other room occupants.
+     */
 
     private final static List<String> stateString;
     static {
 	stateString = new ArrayList<String>(4);
-	for (ChatState s : ChatState.values())
+	for (final ChatState s : ChatState.values()) {
 	    stateString.add(s.name());
+	}
     }
 
     public static final String XMLNS = "http://jabber.org/protocol/chatstates";
 
     private ChatState ownState;
-    private Map<XmppURI, ChatState> othersState;
+    private final Map<XmppURI, ChatState> othersState;
     private final Room room;
     private final Event2<XmppURI, ChatState> onChatStateChanged;
-    private int inactiveDelay = 120 * 1000; // 2 minutes
-    private int pauseDelay = 10 * 1000; // 10 secondes
+    private final int inactiveDelay = 120 * 1000; // 2 minutes
+    private final int pauseDelay = 10 * 1000; // 10 secondes
 
     PacketMatcher bodySubjectThreadMatchter = new PacketMatcher() {
-	public boolean matches(IPacket packet) {
-	    String nn = packet.getName();
+	public boolean matches(final IPacket packet) {
+	    final String nn = packet.getName();
 	    return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
 	}
     };
@@ -99,29 +99,31 @@ public class RoomChatStateManager {
 	// Only Messages are listened not presence events
 	// But sendStateMessage goes through here.
 	public void onEvent(final Message message) {
-	    boolean alreadyWithState = getStateFromMessage(message) != null;
+	    final boolean alreadyWithState = getStateFromMessage(message) != null;
 	    if (!alreadyWithState && ownState != ChatState.active
 		    && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
-		if (ownState == ChatState.composing)
+		if (ownState == ChatState.composing) {
 		    pauseTimer.cancel();
+		}
 
 		GWT.log("Setting own status to: " + ownState + " because we send a body or a subject", null);
 		ownState = ChatState.active;
 		message.addChild(ChatState.active.toString(), XMLNS);
 	    }
-	    if (ownState != ChatState.inactive)
+	    if (ownState != ChatState.inactive) {
 		inactiveTimer.schedule(inactiveDelay);
+	    }
 	}
     };
 
-    private Timer inactiveTimer = new Timer() {
+    private final Timer inactiveTimer = new Timer() {
 	@Override
 	public void run() {
 	    setOwnState(ChatState.inactive);
 	}
     };
 
-    private Timer pauseTimer = new Timer() {
+    private final Timer pauseTimer = new Timer() {
 	@Override
 	public void run() {
 	    setOwnState(ChatState.pause);
@@ -130,13 +132,13 @@ public class RoomChatStateManager {
 
     public RoomChatStateManager(final Room room) {
 	this.room = room;
-	this.onChatStateChanged = new Event2<XmppURI, ChatState>("roomOccupantsChatStateManager:onChatStateChanged");
-	this.othersState = new HashMap<XmppURI, ChatState>();
+	onChatStateChanged = new Event2<XmppURI, ChatState>("roomOccupantsChatStateManager:onChatStateChanged");
+	othersState = new HashMap<XmppURI, ChatState>();
 	room.onMessageReceived(new Listener<Message>() {
 	    public void onEvent(final Message message) {
-		ChatState state = getStateFromMessage(message);
+		final ChatState state = getStateFromMessage(message);
 		if (state != null) {
-		    XmppURI from = message.getFrom();
+		    final XmppURI from = message.getFrom();
 		    GWT.log("Received chat status " + state + " from " + from, null);
 		    othersState.put(from, state);
 		    onChatStateChanged.fire(message.getFrom(), state);
@@ -145,8 +147,8 @@ public class RoomChatStateManager {
 	});
     }
 
-    public ChatState getOtherState(XmppURI occupantUri) {
-	ChatState state = othersState.get(occupantUri);
+    public ChatState getOtherState(final XmppURI occupantUri) {
+	final ChatState state = othersState.get(occupantUri);
 	return state == null ? ChatState.active : state;
     }
 
@@ -165,20 +167,21 @@ public class RoomChatStateManager {
 	// However, every content message SHOULD contain an <active/>
 	// notification.
 	if (ownState == null || !ownState.equals(chatState)) {
-	    this.ownState = chatState;
+	    ownState = chatState;
 	    GWT.log("Setting own status to: " + chatState.toString(), null);
 	    final Message message = new Message(null, room.getURI(), null);
 	    message.addChild(chatState.toString(), XMLNS);
 	    room.send(message);
 	}
-	if (ownState == ChatState.composing)
+	if (ownState == ChatState.composing) {
 	    pauseTimer.schedule(pauseDelay);
+	}
     }
 
     private ChatState getStateFromMessage(final Message message) {
-	IPacket stateNode = message.getFirstChild(new PacketMatcher() {
-	    public boolean matches(IPacket packet) {
-		boolean vn = stateString.contains(packet.getName());
+	final IPacket stateNode = message.getFirstChild(new PacketMatcher() {
+	    public boolean matches(final IPacket packet) {
+		final boolean vn = stateString.contains(packet.getName());
 		return vn;
 		/*
 		 * Namespaces don't work String ns =
