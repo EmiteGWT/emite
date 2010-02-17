@@ -123,8 +123,13 @@ public class RosterItem {
      * @param group
      *            the group name to be added this item in
      */
-    public void addToGroup(final String group) {
-	groups.add(group);
+    public void addToGroup(String group) {
+	if (group != null) {
+	    group = group.trim();
+	    if (group.length() > 0) {
+		groups.add(group);
+	    }
+	}
     }
 
     /**

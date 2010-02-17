@@ -24,6 +24,14 @@ public class RosterItemTests {
     }
 
     @Test
+    public void shouldIgnoreEmptyGroups() {
+	final RosterItem item = new RosterItem(uri("name@domain/RESOURCE"), null, "TheName", null);
+	item.addToGroup(null);
+	item.addToGroup(" ");
+	assertEquals(0, item.getGroups().size());
+    }
+
+    @Test
     public void shouldParseStanza() {
 	final RosterItem item = RosterItem
 		.parse(p("<item jid='romeo@example.net' ask='subscribe' name='R' subscription='both'>"
