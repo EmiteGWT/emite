@@ -49,7 +49,6 @@ public class VCardManager {
 
     public void updateOwnVCard(final VCard vcard, final Listener<VCardResponse> listener) {
 	final IQ iq = new IQ(IQ.Type.set);
-	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 	iq.addChild(vcard);
 	session.sendIQ(ID_PREFIX, iq, new Listener<IPacket>() {
 	    @Override
