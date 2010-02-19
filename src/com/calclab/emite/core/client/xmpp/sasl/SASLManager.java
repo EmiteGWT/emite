@@ -32,7 +32,7 @@ import com.calclab.suco.client.events.Listener;
 public class SASLManager {
     private static final String SEP = new String(new char[] { 0 });
     private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
-    public static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", null, null);
+    public static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", "", null);
 
     private final Event<AuthorizationTransaction> onAuthorized;
     private AuthorizationTransaction currentTransaction;
@@ -40,7 +40,7 @@ public class SASLManager {
 
     public SASLManager(final Connection connection) {
 	this.connection = connection;
-	this.onAuthorized = new Event<AuthorizationTransaction>("saslManager:onAuthorized");
+	onAuthorized = new Event<AuthorizationTransaction>("saslManager:onAuthorized");
 	install();
     }
 
@@ -49,7 +49,7 @@ public class SASLManager {
     }
 
     public void sendAuthorizationRequest(final AuthorizationTransaction authorizationTransaction) {
-	this.currentTransaction = authorizationTransaction;
+	currentTransaction = authorizationTransaction;
 	final IPacket response = isAnonymous(authorizationTransaction) ? createAnonymousAuthorization()
 		: createPlainAuthorization(authorizationTransaction);
 	connection.send(response);

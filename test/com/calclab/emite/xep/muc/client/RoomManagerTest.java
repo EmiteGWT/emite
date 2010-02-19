@@ -24,15 +24,15 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldAcceptInvitations() {
 	final RoomManager rooms = (RoomManager) manager;
-	final MockedListener<Chat> listener = new MockedListener<Chat>();
-	rooms.onChatCreated(listener);
+	final MockedListener<Chat> chatCreatedListener = new MockedListener<Chat>();
+	rooms.onChatCreated(chatCreatedListener);
 
 	final String reason = "theReason";
 	final XmppURI invitor = uri("friend@host/resource");
 	final XmppURI roomURI = uri("room@room.service");
 	rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason));
-	assertTrue(listener.isCalledOnce());
-	final Chat room = listener.getValue(0);
+	assertTrue(chatCreatedListener.isCalledOnce());
+	final Chat room = chatCreatedListener.getValue(0);
 	assertEquals("room@room.service/self", room.getURI().toString());
     }
 

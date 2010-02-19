@@ -36,20 +36,21 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
 
 public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     private static final PacketMatcher FILTER_X = MatcherFactory.byNameAndXMLNS("x",
 	    "http://jabber.org/protocol/muc#user");
     private static final PacketMatcher FILTER_INVITE = MatcherFactory.byName("invite");
-    private final HashMap<XmppURI, Room> rooms;
+    private final HashMap<XmppURI, Room> roomsByJID;
     private final Event<RoomInvitation> onInvitationReceived;
     private HistoryOptions defaultHistoryOptions;
 
     public RoomManagerImpl(final Session session) {
 	super(session);
 	onInvitationReceived = new Event<RoomInvitation>("roomManager:onInvitationReceived");
-	rooms = new HashMap<XmppURI, Room>();
+	roomsByJID = new HashMap<XmppURI, Room>();
 
     }
 
@@ -62,7 +63,7 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     @Override
     public void close(final Chat whatToClose) {
-	final Room room = rooms.remove(whatToClose.getURI().getJID());
+	final Room room = roomsByJID.remove(whatToClose.getURI().getJID());
 	if (room != null) {
 	    room.close();
 	    super.close(room);
@@ -70,12 +71,34 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     }
 
     @Override
-    public Chat getChat(final XmppURI uri) {
-	return rooms.get(uri.getJID());
+    public Room getChat(final XmppURI uri) {
+	return roomsByJID.get(uri.getJID());
+    }
+
+    public HistoryOptions getDefaultHistoryOptions() {
+	return defaultHistoryOptions;
     }
 
     public void onInvitationReceived(final Listener<RoomInvitation> listener) {
 	onInvitationReceived.add(listener);
+    }
+
+    @Override
+    public Room open(final XmppURI uri, final HistoryOptions historyOptions) {
+	GWT.log("OPEN ROOM");
+	Chat chat = getChat(uri);
+	if (chat == null) {
+	    GWT.log("CREATE ROOM" + uri.toString());
+	    chat = new Room(session, uri, session.getCurrentUser(), historyOptions);
+	    addChat(chat);
+	    fireChatCreated(chat);
+	}
+	fireChatOpened(chat);
+	return (Room) chat;
+    }
+
+    public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
+	this.defaultHistoryOptions = defaultHistoryOptions;
     }
 
     private void handleRoomInvitation(final XmppURI roomURI, final Stanza invitation) {
@@ -85,7 +108,8 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 
     @Override
     protected void addChat(final Chat chat) {
-	rooms.put(chat.getURI().getJID(), (Room) chat);
+	final XmppURI jid = chat.getURI().getJID();
+	roomsByJID.put(jid, (Room) chat);
 	super.addChat(chat);
     }
 
@@ -95,22 +119,10 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     }
 
     @Override
-    public Room open(XmppURI uri, HistoryOptions historyOptions) {
-	Chat chat = getChat(uri);
-	if (chat == null) {
-	    chat = new Room(session, uri, session.getCurrentUser(), historyOptions);
-	    addChat(chat);
-	    fireChatCreated(chat);
-	}
-	fireChatOpened(chat);
-	return (Room) chat;
-    }
-
-    @Override
     protected void eventMessage(final Message message) {
 	IPacket child;
 	if (message.getType() == Message.Type.groupchat) {
-	    final Room room = rooms.get(message.getFrom().getJID());
+	    final Room room = getChat(message.getFrom().getJID());
 	    if (room != null) {
 		room.receive(message);
 	    }
@@ -118,13 +130,5 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	    handleRoomInvitation(message.getFrom(), new BasicStanza(child));
 	}
 
-    }
-
-    public HistoryOptions getDefaultHistoryOptions() {
-	return defaultHistoryOptions;
-    }
-
-    public void setDefaultHistoryOptions(HistoryOptions defaultHistoryOptions) {
-	this.defaultHistoryOptions = defaultHistoryOptions;
     }
 }

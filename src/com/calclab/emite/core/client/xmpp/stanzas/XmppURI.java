@@ -89,10 +89,12 @@ public class XmppURI {
      * 
      */
     private XmppURI(final String node, final String host, final String resource) {
-	this.node = node;
-	this.host = host;
-	this.resource = resource;
-	representation = (node != null ? node + "@" : "") + host + (resource != null ? "/" + resource : "");
+	assert host != null : "Host can't be null";
+	this.node = node != null ? node.toLowerCase() : node;
+	this.host = host.toLowerCase();
+	this.resource = resource != null ? resource.toLowerCase() : null;
+	representation = (this.node != null ? this.node + "@" : "") + this.host
+		+ (this.resource != null ? "/" + this.resource : "");
     }
 
     @Override

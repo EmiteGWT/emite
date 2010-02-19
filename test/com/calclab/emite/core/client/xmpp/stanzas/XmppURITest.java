@@ -110,6 +110,17 @@ public class XmppURITest {
 	assertEquals("name-localhost-net-resource", uri.toDebugString());
     }
 
+    // FIXME: See issue 159
+    @Test
+    public void shouldIgnoreLetterCase() {
+	final XmppURI uri1 = XmppURI.uri("NODE", "HOST", "RESOURCE");
+	final XmppURI uri2 = XmppURI.uri("NODE@HOST/RESOURCE");
+	final XmppURI uri3 = XmppURI.uri("node", "host", "resource");
+
+	assertEquals(uri3, uri1);
+	assertEquals(uri3, uri2);
+    }
+
     @Test
     public void shouldParseNull() {
 	assertNull(uri(null));
