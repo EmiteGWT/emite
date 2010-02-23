@@ -88,7 +88,7 @@ public abstract class AbstractRoster implements Roster {
      *            the roster item to be updated
      */
     @Override
-    public void updateItem(final RosterItem item) {
+    public void requestUpdateItem(final RosterItem item) {
 	updateItem(item.getJID(), item.getName(), item.getGroups().toArray(EMPTY_GROUPS));
     }
 

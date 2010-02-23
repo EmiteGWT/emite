@@ -143,19 +143,28 @@ public interface Roster {
     void requestAddItem(XmppURI jid, String name, String... groups);
 
     /**
-     * Request to update a item to the Roster. Utility method to update a roster
-     * item
+     * Request to update a item to the Roster. If the item.jid is not in the
+     * roster, the item is not updated. Notice that the subscription mode is
+     * IGNORED (you should use SubscriptionManager instead)
      * 
      * @param item
      *            the roster item to be updated
      * @see updateItem
      */
-    void updateItem(RosterItem item);
+    void requestUpdateItem(RosterItem item);
+
+    /**
+     * Request to update the given collection of roster items. If the any of the
+     * items is not previously on the roster, the item is not updated.
+     * 
+     * @param items
+     */
+    void requestUpdateItems(Collection<RosterItem> items);
 
     /**
      * Request to update a item to the Roster. If the item.jid is not in the
-     * roster, nothing is done. Notice that the subscription mode is IGNORED
-     * (you should use SubscriptionManager instead)
+     * roster, the item is ADDED to the roster. Notice that the subscription
+     * mode is IGNORED (you should use SubscriptionManager instead)
      * 
      * @param jid
      *            the roster item jid to be updated
@@ -164,6 +173,7 @@ public interface Roster {
      * @param groups
      *            the new groups (ALWAYS overriden)
      */
+    @Deprecated
     void updateItem(XmppURI jid, String name, String... groups);
 
 }

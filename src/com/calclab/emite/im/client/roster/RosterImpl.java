@@ -22,6 +22,7 @@
 package com.calclab.emite.im.client.roster;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
@@ -112,6 +113,19 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	if (getItemByJID(jid) == null) {
 	    addOrUpdateItem(jid, name, null, groups);
 	}
+    }
+
+    @Override
+    public void requestUpdateItems(final Collection<RosterItem> items) {
+	final IQ iq = new IQ(Type.set);
+	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
+	for (final RosterItem item : items) {
+	    item.addStanzaTo(rosterQuery);
+	}
+	session.sendIQ("roster", iq, new Listener<IPacket>() {
+	    public void onEvent(final IPacket parameter) {
+	    }
+	});
     }
 
     public void updateItem(final XmppURI jid, final String name, final String... groups) {
