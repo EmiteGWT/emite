@@ -21,7 +21,6 @@
  */
 package com.calclab.emite.im.client.roster;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,15 +37,17 @@ import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 
 /**
+ * Roster Xmpp implementation.
+ * 
  * @see Roster
  */
-public class RosterImpl extends AbstractRoster implements Roster {
+public class XmppRoster extends AbstractRoster implements Roster {
 
     private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
     private final Session session;
 
-    public RosterImpl(final Session session) {
+    public XmppRoster(final Session session) {
 	this.session = session;
 
 	session.onStateChanged(new Listener<Session>() {
@@ -86,7 +87,7 @@ public class RosterImpl extends AbstractRoster implements Roster {
 		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
 		    if (query != null) {
 			for (final IPacket child : query.getChildren()) {
-			    handleRosterIQSet(RosterItem.parse(child));
+			    handleItemChanged(RosterItem.parse(child));
 			}
 		    }
 		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
@@ -112,6 +113,18 @@ public class RosterImpl extends AbstractRoster implements Roster {
     public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
 	if (getItemByJID(jid) == null) {
 	    addOrUpdateItem(jid, name, null, groups);
+	}
+    }
+
+    @Override
+    public void requestUpdateItem(final RosterItem item) {
+	if (getItemByJID(item.getJID()) != null) {
+	    final IQ iq = new IQ(Type.set);
+	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
+	    session.sendIQ("roster", iq, new Listener<IPacket>() {
+		public void onEvent(final IPacket parameter) {
+		}
+	    });
 	}
     }
 
@@ -148,7 +161,7 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	});
     }
 
-    private void handleRosterIQSet(final RosterItem item) {
+    private void handleItemChanged(final RosterItem item) {
 	final RosterItem old = getItemByJID(item.getJID());
 	if (old == null) { // new item
 	    storeItem(item);
@@ -167,22 +180,10 @@ public class RosterImpl extends AbstractRoster implements Roster {
 		}
 		storeItem(item);
 		fireItemChanged(item);
+		for (final String name : item.getGroups()) {
+		    getRosterGroup(name).fireItemChange(item);
+		}
 	    }
-	}
-    }
-
-    private void removeItem(final RosterItem item) {
-	remove(item.getJID());
-	final ArrayList<String> groupsToRemove = new ArrayList<String>();
-	for (final String groupName : getGroupNames()) {
-	    final List<RosterItem> group = getGroupItems(groupName);
-	    group.remove(item);
-	    if (group.size() == 0) {
-		groupsToRemove.add(groupName);
-	    }
-	}
-	for (final String groupName : groupsToRemove) {
-	    super.removeFromGroup(groupName);
 	}
     }
 
@@ -191,7 +192,7 @@ public class RosterImpl extends AbstractRoster implements Roster {
 	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
 	    public void onEvent(final IPacket received) {
 		if (IQ.isSuccess(received)) {
-		    clearitemsByJID();
+		    clearGroupAll();
 		    final List<? extends IPacket> children = received.getFirstChild("query").getChildren();
 		    for (final IPacket child : children) {
 			final RosterItem item = RosterItem.parse(child);

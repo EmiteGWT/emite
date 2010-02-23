@@ -41,10 +41,19 @@ public interface Roster {
     void addItem(XmppURI jid, String name, String... groups);
 
     /**
-     * Return the group names of this roster
+     * Return the group names of this roster (null is one of the group names:
+     * all the roster group)
      * 
-     * @return
+     * @return the group names of this roster
      */
+    Set<String> getGroupNames();
+
+    /**
+     * Return the group names of this roster (null is one of the group names)
+     * 
+     * @see getGroupNames
+     */
+    @Deprecated
     Set<String> getGroups();
 
     /**
@@ -58,7 +67,8 @@ public interface Roster {
     RosterItem getItemByJID(XmppURI jid);
 
     /**
-     * Retrieve all the RosterItems of the Roster
+     * Retrieve all the RosterItems of the Roster (a copy of the collection: can
+     * be modified)
      * 
      * @return the items of the roster
      */
@@ -73,11 +83,43 @@ public interface Roster {
     Collection<RosterItem> getItemsByGroup(String groupName);
 
     /**
+     * Return the roster group with the given name (can be null: see param)
+     * 
+     * @param name
+     *            the name of the group. If the name is null a RosterGroup with
+     *            all the items is returned
+     * @return the roster group object or null if doesn't exist
+     */
+    RosterGroup getRosterGroup(String name);
+
+    /**
+     * Return all the groups in the roster (included the "null" named group: the
+     * entired roster)
+     */
+    Collection<RosterGroup> getRosterGroups();
+
+    /**
      * Checks if a valid roster has been received in the login process
      * 
      * @return true if has a roster
      */
     boolean isRosterReady();
+
+    /**
+     * Add a listener to know when a roster group is added to the roster after a
+     * roster update
+     * 
+     * @param listener
+     */
+    void onGroupAdded(Listener<RosterGroup> listener);
+
+    /**
+     * Add a listener to know when a roster group is removed from roster after a
+     * roster update
+     * 
+     * @param listener
+     */
+    void onGroupRemoved(Listener<RosterGroup> listener);
 
     /**
      * Add a listener if fired when a item is added to the roster

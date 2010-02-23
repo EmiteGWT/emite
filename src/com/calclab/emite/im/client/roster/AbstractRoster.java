@@ -3,35 +3,44 @@ package com.calclab.emite.im.client.roster;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
+/**
+ * Implements all roster method not related directly with xmpp: boileplate code
+ * and group handling code
+ * 
+ */
 public abstract class AbstractRoster implements Roster {
-    private static final String[] EMPTY_GROUPS = new String[0];
 
-    private final HashMap<XmppURI, RosterItem> itemsByJID;
-    private final HashMap<String, List<RosterItem>> itemsByGroup;
+    private final HashMap<String, RosterGroup> groups;
 
     private final Event<Collection<RosterItem>> onRosterReady;
     private final Event<RosterItem> onItemAdded;
     private final Event<RosterItem> onItemChanged;
     private final Event<RosterItem> onItemRemoved;
+    private final Event<RosterGroup> onGroupRemoved;
+    private final Event<RosterGroup> onGroupAdded;
+
     private boolean rosterReady;
+
+    private final RosterGroup all;
 
     public AbstractRoster() {
 	rosterReady = false;
-	itemsByJID = new HashMap<XmppURI, RosterItem>();
-	itemsByGroup = new HashMap<String, List<RosterItem>>();
+	groups = new HashMap<String, RosterGroup>();
 
 	onItemAdded = new Event<RosterItem>("roster:onItemAdded");
 	onItemChanged = new Event<RosterItem>("roster:onItemChanged");
 	onItemRemoved = new Event<RosterItem>("roster:onItemRemoved");
-
+	onGroupRemoved = new Event<RosterGroup>("roster.onGroupRemoved");
+	onGroupAdded = new Event<RosterGroup>("roster.onGroupAdded");
 	onRosterReady = new Event<Collection<RosterItem>>("roster:onRosterReady");
+
+	all = new RosterGroup(null);
     }
 
     @Deprecated
@@ -39,25 +48,51 @@ public abstract class AbstractRoster implements Roster {
 	requestAddItem(jid, name, groups);
     }
 
+    public Set<String> getGroupNames() {
+	return groups.keySet();
+    }
+
+    @Deprecated
     public Set<String> getGroups() {
-	return itemsByGroup.keySet();
+	return groups.keySet();
     }
 
     public RosterItem getItemByJID(final XmppURI jid) {
-	return itemsByJID.get(jid.getJID());
+	return all.getItem(jid.getJID());
     }
 
     public Collection<RosterItem> getItems() {
-	return new ArrayList<RosterItem>(itemsByJID.values());
+	return new ArrayList<RosterItem>(all.getItems());
     }
 
     public Collection<RosterItem> getItemsByGroup(final String groupName) {
-	return itemsByGroup.get(groupName);
+	final RosterGroup group = getRosterGroup(groupName);
+	return group != null ? group.getItems() : null;
+    }
+
+    @Override
+    public RosterGroup getRosterGroup(final String name) {
+	return groups.get(name);
+    }
+
+    @Override
+    public Collection<RosterGroup> getRosterGroups() {
+	return groups.values();
     }
 
     @Override
     public boolean isRosterReady() {
 	return rosterReady;
+    }
+
+    @Override
+    public void onGroupAdded(final Listener<RosterGroup> listener) {
+	onGroupAdded.add(listener);
+    }
+
+    @Override
+    public void onGroupRemoved(final Listener<RosterGroup> listener) {
+	onGroupRemoved.add(listener);
     }
 
     public void onItemAdded(final Listener<RosterItem> listener) {
@@ -81,19 +116,32 @@ public abstract class AbstractRoster implements Roster {
 	onRosterReady.add(listener);
     }
 
-    /**
-     * Updates a roster item in server side
-     * 
-     * @param item
-     *            the roster item to be updated
-     */
-    @Override
-    public void requestUpdateItem(final RosterItem item) {
-	updateItem(item.getJID(), item.getName(), item.getGroups().toArray(EMPTY_GROUPS));
+    private void addToGroup(final RosterItem item, final String groupName) {
+	RosterGroup group = groups.get(groupName);
+	if (group == null) {
+	    group = addGroup(groupName);
+	}
+	group.add(item);
     }
 
-    protected void clearitemsByJID() {
-	itemsByJID.clear();
+    protected RosterGroup addGroup(final String groupName) {
+	RosterGroup group;
+	group = new RosterGroup(groupName);
+	groups.put(groupName, group);
+	fireGroupAdded(group);
+	return group;
+    }
+
+    protected void clearGroupAll() {
+	all.clear();
+    }
+
+    protected void fireGroupAdded(final RosterGroup group) {
+	onGroupAdded.fire(group);
+    }
+
+    protected void fireGroupRemoved(final RosterGroup group) {
+	onGroupRemoved.fire(group);
     }
 
     protected void fireItemAdded(final RosterItem item) {
@@ -102,6 +150,7 @@ public abstract class AbstractRoster implements Roster {
 
     protected void fireItemChanged(final RosterItem item) {
 	onItemChanged.fire(item);
+	all.fireItemChange(item);
     }
 
     protected void fireItemRemoved(final RosterItem item) {
@@ -113,31 +162,33 @@ public abstract class AbstractRoster implements Roster {
 	onRosterReady.fire(collection);
     }
 
-    protected List<RosterItem> getGroupItems(final String group) {
-	return itemsByGroup.get(group);
+    protected void removeGroup(final String groupName) {
+	final RosterGroup group = groups.remove(groupName);
+	if (groupName != null && group != null) {
+	    fireGroupRemoved(group);
+	}
     }
 
-    protected Set<String> getGroupNames() {
-	return itemsByGroup.keySet();
-    }
-
-    protected void remove(final XmppURI jid) {
-	itemsByJID.remove(jid);
-    }
-
-    protected void removeFromGroup(final String groupName) {
-	itemsByGroup.remove(groupName);
+    protected void removeItem(final RosterItem item) {
+	all.remove(item.getJID());
+	final ArrayList<String> groupsToRemove = new ArrayList<String>();
+	for (final String groupName : getGroupNames()) {
+	    final RosterGroup group = getRosterGroup(groupName);
+	    group.remove(item.getJID());
+	    if (group.getSize() == 0) {
+		groupsToRemove.add(groupName);
+	    }
+	}
+	for (final String groupName : groupsToRemove) {
+	    removeGroup(groupName);
+	}
     }
 
     protected void storeItem(final RosterItem item) {
-	itemsByJID.put(item.getJID(), item);
-	for (final String group : item.getGroups()) {
-	    List<RosterItem> items = itemsByGroup.get(group);
-	    if (items == null) {
-		items = new ArrayList<RosterItem>();
-		itemsByGroup.put(group, items);
-	    }
-	    items.add(item);
+	all.add(item);
+	addToGroup(item, null);
+	for (final String groupName : item.getGroups()) {
+	    addToGroup(item, groupName);
 	}
 
     }

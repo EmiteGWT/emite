@@ -52,7 +52,7 @@ public class RosterTests {
     @Before
     public void beforeTests() {
 	session = new SessionTester();
-	roster = new RosterImpl(session);
+	roster = new XmppRoster(session);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class RosterTests {
 		+ "<item jid='friend@domain' name='MyFriend'><group>Group1</group><group>Group2</group>"
 		+ "</item></query></iq>");
 	assertEquals(1, roster.getItems().size());
-	assertEquals(2, roster.getGroups().size());
+	assertEquals(3, roster.getGroupNames().size());
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' subscription='remove' name='MyFriend'><group>Group1</group>"
 		+ "</item></query></iq>");
@@ -191,7 +191,7 @@ public class RosterTests {
 	session.answer(serverRoster());
 	final Set<String> groups = roster.getGroups();
 	assertNotNull(groups);
-	assertEquals(3, groups.size());
+	assertEquals(4, groups.size());
 	assertTrue(groups.contains("Friends"));
 	assertTrue(groups.contains("X"));
 	assertTrue(groups.contains("Work"));
@@ -221,7 +221,7 @@ public class RosterTests {
 		+ "</item></query></iq>");
 	assertTrue(listener.isCalledOnce());
 	assertEquals(1, roster.getItems().size());
-	assertEquals(2, roster.getGroups().size());
+	assertEquals(3, roster.getGroups().size());
 	assertTrue(roster.getGroups().contains("HH1"));
 	assertTrue(roster.getGroups().contains("HH2"));
     }
