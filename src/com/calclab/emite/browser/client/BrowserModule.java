@@ -125,7 +125,7 @@ public class BrowserModule extends AbstractModule implements EntryPoint {
 
     public void onModuleLoad() {
 	Suco.install(this);
-	if (!PageAssist.isMetaTrue("emite.autoConfig")) {
+	if (PageAssist.isMetaTrue("emite.autoConfig")) {
 	    Suco.get(AutoConfig.class);
 	}
     }
