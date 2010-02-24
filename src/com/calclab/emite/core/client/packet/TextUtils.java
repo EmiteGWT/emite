@@ -21,16 +21,29 @@
  */
 package com.calclab.emite.core.client.packet;
 
-
 public class TextUtils {
-
-    // FIXME this utils are commont to kune, emiteui and emitelib
 
     // Original regexp from http://snippets.dzone.com/posts/show/452
     public static final String URL_REGEXP = "((ftp|http|https):\\/\\/(\\w+:{0,1}\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-\\/]))?)";
 
     // Original regexp from http://www.regular-expressions.info/email.html
     public static final String EMAIL_REGEXP = "[-!#$%&\'*+/=?_`{|}~a-z0-9^]+(\\.[-!#$%&\'*+/=?_`{|}~a-z0-9^]+)*@(localhost|([a-z0-9]([-a-z0-9]*[a-z0-9])?\\.)+[a-z0-9]([-a-z0-9]*[a-z0-9]))?";
+
+    /**
+     * Ellipsis.
+     * 
+     * @param text
+     *            the string to truncate
+     * @param length
+     *            the size (if 0 returns the same text, if null return an empty
+     *            string)
+     * 
+     * @return the result string
+     */
+    public static String ellipsis(final String text, final int length) {
+	return text == null ? "" : length == 0 ? text : text.length() > length ? text.substring(0, length - 3) + "..."
+		: text;
+    }
 
     /*
      * This method escape only some dangerous html chars
