@@ -69,10 +69,10 @@ public class XmppRoster extends AbstractRoster implements Roster {
 
 	    private void setPresence(final Presence presence, final RosterItem item) {
 		final Presence.Type type = presence.getType();
-		if (type == null) {
-		    item.setAvailable(true);
-		} else if (type == Presence.Type.unavailable) {
+		if (type == Presence.Type.unavailable) {
 		    item.setAvailable(false);
+		} else {
+		    item.setAvailable(true);
 		}
 		final Show showReceived = presence.getShow();
 		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
@@ -180,9 +180,6 @@ public class XmppRoster extends AbstractRoster implements Roster {
 		}
 		storeItem(item);
 		fireItemChanged(item);
-		for (final String name : item.getGroups()) {
-		    getRosterGroup(name).fireItemChange(item);
-		}
 	    }
 	}
     }

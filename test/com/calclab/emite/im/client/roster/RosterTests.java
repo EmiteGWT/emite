@@ -140,7 +140,7 @@ public class RosterTests {
 		+ "</item></query></iq>");
 	assertTrue(listener.isCalledOnce());
 	assertEquals(0, roster.getItems().size());
-	assertEquals(0, roster.getGroups().size());
+	assertEquals(1, roster.getGroupNames().size());
     }
 
     @Test

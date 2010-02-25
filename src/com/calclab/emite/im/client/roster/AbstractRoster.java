@@ -126,7 +126,7 @@ public abstract class AbstractRoster implements Roster {
 
     protected RosterGroup addGroup(final String groupName) {
 	RosterGroup group;
-	group = new RosterGroup(groupName);
+	group = groupName != null ? new RosterGroup(groupName) : all;
 	groups.put(groupName, group);
 	fireGroupAdded(group);
 	return group;
@@ -151,6 +151,9 @@ public abstract class AbstractRoster implements Roster {
     protected void fireItemChanged(final RosterItem item) {
 	onItemChanged.fire(item);
 	all.fireItemChange(item);
+	for (final String name : item.getGroups()) {
+	    getRosterGroup(name).fireItemChange(item);
+	}
     }
 
     protected void fireItemRemoved(final RosterItem item) {
@@ -170,12 +173,11 @@ public abstract class AbstractRoster implements Roster {
     }
 
     protected void removeItem(final RosterItem item) {
-	all.remove(item.getJID());
 	final ArrayList<String> groupsToRemove = new ArrayList<String>();
 	for (final String groupName : getGroupNames()) {
 	    final RosterGroup group = getRosterGroup(groupName);
 	    group.remove(item.getJID());
-	    if (group.getSize() == 0) {
+	    if (group.getName() != null && group.getSize() == 0) {
 		groupsToRemove.add(groupName);
 	    }
 	}
@@ -185,7 +187,6 @@ public abstract class AbstractRoster implements Roster {
     }
 
     protected void storeItem(final RosterItem item) {
-	all.add(item);
 	addToGroup(item, null);
 	for (final String groupName : item.getGroups()) {
 	    addToGroup(item, groupName);

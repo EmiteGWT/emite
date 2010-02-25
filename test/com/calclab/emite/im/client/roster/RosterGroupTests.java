@@ -20,6 +20,18 @@ public class RosterGroupTests {
     }
 
     @Test
+    public void shouldFireItemChanged() {
+	final RosterItem item = RosterTester.createItem("test1@dom", "test1", "A", "B");
+	roster.storeItem(item);
+	final MockedListener<RosterItem> itemChangeListener = new MockedListener<RosterItem>();
+	for (final String name : roster.getGroupNames()) {
+	    roster.getRosterGroup(name).onItemChanged(itemChangeListener);
+	}
+	roster.fireItemChanged(item);
+	assertEquals(3, itemChangeListener.getCalledTimes());
+    }
+
+    @Test
     public void shouldHaveCreateGroupsWhenStoreItems() {
 	final MockedListener<RosterGroup> groupAddedListener = new MockedListener<RosterGroup>();
 	roster.onGroupAdded(groupAddedListener);
