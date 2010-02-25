@@ -39,7 +39,7 @@ public class PageAssist {
 
     private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
-    public static void closeSession(Session session) {
+    public static void closeSession(final Session session) {
 	Cookies.removeCookie(PAUSE_COOKIE);
 	session.logout();
     }
@@ -53,10 +53,10 @@ public class PageAssist {
      * @return true if the configuration is perfomed (PARAM_HTTPBASE and
      *         PARAM_HOST are present), false otherwise
      */
-    public static final boolean configureFromMeta(Connection connection) {
+    public static final boolean configureFromMeta(final Connection connection) {
 	GWT.log("Configuring connection...", null);
-	String httpBase = getMeta(PARAM_HTTPBASE);
-	String host = getMeta(PARAM_HOST);
+	final String httpBase = getMeta(PARAM_HTTPBASE);
+	final String host = getMeta(PARAM_HOST);
 	if (host != null && httpBase != null) {
 	    GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
 	    connection.setSettings(new BoshSettings(httpBase, host));
@@ -86,15 +86,20 @@ public class PageAssist {
 	return value;
     }
 
+    public static boolean isMetaFalse(final String id) {
+	return "false".equals(getMeta(id));
+    }
+
     /**
-     * Return true if the given meta is not "false"
+     * Return true if the given meta is not "false". That means always true
+     * except when "false"
      * 
      * @param id
      *            the 'id' value of the dessired meta tag
      * @return true if meta is not "false"
      * @see getMeta
      */
-    public static final boolean isMetaTrue(String id) {
+    public static final boolean isMetaTrue(final String id) {
 	return !"false".equals(getMeta(id));
     }
 
@@ -106,9 +111,9 @@ public class PageAssist {
      *            the session to be logged in
      * @return true if meta parameters value are presents, false otherwise
      */
-    public static final boolean loginFromMeta(Session session) {
-	String userJID = getMeta(PARAM_JID);
-	String password = getMeta(PARAM_PASSWORD);
+    public static final boolean loginFromMeta(final Session session) {
+	final String userJID = getMeta(PARAM_JID);
+	final String password = getMeta(PARAM_PASSWORD);
 	if (password != null && userJID != null) {
 	    final XmppURI jid = uri(userJID);
 	    session.login(jid, password);
@@ -116,8 +121,9 @@ public class PageAssist {
 	} else if (userJID != null && "anonymous".equals(userJID.toLowerCase())) {
 	    session.login(Session.ANONYMOUS, null);
 	    return true;
-	} else
+	} else {
 	    return false;
+	}
     }
 
     /**
@@ -128,7 +134,7 @@ public class PageAssist {
      * @return true if the session is paused (if the session was ready), false
      *         otherwise
      */
-    public static final boolean pauseSession(Session session) {
+    public static final boolean pauseSession(final Session session) {
 	GWT.log("Pausing connection...", null);
 	final StreamSettings stream = session.pause();
 	if (stream != null) {
@@ -158,7 +164,7 @@ public class PageAssist {
      *         resumed), false otherwise. True doesn't mean the sessions is
      *         <b>succesfully</b> resumed.
      */
-    public static final boolean resumeSession(Session session) {
+    public static final boolean resumeSession(final Session session) {
 	final String pause = Cookies.getCookie(PAUSE_COOKIE);
 	if (pause != null) {
 	    GWT.log(("Resume session: " + pause), null);
