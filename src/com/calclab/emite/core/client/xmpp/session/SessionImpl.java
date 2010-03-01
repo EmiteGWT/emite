@@ -78,7 +78,14 @@ public class SessionImpl extends AbstractSession implements Session {
 	    public void onEvent(final String msg) {
 		GWT.log("Connection error: " + msg, null);
 		setState(State.error);
-		disconnect();
+		//Connection takes care of it :
+		//disconnect();
+	    }
+	});
+
+	connection.onDisconnected(new Listener<String>() {
+	    public void onEvent(String parameter) {
+		setState(State.disconnected);
 	    }
 	});
 
@@ -135,7 +142,9 @@ public class SessionImpl extends AbstractSession implements Session {
 
     public void logout() {
 	if (getState() != State.disconnected && userURI != null) {
-	    setState(State.loggingOut);
+	    // TODO : To be reviewed, preventing unvailable presences to be sent so that only the 'terminate' is sent
+	    // Unvailabel are handled automatically by the server
+	    // setState(State.loggingOut);
 	    userURI = null;
 	    connection.disconnect();
 	    setState(State.disconnected);
@@ -154,7 +163,8 @@ public class SessionImpl extends AbstractSession implements Session {
     }
 
     public void send(final IPacket packet) {
-	if (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut) {
+	// Added a condition to check the connection is not retrying...
+	if (connection.noError() && (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut) ) {
 	    packet.setAttribute("from", userURI.toString());
 	    connection.send(packet);
 	} else {
@@ -177,7 +187,8 @@ public class SessionImpl extends AbstractSession implements Session {
 
     private void disconnect() {
 	connection.disconnect();
-	setState(State.disconnected);
+	// Done now with the connection's onDisconnected listener :
+	// setState(State.disconnected);
     }
 
     private void sendQueuedStanzas() {
@@ -202,4 +213,8 @@ public class SessionImpl extends AbstractSession implements Session {
 	super.setState(newState);
     }
 
+    @Override
+    public String toString() {
+	return "Session "+userURI+" in " + getState() +" " + queuedStanzas.size() +" queued stanzas con=" + connection.toString();
+    }
 }

@@ -44,6 +44,7 @@ import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
+import com.google.gwt.core.client.GWT;
 
 /**
  * A Room implementation. You can create rooms using RoomManager
@@ -94,7 +95,7 @@ public class Room extends AbstractChat implements Chat {
 		if (Session.State.loggedIn == state) {
 		} else if (Session.State.loggingOut == state) {
 		    close();
-		} else if (Session.State.disconnected == state) {
+		} else if (Session.State.disconnected == state || Session.State.error == state) {
 		    // TODO : add an error/out state ?
 		    setState(State.locked);
 		}
@@ -324,6 +325,11 @@ public class Room extends AbstractChat implements Chat {
     protected void receive(final Message message) {
 	if (message.getSubject() != null) {
 	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
+	}
+	//
+	if(message.getType() == com.calclab.emite.core.client.xmpp.stanzas.Message.Type.error){
+		GWT.log("Received Error message :" +message);
+		setState(State.locked);
 	}
 	super.receive(message);
     }

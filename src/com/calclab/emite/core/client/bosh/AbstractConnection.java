@@ -4,7 +4,10 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event0;
+import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
+import com.calclab.suco.client.events.Listener0;
+import com.calclab.suco.client.events.Listener2;
 
 /**
  * An abstract connection. It has all the boilerplate
@@ -12,6 +15,7 @@ import com.calclab.suco.client.events.Listener;
  */
 public abstract class AbstractConnection implements Connection {
     private final Event<String> onError;
+    private final Event2<Integer, Integer> onRetry;
     private final Event<String> onDisconnected;
     private final Event0 onConnected;
     private final Event<IPacket> onStanzaReceived;
@@ -25,6 +29,7 @@ public abstract class AbstractConnection implements Connection {
 
     public AbstractConnection() {
 	onError = new Event<String>("bosh:onError");
+	onRetry = new Event2<Integer, Integer>("bosh:onRetry");
 	onDisconnected = new Event<String>("bosh:onDisconnected");
 	onConnected = new Event0("bosh:onConnected");
 	onStanzaReceived = new Event<IPacket>("bosh:onReceived");
@@ -40,13 +45,29 @@ public abstract class AbstractConnection implements Connection {
 	errors++;
 	return errors;
     }
+    
+    public boolean noError(){
+	return errors == 0;
+    }
 
     public void onError(final Listener<String> listener) {
 	onError.add(listener);
     }
 
+    public void onRetry(final Listener2<Integer, Integer> listener) {
+	onRetry.add(listener);
+    }
+
     public void onResponse(final Listener<String> listener) {
 	onResponse.add(listener);
+    }
+
+    public void onConnected(final Listener0 listener) {
+	onConnected.add(listener);
+    }
+
+    public void onDisconnected(final Listener<String> listener) {
+	onDisconnected.add(listener);
     }
 
     public void onStanzaReceived(final Listener<IPacket> listener) {
@@ -69,6 +90,10 @@ public abstract class AbstractConnection implements Connection {
 	onConnected.fire();
     }
 
+    protected void fireRetry(Integer attempt, Integer scedTime) {
+	onRetry.fire(attempt, scedTime);
+    }
+    
     protected void fireDisconnected(final String message) {
 	onDisconnected.fire(message);
     }
