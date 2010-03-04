@@ -29,22 +29,17 @@ public class XmppUriParserTests {
 
     @Test
     public void shouldValidateDomain() {
-	assertTrue(XmppUriParser.isValidDomain("simple"));
+	assertFalse(XmppUriParser.isValidDomain("simple"));
+	assertTrue(XmppUriParser.isValidDomain("simple.net"));
+	assertTrue(XmppUriParser.isValidDomain("localhost"));
     }
 
     @Test
-    public void shouldValidateSimpleJID() {
-	assertValidJID("name@host");
-	assertValidJID("name@host.ext");
-	assertInvalidJid("name");
-	assertInvalidJid("name@host/name");
-    }
-
-    private void assertInvalidJid(final String uri) {
-	assertFalse(XmppUriParser.isValidJid(uri));
-    }
-
-    private void assertValidJID(final String uri) {
-	assertTrue(XmppUriParser.isValidJid(uri));
+    public void shouldValidateJID() {
+	assertTrue(XmppUriParser.isValidJid("name@localhost"));
+	assertTrue(XmppUriParser.isValidJid("name@host.ext"));
+	assertFalse(XmppUriParser.isValidJid("name@host"));
+	assertFalse(XmppUriParser.isValidJid("name"));
+	assertFalse(XmppUriParser.isValidJid("name@host.net/name"));
     }
 }

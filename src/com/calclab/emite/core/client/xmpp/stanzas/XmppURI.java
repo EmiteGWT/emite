@@ -183,15 +183,6 @@ public class XmppURI {
 	return resource != null;
     }
 
-    /**
-     * 
-     * @return
-     */
-    @Deprecated
-    public String toDebugString() {
-	return representation.replaceAll("[@/\\.]", "-");
-    }
-
     @Override
     public String toString() {
 	return representation;
