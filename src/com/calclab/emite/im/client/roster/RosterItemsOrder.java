@@ -20,7 +20,7 @@ public class RosterItemsOrder {
 	public int compare(final RosterItem item1, final RosterItem item2) {
 	    if (item1.isAvailable() && !item2.isAvailable()) {
 		return -1;
-	    } else if (item2.isAvailable() && item2.isAvailable()) {
+	    } else if (!item1.isAvailable() && item2.isAvailable()) {
 		return 1;
 	    } else {
 		return 0;
@@ -32,7 +32,9 @@ public class RosterItemsOrder {
 	public int compare(final RosterItem item1, final RosterItem item2) {
 	    final Integer item1Size = item1.groups.size();
 	    final Integer item2Size = item2.groups.size();
-	    return item1Size.compareTo(item2Size);
+	    System.out.print("GF: " + item1 + item1Size + "-" + item2 + item2Size + ": "
+		    + item2Size.compareTo(item2Size));
+	    return item2Size.compareTo(item1Size);
 	}
     };
 

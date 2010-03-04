@@ -31,12 +31,32 @@ public class RosterItemsOrderTest {
 	assertEquals(3, list.size());
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void shouldOrderAvailabiltyAndGroupAndName() {
+	final RosterGroup myGroup = new RosterGroup("myGroup");
+	myGroup.add(RosterTester.createItem("test2@test", "test2", true, "myGroup"));
+	myGroup.add(RosterTester.createItem("test1@test", "test1", false, "other"));
+	myGroup.add(RosterTester.createItem("test3@test", "test3", true));
+	final Comparator<RosterItem> order = RosterItemsOrder.order(RosterItemsOrder.byAvailability,
+		RosterItemsOrder.groupedFirst, RosterItemsOrder.byName);
+	final ArrayList<RosterItem> list = myGroup.getItemList(order);
+	// available and grouped
+	assertEquals("test2", list.get(0).getName());
+	// available
+	assertEquals("test3", list.get(1).getName());
+	// not available
+	assertEquals("test1", list.get(2).getName());
+
+    }
+
     @Test
     public void shouldOrderByAvailability() {
 	final ArrayList<RosterItem> list = group.getItemList(RosterItemsOrder.byAvailability);
 	assertEquals("test2", list.get(0).getName());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void shouldOrderByAvailabilityAndName() {
 	final Comparator<RosterItem> order = RosterItemsOrder.order(RosterItemsOrder.byAvailability,
@@ -49,22 +69,15 @@ public class RosterItemsOrderTest {
     }
 
     @Test
-    public void shouldOrderByAvailabilityGroupsAndName() {
-    }
-
-    @Test
-    public void shouldOrderByGroupAvailabiltyAndName() {
+    public void shouldOrderByGroupedFirst() {
 	final RosterGroup myGroup = new RosterGroup("myGroup");
-	myGroup.add(RosterTester.createItem("test2@test", "test2", true, "myGroup"));
+	myGroup.add(RosterTester.createItem("test2@test", "test2", false));
 	myGroup.add(RosterTester.createItem("test1@test", "test1", false, "other"));
-	myGroup.add(RosterTester.createItem("test3@test", "test3", true));
-	final Comparator<RosterItem> order = RosterItemsOrder.order(RosterItemsOrder.byAvailability,
-		RosterItemsOrder.groupedFirst, RosterItemsOrder.byName);
-	final ArrayList<RosterItem> list = myGroup.getItemList(order);
-	assertEquals("test3", list.get(0).getName());
-	assertEquals("test2", list.get(1).getName());
-	assertEquals("test1", list.get(2).getName());
-
+	myGroup.add(RosterTester.createItem("test3@test", "test3", false, "myGroup"));
+	final RosterItem firstItemNotSorted = myGroup.getItemList(null).get(0);
+	assertFalse("test3".equals(firstItemNotSorted.getName()));
+	final RosterItem firstItemSorted = myGroup.getItemList(RosterItemsOrder.groupedFirst).get(0);
+	assertEquals("test3", firstItemSorted.getName());
     }
 
     @Test
@@ -73,17 +86,5 @@ public class RosterItemsOrderTest {
 	assertEquals("test1", list.get(0).getName());
 	assertEquals("test2", list.get(1).getName());
 	assertEquals("test3", list.get(2).getName());
-    }
-
-    @Test
-    public void shouldOrderByNonGroupedFirst() {
-	final RosterGroup myGroup = new RosterGroup("myGroup");
-	myGroup.add(RosterTester.createItem("test2@test", "test2", true, "myGroup"));
-	myGroup.add(RosterTester.createItem("test1@test", "test1", false, "other"));
-	myGroup.add(RosterTester.createItem("test3@test", "test3", false));
-	final RosterItem firstItemNotSorted = myGroup.getItemList(null).get(0);
-	assertFalse("test3".equals(firstItemNotSorted.getName()));
-	final RosterItem firstItemSorted = myGroup.getItemList(RosterItemsOrder.groupedFirst).get(0);
-	assertEquals("test3", firstItemSorted.getName());
     }
 }
