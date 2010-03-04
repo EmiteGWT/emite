@@ -69,7 +69,7 @@ public class Room extends AbstractChat implements Chat {
      * @param roomURI
      *            the room uri with the nick specified in the resource part
      */
-    Room(final Session session, final XmppURI roomURI, final XmppURI starter, final HistoryOptions historyOptions) {
+    public Room(final Session session, final XmppURI roomURI, final XmppURI starter, final HistoryOptions historyOptions) {
 	super(session, roomURI, starter);
 	this.session = session;
 	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
