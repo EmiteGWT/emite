@@ -254,7 +254,7 @@ public class Room extends AbstractChat implements Chat {
 	return "ROOM: " + uri;
     }
 
-    private Presence createEnterPresence(final HistoryOptions historyOptions) {
+    protected Presence createEnterPresence(final HistoryOptions historyOptions) {
 	final Presence presence = new Presence(null, null, getURI());
 	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
 	presence.setPriority(0);
@@ -276,7 +276,7 @@ public class Room extends AbstractChat implements Chat {
 	return presence;
     }
 
-    private void handlePresence(final XmppURI occupantURI, final Presence presence) {
+    protected void handlePresence(final XmppURI occupantURI, final Presence presence) {
 	final Type type = presence.getType();
 	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
 	    // TODO : add an error/out state ?
@@ -301,12 +301,12 @@ public class Room extends AbstractChat implements Chat {
 	}
     }
 
-    private boolean isNewRoom(final IPacket xtension) {
+    protected boolean isNewRoom(final IPacket xtension) {
 	final String code = xtension.getFirstChild("status").getAttribute("code");
 	return code != null && code.equals("201");
     }
 
-    private void requestCreateInstantRoom() {
+    protected void requestCreateInstantRoom() {
 	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
 	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
 	session.sendIQ("rooms", iq, new Listener<IPacket>() {
