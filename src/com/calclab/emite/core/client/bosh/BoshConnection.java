@@ -36,7 +36,7 @@ public class BoshConnection extends AbstractConnection {
     private final Services services;
     private final ConnectorCallback listener;
     private boolean shouldCollectResponses;
-    private RetryControl retryControl = new RetryControl();
+    private final RetryControl retryControl = new RetryControl();
 
     public BoshConnection(final Services services) {
 	this.services = services;
@@ -69,26 +69,26 @@ public class BoshConnection extends AbstractConnection {
 		clearErrors();
 		activeConnections--;
 		if (isActive()) {
-  		    // TODO: check if is the same code in other than FF and make
-  		    // tests
- 		    if (statusCode == 404) {
- 			fireError("404 Connection Error (session removed ?!) : " + content);
- 			disconnect();
- 		    } else if (statusCode != 200 && statusCode != 0) {
- 			// setActive(false);
- 			// fireError("Bad status: " + statusCode);
- 			onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
-  		    } else {
-  			final IPacket response = services.toXML(content);
-  			if (response != null && "body".equals(response.getName())) {
- 			    clearErrors();
- 			    fireResponse(content);
-  			    handleResponse(response);
-  			} else {
- 			    onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
- 			    // fireError("Bad response: " + content);
-  			}
-  		    }
+		    // TODO: check if is the same code in other than FF and make
+		    // tests
+		    if (statusCode == 404) {
+			fireError("404 Connection Error (session removed ?!) : " + content);
+			disconnect();
+		    } else if (statusCode != 200 && statusCode != 0) {
+			// setActive(false);
+			// fireError("Bad status: " + statusCode);
+			onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
+		    } else {
+			final IPacket response = services.toXML(content);
+			if (response != null && "body".equals(response.getName())) {
+			    clearErrors();
+			    fireResponse(content);
+			    handleResponse(response);
+			} else {
+			    onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
+			    // fireError("Bad response: " + content);
+			}
+		    }
 		}
 	    }
 	};
@@ -111,7 +111,7 @@ public class BoshConnection extends AbstractConnection {
 	GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
 	// Clearing all queued stanzas
 	setCurrentBody(null);
-	// Create a new terminate stanza and force the send 
+	// Create a new terminate stanza and force the send
 	createBody();
 	getCurrentBody().setAttribute("type", "terminate");
 	sendBody(true);
@@ -154,6 +154,11 @@ public class BoshConnection extends AbstractConnection {
 	getCurrentBody().addChild(packet);
 	sendBody();
 	fireStanzaSent(packet);
+    }
+
+    @Override
+    public String toString() {
+	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
     }
 
     private void continueConnection(final String ack) {
@@ -257,19 +262,15 @@ public class BoshConnection extends AbstractConnection {
     private void sendBody() {
 	sendBody(false);
     }
-    
-    private void sendBody(boolean force) {
-	if (force || (!shouldCollectResponses && isActive() && activeConnections < getUserSettings().maxRequests && noError())) {
+
+    private void sendBody(final boolean force) {
+	if (force || !shouldCollectResponses && isActive() && activeConnections < getUserSettings().maxRequests
+		&& noError()) {
 	    final String request = services.toString(getCurrentBody());
 	    setCurrentBody(null);
 	    send(request);
 	} else {
 	    GWT.log("Send body simply queued", null);
 	}
-    }
-
-    @Override
-    public String toString() {
-	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
     }
 }

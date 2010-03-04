@@ -80,6 +80,10 @@ import com.google.gwt.core.client.EntryPoint;
  * &lt;meta id=&quot;emite.password&quot; content=&quot;test2&quot; /&gt;
  * </pre>
  * 
+ * Automatic logout only (when page closed) is possible using the the "logout"
+ * content value in this meta tag. If this option is choosen, there's no need to
+ * specify user or password.
+ * 
  * <h4>2.3 Pause and resume</h4>
  * 
  * To make BrowserModule pause and resume the session when enter and exit the

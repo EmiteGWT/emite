@@ -44,7 +44,11 @@ import com.google.gwt.user.client.Window;
  */
 public class AutoConfig {
 
+    private static final String LOGIN = "login";
+    private static final String RESUME = "resume";
+    private static final String RESUME_OR_LOGIN = "resumeOrLogin";
     private static final String PARAM_SESSION = "emite.session";
+    protected static final String LOGOUT = "logout";
 
     private final Connection connection;
     private final Session session;
@@ -70,10 +74,13 @@ public class AutoConfig {
 	GWT.log("PageController - configuring close action...", null);
 	Window.addCloseHandler(new CloseHandler<Window>() {
 	    public void onClose(final CloseEvent<Window> arg0) {
-		if ("resume".equals(sessionBehaviour) || "resumeOrLogin".equals(sessionBehaviour)) {
+		if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
 		    GWT.log("PAUSING SESSION...");
 		    PageAssist.pauseSession(session);
-		} else if ("login".equals(sessionBehaviour)) {
+		} else if (LOGIN.equals(sessionBehaviour)) {
+		    GWT.log("LOGGIN OUT SESSION...");
+		    PageAssist.closeSession(session);
+		} else if (LOGOUT.equals(sessionBehaviour)) {
 		    GWT.log("LOGGIN OUT SESSION...");
 		    PageAssist.closeSession(session);
 		}
@@ -83,11 +90,11 @@ public class AutoConfig {
 
     private void prepareOnOpenAction(final String sessionBehaviour) {
 	GWT.log("PageController - trying to resume...", null);
-	if (sessionBehaviour.equals("login")) {
+	if (sessionBehaviour.equals(LOGIN)) {
 	    PageAssist.loginFromMeta(session);
-	} else if (sessionBehaviour.equals("resume")) {
+	} else if (sessionBehaviour.equals(RESUME)) {
 	    PageAssist.resumeSession(session);
-	} else if (sessionBehaviour.equals("loginOrResume")) {
+	} else if (sessionBehaviour.equals(RESUME_OR_LOGIN)) {
 	    if (!PageAssist.resumeSession(session)) {
 		PageAssist.loginFromMeta(session);
 	    }
