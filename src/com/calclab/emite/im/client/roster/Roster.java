@@ -214,6 +214,8 @@ public interface Roster {
      *            the new name or the old one if null
      * @param groups
      *            the new groups (ALWAYS overriden)
+     * 
+     * @see requestUpdateItem
      */
     @Deprecated
     void updateItem(XmppURI jid, String name, String... groups);

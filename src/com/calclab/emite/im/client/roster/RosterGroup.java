@@ -1,6 +1,9 @@
 package com.calclab.emite.im.client.roster;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -12,6 +15,7 @@ import com.calclab.suco.client.events.Listener;
  * Represents a group in a roster. All the roster itself is a group (with name
  * null)
  * 
+ * @see Roster
  */
 public class RosterGroup implements Iterable<RosterItem> {
     private final String name;
@@ -38,15 +42,58 @@ public class RosterGroup implements Iterable<RosterItem> {
 	onItemRemoved = new Event<RosterItem>("rosterGroup.onItemRemoved");
     }
 
+    /**
+     * Add a RosterItem to this group. A ItemAdded event is fired.
+     * 
+     * @param item
+     *            The item to be added. If there's a previously item with the
+     *            same jid, it's replaced
+     */
     public void add(final RosterItem item) {
 	itemsByJID.put(item.getJID(), item);
 	onItemAdded.fire(item);
     }
 
-    public RosterItem getItem(final XmppURI uri) {
-	return itemsByJID.get(uri.getJID());
+    /**
+     * Returns the RosterItem of the given JID or null if theres no RosterItem
+     * for that jabber id.
+     * 
+     * @param uri
+     *            the jabber id (resource is ignored)
+     * @return the RosterItem or null if no item found
+     */
+    public RosterItem getItem(final XmppURI jid) {
+	return itemsByJID.get(jid.getJID());
     }
 
+    /**
+     * Return a modificable list of the roster items sorted by the given
+     * comparator
+     * 
+     * @param comparator
+     *            The comparator using to sort the items. Can be null (and then
+     *            no sort is performed)
+     * 
+     * @return a modificable roster item list
+     * 
+     * @see RosterItemsOrder
+     * 
+     */
+    public ArrayList<RosterItem> getItemList(final Comparator<RosterItem> comparator) {
+	final ArrayList<RosterItem> list = new ArrayList<RosterItem>(getItems());
+	if (comparator != null) {
+	    Collections.sort(list, comparator);
+	}
+	return list;
+    }
+
+    /**
+     * Return the collection of roster items in this group. This collection
+     * should be not modified directly (since is the backend of the group).
+     * 
+     * @return a view-only collection of roster items of this group with no
+     *         specific order
+     */
     public Collection<RosterItem> getItems() {
 	return itemsByJID.values();
     }

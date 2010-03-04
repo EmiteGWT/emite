@@ -33,16 +33,23 @@ public class RosterTester extends AbstractRoster {
 	}
     }
 
-    public static RosterItem createItem(final String jid, final String name, final String... groups) {
+    public static RosterItem createItem(final String jid, final String name, final boolean isAvailable,
+	    final String... groups) {
 	final RosterItem item = new RosterItem(XmppURI.uri(jid), null, name, null);
 	for (final String group : groups) {
 	    item.addToGroup(group);
 	}
+	item.setAvailable(isAvailable);
 	return item;
     }
-    private final ArrayList<ItemAdded> added;
 
+    public static RosterItem createItem(final String jid, final String name, final String... groups) {
+	return createItem(jid, name, false, groups);
+    }
+
+    private final ArrayList<ItemAdded> added;
     private final ArrayList<ItemUpdated> updated;
+
     private final ArrayList<XmppURI> removed;
 
     private Set<String> groupNames;

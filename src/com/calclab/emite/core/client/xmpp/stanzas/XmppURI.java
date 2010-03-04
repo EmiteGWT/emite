@@ -187,6 +187,7 @@ public class XmppURI {
      * 
      * @return
      */
+    @Deprecated
     public String toDebugString() {
 	return representation.replaceAll("[@/\\.]", "-");
     }

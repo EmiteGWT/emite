@@ -84,11 +84,11 @@ public class RosterItem {
 	return item;
     }
 
-    private final ArrayList<String> groups;
-    private final XmppURI jid;
-    private String name;
-    private String status;
-    private Presence.Show show;
+    final ArrayList<String> groups;
+    final XmppURI jid;
+    String name;
+    String status;
+    Presence.Show show;
 
     private SubscriptionState subscriptionState;
     private final Type ask;
@@ -286,6 +286,11 @@ public class RosterItem {
      */
     public void setSubscriptionState(final SubscriptionState state) {
 	subscriptionState = state;
+    }
+
+    @Override
+    public String toString() {
+	return "RosterItem " + jid.toString();
     }
 
     /**
