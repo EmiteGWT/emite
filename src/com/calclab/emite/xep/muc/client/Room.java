@@ -52,14 +52,14 @@ import com.google.gwt.core.client.GWT;
  * @see RoomManager
  */
 public class Room extends AbstractChat implements Chat {
-    private static final PacketMatcher ROOM_CREATED = MatcherFactory.byNameAndXMLNS("x",
+    protected static final PacketMatcher ROOM_CREATED = MatcherFactory.byNameAndXMLNS("x",
 	    "http://jabber.org/protocol/muc#user");
-    private final HashMap<XmppURI, Occupant> occupantsByURI;
-    private final Event<Occupant> onOccupantAdded;
-    private final Event<Occupant> onOccupantModified;
-    private final Event<Occupant> onOccupantRemoved;
-    private final Event2<Occupant, String> onSubjectChanged;
-    private final Session session;
+    protected final HashMap<XmppURI, Occupant> occupantsByURI;
+    protected final Event<Occupant> onOccupantAdded;
+    protected final Event<Occupant> onOccupantModified;
+    protected final Event<Occupant> onOccupantRemoved;
+    protected final Event2<Occupant, String> onSubjectChanged;
+    protected final Session session;
 
     /**
      * Create a new room. The roomURI MUST include the nick (as the resource)
