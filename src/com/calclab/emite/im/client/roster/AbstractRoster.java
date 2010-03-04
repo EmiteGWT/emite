@@ -54,7 +54,7 @@ public abstract class AbstractRoster implements Roster {
 
     @Deprecated
     public Set<String> getGroups() {
-	return groups.keySet();
+	return getGroupNames();
     }
 
     public RosterItem getItemByJID(final XmppURI jid) {

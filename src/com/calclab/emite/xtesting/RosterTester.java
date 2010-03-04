@@ -98,8 +98,8 @@ public class RosterTester extends AbstractRoster {
     }
 
     @Override
-    public Set<String> getGroups() {
-	return groupNames != null ? groupNames : super.getGroups();
+    public Set<String> getGroupNames() {
+	return groupNames != null ? groupNames : super.getGroupNames();
     }
 
     /**
