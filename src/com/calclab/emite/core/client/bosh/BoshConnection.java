@@ -264,6 +264,7 @@ public class BoshConnection extends AbstractConnection {
     }
 
     private void sendBody(final boolean force) {
+	GWT.log("Force send!");
 	if (force || !shouldCollectResponses && isActive() && activeConnections < getUserSettings().maxRequests
 		&& noError()) {
 	    final String request = services.toString(getCurrentBody());
