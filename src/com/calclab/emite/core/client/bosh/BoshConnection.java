@@ -202,9 +202,20 @@ public class BoshConnection extends AbstractConnection {
 	body.setAttribute("xmpp:version", "1.0");
 	body.setAttribute("xml:lang", "en");
 	body.setAttribute("ack", "1");
-	body.setAttribute("secure", "true");
+	body.setAttribute("secure", Boolean.toString(userSettings.secure));
 	body.setAttribute("rid", getStream().getNextRid());
 	body.setAttribute("to", userSettings.hostName);
+	if (userSettings.routeHost != null && userSettings.routePort != null) {
+	    String routeHost = userSettings.routeHost;
+	    if (routeHost == null) {
+	        routeHost = userSettings.hostName;
+	    }
+	    Integer routePort = userSettings.routePort;
+	    if (routePort == null) {
+	        routePort = 5222;
+	    }
+	    body.setAttribute("route", "xmpp:" + routeHost + ":" + routePort);
+	}
 	body.With("hold", userSettings.hold);
 	body.With("wait", userSettings.wait);
 	setCurrentBody(body);
@@ -245,7 +256,7 @@ public class BoshConnection extends AbstractConnection {
 
     /**
      * Sends a new request (and count the activeConnections)
-     * 
+     *
      * @param request
      */
     private void send(final String request) {

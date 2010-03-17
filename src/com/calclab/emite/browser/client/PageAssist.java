@@ -37,6 +37,21 @@ public class PageAssist {
      */
     static final String PARAM_JID = "emite.user";
 
+    /**
+     * Meta key to store the route host param in bosh configuration
+     */
+    static final String PARAM_ROUTE_HOST = "emite.routeHost";
+
+    /**
+     * Meta key to store the route host port number param in bosh configuration
+     */
+    static final String PARAM_ROUTE_PORT = "emite.routePort";
+
+    /**
+     * Meta key to store the route host port number param in bosh configuration
+     */
+    static final String PARAM_SECURE = "emite.secure";
+
     private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
     public static void closeSession(final Session session) {
@@ -57,9 +72,22 @@ public class PageAssist {
 	GWT.log("Configuring connection...", null);
 	final String httpBase = getMeta(PARAM_HTTPBASE);
 	final String host = getMeta(PARAM_HOST);
+	final String routeHost = getMeta(PARAM_ROUTE_HOST);
+	final String routePortString = getMeta(PARAM_ROUTE_PORT);
+	final boolean secure = isMetaTrue(PARAM_SECURE);
+
+	Integer routePort = null;
+	if (routePortString != null) {
+	    try {
+		routePort = Integer.decode(routePortString);
+	    } catch (final NumberFormatException e) {
+
+	    }
+	}
+
 	if (host != null && httpBase != null) {
 	    GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
-	    connection.setSettings(new BoshSettings(httpBase, host));
+	    connection.setSettings(new BoshSettings(httpBase, host, routeHost, routePort, secure));
 	    return true;
 	} else {
 	    return false;

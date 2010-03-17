@@ -189,7 +189,7 @@ public class RosterTests {
     public void shouldRetrieveTheGroups() {
 	shouldRequestRosterOnLogin();
 	session.answer(serverRoster());
-	final Set<String> groups = roster.getGroups();
+	final Set<String> groups = roster.getGroupNames();
 	assertNotNull(groups);
 	assertEquals(4, groups.size());
 	assertTrue(groups.contains("Friends"));
@@ -221,9 +221,9 @@ public class RosterTests {
 		+ "</item></query></iq>");
 	assertTrue(listener.isCalledOnce());
 	assertEquals(1, roster.getItems().size());
-	assertEquals(3, roster.getGroups().size());
-	assertTrue(roster.getGroups().contains("HH1"));
-	assertTrue(roster.getGroups().contains("HH2"));
+	assertEquals(3, roster.getGroupNames().size());
+	assertTrue(roster.getGroupNames().contains("HH1"));
+	assertTrue(roster.getGroupNames().contains("HH2"));
     }
 
     private <T> ArrayList<T> asList(final Collection<? extends T> items) {
