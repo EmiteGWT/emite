@@ -109,12 +109,11 @@ public class XmppURITest {
 	final XmppURI uri1 = XmppURI.uri("NODE", "HOST", "RESOURCE");
 	final XmppURI uri2 = XmppURI.uri("NODE@HOST/RESOURCE");
 	final XmppURI uri3 = XmppURI.uri("node", "host", "RESOURCE");
-	final XmppURI uri4 = XmppURI.uri("node", "host", "resource");
+	final XmppURI uri4 = XmppURI.uri("NODE", "HOST", "resource");
 
 	assertEquals(uri1, uri1);
 	assertEquals(uri1, uri2);
 	assertEquals(uri1, uri3);
-	// FIXME: see issue 159
 	assertFalse(uri1.equals(uri4));
     }
 
