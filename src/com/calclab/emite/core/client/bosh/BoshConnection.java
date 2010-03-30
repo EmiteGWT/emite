@@ -172,7 +172,9 @@ public class BoshConnection extends AbstractConnection {
 		services.schedule(msecs, new ScheduledAction() {
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
+			    // Whitespace keep-alive
 			    createBody();
+			    getCurrentBody().setText(" ");
 			    sendBody();
 			}
 		    }
