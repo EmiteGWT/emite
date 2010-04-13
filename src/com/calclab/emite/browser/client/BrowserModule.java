@@ -50,8 +50,8 @@ import com.google.gwt.core.client.EntryPoint;
  * the head tag of your html file:
  * 
  * <pre>
- * &lt;meta id=&quot;emite.httpBase&quot; content=&quot;proxy&quot; /&gt;
- * &lt;meta id=&quot;emite.host&quot; content=&quot;localhost&quot; /&gt;
+ * &lt;meta name=&quot;emite.httpBase&quot; content=&quot;proxy&quot; /&gt;
+ * &lt;meta name=&quot;emite.host&quot; content=&quot;localhost&quot; /&gt;
  * </pre>
  * 
  * This is completly equivalent to write this configuration code:
@@ -69,15 +69,15 @@ import com.google.gwt.core.client.EntryPoint;
  * respectively this meta tag should be placed in the html file:
  * 
  * <pre>
- * &lt;meta id=&quot;emite.session&quot; content=&quot;login&quot; /&gt;
+ * &lt;meta name=&quot;emite.session&quot; content=&quot;login&quot; /&gt;
  * </pre>
  * 
  * In order this feature to work you have to specify the user's jid and password
  * (plain text at this moment, more to come):
  * 
  * <pre>
- * &lt;meta id=&quot;emite.user&quot; content=&quot;test2@localhost&quot; /&gt;
- * &lt;meta id=&quot;emite.password&quot; content=&quot;test2&quot; /&gt;
+ * &lt;meta name=&quot;emite.user&quot; content=&quot;test2@localhost&quot; /&gt;
+ * &lt;meta name=&quot;emite.password&quot; content=&quot;test2&quot; /&gt;
  * </pre>
  * 
  * Automatic logout only (when page closed) is possible using the the "logout"
@@ -90,7 +90,7 @@ import com.google.gwt.core.client.EntryPoint;
  * page respectively, this meta tag should be use: *
  * 
  * <pre>
- * &lt;meta id=&quot;emite.session&quot; content=&quot;resume&quot; /&gt;
+ * &lt;meta name=&quot;emite.session&quot; content=&quot;resume&quot; /&gt;
  * </pre>
  * 
  * BrowserModule will pause the session and serialize it on a browser's cookie.
@@ -103,7 +103,7 @@ import com.google.gwt.core.client.EntryPoint;
  * placed in your html file:
  * 
  * <pre>
- * &lt;meta id=&quot;emite.session&quot; content=&quot;resumeOrLogin&quot; /&gt;
+ * &lt;meta name=&quot;emite.session&quot; content=&quot;resumeOrLogin&quot; /&gt;
  * </pre>
  * 
  * 
@@ -115,7 +115,7 @@ import com.google.gwt.core.client.EntryPoint;
  * with the following line:
  * 
  * <pre>
- * &lt;meta id=&quot;emite.user&quot; content=&quot;anonymous&quot; /&gt;
+ * &lt;meta name=&quot;emite.user&quot; content=&quot;anonymous&quot; /&gt;
  * </pre>
  * 
  * Remember that <b>emite</b> won't autologin if a session was previously
@@ -136,12 +136,7 @@ public class BrowserModule extends AbstractModule implements EntryPoint {
 
     @Override
     protected void onInstall() {
-	register(Singleton.class, new Factory<DomAssist>(DomAssist.class) {
-	    @Override
-	    public DomAssist create() {
-		return new DomAssist();
-	    }
-	}, new Factory<AutoConfig>(AutoConfig.class) {
+	register(Singleton.class, new Factory<AutoConfig>(AutoConfig.class) {
 	    @Override
 	    public AutoConfig create() {
 		return new AutoConfig($(Connection.class), $(Session.class));

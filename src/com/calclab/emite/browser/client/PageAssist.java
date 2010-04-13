@@ -8,7 +8,9 @@ import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.DOM;
 
@@ -99,7 +101,7 @@ public class PageAssist {
      * information is a html tag with name of meta usually placed inside the the
      * head section with two attributes: id and content. For example:
      * 
-     * <code>&lt;meta id="name" value="userName" /&gt;</code>
+     * <code>&lt;meta name="name" value="userName" /&gt;</code>
      * 
      * @param id
      *            the 'id' value of the desired meta tag
@@ -107,7 +109,19 @@ public class PageAssist {
      */
     public static final String getMeta(final String id) {
 	String value = null;
-	final Element element = DOM.getElementById(id);
+	Element element = null;
+	final NodeList<Element> elements = Document.get().getElementsByTagName("meta");
+	if (elements != null) {
+	    for (int i = 0; i < elements.getLength() && element == null; i++) {
+		final Element candidate = elements.getItem(i);
+		if (id.equals(candidate.getAttribute("name"))) {
+		    element = candidate;
+		}
+	    }
+	}
+	if (element == null) {
+	    element = DOM.getElementById(id);
+	}
 	if (element != null) {
 	    value = element.getPropertyString("content");
 	}

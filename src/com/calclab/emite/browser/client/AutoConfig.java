@@ -33,8 +33,8 @@ import com.google.gwt.user.client.Window;
  * on some html parameters. All the parameters are specified in meta tags. *
  * 
  * <pre>
- * &lt;meta id=&quot;emite.httpBase&quot; content=&quot;proxy&quot; /&gt;
- * &lt;meta id=&quot;emite.host&quot; content=&quot;localhost&quot; /&gt;
+ * &lt;meta name=&quot;emite.httpBase&quot; content=&quot;proxy&quot; /&gt;
+ * &lt;meta name=&quot;emite.host&quot; content=&quot;localhost&quot; /&gt;
  * </pre>
  * 
  * More detailed information in BrowserModule's javadoc.
