@@ -69,6 +69,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	}, new Factory<Session>(Session.class) {
 	    @Override
 	    public Session create() {
+		GWT.log("SESSION CREATED!");
 		final SessionImpl session = new SessionImpl($(Connection.class), $(SASLManager.class),
 			$(ResourceBindingManager.class), $(IMSessionManager.class));
 		return session;
@@ -76,8 +77,8 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 
 	    @Override
 	    public void onAfterCreated(final Session session) {
-		GWT.log("Creating Session grouped objects...", null);
-		$(SessionComponent.class).createAll();
+		GWT.log("TRIGGER SESSION CREATED");
+		$(SessionComponent.class).init();
 	    }
 	}, new Factory<ResourceBindingManager>(ResourceBindingManager.class) {
 	    @Override

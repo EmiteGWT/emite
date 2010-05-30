@@ -34,15 +34,28 @@ import com.google.gwt.core.client.GWT;
  * Use this decorator if your component DEPENDS on Session to perform its tasks
  */
 public class SessionComponent extends ProviderCollection {
+    private boolean initialized;
 
     public SessionComponent(final Container container) {
 	super(container, Singleton.instance);
+	initialized = false;
     }
 
-    public void createAll() {
-	GWT.log("SESSION COMPONENTS!", null);
-	for (final Provider<?> p : getProviders()) {
-	    p.get();
+    @Override
+    public <T> Provider<T> decorate(final Class<T> type, final Provider<T> undecorated) {
+	if (initialized == true) {
+	    undecorated.get();
+	}
+	return super.decorate(type, undecorated);
+    }
+
+    public void init() {
+	if (initialized == false) {
+	    GWT.log("SESSION COMPONENTS!", null);
+	    for (final Provider<?> p : getProviders()) {
+		p.get();
+	    }
+	    initialized = true;
 	}
     }
 }
