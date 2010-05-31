@@ -29,7 +29,6 @@ import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
 
 public class SASLManager {
     private static final String SEP = new String(new char[] { 0 });
@@ -73,7 +72,6 @@ public class SASLManager {
     private IPacket createPlainAuthorization(final AuthorizationTransaction authorizationTransaction) {
 	final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "PLAIN");
 	final Credentials credentials = authorizationTransaction.getCredentials();
-	GWT.log("Plain authorization with password encoded as: " + credentials.getEncodingMethod());
 
 	final PasswordDecoder decoder = decoders.getDecoder(credentials.getEncodingMethod());
 
@@ -84,7 +82,6 @@ public class SASLManager {
 
 	final String decodedPassword = decoder
 		.decode(credentials.getEncodingMethod(), credentials.getEncodedPassword());
-	GWT.log("DECODED PASSWORD: " + decodedPassword);
 	final String encoded = encodeForPlainMethod(credentials.getXmppUri().getHost(), credentials.getXmppUri()
 		.getNode(), decodedPassword);
 	auth.setText(encoded);
