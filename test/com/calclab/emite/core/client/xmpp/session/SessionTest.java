@@ -18,6 +18,7 @@ import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
+import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -79,17 +80,16 @@ public class SessionTest {
     @Test
     public void shouldHandleFailedAuthorizationResult() {
 	connection.connect();
-	fire(new AuthorizationTransaction(uri("node@domain"), "password", AuthorizationTransaction.State.failed)).when(
-		saslManager).onAuthorized(anyListener());
+	fire(createTransaction(uri("node@domain"), "password", AuthorizationTransaction.State.failed))
+		.when(saslManager).onAuthorized(anyListener());
 	assertFalse(connection.isConnected());
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void shouldHandleSucceedAuthorizationResult() {
-	fire(
-		new AuthorizationTransaction(uri("node@domain/resource"), "password",
-			AuthorizationTransaction.State.succeed)).when(saslManager).onAuthorized(anyListener());
+	fire(createTransaction(uri("node@domain/resource"), "password", AuthorizationTransaction.State.succeed)).when(
+		saslManager).onAuthorized(anyListener());
 
 	assertEquals(Session.State.authorized, session.getState());
 	assertTrue(connection.isStreamRestarted());
@@ -131,5 +131,14 @@ public class SessionTest {
     @SuppressWarnings("unchecked")
     private void createSession(final XmppURI uri) {
 	fire(uri).when(iMSessionManager).onSessionCreated(anyListener());
+    }
+
+    private AuthorizationTransaction createTransaction(final XmppURI uri, final String password,
+	    final State transactionState) {
+
+	final Credentials credentials = new Credentials(uri, password, Credentials.ENCODING_NONE);
+	final AuthorizationTransaction authorizationTransaction = new AuthorizationTransaction(credentials);
+	authorizationTransaction.setState(transactionState);
+	return authorizationTransaction;
     }
 }

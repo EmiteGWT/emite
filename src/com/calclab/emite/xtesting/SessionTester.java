@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.AbstractSession;
+import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -83,8 +84,8 @@ public class SessionTester extends AbstractSession {
 	return currentUser != null;
     }
 
-    public void login(final XmppURI uri, final String password) {
-	setLoggedIn(uri);
+    public void login(final Credentials credentials) {
+	setLoggedIn(credentials.getXmppUri());
     }
 
     public void logout() {
@@ -130,8 +131,8 @@ public class SessionTester extends AbstractSession {
     }
 
     public void sendIQ(final String id, final IQ iq, final Listener<IPacket> listener) {
-	this.lastIQSent = iq;
-	this.lastIQListener = listener;
+	lastIQSent = iq;
+	lastIQListener = listener;
     }
 
     public void setCurrentUser(final XmppURI currentUser) {
@@ -143,7 +144,7 @@ public class SessionTester extends AbstractSession {
     }
 
     public void setLoggedIn(final XmppURI userURI) {
-	this.currentUser = userURI;
+	currentUser = userURI;
 	setState(State.loggedIn);
     }
 
@@ -152,7 +153,7 @@ public class SessionTester extends AbstractSession {
     }
 
     @Override
-    public void setState(State state) {
+    public void setState(final State state) {
 	super.setState(state);
     }
 
@@ -199,8 +200,7 @@ public class SessionTester extends AbstractSession {
 	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
     }
 
-    private boolean contains(final IPacket expected, final ArrayList<IPacket> list,
-	    final StringBuffer buffer) {
+    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
 	boolean isContained = false;
 	final IsPacketLike matcher = new IsPacketLike(expected);
 	for (final IPacket packet : list) {

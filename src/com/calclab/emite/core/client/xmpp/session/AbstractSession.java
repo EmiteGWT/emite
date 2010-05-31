@@ -24,6 +24,7 @@ package com.calclab.emite.core.client.xmpp.session;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
@@ -39,16 +40,20 @@ public abstract class AbstractSession implements Session {
     private State state;
 
     public AbstractSession() {
-	this.onStateChanged = new Event<Session>("session:onStateChanged");
-	this.onPresence = new Event<Presence>("session:onPresence");
-	this.onMessage = new Event<Message>("session:onMessage");
-	this.onIQ = new Event<IQ>("session:onIQ");
+	onStateChanged = new Event<Session>("session:onStateChanged");
+	onPresence = new Event<Presence>("session:onPresence");
+	onMessage = new Event<Message>("session:onMessage");
+	onIQ = new Event<IQ>("session:onIQ");
 
 	state = State.disconnected;
     }
 
     public Session.State getState() {
 	return state;
+    }
+
+    public void login(final XmppURI uri, final String password) {
+	login(new Credentials(uri, password, Credentials.ENCODING_NONE));
     }
 
     public void onIQ(final Listener<IQ> listener) {
@@ -67,19 +72,19 @@ public abstract class AbstractSession implements Session {
 	onStateChanged.add(listener);
     }
 
-    protected void fireIQ(IQ iq) {
+    protected void fireIQ(final IQ iq) {
 	onIQ.fire(iq);
     }
 
-    protected void fireMessage(Message message) {
+    protected void fireMessage(final Message message) {
 	onMessage.fire(message);
     }
 
-    protected void firePresence(Presence presence) {
+    protected void firePresence(final Presence presence) {
 	onPresence.fire(presence);
     }
 
-    protected void setState(State state) {
+    protected void setState(final State state) {
 	this.state = state;
 	onStateChanged.fire(this);
 

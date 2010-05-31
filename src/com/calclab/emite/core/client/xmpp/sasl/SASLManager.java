@@ -25,21 +25,30 @@ import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction.State;
+import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
 
 public class SASLManager {
     private static final String SEP = new String(new char[] { 0 });
     private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
+
+    /**
+     * @see Credentials.ANONYMOUS
+     */
+    @Deprecated
     public static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", "", null);
 
     private final Event<AuthorizationTransaction> onAuthorized;
     private AuthorizationTransaction currentTransaction;
     private final Connection connection;
+    private final DecoderRegistry decoders;
 
-    public SASLManager(final Connection connection) {
+    public SASLManager(final Connection connection, final DecoderRegistry decoders) {
 	this.connection = connection;
+	this.decoders = decoders;
 	onAuthorized = new Event<AuthorizationTransaction>("saslManager:onAuthorized");
 	install();
     }
@@ -63,13 +72,26 @@ public class SASLManager {
 
     private IPacket createPlainAuthorization(final AuthorizationTransaction authorizationTransaction) {
 	final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "PLAIN");
-	final String encoded = encode(authorizationTransaction.uri.getHost(), authorizationTransaction.uri.getNode(),
-		authorizationTransaction.getPassword());
+	final Credentials credentials = authorizationTransaction.getCredentials();
+	GWT.log("Plain authorization with password encoded as: " + credentials.getEncodingMethod());
+
+	final PasswordDecoder decoder = decoders.getDecoder(credentials.getEncodingMethod());
+
+	if (decoder == null) {
+	    throw new RuntimeException("No password decoder found to convert from " + credentials.getEncodingMethod()
+		    + "to " + Credentials.ENCODING_BASE64);
+	}
+
+	final String decodedPassword = decoder
+		.decode(credentials.getEncodingMethod(), credentials.getEncodedPassword());
+	GWT.log("DECODED PASSWORD: " + decodedPassword);
+	final String encoded = encodeForPlainMethod(credentials.getXmppUri().getHost(), credentials.getXmppUri()
+		.getNode(), decodedPassword);
 	auth.setText(encoded);
 	return auth;
     }
 
-    private String encode(final String domain, final String userName, final String password) {
+    private String encodeForPlainMethod(final String domain, final String userName, final String password) {
 	final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 	return Base64Coder.encodeString(auth);
     }
@@ -94,6 +116,6 @@ public class SASLManager {
     }
 
     private boolean isAnonymous(final AuthorizationTransaction authorizationTransaction) {
-	return authorizationTransaction.uri == SASLManager.ANONYMOUS;
+	return authorizationTransaction.getCredentials().isAnoymous();
     }
 }

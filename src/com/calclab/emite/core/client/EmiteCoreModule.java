@@ -27,6 +27,7 @@ import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.gwt.GWTServices;
 import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
+import com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.session.IMSessionManager;
 import com.calclab.emite.core.client.xmpp.session.Session;
@@ -85,10 +86,15 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	    public ResourceBindingManager create() {
 		return new ResourceBindingManager($(Connection.class));
 	    }
+	}, new Factory<DecoderRegistry>(DecoderRegistry.class) {
+	    @Override
+	    public DecoderRegistry create() {
+		return new DecoderRegistry();
+	    }
 	}, new Factory<SASLManager>(SASLManager.class) {
 	    @Override
 	    public SASLManager create() {
-		return new SASLManager($(Connection.class));
+		return new SASLManager($(Connection.class), $(DecoderRegistry.class));
 	    }
 	});
 	register(SessionComponent.class, new Factory<SessionReady>(SessionReady.class) {

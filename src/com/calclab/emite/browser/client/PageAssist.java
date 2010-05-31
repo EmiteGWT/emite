@@ -5,6 +5,7 @@ import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import com.calclab.emite.core.client.bosh.BoshSettings;
 import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.core.client.GWT;
@@ -33,6 +34,12 @@ public class PageAssist {
      * Meta key to store the user password in session login
      */
     static final String PARAM_PASSWORD = "emite.password";
+
+    /**
+     * Meta key to store the password encoding method. Out of the box "none" and
+     * "plain" are provided
+     */
+    private static final String PARAM_PASSWORD_ENCODING = "emite.password.encoding";
 
     /**
      * Meta key to store tue user JID in session login
@@ -156,12 +163,14 @@ public class PageAssist {
     public static final boolean loginFromMeta(final Session session) {
 	final String userJID = getMeta(PARAM_JID);
 	final String password = getMeta(PARAM_PASSWORD);
+	String encodingMethod = getMeta(PARAM_PASSWORD_ENCODING);
+	encodingMethod = encodingMethod != null ? encodingMethod : Credentials.ENCODING_NONE;
 	if (password != null && userJID != null) {
 	    final XmppURI jid = uri(userJID);
-	    session.login(jid, password);
+	    session.login(new Credentials(jid, password, encodingMethod));
 	    return true;
 	} else if (userJID != null && "anonymous".equals(userJID.toLowerCase())) {
-	    session.login(Session.ANONYMOUS, null);
+	    session.login(Credentials.createAnonymous());
 	    return true;
 	} else {
 	    return false;

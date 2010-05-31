@@ -84,6 +84,10 @@ public interface Session {
 	resume
     }
 
+    /**
+     * @see Credentials.ANONYMOUS
+     */
+    @Deprecated
     public static XmppURI ANONYMOUS = SASLManager.ANONYMOUS;
 
     /**
@@ -109,19 +113,29 @@ public interface Session {
 
     /**
      * <p>
-     * Start a login process with the current xmpp uri and password. Use
-     * onLoggedIn method to know when you are really logged in. If the uri
-     * doesn't provide a resource, the session will generate one.
-     * </p>
+     * Start a login process with the current credentials. Use onLoggedIn method
+     * to know when you are really logged in. If the uri doesn't provide a
+     * resource, the session will generate one.
      * <p>
-     * You can use Session.ANONYMOUS and null as password to do an anonymous
-     * login.
+     * You can use LoginCredentials.ANONYMOUS and to perform an anonumous login.
+     * </p>
+     * 
+     * @param credentials
+     */
+    public abstract void login(Credentials credentials);
+
+    /**
+     * <p>
+     * Start a login process with the current xmpp uri and password. It uses the
+     * login(credentials) method with not encoded password.
      * </p>
      * 
      * @param uri
      *            the user's uri to loggin
      * @param password
-     *            the user's password
+     *            the user's password (plain)
+     * 
+     * @see login
      */
     public abstract void login(final XmppURI uri, final String password);
 

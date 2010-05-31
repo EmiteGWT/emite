@@ -21,6 +21,7 @@
  */
 package com.calclab.emite.core.client.xmpp.sasl;
 
+import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 public class AuthorizationTransaction {
@@ -28,43 +29,27 @@ public class AuthorizationTransaction {
 	succeed, failed, notStarted, waitingForAuthorization
     }
 
-    public final XmppURI uri;
-    private String password;
     private State state;
+    private final Credentials credentials;
 
-    public AuthorizationTransaction(final XmppURI uri, final String password) {
-	if (uri == null)
-	    throw new NullPointerException("uri can't be null in AuthorizationTransaction");
-	this.uri = uri;
-	this.password = password;
-	this.state = State.notStarted;
+    public AuthorizationTransaction(final Credentials credentials) {
+	this.credentials = credentials;
     }
 
-    /**
-     * Testing purposes only! Not state logic!
-     */
-    public AuthorizationTransaction(final XmppURI uri, final String password, final State state) {
-	this(uri, password);
-	this.state = state;
-    }
-
-    public String getPassword() {
-	return password;
+    public Credentials getCredentials() {
+	return credentials;
     }
 
     public State getState() {
 	return state;
     }
 
-    public void setState(final State state) {
-	this.state = state;
-	this.password = null;
+    public XmppURI getXmppUri() {
+	return credentials.getXmppUri();
     }
 
-    // FIXME: remove this!!!
-    @Override
-    public String toString() {
-	return "Ticket: " + uri + ", " + password + ", " + state;
+    public void setState(final State state) {
+	this.state = state;
     }
 
 }

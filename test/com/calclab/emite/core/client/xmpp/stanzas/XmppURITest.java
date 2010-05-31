@@ -81,9 +81,9 @@ public class XmppURITest {
     }
 
     @Test
-    public void shouldBeCaseInsensitive() {
+    public void shouldBeCaseInsensitiveExceptResource() {
 	final XmppURI uri1 = uri("xmpp:test@EXAMPLE/res");
-	final XmppURI uri2 = uri("tesT@example/reS");
+	final XmppURI uri2 = uri("tesT@example/res");
 	assertEquals(uri1, uri2);
     }
 

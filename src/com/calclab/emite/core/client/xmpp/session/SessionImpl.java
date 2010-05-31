@@ -22,7 +22,6 @@
 package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.StreamSettings;
@@ -78,13 +77,13 @@ public class SessionImpl extends AbstractSession implements Session {
 	    public void onEvent(final String msg) {
 		GWT.log("Connection error: " + msg, null);
 		setState(State.error);
-		//Connection takes care of it :
-		//disconnect();
+		// Connection takes care of it :
+		// disconnect();
 	    }
 	});
 
 	connection.onDisconnected(new Listener<String>() {
-	    public void onEvent(String parameter) {
+	    public void onEvent(final String parameter) {
 		setState(State.disconnected);
 	    }
 	});
@@ -94,7 +93,7 @@ public class SessionImpl extends AbstractSession implements Session {
 		if (ticket.getState() == AuthorizationTransaction.State.succeed) {
 		    setState(Session.State.authorized);
 		    connection.restartStream();
-		    bindingManager.bindResource(ticket.uri.getResource());
+		    bindingManager.bindResource(ticket.getXmppUri().getResource());
 		} else {
 		    setState(Session.State.notAuthorized);
 		    disconnect();
@@ -125,24 +124,21 @@ public class SessionImpl extends AbstractSession implements Session {
 	return userURI != null;
     }
 
-    public void login(XmppURI uri, final String password) {
-	if (uri == Session.ANONYMOUS && password != null) {
-	    throw new RuntimeException("Error on login: anonymous login can't have password");
-	} else if (uri != Session.ANONYMOUS && !uri.hasResource()) {
-	    uri = XmppURI.uri(uri.getNode(), uri.getHost(), "" + new Date().getTime());
-	}
-
+    @Override
+    public void login(final Credentials credentials) {
 	if (getState() == Session.State.disconnected) {
 	    setState(Session.State.connecting);
 	    connection.connect();
-	    transaction = new AuthorizationTransaction(uri, password);
+	    transaction = new AuthorizationTransaction(credentials);
 	    GWT.log("Sending auth transaction: " + transaction, null);
 	}
+
     }
 
     public void logout() {
 	if (getState() != State.disconnected && userURI != null) {
-	    // TODO : To be reviewed, preventing unvailable presences to be sent so that only the 'terminate' is sent
+	    // TODO : To be reviewed, preventing unvailable presences to be sent
+	    // so that only the 'terminate' is sent
 	    // Unvailabel are handled automatically by the server
 	    // setState(State.loggingOut);
 	    userURI = null;
@@ -164,7 +160,8 @@ public class SessionImpl extends AbstractSession implements Session {
 
     public void send(final IPacket packet) {
 	// Added a condition to check the connection is not retrying...
-	if (connection.noError() && (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut) ) {
+	if (connection.noError()
+		&& (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut)) {
 	    packet.setAttribute("from", userURI.toString());
 	    connection.send(packet);
 	} else {
@@ -183,6 +180,12 @@ public class SessionImpl extends AbstractSession implements Session {
 	if (isLoggedIn()) {
 	    setState(State.ready);
 	}
+    }
+
+    @Override
+    public String toString() {
+	return "Session " + userURI + " in " + getState() + " " + queuedStanzas.size() + " queued stanzas con="
+		+ connection.toString();
     }
 
     private void disconnect() {
@@ -211,10 +214,5 @@ public class SessionImpl extends AbstractSession implements Session {
 	    sendQueuedStanzas();
 	}
 	super.setState(newState);
-    }
-
-    @Override
-    public String toString() {
-	return "Session "+userURI+" in " + getState() +" " + queuedStanzas.size() +" queued stanzas con=" + connection.toString();
     }
 }
