@@ -15,15 +15,37 @@ public class RosterItemsOrder {
 
 	}
     };
+
+    /**
+     * Available first. Inside availables, items with getShow() == Show.dnd last
+     */
     public static final Comparator<RosterItem> byAvailability = new Comparator<RosterItem>() {
 	@Override
 	public int compare(final RosterItem item1, final RosterItem item2) {
-	    if (item1.isAvailable() && !item2.isAvailable()) {
+	    final boolean av1 = item1.isAvailable();
+	    final boolean av2 = item2.isAvailable();
+
+	    if (av1 && !av2) {
 		return -1;
-	    } else if (!item1.isAvailable() && item2.isAvailable()) {
+	    } else if (!av1 && av2) {
 		return 1;
+	    } else if (av1 && av2) {
+		return getShowLevel(item2) - getShowLevel(item1);
 	    } else {
 		return 0;
+	    }
+
+	}
+
+	private int getShowLevel(final RosterItem item) {
+	    switch (item.getShow()) {
+	    case dnd:
+		return 1;
+	    case away:
+	    case xa:
+		return 2;
+	    default:
+		return 3;
 	    }
 	}
     };

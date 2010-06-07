@@ -3,7 +3,7 @@ war/EmiteFunctionalTests/
 war/ExampleEcho/
 war/ExampleIMChat/
 war/ExampleXmppSession/
-
+extras
 .svn
 **/.svn
 war/WEB-INF/classes

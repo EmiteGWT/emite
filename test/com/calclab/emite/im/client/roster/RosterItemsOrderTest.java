@@ -10,6 +10,7 @@ import java.util.Comparator;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.xtesting.RosterTester;
 
 public class RosterItemsOrderTest {
@@ -47,7 +48,25 @@ public class RosterItemsOrderTest {
 	assertEquals("test3", list.get(1).getName());
 	// not available
 	assertEquals("test1", list.get(2).getName());
+    }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void shouldOrderAvailableFirstBusyNext() {
+	final RosterItem busy = RosterTester.createItem("test0@test", "test0", true, "myGroup");
+	busy.setShow(Show.dnd);
+	group.add(busy);
+	final ArrayList<RosterItem> list = group.getItemList(RosterItemsOrder.order(RosterItemsOrder.byAvailability,
+		RosterItemsOrder.byName));
+
+	// available
+	assertEquals("test2", list.get(0).getName());
+	// dnd
+	assertEquals("test0", list.get(1).getName());
+	// not available (alphabetically)
+	assertEquals("test1", list.get(2).getName());
+	// not available (alphabetically)
+	assertEquals("test3", list.get(3).getName());
     }
 
     @Test
