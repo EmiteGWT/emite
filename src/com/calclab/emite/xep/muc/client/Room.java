@@ -58,8 +58,10 @@ public class Room extends AbstractChat implements Chat {
     protected final Event<Occupant> onOccupantAdded;
     protected final Event<Occupant> onOccupantModified;
     protected final Event<Occupant> onOccupantRemoved;
+
     protected final Event2<Occupant, String> onSubjectChanged;
     protected final Session session;
+    private final Event2<XmppURI, String> onInvitationSent;
 
     /**
      * Create a new room. The roomURI MUST include the nick (as the resource)
@@ -77,6 +79,7 @@ public class Room extends AbstractChat implements Chat {
 	onOccupantModified = new Event<Occupant>("room:onOccupantModified");
 	onOccupantRemoved = new Event<Occupant>("room:onOccupantRemoved");
 	onSubjectChanged = new Event2<Occupant, String>("room:onSubjectChanged");
+	onInvitationSent = new Event2<XmppURI, String>("room:onInvitationSent");
 
 	// @see http://www.xmpp.org/extensions/xep-0045.html#createroom
 	session.onPresence(new Listener<Presence>() {
@@ -146,6 +149,13 @@ public class Room extends AbstractChat implements Chat {
 	return myNick.equals(messageNick);
     }
 
+    /**
+     * Add a listener to know when an invitation was sent
+     */
+    public void onInvitationSent(final Listener2<XmppURI, String> listener) {
+	onInvitationSent.add(listener);
+    }
+
     public void onOccupantAdded(final Listener<Occupant> listener) {
 	onOccupantAdded.add(listener);
     }
@@ -201,6 +211,7 @@ public class Room extends AbstractChat implements Chat {
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
 	session.send(message);
+	onInvitationSent.fire(userJid, reasonText);
     }
 
     public Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role,
@@ -306,6 +317,22 @@ public class Room extends AbstractChat implements Chat {
 	return code != null && code.equals("201");
     }
 
+    @Override
+    /**
+     * WARNING : breaking change, need to check (message.getBody() != null)
+     */
+    protected void receive(final Message message) {
+	if (message.getSubject() != null) {
+	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
+	}
+	//
+	if (message.getType() == com.calclab.emite.core.client.xmpp.stanzas.Message.Type.error) {
+	    GWT.log("Received Error message :" + message);
+	    setState(State.locked);
+	}
+	super.receive(message);
+    }
+
     protected void requestCreateInstantRoom() {
 	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
 	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
@@ -316,21 +343,5 @@ public class Room extends AbstractChat implements Chat {
 		}
 	    }
 	});
-    }
-
-    @Override
-    /**
-     * WARNING : breaking change, need to check (message.getBody() != null)
-     */
-    protected void receive(final Message message) {
-	if (message.getSubject() != null) {
-	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
-	}
-	//
-	if(message.getType() == com.calclab.emite.core.client.xmpp.stanzas.Message.Type.error){
-		GWT.log("Received Error message :" +message);
-		setState(State.locked);
-	}
-	super.receive(message);
     }
 }

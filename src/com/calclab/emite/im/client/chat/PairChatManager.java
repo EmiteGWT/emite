@@ -29,7 +29,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
 
 /**
  * Default ChatManager implementation. Use ChatManager interface instead
@@ -41,7 +40,6 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
 	super(session);
 	session.onMessage(new Listener<Message>() {
 	    public void onEvent(final Message message) {
-		GWT.log("PAiR CHAT EVENT MESSAGE");
 		eventMessage(message);
 	    }
 	});
