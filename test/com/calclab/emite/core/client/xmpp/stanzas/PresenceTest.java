@@ -71,8 +71,23 @@ public class PresenceTest {
 	final Presence presence = new Presence();
 	for (final Show value : Show.values()) {
 	    presence.setShow(value);
-	    assertSame(value, presence.getShow());
+	    if (value == Show.unknown) {
+		assertSame(Show.notSpecified, presence.getShow());
+	    } else {
+		assertSame(value, presence.getShow());
+	    }
 	}
+    }
+
+    /**
+     * Show values unknown and show should never be serialized to the stanza.
+     * Issue 264
+     */
+    @Test
+    public void shouldSetShowCorrectly() {
+	final Presence presence = new Presence();
+	presence.setShow(Show.unknown);
+	assertEquals(-1, presence.toString().indexOf("unknown"));
     }
 
     @Test

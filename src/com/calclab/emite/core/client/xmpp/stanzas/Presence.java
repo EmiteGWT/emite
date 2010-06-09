@@ -225,8 +225,8 @@ public class Presence extends BasicStanza {
     }
 
     public void setShow(final Show value) {
-	setTextToChild("show", (value != null && (value != Show.notSpecified || value != Show.unknown)) ? value
-		.toString() : null);
+	setTextToChild("show", value != null && value != Show.notSpecified && value != Show.unknown ? value.toString()
+		: null);
     }
 
     public void setStatus(final String statusMessage) {
