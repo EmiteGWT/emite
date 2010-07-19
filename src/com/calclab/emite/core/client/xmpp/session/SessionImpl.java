@@ -93,7 +93,11 @@ public class SessionImpl extends AbstractSession implements Session {
 		if (ticket.getState() == AuthorizationTransaction.State.succeed) {
 		    setState(Session.State.authorized);
 		    connection.restartStream();
-		    bindingManager.bindResource(ticket.getXmppUri().getResource());
+		    String resource = ticket.getXmppUri().getResource();
+		    if (resource == null) {
+			resource = "emite-" + System.currentTimeMillis();
+		    }
+		    bindingManager.bindResource(resource);
 		} else {
 		    setState(Session.State.notAuthorized);
 		    disconnect();
