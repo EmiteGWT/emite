@@ -153,6 +153,29 @@ public class PageAssist {
     }
 
     /**
+     * Returns the true/false value of a meta tag.
+     * 
+     * @param id
+     *            the 'id' value of the desired meta tag
+     * @param defaultValue
+     *            the value to return if the meta value is neither
+     *            <code>"true"</code> nor <code>"false"</code>
+     * @return true if the given meta is "true", false if the given meta is
+     *         "false" otherwise the defaultValue.
+     * @see PageAssist#getMeta(String)
+     */
+    public static final boolean isMetaTrue(final String id, final boolean defaultValue) {
+	String metaValue = getMeta(id);
+	if ("true".equals(metaValue)) {
+	    return true;
+	} else if ("false".equals(metaValue)) {
+	    return false;
+	}
+
+	return defaultValue;
+    }
+
+    /**
      * Will try to login session if PARAM_JID and PARAM_PASSWORD are present. <br/>
      * PARAM_PASSWORD is optional if PARAM_JID value is set to 'anonymous'
      * 
