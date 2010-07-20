@@ -1,3 +1,5 @@
-#Wed Mar 17 12:07:01 CET 2010
+#Mon Jul 19 13:31:21 CEST 2010
 eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=/home/dani/Emite/emite-lib/lib/mockito-all-1.8.2.jar|/home/dani/Emite/emite-lib/lib/suco-snapshot.jar|/home/dani/Emite/emite-lib/lib/tigase-xmltools-2.3.0.jar|/Users/dani/Emite/emite-lib/lib/mockito-all-1.8.2.jar|/Users/dani/Emite/emite-lib/lib/suco-snapshot.jar|/Users/dani/Emite/emite-lib/lib/tigase-xmltools-2.3.0.jar
+jarsExcludedFromWebInfLib=/home/dani/Emite/emite-lib/lib/mockito-all-1.8.2.jar|/home/dani/Emite/emite-lib/lib/suco-snapshot.jar|/home/dani/Emite/emite-lib/lib/tigase-xmltools-2.3.0.jar|/Users/dani/Emite/emite-lib/lib/mockito-all-1.8.2.jar|/Users/dani/Emite/emite-lib/lib/suco-snapshot.jar|/Users/dani/Emite/emite-lib/lib/tigase-xmltools-2.3.0.jar|/home/dani/workspace/emite-lib/lib/mockito-all-1.8.2.jar|/home/dani/workspace/emite-lib/lib/suco-snapshot.jar|/home/dani/workspace/emite-lib/lib/tigase-xmltools-2.3.0.jar
+warSrcDir=war
+warSrcDirIsOutput=true

@@ -47,12 +47,14 @@ public class BoshConnection extends AbstractConnection {
 	    public void onError(final String request, final Throwable throwable) {
 		if (isActive()) {
 		    final int e = incrementErrors();
-		    GWT.log("Connection error n°" + e, throwable);
+		    GWT.log("Connection error n° " + e, throwable);
 		    if (e > retryControl.maxRetries) {
+			GWT.log("Too much errors. Stop retrying.");
 			fireError("Connection error: " + throwable.toString());
 			disconnect();
 		    } else {
 			final int scedTime = retryControl.retry(e);
+			GWT.log("Retrying in " + scedTime / 1000 + " seconds.");
 			fireRetry(e, scedTime);
 			services.schedule(scedTime, new ScheduledAction() {
 			    public void run() {
@@ -66,7 +68,6 @@ public class BoshConnection extends AbstractConnection {
 
 	    @Override
 	    public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
-		clearErrors();
 		activeConnections--;
 		if (isActive()) {
 		    // TODO: check if is the same code in other than FF and make
