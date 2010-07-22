@@ -34,6 +34,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.PairChatManager;
+import com.calclab.emite.xep.disco.client.DiscoveryManager;
+import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
@@ -95,6 +97,12 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
 	}
 	fireChatOpened(chat);
 	return (Room) chat;
+    }
+
+    @Override
+    public void requestRoomDiscovery(XmppURI hostUri, RoomDiscoveryListener listener) {
+	DiscoveryManager discoManager = Suco.get(DiscoveryManager.class);
+	discoManager.sendDiscoItemsQuery(session.getCurrentUser(), hostUri, listener);
     }
 
     public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {

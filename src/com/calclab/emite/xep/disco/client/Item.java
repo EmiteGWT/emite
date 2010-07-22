@@ -8,7 +8,7 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later ver@author antoniosion.
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,24 +24,26 @@ package com.calclab.emite.xep.disco.client;
 import com.calclab.emite.core.client.packet.IPacket;
 
 /**
- * Each <identity/> element MUST possess 'category' and 'type' attributes
- * specifying the category and type for the entity, and MAY possess a 'name'
- * attribute specifying a natural-language name for the entity
- * 
- * 
+ * Each <item/> element MUST possess 'jid' attribute and MAY possess:
+ * <ul>
+ * <li>a 'name' attribute specifying a natural-language name for the entity;</li>
+ * <li>a 'node' attribute specifying a hierarchical structure.</li>
+ * </ul>
+ *
+ *
  */
-public class Identity {
-    public static Identity fromPacket(final IPacket packet) {
-	return new Identity(packet.getAttribute("category"), packet.getAttribute("type"), packet.getAttribute("name"));
+public class Item {
+    public static Item fromPacket(final IPacket packet) {
+	return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
     }
 
-    public final String category;
-    public final String type;
+    public final String jid;
     public final String name;
+    public final String node;
 
-    public Identity(final String category, final String type, final String name) {
-	this.category = category;
-	this.type = type;
+    public Item(final String jid, final String name, final String node) {
+	this.jid = jid;
 	this.name = name;
+	this.node = node;
     }
 }

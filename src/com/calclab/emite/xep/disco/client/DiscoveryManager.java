@@ -29,88 +29,112 @@ import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
 public class DiscoveryManager {
-    private final Event<DiscoveryManager> onReady;
-    private final PacketMatcher filterQuery;
-    private ArrayList<Feature> features;
-    private ArrayList<Identity> identities;
     private final Session session;
-    private boolean isReady;
-    private boolean isActive;
 
     public DiscoveryManager(final Session session) {
 	this.session = session;
-	this.onReady = new Event<DiscoveryManager>("discoveryManager:onReady");
-	this.filterQuery = MatcherFactory.byNameAndXMLNS("query", "http://jabber.org/protocol/disco#info");
-	this.isActive = false;
-
-	session.onStateChanged(new Listener<Session>() {
-	    @Override
-	    public void onEvent(Session session) {
-		if (isActive && session.getState() == Session.State.loggedIn) {
-		    sendDiscoQuery(session.getCurrentUser());
-		}
-	    }
-	});
-
-	this.isReady = false;
+//	session.onStateChanged(new Listener<Session>() {
+//	    @Override
+//	    public void onEvent(Session session) {
+//		if (session.getState() == Session.State.loggedIn) {
+//		    sendDiscoQuery(session.getCurrentUser(), null, listener);
+//		}
+//	    }
+//	});
     }
 
-    public ArrayList<Feature> getFeatures() {
-	return features;
-    }
-
-    public ArrayList<Identity> getIdentities() {
-	return identities;
-    }
-
-    /**
-     * Add listener to the ready event. <b>Every listener is called once and
-     * only once</b>
-     * 
-     * @param listener
-     */
-    public void onReady(final Listener<DiscoveryManager> listener) {
-	onReady.add(listener);
-	if (isReady)
-	    listener.onEvent(this);
-    }
-
-    public void sendDiscoQuery(final XmppURI uri) {
-	final IQ iq = new IQ(Type.get, uri.getHostURI());
+    public void sendDiscoQuery(final XmppURI uri, XmppURI hostUri, Listener<DiscoveryManagerResponse> listener) {
+	final IQ iq = new IQ(Type.get, hostUri != null ? hostUri : uri.getHostURI()).From(uri);
 	iq.addQuery("http://jabber.org/protocol/disco#info");
+	final Event<DiscoveryManagerResponse> onReady = new Event<DiscoveryManagerResponse>("discoveryManager:onReady");
+	onReady.add(listener);
+	final PacketMatcher filterQuery = MatcherFactory.byNameAndXMLNS("query",
+		"http://jabber.org/protocol/disco#info");
 	session.sendIQ("disco", iq, new Listener<IPacket>() {
 	    public void onEvent(final IPacket response) {
 		final IPacket query = response.getFirstChild(filterQuery);
-		processIdentity(query.getChildren(MatcherFactory.byName("identity")));
-		processFeatures(query.getChildren(MatcherFactory.byName("features")));
-		isReady = true;
-		onReady.fire(DiscoveryManager.this);
+		onReady.fire(new DiscoveryManagerResponse(processIdentity(query.getChildren(MatcherFactory
+			.byName("identity"))), processFeatures(query.getChildren(MatcherFactory.byName("feature")))));
 	    }
 	});
     }
 
-    public void setActive(boolean isActive) {
-	this.isActive = isActive;
+    public void sendDiscoItemsQuery(final XmppURI uri, XmppURI hostUri, Listener<DiscoveryManagerResponse> listener) {
+	final IQ iq = new IQ(Type.get, hostUri != null ? hostUri : uri.getHostURI()).From(uri);
+	iq.addQuery("http://jabber.org/protocol/disco#items");
+	final Event<DiscoveryManagerResponse> onReady = new Event<DiscoveryManagerResponse>("discoveryManager:onReady");
+	onReady.add(listener);
+	final PacketMatcher filterQuery = MatcherFactory.byNameAndXMLNS("query",
+		"http://jabber.org/protocol/disco#items");
+	session.sendIQ("disco", iq, new Listener<IPacket>() {
+	    public void onEvent(final IPacket response) {
+		final IPacket query = response.getFirstChild(filterQuery);
+		onReady.fire(new DiscoveryManagerResponse(processItem(query.getChildren(MatcherFactory.byName("item")))));
+	    }
+	});
     }
 
-    private void processFeatures(final List<? extends IPacket> children) {
-	this.features = new ArrayList<Feature>();
+    private List<Feature> processFeatures(final List<? extends IPacket> children) {
+	List<Feature> features = new ArrayList<Feature>();
 	for (final IPacket child : children) {
 	    features.add(Feature.fromPacket(child));
 	}
+	return features;
     }
 
-    private void processIdentity(final List<? extends IPacket> children) {
-	this.identities = new ArrayList<Identity>();
+    private List<Identity> processIdentity(final List<? extends IPacket> children) {
+	List<Identity> identities = new ArrayList<Identity>();
 	for (final IPacket child : children) {
 	    identities.add(Identity.fromPacket(child));
 	}
+	return identities;
     }
 
+    private List<Item> processItem(final List<? extends IPacket> children) {
+	List<Item> items = new ArrayList<Item>();
+	for (final IPacket child : children) {
+	    items.add(Item.fromPacket(child));
+	}
+	return items;
+    }
+
+    public static class DiscoveryManagerResponse {
+	private List<Identity> identities;
+
+	private List<Feature> features;
+
+	private List<Item> items;
+
+	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features) {
+	    this(identities, features, null);
+	}
+
+	public DiscoveryManagerResponse(List<Item> items) {
+	    this(null, null, items);
+	}
+
+	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features, List<Item> items) {
+	    this.identities = identities;
+	    this.features = features;
+	    this.items = items;
+	}
+
+	public List<Identity> getIdentities() {
+	    return identities;
+	}
+
+	public List<Feature> getFeatures() {
+	    return features;
+	}
+
+	public List<Item> getItems() {
+	    return items;
+	}
+    }
 }
