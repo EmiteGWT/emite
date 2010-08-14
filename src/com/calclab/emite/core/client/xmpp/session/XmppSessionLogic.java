@@ -44,16 +44,19 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.core.client.GWT;
 
 /**
- * Default Session implementation. Use Session interface instead.
+ * Default XmppSession logic implementation. You should use XmppSession
+ * interface instead.
+ * 
+ * @see XmppSession
  */
-public class DefaultXmppSession extends AbstractXmppSession {
+public class XmppSessionLogic extends XmppSessionBoilerPlate {
     private XmppURI userURI;
     private final XmppConnection connection;
     private final IQManager iqManager;
     private final ArrayList<IPacket> queuedStanzas;
     private Credentials credentials;
 
-    public DefaultXmppSession(final XmppConnection connection, final SASLManager saslManager,
+    public XmppSessionLogic(final XmppConnection connection, final SASLManager saslManager,
 	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager) {
 	super(connection.getEventBus());
 	this.connection = connection;
@@ -77,6 +80,7 @@ public class DefaultXmppSession extends AbstractXmppSession {
 			iqManager.handle(stanza);
 		    }
 		} else if (credentials != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
+		    setSessionState(SessionState.connecting);
 		    saslManager.sendAuthorizationRequest(credentials);
 		    credentials = null;
 		}
@@ -95,7 +99,7 @@ public class DefaultXmppSession extends AbstractXmppSession {
 	    }
 	});
 
-	eventBus.addHandler(AuthorizationResultEvent.getType(), new AuthorizationResultHandler() {
+	saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		if (event.isSucceed()) {
@@ -109,14 +113,15 @@ public class DefaultXmppSession extends AbstractXmppSession {
 	    }
 	});
 
-	eventBus.addHandler(ResourceBindResultEvent.getType(), new ResourceBindResultHandler() {
+	bindingManager.addResourceBindResultHandler(new ResourceBindResultHandler() {
 	    @Override
 	    public void onBinded(final ResourceBindResultEvent event) {
+		setSessionState(SessionState.binded);
 		iMSessionManager.requestSession(event.getXmppUri());
 	    }
 	});
 
-	eventBus.addHandler(SessionRequestResultEvent.getType(), new SessionRequestResultHandler() {
+	iMSessionManager.addSessionRequestResultHandler(new SessionRequestResultHandler() {
 	    @Override
 	    public void onSessionRequestResult(final SessionRequestResultEvent event) {
 		if (event.isSucceed()) {

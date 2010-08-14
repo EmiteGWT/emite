@@ -28,9 +28,11 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
- * Handle the IM session request.
+ * Handle the IM session request. Used by XmppSession (not need to be used by
+ * clients)
  * 
  * @see http://www.xmpp.org/extensions/xep-0206.html#preconditions-sasl
  */
@@ -53,8 +55,20 @@ public class IMSessionManager {
 
     }
 
+    /**
+     * Add a handler to know the result of the session request
+     * 
+     * @param handler
+     *            the handler
+     * @return a handler registration to remove the handler
+     */
+    public HandlerRegistration addSessionRequestResultHandler(final SessionRequestResultHandler handler) {
+	return SessionRequestResultEvent.bind(connection.getEventBus(), handler);
+    }
+
+    // TODO: deprecate
     public void onSessionCreated(final Listener<XmppURI> listener) {
-	SessionRequestResultEvent.bind(connection.getEventBus(), new SessionRequestResultHandler() {
+	addSessionRequestResultHandler(new SessionRequestResultHandler() {
 	    @Override
 	    public void onSessionRequestResult(final SessionRequestResultEvent event) {
 		listener.onEvent(event.getXmppUri());
@@ -62,6 +76,11 @@ public class IMSessionManager {
 	});
     }
 
+    /**
+     * Request the session
+     * 
+     * @param uri
+     */
     public void requestSession(final XmppURI uri) {
 	final IQ iq = new IQ(IQ.Type.set, uri.getHostURI());
 	iq.setFrom(uri);

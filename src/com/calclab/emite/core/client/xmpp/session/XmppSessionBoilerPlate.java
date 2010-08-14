@@ -14,11 +14,11 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public abstract class AbstractXmppSession implements XmppSession {
+public abstract class XmppSessionBoilerPlate implements XmppSession {
     protected final EmiteEventBus eventBus;
     private String state;
 
-    public AbstractXmppSession(final EmiteEventBus eventBus) {
+    public XmppSessionBoilerPlate(final EmiteEventBus eventBus) {
 	this.eventBus = eventBus;
 	state = SessionState.disconnected;
     }
@@ -30,7 +30,7 @@ public abstract class AbstractXmppSession implements XmppSession {
 
     @Override
     public HandlerRegistration addMessageReceivedHandler(final MessageHandler handler) {
-	return eventBus.addHandler(MessageReceivedEvent.getType(), handler);
+	return MessageReceivedEvent.bind(eventBus, handler);
     }
 
     @Override

@@ -33,7 +33,7 @@ import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
-import com.calclab.emite.core.client.xmpp.session.DefaultXmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSessionLogic;
 import com.calclab.emite.core.client.xmpp.session.IMSessionManager;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.SessionComponent;
@@ -80,7 +80,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	register(Singleton.class, new Factory<XmppSession>(XmppSession.class) {
 	    @Override
 	    public XmppSession create() {
-		return new DefaultXmppSession($(XmppConnection.class), $(SASLManager.class),
+		return new XmppSessionLogic($(XmppConnection.class), $(SASLManager.class),
 			$(ResourceBindingManager.class), $(IMSessionManager.class));
 	    }
 	});

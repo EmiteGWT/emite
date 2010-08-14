@@ -28,6 +28,18 @@ public class Message extends BasicStanza {
 	chat, error, groupchat, headlines, normal
     }
 
+    private static final String PACKET_NAME = "message";
+
+    /**
+     * Return true if the given packet is a message
+     * 
+     * @param packet
+     * @return
+     */
+    public static boolean is(final IPacket packet) {
+	return PACKET_NAME.equals(packet.getName());
+    }
+
     /**
      * Create a message by delegation. Not for normal use
      * 
@@ -79,7 +91,7 @@ public class Message extends BasicStanza {
      * @param message
      */
     public Message(final XmppURI fromUri, final XmppURI toURI, final String message, final Type type) {
-	super("message", null);
+	super(PACKET_NAME, null);
 	setType(type);
 	setFrom(fromUri);
 	setTo(toURI);

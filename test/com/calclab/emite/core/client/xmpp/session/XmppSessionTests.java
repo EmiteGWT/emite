@@ -32,7 +32,7 @@ import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
 
 public class XmppSessionTests {
-    private DefaultXmppSession session;
+    private XmppSessionLogic session;
     private SASLManager saslManager;
     private ResourceBindingManager bindingManager;
     private IMSessionManager iMSessionManager;
@@ -47,7 +47,7 @@ public class XmppSessionTests {
 	saslManager = mock(SASLManager.class);
 	bindingManager = mock(ResourceBindingManager.class);
 	iMSessionManager = mock(IMSessionManager.class);
-	session = new DefaultXmppSession(connection, saslManager, bindingManager, iMSessionManager);
+	session = new XmppSessionLogic(connection, saslManager, bindingManager, iMSessionManager);
 
     }
 

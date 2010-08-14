@@ -1,0 +1,16 @@
+
+body,div,p,a {
+	font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+	font-size: 12pt;
+	color: #999;
+}
+
+.gwt-Label {margin: 3px 0 3px 20px;}
+
+.title { font-size: 200%; color: #0072c2;}
+.error {color: #c00;}
+.important {color: black; font-size: 150%;}
+.received {color: #00c;}
+.sent {color: #0c0;}
+.session {color: gray;}
+.info {color: gray;}

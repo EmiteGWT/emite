@@ -153,7 +153,7 @@ public class SessionImpl implements Session {
 	    return State.valueOf(sessionState);
 	} catch (final Exception e) {
 	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
-	    return State.error;
+	    return State.unknown;
 	}
     }
 

@@ -48,6 +48,10 @@ public class ResourceBindingManager {
 
     }
 
+    public void addResourceBindResultHandler(final ResourceBindResultHandler handler) {
+	ResourceBindResultEvent.bind(connection.getEventBus(), handler);
+    }
+
     public void bindResource(final String resource) {
 	final IQ iq = new IQ(IQ.Type.set);
 	iq.setId("bind-resource");
@@ -56,8 +60,9 @@ public class ResourceBindingManager {
 	connection.send(iq);
     }
 
+    // TODO: deprecate
     public void onBinded(final Listener<XmppURI> listener) {
-	ResourceBindResultEvent.bind(connection.getEventBus(), new ResourceBindResultHandler() {
+	addResourceBindResultHandler(new ResourceBindResultHandler() {
 	    @Override
 	    public void onBinded(final ResourceBindResultEvent event) {
 		listener.onEvent(event.getXmppUri());

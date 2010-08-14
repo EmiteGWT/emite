@@ -80,7 +80,11 @@ public interface Session {
 	 * We are resuming a session. When resuming a session you only receive
 	 * "resuming" and "ready" (not loggedIn)
 	 */
-	resume
+	resume,
+	/**
+	 * Compatibility with new SessionState
+	 */
+	unknown
     }
 
     /**

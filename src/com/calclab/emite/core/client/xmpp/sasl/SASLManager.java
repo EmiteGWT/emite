@@ -61,7 +61,7 @@ public class SASLManager {
 	});
     }
 
-    public HandlerRegistration addAuthorizationHandler(final AuthorizationResultHandler handler) {
+    public HandlerRegistration addAuthorizationResultHandler(final AuthorizationResultHandler handler) {
 	return AuthorizationResultEvent.bind(eventBus, handler);
     }
 

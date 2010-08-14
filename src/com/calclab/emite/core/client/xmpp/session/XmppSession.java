@@ -68,6 +68,11 @@ public interface XmppSession {
 	 * "resuming" and "ready" (not loggedIn)
 	 */
 	public static final String resume = "resume";
+
+	/**
+	 * The session is binded
+	 */
+	protected static String binded = "binded";
     }
 
     /**

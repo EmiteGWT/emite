@@ -3,6 +3,7 @@ war/EmiteFunctionalTests/
 war/ExampleEcho/
 war/ExampleIMChat/
 war/ExampleXmppSession/
+war/PingPongExample/
 extras
 .svn
 **/.svn
