@@ -23,7 +23,6 @@ package com.calclab.emite.core.client.xmpp.session;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
@@ -88,7 +87,7 @@ public interface Session {
      * @see Credentials.ANONYMOUS
      */
     @Deprecated
-    public static XmppURI ANONYMOUS = SASLManager.ANONYMOUS;
+    public static XmppURI ANONYMOUS = Credentials.ANONYMOUS;
 
     /**
      * Returns the current user xmpp uri

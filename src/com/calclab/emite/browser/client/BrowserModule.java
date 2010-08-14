@@ -21,7 +21,7 @@
  */
 package com.calclab.emite.browser.client;
 
-import com.calclab.emite.core.client.bosh.Connection;
+import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;

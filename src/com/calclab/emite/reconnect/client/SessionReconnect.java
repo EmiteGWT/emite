@@ -1,6 +1,6 @@
 package com.calclab.emite.reconnect.client;
 
-import com.calclab.emite.core.client.bosh.Connection;
+import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.session.Credentials;

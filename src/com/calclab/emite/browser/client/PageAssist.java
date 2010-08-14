@@ -2,9 +2,9 @@ package com.calclab.emite.browser.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import com.calclab.emite.core.client.bosh.BoshSettings;
-import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.conn.Connection;
+import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -96,7 +96,7 @@ public class PageAssist {
 
 	if (host != null && httpBase != null) {
 	    GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
-	    connection.setSettings(new BoshSettings(httpBase, host, routeHost, routePort, secure));
+	    connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
 	    return true;
 	} else {
 	    return false;
@@ -165,7 +165,7 @@ public class PageAssist {
      * @see PageAssist#getMeta(String)
      */
     public static final boolean isMetaTrue(final String id, final boolean defaultValue) {
-	String metaValue = getMeta(id);
+	final String metaValue = getMeta(id);
 	if ("true".equals(metaValue)) {
 	    return true;
 	} else if ("false".equals(metaValue)) {

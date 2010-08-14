@@ -21,45 +21,19 @@
  */
 package com.calclab.emite.core.client.bosh;
 
+import com.calclab.emite.core.client.conn.ConnectionSettings;
+
 /**
  * Bosh connection settings
+ * 
+ * This class will be removed
  */
-public class BoshSettings {
-    public final String hostName;
-    public final String httpBase;
-    public final String version;
-    public final int maxRequests;
-    public final int hold;
-    public final int wait;
-    public final String routeHost;
-    public final Integer routePort;
-    public final boolean secure;
+@Deprecated
+public class BoshSettings extends ConnectionSettings {
 
-    public BoshSettings(final String httpBase, final String hostName) {
-        this(httpBase, hostName, "1.6", 60, 1, 2, null, null, true);
-    }
-
-    public BoshSettings(final String httpBase, final String hostName, final String version, final int wait,
-            final int hold, final int maxRequests) {
-        this(httpBase, hostName, version, wait, hold, maxRequests,
-                null, null, true);
-    }
-
-    public BoshSettings(final String httpBase, final String hostName, String routeHost, Integer routePort, boolean secure) {
-        this(httpBase, hostName, "1.6", 60, 1, 2, routeHost, routePort, secure);
-    }
-
-    public BoshSettings(final String httpBase, final String hostName, final String version, final int wait,
-            final int hold, final int maxRequests, String routeHost, Integer routePort, boolean secure) {
-    	this.httpBase = httpBase;
-    	this.hostName = hostName;
-    	this.version = version;
-    	this.wait = wait;
-    	this.hold = hold;
-    	this.maxRequests = maxRequests;
-    	this.routeHost = routeHost;
-    	this.routePort = routePort;
-    	this.secure = secure;
+    public BoshSettings(final String httpBase, final String hostName, final String routeHost, final Integer routePort,
+	    final boolean secure) {
+	super(httpBase, hostName, routeHost, routePort, secure);
     }
 
 }

@@ -23,8 +23,8 @@ package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.ArrayList;
 
-import com.calclab.emite.core.client.bosh.Connection;
 import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction;
@@ -67,7 +67,7 @@ public class SessionImpl extends AbstractSession implements Session {
 			iqManager.handle(stanza);
 		    }
 		} else if (transaction != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
-		    saslManager.sendAuthorizationRequest(transaction);
+		    saslManager.sendAuthorizationRequest(transaction.getCredentials());
 		    transaction = null;
 		}
 	    }
@@ -164,7 +164,7 @@ public class SessionImpl extends AbstractSession implements Session {
 
     public void send(final IPacket packet) {
 	// Added a condition to check the connection is not retrying...
-	if (connection.noError()
+	if (!connection.hasErrors()
 		&& (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut)) {
 	    packet.setAttribute("from", userURI.toString());
 	    connection.send(packet);

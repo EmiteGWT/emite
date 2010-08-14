@@ -5,22 +5,25 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.calclab.emite.core.client.conn.ConnectionSettings;
+import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
 import com.calclab.emite.xtesting.ServicesTester;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 
-public class BoshConnectionTests {
+public class XmppBoshConnectionTests {
 
     private final ServicesTester services;
-    private final BoshConnection connection;
+    private final XmppBoshConnection connection;
 
-    public BoshConnectionTests() {
+    public XmppBoshConnectionTests() {
 	services = new ServicesTester();
-	connection = new BoshConnection(services);
+	final DefaultEmiteEventBus eventBus = new DefaultEmiteEventBus();
+	connection = new XmppBoshConnection(eventBus, services);
     }
 
     @Test
     public void shouldSendInitialBody() {
-	connection.setSettings(new BoshSettings("httpBase", "localhost"));
+	connection.setSettings(new ConnectionSettings("httpBase", "localhost"));
 	connection.connect();
 	assertEquals(1, services.requestSentCount());
 	final IsPacketLike matcher = IsPacketLike.build("<body to='localhost' "

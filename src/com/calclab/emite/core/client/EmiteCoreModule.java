@@ -22,7 +22,11 @@
 package com.calclab.emite.core.client;
 
 import com.calclab.emite.core.client.bosh.BoshConnection;
-import com.calclab.emite.core.client.bosh.Connection;
+import com.calclab.emite.core.client.bosh.XmppBoshConnection;
+import com.calclab.emite.core.client.conn.Connection;
+import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.gwt.GWTServices;
 import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
@@ -57,10 +61,24 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	    }
 	});
 
+	register(Singleton.class, new Factory<EmiteEventBus>(EmiteEventBus.class) {
+	    @Override
+	    public EmiteEventBus create() {
+		return new DefaultEmiteEventBus();
+	    }
+	});
+
+	register(Singleton.class, new Factory<XmppConnection>(XmppConnection.class) {
+	    @Override
+	    public XmppConnection create() {
+		return new XmppBoshConnection($(EmiteEventBus.class), $(Services.class));
+	    }
+	});
+
 	register(Singleton.class, new Factory<Connection>(Connection.class) {
 	    @Override
 	    public Connection create() {
-		return new BoshConnection($(Services.class));
+		return new BoshConnection($(XmppConnection.class));
 	    }
 	}, new Factory<IMSessionManager>(IMSessionManager.class) {
 	    @Override
@@ -84,7 +102,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	}, new Factory<ResourceBindingManager>(ResourceBindingManager.class) {
 	    @Override
 	    public ResourceBindingManager create() {
-		return new ResourceBindingManager($(Connection.class));
+		return new ResourceBindingManager($(EmiteEventBus.class), $(XmppConnection.class));
 	    }
 	}, new Factory<DecoderRegistry>(DecoderRegistry.class) {
 	    @Override
@@ -94,7 +112,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	}, new Factory<SASLManager>(SASLManager.class) {
 	    @Override
 	    public SASLManager create() {
-		return new SASLManager($(Connection.class), $(DecoderRegistry.class));
+		return new SASLManager($(XmppConnection.class), $(DecoderRegistry.class));
 	    }
 	});
 	register(SessionComponent.class, new Factory<SessionReady>(SessionReady.class) {

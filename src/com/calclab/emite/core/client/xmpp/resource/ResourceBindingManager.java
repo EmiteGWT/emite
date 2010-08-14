@@ -21,29 +21,34 @@
  */
 package com.calclab.emite.core.client.xmpp.resource;
 
-import com.calclab.emite.core.client.bosh.Connection;
+import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
+import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
+import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
 public class ResourceBindingManager {
-    private final Event<XmppURI> onBinded;
-    private final Connection connection;
+    private final XmppConnection connection;
+    private final EmiteEventBus eventBus;
 
-    public ResourceBindingManager(final Connection connection) {
+    public ResourceBindingManager(final EmiteEventBus eventBus, final XmppConnection connection) {
+	this.eventBus = eventBus;
 	this.connection = connection;
-	this.onBinded = new Event<XmppURI>("resourceBindingManager:onBinded");
 
-	connection.onStanzaReceived(new Listener<IPacket>() {
-	    public void onEvent(final IPacket received) {
+	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	    @Override
+	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+		final IPacket received = event.getStanza();
 		if ("bind-resource".equals(received.getAttribute("id"))) {
 		    final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
-		    onBinded.fire(XmppURI.uri(jid));
+		    eventBus.fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
 		}
 	    }
 	});
+
     }
 
     public void bindResource(final String resource) {
@@ -55,7 +60,12 @@ public class ResourceBindingManager {
     }
 
     public void onBinded(final Listener<XmppURI> listener) {
-	onBinded.add(listener);
+	eventBus.addHandler(ResourceBindResultEvent.getType(), new ResourceBindResultHandler() {
+	    @Override
+	    public void onBinded(final ResourceBindResultEvent event) {
+		listener.onEvent(event.getXmppUri());
+	    }
+	});
     }
 
 }

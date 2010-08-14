@@ -1,35 +1,45 @@
 package com.calclab.emite.core.client.xmpp.resource;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.ConnectionTester;
-import com.calclab.suco.testing.events.MockedListener;
 
 public class ResourceBindingManagerTest {
     private ResourceBindingManager manager;
     private ConnectionTester connection;
+    private EmiteEventBus eventBus;
+    private ResourceBindResultEvent currentEvent;
 
     @Before
     public void beforeTests() {
 	connection = new ConnectionTester();
-	manager = new ResourceBindingManager(connection);
+	eventBus = connection.getEventBus();
+	manager = new ResourceBindingManager(eventBus, connection);
     }
 
     @Test
     public void shouldEventIfBindedSucceed() {
-	final MockedListener<XmppURI> onBindedListener = new MockedListener<XmppURI>();
-	manager.onBinded(onBindedListener);
+	currentEvent = null;
+	eventBus.addHandler(ResourceBindResultEvent.getType(), new ResourceBindResultHandler() {
+	    @Override
+	    public void onBinded(final ResourceBindResultEvent event) {
+		currentEvent = event;
+	    }
+	});
+
 	connection.receives("<iq type='result' id='bind-resource'>" + "<bind xmlns='urn:ietf:params:xml:ns:xmpp-bind'>"
 		+ "<jid>somenode@example.com/someresource</jid></bind></iq>");
 
-	assertTrue(onBindedListener.isCalledWithEquals(uri("somenode@example.com/someresource")));
-
+	assertNotNull(currentEvent);
+	assertEquals(uri("somenode@example.com/someresource"), currentEvent.getXmppUri());
     }
 
     @Test
