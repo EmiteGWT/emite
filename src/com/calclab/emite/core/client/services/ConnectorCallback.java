@@ -21,6 +21,12 @@
  */
 package com.calclab.emite.core.client.services;
 
+/**
+ * A connector callback interface to interact with a Connector
+ * 
+ * @author dani
+ * 
+ */
 public interface ConnectorCallback {
     void onError(String request, Throwable throwable);
 
