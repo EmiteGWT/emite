@@ -21,11 +21,12 @@
  */
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.conn.Connection;
+import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
+import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
+import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
 
 /**
@@ -34,25 +35,31 @@ import com.calclab.suco.client.events.Listener;
  * @see http://www.xmpp.org/extensions/xep-0206.html#preconditions-sasl
  */
 public class IMSessionManager {
-    private final Connection connection;
-    private final Event<XmppURI> onSessionCreated;
+    private final XmppConnection connection;
 
-    public IMSessionManager(final Connection connection) {
+    public IMSessionManager(final XmppConnection connection) {
 	this.connection = connection;
-	this.onSessionCreated = new Event<XmppURI>("sessionManager:onSessionCreated");
 
-	connection.onStanzaReceived(new Listener<IPacket>() {
-	    public void onEvent(final IPacket stanza) {
+	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	    @Override
+	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+		final IPacket stanza = event.getStanza();
 		if ("im-session-request".equals(stanza.getAttribute("id"))) {
-		    onSessionCreated.fire(XmppURI.uri(stanza.getAttribute("to")));
+		    connection.getEventBus().fireEvent(
+			    new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
 		}
 	    }
-
 	});
+
     }
 
     public void onSessionCreated(final Listener<XmppURI> listener) {
-	onSessionCreated.add(listener);
+	SessionRequestResultEvent.bind(connection.getEventBus(), new SessionRequestResultHandler() {
+	    @Override
+	    public void onSessionRequestResult(final SessionRequestResultEvent event) {
+		listener.onEvent(event.getXmppUri());
+	    }
+	});
     }
 
     public void requestSession(final XmppURI uri) {

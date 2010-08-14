@@ -1,17 +1,23 @@
 package com.calclab.emite.core.client.xmpp.sasl;
 
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandler> {
     private static final Type<AuthorizationResultHandler> TYPE = new Type<AuthorizationResultHandler>();
 
+    public static HandlerRegistration bind(final EmiteEventBus eventBus, final AuthorizationResultHandler handler) {
+	return eventBus.addHandler(TYPE, handler);
+    }
+
     public static Type<AuthorizationResultHandler> getType() {
 	return TYPE;
     }
-
     private final boolean succeed;
+
     private final Credentials credentials;
 
     /**
@@ -51,6 +57,12 @@ public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandle
 
     public boolean isSucceed() {
 	return succeed;
+    }
+
+    @Override
+    public String toDebugString() {
+	final String value = succeed ? " Succeed - " + credentials.getXmppUri() : " Failed!";
+	return super.toDebugString() + value;
     }
 
     @Override

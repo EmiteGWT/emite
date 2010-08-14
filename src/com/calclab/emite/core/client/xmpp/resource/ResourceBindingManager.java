@@ -24,7 +24,6 @@ package com.calclab.emite.core.client.xmpp.resource;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -32,10 +31,8 @@ import com.calclab.suco.client.events.Listener;
 
 public class ResourceBindingManager {
     private final XmppConnection connection;
-    private final EmiteEventBus eventBus;
 
-    public ResourceBindingManager(final EmiteEventBus eventBus, final XmppConnection connection) {
-	this.eventBus = eventBus;
+    public ResourceBindingManager(final XmppConnection connection) {
 	this.connection = connection;
 
 	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
@@ -44,7 +41,7 @@ public class ResourceBindingManager {
 		final IPacket received = event.getStanza();
 		if ("bind-resource".equals(received.getAttribute("id"))) {
 		    final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
-		    eventBus.fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
+		    connection.getEventBus().fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
 		}
 	    }
 	});
@@ -60,7 +57,7 @@ public class ResourceBindingManager {
     }
 
     public void onBinded(final Listener<XmppURI> listener) {
-	eventBus.addHandler(ResourceBindResultEvent.getType(), new ResourceBindResultHandler() {
+	ResourceBindResultEvent.bind(connection.getEventBus(), new ResourceBindResultHandler() {
 	    @Override
 	    public void onBinded(final ResourceBindResultEvent event) {
 		listener.onEvent(event.getXmppUri());

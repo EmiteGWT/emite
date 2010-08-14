@@ -70,7 +70,8 @@ public class ConnectionEvent extends GwtEvent<ConnectionHandler> {
 
     @Override
     public String toDebugString() {
-	return super.toDebugString() + eventType + "(" + text + ")";
+	final String value = text != null ? "(" + text + ")" : "";
+	return super.toDebugString() + " " + eventType + value;
     }
 
     @Override

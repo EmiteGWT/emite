@@ -10,19 +10,19 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.xtesting.ConnectionTester;
+import com.calclab.emite.xtesting.XmppConnectionTester;
 
 public class ResourceBindingManagerTest {
     private ResourceBindingManager manager;
-    private ConnectionTester connection;
+    private XmppConnectionTester connection;
     private EmiteEventBus eventBus;
     private ResourceBindResultEvent currentEvent;
 
     @Before
     public void beforeTests() {
-	connection = new ConnectionTester();
+	connection = new XmppConnectionTester();
 	eventBus = connection.getEventBus();
-	manager = new ResourceBindingManager(eventBus, connection);
+	manager = new ResourceBindingManager(connection);
     }
 
     @Test

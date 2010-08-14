@@ -21,14 +21,16 @@
  */
 package com.calclab.emite.core.client.xmpp.session;
 
-import java.util.ArrayList;
-
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.Connection;
+import com.calclab.emite.core.client.events.IQEvent;
+import com.calclab.emite.core.client.events.IQHandler;
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.PresenceEvent;
+import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
-import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction;
-import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
@@ -39,184 +41,120 @@ import com.google.gwt.core.client.GWT;
 /**
  * Default Session implementation. Use Session interface instead.
  */
-public class SessionImpl extends AbstractSession implements Session {
-    private XmppURI userURI;
-    private final Connection connection;
-    private AuthorizationTransaction transaction;
-    private final IQManager iqManager;
-    private final ArrayList<IPacket> queuedStanzas;
+public class SessionImpl implements Session {
+    private final XmppSession delegate;
 
-    public SessionImpl(final Connection connection, final SASLManager saslManager,
-	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager) {
-	this.connection = connection;
-	iqManager = new IQManager();
-	queuedStanzas = new ArrayList<IPacket>();
-
-	connection.onStanzaReceived(new Listener<IPacket>() {
-	    public void onEvent(final IPacket stanza) {
-		final String name = stanza.getName();
-		if (name.equals("message")) {
-		    fireMessage(new Message(stanza));
-		} else if (name.equals("presence")) {
-		    firePresence(new Presence(stanza));
-		} else if (name.equals("iq")) {
-		    final String type = stanza.getAttribute("type");
-		    if ("get".equals(type) || "set".equals(type)) {
-			fireIQ(new IQ(stanza));
-		    } else {
-			iqManager.handle(stanza);
-		    }
-		} else if (transaction != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
-		    saslManager.sendAuthorizationRequest(transaction.getCredentials());
-		    transaction = null;
-		}
-	    }
-	});
-
-	connection.onError(new Listener<String>() {
-	    public void onEvent(final String msg) {
-		GWT.log("Connection error: " + msg, null);
-		setState(State.error);
-		// Connection takes care of it :
-		// disconnect();
-	    }
-	});
-
-	connection.onDisconnected(new Listener<String>() {
-	    public void onEvent(final String parameter) {
-		setState(State.disconnected);
-	    }
-	});
-
-	saslManager.onAuthorized(new Listener<AuthorizationTransaction>() {
-	    public void onEvent(final AuthorizationTransaction ticket) {
-		if (ticket.getState() == AuthorizationTransaction.State.succeed) {
-		    setState(Session.State.authorized);
-		    connection.restartStream();
-		    String resource = ticket.getXmppUri().getResource();
-		    if (resource == null) {
-			resource = "emite-" + System.currentTimeMillis();
-		    }
-		    bindingManager.bindResource(resource);
-		} else {
-		    setState(Session.State.notAuthorized);
-		    disconnect();
-		}
-	    }
-	});
-
-	bindingManager.onBinded(new Listener<XmppURI>() {
-	    public void onEvent(final XmppURI uri) {
-		iMSessionManager.requestSession(uri);
-	    }
-	});
-
-	iMSessionManager.onSessionCreated(new Listener<XmppURI>() {
-	    public void onEvent(final XmppURI uri) {
-		setLoggedIn(uri);
-	    }
-
-	});
-
+    public SessionImpl(final XmppSession delegate) {
+	this.delegate = delegate;
     }
 
+    @Override
     public XmppURI getCurrentUser() {
-	return userURI;
+	return delegate.getCurrentUser();
     }
 
+    @Override
+    public State getState() {
+	return convertState(delegate.getSessionState());
+    }
+
+    @Override
     public boolean isLoggedIn() {
-	return userURI != null;
+	return delegate.isLoggedIn();
     }
 
     @Override
     public void login(final Credentials credentials) {
-	if (getState() == Session.State.disconnected) {
-	    setState(Session.State.connecting);
-	    connection.connect();
-	    transaction = new AuthorizationTransaction(credentials);
-	    GWT.log("Sending auth transaction: " + transaction, null);
-	}
-
+	delegate.login(credentials);
     }
 
+    @Override
+    public void login(final XmppURI uri, final String password) {
+	delegate.login(uri, password);
+    }
+
+    @Override
     public void logout() {
-	if (getState() != State.disconnected && userURI != null) {
-	    // TODO : To be reviewed, preventing unvailable presences to be sent
-	    // so that only the 'terminate' is sent
-	    // Unvailabel are handled automatically by the server
-	    // setState(State.loggingOut);
-	    userURI = null;
-	    connection.disconnect();
-	    setState(State.disconnected);
-	}
+	delegate.logout();
     }
 
+    @Override
+    public void onIQ(final Listener<IQ> listener) {
+	delegate.addIQReceivedHandler(new IQHandler() {
+	    @Override
+	    public void onPacket(final IQEvent event) {
+		listener.onEvent(event.getIQ());
+	    }
+	});
+    }
+
+    @Override
+    public void onMessage(final Listener<Message> listener) {
+	delegate.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(final MessageEvent event) {
+		listener.onEvent(event.getMessage());
+	    }
+	});
+    }
+
+    @Override
+    public void onPresence(final Listener<Presence> listener) {
+	delegate.addPresenceReceivedHandler(new PresenceHandler() {
+	    @Override
+	    public void onPresence(final PresenceEvent event) {
+		listener.onEvent(event.getPresence());
+	    }
+	});
+    }
+
+    @Override
+    public void onStateChanged(final Listener<Session> listener) {
+	delegate.addSessionStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(final StateChangedEvent event) {
+		listener.onEvent(SessionImpl.this);
+	    }
+	});
+    }
+
+    @Override
     public StreamSettings pause() {
-	return connection.pause();
+	return delegate.pause();
     }
 
+    @Override
     public void resume(final XmppURI userURI, final StreamSettings settings) {
-	this.userURI = userURI;
-	setState(State.resume);
-	connection.resume(settings);
-	setState(State.ready);
+	delegate.resume(userURI, settings);
     }
 
-    public void send(final IPacket packet) {
-	// Added a condition to check the connection is not retrying...
-	if (!connection.hasErrors()
-		&& (getState() == State.loggedIn || getState() == State.ready || getState() == State.loggingOut)) {
-	    packet.setAttribute("from", userURI.toString());
-	    connection.send(packet);
-	} else {
-	    GWT.log("session queuing stanza" + packet, null);
-	    queuedStanzas.add(packet);
-	}
+    @Override
+    public void send(final IPacket stanza) {
+	delegate.send(stanza);
     }
 
+    @Override
     public void sendIQ(final String category, final IQ iq, final Listener<IPacket> listener) {
-	final String id = iqManager.register(category, listener);
-	iq.setAttribute("id", id);
-	send(iq);
+	delegate.sendIQ(category, iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(final IQ iq) {
+		listener.onEvent(iq);
+	    }
+	});
     }
 
+    @Override
     public void setReady() {
-	if (isLoggedIn()) {
-	    setState(State.ready);
+	delegate.setReady();
+    }
+
+    private State convertState(final String sessionState) {
+	try {
+	    return State.valueOf(sessionState);
+	} catch (final Exception e) {
+	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
+	    return State.error;
 	}
     }
 
-    @Override
-    public String toString() {
-	return "Session " + userURI + " in " + getState() + " " + queuedStanzas.size() + " queued stanzas con="
-		+ connection.toString();
-    }
-
-    private void disconnect() {
-	connection.disconnect();
-	// Done now with the connection's onDisconnected listener :
-	// setState(State.disconnected);
-    }
-
-    private void sendQueuedStanzas() {
-	GWT.log("Sending queued stanzas....", null);
-	for (final IPacket packet : queuedStanzas) {
-	    send(packet);
-	}
-	queuedStanzas.clear();
-    }
-
-    private void setLoggedIn(final XmppURI userURI) {
-	this.userURI = userURI;
-	GWT.log("SESSION LOGGED IN");
-	setState(Session.State.loggedIn);
-    }
-
-    @Override
-    protected void setState(final Session.State newState) {
-	if (newState == State.ready) {
-	    sendQueuedStanzas();
-	}
-	super.setState(newState);
-    }
 }

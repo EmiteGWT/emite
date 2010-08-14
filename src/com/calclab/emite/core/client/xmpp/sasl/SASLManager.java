@@ -62,11 +62,11 @@ public class SASLManager {
     }
 
     public HandlerRegistration addAuthorizationHandler(final AuthorizationResultHandler handler) {
-	return eventBus.addHandler(AuthorizationResultEvent.getType(), handler);
+	return AuthorizationResultEvent.bind(eventBus, handler);
     }
 
     public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
-	eventBus.addHandler(AuthorizationResultEvent.getType(), new AuthorizationResultHandler() {
+	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());

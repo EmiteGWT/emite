@@ -23,34 +23,14 @@ package com.calclab.emite.core.client.bosh;
 
 import com.calclab.emite.core.client.conn.AbstractConnection;
 import com.calclab.emite.core.client.conn.Connection;
-import com.calclab.emite.core.client.conn.ConnectionHandler;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
-import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
-import com.calclab.emite.core.client.conn.StanzaSentHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.google.gwt.event.shared.HandlerRegistration;
 
 public class BoshConnection extends AbstractConnection implements Connection {
 
     public BoshConnection(final XmppConnection delegate) {
 	super(delegate);
-    }
-
-    @Override
-    public HandlerRegistration addConnectionHandler(final ConnectionHandler handler) {
-	return delegate.addConnectionHandler(handler);
-    }
-
-    @Override
-    public HandlerRegistration addStanzaReceivedHandler(final StanzaReceivedHandler handler) {
-	return delegate.addStanzaReceivedHandler(handler);
-    }
-
-    @Override
-    public HandlerRegistration addStanzaSentHandler(final StanzaSentHandler handler) {
-	return delegate.addStanzaSentHandler(handler);
     }
 
     @Override
@@ -61,11 +41,6 @@ public class BoshConnection extends AbstractConnection implements Connection {
     @Override
     public void disconnect() {
 	delegate.disconnect();
-    }
-
-    @Override
-    public EmiteEventBus getEventBus() {
-	return delegate.getEventBus();
     }
 
     @Override

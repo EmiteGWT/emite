@@ -28,6 +28,11 @@ public abstract class StateChangedEvent extends GwtEvent<StateChangedHandler> {
     }
 
     @Override
+    public String toDebugString() {
+	return super.toDebugString() + state;
+    }
+
+    @Override
     protected void dispatch(final StateChangedHandler handler) {
 	handler.onStateChanged(this);
     }

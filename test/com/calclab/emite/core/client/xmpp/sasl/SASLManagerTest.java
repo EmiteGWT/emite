@@ -12,16 +12,16 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xtesting.ConnectionTester;
+import com.calclab.emite.xtesting.XmppConnectionTester;
 
 public class SASLManagerTest {
     private SASLManager manager;
-    private ConnectionTester connection;
+    private XmppConnectionTester connection;
     protected AuthorizationResultEvent authEvent;
 
     @Before
     public void beforeTests() {
-	connection = new ConnectionTester();
+	connection = new XmppConnectionTester();
 	manager = new SASLManager(connection, new DecoderRegistry());
 	authEvent = null;
 	connection.getEventBus().addHandler(AuthorizationResultEvent.getType(), new AuthorizationResultHandler() {

@@ -24,6 +24,7 @@ package com.calclab.emite.core.client.xmpp.session;
 import java.util.HashMap;
 
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.suco.client.events.Listener;
 
 /**
@@ -33,27 +34,36 @@ import com.calclab.suco.client.events.Listener;
  */
 class IQManager {
     private int id;
-    private final HashMap<String, Listener<IPacket>> listeners;
+    private final HashMap<String, IQResponseHandler> handlers;
 
     public IQManager() {
 	id = 0;
-	this.listeners = new HashMap<String, Listener<IPacket>>();
+	handlers = new HashMap<String, IQResponseHandler>();
     }
 
     public boolean handle(final IPacket received) {
 	final String key = received.getAttribute("id");
-	final Listener<IPacket> listener = listeners.remove(key);
-	final boolean isHandled = listener != null;
+	final IQResponseHandler handler = handlers.remove(key);
+	final boolean isHandled = handler != null;
 	if (isHandled) {
-	    listener.onEvent(received);
+	    handler.onIQ(new IQ(received));
 	}
 	return isHandled;
     }
 
-    public String register(final String category, final Listener<IPacket> listener) {
+    public String register(final String category, final IQResponseHandler handler) {
 	id++;
 	final String key = category + "_" + id;
-	listeners.put(key, listener);
+	handlers.put(key, handler);
 	return key;
+    }
+
+    public String register(final String category, final Listener<IPacket> listener) {
+	return register(category, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(final IQ iq) {
+		listener.onEvent(iq);
+	    }
+	});
     }
 }

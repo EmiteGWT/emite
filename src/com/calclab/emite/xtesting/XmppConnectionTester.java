@@ -3,37 +3,29 @@ package com.calclab.emite.xtesting;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.bosh.XmppBoshConnection;
-import com.calclab.emite.core.client.conn.AbstractConnection;
-import com.calclab.emite.core.client.conn.Connection;
+import com.calclab.emite.core.client.conn.AbstractXmppConnection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
+import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
-/**
- * Object of this class are used to test against connection (for example, to
- * test the Session)
- * 
- */
-public class ConnectionTester extends AbstractConnection implements Connection {
+public class XmppConnectionTester extends AbstractXmppConnection implements XmppConnection {
 
+    private final TigaseXMLService xmler;
+    private final ArrayList<IPacket> sent;
+    private final ArrayList<IPacket> received;
     private boolean isConnected;
     private boolean paused;
     private boolean streamRestarted;
     private ConnectionSettings settings;
-    private final TigaseXMLService xmler;
-    private final ArrayList<IPacket> sent;
-    private final ArrayList<IPacket> received;
-    private final EmiteEventBus eventBus;
 
-    public ConnectionTester() {
-	super(new XmppBoshConnection(new DefaultEmiteEventBus(), new ServicesTester()));
-	eventBus = delegate.getEventBus();
+    public XmppConnectionTester() {
+	super(new DefaultEmiteEventBus());
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
 	received = new ArrayList<IPacket>();
@@ -49,6 +41,7 @@ public class ConnectionTester extends AbstractConnection implements Connection {
 	isConnected = false;
     }
 
+    @Override
     public EmiteEventBus getEventBus() {
 	return eventBus;
     }
