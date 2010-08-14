@@ -14,6 +14,7 @@ public abstract class AbstractChatManager implements ChatManager {
     private final Event<Chat> onChatOpened;
     private final Event<Chat> onChatClosed;
     protected final Session session;
+    private ChatSelectionStrategy strategy;
 
     public AbstractChatManager(final Session session) {
 	this.session = session;
@@ -21,6 +22,13 @@ public abstract class AbstractChatManager implements ChatManager {
 	onChatClosed = new Event<Chat>("chatManager.onChatClosed");
 	onChatOpened = new Event<Chat>("chatManager.onChatOpened");
 	chats = new HashSet<Chat>();
+	this.strategy = new SameJidChatSelectionStrategy();
+    }
+
+    @Override
+    public void setChatSelectionStrategy(ChatSelectionStrategy strategy) {
+	assert strategy != null : "The ChatSelectionStrategy can't be null!";
+	this.strategy = strategy;
     }
 
     @Override
@@ -29,25 +37,43 @@ public abstract class AbstractChatManager implements ChatManager {
 	fireChatClosed(chat);
     }
 
-    public abstract Chat getChat(XmppURI uri);
+    @Override
+    public Chat getChat(XmppURI uri) {
+	return findChat(uri, null);
+    }
 
+    @Override
+    public Chat findChat(XmppURI uri, ChatMetadata metadata) {
+	return strategy.find(uri, metadata, chats);
+    }
+
+    @Override
     public Collection<? extends Chat> getChats() {
 	return chats;
     }
 
+    @Override
     public void onChatClosed(final Listener<Chat> listener) {
 	onChatClosed.add(listener);
     }
 
+    @Override
     public void onChatCreated(final Listener<Chat> listener) {
 	onChatCreated.add(listener);
     }
 
+    @Override
     public void onChatOpened(final Listener<Chat> listener) {
 	onChatOpened.add(listener);
     }
 
+    @Override
     public Chat open(final XmppURI uri) {
+	return open(uri, null);
+    }
+
+    @Override
+    public Chat open(XmppURI uri, ChatMetadata metadata) {
 	Chat chat = getChat(uri);
 	if (chat == null) {
 	    chat = createChat(uri, session.getCurrentUser());

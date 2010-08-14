@@ -4,46 +4,40 @@ import java.util.HashMap;
 
 /**
  * A simple store of data associated to a given chat
- *
+ * 
  */
 public class ChatMetadata {
-    private HashMap<Class<?>, Object> data;
+    private final HashMap<String, Object> data;
 
     public ChatMetadata() {
-	this.data = new HashMap<Class<?>, Object>();
+	this.data = new HashMap<String, Object>();
     }
-    
+
     /**
-     * Get the associated metadata object of class 'type'
+     * Get the metadata object associated to a given key
      * 
-     * @param <T>
-     *            the class (key) of the associated object
-     * @param type
-     *            the class object itself
+     * @param key
+     *            the key
      * @return the associated object if any, null otherwise
      * @see setData
      */
-    @SuppressWarnings("unchecked")
-    public <T> T getData(final Class<T> type) {
-	return (T) data.get(type);
+    public Object getData(String key) {
+	return data.get(key);
     }
-    
+
     /**
-     * Set the metadata object associated to a class type
+     * Set the metadata object associated to a given key
      * 
-     * @param <T>
-     *            the class of the object
-     * @param type
-     *            the class object itself
+     * @param key
+     *            the key
      * @param data
      *            the object you want to associate
-     * @return the previously metadata of the same class type if any
+     * @return the previously metadata object associated to that kay (if any) or
+     *         null otherwise
      * @see getData
      */
-    @SuppressWarnings("unchecked")
-    public <T> T setData(final Class<T> type, final T value) {
-	return (T) data.put(type, value);
+    public Object setData(String key, Object value) {
+	return data.put(key, value);
     }
-    
-    
+
 }

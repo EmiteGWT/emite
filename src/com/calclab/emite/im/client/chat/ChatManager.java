@@ -73,6 +73,8 @@ public interface ChatManager {
      * it just returns it. If not, it creates a new Chat object and then return
      * it.
      * 
+     * It's the same as open(uri, null);
+     * 
      * @param uri
      *            the uri we want to chat to
      * @return the Chat object
@@ -80,11 +82,46 @@ public interface ChatManager {
     public Chat open(XmppURI uri);
 
     /**
-     * Get a chat by uri. Can be null
+     * Get a chat associated to a given uri and a given metadata. If the no
+     * associated chat is found, a new one is created.
      * 
      * @param uri
-     * @return
+     *            the uri to chat with
+     * @param metadata
+     *            the metadata associated to the chat
+     * @return the created chat
      */
+    public Chat open(XmppURI uri, ChatMetadata metadata);
+
+    /**
+     * Use findChat instead.
+     * 
+     * @param uri
+     * @return the chat, can be null
+     * @see findChat
+     */
+    @Deprecated
     Chat getChat(XmppURI uri);
+
+    /**
+     * Find a previously created chat with the given characteristics (uri and
+     * metadata).
+     * 
+     * @param uri
+     *            the uri of the chat
+     * @param metaddata
+     *            the desired metadata of the chat. Can be ignored (see
+     *            ChatSelectorStrategy)
+     * @return a previously created chat if any
+     */
+    public Chat findChat(XmppURI uri, ChatMetadata metaddata);
+
+    /**
+     * Changes a the chat selection strategy of the current chat manager
+     * 
+     * @param strategy
+     *            the new strategy. can't be null
+     */
+    void setChatSelectionStrategy(ChatSelectionStrategy strategy);
 
 }
