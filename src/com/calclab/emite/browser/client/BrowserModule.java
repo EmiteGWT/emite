@@ -28,6 +28,8 @@ import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 
 /**
  * In order to remove the (bosh) configuration from the source code and to
@@ -140,9 +142,15 @@ public class BrowserModule extends AbstractModule implements EntryPoint {
     @Override
     public void onModuleLoad() {
 	Suco.install(this);
-	if (PageAssist.isMetaTrue("emite.autoConfig")) {
-	    Suco.get(AutoConfig.class);
-	}
+	DeferredCommand.addCommand(new Command() {
+	    @Override
+	    public void execute() {
+		if (PageAssist.isMetaTrue("emite.autoConfig")) {
+		    Suco.get(AutoConfig.class);
+		}
+	    }
+	});
+
     }
 
 }

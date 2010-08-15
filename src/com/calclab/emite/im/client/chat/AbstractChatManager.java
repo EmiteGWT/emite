@@ -7,7 +7,7 @@ import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
@@ -49,7 +49,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	session.addSessionStateChangedHandler(new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
-		if (session.isState(SessionState.ready)) {
+		if (event.is(SessionStates.loggedIn)) {
 		    final XmppURI currentUser = session.getCurrentUser();
 		    if (currentChatUser == null) {
 			currentChatUser = currentUser;
@@ -59,7 +59,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 			    chat.open();
 			}
 		    }
-		} else if (session.isState(SessionState.loggingOut)) {
+		} else if (event.is(SessionStates.loggingOut)) {
 		    for (Chat chat : chats) {
 			chat.close();
 		    }

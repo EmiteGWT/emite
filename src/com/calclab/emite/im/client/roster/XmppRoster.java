@@ -48,6 +48,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
     private final Session session;
 
     public XmppRoster(final Session session) {
+	GWT.log("ROSTER - created");
 	this.session = session;
 
 	session.onStateChanged(new Listener<Session>() {
@@ -158,7 +159,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
     }
 
     private void requestRoster(final XmppURI user) {
-	GWT.log("Request roster");
+	GWT.log("ROSTER - request");
 	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
 	    @Override
 	    public void onEvent(final IPacket received) {
@@ -170,7 +171,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
 			storeItem(item);
 		    }
 		    fireRosterReady(getItems());
-		    session.setReady();
+		    // session.setReady();
 		}
 	    }
 

@@ -5,7 +5,7 @@ import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
@@ -57,9 +57,9 @@ public class PingChat {
     }
 
     public void start() {
-	output.print("This is ping", Style.title);
-	output.print("Ping to: " + other, Style.info);
-	output.print("You need to open the pong example page in order to run the example", Style.important);
+	output.printHeader("This is ping", Style.title);
+	output.printHeader("Ping to: " + other, Style.info);
+	output.printHeader("You need to open the pong example page in order to run the example", Style.important);
 
 	XmppSession session = Suco.get(XmppSession.class);
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
@@ -67,8 +67,9 @@ public class PingChat {
 	session.addSessionStateChangedHandler(new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
-		if (event.is(SessionState.ready)) {
+		if (event.is(SessionStates.ready)) {
 		    Chat chat = openChat();
+		    new ChatEventsSupervisor(chat, output);
 		    sendPing(chat);
 		}
 		output.print(("SESSION : " + event.getState()), Style.session);

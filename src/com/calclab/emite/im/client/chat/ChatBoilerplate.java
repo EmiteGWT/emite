@@ -152,7 +152,8 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     protected void setChatState(final String chatState) {
-	if (properties.getState() != chatState) {
+	assert chatState != null : "Chat state can't be null";
+	if (!chatState.equals(properties.getState())) {
 	    properties.setState(chatState);
 	    eventBus.fireEvent(new ChatStateChangedEvent(chatState));
 	}

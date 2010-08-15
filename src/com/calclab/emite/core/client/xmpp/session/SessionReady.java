@@ -33,6 +33,7 @@ import com.google.gwt.core.client.GWT;
 public class SessionReady {
 
     public SessionReady(final Session session) {
+	GWT.log("SESSION READY - created");
 
 	session.onStateChanged(new Listener<Session>() {
 	    @Override

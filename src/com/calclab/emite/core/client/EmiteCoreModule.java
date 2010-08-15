@@ -33,13 +33,13 @@ import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
-import com.calclab.emite.core.client.xmpp.session.XmppSessionLogic;
 import com.calclab.emite.core.client.xmpp.session.IMSessionManager;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.SessionComponent;
 import com.calclab.emite.core.client.xmpp.session.SessionImpl;
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSessionLogic;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
@@ -83,6 +83,12 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 		return new XmppSessionLogic($(XmppConnection.class), $(SASLManager.class),
 			$(ResourceBindingManager.class), $(IMSessionManager.class));
 	    }
+
+	    @Override
+	    public void onAfterCreated(final XmppSession session) {
+		GWT.log("TRIGGER SESSION CREATED");
+		$(SessionComponent.class).init();
+	    }
 	});
 
 	register(Singleton.class, new Factory<Connection>(Connection.class) {
@@ -103,11 +109,6 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 		return session;
 	    }
 
-	    @Override
-	    public void onAfterCreated(final Session session) {
-		GWT.log("TRIGGER SESSION CREATED");
-		$(SessionComponent.class).init();
-	    }
 	}, new Factory<ResourceBindingManager>(ResourceBindingManager.class) {
 	    @Override
 	    public ResourceBindingManager create() {
@@ -133,6 +134,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 
     }
 
+    @Override
     public void onModuleLoad() {
 	XmppDateTime.useGWT();
 	Suco.install(this);

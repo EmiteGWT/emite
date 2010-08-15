@@ -26,7 +26,7 @@ public interface XmppSession {
      * <li>Loging out: (ready) - loggingOut - disconnected</li>
      * </ul>
      */
-    public static class SessionState {
+    public static class SessionStates {
 	/*
 	 * The authorization was successfull. You can NOT send stanzas using the
 	 * session (stanzas will be queued). If you need to send stanzas, use
@@ -111,11 +111,17 @@ public interface XmppSession {
     public String getSessionState();
 
     /**
-     * Answer if is logged in or not
+     * Answer if is logged in or not. Use isReady instead
      * 
      * @return true if a user is logged in
      */
+    @Deprecated
     public boolean isLoggedIn();
+
+    /**
+     * Check if the session is ready to send stanzas
+     */
+    public boolean isReady();
 
     /**
      * Check whenever or not the session is in the given state

@@ -41,18 +41,8 @@ public abstract class AbstractChat extends ChatBoilerplate {
     }
 
     @Override
-    public void close() {
-
-    }
-
-    @Override
     public boolean isReady() {
 	return ChatStates.ready.equals(getChatState());
-    }
-
-    @Override
-    public void open() {
-
     }
 
     protected void receive(final Message message) {

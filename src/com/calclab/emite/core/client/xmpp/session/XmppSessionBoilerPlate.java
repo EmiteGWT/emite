@@ -20,7 +20,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 
     public XmppSessionBoilerPlate(final EmiteEventBus eventBus) {
 	this.eventBus = eventBus;
-	state = SessionState.disconnected;
+	state = SessionStates.disconnected;
     }
 
     @Override

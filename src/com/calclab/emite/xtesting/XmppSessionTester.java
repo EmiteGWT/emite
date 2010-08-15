@@ -14,10 +14,10 @@ import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerPlate;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
@@ -71,26 +71,58 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	answer(new IQ(Type.result));
     }
 
+    private void assertContains(final IPacket expected, final ArrayList<IPacket> list) {
+	final StringBuffer buffer = new StringBuffer();
+	final boolean isContained = contains(expected, list, buffer);
+	assertTrue("Expected " + expected + " contained in " + buffer, isContained);
+    }
+
+    private void assertNotContains(final IPacket expected, final ArrayList<IPacket> list) {
+	final StringBuffer buffer = new StringBuffer();
+	final boolean isContained = contains(expected, list, buffer);
+	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
+    }
+
+    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
+	boolean isContained = false;
+	final IsPacketLike matcher = new IsPacketLike(expected);
+	for (final IPacket packet : list) {
+	    buffer.append("[").append(packet.toString()).append("]");
+	    isContained = isContained ? isContained : matcher.matches(packet, System.out);
+	}
+	return isContained;
+    }
+
+    @Override
     public XmppURI getCurrentUser() {
 	return currentUser;
     }
 
+    @Override
     public boolean isLoggedIn() {
+	return isReady();
+    }
+
+    @Override
+    public boolean isReady() {
 	return currentUser != null;
     }
 
+    @Override
     public void login(final Credentials credentials) {
 	setLoggedIn(credentials.getXmppUri());
     }
 
+    @Override
     public void logout() {
 	if (currentUser != null) {
-	    setSessionState(SessionState.loggingOut);
+	    setSessionState(SessionStates.loggingOut);
 	    currentUser = null;
-	    setSessionState(SessionState.disconnected);
+	    setSessionState(SessionStates.disconnected);
 	}
     }
 
+    @Override
     public StreamSettings pause() {
 	return null;
     }
@@ -118,9 +150,11 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
     }
 
+    @Override
     public void resume(final XmppURI userURI, final StreamSettings settings) {
     }
 
+    @Override
     public void send(final IPacket packet) {
 	sent.add(packet);
     }
@@ -141,11 +175,12 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
     public void setLoggedIn(final XmppURI userURI) {
 	currentUser = userURI;
-	setSessionState(SessionState.loggedIn);
+	setSessionState(SessionStates.loggedIn);
     }
 
+    @Override
     public void setReady() {
-	setSessionState(SessionState.ready);
+	setSessionState(SessionStates.ready);
     }
 
     public IQResponseHandler verifyIQSent(final IPacket iq) {
@@ -177,28 +212,6 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
     public void verifySentNothing() {
 	assertEquals("number of sent stanzas", 0, sent.size());
-    }
-
-    private void assertContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertTrue("Expected " + expected + " contained in " + buffer, isContained);
-    }
-
-    private void assertNotContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
-    }
-
-    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
-	boolean isContained = false;
-	final IsPacketLike matcher = new IsPacketLike(expected);
-	for (final IPacket packet : list) {
-	    buffer.append("[").append(packet.toString()).append("]");
-	    isContained = isContained ? isContained : matcher.matches(packet, System.out);
-	}
-	return isContained;
     }
 
 }

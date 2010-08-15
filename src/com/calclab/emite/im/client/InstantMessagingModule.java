@@ -39,6 +39,7 @@ import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 
 /**
  * <p>
@@ -68,6 +69,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 
     @Override
     public void onInstall() {
+	GWT.log("IM - Remove session ready component");
 	container.removeProvider(SessionReady.class);
 
 	register(SessionComponent.class, new Factory<Roster>(Roster.class) {
@@ -101,6 +103,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 
     }
 
+    @Override
     public void onModuleLoad() {
 	Suco.install(this);
     }

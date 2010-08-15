@@ -93,6 +93,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldCloseChatWhenLoggedOut() {
 	final Chat chat = manager.open(uri("name@domain/resouce"));
+	assertEquals(Chat.State.ready, chat.getState());
 	final MockedListener<State> listener = new MockedListener<State>();
 	chat.onStateChanged(listener);
 	session.logout();

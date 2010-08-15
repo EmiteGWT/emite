@@ -11,25 +11,43 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongChatDis
     private final Button login;
     private final Button logout;
     private final VerticalPanel panel;
+    private final VerticalPanel header;
+    private final Button clear;
 
     public PingPongChatWidget() {
+	header = new VerticalPanel();
+	add(header);
 	login = new Button("Login");
 	logout = new Button("Logout");
+	clear = new Button("Clear");
 	FlowPanel buttons = new FlowPanel();
 	buttons.add(login);
 	buttons.add(logout);
+	buttons.add(clear);
 	add(buttons);
 	panel = new VerticalPanel();
 	add(panel);
 
     }
 
+    @Override
+    public void addClearClickHandler(ClickHandler handler) {
+	clear.addClickHandler(handler);
+    }
+
+    @Override
     public void addLoginClickHandler(ClickHandler handler) {
 	login.addClickHandler(handler);
     }
 
+    @Override
     public void addLogoutClickHandler(ClickHandler handler) {
 	logout.addClickHandler(handler);
+    }
+
+    @Override
+    public void clearOutput() {
+	panel.clear();
     }
 
     @Override
@@ -37,5 +55,13 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongChatDis
 	final Label label = new Label(text);
 	label.addStyleName(style);
 	panel.insert(label, 0);
+    }
+
+    @Override
+    public void printHeader(String text, String style) {
+	final Label label = new Label(text);
+	label.addStyleName(style);
+	header.add(label);
+
     }
 }

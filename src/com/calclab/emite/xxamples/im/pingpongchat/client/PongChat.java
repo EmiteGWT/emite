@@ -40,8 +40,8 @@ public class PongChat {
     }
 
     public void start() {
-	output.print("This is pong chat", Style.title);
-	output.print("You need to open the ping chat example page in order to run the example", Style.important);
+	output.printHeader("This is pong chat", Style.title);
+	output.printHeader("You need to open the ping chat example page in order to run the example", Style.important);
 
 	XmppSession session = Suco.get(XmppSession.class);
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
@@ -57,7 +57,9 @@ public class PongChat {
 	    @Override
 	    public void onChatChanged(ChatChangedEvent event) {
 		if (event.is(ChangeEventTypes.created)) {
-		    listenToChat(event.getChat());
+		    Chat chat = event.getChat();
+		    new ChatEventsSupervisor(chat, output);
+		    listenToChat(chat);
 		}
 	    }
 	});

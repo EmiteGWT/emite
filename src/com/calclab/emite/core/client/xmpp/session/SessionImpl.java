@@ -48,6 +48,15 @@ public class SessionImpl implements Session {
 	this.delegate = delegate;
     }
 
+    private State convertState(final String sessionState) {
+	try {
+	    return State.valueOf(sessionState);
+	} catch (final Exception e) {
+	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
+	    return State.unknown;
+	}
+    }
+
     @Override
     public XmppURI getCurrentUser() {
 	return delegate.getCurrentUser();
@@ -60,7 +69,7 @@ public class SessionImpl implements Session {
 
     @Override
     public boolean isLoggedIn() {
-	return delegate.isLoggedIn();
+	return delegate.isReady();
     }
 
     @Override
@@ -146,15 +155,6 @@ public class SessionImpl implements Session {
     @Override
     public void setReady() {
 	delegate.setReady();
-    }
-
-    private State convertState(final String sessionState) {
-	try {
-	    return State.valueOf(sessionState);
-	} catch (final Exception e) {
-	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
-	    return State.unknown;
-	}
     }
 
 }

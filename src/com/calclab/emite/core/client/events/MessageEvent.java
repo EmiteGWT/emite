@@ -13,6 +13,11 @@ public abstract class MessageEvent extends GwtEvent<MessageHandler> {
     }
 
     @Override
+    protected void dispatch(final MessageHandler handler) {
+	handler.onMessage(this);
+    }
+
+    @Override
     public Type<MessageHandler> getAssociatedType() {
 	return type;
     }
@@ -22,8 +27,8 @@ public abstract class MessageEvent extends GwtEvent<MessageHandler> {
     }
 
     @Override
-    protected void dispatch(final MessageHandler handler) {
-	handler.onMessage(this);
+    public String toDebugString() {
+	return super.toDebugString() + message;
     }
 
 }

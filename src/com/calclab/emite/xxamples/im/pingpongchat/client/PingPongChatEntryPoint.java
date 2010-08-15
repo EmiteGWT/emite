@@ -23,7 +23,7 @@ public class PingPongChatEntryPoint implements EntryPoint {
 	} else if ("pong".equals(clientType)) {
 	    new PongChat(output).start();
 	} else {
-	    output.print("You need to configure the client.type meta tag!!", PingPongChatDisplay.Style.error);
+	    output.printHeader("You need to configure the client.type meta tag!!", PingPongChatDisplay.Style.error);
 	}
     }
 

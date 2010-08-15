@@ -112,6 +112,9 @@ public class XmppURI {
 	if (other == null) {
 	    return false;
 	}
+	if (this == other) {
+	    return true;
+	}
 	if (node == null && other.node != null) {
 	    return false;
 	}

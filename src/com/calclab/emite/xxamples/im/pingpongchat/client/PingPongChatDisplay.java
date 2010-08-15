@@ -15,10 +15,16 @@ public interface PingPongChatDisplay {
 	public static final String stanzaSent = "stanzaSent";
     }
 
+    void addClearClickHandler(ClickHandler handler);
+
     public void addLoginClickHandler(ClickHandler handler);
 
     public void addLogoutClickHandler(ClickHandler handler);
 
+    void clearOutput();
+
     public void print(String message, String style);
+
+    void printHeader(String text, String style);
 
 }

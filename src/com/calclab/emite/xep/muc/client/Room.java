@@ -80,10 +80,6 @@ public class Room extends RoomBoilerplate {
 	    }
 	});
 
-	final HistoryOptions historyOptions = (HistoryOptions) properties.getData(HistoryOptions.KEY);
-	if (historyOptions != null) {
-	    session.send(createEnterPresence(historyOptions));
-	}
     }
 
     /**
@@ -173,6 +169,13 @@ public class Room extends RoomBoilerplate {
     protected boolean isNewRoom(final IPacket xtension) {
 	final String code = xtension.getFirstChild("status").getAttribute("code");
 	return code != null && code.equals("201");
+    }
+
+    @Override
+    public void open() {
+	final HistoryOptions historyOptions = (HistoryOptions) properties.getData(HistoryOptions.KEY);
+	session.send(createEnterPresence(historyOptions));
+
     }
 
     @Override

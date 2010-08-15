@@ -19,6 +19,11 @@ public class ConnectionResponseEvent extends GwtEvent<ConnectionResponseHandler>
     }
 
     @Override
+    protected void dispatch(final ConnectionResponseHandler handler) {
+	handler.onResponse(this);
+    }
+
+    @Override
     public Type<ConnectionResponseHandler> getAssociatedType() {
 	return TYPE;
     }
@@ -28,8 +33,8 @@ public class ConnectionResponseEvent extends GwtEvent<ConnectionResponseHandler>
     }
 
     @Override
-    protected void dispatch(final ConnectionResponseHandler handler) {
-	handler.onResponse(this);
+    public String toDebugString() {
+	return super.toDebugString() + response;
     }
 
 }

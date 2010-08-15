@@ -13,7 +13,12 @@ public class DefaultEmiteEventBus extends HandlerManager implements EmiteEventBu
     @Override
     public void fireEvent(final GwtEvent<?> event) {
 	GWT.log(event.toDebugString());
-	super.fireEvent(event);
+	DefaultEmiteEventBus.super.fireEvent(event);
+	// DeferredCommand.addCommand(new Command() {
+	// @Override
+	// public void execute() {
+	// }
+	// });
     }
 
 }

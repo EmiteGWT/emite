@@ -80,7 +80,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 			iqManager.handle(stanza);
 		    }
 		} else if (credentials != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
-		    setSessionState(SessionState.connecting);
+		    setSessionState(SessionStates.connecting);
 		    saslManager.sendAuthorizationRequest(credentials);
 		    credentials = null;
 		}
@@ -92,9 +92,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    public void onStateChanged(final ConnectionStateEvent event) {
 		if (event.is(ConnectionState.error)) {
 		    GWT.log("Connection error: " + event.getDescription());
-		    setSessionState(SessionState.error);
+		    setSessionState(SessionStates.error);
 		} else if (event.is(ConnectionState.disconnected)) {
-		    setSessionState(SessionState.disconnected);
+		    setSessionState(SessionStates.disconnected);
 		}
 	    }
 	});
@@ -104,11 +104,11 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		if (event.isSucceed()) {
-		    setSessionState(SessionState.authorized);
+		    setSessionState(SessionStates.authorized);
 		    connection.restartStream();
 		    bindingManager.bindResource(event.getXmppUri().getResource());
 		} else {
-		    setSessionState(SessionState.notAuthorized);
+		    setSessionState(SessionStates.notAuthorized);
 		    disconnect();
 		}
 	    }
@@ -118,7 +118,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	ResourceBindResultEvent.bind(eventBus, new ResourceBindResultHandler() {
 	    @Override
 	    public void onBinded(final ResourceBindResultEvent event) {
-		setSessionState(SessionState.binded);
+		setSessionState(SessionStates.binded);
 		iMSessionManager.requestSession(event.getXmppUri());
 	    }
 	});
@@ -151,9 +151,14 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     }
 
     @Override
+    public boolean isReady() {
+	return userURI != null;
+    }
+
+    @Override
     public void login(final Credentials credentials) {
-	if (getSessionState() == XmppSession.SessionState.disconnected) {
-	    setSessionState(XmppSession.SessionState.connecting);
+	if (getSessionState() == XmppSession.SessionStates.disconnected) {
+	    setSessionState(XmppSession.SessionStates.connecting);
 	    connection.connect();
 	    this.credentials = credentials;
 	}
@@ -162,14 +167,14 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
     @Override
     public void logout() {
-	if (getSessionState() != XmppSession.SessionState.disconnected && userURI != null) {
+	if (getSessionState() != XmppSession.SessionStates.disconnected && userURI != null) {
 	    // TODO : To be reviewed, preventing unvailable presences to be sent
 	    // so that only the 'terminate' is sent
 	    // Unvailabel are handled automatically by the server
-	    // setState(State.loggingOut);
+	    setSessionState(SessionStates.loggingOut);
 	    userURI = null;
 	    connection.disconnect();
-	    setSessionState(XmppSession.SessionState.disconnected);
+	    setSessionState(XmppSession.SessionStates.disconnected);
 	}
     }
 
@@ -181,17 +186,17 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     @Override
     public void resume(final XmppURI userURI, final StreamSettings settings) {
 	this.userURI = userURI;
-	setSessionState(XmppSession.SessionState.resume);
+	setSessionState(XmppSession.SessionStates.resume);
 	connection.resume(settings);
-	setSessionState(XmppSession.SessionState.ready);
+	setSessionState(XmppSession.SessionStates.ready);
     }
 
     @Override
     public void send(final IPacket packet) {
 	// Added a condition to check the connection is not retrying...
 	if (!connection.hasErrors()
-		&& (getSessionState() == XmppSession.SessionState.loggedIn
-			|| getSessionState() == XmppSession.SessionState.ready || getSessionState() == XmppSession.SessionState.loggingOut)) {
+		&& (getSessionState() == XmppSession.SessionStates.loggedIn
+			|| getSessionState() == XmppSession.SessionStates.ready || getSessionState() == XmppSession.SessionStates.loggingOut)) {
 	    packet.setAttribute("from", userURI.toString());
 	    connection.send(packet);
 	} else {
@@ -218,19 +223,19 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     private void setLoggedIn(final XmppURI userURI) {
 	this.userURI = userURI;
 	GWT.log("SESSION LOGGED IN");
-	setSessionState(XmppSession.SessionState.loggedIn);
+	setSessionState(XmppSession.SessionStates.loggedIn);
     }
 
     @Override
     public void setReady() {
 	if (isLoggedIn()) {
-	    setSessionState(XmppSession.SessionState.ready);
+	    setSessionState(XmppSession.SessionStates.ready);
 	}
     }
 
     @Override
     protected void setSessionState(final String newState) {
-	if (newState == XmppSession.SessionState.ready) {
+	if (newState == XmppSession.SessionStates.ready) {
 	    sendQueuedStanzas();
 	}
 	super.setSessionState(newState);

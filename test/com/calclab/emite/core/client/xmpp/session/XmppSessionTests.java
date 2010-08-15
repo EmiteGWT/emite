@@ -25,7 +25,7 @@ import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppConnectionTester;
@@ -88,8 +88,8 @@ public class XmppSessionTests {
     public void shouldEventStateChanges() {
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
 	session.addSessionStateChangedHandler(handler, false);
-	session.setSessionState(SessionState.ready);
-	assertSame(SessionState.ready, handler.getState());
+	session.setSessionState(SessionStates.ready);
+	assertSame(SessionStates.ready, handler.getState());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class XmppSessionTests {
 	eventBus.fireEvent(new AuthorizationResultEvent(new Credentials(uri("node@domain"), "pass",
 		Credentials.ENCODING_NONE)));
 
-	assertEquals(SessionState.authorized, session.getSessionState());
+	assertEquals(SessionStates.authorized, session.getSessionState());
 	assertTrue(connection.isStreamRestarted());
 	verify(bindingManager).bindResource(anyString());
     }
@@ -114,7 +114,7 @@ public class XmppSessionTests {
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
 	session.addSessionStateChangedHandler(handler, false);
 	eventBus.fireEvent(new SessionRequestResultEvent(uri("me@domain")));
-	assertSame(SessionState.loggedIn, handler.getState());
+	assertSame(SessionStates.loggedIn, handler.getState());
     }
 
     @Test

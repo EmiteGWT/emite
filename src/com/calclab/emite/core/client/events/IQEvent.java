@@ -18,6 +18,11 @@ public class IQEvent extends GwtEvent<IQHandler> {
     }
 
     @Override
+    protected void dispatch(final IQHandler handler) {
+	handler.onPacket(this);
+    }
+
+    @Override
     public Type<IQHandler> getAssociatedType() {
 	return getType();
     }
@@ -27,8 +32,8 @@ public class IQEvent extends GwtEvent<IQHandler> {
     }
 
     @Override
-    protected void dispatch(final IQHandler handler) {
-	handler.onPacket(this);
+    public String toDebugString() {
+	return super.toDebugString() + iq;
     }
 
 }
