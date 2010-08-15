@@ -114,12 +114,24 @@ public interface Chat {
     public HandlerRegistration addMessageSentHandler(MessageHandler handler);
 
     /**
+     * Close a chat. This methos is normally called by the chat manager
+     */
+    public void close();
+
+    /**
      * Get the event bus of this chat. Used to fire event to listeners of the
      * chat
      * 
      * @return
      */
     public EmiteEventBus getChatEventBus();
+
+    /**
+     * Get the current chat's state
+     * 
+     * @return
+     */
+    public String getChatState();
 
     /**
      * Get the associated object of class 'type'
@@ -148,7 +160,7 @@ public interface Chat {
      * 
      * @return
      */
-    // TODO: deprecate
+    @Deprecated
     public State getState();
 
     /**
@@ -178,6 +190,7 @@ public interface Chat {
      * @param listener
      *            the listener
      */
+    // TODO: deprecate
     public void onBeforeSend(Listener<Message> listener);
 
     /**
@@ -185,6 +198,7 @@ public interface Chat {
      * 
      * @param messageInterceptor
      */
+    // TODO: deprecate
     public void onMessageReceived(Listener<Message> listener);
 
     /**
@@ -193,6 +207,7 @@ public interface Chat {
      * @param listener
      *            the listener to the events
      */
+    // TODO: deprecate
     public void onMessageSent(Listener<Message> listener);
 
     /**
@@ -201,10 +216,16 @@ public interface Chat {
      * 
      * @param listener
      */
+    // TODO: deprecate
     public void onStateChanged(Listener<State> listener);
 
     /**
-     * To make this chat send a message
+     * Open a chat. This method is normally called by the chat manager
+     */
+    public void open();
+
+    /**
+     * Send a message to the uri of this chat
      * 
      * @param message
      *            the message

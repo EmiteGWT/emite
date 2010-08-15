@@ -28,6 +28,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.xep.disco.client.DiscoveryManager.DiscoveryManagerResponse;
 import com.calclab.emite.xep.disco.client.Item;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 

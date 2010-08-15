@@ -1,55 +1,28 @@
 package com.calclab.emite.im.client.chat;
 
-import java.util.Collection;
-import java.util.HashSet;
-
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeAction;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.calclab.suco.client.events.Listener;
-import com.google.gwt.event.shared.HandlerRegistration;
 
-public abstract class AbstractChatManager implements ChatManager {
-    private final HashSet<Chat> chats;
-    protected final XmppSession session;
-    protected ChatSelectionStrategy strategy;
+public abstract class AbstractChatManager extends ChatManagerBoilerplate {
+    private XmppURI currentChatUser;
 
     public AbstractChatManager(final XmppSession session, final ChatSelectionStrategy strategy) {
-	this.session = session;
-	this.strategy = strategy;
-	chats = new HashSet<Chat>();
-
-	session.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		final Message message = event.getMessage();
-		final ChatProperties properties = strategy.extractChatProperties(message);
-		if (properties != null) {
-		    Chat chat = getChat(properties, false);
-		    if (chat == null && properties.shouldCreateNewChat()) {
-			// we need to create a chat for this incoming message
-			properties.setInitiatorUri(properties.getUri());
-			chat = addNewChat(properties);
-			chat.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
-		    }
-		}
-	    }
-	});
+	super(session, strategy);
+	forwardMessagesToChats();
+	controlSessionStatus();
     }
 
     protected void addChat(final Chat chat) {
 	chats.add(chat);
-    }
-
-    @Override
-    public HandlerRegistration addChatChangedHandler(final ChatChangedHandler handler) {
-	return ChatChangedEvent.bind(session.getEventBus(), handler);
     }
 
     /**
@@ -66,8 +39,34 @@ public abstract class AbstractChatManager implements ChatManager {
 
     @Override
     public void close(final Chat chat) {
+	chat.close();
 	getChats().remove(chat);
 	fireChatClosed(chat);
+    }
+
+    private void controlSessionStatus() {
+	// Control chat state when the user logout and login again
+	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(final StateChangedEvent event) {
+		if (session.isState(SessionState.ready)) {
+		    final XmppURI currentUser = session.getCurrentUser();
+		    if (currentChatUser == null) {
+			currentChatUser = currentUser;
+		    }
+		    if (currentUser.equalsNoResource(currentChatUser)) {
+			for (Chat chat : chats) {
+			    chat.open();
+			}
+		    }
+		} else if (session.isState(SessionState.loggingOut)) {
+		    for (Chat chat : chats) {
+			chat.close();
+		    }
+		}
+	    }
+	}, true);
+
     }
 
     /**
@@ -80,15 +79,36 @@ public abstract class AbstractChatManager implements ChatManager {
     protected abstract Chat createChat(ChatProperties properties);
 
     protected void fireChatClosed(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeAction.closed, chat));
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
     }
 
     protected void fireChatCreated(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeAction.created, chat));
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
     }
 
     protected void fireChatOpened(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeAction.opened, chat));
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
+    }
+
+    private void forwardMessagesToChats() {
+	session.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(final MessageEvent event) {
+		final Message message = event.getMessage();
+		final ChatProperties properties = strategy.extractChatProperties(message);
+		if (properties != null) {
+		    Chat chat = getChat(properties, false);
+		    if (chat == null && properties.shouldCreateNewChat()) {
+			// we need to create a chat for this incoming message
+			properties.setInitiatorUri(properties.getUri());
+			chat = addNewChat(properties);
+		    }
+		    if (chat != null) {
+			chat.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
+		    }
+		}
+	    }
+	});
     }
 
     @Override
@@ -104,60 +124,6 @@ public abstract class AbstractChatManager implements ChatManager {
     }
 
     @Override
-    public Chat getChat(final XmppURI uri) {
-	return getChat(new ChatProperties(uri), false);
-    }
-
-    @Override
-    public Collection<? extends Chat> getChats() {
-	return chats;
-    }
-
-    @Override
-    // TODO: deprecate
-    public void onChatClosed(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isClosed()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
-    }
-
-    @Override
-    // TODO: deprecate
-    public void onChatCreated(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isCreated()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
-    }
-
-    @Override
-    // TODO: deprecate
-    public void onChatOpened(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isOpened()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
-    }
-
-    @Override
-    public Chat open(final XmppURI uri) {
-	return openChat(new ChatProperties(uri), true);
-    }
-
-    @Override
     public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
 	Chat chat = getChat(properties, false);
 	if (chat == null && createIfNotFound) {
@@ -168,9 +134,4 @@ public abstract class AbstractChatManager implements ChatManager {
 	return chat;
     }
 
-    @Override
-    public void setChatSelectionStrategy(final ChatSelectionStrategy strategy) {
-	assert strategy != null : "The ChatSelectionStrategy can't be null!";
-	this.strategy = strategy;
-    }
 }

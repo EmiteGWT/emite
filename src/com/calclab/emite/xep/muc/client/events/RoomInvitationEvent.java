@@ -1,6 +1,7 @@
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
 
 import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.xep.muc.client.RoomInvitation;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 

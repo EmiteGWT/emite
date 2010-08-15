@@ -1,7 +1,7 @@
 package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
  * A simple chat provider strategy. It ignores the metadata and the resource of
@@ -11,9 +11,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 public class PairChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
-    public ChatProperties extractChatProperties(final Message message) {
-	ChatProperties properties = new ChatProperties(message.getFrom());
-	boolean messageHasBody = message.getFirstChild("body") != NoPacket.INSTANCE;
+    public ChatProperties extractChatProperties(final BasicStanza stanza) {
+	ChatProperties properties = new ChatProperties(stanza.getFrom());
+	boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
 	properties.setShouldCreateNewChat(messageHasBody);
 	return properties;
     }

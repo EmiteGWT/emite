@@ -1,6 +1,6 @@
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 
 /**
  * An interchangeable strategy to retrieve or create new chats. You can replace
@@ -16,14 +16,14 @@ public interface ChatSelectionStrategy {
      * Extract the properties of the target chat of this packet. This properties
      * are used to find a chat or decide whenever or not create a new one
      * 
-     * @param packet
-     *            the packet to extract the properties from (usually a message,
+     * @param stanza
+     *            the stanza to extract the properties from (usually a message,
      *            but can be presence in rooms)
      * @return the properties of the ideal receiver of this message (stanza). If
      *         null is return, the ChatManager assume this message has no
      *         receiver
      */
-    ChatProperties extractChatProperties(Message message);
+    ChatProperties extractChatProperties(BasicStanza stanza);
 
     /**
      * This is the used to locate a chat in a pool of chats.

@@ -39,12 +39,14 @@ public class PairChat extends AbstractChat {
     private static final String PAIRCHAT_THREAD_PROP = "pairchat.thred";
     private final String id;
 
-    public PairChat(final XmppSession session, final ChatProperties properties) {
-	this(session, properties, new PairChatSelectionStrategy());
-    }
-
-    public PairChat(final XmppSession session, final ChatProperties properties, ChatSelectionStrategy strategy) {
-	super(session, properties, strategy);
+    /**
+     * Create a new pair chat. Pair chats are created by PairChatManager
+     * 
+     * @param session
+     * @param properties
+     */
+    PairChat(final XmppSession session, final ChatProperties properties) {
+	super(session, properties);
 	id = generateChatID();
     }
 

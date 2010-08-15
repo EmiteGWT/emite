@@ -36,9 +36,10 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -101,9 +102,7 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
 
     @Override
     protected Chat createChat(final ChatProperties properties) {
-	// rooms are locked by default
-	properties.setState(ChatStates.locked);
-	return new Room(session, properties, strategy);
+	return new Room(session, properties);
     }
 
     @Override

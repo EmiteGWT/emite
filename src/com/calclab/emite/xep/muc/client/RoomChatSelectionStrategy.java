@@ -1,6 +1,6 @@
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
@@ -8,9 +8,9 @@ import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
-    public ChatProperties extractChatProperties(Message message) {
-	ChatProperties properties = new ChatProperties(message.getFrom().getJID());
-	boolean isGroupChatMessage = message.getType() == Message.Type.groupchat;
+    public ChatProperties extractChatProperties(BasicStanza stanza) {
+	ChatProperties properties = new ChatProperties(stanza.getFrom().getJID());
+	boolean isGroupChatMessage = stanza.getAttribute("type").equals("groupchat");
 	properties.setShouldCreateNewChat(isGroupChatMessage);
 	return properties;
     }
