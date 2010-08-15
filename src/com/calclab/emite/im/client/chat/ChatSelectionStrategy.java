@@ -1,8 +1,6 @@
 package com.calclab.emite.im.client.chat;
 
-import java.util.Collection;
-
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.packet.IPacket;
 
 /**
  * An interchangeable strategy to retrieve or create new chats. You can replace
@@ -13,17 +11,32 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  * 
  */
 public interface ChatSelectionStrategy {
+
     /**
-     * Find a chat with the given characteristics (uri and metadata) from a Chat
-     * collection
+     * Extract the properties of the target chat of this packet. This properties
+     * are used to find a chat or decide whenever or not create a new one
      * 
-     * @param uri
-     *            the uri of the chat to be found
-     * @param metadata
-     *            the metadata of the chat to be found
-     * @return the previously created chat or null if no one matches the
-     *         requirements
+     * @param packet
+     *            the packet to extract the properties from (usually a message,
+     *            but can be presence in rooms)
+     * @return the properties of the ideal receiver of this message (stanza)
      */
-    Chat find(XmppURI uri, ChatMetadata metadata, Collection<? extends Chat> chats);
+    ChatProperties extractChatProperties(IPacket packet);
+
+    /**
+     * This is the used to locate a chat in a pool of chats.
+     * 
+     * Should return true if the given chat correspond (or is asignable) to the
+     * current properties. This NOT mean the properties should be same between
+     * both. Different "strategies" could be implemented (ie. only comparing the
+     * uri)
+     * 
+     * @param chat
+     *            the chat to examined
+     * @param properties
+     *            the properties
+     * @return true if the chat matches the properties, else otherwise
+     */
+    boolean isAssignable(Chat chat, ChatProperties properties);
 
 }

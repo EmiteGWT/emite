@@ -1,9 +1,7 @@
 package com.calclab.emite.xxamples.core.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.Suco;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -28,15 +26,9 @@ public class PingPongEntryPoint implements EntryPoint {
     }
 
     private VerticalPanel panel;
-    private final int pings;
-    private final int pongs;
-    private final XmppSession session;
     private XmppURI other;
 
     public PingPongEntryPoint() {
-	pings = 0;
-	pongs = 0;
-	session = Suco.get(XmppSession.class);
     }
 
     @Override

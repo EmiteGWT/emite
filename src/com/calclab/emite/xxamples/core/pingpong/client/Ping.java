@@ -49,7 +49,7 @@ public class Ping {
 		}
 		output.print(("SESSION : " + event.getState()), Output.Style.session);
 	    }
-	});
+	}, true);
 
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override

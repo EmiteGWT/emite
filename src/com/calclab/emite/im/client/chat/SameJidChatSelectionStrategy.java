@@ -12,7 +12,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 public class SameJidChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
-    public Chat find(XmppURI uri, ChatMetadata metadata, Collection<? extends Chat> chats) {
+    public Chat find(XmppURI uri, ChatProperties metadata, Collection<? extends Chat> chats) {
 	for (final Chat chat : chats) {
 	    final XmppURI chatTargetURI = chat.getURI();
 	    if (uri.equalsNoResource(chatTargetURI)) {

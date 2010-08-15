@@ -21,9 +21,13 @@
  */
 package com.calclab.emite.im.client.chat;
 
+import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * Defines a xmpp chat.
@@ -33,13 +37,89 @@ import com.calclab.suco.client.events.Listener;
  * @see PairChat, Room
  */
 public interface Chat {
-
     /**
      * Possible conversation states.
      */
-    public static enum State {
-	ready, locked
+    public static class ChatStates {
+	/**
+	 * the chat is ready to be used
+	 */
+	public static final String ready = "ready";
+	/**
+	 * the chat is opened but can't be used (maybe waiting for a server
+	 * confirmation or because the session is closed or the connection is
+	 * lost)
+	 */
+	public static final String locked = "locked";
     }
+
+    /**
+     * Possible conversation states. Enum can't be extended so, this won't be
+     * used anymore
+     */
+    // TODO: deprecate
+    public static enum State {
+	ready, locked,
+	/**
+	 * Because the new extensible chat state system (using strings instead
+	 * of enums) this is used when a unknown (not in this enum) state is set
+	 */
+	unknown
+    }
+
+    /**
+     * Add a handler to know when a message is received. It allows the listener
+     * to modify the message just before the receive event (a kind of
+     * interceptor in aop programming)
+     * 
+     * @param handler
+     *            the message handler
+     */
+    public HandlerRegistration addBeforeReceiveMessageHandler(MessageHandler handler);
+
+    /**
+     * A a handler to know when a message is going to be sent. It allows the
+     * listener to modify the message just before send it (a kind of interceptor
+     * in aop programming)
+     * 
+     * @param handler
+     *            the message handeler
+     */
+    public HandlerRegistration addBeforeSendMessageHandler(MessageHandler handler);
+
+    /**
+     * Add a handler to know whenever a chat state property changed
+     * 
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addChatStateChangedHandler(StateChangedHandler handler);
+
+    /**
+     * Add a handler to know when a message is received in this chat
+     * 
+     * @param handler
+     * @return a handler registration object to detach the handler
+     */
+    public HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
+
+    /**
+     * Add a handler to know when this chat has sent a message
+     * 
+     * @param handler
+     *            the message handler
+     * @return a handler registration object to detach the handler
+     * 
+     */
+    public HandlerRegistration addMessageSentHandler(MessageHandler handler);
+
+    /**
+     * Get the event bus of this chat. Used to fire event to listeners of the
+     * chat
+     * 
+     * @return
+     */
+    public EmiteEventBus getChatEventBus();
 
     /**
      * Get the associated object of class 'type'
@@ -51,10 +131,24 @@ public interface Chat {
      * @return the associated object if any, null otherwise
      * @see setData
      */
+    @Deprecated
     public <T> T getData(Class<T> type);
 
     public String getID();
 
+    /**
+     * Get the chat properties of the chat
+     * 
+     * @return the chat properties
+     */
+    public ChatProperties getProperties();
+
+    /**
+     * Use getChatState
+     * 
+     * @return
+     */
+    // TODO: deprecate
     public State getState();
 
     /**
@@ -131,6 +225,6 @@ public interface Chat {
      * @return the object associated
      * @see getData
      */
+    @Deprecated
     public <T> T setData(Class<T> type, T data);
-
 }

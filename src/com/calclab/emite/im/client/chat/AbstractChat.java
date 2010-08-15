@@ -21,102 +21,169 @@
  */
 package com.calclab.emite.im.client.chat;
 
-import java.util.HashMap;
-
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Event;
+import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
+import com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent;
+import com.calclab.emite.im.client.chat.events.ChatStateChangedEvent;
+import com.calclab.emite.im.client.chat.events.MessageSentEvent;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class AbstractChat implements Chat {
+    protected final XmppSession session;
+    protected final ChatProperties properties;
+    private final DefaultEmiteEventBus eventBus;
 
-    protected final XmppURI uri;
-    protected State state;
-    private final Event<State> onStateChanged;
-    private final Event<Message> onBeforeReceive;
-    private final Session session;
-    private final HashMap<Class<?>, Object> data;
-    private final Event<Message> onMessageSent;
-    private final Event<Message> onMessageReceived;
-    private final Event<Message> onBeforeSend;
-    private final XmppURI starter;
-
-    public AbstractChat(final Session session, final XmppURI uri, final XmppURI starter) {
+    public AbstractChat(final XmppSession session, final ChatProperties properties) {
 	this.session = session;
-	this.uri = uri;
-	this.starter = starter;
-	this.data = new HashMap<Class<?>, Object>();
-	this.state = Chat.State.locked;
-	this.onStateChanged = new Event<State>("chat:onStateChanged");
-	this.onMessageSent = new Event<Message>("chat:onMessageSent");
-	this.onMessageReceived = new Event<Message>("chat:onMessageReceived");
-	this.onBeforeSend = new Event<Message>("chat:onBeforeSend");
-	this.onBeforeReceive = new Event<Message>("chat:onBeforeReceive");
+	this.properties = properties;
+	eventBus = new DefaultEmiteEventBus();
+	if (properties.getState() == null) {
+	    properties.setState(ChatStates.locked);
+	}
+    }
+
+    @Override
+    public HandlerRegistration addBeforeReceiveMessageHandler(final MessageHandler handler) {
+	return BeforeReceiveMessageEvent.bind(eventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addBeforeSendMessageHandler(final MessageHandler handler) {
+	return BeforeSendMessageEvent.bind(eventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addChatStateChangedHandler(final StateChangedHandler handler) {
+	return ChatStateChangedEvent.bind(eventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addMessageReceivedHandler(final MessageHandler handler) {
+	return MessageReceivedEvent.bind(eventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addMessageSentHandler(final MessageHandler handler) {
+	return MessageSentEvent.bind(eventBus, handler);
+    }
+
+    @Override
+    public EmiteEventBus getChatEventBus() {
+	return eventBus;
     }
 
     @SuppressWarnings("unchecked")
     public <T> T getData(final Class<T> type) {
-	return (T) data.get(type);
+	return (T) properties.getData(type.toString());
+    }
+
+    @Override
+    public ChatProperties getProperties() {
+	return properties;
     }
 
     public State getState() {
-	return state;
+	final String state = properties.getState();
+	try {
+	    return State.valueOf(state);
+	} catch (final Exception e) {
+	    return State.unknown;
+	}
     }
 
     public XmppURI getURI() {
-	return uri;
+	return properties.getUri();
     }
 
     public boolean isInitiatedByMe() {
-	return starter.equals(session.getCurrentUser());
+	return session.getCurrentUser() != null && session.getCurrentUser().equals(properties.getInitiatorUri());
     }
 
     public void onBeforeReceive(final Listener<Message> listener) {
-	onBeforeReceive.add(listener);
+	addBeforeReceiveMessageHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(final MessageEvent event) {
+		listener.onEvent(event.getMessage());
+	    }
+	});
     }
 
     public void onBeforeSend(final Listener<Message> listener) {
-	onBeforeSend.add(listener);
+	addBeforeSendMessageHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(final MessageEvent event) {
+		listener.onEvent(event.getMessage());
+	    }
+	});
     }
 
     public void onMessageReceived(final Listener<Message> listener) {
-	onMessageReceived.add(listener);
+	addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(final MessageEvent event) {
+		listener.onEvent(event.getMessage());
+	    }
+	});
     }
 
     public void onMessageSent(final Listener<Message> listener) {
-	onMessageSent.add(listener);
+	addMessageSentHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(final MessageEvent event) {
+		listener.onEvent(event.getMessage());
+	    }
+	});
     }
 
     public void onStateChanged(final Listener<State> listener) {
-	onStateChanged.add(listener);
+	addChatStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(final StateChangedEvent event) {
+		listener.onEvent(getState());
+	    }
+	});
     }
 
     public void send(final Message message) {
 	message.setFrom(session.getCurrentUser());
-	onBeforeSend.fire(message);
+	eventBus.fireEvent(new BeforeSendMessageEvent(message));
 	session.send(message);
-	onMessageSent.fire(message);
+	eventBus.fireEvent(new MessageSentEvent(message));
     }
 
     @SuppressWarnings("unchecked")
     public <T> T setData(final Class<T> type, final T value) {
-	return (T) data.put(type, value);
+	return (T) properties.setData(type.toString(), value);
     }
 
-    protected void fireBeforeReceive(Message message) {
-	onBeforeReceive.fire(message);
+    protected void fireBeforeReceive(final Message message) {
+	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
     }
 
     protected void receive(final Message message) {
-	onBeforeReceive.fire(message);
-	onMessageReceived.fire(message);
+	fireBeforeReceive(message);
+	eventBus.fireEvent(new MessageReceivedEvent(message));
     }
 
-    protected void setState(final State state) {
-	if (this.state != state) {
-	    this.state = state;
-	    onStateChanged.fire(state);
+    protected void setChatState(final String chatState) {
+	if (properties.getState() != chatState) {
+	    properties.setState(chatState);
+	    session.getEventBus().fireEvent(new ChatStateChangedEvent(chatState));
 	}
+    }
+
+    @Deprecated
+    protected void setState(final State state) {
+	setChatState(state.toString());
     }
 }

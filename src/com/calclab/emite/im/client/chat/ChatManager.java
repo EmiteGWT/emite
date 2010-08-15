@@ -24,7 +24,9 @@ package com.calclab.emite.im.client.chat;
 import java.util.Collection;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * Create and manage chat conversations.
@@ -33,6 +35,15 @@ import com.calclab.suco.client.events.Listener;
  * and many-to-many conversations (RoomManagerImpl)
  */
 public interface ChatManager {
+
+    /**
+     * Add a handler to track chat changes. The following changes can ocurr from
+     * a default chat manager: created, opened, closed
+     * 
+     * @param handler
+     */
+    public HandlerRegistration addChatChangedHandler(ChatChangedHandler handler);
+
     /**
      * Close the given conversation. If a conversation is closed, a new
      * onChatCreated event will be throw when opened
@@ -40,6 +51,31 @@ public interface ChatManager {
      * @param chat
      */
     public void close(Chat chat);
+
+    /**
+     * Obtain a chat from the chat manager. It can create new chats if
+     * specified.
+     * 
+     * @param properties
+     *            the properties of the chat
+     * @param createIfNotFound
+     *            if true, ChatManager will create a new chat with that
+     *            properties
+     * @return the chat with that properties. If createIfNotFound is false, the
+     *         return CAN be null
+     */
+    public Chat getChat(ChatProperties properties, boolean createIfNotFound);
+
+    /**
+     * Same as getChat(new ChatProperties(uri), false);
+     * 
+     * Here for compatibility reasons.
+     * 
+     * @param uri
+     * @return
+     */
+    // TODO: deprecate
+    public Chat getChat(XmppURI uri);
 
     public Collection<? extends Chat> getChats();
 
@@ -69,52 +105,25 @@ public interface ChatManager {
     public void onChatOpened(Listener<Chat> listener);
 
     /**
-     * Get a chat associated to the given uri. If the chat is previouly created,
-     * it just returns it. If not, it creates a new Chat object and then return
-     * it.
+     * Same as openChat(new ChatProperties(uri))
      * 
-     * It's the same as open(uri, null);
+     * Here for compatilibility reasons
      * 
      * @param uri
-     *            the uri we want to chat to
-     * @return the Chat object
+     * @return
      */
+    // FIXME: deprecate
     public Chat open(XmppURI uri);
 
     /**
-     * Get a chat associated to a given uri and a given metadata. If the no
-     * associated chat is found, a new one is created.
+     * The same as getChat, but it fire ChatChanged(opened) event if the chat is
+     * found or created
      * 
-     * @param uri
-     *            the uri to chat with
-     * @param metadata
-     *            the metadata associated to the chat
-     * @return the created chat
+     * @param properties
+     * @param createIfNotFound
+     * @return
      */
-    public Chat open(XmppURI uri, ChatMetadata metadata);
-
-    /**
-     * Use findChat instead.
-     * 
-     * @param uri
-     * @return the chat, can be null
-     * @see findChat
-     */
-    @Deprecated
-    Chat getChat(XmppURI uri);
-
-    /**
-     * Find a previously created chat with the given characteristics (uri and
-     * metadata).
-     * 
-     * @param uri
-     *            the uri of the chat
-     * @param metaddata
-     *            the desired metadata of the chat. Can be ignored (see
-     *            ChatSelectorStrategy)
-     * @return a previously created chat if any
-     */
-    public Chat findChat(XmppURI uri, ChatMetadata metaddata);
+    public Chat openChat(ChatProperties properties, boolean createIfNotFound);
 
     /**
      * Changes a the chat selection strategy of the current chat manager

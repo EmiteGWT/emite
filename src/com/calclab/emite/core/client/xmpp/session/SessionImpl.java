@@ -115,7 +115,7 @@ public class SessionImpl implements Session {
 	    public void onStateChanged(final StateChangedEvent event) {
 		listener.onEvent(SessionImpl.this);
 	    }
-	});
+	}, false);
     }
 
     @Override

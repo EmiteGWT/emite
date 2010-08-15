@@ -1,6 +1,7 @@
 package com.calclab.emite.core.client.xmpp.session;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.IQHandler;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceHandler;
@@ -75,12 +76,32 @@ public interface XmppSession {
 	protected static String binded = "binded";
     }
 
+    public HandlerRegistration addIQReceivedHandler(IQHandler handler);
+
+    public HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
+
+    public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
+
+    /**
+     * Add a handler to track session state changes. If sendCurrent is true, the
+     * handler will receive the current session state just after been added.
+     * 
+     * @param handler
+     * @param sendCurrent
+     *            if true, the current session state will be sent to the handler
+     *            just after addition
+     * @return
+     */
+    public HandlerRegistration addSessionStateChangedHandler(StateChangedHandler handler, boolean sendCurrent);
+
     /**
      * Returns the current user xmpp uri
      * 
      * @return the current user xmpp uri
      */
     public XmppURI getCurrentUser();
+
+    public EmiteEventBus getEventBus();
 
     /**
      * Returns the current state
@@ -95,6 +116,15 @@ public interface XmppSession {
      * @return true if a user is logged in
      */
     public boolean isLoggedIn();
+
+    /**
+     * Check whenever or not the session is in the given state
+     * 
+     * @param expectedState
+     *            the expected state of the session
+     * @return true if the expected state is the actual state
+     */
+    public boolean isState(String expectedState);
 
     /**
      * <p>
@@ -194,12 +224,4 @@ public interface XmppSession {
      * Presence managers should call this method when initial presence is sent
      */
     public void setReady();
-
-    HandlerRegistration addIQReceivedHandler(IQHandler handler);
-
-    HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
-
-    HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
-
-    HandlerRegistration addSessionStateChangedHandler(StateChangedHandler handler);
 }

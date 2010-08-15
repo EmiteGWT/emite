@@ -7,18 +7,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public abstract class AbstractChatManagerTest {
     protected static final XmppURI MYSELF = uri("self@domain");
     protected static final XmppURI OTHER = uri("other@domain");
     protected PairChatManager manager;
-    protected SessionTester session;
+    protected XmppSessionTester session;
 
     @Before
     public void beforeTests() {
-	session = new SessionTester();
+	session = new XmppSessionTester();
 	manager = createChatManager();
 	session.login(MYSELF, null);
     }

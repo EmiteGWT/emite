@@ -10,19 +10,21 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat.State;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class ChatTest extends AbstractChatTest {
     private static final XmppURI CHAT_URI = uri("other@domain/other");
     private static final XmppURI USER_URI = uri("self@domain/res");
     private PairChat pairChat;
-    private SessionTester session;
+    private XmppSessionTester session;
 
     @Before
     public void beforeTests() {
-	session = new SessionTester(USER_URI);
-	pairChat = new PairChat(session, CHAT_URI, USER_URI, "theThread");
+	session = new XmppSessionTester(USER_URI);
+	final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, null);
+	pairChat = new PairChat(session, properties);
+	// pairChat.setThread("theThread");
     }
 
     @Override
@@ -32,7 +34,8 @@ public class ChatTest extends AbstractChatTest {
 
     @Test
     public void shouldBeReadyIfSessionLogedIn() {
-	final PairChat aChat = new PairChat(session, uri("someone@domain"), USER_URI, null);
+	final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, null);
+	final PairChat aChat = new PairChat(session, properties);
 	assertEquals(Chat.State.ready, aChat.getState());
     }
 
@@ -63,7 +66,8 @@ public class ChatTest extends AbstractChatTest {
 
     @Test
     public void shouldSendNoThreadWhenNotSpecified() {
-	final AbstractChat noThreadChat = new PairChat(session, CHAT_URI, USER_URI, null);
+	final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, null);
+	final AbstractChat noThreadChat = new PairChat(session, properties);
 	noThreadChat.setState(State.ready);
 	noThreadChat.send(new Message("the message"));
 	session.verifySent("<message from='self@domain/res' to='other@domain/other' "

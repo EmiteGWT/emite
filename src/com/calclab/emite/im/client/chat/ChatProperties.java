@@ -1,0 +1,106 @@
+package com.calclab.emite.im.client.chat;
+
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
+
+/**
+ * The properties of a chat. One property is required (the uri), some other are
+ * fixed but optional (like the initiatorUri, or the state) and some are
+ * optional and not fixed (you can add or retrieve any property by key)
+ * 
+ * The properties are the id used to find a chat in a pool of chats.
+ */
+public class ChatProperties {
+    private final HashMap<String, Object> data;
+    private final XmppURI uri;
+    private XmppURI initiatorUri;
+    private String state;
+
+    public ChatProperties(final XmppURI uri) {
+	this(uri, null, null);
+    }
+
+    public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state) {
+	this.uri = uri;
+	this.initiatorUri = initiatorUri;
+	this.state = state;
+	data = new HashMap<String, Object>();
+    }
+
+    /**
+     * Get the metadata object associated to a given key
+     * 
+     * @param key
+     *            the key
+     * @return the associated object if any, null otherwise
+     * @see setData
+     */
+    public Object getData(final String key) {
+	return data.get(key);
+    }
+
+    /**
+     * This is the uri of the entity that inititated the chat
+     * 
+     * @return
+     */
+    public XmppURI getInitiatorUri() {
+	return initiatorUri;
+    }
+
+    /**
+     * The current state of the chat. See ChatStates to see some options.
+     * 
+     * @return
+     * @see ChatStates
+     */
+    public String getState() {
+	return state;
+    }
+
+    /**
+     * Get the chats uri. Is the other side of the conversation in a PairChat,
+     * or the room uri in a RoomChat
+     * 
+     * @return
+     */
+    public XmppURI getUri() {
+	return uri;
+    }
+
+    /**
+     * Set the metadata object associated to a given key
+     * 
+     * @param key
+     *            the key
+     * @param data
+     *            the object you want to associate
+     * @return the previously metadata object associated to that kay (if any) or
+     *         null otherwise
+     * @see getData
+     */
+    public Object setData(final String key, final Object value) {
+	return data.put(key, value);
+    }
+
+    /**
+     * Change the initiatorUri
+     * 
+     * @param initiatorUri
+     */
+    public void setInitiatorUri(final XmppURI initiatorUri) {
+	this.initiatorUri = initiatorUri;
+    }
+
+    /**
+     * Change the state of the chat
+     * 
+     * @param state
+     */
+    public void setState(final String state) {
+	this.state = state;
+    }
+
+}

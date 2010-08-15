@@ -21,52 +21,39 @@
  */
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
-import com.calclab.suco.client.events.Listener;
 
 /**
- * <p>
- * Default Chat implementation. Use Chat interface instead
- * </p>
+ * Default Chat implementation. Use Chat interface instead. Created by a chat
+ * manager
  * 
- * <p>
  * About Chat ids: Other sender Uri plus thread identifies a chat (associated
  * with a chat panel in the UI). If no thread is specified, we join all messages
  * in one chat.
- * </p>
  * 
  * @see Chat
  */
 public class PairChat extends AbstractChat {
-    protected final String thread;
+    private static final String PAIRCHAT_THREAD_PROP = "pairchat.thred";
     private final String id;
-    private XmppURI user;
+    private XmppURI currentChatUser;
 
-    PairChat(final Session session, final XmppURI other, final XmppURI starter, final String thread) {
-	super(session, other, starter);
-	this.thread = thread;
-	this.id = generateChatID();
+    public PairChat(final XmppSession session, final ChatProperties properties) {
+	super(session, properties);
+	id = generateChatID();
 
-	setStateFromSessionState(session);
-
-	session.onStateChanged(new Listener<Session>() {
+	session.addSessionStateChangedHandler(new StateChangedHandler() {
 	    @Override
-	    public void onEvent(Session session) {
+	    public void onStateChanged(final StateChangedEvent event) {
 		setStateFromSessionState(session);
 	    }
-	});
-
-	session.onMessage(new Listener<Message>() {
-	    public void onEvent(final Message message) {
-		final XmppURI from = message.getFrom();
-		if (from.equalsNoResource(uri)) {
-		    receive(message);
-		}
-	    }
-	});
+	}, true);
     }
 
     @Override
@@ -86,24 +73,29 @@ public class PairChat extends AbstractChat {
     }
 
     public String getThread() {
-	return thread;
+	return (String) properties.getData(PAIRCHAT_THREAD_PROP);
     }
 
     @Override
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + (uri == null ? 0 : uri.hashCode());
+	result = prime * result + (getURI() == null ? 0 : getURI().hashCode());
+	final String thread = getThread();
 	result = prime * result + (thread == null ? 0 : thread.hashCode());
 	return result;
     }
 
     @Override
     public void send(final Message message) {
-	message.setThread(thread);
+	message.setThread(getThread());
 	message.setType(Type.chat);
-	message.setTo(uri);
+	message.setTo(getURI());
 	super.send(message);
+    }
+
+    public void setThread(final String thread) {
+	properties.setData(PAIRCHAT_THREAD_PROP, thread);
     }
 
     @Override
@@ -112,22 +104,18 @@ public class PairChat extends AbstractChat {
     }
 
     private String generateChatID() {
-	return "chat: " + uri.toString() + "-" + thread;
+	return "chat: " + getURI().toString() + "-" + getThread();
     }
 
-    private void setStateFromSessionState(final Session session) {
-	switch (session.getState()) {
-	case loggedIn:
-	case ready:
+    private void setStateFromSessionState(final XmppSession session) {
+	if (session.isState(SessionState.ready) || session.isState(SessionState.loggedIn)) {
 	    final XmppURI currentUser = session.getCurrentUser();
-	    if (this.user == null) {
-		this.user = currentUser;
+	    if (currentChatUser == null) {
+		currentChatUser = currentUser;
 	    }
-	    setState(currentUser.equalsNoResource(user) ? State.ready : State.locked);
-	    break;
-	default:
-	    setState(State.locked);
-	    break;
+	    setChatState(currentUser.equalsNoResource(currentChatUser) ? ChatStates.ready : ChatStates.locked);
+	} else {
+	    setChatState(ChatStates.locked);
 	}
     }
 

@@ -24,15 +24,16 @@ package com.calclab.emite.im.client;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.SessionComponent;
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.emite.im.client.presence.PresenceManager;
 import com.calclab.emite.im.client.presence.PresenceManagerImpl;
 import com.calclab.emite.im.client.roster.Roster;
-import com.calclab.emite.im.client.roster.XmppRoster;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
 import com.calclab.emite.im.client.roster.SubscriptionManagerImpl;
+import com.calclab.emite.im.client.roster.XmppRoster;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
@@ -77,7 +78,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 	}, new Factory<ChatManager>(ChatManager.class) {
 	    @Override
 	    public PairChatManager create() {
-		return new PairChatManager($(Session.class));
+		return new PairChatManager($(XmppSession.class));
 	    }
 	}, new Factory<SubscriptionManager>(SubscriptionManager.class) {
 	    @Override

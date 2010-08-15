@@ -27,7 +27,7 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
@@ -49,7 +49,7 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     private final Event<RoomInvitation> onInvitationReceived;
     private HistoryOptions defaultHistoryOptions;
 
-    public RoomManagerImpl(final Session session) {
+    public RoomManagerImpl(final XmppSession session) {
 	super(session);
 	onInvitationReceived = new Event<RoomInvitation>("roomManager:onInvitationReceived");
 	roomsByJID = new HashMap<XmppURI, Room>();
@@ -100,8 +100,8 @@ public class RoomManagerImpl extends PairChatManager implements RoomManager {
     }
 
     @Override
-    public void requestRoomDiscovery(XmppURI hostUri, RoomDiscoveryListener listener) {
-	DiscoveryManager discoManager = Suco.get(DiscoveryManager.class);
+    public void requestRoomDiscovery(final XmppURI hostUri, final RoomDiscoveryListener listener) {
+	final DiscoveryManager discoManager = Suco.get(DiscoveryManager.class);
 	discoManager.sendDiscoItemsQuery(session.getCurrentUser(), hostUri, listener);
     }
 
