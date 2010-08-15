@@ -31,7 +31,7 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 public class PairChatManager extends AbstractChatManager implements ChatManager {
 
     public PairChatManager(final XmppSession session) {
-	super(session, new SameJidChatSelectionStrategy());
+	super(session, new PairChatSelectionStrategy());
     }
 
     @Override

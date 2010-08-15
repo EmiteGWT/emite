@@ -23,6 +23,8 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.HashMap;
 
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
@@ -37,8 +39,8 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public class RoomManagerImpl extends AbstractChatManager implements RoomManager {
 
@@ -47,14 +49,25 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
     private static final PacketMatcher FILTER_INVITE = MatcherFactory.byName("invite");
     private static final String HISTORY_OPTIONS_PROP = "history.options";
     private final HashMap<XmppURI, Room> roomsByJID;
-    private final Event<RoomInvitation> onInvitationReceived;
     private HistoryOptions defaultHistoryOptions;
 
     public RoomManagerImpl(final XmppSession session) {
-	super(session, new DefaultRoomSelectionStrategy());
-	onInvitationReceived = new Event<RoomInvitation>("roomManager:onInvitationReceived");
+	super(session, new RoomChatSelectionStrategy());
 	roomsByJID = new HashMap<XmppURI, Room>();
 
+	session.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onPacketEvent(MessageEvent event) {
+		Message message = event.getMessage();
+		IPacket child;
+		if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
+		    Stanza invitationStanza = new BasicStanza(child);
+		    RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(),
+			    invitationStanza.getFirstChild("reason").getText());
+		    session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
+		}
+	    }
+	});
     }
 
     @Override
@@ -62,6 +75,18 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
 	final XmppURI roomURI = invitation.getRoomURI();
 	final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUser().getNode());
 	open(uri);
+    }
+
+    @Override
+    protected void addChat(final Chat chat) {
+	final XmppURI jid = chat.getURI().getJID();
+	roomsByJID.put(jid, (Room) chat);
+	super.addChat(chat);
+    }
+
+    @Override
+    public HandlerRegistration addRoomInvitationHandler(RoomInvitationHandler handler) {
+	return RoomInvitationEvent.bind(session.getEventBus(), handler);
     }
 
     @Override
@@ -74,16 +99,28 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
     }
 
     @Override
+    protected Chat createChat(final ChatProperties properties) {
+	return new Room(session, properties);
+    }
+
+    @Override
     public Room getChat(final XmppURI uri) {
 	return roomsByJID.get(uri.getJID());
     }
 
+    @Override
     public HistoryOptions getDefaultHistoryOptions() {
 	return defaultHistoryOptions;
     }
 
+    @Override
     public void onInvitationReceived(final Listener<RoomInvitation> listener) {
-	onInvitationReceived.add(listener);
+	addRoomInvitationHandler(new RoomInvitationHandler() {
+	    @Override
+	    public void onRoomInvitation(RoomInvitationEvent event) {
+		listener.onEvent(event.getRoomInvitation());
+	    }
+	});
     }
 
     @Override
@@ -99,38 +136,8 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
 	discoManager.sendDiscoItemsQuery(session.getCurrentUser(), hostUri, listener);
     }
 
+    @Override
     public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
 	this.defaultHistoryOptions = defaultHistoryOptions;
-    }
-
-    // FIXME: joder!
-    private void eventMessage(final Message message) {
-	IPacket child;
-	if (message.getType() == Message.Type.groupchat) {
-	    final Room room = getChat(message.getFrom().getJID());
-	    if (room != null) {
-		room.receive(message);
-	    }
-	} else if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
-	    handleRoomInvitation(message.getFrom(), new BasicStanza(child));
-	}
-
-    }
-
-    private void handleRoomInvitation(final XmppURI roomURI, final Stanza invitation) {
-	onInvitationReceived.fire(new RoomInvitation(invitation.getFrom(), roomURI, invitation.getFirstChild("reason")
-		.getText()));
-    }
-
-    @Override
-    protected void addChat(final Chat chat) {
-	final XmppURI jid = chat.getURI().getJID();
-	roomsByJID.put(jid, (Room) chat);
-	super.addChat(chat);
-    }
-
-    @Override
-    protected Chat createChat(final ChatProperties properties) {
-	return new Room(session, properties);
     }
 }

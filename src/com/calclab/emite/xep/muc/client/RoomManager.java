@@ -29,31 +29,14 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.xep.disco.client.DiscoveryManager.DiscoveryManagerResponse;
 import com.calclab.emite.xep.disco.client.Item;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * RoomManager: room related methods
- *
+ * 
  * @see ChatManager
  */
 public interface RoomManager extends ChatManager {
-    void acceptRoomInvitation(RoomInvitation invitation);
-
-    /**
-     * Notify when a room invitation arrives
-     *
-     * @param listener
-     *            the listener to be informed
-     */
-    void onInvitationReceived(Listener<RoomInvitation> listener);
-
-    Room open(final XmppURI uri, HistoryOptions historyOptions);
-
-    void requestRoomDiscovery(XmppURI hostUri, RoomDiscoveryListener listener);
-
-    HistoryOptions getDefaultHistoryOptions();
-
-    void setDefaultHistoryOptions(HistoryOptions historyOptions);
-
     public static abstract class RoomDiscoveryListener implements Listener<DiscoveryManagerResponse> {
 
 	@Override
@@ -70,4 +53,42 @@ public interface RoomManager extends ChatManager {
 
 	public abstract void process(List<XmppURI> rooms);
     }
+
+    /**
+     * Accepts a room invitation event
+     * 
+     * @param invitation
+     *            the invitation event to be accepted
+     */
+    public void acceptRoomInvitation(RoomInvitation invitation);
+
+    /**
+     * Add a handler to know when a room invitation has arrived
+     * 
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addRoomInvitationHandler(RoomInvitationHandler handler);
+
+    /**
+     * Obtain the default history options applied to all new rooms
+     * 
+     * @return
+     */
+    public HistoryOptions getDefaultHistoryOptions();
+
+    /**
+     * Notify when a room invitation arrives. Use addRoomInvitationHandler
+     * 
+     * @param listener
+     *            the listener to be informed
+     */
+    // TODO: deprecate
+    public void onInvitationReceived(Listener<RoomInvitation> listener);
+
+    public Room open(final XmppURI uri, HistoryOptions historyOptions);
+
+    public void requestRoomDiscovery(XmppURI hostUri, RoomDiscoveryListener listener);
+
+    public void setDefaultHistoryOptions(HistoryOptions historyOptions);
 }

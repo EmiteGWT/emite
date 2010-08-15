@@ -29,20 +29,21 @@ public class RoomInvitation {
     private final String reason;
 
     public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
-        this.invitor = invitor;
-        this.roomURI = roomURI;
-        this.reason = reason;
+	this.invitor = invitor;
+	this.roomURI = roomURI;
+	this.reason = reason;
     }
 
     public XmppURI getInvitor() {
-        return invitor;
+	return invitor;
     }
 
     public String getReason() {
-        return reason;
+	return reason;
     }
 
     public XmppURI getRoomURI() {
-        return roomURI;
+	return roomURI;
     }
+
 }

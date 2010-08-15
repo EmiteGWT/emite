@@ -91,6 +91,7 @@ public abstract class AbstractChat implements Chat {
 	return eventBus;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T getData(final Class<T> type) {
 	return (T) properties.getData(type.toString());
@@ -101,6 +102,7 @@ public abstract class AbstractChat implements Chat {
 	return properties;
     }
 
+    @Override
     public State getState() {
 	final String state = properties.getState();
 	try {
@@ -111,14 +113,17 @@ public abstract class AbstractChat implements Chat {
     }
 
     // FIXME: rename to getUri
+    @Override
     public XmppURI getURI() {
 	return properties.getUri();
     }
 
+    @Override
     public boolean isInitiatedByMe() {
 	return session.getCurrentUser() != null && session.getCurrentUser().equals(properties.getInitiatorUri());
     }
 
+    @Override
     public void onBeforeReceive(final Listener<Message> listener) {
 	addBeforeReceiveMessageHandler(new MessageHandler() {
 	    @Override
@@ -128,6 +133,7 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onBeforeSend(final Listener<Message> listener) {
 	addBeforeSendMessageHandler(new MessageHandler() {
 	    @Override
@@ -137,6 +143,7 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onMessageReceived(final Listener<Message> listener) {
 	addMessageReceivedHandler(new MessageHandler() {
 	    @Override
@@ -146,6 +153,7 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onMessageSent(final Listener<Message> listener) {
 	addMessageSentHandler(new MessageHandler() {
 	    @Override
@@ -155,6 +163,7 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onStateChanged(final Listener<State> listener) {
 	addChatStateChangedHandler(new StateChangedHandler() {
 	    @Override
@@ -164,6 +173,7 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void send(final Message message) {
 	message.setFrom(session.getCurrentUser());
 	eventBus.fireEvent(new BeforeSendMessageEvent(message));
@@ -171,9 +181,11 @@ public abstract class AbstractChat implements Chat {
 	eventBus.fireEvent(new MessageSentEvent(message));
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T setData(final Class<T> type, final T value) {
-	return (T) properties.setData(type.toString(), value);
+	String key = type != null ? type.toString() : null;
+	return (T) properties.setData(key, value);
     }
 
     private void setStateFromSessionState(final XmppSession session) {
@@ -204,7 +216,7 @@ public abstract class AbstractChat implements Chat {
     protected void setChatState(final String chatState) {
 	if (properties.getState() != chatState) {
 	    properties.setState(chatState);
-	    session.getEventBus().fireEvent(new ChatStateChangedEvent(chatState));
+	    eventBus.fireEvent(new ChatStateChangedEvent(chatState));
 	}
     }
 
