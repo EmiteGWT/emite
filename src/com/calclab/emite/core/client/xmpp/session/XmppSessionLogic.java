@@ -24,12 +24,12 @@ package com.calclab.emite.core.client.xmpp.session;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.ConnectionEvent;
-import com.calclab.emite.core.client.conn.ConnectionHandler;
+import com.calclab.emite.core.client.conn.ConnectionStateEvent;
+import com.calclab.emite.core.client.conn.ConnectionStateHandler;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.conn.ConnectionEvent.EventType;
+import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -87,19 +87,20 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    }
 	});
 
-	connection.addConnectionHandler(new ConnectionHandler() {
+	connection.addConnectionHandler(new ConnectionStateHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(EventType.error)) {
-		    GWT.log("Connection error: " + event.getText());
+	    public void onStateChanged(final ConnectionStateEvent event) {
+		if (event.is(ConnectionState.error)) {
+		    GWT.log("Connection error: " + event.getDescription());
 		    setSessionState(SessionState.error);
-		} else if (event.is(EventType.disconnected)) {
+		} else if (event.is(ConnectionState.disconnected)) {
 		    setSessionState(SessionState.disconnected);
 		}
 	    }
 	});
 
-	saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
+	// Do not use manager, in order to be able to mock on testing
+	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		if (event.isSucceed()) {
@@ -113,7 +114,8 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    }
 	});
 
-	bindingManager.addResourceBindResultHandler(new ResourceBindResultHandler() {
+	// Do not use manager, in order to be able to mock on testing
+	ResourceBindResultEvent.bind(eventBus, new ResourceBindResultHandler() {
 	    @Override
 	    public void onBinded(final ResourceBindResultEvent event) {
 		setSessionState(SessionState.binded);
@@ -121,7 +123,8 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    }
 	});
 
-	iMSessionManager.addSessionRequestResultHandler(new SessionRequestResultHandler() {
+	// Do not use manager, in order to be able to mock on testing
+	SessionRequestResultEvent.bind(eventBus, new SessionRequestResultHandler() {
 	    @Override
 	    public void onSessionRequestResult(final SessionRequestResultEvent event) {
 		if (event.isSucceed()) {

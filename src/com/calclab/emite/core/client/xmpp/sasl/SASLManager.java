@@ -30,7 +30,6 @@ import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction.State;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.event.shared.HandlerRegistration;
 
 public class SASLManager {
     private static final String SEP = new String(new char[] { 0 });
@@ -59,10 +58,6 @@ public class SASLManager {
 		currentCredentials = null;
 	    }
 	});
-    }
-
-    public HandlerRegistration addAuthorizationResultHandler(final AuthorizationResultHandler handler) {
-	return AuthorizationResultEvent.bind(eventBus, handler);
     }
 
     public void onAuthorized(final Listener<AuthorizationTransaction> listener) {

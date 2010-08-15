@@ -24,7 +24,7 @@ public class SASLManagerTest {
 	connection = new XmppConnectionTester();
 	manager = new SASLManager(connection, new DecoderRegistry());
 	authEvent = null;
-	connection.getEventBus().addHandler(AuthorizationResultEvent.getType(), new AuthorizationResultHandler() {
+	AuthorizationResultEvent.bind(connection.getEventBus(), new AuthorizationResultHandler() {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		authEvent = event;

@@ -3,7 +3,7 @@ package com.calclab.emite.xtesting;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.AbstractXmppConnection;
+import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
@@ -14,7 +14,7 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
-public class XmppConnectionTester extends AbstractXmppConnection implements XmppConnection {
+public class XmppConnectionTester extends XmppConnectionBoilerPlate implements XmppConnection {
 
     private final TigaseXMLService xmler;
     private final ArrayList<IPacket> sent;

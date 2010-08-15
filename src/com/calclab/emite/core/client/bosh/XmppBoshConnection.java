@@ -2,8 +2,9 @@ package com.calclab.emite.core.client.bosh;
 
 import java.util.List;
 
-import com.calclab.emite.core.client.conn.AbstractXmppConnection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
+import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
@@ -13,7 +14,12 @@ import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
 import com.google.gwt.core.client.GWT;
 
-public class XmppBoshConnection extends AbstractXmppConnection {
+/**
+ * A Bosh connection implementation.
+ * 
+ * @see XmppConnection
+ */
+public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     private int activeConnections;
     private final Services services;
     private final ConnectorCallback listener;

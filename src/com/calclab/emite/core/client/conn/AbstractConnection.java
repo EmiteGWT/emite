@@ -1,5 +1,6 @@
 package com.calclab.emite.core.client.conn;
 
+import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener0;
@@ -18,10 +19,10 @@ public abstract class AbstractConnection {
     }
 
     public void onConnected(final Listener0 listener) {
-	delegate.addConnectionHandler(new ConnectionHandler() {
+	delegate.addConnectionHandler(new ConnectionStateHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(ConnectionEvent.EventType.connected)) {
+	    public void onStateChanged(final ConnectionStateEvent event) {
+		if (event.is(ConnectionState.connected)) {
 		    listener.onEvent();
 		}
 	    }
@@ -29,44 +30,43 @@ public abstract class AbstractConnection {
     }
 
     public void onDisconnected(final Listener<String> listener) {
-	delegate.addConnectionHandler(new ConnectionHandler() {
+	delegate.addConnectionHandler(new ConnectionStateHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(ConnectionEvent.EventType.disconnected)) {
-		    listener.onEvent(event.getText());
+	    public void onStateChanged(final ConnectionStateEvent event) {
+		if (event.is(ConnectionState.disconnected)) {
+		    listener.onEvent(event.getDescription());
 		}
 	    }
 	});
     }
 
     public void onError(final Listener<String> listener) {
-	delegate.addConnectionHandler(new ConnectionHandler() {
+	delegate.addConnectionHandler(new ConnectionStateHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(ConnectionEvent.EventType.error)) {
-		    listener.onEvent(event.getText());
+	    public void onStateChanged(final ConnectionStateEvent event) {
+		if (event.is(ConnectionState.error)) {
+		    listener.onEvent(event.getDescription());
 		}
 	    }
 	});
     }
 
+    // TODO: deprecate
     public void onResponse(final Listener<String> listener) {
-	delegate.addConnectionHandler(new ConnectionHandler() {
+	delegate.addConnectionResponseHandler(new ConnectionResponseHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(ConnectionEvent.EventType.response)) {
-		    listener.onEvent(event.getText());
-		}
+	    public void onResponse(final ConnectionResponseEvent event) {
+		listener.onEvent(event.getResponse());
 	    }
 	});
     }
 
     public void onRetry(final Listener2<Integer, Integer> listener) {
-	delegate.addConnectionHandler(new ConnectionHandler() {
+	delegate.addConnectionHandler(new ConnectionStateHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionEvent event) {
-		if (event.is(ConnectionEvent.EventType.response)) {
-		    listener.onEvent(event.getCount(), 0);
+	    public void onStateChanged(final ConnectionStateEvent event) {
+		if (event.is(ConnectionState.waitingForRetry)) {
+		    listener.onEvent(event.getValue(), 0);
 		}
 	    }
 	});

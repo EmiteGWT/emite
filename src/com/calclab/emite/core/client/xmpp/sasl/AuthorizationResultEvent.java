@@ -13,9 +13,6 @@ public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandle
 	return eventBus.addHandler(TYPE, handler);
     }
 
-    public static Type<AuthorizationResultHandler> getType() {
-	return TYPE;
-    }
     private final boolean succeed;
 
     private final Credentials credentials;

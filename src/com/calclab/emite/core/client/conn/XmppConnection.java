@@ -34,7 +34,9 @@ public interface XmppConnection {
 
     public abstract void setSettings(ConnectionSettings settings);
 
-    HandlerRegistration addConnectionHandler(ConnectionHandler handler);
+    HandlerRegistration addConnectionHandler(ConnectionStateHandler handler);
+
+    HandlerRegistration addConnectionResponseHandler(ConnectionResponseHandler handler);
 
     HandlerRegistration addStanzaReceivedHandler(StanzaReceivedHandler handler);
 

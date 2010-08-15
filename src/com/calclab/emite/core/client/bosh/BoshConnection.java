@@ -27,6 +27,9 @@ import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 
+/**
+ * The old connection object. Will be deprecated.
+ */
 public class BoshConnection extends AbstractConnection implements Connection {
 
     public BoshConnection(final XmppConnection delegate) {
