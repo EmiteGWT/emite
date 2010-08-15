@@ -17,6 +17,7 @@ public class ChatProperties {
     private final XmppURI uri;
     private XmppURI initiatorUri;
     private String state;
+    private boolean shouldCreateNewChat;
 
     public ChatProperties(final XmppURI uri) {
 	this(uri, null, null);
@@ -26,6 +27,7 @@ public class ChatProperties {
 	this.uri = uri;
 	this.initiatorUri = initiatorUri;
 	this.state = state;
+	this.shouldCreateNewChat = true;
 	data = new HashMap<String, Object>();
     }
 
@@ -95,12 +97,35 @@ public class ChatProperties {
     }
 
     /**
+     * If this attribute is true, when a chat is not found with this properties,
+     * the ChatManager should create a new chat.
+     * 
+     * If this attribute is false, this chat properties never fire a new chat
+     * creation
+     * 
+     * @param shouldCreateNewChat
+     */
+    public void setShouldCreateNewChat(boolean shouldCreateNewChat) {
+	this.shouldCreateNewChat = shouldCreateNewChat;
+    }
+
+    /**
      * Change the state of the chat
      * 
      * @param state
      */
     public void setState(final String state) {
 	this.state = state;
+    }
+
+    /**
+     * ChatManager uses this value to know whenever a new chat should be created
+     * when a message with this chat properties arrives
+     * 
+     * @return
+     */
+    public boolean shouldCreateNewChat() {
+	return shouldCreateNewChat;
     }
 
 }

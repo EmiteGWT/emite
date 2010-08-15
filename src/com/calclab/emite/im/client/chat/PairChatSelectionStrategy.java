@@ -1,5 +1,6 @@
 package com.calclab.emite.im.client.chat;
 
+import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 
 /**
@@ -12,6 +13,8 @@ public class PairChatSelectionStrategy implements ChatSelectionStrategy {
     @Override
     public ChatProperties extractChatProperties(final Message message) {
 	ChatProperties properties = new ChatProperties(message.getFrom());
+	boolean messageHasBody = message.getFirstChild("body") != NoPacket.INSTANCE;
+	properties.setShouldCreateNewChat(messageHasBody);
 	return properties;
     }
 

@@ -19,7 +19,9 @@ public interface ChatSelectionStrategy {
      * @param packet
      *            the packet to extract the properties from (usually a message,
      *            but can be presence in rooms)
-     * @return the properties of the ideal receiver of this message (stanza)
+     * @return the properties of the ideal receiver of this message (stanza). If
+     *         null is return, the ChatManager assume this message has no
+     *         receiver
      */
     ChatProperties extractChatProperties(Message message);
 

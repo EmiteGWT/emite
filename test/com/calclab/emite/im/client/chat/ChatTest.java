@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
@@ -22,9 +23,9 @@ public class ChatTest extends AbstractChatTest {
     @Before
     public void beforeTests() {
 	session = new XmppSessionTester(USER_URI);
-	final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, null);
+	final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.ready);
 	pairChat = new PairChat(session, properties);
-	// pairChat.setThread("theThread");
+	pairChat.setThread("theThread");
     }
 
     @Override
@@ -34,18 +35,20 @@ public class ChatTest extends AbstractChatTest {
 
     @Test
     public void shouldBeReadyIfSessionLogedIn() {
-	final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, null);
+	final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, ChatStates.ready);
 	final PairChat aChat = new PairChat(session, properties);
 	assertEquals(Chat.State.ready, aChat.getState());
     }
 
     @Test
-    public void shouldLockIfLogout() {
+    public void shouldLockIfLogoutAndUnlockWhenLogginWithSameUser() {
 	final MockedListener<State> listener = new MockedListener<State>();
 	pairChat.onStateChanged(listener);
 	session.logout();
+	assertTrue(listener.isCalledWithSame(Chat.State.locked));
+	listener.clear();
 	session.login(USER_URI, "");
-	assertTrue(listener.isCalledWithSame(Chat.State.locked, Chat.State.ready));
+	assertTrue(listener.isCalledWithSame(Chat.State.ready));
     }
 
     @Test

@@ -13,7 +13,7 @@ import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager;
 import com.calclab.suco.testing.events.MockedListener;
 
-public class ChatManagerTest extends AbstractChatManagerTest {
+public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {

@@ -23,7 +23,7 @@ public abstract class MessageEvent extends GwtEvent<MessageHandler> {
 
     @Override
     protected void dispatch(final MessageHandler handler) {
-	handler.onPacketEvent(this);
+	handler.onMessage(this);
     }
 
 }

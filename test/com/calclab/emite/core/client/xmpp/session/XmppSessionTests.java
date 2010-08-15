@@ -63,7 +63,7 @@ public class XmppSessionTests {
 	incomingPacket = null;
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		incomingPacket = event.getMessage();
 	    }
 	});

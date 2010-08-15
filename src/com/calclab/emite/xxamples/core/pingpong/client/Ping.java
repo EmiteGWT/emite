@@ -53,7 +53,7 @@ public class Ping {
 
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		output.print(("RECEIVED: " + event.getMessage().getBody()), Output.Style.received);
 	    }
 	});

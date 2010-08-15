@@ -9,15 +9,15 @@ public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
     public ChatProperties extractChatProperties(Message message) {
-	if (message.getType() == Message.Type.groupchat) {
-	    return new ChatProperties(message.getFrom().getJID());
-	}
-	return null;
+	ChatProperties properties = new ChatProperties(message.getFrom().getJID());
+	boolean isGroupChatMessage = message.getType() == Message.Type.groupchat;
+	properties.setShouldCreateNewChat(isGroupChatMessage);
+	return properties;
     }
 
     @Override
     public boolean isAssignable(Chat chat, ChatProperties properties) {
-	return properties != null && chat.getURI().equalsNoResource(properties.getUri());
+	return chat.getURI().equalsNoResource(properties.getUri());
     }
 
 }

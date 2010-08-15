@@ -92,7 +92,7 @@ public class SessionImpl implements Session {
     public void onMessage(final Listener<Message> listener) {
 	delegate.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		listener.onEvent(event.getMessage());
 	    }
 	});

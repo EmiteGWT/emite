@@ -10,13 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.Chat.State;
+import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 import com.calclab.suco.testing.events.MockedListener2;
@@ -42,6 +42,16 @@ public class RoomTest extends AbstractChatTest {
 	return room;
     }
 
+    private void receiveInstantRoomCreation(final XmppURI room) {
+	session.receives("<presence to='user@domain/res' from='" + room + "'>"
+		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
+		+ "<item affiliation='owner' role='moderator'/><status code='201'/></x></presence>");
+	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
+		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
+		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
+	session.answerSuccess();
+    }
+
     @Test
     public void shouldAddOccupantAndFireListeners() {
 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
@@ -61,16 +71,8 @@ public class RoomTest extends AbstractChatTest {
     }
 
     @Test
-    public void shouldCreateInstantRooms() {
-	final MockedListener<State> stateChanged = new MockedListener<Chat.State>();
-	room.onStateChanged(stateChanged);
-	openInstantRoom(roomURI);
-	assertTrue(stateChanged.isCalledOnce());
-    }
-
-    @Test
     public void shouldExitAndLockTheRoomWhenLoggedOut() {
-	openInstantRoom(roomURI);
+	receiveInstantRoomCreation(roomURI);
 	session.logout();
 	assertEquals(Chat.State.locked, room.getState());
 	session.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
@@ -124,6 +126,15 @@ public class RoomTest extends AbstractChatTest {
     }
 
     @Test
+    public void shouldUnlockWhenInstantRoomIsCreated() {
+	final MockedListener<State> stateChanged = new MockedListener<Chat.State>();
+	room.onStateChanged(stateChanged);
+	assertEquals(State.locked, room.getState());
+	receiveInstantRoomCreation(roomURI);
+	assertTrue(stateChanged.isCalledOnce());
+    }
+
+    @Test
     public void shouldUpdateOccupantAndFireListeners() {
 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
 	room.onOccupantModified(listener);
@@ -132,16 +143,6 @@ public class RoomTest extends AbstractChatTest {
 	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator", Show.notSpecified, null);
 	assertEquals(1, listener.getCalledTimes());
 	assertSame(occupant, occupant2);
-    }
-
-    private void openInstantRoom(final XmppURI room) {
-	session.receives("<presence to='user@domain/res' from='" + room + "'>"
-		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item affiliation='owner' role='moderator'/><status code='201'/></x></presence>");
-	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
-		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
-		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
-	session.answerSuccess();
     }
 
 }

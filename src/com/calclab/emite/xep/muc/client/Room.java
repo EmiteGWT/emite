@@ -28,22 +28,26 @@ import java.util.List;
 
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.suco.client.events.Event;
 import com.calclab.suco.client.events.Event2;
 import com.calclab.suco.client.events.Listener;
@@ -67,6 +71,16 @@ public class Room extends AbstractChat implements Chat {
     private final Event2<XmppURI, String> onInvitationSent;
 
     /**
+     * Create a new room with the default room selection strategy
+     * 
+     * @param session
+     * @param properties
+     */
+    public Room(final XmppSession session, final ChatProperties properties) {
+	this(session, properties, new RoomChatSelectionStrategy());
+    }
+
+    /**
      * Create a new room. The roomURI MUST include the nick (as the resource)
      * 
      * @param session
@@ -74,8 +88,8 @@ public class Room extends AbstractChat implements Chat {
      * @param roomURI
      *            the room uri with the nick specified in the resource part
      */
-    public Room(final XmppSession session, final ChatProperties properties) {
-	super(session, properties);
+    public Room(final XmppSession session, final ChatProperties properties, ChatSelectionStrategy strategy) {
+	super(session, properties, strategy);
 	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
 	onOccupantAdded = new Event<Occupant>("room:onOccupantAdded");
 	onOccupantModified = new Event<Occupant>("room:onOccupantModified");
@@ -96,6 +110,15 @@ public class Room extends AbstractChat implements Chat {
 	    }
 	});
 
+	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(StateChangedEvent event) {
+		if (event.is(SessionState.loggingOut)) {
+		    close();
+		}
+	    }
+	}, false);
+
 	final HistoryOptions historyOptions = (HistoryOptions) properties.getData(HistoryOptions.KEY);
 	session.send(createEnterPresence(historyOptions));
     }
@@ -113,6 +136,29 @@ public class Room extends AbstractChat implements Chat {
 	}
     }
 
+    protected Presence createEnterPresence(final HistoryOptions historyOptions) {
+	final Presence presence = new Presence(null, null, getURI());
+	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
+	presence.setPriority(0);
+	if (historyOptions != null) {
+	    final IPacket h = x.addChild("history");
+	    if (historyOptions.maxchars >= 0) {
+		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
+	    }
+	    if (historyOptions.maxstanzas >= 0) {
+		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
+	    }
+	    if (historyOptions.seconds >= 0) {
+		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
+	    }
+	    if (historyOptions.since != null) {
+		h.setAttribute("since", XmppDateTime.formatXMPPDateTime(historyOptions.since));
+	    }
+	}
+	return presence;
+    }
+
+    @Override
     public String getID() {
 	return getURI().toString();
     }
@@ -129,6 +175,31 @@ public class Room extends AbstractChat implements Chat {
 	return occupantsByURI.size();
     }
 
+    protected void handlePresence(final XmppURI occupantURI, final Presence presence) {
+	final Type type = presence.getType();
+	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
+	    // TODO : add an error/out state ?
+	    setState(State.locked);
+	} else if (type == Type.unavailable) {
+	    removeOccupant(occupantURI);
+	} else {
+	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
+	    for (final IPacket child : children) {
+		final IPacket item = child.getFirstChild("item");
+		final String affiliation = item.getAttribute("affiliation");
+		final String role = item.getAttribute("role");
+		setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
+		if (isNewRoom(child)) {
+		    requestCreateInstantRoom();
+		} else {
+		    if (ChatStates.ready.equals(getChatState())) {
+			setChatState(ChatStates.ready);
+		    }
+		}
+	    }
+	}
+    }
+
     /**
      * To check if is an echo message
      * 
@@ -139,6 +210,11 @@ public class Room extends AbstractChat implements Chat {
 	final String myNick = getURI().getResource();
 	final String messageNick = message.getFrom().getResource();
 	return myNick.equals(messageNick);
+    }
+
+    protected boolean isNewRoom(final IPacket xtension) {
+	final String code = xtension.getFirstChild("status").getAttribute("code");
+	return code != null && code.equals("201");
     }
 
     /**
@@ -164,6 +240,22 @@ public class Room extends AbstractChat implements Chat {
 	onSubjectChanged.add(listener);
     }
 
+    @Override
+    /**
+     * WARNING : breaking change, need to check (message.getBody() != null)
+     */
+    protected void receive(final Message message) {
+	if (message.getSubject() != null) {
+	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
+	}
+	//
+	if (message.getType() == com.calclab.emite.core.client.xmpp.stanzas.Message.Type.error) {
+	    GWT.log("Received Error message :" + message);
+	    setChatState(ChatStates.locked);
+	}
+	super.receive(message);
+    }
+
     public void reEnter(final HistoryOptions historyOptions) {
 	if (getState() == State.locked) {
 	    session.send(createEnterPresence(historyOptions));
@@ -175,6 +267,21 @@ public class Room extends AbstractChat implements Chat {
 	if (occupant != null) {
 	    onOccupantRemoved.fire(occupant);
 	}
+    }
+
+    protected void requestCreateInstantRoom() {
+	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
+	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
+
+	session.sendIQ("rooms", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(final IQ iq) {
+		if (IQ.isSuccess(iq)) {
+		    setChatState(ChatStates.ready);
+		}
+	    }
+	});
+
     }
 
     @Override
@@ -255,88 +362,5 @@ public class Room extends AbstractChat implements Chat {
     @Override
     public String toString() {
 	return "ROOM: " + getURI();
-    }
-
-    protected Presence createEnterPresence(final HistoryOptions historyOptions) {
-	final Presence presence = new Presence(null, null, getURI());
-	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
-	presence.setPriority(0);
-	if (historyOptions != null) {
-	    final IPacket h = x.addChild("history");
-	    if (historyOptions.maxchars >= 0) {
-		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
-	    }
-	    if (historyOptions.maxstanzas >= 0) {
-		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
-	    }
-	    if (historyOptions.seconds >= 0) {
-		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
-	    }
-	    if (historyOptions.since != null) {
-		h.setAttribute("since", XmppDateTime.formatXMPPDateTime(historyOptions.since));
-	    }
-	}
-	return presence;
-    }
-
-    protected void handlePresence(final XmppURI occupantURI, final Presence presence) {
-	final Type type = presence.getType();
-	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
-	    // TODO : add an error/out state ?
-	    setState(State.locked);
-	} else if (type == Type.unavailable) {
-	    removeOccupant(occupantURI);
-	} else {
-	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
-	    for (final IPacket child : children) {
-		final IPacket item = child.getFirstChild("item");
-		final String affiliation = item.getAttribute("affiliation");
-		final String role = item.getAttribute("role");
-		setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
-		if (isNewRoom(child)) {
-		    requestCreateInstantRoom();
-		} else {
-		    if (ChatStates.ready.equals(getChatState())) {
-			setChatState(ChatStates.ready);
-		    }
-		}
-	    }
-	}
-    }
-
-    protected boolean isNewRoom(final IPacket xtension) {
-	final String code = xtension.getFirstChild("status").getAttribute("code");
-	return code != null && code.equals("201");
-    }
-
-    @Override
-    /**
-     * WARNING : breaking change, need to check (message.getBody() != null)
-     */
-    protected void receive(final Message message) {
-	if (message.getSubject() != null) {
-	    onSubjectChanged.fire(occupantsByURI.get(message.getFrom()), message.getSubject());
-	}
-	//
-	if (message.getType() == com.calclab.emite.core.client.xmpp.stanzas.Message.Type.error) {
-	    GWT.log("Received Error message :" + message);
-	    setChatState(ChatStates.locked);
-	}
-	super.receive(message);
-    }
-
-    protected void requestCreateInstantRoom() {
-	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
-	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
-
-	session.sendIQ("rooms", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(final IQ iq) {
-		if (IQ.isSuccess(iq)) {
-		    setChatState(ChatStates.ready);
-		}
-	    }
-	});
-
     }
 }

@@ -11,7 +11,7 @@ public class MessageTestHandler extends TestHandler<MessageEvent> implements Mes
     }
 
     @Override
-    public void onPacketEvent(final MessageEvent event) {
+    public void onMessage(final MessageEvent event) {
 	this.event = event;
     }
 

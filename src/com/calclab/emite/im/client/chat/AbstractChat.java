@@ -40,25 +40,53 @@ import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class AbstractChat implements Chat {
+    private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
     protected final XmppSession session;
     protected final ChatProperties properties;
     private final DefaultEmiteEventBus eventBus;
     private XmppURI currentChatUser;
+    private final ChatSelectionStrategy strategy;
 
-    public AbstractChat(final XmppSession session, final ChatProperties properties) {
+    public AbstractChat(final XmppSession session, final ChatProperties properties, final ChatSelectionStrategy strategy) {
 	this.session = session;
 	this.properties = properties;
+	this.strategy = strategy;
+
 	eventBus = new DefaultEmiteEventBus();
 	if (properties.getState() == null) {
 	    properties.setState(ChatStates.locked);
 	}
+	setPreviousChatState(getChatState());
 
+	// Control chat state when the user logout and login again
 	session.addSessionStateChangedHandler(new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
-		setStateFromSessionState(session);
+		if (session.isState(SessionState.ready)) {
+		    final XmppURI currentUser = session.getCurrentUser();
+		    if (currentChatUser == null) {
+			currentChatUser = currentUser;
+		    }
+		    boolean isSameUser = currentUser.equalsNoResource(currentChatUser);
+		    setChatState(isSameUser ? getPreviousChatState() : ChatStates.locked);
+		} else if (session.isState(SessionState.disconnected)) {
+		    // all chats are locked when the session is not ready
+		    setPreviousChatState(getChatState());
+		    setChatState(ChatStates.locked);
+		}
 	    }
 	}, true);
+
+	session.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		Message message = event.getMessage();
+		ChatProperties messageProperties = strategy.extractChatProperties(message);
+		if (strategy.isAssignable(AbstractChat.this, messageProperties)) {
+		    receive(message);
+		}
+	    }
+	});
     }
 
     @Override
@@ -86,15 +114,27 @@ public abstract class AbstractChat implements Chat {
 	return MessageSentEvent.bind(eventBus, handler);
     }
 
+    protected void fireBeforeReceive(final Message message) {
+	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
+    }
+
     @Override
     public EmiteEventBus getChatEventBus() {
 	return eventBus;
+    }
+
+    protected String getChatState() {
+	return properties.getState();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getData(final Class<T> type) {
 	return (T) properties.getData(type.toString());
+    }
+
+    private String getPreviousChatState() {
+	return (String) properties.getData(PREVIOUS_CHAT_STATE);
     }
 
     @Override
@@ -127,7 +167,7 @@ public abstract class AbstractChat implements Chat {
     public void onBeforeReceive(final Listener<Message> listener) {
 	addBeforeReceiveMessageHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		listener.onEvent(event.getMessage());
 	    }
 	});
@@ -137,7 +177,7 @@ public abstract class AbstractChat implements Chat {
     public void onBeforeSend(final Listener<Message> listener) {
 	addBeforeSendMessageHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		listener.onEvent(event.getMessage());
 	    }
 	});
@@ -147,7 +187,7 @@ public abstract class AbstractChat implements Chat {
     public void onMessageReceived(final Listener<Message> listener) {
 	addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		listener.onEvent(event.getMessage());
 	    }
 	});
@@ -157,7 +197,7 @@ public abstract class AbstractChat implements Chat {
     public void onMessageSent(final Listener<Message> listener) {
 	addMessageSentHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(final MessageEvent event) {
+	    public void onMessage(final MessageEvent event) {
 		listener.onEvent(event.getMessage());
 	    }
 	});
@@ -173,44 +213,17 @@ public abstract class AbstractChat implements Chat {
 	});
     }
 
+    protected void receive(final Message message) {
+	fireBeforeReceive(message);
+	eventBus.fireEvent(new MessageReceivedEvent(message));
+    }
+
     @Override
     public void send(final Message message) {
 	message.setFrom(session.getCurrentUser());
 	eventBus.fireEvent(new BeforeSendMessageEvent(message));
 	session.send(message);
 	eventBus.fireEvent(new MessageSentEvent(message));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T setData(final Class<T> type, final T value) {
-	String key = type != null ? type.toString() : null;
-	return (T) properties.setData(key, value);
-    }
-
-    private void setStateFromSessionState(final XmppSession session) {
-	if (session.isState(SessionState.ready) || session.isState(SessionState.loggedIn)) {
-	    final XmppURI currentUser = session.getCurrentUser();
-	    if (currentChatUser == null) {
-		currentChatUser = currentUser;
-	    }
-	    setChatState(currentUser.equalsNoResource(currentChatUser) ? ChatStates.ready : ChatStates.locked);
-	} else {
-	    setChatState(ChatStates.locked);
-	}
-    }
-
-    protected void fireBeforeReceive(final Message message) {
-	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
-    }
-
-    protected String getChatState() {
-	return properties.getState();
-    }
-
-    protected void receive(final Message message) {
-	fireBeforeReceive(message);
-	eventBus.fireEvent(new MessageReceivedEvent(message));
     }
 
     protected void setChatState(final String chatState) {
@@ -220,8 +233,20 @@ public abstract class AbstractChat implements Chat {
 	}
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T setData(final Class<T> type, final T value) {
+	String key = type != null ? type.toString() : null;
+	return (T) properties.setData(key, value);
+    }
+
+    private void setPreviousChatState(String chatState) {
+	properties.setData(PREVIOUS_CHAT_STATE, chatState);
+    }
+
     @Deprecated
     protected void setState(final State state) {
 	setChatState(state.toString());
     }
+
 }

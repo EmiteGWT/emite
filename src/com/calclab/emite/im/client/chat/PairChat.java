@@ -40,9 +40,12 @@ public class PairChat extends AbstractChat {
     private final String id;
 
     public PairChat(final XmppSession session, final ChatProperties properties) {
-	super(session, properties);
-	id = generateChatID();
+	this(session, properties, new PairChatSelectionStrategy());
+    }
 
+    public PairChat(final XmppSession session, final ChatProperties properties, ChatSelectionStrategy strategy) {
+	super(session, properties, strategy);
+	id = generateChatID();
     }
 
     @Override
@@ -57,6 +60,11 @@ public class PairChat extends AbstractChat {
 	return id.equals(other.id);
     }
 
+    private String generateChatID() {
+	return "chat: " + getURI().toString() + "-" + getThread();
+    }
+
+    @Override
     public String getID() {
 	return id;
     }
@@ -90,10 +98,6 @@ public class PairChat extends AbstractChat {
     @Override
     public String toString() {
 	return id;
-    }
-
-    private String generateChatID() {
-	return "chat: " + getURI().toString() + "-" + getThread();
     }
 
 }

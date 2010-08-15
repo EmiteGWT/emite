@@ -36,6 +36,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.suco.client.Suco;
@@ -57,7 +58,7 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
 
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onPacketEvent(MessageEvent event) {
+	    public void onMessage(MessageEvent event) {
 		Message message = event.getMessage();
 		IPacket child;
 		if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
@@ -100,7 +101,9 @@ public class RoomManagerImpl extends AbstractChatManager implements RoomManager 
 
     @Override
     protected Chat createChat(final ChatProperties properties) {
-	return new Room(session, properties);
+	// rooms are locked by default
+	properties.setState(ChatStates.locked);
+	return new Room(session, properties, strategy);
     }
 
     @Override
