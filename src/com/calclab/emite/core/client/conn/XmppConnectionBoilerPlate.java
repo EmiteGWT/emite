@@ -36,36 +36,17 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
     }
 
     @Override
-    public HandlerRegistration addStanzaReceivedHandler(final StanzaReceivedHandler handler) {
-	return eventBus.addHandler(StanzaReceivedEvent.getType(), handler);
+    public HandlerRegistration addStanzaReceivedHandler(final StanzaHandler handler) {
+	return StanzaReceivedEvent.bind(eventBus, handler);
     }
 
     @Override
-    public HandlerRegistration addStanzaSentHandler(final StanzaSentHandler handler) {
-	return eventBus.addHandler(StanzaSentEvent.getType(), handler);
+    public HandlerRegistration addStanzaSentHandler(final StanzaHandler handler) {
+	return StanzaSentEvent.bind(eventBus, handler);
     }
 
     public void clearErrors() {
 	errors = 0;
-    }
-
-    @Override
-    public EmiteEventBus getEventBus() {
-	return eventBus;
-    }
-
-    @Override
-    public boolean hasErrors() {
-	return errors != 0;
-    }
-
-    public int incrementErrors() {
-	errors++;
-	return errors;
-    }
-
-    public void setSettings(final ConnectionSettings settings) {
-	connectionSettings = settings;
     }
 
     protected void fireConnected() {
@@ -108,11 +89,26 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	return currentBody;
     }
 
+    @Override
+    public EmiteEventBus getEventBus() {
+	return eventBus;
+    }
+
     /**
      * @return the stream
      */
     protected StreamSettings getStream() {
 	return stream;
+    }
+
+    @Override
+    public boolean hasErrors() {
+	return errors != 0;
+    }
+
+    public int incrementErrors() {
+	errors++;
+	return errors;
     }
 
     /**
@@ -139,6 +135,11 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
      */
     protected void setCurrentBody(final Packet currentBody) {
 	this.currentBody = currentBody;
+    }
+
+    @Override
+    public void setSettings(final ConnectionSettings settings) {
+	connectionSettings = settings;
     }
 
     /**

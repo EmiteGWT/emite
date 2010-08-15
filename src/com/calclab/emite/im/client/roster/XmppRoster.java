@@ -29,10 +29,10 @@ import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 
@@ -60,6 +60,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
 	});
 
 	session.onPresence(new Listener<Presence>() {
+	    @Override
 	    public void onEvent(final Presence presence) {
 		final RosterItem item = getItemByJID(presence.getFrom());
 		if (item != null) {
@@ -82,6 +83,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
 	});
 
 	session.onIQ(new Listener<IQ>() {
+	    @Override
 	    public void onEvent(final IQ iq) {
 		if (iq.isType(IQ.Type.set)) {
 		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
@@ -97,58 +99,6 @@ public class XmppRoster extends AbstractRoster implements Roster {
 	});
     }
 
-    public void removeItem(final XmppURI uri) {
-	final RosterItem item = getItemByJID(uri.getJID());
-	if (item != null) {
-	    final IQ iq = new IQ(Type.set);
-	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
-	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
-	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
-    }
-
-    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
-	if (getItemByJID(jid) == null) {
-	    addOrUpdateItem(jid, name, null, groups);
-	}
-    }
-
-    @Override
-    public void requestUpdateItem(final RosterItem item) {
-	if (getItemByJID(item.getJID()) != null) {
-	    final IQ iq = new IQ(Type.set);
-	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-	    session.sendIQ("roster", iq, new Listener<IPacket>() {
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
-    }
-
-    @Override
-    public void requestUpdateItems(final Collection<RosterItem> items) {
-	final IQ iq = new IQ(Type.set);
-	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
-	for (final RosterItem item : items) {
-	    item.addStanzaTo(rosterQuery);
-	}
-	session.sendIQ("roster", iq, new Listener<IPacket>() {
-	    public void onEvent(final IPacket parameter) {
-	    }
-	});
-    }
-
-    public void updateItem(final XmppURI jid, final String name, final String... groups) {
-	final RosterItem oldItem = getItemByJID(jid);
-	if (oldItem != null) {
-	    final String newName = name == null ? oldItem.getName() : name;
-	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
-	}
-    }
-
     private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
 	    final String... groups) {
 	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
@@ -156,6 +106,7 @@ public class XmppRoster extends AbstractRoster implements Roster {
 	final IQ iq = new IQ(Type.set);
 	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
 	session.sendIQ("roster", iq, new Listener<IPacket>() {
+	    @Override
 	    public void onEvent(final IPacket parameter) {
 	    }
 	});
@@ -184,9 +135,32 @@ public class XmppRoster extends AbstractRoster implements Roster {
 	}
     }
 
+    @Override
+    public void removeItem(final XmppURI uri) {
+	final RosterItem item = getItemByJID(uri.getJID());
+	if (item != null) {
+	    final IQ iq = new IQ(Type.set);
+	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
+	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
+	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
+		@Override
+		public void onEvent(final IPacket parameter) {
+		}
+	    });
+	}
+    }
+
+    @Override
+    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
+	if (getItemByJID(jid) == null) {
+	    addOrUpdateItem(jid, name, null, groups);
+	}
+    }
+
     private void requestRoster(final XmppURI user) {
 	GWT.log("Request roster");
 	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
+	    @Override
 	    public void onEvent(final IPacket received) {
 		if (IQ.isSuccess(received)) {
 		    clearGroupAll();
@@ -196,9 +170,46 @@ public class XmppRoster extends AbstractRoster implements Roster {
 			storeItem(item);
 		    }
 		    fireRosterReady(getItems());
+		    session.setReady();
 		}
 	    }
 
 	});
+    }
+
+    @Override
+    public void requestUpdateItem(final RosterItem item) {
+	if (getItemByJID(item.getJID()) != null) {
+	    final IQ iq = new IQ(Type.set);
+	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
+	    session.sendIQ("roster", iq, new Listener<IPacket>() {
+		@Override
+		public void onEvent(final IPacket parameter) {
+		}
+	    });
+	}
+    }
+
+    @Override
+    public void requestUpdateItems(final Collection<RosterItem> items) {
+	final IQ iq = new IQ(Type.set);
+	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
+	for (final RosterItem item : items) {
+	    item.addStanzaTo(rosterQuery);
+	}
+	session.sendIQ("roster", iq, new Listener<IPacket>() {
+	    @Override
+	    public void onEvent(final IPacket parameter) {
+	    }
+	});
+    }
+
+    @Override
+    public void updateItem(final XmppURI jid, final String name, final String... groups) {
+	final RosterItem oldItem = getItemByJID(jid);
+	if (oldItem != null) {
+	    final String newName = name == null ? oldItem.getName() : name;
+	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
+	}
     }
 }

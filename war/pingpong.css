@@ -14,3 +14,5 @@ body,div,p,a {
 .sent {color: #0c0;}
 .session {color: gray;}
 .info {color: gray;}
+.stanzaReceived {color: #00c; font-size: 80%; margin: 1px 0 1px 40px;}
+.stanzaSent {color: #0c0; font-size: 80%; margin: 1px 0 1px 40px;}

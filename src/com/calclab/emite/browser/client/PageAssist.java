@@ -6,7 +6,7 @@ import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -63,7 +63,7 @@ public class PageAssist {
 
     private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
-    public static void closeSession(final Session session) {
+    public static void closeSession(final XmppSession session) {
 	Cookies.removeCookie(PAUSE_COOKIE);
 	session.logout();
     }
@@ -183,7 +183,7 @@ public class PageAssist {
      *            the session to be logged in
      * @return true if meta parameters value are presents, false otherwise
      */
-    public static final boolean loginFromMeta(final Session session) {
+    public static final boolean loginFromMeta(final XmppSession session) {
 	final String userJID = getMeta(PARAM_JID);
 	final String password = getMeta(PARAM_PASSWORD);
 	String encodingMethod = getMeta(PARAM_PASSWORD_ENCODING);
@@ -208,7 +208,7 @@ public class PageAssist {
      * @return true if the session is paused (if the session was ready), false
      *         otherwise
      */
-    public static final boolean pauseSession(final Session session) {
+    public static final boolean pauseSession(final XmppSession session) {
 	GWT.log("Pausing connection...", null);
 	final StreamSettings stream = session.pause();
 	if (stream != null) {
@@ -238,7 +238,7 @@ public class PageAssist {
      *         resumed), false otherwise. True doesn't mean the sessions is
      *         <b>succesfully</b> resumed.
      */
-    public static final boolean resumeSession(final Session session) {
+    public static final boolean resumeSession(final XmppSession session) {
 	final String pause = Cookies.getCookie(PAUSE_COOKIE);
 	if (pause != null) {
 	    GWT.log(("Resume session: " + pause), null);

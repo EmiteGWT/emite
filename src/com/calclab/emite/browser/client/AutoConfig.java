@@ -22,7 +22,7 @@
 package com.calclab.emite.browser.client;
 
 import com.calclab.emite.core.client.conn.Connection;
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
@@ -51,9 +51,9 @@ public class AutoConfig {
     protected static final String LOGOUT = "logout";
 
     private final Connection connection;
-    private final Session session;
+    private final XmppSession session;
 
-    public AutoConfig(final Connection connection, final Session session) {
+    public AutoConfig(final Connection connection, final XmppSession session) {
 	this.connection = connection;
 	this.session = session;
 	initialize();
@@ -73,6 +73,7 @@ public class AutoConfig {
     private void prepareOnCloseAction(final String sessionBehaviour) {
 	GWT.log("PageController - configuring close action...", null);
 	Window.addCloseHandler(new CloseHandler<Window>() {
+	    @Override
 	    public void onClose(final CloseEvent<Window> arg0) {
 		if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
 		    GWT.log("PAUSING SESSION...");
@@ -89,7 +90,7 @@ public class AutoConfig {
     }
 
     private void prepareOnOpenAction(final String sessionBehaviour) {
-	GWT.log("PageController - trying to resume...", null);
+	GWT.log("SESSION BEHAVIOUR: " + sessionBehaviour);
 	if (sessionBehaviour.equals(LOGIN)) {
 	    PageAssist.loginFromMeta(session);
 	} else if (sessionBehaviour.equals(RESUME)) {

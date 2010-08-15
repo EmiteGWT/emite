@@ -21,8 +21,8 @@
  */
 package com.calclab.emite.core.client.xmpp.resource;
 
-import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
-import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
+import com.calclab.emite.core.client.conn.StanzaEvent;
+import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -35,9 +35,9 @@ public class ResourceBindingManager {
     public ResourceBindingManager(final XmppConnection connection) {
 	this.connection = connection;
 
-	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		final IPacket received = event.getStanza();
 		if ("bind-resource".equals(received.getAttribute("id"))) {
 		    final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();

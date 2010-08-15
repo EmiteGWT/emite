@@ -73,18 +73,18 @@ public abstract class AbstractConnection {
     }
 
     public void onStanzaReceived(final Listener<IPacket> listener) {
-	delegate.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	delegate.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		listener.onEvent(event.getStanza());
 	    }
 	});
     }
 
     public void onStanzaSent(final Listener<IPacket> listener) {
-	delegate.addStanzaSentHandler(new StanzaSentHandler() {
+	delegate.addStanzaSentHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaSent(final StanzaSentEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		listener.onEvent(event.getStanza());
 	    }
 	});

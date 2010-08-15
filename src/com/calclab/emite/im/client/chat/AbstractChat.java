@@ -46,6 +46,11 @@ public abstract class AbstractChat extends ChatBoilerplate {
     }
 
     @Override
+    public boolean isReady() {
+	return ChatStates.ready.equals(getChatState());
+    }
+
+    @Override
     public void open() {
 
     }

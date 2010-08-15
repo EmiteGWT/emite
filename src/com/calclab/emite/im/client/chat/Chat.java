@@ -180,6 +180,13 @@ public interface Chat {
      */
     public boolean isInitiatedByMe();
 
+    /**
+     * Return true if the chat is ready to be used
+     * 
+     * @return
+     */
+    public boolean isReady();
+
     public void onBeforeReceive(Listener<Message> listener);
 
     /**

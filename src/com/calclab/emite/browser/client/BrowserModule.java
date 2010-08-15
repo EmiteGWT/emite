@@ -22,7 +22,7 @@
 package com.calclab.emite.browser.client;
 
 import com.calclab.emite.core.client.conn.Connection;
-import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
@@ -127,21 +127,22 @@ public class BrowserModule extends AbstractModule implements EntryPoint {
 	super();
     }
 
-    public void onModuleLoad() {
-	Suco.install(this);
-	if (PageAssist.isMetaTrue("emite.autoConfig")) {
-	    Suco.get(AutoConfig.class);
-	}
-    }
-
     @Override
     protected void onInstall() {
 	register(Singleton.class, new Factory<AutoConfig>(AutoConfig.class) {
 	    @Override
 	    public AutoConfig create() {
-		return new AutoConfig($(Connection.class), $(Session.class));
+		return new AutoConfig($(Connection.class), $(XmppSession.class));
 	    }
 	});
+    }
+
+    @Override
+    public void onModuleLoad() {
+	Suco.install(this);
+	if (PageAssist.isMetaTrue("emite.autoConfig")) {
+	    Suco.get(AutoConfig.class);
+	}
     }
 
 }

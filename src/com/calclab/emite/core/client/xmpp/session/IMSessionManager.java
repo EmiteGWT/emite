@@ -21,8 +21,8 @@
  */
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
-import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
+import com.calclab.emite.core.client.conn.StanzaEvent;
+import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -41,9 +41,9 @@ public class IMSessionManager {
     public IMSessionManager(final XmppConnection connection) {
 	this.connection = connection;
 
-	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		final IPacket stanza = event.getStanza();
 		if ("im-session-request".equals(stanza.getAttribute("id"))) {
 		    connection.getEventBus().fireEvent(

@@ -21,8 +21,8 @@
  */
 package com.calclab.emite.core.client.xmpp.sasl;
 
-import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
-import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
+import com.calclab.emite.core.client.conn.StanzaEvent;
+import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -45,9 +45,9 @@ public class SASLManager {
 	eventBus = connection.getEventBus();
 	this.decoders = decoders;
 
-	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		final IPacket stanza = event.getStanza();
 		final String name = stanza.getName();
 		if ("failure".equals(name)) { // & XMLNS
@@ -58,24 +58,6 @@ public class SASLManager {
 		currentCredentials = null;
 	    }
 	});
-    }
-
-    public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
-	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
-	    @Override
-	    public void onAuthorization(final AuthorizationResultEvent event) {
-		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());
-		transaction.setState(event.isSucceed() ? State.succeed : State.failed);
-		listener.onEvent(transaction);
-	    }
-	});
-    }
-
-    public void sendAuthorizationRequest(final Credentials credentials) {
-	currentCredentials = credentials;
-	final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization()
-		: createPlainAuthorization(credentials);
-	connection.send(response);
     }
 
     private IPacket createAnonymousAuthorization() {
@@ -104,6 +86,24 @@ public class SASLManager {
     private String encodeForPlainMethod(final String domain, final String userName, final String password) {
 	final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 	return Base64Coder.encodeString(auth);
+    }
+
+    public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
+	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
+	    @Override
+	    public void onAuthorization(final AuthorizationResultEvent event) {
+		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());
+		transaction.setState(event.isSucceed() ? State.succeed : State.failed);
+		listener.onEvent(transaction);
+	    }
+	});
+    }
+
+    public void sendAuthorizationRequest(final Credentials credentials) {
+	currentCredentials = credentials;
+	final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization()
+		: createPlainAuthorization(credentials);
+	connection.send(response);
     }
 
 }

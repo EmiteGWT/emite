@@ -7,6 +7,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public interface XmppConnection {
 
+    HandlerRegistration addConnectionHandler(ConnectionStateHandler handler);
+
+    HandlerRegistration addConnectionResponseHandler(ConnectionResponseHandler handler);
+
+    HandlerRegistration addStanzaReceivedHandler(StanzaHandler handler);
+
+    HandlerRegistration addStanzaSentHandler(StanzaHandler handler);
+
     public abstract void connect();
 
     public abstract void disconnect();
@@ -33,12 +41,4 @@ public interface XmppConnection {
     public abstract void send(final IPacket packet);
 
     public abstract void setSettings(ConnectionSettings settings);
-
-    HandlerRegistration addConnectionHandler(ConnectionStateHandler handler);
-
-    HandlerRegistration addConnectionResponseHandler(ConnectionResponseHandler handler);
-
-    HandlerRegistration addStanzaReceivedHandler(StanzaReceivedHandler handler);
-
-    HandlerRegistration addStanzaSentHandler(StanzaSentHandler handler);
 }

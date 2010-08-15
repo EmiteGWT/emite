@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateHandler;
-import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
-import com.calclab.emite.core.client.conn.StanzaReceivedHandler;
-import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
+import com.calclab.emite.core.client.conn.ConnectionStateHandler;
+import com.calclab.emite.core.client.conn.StanzaEvent;
+import com.calclab.emite.core.client.conn.StanzaHandler;
+import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -63,9 +63,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	iqManager = new IQManager();
 	queuedStanzas = new ArrayList<IPacket>();
 
-	connection.addStanzaReceivedHandler(new StanzaReceivedHandler() {
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
-	    public void onStanzaReceived(final StanzaReceivedEvent event) {
+	    public void onStanza(final StanzaEvent event) {
 		final IPacket stanza = event.getStanza();
 		final String name = stanza.getName();
 		if (name.equals("message")) {
@@ -136,10 +136,16 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	});
     }
 
+    private void disconnect() {
+	connection.disconnect();
+    }
+
+    @Override
     public XmppURI getCurrentUser() {
 	return userURI;
     }
 
+    @Override
     public boolean isLoggedIn() {
 	return userURI != null;
     }
@@ -154,6 +160,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
     }
 
+    @Override
     public void logout() {
 	if (getSessionState() != XmppSession.SessionState.disconnected && userURI != null) {
 	    // TODO : To be reviewed, preventing unvailable presences to be sent
@@ -166,10 +173,12 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	}
     }
 
+    @Override
     public StreamSettings pause() {
 	return connection.pause();
     }
 
+    @Override
     public void resume(final XmppURI userURI, final StreamSettings settings) {
 	this.userURI = userURI;
 	setSessionState(XmppSession.SessionState.resume);
@@ -177,6 +186,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	setSessionState(XmppSession.SessionState.ready);
     }
 
+    @Override
     public void send(final IPacket packet) {
 	// Added a condition to check the connection is not retrying...
 	if (!connection.hasErrors()
@@ -190,26 +200,11 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	}
     }
 
+    @Override
     public void sendIQ(final String category, final IQ iq, final IQResponseHandler handler) {
 	final String id = iqManager.register(category, handler);
 	iq.setAttribute("id", id);
 	send(iq);
-    }
-
-    public void setReady() {
-	if (isLoggedIn()) {
-	    setSessionState(XmppSession.SessionState.ready);
-	}
-    }
-
-    @Override
-    public String toString() {
-	return "Session " + userURI + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
-		+ connection.toString();
-    }
-
-    private void disconnect() {
-	connection.disconnect();
     }
 
     private void sendQueuedStanzas() {
@@ -227,10 +222,23 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     }
 
     @Override
+    public void setReady() {
+	if (isLoggedIn()) {
+	    setSessionState(XmppSession.SessionState.ready);
+	}
+    }
+
+    @Override
     protected void setSessionState(final String newState) {
 	if (newState == XmppSession.SessionState.ready) {
 	    sendQueuedStanzas();
 	}
 	super.setSessionState(newState);
+    }
+
+    @Override
+    public String toString() {
+	return "Session " + userURI + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
+		+ connection.toString();
     }
 }
