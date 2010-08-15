@@ -21,12 +21,8 @@
  */
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 
 /**
@@ -42,18 +38,11 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 public class PairChat extends AbstractChat {
     private static final String PAIRCHAT_THREAD_PROP = "pairchat.thred";
     private final String id;
-    private XmppURI currentChatUser;
 
     public PairChat(final XmppSession session, final ChatProperties properties) {
 	super(session, properties);
 	id = generateChatID();
 
-	session.addSessionStateChangedHandler(new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(final StateChangedEvent event) {
-		setStateFromSessionState(session);
-	    }
-	}, true);
     }
 
     @Override
@@ -105,18 +94,6 @@ public class PairChat extends AbstractChat {
 
     private String generateChatID() {
 	return "chat: " + getURI().toString() + "-" + getThread();
-    }
-
-    private void setStateFromSessionState(final XmppSession session) {
-	if (session.isState(SessionState.ready) || session.isState(SessionState.loggedIn)) {
-	    final XmppURI currentUser = session.getCurrentUser();
-	    if (currentChatUser == null) {
-		currentChatUser = currentUser;
-	    }
-	    setChatState(currentUser.equalsNoResource(currentChatUser) ? ChatStates.ready : ChatStates.locked);
-	} else {
-	    setChatState(ChatStates.locked);
-	}
     }
 
 }

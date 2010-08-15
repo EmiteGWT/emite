@@ -14,7 +14,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.PairChatManager;
+import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
 import com.calclab.suco.testing.events.MockedListener;
@@ -120,7 +120,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     }
 
     @Override
-    protected PairChatManager createChatManager() {
+    protected ChatManager createChatManager() {
 	final RoomManagerImpl roomManager = new RoomManagerImpl(session);
 	return roomManager;
     }

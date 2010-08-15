@@ -29,6 +29,7 @@ import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
@@ -42,6 +43,7 @@ public abstract class AbstractChat implements Chat {
     protected final XmppSession session;
     protected final ChatProperties properties;
     private final DefaultEmiteEventBus eventBus;
+    private XmppURI currentChatUser;
 
     public AbstractChat(final XmppSession session, final ChatProperties properties) {
 	this.session = session;
@@ -50,6 +52,13 @@ public abstract class AbstractChat implements Chat {
 	if (properties.getState() == null) {
 	    properties.setState(ChatStates.locked);
 	}
+
+	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(final StateChangedEvent event) {
+		setStateFromSessionState(session);
+	    }
+	}, true);
     }
 
     @Override
@@ -101,6 +110,7 @@ public abstract class AbstractChat implements Chat {
 	}
     }
 
+    // FIXME: rename to getUri
     public XmppURI getURI() {
 	return properties.getUri();
     }
@@ -166,8 +176,24 @@ public abstract class AbstractChat implements Chat {
 	return (T) properties.setData(type.toString(), value);
     }
 
+    private void setStateFromSessionState(final XmppSession session) {
+	if (session.isState(SessionState.ready) || session.isState(SessionState.loggedIn)) {
+	    final XmppURI currentUser = session.getCurrentUser();
+	    if (currentChatUser == null) {
+		currentChatUser = currentUser;
+	    }
+	    setChatState(currentUser.equalsNoResource(currentChatUser) ? ChatStates.ready : ChatStates.locked);
+	} else {
+	    setChatState(ChatStates.locked);
+	}
+    }
+
     protected void fireBeforeReceive(final Message message) {
 	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
+    }
+
+    protected String getChatState() {
+	return properties.getState();
     }
 
     protected void receive(final Message message) {

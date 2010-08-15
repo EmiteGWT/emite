@@ -30,6 +30,8 @@ import java.util.Date;
  */
 public class HistoryOptions {
 
+    public static final String KEY = "RoomHistoryOptions";
+
     /**
      * Limit the total number of characters in the history to "X" (where the
      * character count is the characters of the complete XML stanzas, not only
@@ -61,11 +63,11 @@ public class HistoryOptions {
 	this(-1, -1, -1, null);
     }
 
-    public HistoryOptions(int maxchars, int maxstanzas, long l, Date since) {
+    public HistoryOptions(final int maxchars, final int maxstanzas, final long l, final Date since) {
 	super();
 	this.maxchars = maxchars;
 	this.maxstanzas = maxstanzas;
-	this.seconds = l;
+	seconds = l;
 	this.since = since;
     }
 

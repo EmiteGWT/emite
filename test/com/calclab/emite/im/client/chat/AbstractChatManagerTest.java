@@ -13,7 +13,7 @@ import com.calclab.suco.testing.events.MockedListener;
 public abstract class AbstractChatManagerTest {
     protected static final XmppURI MYSELF = uri("self@domain");
     protected static final XmppURI OTHER = uri("other@domain");
-    protected PairChatManager manager;
+    protected ChatManager manager;
     protected XmppSessionTester session;
 
     @Before
@@ -46,5 +46,5 @@ public abstract class AbstractChatManagerTest {
 	assertTrue(listener.isCalledOnce());
     }
 
-    protected abstract PairChatManager createChatManager();
+    protected abstract ChatManager createChatManager();
 }
