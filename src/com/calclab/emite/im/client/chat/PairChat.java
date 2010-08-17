@@ -67,10 +67,6 @@ public class PairChat extends AbstractChat {
 	return id.equals(other.id);
     }
 
-    private String generateChatID() {
-	return "chat: " + getURI().toString() + "-" + getThread();
-    }
-
     @Override
     public String getID() {
 	return id;
@@ -92,7 +88,7 @@ public class PairChat extends AbstractChat {
 
     @Override
     public void open() {
-	setChatState(ChatStates.locked);
+	setChatState(ChatStates.ready);
     }
 
     @Override
@@ -110,6 +106,10 @@ public class PairChat extends AbstractChat {
     @Override
     public String toString() {
 	return id;
+    }
+
+    private String generateChatID() {
+	return "chat: " + getURI().toString() + "-" + getThread();
     }
 
 }

@@ -23,8 +23,9 @@ public class ChatTest extends AbstractChatTest {
     @Before
     public void beforeTests() {
 	session = new XmppSessionTester(USER_URI);
+	PairChatManager manager = new PairChatManager(session);
 	final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.ready);
-	pairChat = new PairChat(session, properties);
+	pairChat = (PairChat) manager.openChat(properties, true);
 	pairChat.setThread("theThread");
     }
 
@@ -44,6 +45,7 @@ public class ChatTest extends AbstractChatTest {
     public void shouldLockIfLogoutAndUnlockWhenLogginWithSameUser() {
 	final MockedListener<State> listener = new MockedListener<State>();
 	pairChat.onStateChanged(listener);
+	assertEquals(Chat.State.ready, pairChat.getState());
 	session.logout();
 	assertTrue(listener.isCalledWithSame(Chat.State.locked));
 	listener.clear();

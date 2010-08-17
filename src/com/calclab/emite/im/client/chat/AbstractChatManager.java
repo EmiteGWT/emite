@@ -1,11 +1,11 @@
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -21,8 +21,35 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	controlSessionStatus();
     }
 
-    protected void addChat(final Chat chat) {
-	chats.add(chat);
+    @Override
+    public void close(final Chat chat) {
+	chat.close();
+	getChats().remove(chat);
+	fireChatClosed(chat);
+    }
+
+    @Override
+    public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
+	for (final Chat chat : chats) {
+	    if (strategy.isAssignable(chat, properties)) {
+		return chat;
+	    }
+	}
+	if (createIfNotFound) {
+	}
+	return null;
+    }
+
+    @Override
+    public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
+	Chat chat = getChat(properties, false);
+	if (chat == null && createIfNotFound) {
+	    properties.setInitiatorUri(session.getCurrentUser());
+	    chat = addNewChat(properties);
+	}
+	chat.open();
+	fireChatOpened(chat);
+	return chat;
     }
 
     /**
@@ -35,13 +62,6 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	addChat(chat);
 	fireChatCreated(chat);
 	return chat;
-    }
-
-    @Override
-    public void close(final Chat chat) {
-	chat.close();
-	getChats().remove(chat);
-	fireChatClosed(chat);
     }
 
     private void controlSessionStatus() {
@@ -69,27 +89,6 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 
     }
 
-    /**
-     * A template method: the subclass must return a new object of class Chat
-     * 
-     * @param properties
-     *            the properties of the chat
-     * @return a new chat. must not be null
-     */
-    protected abstract Chat createChat(ChatProperties properties);
-
-    protected void fireChatClosed(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
-    }
-
-    protected void fireChatCreated(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
-    }
-
-    protected void fireChatOpened(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
-    }
-
     private void forwardMessagesToChats() {
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
@@ -111,27 +110,29 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	});
     }
 
-    @Override
-    public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
-	for (final Chat chat : chats) {
-	    if (strategy.isAssignable(chat, properties)) {
-		return chat;
-	    }
-	}
-	if (createIfNotFound) {
-	}
-	return null;
+    protected void addChat(final Chat chat) {
+	chats.add(chat);
     }
 
-    @Override
-    public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
-	Chat chat = getChat(properties, false);
-	if (chat == null && createIfNotFound) {
-	    properties.setInitiatorUri(session.getCurrentUser());
-	    chat = addNewChat(properties);
-	}
-	fireChatOpened(chat);
-	return chat;
+    /**
+     * A template method: the subclass must return a new object of class Chat
+     * 
+     * @param properties
+     *            the properties of the chat
+     * @return a new chat. must not be null
+     */
+    protected abstract Chat createChat(ChatProperties properties);
+
+    protected void fireChatClosed(final Chat chat) {
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
+    }
+
+    protected void fireChatCreated(final Chat chat) {
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
+    }
+
+    protected void fireChatOpened(final Chat chat) {
+	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
     }
 
 }

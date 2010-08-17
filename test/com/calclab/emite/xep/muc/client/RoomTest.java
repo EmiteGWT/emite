@@ -10,13 +10,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 import com.calclab.suco.testing.events.MockedListener2;
@@ -33,23 +33,14 @@ public class RoomTest extends AbstractChatTest {
 	userURI = uri("user@domain/res");
 	roomURI = uri("room@domain/nick");
 	session = new XmppSessionTester(userURI);
+	RoomManagerImpl manager = new RoomManagerImpl(session);
 	final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
-	room = new Room(session, properties);
+	room = (Room) manager.openChat(properties, true);
     }
 
     @Override
     public AbstractChat getChat() {
 	return room;
-    }
-
-    private void receiveInstantRoomCreation(final XmppURI room) {
-	session.receives("<presence to='user@domain/res' from='" + room + "'>"
-		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item affiliation='owner' role='moderator'/><status code='201'/></x></presence>");
-	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
-		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
-		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
-	session.answerSuccess();
     }
 
     @Test
@@ -143,6 +134,16 @@ public class RoomTest extends AbstractChatTest {
 	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator", Show.notSpecified, null);
 	assertEquals(1, listener.getCalledTimes());
 	assertSame(occupant, occupant2);
+    }
+
+    private void receiveInstantRoomCreation(final XmppURI room) {
+	session.receives("<presence to='user@domain/res' from='" + room + "'>"
+		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
+		+ "<item affiliation='owner' role='moderator'/><status code='201'/></x></presence>");
+	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
+		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
+		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
+	session.answerSuccess();
     }
 
 }
