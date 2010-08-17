@@ -6,10 +6,10 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomManager;
-import com.calclab.emite.xxamples.pingpong.client.ChatEventsSupervisor;
-import com.calclab.emite.xxamples.pingpong.client.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
+import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
 import com.calclab.suco.client.Suco;
 
 /**
@@ -35,10 +35,10 @@ public class PongRoomPresenter {
 
 	RoomManager roomManager = Suco.get(RoomManager.class);
 	new ChatManagerEventsSupervisor(roomManager, display);
+	new RoomManagerEventsSupervisor(roomManager, display);
 
 	// Because is a RoomManager, we know this MUST be a room
 	final Room room = (Room) roomManager.open(roomUri);
-	new ChatEventsSupervisor(room, display);
 	room.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
 	    public void onMessage(MessageEvent event) {

@@ -10,7 +10,8 @@ public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
     @Override
     public ChatProperties extractChatProperties(BasicStanza stanza) {
 	ChatProperties properties = new ChatProperties(stanza.getFrom().getJID());
-	boolean isGroupChatMessage = stanza.getAttribute("type").equals("groupchat");
+	String stanzaType = stanza.getAttribute("type");
+	boolean isGroupChatMessage = stanzaType != null && stanzaType.equals("groupchat");
 	properties.setShouldCreateNewChat(isGroupChatMessage);
 	return properties;
     }

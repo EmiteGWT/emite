@@ -5,6 +5,7 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
 import com.calclab.suco.client.Suco;
 
 public class PingRoomPresenter extends PingChatPresenter {
@@ -17,7 +18,9 @@ public class PingRoomPresenter extends PingChatPresenter {
     protected ChatManager getChatManager() {
 	display.printHeader("This is ping room example", Style.title);
 	display.printHeader("You need to open the pong room example page in order to run the example", Style.important);
-	return Suco.get(RoomManager.class);
+	RoomManager roomManager = Suco.get(RoomManager.class);
+	new RoomManagerEventsSupervisor(roomManager, display);
+	return roomManager;
     }
 
 }

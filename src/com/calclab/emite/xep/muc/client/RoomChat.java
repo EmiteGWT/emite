@@ -25,7 +25,8 @@ import java.util.List;
 
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
@@ -44,6 +45,7 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * A Room implementation. You can create rooms using RoomManager.
@@ -67,19 +69,18 @@ public class RoomChat extends RoomBoilerplate {
 	super(session, properties);
 	setChatState(ChatStates.locked);
 
-	// @see http://www.xmpp.org/extensions/xep-0045.html#createroom
-	session.addPresenceReceivedHandler(new PresenceHandler() {
+	addPresenceReceivedHandler(new PresenceHandler() {
 	    @Override
-	    public void onPresence(final PresenceEvent event) {
-		final Presence presence = event.getPresence();
-		final XmppURI occupantURI = presence.getFrom();
-		final XmppURI roomURI = properties.getUri();
-		if (roomURI.equalsNoResource(occupantURI)) {
-		    handlePresence(occupantURI, presence);
-		}
+	    public void onPresence(PresenceEvent event) {
+		handlePresence(event.getPresence());
 	    }
 	});
 
+    }
+
+    @Override
+    public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler) {
+	return PresenceReceivedEvent.bind(chatEventBus, handler);
     }
 
     /*
@@ -128,7 +129,8 @@ public class RoomChat extends RoomBoilerplate {
      */
     @Override
     public boolean isUserMessage(Message message) {
-	return message.getFrom().getResource() == null;
+	String resource = message.getFrom().getResource();
+	return resource != null && !"".equals(resource);
     }
 
     /*
@@ -168,7 +170,7 @@ public class RoomChat extends RoomBoilerplate {
     public void removeOccupant(final XmppURI uri) {
 	final Occupant occupant = occupantsByURI.remove(uri);
 	if (occupant != null) {
-	    eventBus.fireEvent(new OccupantChangedEvent(ChangeEventTypes.removed, occupant));
+	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.removed, occupant));
 	}
     }
 
@@ -204,7 +206,7 @@ public class RoomChat extends RoomBoilerplate {
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
 	session.send(message);
-	eventBus.fireEvent(new RoomInvitationSentEvent(userJid, reasonText));
+	chatEventBus.fireEvent(new RoomInvitationSentEvent(userJid, reasonText));
     }
 
     /*
@@ -224,13 +226,13 @@ public class RoomChat extends RoomBoilerplate {
 	if (occupant == null) {
 	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
 	    occupantsByURI.put(occupant.getURI(), occupant);
-	    eventBus.fireEvent(new OccupantChangedEvent(ChangeEventTypes.added, occupant));
+	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.added, occupant));
 	} else {
 	    occupant.setAffiliation(affiliation);
 	    occupant.setRole(role);
 	    occupant.setShow(show);
 	    occupant.setStatusMessage(statusMessage);
-	    eventBus.fireEvent(new OccupantChangedEvent(ChangeEventTypes.modified, occupant));
+	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.modified, occupant));
 	}
 	return occupant;
     }
@@ -299,7 +301,10 @@ public class RoomChat extends RoomBoilerplate {
 	return presence;
     }
 
-    protected void handlePresence(final XmppURI occupantURI, final Presence presence) {
+    protected void handlePresence(final Presence presence) {
+	GWT.log("ROOM PRESENCE");
+
+	final XmppURI occupantURI = presence.getFrom();
 	final Type type = presence.getType();
 	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
 	    // TODO : add an error/out state ?
@@ -316,9 +321,7 @@ public class RoomChat extends RoomBoilerplate {
 		if (isNewRoom(child)) {
 		    requestCreateInstantRoom();
 		} else {
-		    if (ChatStates.ready.equals(getChatState())) {
-			setChatState(ChatStates.ready);
-		    }
+		    setChatState(ChatStates.ready);
 		}
 	    }
 	}
@@ -332,8 +335,8 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     protected void receive(final Message message) {
 	if (message.getSubject() != null) {
-	    eventBus
-		    .fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message.getSubject()));
+	    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
+		    .getSubject()));
 	}
 	if (message.getType() == Message.Type.error) {
 	    GWT.log("Received Error message :" + message);

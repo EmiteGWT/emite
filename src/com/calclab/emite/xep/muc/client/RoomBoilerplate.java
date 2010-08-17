@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
@@ -35,7 +35,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
      */
     @Override
     public HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler) {
-	return OccupantChangedEvent.bind(eventBus, handler);
+	return OccupantChangedEvent.bind(chatEventBus, handler);
     }
 
     /**
@@ -45,7 +45,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
      * @return
      */
     public HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentHandler handler) {
-	return RoomInvitationSentEvent.bind(eventBus, handler);
+	return RoomInvitationSentEvent.bind(chatEventBus, handler);
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
      * @return
      */
     public HandlerRegistration addRoomSubjectChangedHandler(RoomSubjectChangedHandler handler) {
-	return RoomSubjectChangedEvent.bind(eventBus, handler);
+	return RoomSubjectChangedEvent.bind(chatEventBus, handler);
     }
 
     @Override
@@ -91,7 +91,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeEventTypes.added)) {
+		if (event.is(ChangeTypes.added)) {
 		    listener.onEvent(event.getOccupant());
 		}
 	    }
@@ -103,7 +103,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeEventTypes.modified)) {
+		if (event.is(ChangeTypes.modified)) {
 		    listener.onEvent(event.getOccupant());
 		}
 	    }
@@ -114,7 +114,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeEventTypes.removed)) {
+		if (event.is(ChangeTypes.removed)) {
 		    listener.onEvent(event.getOccupant());
 		}
 	    }

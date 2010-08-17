@@ -2,7 +2,6 @@ package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
@@ -50,18 +49,6 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	return chat;
     }
 
-    /**
-     * This method creates a new chat, add it to the pool and fire the event
-     * 
-     * @param properties
-     */
-    private Chat addNewChat(final ChatProperties properties) {
-	final Chat chat = createChat(properties);
-	addChat(chat);
-	fireChatCreated(chat);
-	return chat;
-    }
-
     private void controlSessionStatus() {
 	// Control chat state when the user logout and login again
 	session.addSessionStateChangedHandler(new StateChangedHandler() {
@@ -101,7 +88,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 			chat = addNewChat(properties);
 		    }
 		    if (chat != null) {
-			chat.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
+			chat.getChatEventBus().fireEvent(event);
 		    }
 		}
 	    }
@@ -110,6 +97,18 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 
     protected void addChat(final Chat chat) {
 	chats.add(chat);
+    }
+
+    /**
+     * This method creates a new chat, add it to the pool and fire the event
+     * 
+     * @param properties
+     */
+    protected Chat addNewChat(final ChatProperties properties) {
+	final Chat chat = createChat(properties);
+	addChat(chat);
+	fireChatCreated(chat);
+	return chat;
     }
 
     /**

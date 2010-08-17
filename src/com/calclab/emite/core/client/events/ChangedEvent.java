@@ -15,7 +15,7 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public abstract class ChangedEvent<T extends EventHandler> extends GwtEvent<T> {
 
-    public static final class ChangeEventTypes {
+    public static final class ChangeTypes {
 	public static final String removed = "removed";
 	public static final String added = "added";
 	public static final String modified = "modified";
@@ -47,27 +47,27 @@ public abstract class ChangedEvent<T extends EventHandler> extends GwtEvent<T> {
     }
 
     public boolean isAdded() {
-	return ChangeEventTypes.added.equals(changeType);
+	return ChangeTypes.added.equals(changeType);
     }
 
     public boolean isClosed() {
-	return ChangeEventTypes.closed.equals(changeType);
+	return ChangeTypes.closed.equals(changeType);
     }
 
     public boolean isCreated() {
-	return ChangeEventTypes.created.equals(changeType);
+	return ChangeTypes.created.equals(changeType);
     }
 
     public boolean isModified() {
-	return ChangeEventTypes.modified.equals(changeType);
+	return ChangeTypes.modified.equals(changeType);
     }
 
     public boolean isOpened() {
-	return ChangeEventTypes.opened.equals(changeType);
+	return ChangeTypes.opened.equals(changeType);
     }
 
     public boolean isRemoved() {
-	return ChangeEventTypes.removed.equals(changeType);
+	return ChangeTypes.removed.equals(changeType);
     }
 
     @Override

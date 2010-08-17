@@ -14,6 +14,7 @@ public interface PingPongDisplay {
 	public static final String sent = "sent";
 	public static final String stanzaReceived = "stanzaReceived";
 	public static final String stanzaSent = "stanzaSent";
+	public static final String event = "event";
     }
 
     public void addClearClickHandler(ClickHandler handler);

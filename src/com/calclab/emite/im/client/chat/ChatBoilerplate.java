@@ -20,24 +20,24 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public abstract class ChatBoilerplate implements Chat {
     protected final XmppSession session;
     protected final ChatProperties properties;
-    protected final GwtEmiteEventBus eventBus;
+    protected final GwtEmiteEventBus chatEventBus;
 
     private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
 
     public ChatBoilerplate(XmppSession session, ChatProperties properties) {
 	this.session = session;
 	this.properties = properties;
-	eventBus = new GwtEmiteEventBus();
+	chatEventBus = new GwtEmiteEventBus();
     }
 
     @Override
     public HandlerRegistration addBeforeReceiveMessageHandler(final MessageHandler handler) {
-	return BeforeReceiveMessageEvent.bind(eventBus, handler);
+	return BeforeReceiveMessageEvent.bind(chatEventBus, handler);
     }
 
     @Override
     public HandlerRegistration addBeforeSendMessageHandler(final MessageHandler handler) {
-	return BeforeSendMessageEvent.bind(eventBus, handler);
+	return BeforeSendMessageEvent.bind(chatEventBus, handler);
     }
 
     @Override
@@ -45,22 +45,22 @@ public abstract class ChatBoilerplate implements Chat {
 	if (sendCurrent) {
 	    handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
 	}
-	return ChatStateChangedEvent.bind(eventBus, handler);
+	return ChatStateChangedEvent.bind(chatEventBus, handler);
     }
 
     @Override
     public HandlerRegistration addMessageReceivedHandler(final MessageHandler handler) {
-	return MessageReceivedEvent.bind(eventBus, handler);
+	return MessageReceivedEvent.bind(chatEventBus, handler);
     }
 
     @Override
     public HandlerRegistration addMessageSentHandler(final MessageHandler handler) {
-	return MessageSentEvent.bind(eventBus, handler);
+	return MessageSentEvent.bind(chatEventBus, handler);
     }
 
     @Override
     public EmiteEventBus getChatEventBus() {
-	return eventBus;
+	return chatEventBus;
     }
 
     @Override
@@ -165,7 +165,7 @@ public abstract class ChatBoilerplate implements Chat {
 	assert chatState != null : "Chat state can't be null";
 	if (!chatState.equals(properties.getState())) {
 	    properties.setState(chatState);
-	    eventBus.fireEvent(new ChatStateChangedEvent(chatState));
+	    chatEventBus.fireEvent(new ChatStateChangedEvent(chatState));
 	}
     }
 

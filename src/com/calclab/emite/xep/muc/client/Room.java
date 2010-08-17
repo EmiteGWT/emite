@@ -2,6 +2,7 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.Collection;
 
+import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
@@ -95,6 +96,14 @@ public interface Room extends Chat {
      * @return
      */
     HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler);
+
+    /**
+     * Adds a handler to know when a presence arrives to this room
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
 
     /**
      * Return the occupants of this room. THIS IS THE ACTUAL BACKEND

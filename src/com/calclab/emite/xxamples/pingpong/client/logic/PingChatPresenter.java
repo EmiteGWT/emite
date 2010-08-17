@@ -9,10 +9,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
-import com.calclab.emite.xxamples.pingpong.client.ChatEventsSupervisor;
-import com.calclab.emite.xxamples.pingpong.client.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
 
@@ -38,7 +37,6 @@ public class PingChatPresenter {
 
 	new ChatManagerEventsSupervisor(chatManager, display);
 	final Chat chat = chatManager.open(other);
-	new ChatEventsSupervisor(chat, display);
 
 	chat.addMessageReceivedHandler(new MessageHandler() {
 	    @Override

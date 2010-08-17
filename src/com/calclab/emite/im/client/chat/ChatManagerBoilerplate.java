@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import com.calclab.emite.core.client.events.GwtEmiteEventBus;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
@@ -92,15 +92,15 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     }
 
     protected void fireChatClosed(final Chat chat) {
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.closed, chat));
     }
 
     protected void fireChatCreated(final Chat chat) {
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.created, chat));
     }
 
     protected void fireChatOpened(final Chat chat) {
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.opened, chat));
     }
 
 }

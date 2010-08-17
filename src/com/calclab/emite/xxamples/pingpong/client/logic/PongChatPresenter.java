@@ -2,16 +2,15 @@ package com.calclab.emite.xxamples.pingpong.client.logic;
 
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.calclab.emite.xxamples.pingpong.client.ChatEventsSupervisor;
-import com.calclab.emite.xxamples.pingpong.client.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.suco.client.Suco;
 
 public class PongChatPresenter {
@@ -33,9 +32,8 @@ public class PongChatPresenter {
 	chatManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(ChatChangedEvent event) {
-		if (event.is(ChangeEventTypes.created)) {
+		if (event.is(ChangeTypes.created)) {
 		    Chat chat = event.getChat();
-		    new ChatEventsSupervisor(chat, display);
 		    listenToChat(chat);
 		}
 	    }

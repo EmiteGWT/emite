@@ -35,7 +35,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 
     @Override
     public HandlerRegistration addPresenceReceivedHandler(final PresenceHandler handler) {
-	return eventBus.addHandler(PresenceReceivedEvent.getType(), handler);
+	return PresenceReceivedEvent.bind(eventBus, handler);
     }
 
     @Override
@@ -44,7 +44,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	if (sendCurrent) {
 	    handler.onStateChanged(new SessionStateChangedEvent(getSessionState()));
 	}
-	return eventBus.addHandler(SessionStateChangedEvent.getType(), handler);
+	return SessionStateChangedEvent.bind(eventBus, handler);
     }
 
     @Override

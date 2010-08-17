@@ -25,6 +25,8 @@ import java.util.HashMap;
 
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.PresenceEvent;
+import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
@@ -32,6 +34,7 @@ import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
@@ -62,19 +65,8 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	super(session, new RoomChatSelectionStrategy());
 	roomsByJID = new HashMap<XmppURI, Room>();
 
-	session.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		Message message = event.getMessage();
-		IPacket child;
-		if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
-		    Stanza invitationStanza = new BasicStanza(child);
-		    RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(),
-			    invitationStanza.getFirstChild("reason").getText());
-		    session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
-		}
-	    }
-	});
+	forwardPresenceToRooms();
+	handleRoomInvitations();
     }
 
     @Override
@@ -134,6 +126,49 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     @Override
     public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
 	this.defaultHistoryOptions = defaultHistoryOptions;
+    }
+
+    /**
+     * Forward the presence messages to the room event bus.
+     */
+    private void forwardPresenceToRooms() {
+	session.addPresenceReceivedHandler(new PresenceHandler() {
+	    @Override
+	    public void onPresence(PresenceEvent event) {
+		Presence presence = event.getPresence();
+		final ChatProperties properties = strategy.extractChatProperties(presence);
+		if (properties != null) {
+		    Chat chat = getChat(properties, false);
+		    if (chat == null && properties.shouldCreateNewChat()) {
+			// we need to create a chat for this incoming presence
+			properties.setInitiatorUri(properties.getUri());
+			chat = addNewChat(properties);
+		    }
+		    if (chat != null) {
+			chat.getChatEventBus().fireEvent(event);
+		    }
+		}
+	    }
+	});
+    }
+
+    /**
+     * Check if the incomming message is a room invitation to the user
+     */
+    private void handleRoomInvitations() {
+	session.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		Message message = event.getMessage();
+		IPacket child;
+		if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
+		    Stanza invitationStanza = new BasicStanza(child);
+		    RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(),
+			    invitationStanza.getFirstChild("reason").getText());
+		    session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
+		}
+	    }
+	});
     }
 
     @Override
