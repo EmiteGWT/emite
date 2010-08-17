@@ -1,6 +1,6 @@
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
@@ -20,14 +20,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public abstract class ChatBoilerplate implements Chat {
     protected final XmppSession session;
     protected final ChatProperties properties;
-    protected final DefaultEmiteEventBus eventBus;
+    protected final GwtEmiteEventBus eventBus;
 
     private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
 
     public ChatBoilerplate(XmppSession session, ChatProperties properties) {
 	this.session = session;
 	this.properties = properties;
-	eventBus = new DefaultEmiteEventBus();
+	eventBus = new GwtEmiteEventBus();
     }
 
     @Override
@@ -41,7 +41,10 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
-    public HandlerRegistration addChatStateChangedHandler(final StateChangedHandler handler) {
+    public HandlerRegistration addChatStateChangedHandler(final StateChangedHandler handler, boolean sendCurrent) {
+	if (sendCurrent) {
+	    handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
+	}
 	return ChatStateChangedEvent.bind(eventBus, handler);
     }
 
@@ -69,10 +72,6 @@ public abstract class ChatBoilerplate implements Chat {
     @SuppressWarnings("unchecked")
     public <T> T getData(final Class<T> type) {
 	return (T) properties.getData(type.toString());
-    }
-
-    protected String getPreviousChatState() {
-	return (String) properties.getData(PREVIOUS_CHAT_STATE);
     }
 
     @Override
@@ -148,7 +147,18 @@ public abstract class ChatBoilerplate implements Chat {
 	    public void onStateChanged(final StateChangedEvent event) {
 		listener.onEvent(getState());
 	    }
-	});
+	}, false);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T setData(final Class<T> type, final T value) {
+	String key = type != null ? type.toString() : null;
+	return (T) properties.setData(key, value);
+    }
+
+    protected String getPreviousChatState() {
+	return (String) properties.getData(PREVIOUS_CHAT_STATE);
     }
 
     protected void setChatState(final String chatState) {
@@ -157,13 +167,6 @@ public abstract class ChatBoilerplate implements Chat {
 	    properties.setState(chatState);
 	    eventBus.fireEvent(new ChatStateChangedEvent(chatState));
 	}
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> T setData(final Class<T> type, final T value) {
-	String key = type != null ? type.toString() : null;
-	return (T) properties.setData(key, value);
     }
 
     protected void setPreviousChatState(String chatState) {

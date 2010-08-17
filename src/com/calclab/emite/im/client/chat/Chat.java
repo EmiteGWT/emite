@@ -91,9 +91,10 @@ public interface Chat {
      * Add a handler to know whenever a chat state property changed
      * 
      * @param handler
+     * @param sendCurrentStateAsEvent
      * @return
      */
-    public HandlerRegistration addChatStateChangedHandler(StateChangedHandler handler);
+    public HandlerRegistration addChatStateChangedHandler(StateChangedHandler handler, boolean sendCurrentState);
 
     /**
      * Add a handler to know when a message is received in this chat

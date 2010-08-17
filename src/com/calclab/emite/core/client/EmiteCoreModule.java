@@ -25,7 +25,7 @@ import com.calclab.emite.core.client.bosh.BoshConnection;
 import com.calclab.emite.core.client.bosh.XmppBoshConnection;
 import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.gwt.GWTServices;
@@ -66,7 +66,7 @@ public class EmiteCoreModule extends AbstractModule implements EntryPoint {
 	register(Singleton.class, new Factory<EmiteEventBus>(EmiteEventBus.class) {
 	    @Override
 	    public EmiteEventBus create() {
-		return new DefaultEmiteEventBus();
+		return new GwtEmiteEventBus();
 	    }
 	});
 

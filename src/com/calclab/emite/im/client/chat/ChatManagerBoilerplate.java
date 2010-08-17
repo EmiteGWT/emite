@@ -3,7 +3,7 @@ package com.calclab.emite.im.client.chat;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -17,12 +17,12 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     protected final XmppSession session;
     protected ChatSelectionStrategy strategy;
     protected final HashSet<Chat> chats;
-    protected final DefaultEmiteEventBus managerEventBus;
+    protected final GwtEmiteEventBus managerEventBus;
 
     public ChatManagerBoilerplate(XmppSession session, ChatSelectionStrategy strategy) {
 	this.session = session;
 	this.strategy = strategy;
-	this.managerEventBus = new DefaultEmiteEventBus();
+	this.managerEventBus = new GwtEmiteEventBus();
 	chats = new HashSet<Chat>();
     }
 

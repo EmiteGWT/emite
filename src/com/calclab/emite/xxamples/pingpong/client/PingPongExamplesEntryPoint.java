@@ -2,6 +2,13 @@ package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.logic.PingChatPresenter;
+import com.calclab.emite.xxamples.pingpong.client.logic.PingRoomPresenter;
+import com.calclab.emite.xxamples.pingpong.client.logic.PingSessionPresenter;
+import com.calclab.emite.xxamples.pingpong.client.logic.PongChatPresenter;
+import com.calclab.emite.xxamples.pingpong.client.logic.PongRoomPresenter;
+import com.calclab.emite.xxamples.pingpong.client.logic.PongSessionPresenter;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -9,27 +16,29 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	PingPongChatWidget output = new PingPongChatWidget();
-	RootPanel.get().add(output);
-	new PingPongChatPresenter(output);
+	PingPongDisplay display = new PingPongChatWidget();
+	RootPanel.get().add(display.asWidget());
+	new PingPongCommonPresenter(display);
 
 	XmppURI other = XmppURI.uri(PageAssist.getMeta("pingpong.other"));
 	final String clientType = PageAssist.getMeta("pingpong.type");
+	display.print("Ping pong example type: " + clientType, Style.info);
 	if ("ping".equals(clientType)) {
-	    new PingPresenter(other, output).start();
+	    new PingSessionPresenter(other, display).start();
 	} else if ("pong".equals(clientType)) {
-	    new PongPresenter(other, output).start();
+	    new PongSessionPresenter(other, display).start();
 	} else if ("pingChat".equals(clientType)) {
-	    new PingChatPresenter(other, output).start();
+	    new PingChatPresenter(other, display).start();
 	} else if ("pongChat".equals(clientType)) {
-	    new PongChatPresenter(output).start();
+	    new PongChatPresenter(display).start();
 	} else if ("pingRoom".equals(clientType)) {
+	    new PingRoomPresenter(other, display).start();
 	} else if ("pongRoom".equals(clientType)) {
-
+	    new PongRoomPresenter(other, display).start();
 	} else {
-	    output.printHeader("You need to configure the pingpong.type meta tag!! "
+	    display.printHeader("You need to configure the pingpong.type meta tag!! "
 		    + " (possible values: ping, pong, pingChat, pongChat, pingRoom, pongRoom)",
-		    PingPongChatDisplay.Style.error);
+		    PingPongDisplay.Style.error);
 	}
     }
 }

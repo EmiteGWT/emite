@@ -47,7 +47,7 @@ public class MUCModule extends AbstractModule implements EntryPoint {
 	register(SessionComponent.class, new Factory<RoomManager>(RoomManager.class) {
 	    @Override
 	    public RoomManager create() {
-		return new RoomManagerImpl($(XmppSession.class));
+		return new RoomChatManager($(XmppSession.class));
 	    }
 	});
     }

@@ -1,6 +1,6 @@
 package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -9,7 +9,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 
     private static final Type<RoomInvitationSentHandler> TYPE = new Type<RoomInvitationSentHandler>();
 
-    public static HandlerRegistration bind(DefaultEmiteEventBus eventBus, RoomInvitationSentHandler handler) {
+    public static HandlerRegistration bind(GwtEmiteEventBus eventBus, RoomInvitationSentHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
     private final XmppURI userJid;

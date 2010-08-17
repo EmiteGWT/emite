@@ -6,7 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.xtesting.BasicEmiteEventBus;
 import com.calclab.emite.xtesting.ServicesTester;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 
@@ -17,7 +18,7 @@ public class XmppBoshConnectionTests {
 
     public XmppBoshConnectionTests() {
 	services = new ServicesTester();
-	final DefaultEmiteEventBus eventBus = new DefaultEmiteEventBus();
+	final EmiteEventBus eventBus = new BasicEmiteEventBus();
 	connection = new XmppBoshConnection(eventBus, services);
     }
 

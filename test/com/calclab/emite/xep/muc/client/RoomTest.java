@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
@@ -23,7 +24,7 @@ import com.calclab.suco.testing.events.MockedListener2;
 
 public class RoomTest extends AbstractChatTest {
 
-    private Room room;
+    private RoomChat room;
     private XmppURI userURI;
     private XmppURI roomURI;
     private XmppSessionTester session;
@@ -33,9 +34,9 @@ public class RoomTest extends AbstractChatTest {
 	userURI = uri("user@domain/res");
 	roomURI = uri("room@domain/nick");
 	session = new XmppSessionTester(userURI);
-	RoomManagerImpl manager = new RoomManagerImpl(session);
+	RoomChatManager manager = new RoomChatManager(session);
 	final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
-	room = (Room) manager.openChat(properties, true);
+	room = (RoomChat) manager.openChat(properties, true);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class RoomTest extends AbstractChatTest {
 	final MockedListener<Message> listener = new MockedListener<Message>();
 	room.onMessageReceived(listener);
 	final Message message = new Message(uri("someone@domain/res"), uri("room@domain"), "message");
-	room.receive(message);
+	room.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
 	assertTrue(listener.isCalledWithEquals(message));
     }
 
@@ -84,7 +85,8 @@ public class RoomTest extends AbstractChatTest {
 	room.onSubjectChanged(subjectListener);
 
 	final XmppURI occupantURI = uri("someone@domain/res");
-	room.receive(new Message(occupantURI, uri("room@domain"), null).Subject("the subject"));
+	room.getChatEventBus().fireEvent(
+		new MessageReceivedEvent(new Message(occupantURI, uri("room@domain"), null).Subject("the subject")));
 	assertEquals(1, subjectListener.getCalledTimes());
 	final Occupant occupant = room.getOccupantByURI(occupantURI);
 	assertTrue(subjectListener.isCalledWithSame(occupant, "the subject"));

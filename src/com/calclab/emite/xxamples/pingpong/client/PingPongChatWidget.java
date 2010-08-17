@@ -5,8 +5,9 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class PingPongChatWidget extends VerticalPanel implements PingPongChatDisplay {
+public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay {
 
     private final Button login;
     private final Button logout;
@@ -43,6 +44,11 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongChatDis
     @Override
     public void addLogoutClickHandler(ClickHandler handler) {
 	logout.addClickHandler(handler);
+    }
+
+    @Override
+    public Widget asWidget() {
+	return this;
     }
 
     @Override

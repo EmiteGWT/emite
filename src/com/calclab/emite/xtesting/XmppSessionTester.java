@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
@@ -51,7 +51,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
      *            optional user to login
      */
     public XmppSessionTester(final XmppURI user) {
-	super(new DefaultEmiteEventBus());
+	super(new GwtEmiteEventBus());
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
 	if (user != null) {

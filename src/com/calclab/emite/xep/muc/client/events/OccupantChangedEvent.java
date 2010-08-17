@@ -1,7 +1,7 @@
 package com.calclab.emite.xep.muc.client.events;
 
 import com.calclab.emite.core.client.events.ChangedEvent;
-import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.xep.muc.client.Occupant;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -9,7 +9,7 @@ public class OccupantChangedEvent extends ChangedEvent<OccupantChangedHandler> {
 
     private static final Type<OccupantChangedHandler> TYPE = new Type<OccupantChangedHandler>();
 
-    public static HandlerRegistration bind(DefaultEmiteEventBus eventBus, OccupantChangedHandler handler) {
+    public static HandlerRegistration bind(GwtEmiteEventBus eventBus, OccupantChangedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
 

@@ -8,7 +8,6 @@ import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
-import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
@@ -20,7 +19,7 @@ import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-abstract class RoomBoilerplate extends AbstractChat implements Chat {
+abstract class RoomBoilerplate extends AbstractChat implements Room {
     protected final HashMap<XmppURI, Occupant> occupantsByURI;
 
     public RoomBoilerplate(XmppSession session, ChatProperties properties) {
@@ -34,6 +33,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Chat {
      * @param handler
      * @return
      */
+    @Override
     public HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler) {
 	return OccupantChangedEvent.bind(eventBus, handler);
     }
@@ -58,14 +58,17 @@ abstract class RoomBoilerplate extends AbstractChat implements Chat {
 	return RoomSubjectChangedEvent.bind(eventBus, handler);
     }
 
+    @Override
     public Occupant getOccupantByURI(final XmppURI uri) {
 	return occupantsByURI.get(uri);
     }
 
+    @Override
     public Collection<Occupant> getOccupants() {
 	return occupantsByURI.values();
     }
 
+    @Override
     public int getOccupantsCount() {
 	return occupantsByURI.size();
     }
@@ -73,6 +76,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Chat {
     /**
      * Add a listener to know when an invitation was sent
      */
+    @Override
     public void onInvitationSent(final Listener2<XmppURI, String> listener) {
 	addRoomInvitationSentHandler(new RoomInvitationSentHandler() {
 	    @Override
@@ -82,6 +86,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onOccupantAdded(final Listener<Occupant> listener) {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
@@ -93,6 +98,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Chat {
 	});
     }
 
+    @Override
     public void onOccupantModified(final Listener<Occupant> listener) {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override

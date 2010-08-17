@@ -121,7 +121,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 
     @Override
     protected ChatManager createChatManager() {
-	final RoomManagerImpl roomManager = new RoomManagerImpl(session);
+	final RoomManager roomManager = new RoomChatManager(session);
 	return roomManager;
     }
 }
