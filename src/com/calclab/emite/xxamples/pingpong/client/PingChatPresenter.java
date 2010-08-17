@@ -1,4 +1,4 @@
-package com.calclab.emite.xxamples.im.pingpongchat.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
@@ -10,22 +10,43 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.xxamples.im.pingpongchat.client.PingPongChatDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.PingPongChatDisplay.Style;
 import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
 
-public class PingChat {
+public class PingChatPresenter {
 
     private final XmppURI other;
     private final PingPongChatDisplay output;
     private int pings;
     private int waitTime;
 
-    public PingChat(XmppURI other, PingPongChatDisplay output) {
+    public PingChatPresenter(XmppURI other, PingPongChatDisplay output) {
 	this.other = other;
 	this.output = output;
 	pings = 0;
 	waitTime = 2000;
+    }
+
+    public void start() {
+	output.printHeader("This is ping chat example", Style.title);
+	output.printHeader("Ping to: " + other, Style.info);
+	output.printHeader("You need to open the pong example page in order to run the example", Style.important);
+
+	XmppSession session = Suco.get(XmppSession.class);
+	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
+	// WHEN LOGGED IN, SEND THE FIRST PING
+	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(final StateChangedEvent event) {
+		if (event.is(SessionStates.ready)) {
+		    Chat chat = openChat();
+		    new ChatEventsSupervisor(chat, output);
+		    sendPing(chat);
+		}
+		output.print(("SESSION : " + event.getState()), Style.session);
+	    }
+	}, true);
     }
 
     private Chat openChat() {
@@ -54,27 +75,6 @@ public class PingChat {
 		}
 	    }.schedule(waitTime);
 	}
-    }
-
-    public void start() {
-	output.printHeader("This is ping", Style.title);
-	output.printHeader("Ping to: " + other, Style.info);
-	output.printHeader("You need to open the pong example page in order to run the example", Style.important);
-
-	XmppSession session = Suco.get(XmppSession.class);
-	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
-	// WHEN LOGGED IN, SEND THE FIRST PING
-	session.addSessionStateChangedHandler(new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(final StateChangedEvent event) {
-		if (event.is(SessionStates.ready)) {
-		    Chat chat = openChat();
-		    new ChatEventsSupervisor(chat, output);
-		    sendPing(chat);
-		}
-		output.print(("SESSION : " + event.getState()), Style.session);
-	    }
-	}, true);
     }
 
 }

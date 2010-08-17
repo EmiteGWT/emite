@@ -3,6 +3,8 @@ package com.calclab.emite.im.client.chat;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.calclab.emite.core.client.events.DefaultEmiteEventBus;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
@@ -15,16 +17,18 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     protected final XmppSession session;
     protected ChatSelectionStrategy strategy;
     protected final HashSet<Chat> chats;
+    protected final DefaultEmiteEventBus managerEventBus;
 
     public ChatManagerBoilerplate(XmppSession session, ChatSelectionStrategy strategy) {
 	this.session = session;
 	this.strategy = strategy;
+	this.managerEventBus = new DefaultEmiteEventBus();
 	chats = new HashSet<Chat>();
     }
 
     @Override
     public HandlerRegistration addChatChangedHandler(final ChatChangedHandler handler) {
-	return ChatChangedEvent.bind(session.getEventBus(), handler);
+	return ChatChangedEvent.bind(managerEventBus, handler);
     }
 
     @Override
@@ -85,6 +89,18 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     public void setChatSelectionStrategy(final ChatSelectionStrategy strategy) {
 	assert strategy != null : "The ChatSelectionStrategy can't be null!";
 	this.strategy = strategy;
+    }
+
+    protected void fireChatClosed(final Chat chat) {
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
+    }
+
+    protected void fireChatCreated(final Chat chat) {
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
+    }
+
+    protected void fireChatOpened(final Chat chat) {
+	managerEventBus.fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
     }
 
 }

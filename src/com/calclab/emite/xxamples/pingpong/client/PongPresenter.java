@@ -1,26 +1,24 @@
-package com.calclab.emite.xxamples.core.pingpong.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xxamples.core.pingpong.client.PingPongEntryPoint.Output;
+import com.calclab.emite.xxamples.pingpong.client.PingPongChatDisplay.Style;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 
 /**
- * Simple pong example. Uses the OLD Session interface
- * 
- * @author dani
+ * Receives pings (and answer pongs) using the old Session object
  * 
  */
-public class Pong {
+public class PongPresenter {
 
     private final XmppURI other;
-    private final Output output;
+    private final PingPongChatDisplay output;
     protected int pongs;
     private final Session session;
 
-    public Pong(final XmppURI other, final Output output) {
+    public PongPresenter(final XmppURI other, final PingPongChatDisplay output) {
 	this.other = other;
 	this.output = output;
 	pongs = 0;
@@ -28,26 +26,26 @@ public class Pong {
     }
 
     public void start() {
-	output.print("This is pong", Output.Style.title);
-	output.print("Pong to: " + other, Output.Style.info);
-	output.print("You need to open the ping example page in order to run the example", Output.Style.important);
+	output.print("This is pong", Style.title);
+	output.print("Pong to: " + other, Style.info);
+	output.print("You need to open the ping example page in order to run the example", Style.important);
 
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
 	session.onStateChanged(new Listener<Session>() {
 	    @Override
 	    public void onEvent(final Session parameter) {
-		output.print(("SESSION : " + session.getState()), Output.Style.session);
+		output.print(("SESSION : " + session.getState()), Style.session);
 	    }
 	});
 
 	session.onMessage(new Listener<Message>() {
 	    @Override
 	    public void onEvent(final Message message) {
-		output.print(("RECEIVED: " + message.getBody()), Output.Style.received);
+		output.print(("RECEIVED: " + message.getBody()), Style.received);
 		pongs++;
 		final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";
 		session.send(new Message(body, other));
-		output.print("SENT: " + body, Output.Style.sent);
+		output.print("SENT: " + body, Style.sent);
 	    }
 	});
 

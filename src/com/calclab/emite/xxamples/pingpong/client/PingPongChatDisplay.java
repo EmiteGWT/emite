@@ -1,4 +1,4 @@
-package com.calclab.emite.xxamples.im.pingpongchat.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 

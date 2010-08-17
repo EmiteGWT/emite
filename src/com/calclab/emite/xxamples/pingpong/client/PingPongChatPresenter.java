@@ -1,4 +1,4 @@
-package com.calclab.emite.xxamples.im.pingpongchat.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
 import com.calclab.emite.core.client.conn.StanzaEvent;
@@ -8,7 +8,7 @@ import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
-import com.calclab.emite.xxamples.im.pingpongchat.client.PingPongChatDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.PingPongChatDisplay.Style;
 import com.calclab.suco.client.Suco;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -16,7 +16,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 public class PingPongChatPresenter {
 
     public PingPongChatPresenter(final PingPongChatDisplay output) {
-	output.printHeader("Welcome to ping pong example", PingPongChatDisplay.Style.title);
+	output.printHeader("Welcome to ping pong examples", PingPongChatDisplay.Style.title);
 
 	final XmppSession session = Suco.get(XmppSession.class);
 	session.addSessionStateChangedHandler(new StateChangedHandler() {

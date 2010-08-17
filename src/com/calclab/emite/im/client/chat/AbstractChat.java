@@ -41,13 +41,18 @@ public abstract class AbstractChat extends ChatBoilerplate {
     }
 
     @Override
+    public void close() {
+	setChatState(ChatStates.locked);
+    }
+
+    @Override
     public boolean isReady() {
 	return ChatStates.ready.equals(getChatState());
     }
 
-    protected void receive(final Message message) {
-	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
-	eventBus.fireEvent(new MessageReceivedEvent(message));
+    @Override
+    public void open() {
+	setChatState(ChatStates.ready);
     }
 
     @Override
@@ -56,6 +61,11 @@ public abstract class AbstractChat extends ChatBoilerplate {
 	eventBus.fireEvent(new BeforeSendMessageEvent(message));
 	session.send(message);
 	eventBus.fireEvent(new MessageSentEvent(message));
+    }
+
+    protected void receive(final Message message) {
+	eventBus.fireEvent(new BeforeReceiveMessageEvent(message));
+	eventBus.fireEvent(new MessageReceivedEvent(message));
     }
 
 }

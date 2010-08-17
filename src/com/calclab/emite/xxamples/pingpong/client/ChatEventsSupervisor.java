@@ -1,9 +1,9 @@
-package com.calclab.emite.xxamples.im.pingpongchat.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.xxamples.im.pingpongchat.client.PingPongChatDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.PingPongChatDisplay.Style;
 
 public class ChatEventsSupervisor {
 

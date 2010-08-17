@@ -5,12 +5,10 @@ import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 
 public abstract class AbstractChatManager extends ChatManagerBoilerplate {
     private XmppURI currentChatUser;
@@ -122,17 +120,5 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
      * @return a new chat. must not be null
      */
     protected abstract Chat createChat(ChatProperties properties);
-
-    protected void fireChatClosed(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.closed, chat));
-    }
-
-    protected void fireChatCreated(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.created, chat));
-    }
-
-    protected void fireChatOpened(final Chat chat) {
-	session.getEventBus().fireEvent(new ChatChangedEvent(ChangeEventTypes.opened, chat));
-    }
 
 }

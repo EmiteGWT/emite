@@ -1,4 +1,4 @@
-package com.calclab.emite.xxamples.im.pingpongchat.client;
+package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeEventTypes;
 import com.calclab.emite.core.client.events.MessageEvent;
@@ -11,15 +11,15 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.calclab.emite.xxamples.im.pingpongchat.client.PingPongChatDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.PingPongChatDisplay.Style;
 import com.calclab.suco.client.Suco;
 
-public class PongChat {
+public class PongChatPresenter {
 
     private final PingPongChatDisplay output;
     private int pongs;
 
-    public PongChat(PingPongChatDisplay output) {
+    public PongChatPresenter(PingPongChatDisplay output) {
 	this.output = output;
 	this.pongs = 0;
     }

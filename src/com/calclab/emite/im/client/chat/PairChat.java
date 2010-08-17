@@ -51,11 +51,6 @@ public class PairChat extends AbstractChat {
     }
 
     @Override
-    public void close() {
-	setChatState(ChatStates.locked);
-    }
-
-    @Override
     public boolean equals(final Object obj) {
 	if (obj == null) {
 	    return false;
@@ -84,11 +79,6 @@ public class PairChat extends AbstractChat {
 	final String thread = getThread();
 	result = prime * result + (thread == null ? 0 : thread.hashCode());
 	return result;
-    }
-
-    @Override
-    public void open() {
-	setChatState(ChatStates.ready);
     }
 
     @Override
