@@ -49,6 +49,26 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	errors = 0;
     }
 
+    @Override
+    public EmiteEventBus getEventBus() {
+	return eventBus;
+    }
+
+    @Override
+    public boolean hasErrors() {
+	return errors != 0;
+    }
+
+    public int incrementErrors() {
+	errors++;
+	return errors;
+    }
+
+    @Override
+    public void setSettings(final ConnectionSettings settings) {
+	connectionSettings = settings;
+    }
+
     protected void fireConnected() {
 	eventBus.fireEvent(new ConnectionStateEvent(ConnectionState.connected));
     }
@@ -89,26 +109,11 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	return currentBody;
     }
 
-    @Override
-    public EmiteEventBus getEventBus() {
-	return eventBus;
-    }
-
     /**
      * @return the stream
      */
     protected StreamSettings getStream() {
 	return stream;
-    }
-
-    @Override
-    public boolean hasErrors() {
-	return errors != 0;
-    }
-
-    public int incrementErrors() {
-	errors++;
-	return errors;
     }
 
     /**
@@ -135,11 +140,6 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
      */
     protected void setCurrentBody(final Packet currentBody) {
 	this.currentBody = currentBody;
-    }
-
-    @Override
-    public void setSettings(final ConnectionSettings settings) {
-	connectionSettings = settings;
     }
 
     /**

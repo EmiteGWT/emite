@@ -60,6 +60,24 @@ public class SASLManager {
 	});
     }
 
+    public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
+	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
+	    @Override
+	    public void onAuthorization(final AuthorizationResultEvent event) {
+		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());
+		transaction.setState(event.isSucceed() ? State.succeed : State.failed);
+		listener.onEvent(transaction);
+	    }
+	});
+    }
+
+    public void sendAuthorizationRequest(final Credentials credentials) {
+	currentCredentials = credentials;
+	final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization()
+		: createPlainAuthorization(credentials);
+	connection.send(response);
+    }
+
     private IPacket createAnonymousAuthorization() {
 	final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "ANONYMOUS");
 	return auth;
@@ -86,24 +104,6 @@ public class SASLManager {
     private String encodeForPlainMethod(final String domain, final String userName, final String password) {
 	final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 	return Base64Coder.encodeString(auth);
-    }
-
-    public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
-	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
-	    @Override
-	    public void onAuthorization(final AuthorizationResultEvent event) {
-		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());
-		transaction.setState(event.isSucceed() ? State.succeed : State.failed);
-		listener.onEvent(transaction);
-	    }
-	});
-    }
-
-    public void sendAuthorizationRequest(final Credentials credentials) {
-	currentCredentials = credentials;
-	final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization()
-		: createPlainAuthorization(credentials);
-	connection.send(response);
     }
 
 }

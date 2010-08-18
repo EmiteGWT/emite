@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateHandler;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -136,10 +136,6 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	});
     }
 
-    private void disconnect() {
-	connection.disconnect();
-    }
-
     @Override
     public XmppURI getCurrentUser() {
 	return userURI;
@@ -212,6 +208,23 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	send(iq);
     }
 
+    @Override
+    public void setReady() {
+	if (isLoggedIn()) {
+	    setSessionState(XmppSession.SessionStates.ready);
+	}
+    }
+
+    @Override
+    public String toString() {
+	return "Session " + userURI + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
+		+ connection.toString();
+    }
+
+    private void disconnect() {
+	connection.disconnect();
+    }
+
     private void sendQueuedStanzas() {
 	GWT.log("Sending queued stanzas....", null);
 	for (final IPacket packet : queuedStanzas) {
@@ -227,23 +240,10 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     }
 
     @Override
-    public void setReady() {
-	if (isLoggedIn()) {
-	    setSessionState(XmppSession.SessionStates.ready);
-	}
-    }
-
-    @Override
     protected void setSessionState(final String newState) {
 	if (newState == XmppSession.SessionStates.ready) {
 	    sendQueuedStanzas();
 	}
 	super.setSessionState(newState);
-    }
-
-    @Override
-    public String toString() {
-	return "Session " + userURI + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
-		+ connection.toString();
     }
 }
