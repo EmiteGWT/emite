@@ -30,7 +30,7 @@ public abstract class TestHandler<T> {
 	return getCalledTimes() == 1;
     }
 
-    public void setEvent(final T event) {
+    public void addEvent(final T event) {
 	events.add(event);
     }
 }

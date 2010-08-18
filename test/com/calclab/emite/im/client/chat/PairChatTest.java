@@ -13,6 +13,9 @@ import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.suco.testing.events.MockedListener;
 
+/**
+ * Pair chat tests using the old listener interface
+ */
 public class PairChatTest extends AbstractChatTest {
     private static final XmppURI CHAT_URI = uri("other@domain/other");
     private PairChat pairChat;

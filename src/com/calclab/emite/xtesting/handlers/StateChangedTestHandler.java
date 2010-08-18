@@ -10,7 +10,7 @@ public class StateChangedTestHandler extends TestHandler<StateChangedEvent> impl
 
     @Override
     public void onStateChanged(final StateChangedEvent event) {
-	setEvent(event);
+	addEvent(event);
     }
 
 }

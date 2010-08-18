@@ -12,7 +12,7 @@ public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implem
 
     @Override
     public void onChatChanged(ChatChangedEvent event) {
-	setEvent(event);
+	addEvent(event);
     }
 
 }

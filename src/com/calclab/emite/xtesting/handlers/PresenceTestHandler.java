@@ -12,6 +12,6 @@ public class PresenceTestHandler extends TestHandler<PresenceEvent> implements P
 
     @Override
     public void onPresence(final PresenceEvent event) {
-	setEvent(event);
+	addEvent(event);
     }
 }
