@@ -56,8 +56,7 @@ public class Message extends BasicStanza {
      *            the body of the message
      */
     public Message(final String body) {
-	this();
-	setBody(body);
+	this(body, null, null, null);
     }
 
     /**
@@ -176,7 +175,8 @@ public class Message extends BasicStanza {
     }
 
     public void setType(final Type type) {
-	setType(type.toString());
+	if (type != null)
+	    setType(type.toString());
     }
 
     public Message Subject(final String subject) {
