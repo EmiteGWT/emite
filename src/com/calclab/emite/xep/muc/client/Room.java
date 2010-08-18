@@ -4,9 +4,10 @@ import java.util.Collection;
 
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.xep.muc.client.events.BeforeInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
@@ -18,6 +19,32 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public interface Room extends Chat {
 
     /**
+     * Adds a handler to know when a invitation to this room is going to be
+     * sent. This handler allows to decorate the Message object before is sent
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addBeforeInvitationSendHandler(BeforeInvitationSendHandler handler);
+
+    /**
+     * Adds a handler to know when a OccupantChangedEvent ocurs. This is used
+     * know when a user enter or exites the room, for example.
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler);
+
+    /**
+     * Adds a handler to know when a presence arrives to this room
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
+
+    /**
      * Get the occupant by uri.
      * 
      * @param uri
@@ -25,6 +52,14 @@ public interface Room extends Chat {
      * @return the occupant if exist, null otherwise
      */
     public abstract Occupant getOccupantByURI(XmppURI uri);
+
+    /**
+     * Return the occupants of this room. THIS IS THE ACTUAL BACKEND
+     * IMPLEMENTATION. DO NOT MODIFY
+     * 
+     * @return
+     */
+    Collection<Occupant> getOccupants();
 
     /**
      * Return the current number of occupants of this room
@@ -42,6 +77,9 @@ public interface Room extends Chat {
     public abstract boolean isComingFromMe(final Message message);
 
     public abstract boolean isUserMessage(Message message);
+
+    // TODO: deprecate
+    void onInvitationSent(Listener2<XmppURI, String> listener);
 
     // TODO: deprecate
     public abstract void onOccupantAdded(Listener<Occupant> listener);
@@ -87,33 +125,5 @@ public interface Room extends Chat {
      * @param subjectText
      */
     public abstract void setSubject(final String subjectText);
-
-    /**
-     * Adds a handler to know when a OccupantChangedEvent ocurs. This is used
-     * know when a user enter or exites the room, for example.
-     * 
-     * @param handler
-     * @return
-     */
-    HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler);
-
-    /**
-     * Adds a handler to know when a presence arrives to this room
-     * 
-     * @param handler
-     * @return
-     */
-    HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
-
-    /**
-     * Return the occupants of this room. THIS IS THE ACTUAL BACKEND
-     * IMPLEMENTATION. DO NOT MODIFY
-     * 
-     * @return
-     */
-    Collection<Occupant> getOccupants();
-
-    // TODO: deprecate
-    void onInvitationSent(Listener2<XmppURI, String> listener);
 
 }

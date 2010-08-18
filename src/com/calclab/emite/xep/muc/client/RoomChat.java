@@ -23,10 +23,10 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.List;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
@@ -37,10 +37,12 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.xep.muc.client.events.BeforeInvitationSendEvent;
+import com.calclab.emite.xep.muc.client.events.BeforeInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
@@ -79,6 +81,11 @@ public class RoomChat extends RoomBoilerplate {
     }
 
     @Override
+    public HandlerRegistration addBeforeInvitationSendHandler(BeforeInvitationSendHandler handler) {
+	return BeforeInvitationSendEvent.bind(chatEventBus, handler);
+    }
+
+    @Override
     public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler) {
 	return PresenceReceivedEvent.bind(chatEventBus, handler);
     }
@@ -96,6 +103,34 @@ public class RoomChat extends RoomBoilerplate {
 	}
     }
 
+    /**
+     * Created a enter presence object based on the history options given
+     * 
+     * @param historyOptions
+     * @return
+     */
+    protected Presence createEnterPresence(final HistoryOptions historyOptions) {
+	final Presence presence = new Presence(null, null, getURI());
+	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
+	presence.setPriority(0);
+	if (historyOptions != null) {
+	    final IPacket h = x.addChild("history");
+	    if (historyOptions.maxchars >= 0) {
+		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
+	    }
+	    if (historyOptions.maxstanzas >= 0) {
+		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
+	    }
+	    if (historyOptions.seconds >= 0) {
+		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
+	    }
+	    if (historyOptions.since != null) {
+		h.setAttribute("since", XmppDateTime.formatXMPPDateTime(historyOptions.since));
+	    }
+	}
+	return presence;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -104,6 +139,32 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     public String getID() {
 	return getURI().toString();
+    }
+
+    protected void handlePresence(final Presence presence) {
+	GWT.log("ROOM PRESENCE");
+
+	final XmppURI occupantURI = presence.getFrom();
+	final Type type = presence.getType();
+	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
+	    // TODO : add an error/out state ?
+	    setState(State.locked);
+	} else if (type == Type.unavailable) {
+	    removeOccupant(occupantURI);
+	} else {
+	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
+	    for (final IPacket child : children) {
+		final IPacket item = child.getFirstChild("item");
+		final String affiliation = item.getAttribute("affiliation");
+		final String role = item.getAttribute("role");
+		setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
+		if (isNewRoom(child)) {
+		    requestCreateInstantRoom();
+		} else {
+		    setChatState(ChatStates.ready);
+		}
+	    }
+	}
     }
 
     /*
@@ -118,6 +179,11 @@ public class RoomChat extends RoomBoilerplate {
 	final String myNick = getURI().getResource();
 	final String messageNick = message.getFrom().getResource();
 	return myNick.equals(messageNick);
+    }
+
+    protected boolean isNewRoom(final IPacket xtension) {
+	final String code = xtension.getFirstChild("status").getAttribute("code");
+	return code != null && code.equals("201");
     }
 
     /*
@@ -143,6 +209,19 @@ public class RoomChat extends RoomBoilerplate {
 	final HistoryOptions historyOptions = (HistoryOptions) properties.getData(HistoryOptions.KEY);
 	session.send(createEnterPresence(historyOptions));
 
+    }
+
+    @Override
+    protected void receive(final Message message) {
+	if (message.getSubject() != null) {
+	    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
+		    .getSubject()));
+	}
+	if (message.getType() == Message.Type.error) {
+	    GWT.log("Received Error message :" + message);
+	    setChatState(ChatStates.locked);
+	}
+	super.receive(message);
     }
 
     /*
@@ -174,6 +253,21 @@ public class RoomChat extends RoomBoilerplate {
 	}
     }
 
+    protected void requestCreateInstantRoom() {
+	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
+	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
+
+	session.sendIQ("rooms", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(final IQ iq) {
+		if (IQ.isSuccess(iq)) {
+		    setChatState(ChatStates.ready);
+		}
+	    }
+	});
+
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -197,7 +291,7 @@ public class RoomChat extends RoomBoilerplate {
      */
     @Override
     public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
-	final BasicStanza message = new BasicStanza("message", null);
+	final Message message = new Message((String) null);
 	message.setFrom(session.getCurrentUser());
 	message.setTo(getURI().getJID());
 	final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
@@ -205,6 +299,7 @@ public class RoomChat extends RoomBoilerplate {
 	invite.setAttribute("to", userJid.toString());
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
+	chatEventBus.fireEvent(new BeforeInvitationSendEvent(message, invite));
 	session.send(message);
 	chatEventBus.fireEvent(new RoomInvitationSentEvent(userJid, reasonText));
     }
@@ -271,92 +366,5 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     public String toString() {
 	return "ROOM: " + getURI();
-    }
-
-    /**
-     * Created a enter presence object based on the history options given
-     * 
-     * @param historyOptions
-     * @return
-     */
-    protected Presence createEnterPresence(final HistoryOptions historyOptions) {
-	final Presence presence = new Presence(null, null, getURI());
-	final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
-	presence.setPriority(0);
-	if (historyOptions != null) {
-	    final IPacket h = x.addChild("history");
-	    if (historyOptions.maxchars >= 0) {
-		h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
-	    }
-	    if (historyOptions.maxstanzas >= 0) {
-		h.setAttribute("maxstanzas", Integer.toString(historyOptions.maxstanzas));
-	    }
-	    if (historyOptions.seconds >= 0) {
-		h.setAttribute("seconds", Long.toString(historyOptions.seconds));
-	    }
-	    if (historyOptions.since != null) {
-		h.setAttribute("since", XmppDateTime.formatXMPPDateTime(historyOptions.since));
-	    }
-	}
-	return presence;
-    }
-
-    protected void handlePresence(final Presence presence) {
-	GWT.log("ROOM PRESENCE");
-
-	final XmppURI occupantURI = presence.getFrom();
-	final Type type = presence.getType();
-	if (type == Type.error || type == Type.unavailable && occupantURI.equals(getURI())) {
-	    // TODO : add an error/out state ?
-	    setState(State.locked);
-	} else if (type == Type.unavailable) {
-	    removeOccupant(occupantURI);
-	} else {
-	    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
-	    for (final IPacket child : children) {
-		final IPacket item = child.getFirstChild("item");
-		final String affiliation = item.getAttribute("affiliation");
-		final String role = item.getAttribute("role");
-		setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
-		if (isNewRoom(child)) {
-		    requestCreateInstantRoom();
-		} else {
-		    setChatState(ChatStates.ready);
-		}
-	    }
-	}
-    }
-
-    protected boolean isNewRoom(final IPacket xtension) {
-	final String code = xtension.getFirstChild("status").getAttribute("code");
-	return code != null && code.equals("201");
-    }
-
-    @Override
-    protected void receive(final Message message) {
-	if (message.getSubject() != null) {
-	    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
-		    .getSubject()));
-	}
-	if (message.getType() == Message.Type.error) {
-	    GWT.log("Received Error message :" + message);
-	    setChatState(ChatStates.locked);
-	}
-	super.receive(message);
-    }
-
-    protected void requestCreateInstantRoom() {
-	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
-	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
-
-	session.sendIQ("rooms", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(final IQ iq) {
-		if (IQ.isSuccess(iq)) {
-		    setChatState(ChatStates.ready);
-		}
-	    }
-	});
-
     }
 }
