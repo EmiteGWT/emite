@@ -11,7 +11,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 public class PairChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
-    public ChatProperties extractChatProperties(final BasicStanza stanza) {
+    public ChatProperties extractProperties(final BasicStanza stanza) {
 	ChatProperties properties = new ChatProperties(stanza.getFrom());
 	boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
 	properties.setShouldCreateNewChat(messageHasBody);
@@ -19,8 +19,8 @@ public class PairChatSelectionStrategy implements ChatSelectionStrategy {
     }
 
     @Override
-    public boolean isAssignable(final Chat chat, final ChatProperties properties) {
-	return chat.getURI().equalsNoResource(properties.getUri());
+    public boolean isAssignable(final ChatProperties chatProperties, final ChatProperties properties) {
+	return chatProperties.getUri().equalsNoResource(properties.getUri());
     }
 
 }

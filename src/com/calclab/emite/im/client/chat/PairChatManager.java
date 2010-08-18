@@ -22,6 +22,7 @@
 package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 
 /**
  * Default ChatManager implementation. Use ChatManager interface instead
@@ -36,6 +37,9 @@ public class PairChatManager extends AbstractChatManager implements ChatManager 
 
     @Override
     protected Chat createChat(final ChatProperties properties) {
+	if (properties.getState() == null) {
+	    properties.setState(session.isReady() ? ChatStates.ready : ChatStates.locked);
+	}
 	return new PairChat(session, properties);
     }
 

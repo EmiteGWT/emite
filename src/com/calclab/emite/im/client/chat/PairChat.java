@@ -82,6 +82,13 @@ public class PairChat extends AbstractChat {
     }
 
     @Override
+    public void open() {
+	if (session.isReady()) {
+	    setChatState(ChatStates.ready);
+	}
+    }
+
+    @Override
     public void send(final Message message) {
 	message.setThread(getThread());
 	message.setType(Type.chat);

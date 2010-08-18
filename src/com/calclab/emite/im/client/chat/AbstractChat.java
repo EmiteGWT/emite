@@ -34,10 +34,7 @@ public abstract class AbstractChat extends ChatBoilerplate {
 
     public AbstractChat(final XmppSession session, final ChatProperties properties) {
 	super(session, properties);
-
-	if (properties.getState() == null) {
-	    properties.setState(ChatStates.ready);
-	}
+	assert properties.getState() != null : "State can't be null in chats";
 	setPreviousChatState(getChatState());
 
     }
@@ -50,11 +47,6 @@ public abstract class AbstractChat extends ChatBoilerplate {
     @Override
     public boolean isReady() {
 	return ChatStates.ready.equals(getChatState());
-    }
-
-    @Override
-    public void open() {
-	setChatState(ChatStates.ready);
     }
 
     @Override

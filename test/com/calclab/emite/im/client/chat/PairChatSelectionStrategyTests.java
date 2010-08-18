@@ -21,22 +21,30 @@ public class PairChatSelectionStrategyTests {
     }
 
     @Test
+    public void shouldAssignToSameIfResourceChanged() {
+	ChatProperties chatProperties = new ChatProperties(uri("user@domain"));
+	assertTrue(strategy.isAssignable(chatProperties, new ChatProperties(uri("user@domain"))));
+	assertTrue(strategy.isAssignable(chatProperties, new ChatProperties(uri("user@domain/res1"))));
+	assertTrue(strategy.isAssignable(chatProperties, new ChatProperties(uri("user@domain/res2"))));
+    }
+
+    @Test
     public void shouldExtractFromProperty() {
 	Message message = new Message("body", uri("recipient@domain"), uri("sender@domain"));
-	ChatProperties properties = strategy.extractChatProperties(message);
+	ChatProperties properties = strategy.extractProperties(message);
 	assertNotNull(properties);
 	assertEquals(uri("sender@domain"), properties.getUri());
     }
 
     @Test
     public void shouldInitiateCreationWhenMessageBody() {
-	ChatProperties properties = strategy.extractChatProperties(new Message("body"));
+	ChatProperties properties = strategy.extractProperties(new Message("body"));
 	assertTrue(properties.shouldCreateNewChat());
     }
 
     @Test
     public void shouldNotInitiateCreationWhenNotBody() {
-	ChatProperties properties = strategy.extractChatProperties(new Message((String) null));
+	ChatProperties properties = strategy.extractProperties(new Message((String) null));
 	assertFalse(properties.shouldCreateNewChat());
     }
 

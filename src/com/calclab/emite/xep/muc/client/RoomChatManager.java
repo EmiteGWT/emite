@@ -136,7 +136,7 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	    @Override
 	    public void onPresence(PresenceEvent event) {
 		Presence presence = event.getPresence();
-		final ChatProperties properties = strategy.extractChatProperties(presence);
+		final ChatProperties properties = strategy.extractProperties(presence);
 		if (properties != null) {
 		    Chat chat = getChat(properties, false);
 		    if (chat == null && properties.shouldCreateNewChat()) {

@@ -2,14 +2,13 @@ package com.calclab.emite.xep.muc.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 
 public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
-    public ChatProperties extractChatProperties(BasicStanza stanza) {
+    public ChatProperties extractProperties(BasicStanza stanza) {
 	XmppURI from = stanza.getFrom();
 	ChatProperties properties = new ChatProperties(from != null ? from.getJID() : null);
 	String stanzaType = stanza.getAttribute("type");
@@ -19,8 +18,8 @@ public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
     }
 
     @Override
-    public boolean isAssignable(Chat chat, ChatProperties properties) {
-	return chat.getURI().equalsNoResource(properties.getUri());
+    public boolean isAssignable(ChatProperties chatProperties, ChatProperties messsageProperties) {
+	return chatProperties.getUri().equalsNoResource(messsageProperties.getUri());
     }
 
 }

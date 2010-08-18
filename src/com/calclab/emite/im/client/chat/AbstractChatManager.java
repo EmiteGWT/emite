@@ -28,7 +28,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
     @Override
     public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
 	for (final Chat chat : chats) {
-	    if (strategy.isAssignable(chat, properties)) {
+	    if (strategy.isAssignable(chat.getProperties(), properties)) {
 		return chat;
 	    }
 	}
@@ -104,7 +104,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	    @Override
 	    public void onMessage(final MessageEvent event) {
 		final Message message = event.getMessage();
-		final ChatProperties properties = strategy.extractChatProperties(message);
+		final ChatProperties properties = strategy.extractProperties(message);
 		if (properties != null) {
 		    Chat chat = getChat(properties, false);
 		    if (chat == null && properties.shouldCreateNewChat()) {
