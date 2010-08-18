@@ -44,7 +44,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     @Override
     // TODO: deprecate
     public void onChatClosed(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
+	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(final ChatChangedEvent event) {
 		if (event.isClosed()) {
@@ -57,7 +57,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     @Override
     // TODO: deprecate
     public void onChatCreated(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
+	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(final ChatChangedEvent event) {
 		if (event.isCreated()) {
@@ -70,7 +70,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     @Override
     // TODO: deprecate
     public void onChatOpened(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(session.getEventBus(), new ChatChangedHandler() {
+	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(final ChatChangedEvent event) {
 		if (event.isOpened()) {

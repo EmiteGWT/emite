@@ -21,11 +21,13 @@
  */
 package com.calclab.emite.im.client.chat;
 
+import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
 import com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent;
+import com.calclab.emite.im.client.chat.events.ChatStateChangedEvent;
 import com.calclab.emite.im.client.chat.events.MessageSentEvent;
 
 public abstract class AbstractChat extends ChatBoilerplate {
@@ -63,10 +65,32 @@ public abstract class AbstractChat extends ChatBoilerplate {
 
     @Override
     public void send(final Message message) {
-	message.setFrom(session.getCurrentUser());
-	chatEventBus.fireEvent(new BeforeSendMessageEvent(message));
-	session.send(message);
-	chatEventBus.fireEvent(new MessageSentEvent(message));
+	if (ChatStates.ready.equals(getChatState())) {
+	    message.setFrom(session.getCurrentUser());
+	    chatEventBus.fireEvent(new BeforeSendMessageEvent(message));
+	    session.send(message);
+	    chatEventBus.fireEvent(new MessageSentEvent(message));
+	} else {
+	    chatEventBus.fireEvent(new ErrorEvent(ChatErrors.sendNotReady,
+		    "The chat is not ready. You can't send messages", null));
+	}
+    }
+
+    /**
+     * Set the current chat state
+     * 
+     * @param chatState
+     */
+    protected void setChatState(final String chatState) {
+	assert chatState != null : "Chat state can't be null";
+	if (!chatState.equals(properties.getState())) {
+	    properties.setState(chatState);
+	    chatEventBus.fireEvent(new ChatStateChangedEvent(chatState));
+	}
+    }
+
+    protected void setState(final State state) {
+	setChatState(state.toString());
     }
 
 }

@@ -1,26 +1,36 @@
 package com.calclab.emite.xtesting.handlers;
 
-public abstract class TestHandler<T> {
+import java.util.ArrayList;
 
-    protected T event;
+public abstract class TestHandler<T> {
+    private final ArrayList<T> events;
 
     public TestHandler() {
-	event = null;
+	events = new ArrayList<T>();
     }
 
-    public T getEvent() {
-	return event;
+    public int getCalledTimes() {
+	return events.size();
+    }
+
+    public T getEvent(int index) {
+	return events.get(index);
+    }
+
+    public T getLastEvent() {
+	int size = getCalledTimes();
+	return size > 0 ? events.get(size - 1) : null;
     }
 
     public boolean hasEvent() {
-	return event != null;
+	return isCalledOnce();
     }
 
     public boolean isCalledOnce() {
-	return hasEvent();
+	return getCalledTimes() == 1;
     }
 
     public void setEvent(final T event) {
-	this.event = event;
+	events.add(event);
     }
 }

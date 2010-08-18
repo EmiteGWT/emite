@@ -22,6 +22,7 @@
 package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.ErrorHandler;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -37,6 +38,16 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see PairChat, Room
  */
 public interface Chat {
+    /**
+     * Common chat errors
+     */
+    public static class ChatErrors {
+	/**
+	 * You are trying to send messages to a not ready chat
+	 */
+	public static final String sendNotReady = "sendNotReady";
+    }
+
     /**
      * Possible conversation states.
      */
@@ -95,6 +106,14 @@ public interface Chat {
      * @return
      */
     public HandlerRegistration addChatStateChangedHandler(StateChangedHandler handler, boolean sendCurrentState);
+
+    /**
+     * Add a handler to know when an error has occur in this chat
+     * 
+     * @param handler
+     * @return
+     */
+    public HandlerRegistration addErrorHandler(ErrorHandler handler);
 
     /**
      * Add a handler to know when a message is received in this chat

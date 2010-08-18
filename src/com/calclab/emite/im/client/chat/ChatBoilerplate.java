@@ -1,7 +1,9 @@
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.ErrorEvent;
+import com.calclab.emite.core.client.events.ErrorHandler;
+import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
@@ -46,6 +48,11 @@ public abstract class ChatBoilerplate implements Chat {
 	    handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
 	}
 	return ChatStateChangedEvent.bind(chatEventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addErrorHandler(ErrorHandler handler) {
+	return ErrorEvent.bind(chatEventBus, handler);
     }
 
     @Override
@@ -161,19 +168,8 @@ public abstract class ChatBoilerplate implements Chat {
 	return (String) properties.getData(PREVIOUS_CHAT_STATE);
     }
 
-    protected void setChatState(final String chatState) {
-	assert chatState != null : "Chat state can't be null";
-	if (!chatState.equals(properties.getState())) {
-	    properties.setState(chatState);
-	    chatEventBus.fireEvent(new ChatStateChangedEvent(chatState));
-	}
-    }
-
     protected void setPreviousChatState(String chatState) {
 	properties.setData(PREVIOUS_CHAT_STATE, chatState);
     }
 
-    protected void setState(final State state) {
-	setChatState(state.toString());
-    }
 }

@@ -135,7 +135,6 @@ public class RoomChat extends RoomBoilerplate {
     public void open() {
 	final HistoryOptions historyOptions = (HistoryOptions) properties.getData(HistoryOptions.KEY);
 	session.send(createEnterPresence(historyOptions));
-
     }
 
     /*
@@ -150,6 +149,22 @@ public class RoomChat extends RoomBoilerplate {
 	if (getState() == State.locked) {
 	    session.send(createEnterPresence(historyOptions));
 	}
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.calclab.emite.xep.muc.client.IRoom#setSubject(java.lang.String)
+     */
+    @Override
+    public void requestSubjectChange(final String subjectText) {
+	final BasicStanza message = new BasicStanza("message", null);
+	message.setFrom(session.getCurrentUser());
+	message.setTo(getURI().getJID());
+	message.setType(Message.Type.groupchat.toString());
+	final IPacket subject = message.addChild("subject", null);
+	subject.setText(subjectText);
+	session.send(message);
     }
 
     /*
@@ -199,22 +214,6 @@ public class RoomChat extends RoomBoilerplate {
 	// presence.addChild("x", "http://jabber.org/protocol/muc");
 	// presence.setPriority(0);
 	session.send(presence);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.calclab.emite.xep.muc.client.IRoom#setSubject(java.lang.String)
-     */
-    @Override
-    public void setSubject(final String subjectText) {
-	final BasicStanza message = new BasicStanza("message", null);
-	message.setFrom(session.getCurrentUser());
-	message.setTo(getURI().getJID());
-	message.setType(Message.Type.groupchat.toString());
-	final IPacket subject = message.addChild("subject", null);
-	subject.setText(subjectText);
-	session.send(message);
     }
 
     @Override

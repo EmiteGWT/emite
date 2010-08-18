@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.emite.xtesting.XmppSessionTester;
@@ -29,7 +30,7 @@ public abstract class AbstractChatTest {
 	final AbstractChat chat = getChat();
 	final MockedListener<Message> interceptor = new MockedListener<Message>();
 	chat.onBeforeReceive(interceptor);
-	final Message message = new Message("body", chat.getURI());
+	final Message message = new Message("body", USER_URI, chat.getURI());
 	session.receives(message);
 	assertTrue(interceptor.isCalledWithSame(message));
     }
@@ -37,6 +38,7 @@ public abstract class AbstractChatTest {
     @Test
     public void shouldInterceptOutcomingMessages() {
 	final AbstractChat chat = getChat();
+	chat.setChatState(ChatStates.ready);
 	final MockedListener<Message> interceptor = new MockedListener<Message>();
 	chat.onBeforeSend(interceptor);
 	final Message message = new Message("body");

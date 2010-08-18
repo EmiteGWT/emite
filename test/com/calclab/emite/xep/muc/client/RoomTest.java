@@ -54,7 +54,7 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldChangeSubject() {
-	room.setSubject("Some subject");
+	room.requestSubjectChange("Some subject");
 	xmppSession.verifySent("<message type=\"groupchat\" from=\"" + userURI + "\" to=\"" + room.getURI().getJID()
 		+ "\"><subject>Some subject</subject></message></body>");
     }

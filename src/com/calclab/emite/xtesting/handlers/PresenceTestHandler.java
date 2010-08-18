@@ -6,12 +6,12 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 
 public class PresenceTestHandler extends TestHandler<PresenceEvent> implements PresenceHandler {
 
-    public Presence getPresence() {
-	return hasEvent() ? event.getPresence() : null;
+    public Presence getLastPresence() {
+	return hasEvent() ? getLastEvent().getPresence() : null;
     }
 
     @Override
     public void onPresence(final PresenceEvent event) {
-	this.event = event;
+	setEvent(event);
     }
 }

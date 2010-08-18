@@ -143,4 +143,10 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	    }
 	});
     }
+
+    @Override
+    @Deprecated
+    public void setSubject(String newSubject) {
+	requestSubjectChange(newSubject);
+    }
 }
