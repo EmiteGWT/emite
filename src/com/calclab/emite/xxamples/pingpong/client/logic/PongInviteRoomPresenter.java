@@ -31,9 +31,8 @@ public class PongInviteRoomPresenter {
     }
 
     public void start() {
-	display.printHeader("This is ping invite room example", Style.title);
-	display.printHeader("You need to open the ping invite room example page in order to run the example",
-		Style.important);
+	display.printHeader("This is pong invite room example", Style.title);
+	display.print("You need to open the ping invite room example page", Style.important);
 
 	final RoomManager manager = Suco.get(RoomManager.class);
 	new ChatManagerEventsSupervisor(manager, display);
@@ -46,6 +45,7 @@ public class PongInviteRoomPresenter {
 		RoomInvitation invitation = event.getRoomInvitation();
 		display.print("Room invitation: " + invitation.getReason() + " - " + invitation.getInvitor() + " to "
 			+ invitation.getRoomURI(), Style.received);
+		display.print("We accept the invitation", Style.info);
 		manager.acceptRoomInvitation(invitation);
 	    }
 	});
@@ -61,12 +61,13 @@ public class PongInviteRoomPresenter {
 		    @Override
 		    public void onStateChanged(StateChangedEvent event) {
 			if (event.is(ChatStates.ready)) {
-			    display.print("We entered the room! " + room.getURI(), Style.info);
+			    display.print("We entered the room: " + room.getURI(), Style.info);
 			    pongs++;
 			    room.send(new Message("Pong " + pongs));
 			    new Timer() {
 				@Override
 				public void run() {
+				    display.print("We close the room: " + room.getURI(), Style.important);
 				    time += 2000;
 				    manager.close(room);
 				}

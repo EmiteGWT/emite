@@ -11,7 +11,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 public class PingPongCommonPresenter {
 
     public PingPongCommonPresenter(final PingPongDisplay display) {
-	display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.title);
+	display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.important);
 
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
 	final XmppSession session = Suco.get(XmppSession.class);

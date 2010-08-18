@@ -8,8 +8,8 @@
 	<inherits name='com.calclab.emite.im.EmiteIM' />
 	<!-- inherits name='com.calclab.emite.xep.chatstate.EmiteChatState' /-->
 	<inherits name="com.calclab.emite.xep.muc.EmiteMUC" />
-	<inherits
-		name="com.calclab.emite.xep.mucchatstate.EmiteMUCChatState" />
+	<!--  inherits
+		name="com.calclab.emite.xep.mucchatstate.EmiteMUCChatState" /-->
 
 	<source path="client" />
 	<entry-point

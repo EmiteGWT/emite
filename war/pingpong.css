@@ -15,5 +15,6 @@ body,div,p,a {
 .session {color: gray;}
 .info {color: gray;}
 .event {color: pink;}
+.eventBus {color: #ED533F; font-size: 80%; margin: 1px 0 1px 40px;}
 .stanzaReceived {color: #00c; font-size: 80%; margin: 1px 0 1px 40px;}
 .stanzaSent {color: #0c0; font-size: 80%; margin: 1px 0 1px 40px;}

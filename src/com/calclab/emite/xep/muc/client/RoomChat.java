@@ -71,7 +71,7 @@ public class RoomChat extends RoomBoilerplate {
 	setChatState(ChatStates.locked);
 
 	trackRoomPresence();
-	trackMessages();
+	trackSubjectChangeMessages();
 
     }
 
@@ -83,7 +83,9 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     public void close() {
 	if (ChatStates.ready.equals(properties.getState())) {
-	    session.send(new Presence(Type.unavailable, null, getURI()));
+	    if (getOccupantByURI(session.getCurrentUser().getJID()) != null) {
+		session.send(new Presence(Type.unavailable, null, getURI()));
+	    }
 	    properties.setState(ChatStates.locked);
 	}
     }
@@ -189,14 +191,16 @@ public class RoomChat extends RoomBoilerplate {
      */
     @Override
     public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
-	final Message message = new Message((String) null, getURI().getJID(), session.getCurrentUser());
+	final BasicStanza message = new BasicStanza("message", null);
+	message.setFrom(session.getCurrentUser());
+	message.setTo(getURI().getJID());
 	final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
 	final IPacket invite = x.addChild("invite", null);
 	invite.setAttribute("to", userJid.toString());
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
-	session.send(message);
 	chatEventBus.fireEvent(new BeforeRoomInvitationSendEvent(message, invite));
+	session.send(message);
 	chatEventBus.fireEvent(new RoomInvitationSentEvent(userJid, reasonText));
     }
 
@@ -299,19 +303,6 @@ public class RoomChat extends RoomBoilerplate {
 	return occupant;
     }
 
-    private void trackMessages() {
-	addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		Message message = event.getMessage();
-		if (message.getSubject() != null) {
-		    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
-			    .getSubject()));
-		}
-	    }
-	});
-    }
-
     /**
      * Perform some room actions when presence received: handle room occupants,
      * create instant rooms...
@@ -326,10 +317,11 @@ public class RoomChat extends RoomBoilerplate {
 		if (type == Type.error) {
 		    chatEventBus.fireEvent(new ErrorEvent(ChatErrors.errorPresence, "We received a presence error",
 			    presence));
-		} else if (type == Type.unavailable && occupantURI.equals(getURI())) {
-
 		} else if (type == Type.unavailable) {
 		    removeOccupant(occupantURI);
+		    if (occupantURI.equalsNoResource(session.getCurrentUser())) {
+			close();
+		    }
 		} else {
 		    final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
 		    for (final IPacket child : children) {
@@ -343,6 +335,19 @@ public class RoomChat extends RoomBoilerplate {
 			    setChatState(ChatStates.ready);
 			}
 		    }
+		}
+	    }
+	});
+    }
+
+    private void trackSubjectChangeMessages() {
+	addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		Message message = event.getMessage();
+		if (message.getSubject() != null) {
+		    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
+			    .getSubject()));
 		}
 	    }
 	});

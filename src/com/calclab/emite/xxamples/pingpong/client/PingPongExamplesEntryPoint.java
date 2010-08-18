@@ -20,7 +20,8 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	PingPongDisplay display = new PingPongChatWidget();
+	final PingPongDisplay display = new PingPongChatWidget();
+	new EventBusEventsSupervisor(display);
 	RootPanel.get().add(display.asWidget());
 	new PingPongCommonPresenter(display);
 	new ConnectionEventsSupervisor(display);
