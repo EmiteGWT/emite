@@ -7,7 +7,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.xep.muc.client.events.BeforeInvitationSendHandler;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
@@ -25,7 +25,7 @@ public interface Room extends Chat {
      * @param handler
      * @return
      */
-    HandlerRegistration addBeforeInvitationSendHandler(BeforeInvitationSendHandler handler);
+    HandlerRegistration addBeforeRoomInvitationSendHandler(BeforeRoomInvitationSendHandler handler);
 
     /**
      * Adds a handler to know when a OccupantChangedEvent ocurs. This is used

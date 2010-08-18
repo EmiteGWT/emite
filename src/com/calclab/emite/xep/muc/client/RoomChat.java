@@ -42,6 +42,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
@@ -174,15 +175,14 @@ public class RoomChat extends RoomBoilerplate {
      */
     @Override
     public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
-	final BasicStanza message = new BasicStanza("message", null);
-	message.setFrom(session.getCurrentUser());
-	message.setTo(getURI().getJID());
+	final Message message = new Message((String) null, getURI().getJID(), session.getCurrentUser());
 	final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
 	final IPacket invite = x.addChild("invite", null);
 	invite.setAttribute("to", userJid.toString());
 	final IPacket reason = invite.addChild("reason", null);
 	reason.setText(reasonText);
 	session.send(message);
+	chatEventBus.fireEvent(new BeforeRoomInvitationSendEvent(message, invite));
 	chatEventBus.fireEvent(new RoomInvitationSentEvent(userJid, reasonText));
     }
 

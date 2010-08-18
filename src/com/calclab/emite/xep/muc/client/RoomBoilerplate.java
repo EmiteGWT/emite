@@ -11,6 +11,8 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendEvent;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
@@ -27,6 +29,11 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     public RoomBoilerplate(XmppSession session, ChatProperties properties) {
 	super(session, properties);
 	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
+    }
+
+    @Override
+    public HandlerRegistration addBeforeRoomInvitationSendHandler(BeforeRoomInvitationSendHandler handler) {
+	return BeforeRoomInvitationSendEvent.bind(chatEventBus, handler);
     }
 
     /**
