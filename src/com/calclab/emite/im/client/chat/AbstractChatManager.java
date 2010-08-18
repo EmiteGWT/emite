@@ -49,6 +49,31 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	return chat;
     }
 
+    protected void addChat(final Chat chat) {
+	chats.add(chat);
+    }
+
+    /**
+     * This method creates a new chat, add it to the pool and fire the event
+     * 
+     * @param properties
+     */
+    protected Chat addNewChat(final ChatProperties properties) {
+	final Chat chat = createChat(properties);
+	addChat(chat);
+	fireChatCreated(chat);
+	return chat;
+    }
+
+    /**
+     * A template method: the subclass must return a new object of class Chat
+     * 
+     * @param properties
+     *            the properties of the chat
+     * @return a new chat. must not be null
+     */
+    protected abstract Chat createChat(ChatProperties properties);
+
     private void controlSessionStatus() {
 	// Control chat state when the user logout and login again
 	session.addSessionStateChangedHandler(new StateChangedHandler() {
@@ -88,36 +113,11 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 			chat = addNewChat(properties);
 		    }
 		    if (chat != null) {
-			chat.getChatEventBus().fireEvent(event);
+			chat.receive(message);
 		    }
 		}
 	    }
 	});
     }
-
-    protected void addChat(final Chat chat) {
-	chats.add(chat);
-    }
-
-    /**
-     * This method creates a new chat, add it to the pool and fire the event
-     * 
-     * @param properties
-     */
-    protected Chat addNewChat(final ChatProperties properties) {
-	final Chat chat = createChat(properties);
-	addChat(chat);
-	fireChatCreated(chat);
-	return chat;
-    }
-
-    /**
-     * A template method: the subclass must return a new object of class Chat
-     * 
-     * @param properties
-     *            the properties of the chat
-     * @return a new chat. must not be null
-     */
-    protected abstract Chat createChat(ChatProperties properties);
 
 }

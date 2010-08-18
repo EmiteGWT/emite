@@ -93,9 +93,7 @@ public interface Room extends Chat {
     // TODO: deprecate
     public abstract void onSubjectChanged(Listener2<Occupant, String> subjectListener);
 
-    public abstract void reEnter(final HistoryOptions historyOptions);
-
-    public abstract void removeOccupant(final XmppURI uri);
+    public void reEnter(final HistoryOptions historyOptions);
 
     /**
      * 
@@ -106,10 +104,11 @@ public interface Room extends Chat {
      * @param reasonText
      *            reason for the invitation
      */
-    public abstract void sendInvitationTo(final XmppURI userJid, final String reasonText);
+    public void sendInvitationTo(final XmppURI userJid, final String reasonText);
 
-    public abstract Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role,
-	    final Show show, final String statusMessage);
+    // public Occupant setOccupantPresence(final XmppURI uri, final String
+    // affiliation, final String role,
+    // final Show show, final String statusMessage);
 
     /**
      * Update my status to other occupants.
@@ -117,13 +116,13 @@ public interface Room extends Chat {
      * @param statusMessage
      * @param show
      */
-    public abstract void setStatus(final String statusMessage, final Show show);
+    public void setStatus(final String statusMessage, final Show show);
 
     /**
      * http://www.xmpp.org/extensions/xep-0045.html#subject-mod
      * 
      * @param subjectText
      */
-    public abstract void setSubject(final String subjectText);
+    public void setSubject(final String subjectText);
 
 }

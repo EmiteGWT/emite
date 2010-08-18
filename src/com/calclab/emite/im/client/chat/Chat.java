@@ -233,6 +233,14 @@ public interface Chat {
     public void open();
 
     /**
+     * Makes this chat receives the given message
+     * 
+     * @param message
+     *            the message to be received by this chat
+     */
+    public void receive(Message message);
+
+    /**
      * Send a message to the uri of this chat
      * 
      * @param message

@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form.Type;
 import com.calclab.emite.xtesting.SessionTester;
@@ -30,150 +29,151 @@ public class FormTest {
 
     @Test
     public void parseFieldsInIQ() {
-        final Form result = parse(XEP_0004_5_1_SAMPLE_2);
-        final List<Field> fields = result.getFields();
-        assertEquals(12, fields.size());
-        assertEquals("hidden", fields.get(0).getType());
-        assertEquals("FORM_TYPE", fields.get(0).getVar());
-        assertEquals("jabber:bot", fields.get(0).getValues().get(0));
-        assertEquals("Tell all your friends about your new bot!", fields.get(11).getDesc());
+	final Form result = parse(XEP_0004_5_1_SAMPLE_2);
+	final List<Field> fields = result.getFields();
+	assertEquals(12, fields.size());
+	assertEquals("hidden", fields.get(0).getType());
+	assertEquals("FORM_TYPE", fields.get(0).getVar());
+	assertEquals("jabber:bot", fields.get(0).getValues().get(0));
+	assertEquals("Tell all your friends about your new bot!", fields.get(11).getDesc());
     }
 
     @Test
     public void parseFieldsInMessage() {
-        final Form result = parse(XEP_0154_5_3_SAMPLE_13);
-        final List<Field> fields = result.getFields();
-        assertEquals(1, fields.size());
-        assertEquals(null, fields.get(0).getType());
-        assertEquals("weblog", fields.get(0).getVar());
-        assertEquals("http://www.denmark.lit/blogs/princely_musings", fields.get(0).getValues().get(0));
+	final Form result = parse(XEP_0154_5_3_SAMPLE_13);
+	final List<Field> fields = result.getFields();
+	assertEquals(1, fields.size());
+	assertEquals(null, fields.get(0).getType());
+	assertEquals("weblog", fields.get(0).getVar());
+	assertEquals("http://www.denmark.lit/blogs/princely_musings", fields.get(0).getValues().get(0));
     }
 
     @Test
     public void parseInstructions() {
-        final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
-        final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
-        final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
-        assertEquals("Fill out this form to configure your new bot!", result1.getInstructions().get(0));
-        assertEquals(0, result2.getInstructions().size());
-        assertEquals("Fill out this form to search for information!", result4.getInstructions().get(0));
+	final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
+	final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
+	final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
+	assertEquals("Fill out this form to configure your new bot!", result1.getInstructions().get(0));
+	assertEquals(0, result2.getInstructions().size());
+	assertEquals("Fill out this form to search for information!", result4.getInstructions().get(0));
     }
 
     @Test
     public void parseReported() {
-        final Form result = parse(XEP_0004_5_2_SAMPLE_8);
-        final Reported reported = result.getReported();
-        final List<Field> fields = reported.getFields();
-        assertEquals(2, fields.size());
-        assertEquals("name", fields.get(0).getVar());
-        assertEquals("url", fields.get(1).getVar());
+	final Form result = parse(XEP_0004_5_2_SAMPLE_8);
+	final Reported reported = result.getReported();
+	final List<Field> fields = reported.getFields();
+	assertEquals(2, fields.size());
+	assertEquals("name", fields.get(0).getVar());
+	assertEquals("url", fields.get(1).getVar());
     }
 
     @Test
     public void parseSearchResults() {
-        final Form result = parse(XEP_0004_5_2_SAMPLE_8);
-        final List<Item> items = result.getItems();
-        assertEquals(5, items.size());
-        final List<Field> fields1 = items.get(0).getFields();
-        assertEquals(2, fields1.size());
-        assertEquals("name", fields1.get(0).getVar());
-        assertEquals("url", fields1.get(1).getVar());
-        assertEquals("Comune di Verona - Benvenuti nel sito ufficiale", fields1.get(0).getValues().get(0));
-        assertEquals("http://www.comune.verona.it/", fields1.get(1).getValues().get(0));
-        final List<Field> fields4 = items.get(4).getFields();
-        assertEquals("Veronafiere - fiera di Verona", fields4.get(0).getValues().get(0));
-        assertEquals("http://www.veronafiere.it/", fields4.get(1).getValues().get(0));
+	final Form result = parse(XEP_0004_5_2_SAMPLE_8);
+	final List<Item> items = result.getItems();
+	assertEquals(5, items.size());
+	final List<Field> fields1 = items.get(0).getFields();
+	assertEquals(2, fields1.size());
+	assertEquals("name", fields1.get(0).getVar());
+	assertEquals("url", fields1.get(1).getVar());
+	assertEquals("Comune di Verona - Benvenuti nel sito ufficiale", fields1.get(0).getValues().get(0));
+	assertEquals("http://www.comune.verona.it/", fields1.get(1).getValues().get(0));
+	final List<Field> fields4 = items.get(4).getFields();
+	assertEquals("Veronafiere - fiera di Verona", fields4.get(0).getValues().get(0));
+	assertEquals("http://www.veronafiere.it/", fields4.get(1).getValues().get(0));
     }
 
     @Test
     public void parseSearchWithoutForm() {
-        final Form form = parse(XEP_0055_2_1_SAMPLE_1);
-        assertEquals(form.x(), NoPacket.INSTANCE);
+	final Form form = parse(XEP_0055_2_1_SAMPLE_1);
+	assertEquals(form.x(), NoPacket.INSTANCE);
     }
 
     @Test
     public void parseTitle() {
-        final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
-        final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
-        final Form result3 = parse(XEP_0004_5_1_SAMPLE_4);
-        final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
-        final Form result5 = parse(XEP_0004_5_2_SAMPLE_7);
-        final Form result6 = parse(XEP_0004_5_2_SAMPLE_8);
-        assertEquals("Bot Configuration", result1.getTitle());
-        assertEquals(null, result2.getTitle());
-        assertEquals(null, result3.getTitle());
-        assertEquals("Joogle Search", result4.getTitle());
-        assertEquals(null, result5.getTitle());
-        assertEquals("Joogle Search: verona", result6.getTitle());
+	final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
+	final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
+	final Form result3 = parse(XEP_0004_5_1_SAMPLE_4);
+	final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
+	final Form result5 = parse(XEP_0004_5_2_SAMPLE_7);
+	final Form result6 = parse(XEP_0004_5_2_SAMPLE_8);
+	assertEquals("Bot Configuration", result1.getTitle());
+	assertEquals(null, result2.getTitle());
+	assertEquals(null, result3.getTitle());
+	assertEquals("Joogle Search", result4.getTitle());
+	assertEquals(null, result5.getTitle());
+	assertEquals("Joogle Search: verona", result6.getTitle());
     }
 
     @Test
     public void parseType() {
-        final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
-        final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
-        final Form result3 = parse(XEP_0004_5_1_SAMPLE_4);
-        final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
-        final Form result5 = parse(XEP_0004_5_2_SAMPLE_7);
-        final Form result6 = parse(XEP_0004_5_2_SAMPLE_8);
-        final Form result7 = parse(XEP_0154_5_3_SAMPLE_13);
-        assertEquals(Form.Type.form, result1.getType());
-        assertEquals(Form.Type.submit, result2.getType());
-        assertEquals(Form.Type.result, result3.getType());
-        assertEquals(Form.Type.form, result4.getType());
-        assertEquals(Form.Type.submit, result5.getType());
-        assertEquals(Form.Type.result, result6.getType());
-        assertEquals(Form.Type.result, result7.getType());
+	final Form result1 = parse(XEP_0004_5_1_SAMPLE_2);
+	final Form result2 = parse(XEP_0004_5_1_SAMPLE_3);
+	final Form result3 = parse(XEP_0004_5_1_SAMPLE_4);
+	final Form result4 = parse(XEP_0004_5_2_SAMPLE_6);
+	final Form result5 = parse(XEP_0004_5_2_SAMPLE_7);
+	final Form result6 = parse(XEP_0004_5_2_SAMPLE_8);
+	final Form result7 = parse(XEP_0154_5_3_SAMPLE_13);
+	assertEquals(Form.Type.form, result1.getType());
+	assertEquals(Form.Type.submit, result2.getType());
+	assertEquals(Form.Type.result, result3.getType());
+	assertEquals(Form.Type.form, result4.getType());
+	assertEquals(Form.Type.submit, result5.getType());
+	assertEquals(Form.Type.result, result6.getType());
+	assertEquals(Form.Type.result, result7.getType());
     }
 
     @Before
     public void setUp() {
-        session = new SessionTester();
-        session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));
-        session.setState(State.ready);
+	session = new SessionTester();
+	session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));
+	session.setReady();
     }
 
     @Test
     public void testFormReportedAndItems() {
-        final Form form = new Form(Type.result);
-        form.setTitle("Joogle Search: verona");
-        form.addToReported(new Field().Var("name"));
-        form.addToReported(new Field().Var("url"));
-        form.addItem(new Item().WithField(
-                new Field().Var("name").Value("Comune di Verona - Benvenuti nel sito ufficiale")).WithField(
-                new Field().Var("url").Value("http://www.comune.verona.it/")));
-        form.addItem(new Item().WithField(new Field().Var("name").Value("benvenuto!")).WithField(
-                new Field().Var("url").Value("http://www.hellasverona.it/")));
-        form.addItem(new Item().WithField(new Field().Var("name").Value("Universita degli Studi di Verona - Home Page")).WithField(
-                new Field().Var("url").Value("http://www.univr.it/")));
-        form.addItem(new Item().WithField(new Field().Var("name").Value("Aeroporti del Garda")).WithField(
-                new Field().Var("url").Value("http://www.aeroportoverona.it/")));
-        form.addItem(new Item().WithField(new Field().Var("name").Value("Veronafiere - fiera di Verona")).WithField(
-                new Field().Var("url").Value("http://www.veronafiere.it/")));
-        session.send(form);
-        session.verifySent(parse(XEP_0004_5_2_SAMPLE_8).x());
+	final Form form = new Form(Type.result);
+	form.setTitle("Joogle Search: verona");
+	form.addToReported(new Field().Var("name"));
+	form.addToReported(new Field().Var("url"));
+	form.addItem(new Item().WithField(
+		new Field().Var("name").Value("Comune di Verona - Benvenuti nel sito ufficiale")).WithField(
+		new Field().Var("url").Value("http://www.comune.verona.it/")));
+	form.addItem(new Item().WithField(new Field().Var("name").Value("benvenuto!")).WithField(
+		new Field().Var("url").Value("http://www.hellasverona.it/")));
+	form.addItem(new Item()
+		.WithField(new Field().Var("name").Value("Universita degli Studi di Verona - Home Page")).WithField(
+			new Field().Var("url").Value("http://www.univr.it/")));
+	form.addItem(new Item().WithField(new Field().Var("name").Value("Aeroporti del Garda")).WithField(
+		new Field().Var("url").Value("http://www.aeroportoverona.it/")));
+	form.addItem(new Item().WithField(new Field().Var("name").Value("Veronafiere - fiera di Verona")).WithField(
+		new Field().Var("url").Value("http://www.veronafiere.it/")));
+	session.send(form);
+	session.verifySent(parse(XEP_0004_5_2_SAMPLE_8).x());
     }
 
     @Test
     public void testFormResult() {
-        final Form form = new Form(Type.result);
-        form.WithField(new Field(FieldType.HIDDEN).Var("FORM_TYPE").Value("jabber:bot"));
-        form.WithField(new Field(FieldType.TEXT_SINGLE).Var("botname").Value("The Jabber Google Bot"));
-        form.WithField(new Field(FieldType.BOOLEAN).Var("public").Value("0"));
-        form.WithField(new Field(FieldType.TEXT_PRIVATE).Var("password").Value("v3r0na"));
-        form.WithField(new Field(FieldType.LIST_MULTI).Var("features").Value("news").Value("search"));
-        form.WithField(new Field(FieldType.LIST_SINGLE).Var("maxsubs").Value("50"));
-        form.WithField(new Field(FieldType.JID_MULTI).Var("invitelist").Value("juliet@capulet.com").Value(
-                "benvolio@montague.net"));
-        session.send(form);
-        session.verifySent(parse(XEP_0004_5_1_SAMPLE_4).x());
+	final Form form = new Form(Type.result);
+	form.WithField(new Field(FieldType.HIDDEN).Var("FORM_TYPE").Value("jabber:bot"));
+	form.WithField(new Field(FieldType.TEXT_SINGLE).Var("botname").Value("The Jabber Google Bot"));
+	form.WithField(new Field(FieldType.BOOLEAN).Var("public").Value("0"));
+	form.WithField(new Field(FieldType.TEXT_PRIVATE).Var("password").Value("v3r0na"));
+	form.WithField(new Field(FieldType.LIST_MULTI).Var("features").Value("news").Value("search"));
+	form.WithField(new Field(FieldType.LIST_SINGLE).Var("maxsubs").Value("50"));
+	form.WithField(new Field(FieldType.JID_MULTI).Var("invitelist").Value("juliet@capulet.com").Value(
+		"benvolio@montague.net"));
+	session.send(form);
+	session.verifySent(parse(XEP_0004_5_1_SAMPLE_4).x());
     }
 
     @Test
     public void testFormSearch() {
-        final Form form = new Form(Type.submit).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Value(
-                "verona"));
-        session.send(form);
-        session.verifySent(parse(XEP_0004_5_2_SAMPLE_7).x());
+	final Form form = new Form(Type.submit).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Value(
+		"verona"));
+	session.send(form);
+	session.verifySent(parse(XEP_0004_5_2_SAMPLE_7).x());
     }
 
     /**
@@ -187,24 +187,24 @@ public class FormTest {
      */
     @Test
     public void testMultipleInstructions() {
-        final Form result = parse(SEVERAL_INSTRUCTIONS);
-        assertEquals("First", result.getInstructions().get(0));
-        assertEquals("Second", result.getInstructions().get(1));
-        assertEquals(2, result.getInstructions().size());
+	final Form result = parse(SEVERAL_INSTRUCTIONS);
+	assertEquals("First", result.getInstructions().get(0));
+	assertEquals("Second", result.getInstructions().get(1));
+	assertEquals(2, result.getInstructions().size());
     }
 
     @Test
     public void testTypeForm() {
-        final Form form = new Form(Type.form).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Required(
-                true));
-        form.setTitle("Joogle Search");
-        form.addInstruction("Fill out this form to search for information!");
-        session.send(form);
-        session.verifySent(parse(XEP_0004_5_2_SAMPLE_6).x());
+	final Form form = new Form(Type.form).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request")
+		.Required(true));
+	form.setTitle("Joogle Search");
+	form.addInstruction("Fill out this form to search for information!");
+	session.send(form);
+	session.verifySent(parse(XEP_0004_5_2_SAMPLE_6).x());
     }
 
     private Form parse(final String xml) {
-        return new Form(TigaseXMLService.toPacket(xml));
+	return new Form(TigaseXMLService.toPacket(xml));
     }
 
 }

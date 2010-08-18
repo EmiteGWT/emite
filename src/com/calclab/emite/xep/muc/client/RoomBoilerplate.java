@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -36,6 +38,11 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Override
     public HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler) {
 	return OccupantChangedEvent.bind(chatEventBus, handler);
+    }
+
+    @Override
+    public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler) {
+	return PresenceReceivedEvent.bind(chatEventBus, handler);
     }
 
     /**

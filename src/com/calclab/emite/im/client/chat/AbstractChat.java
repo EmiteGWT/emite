@@ -56,16 +56,17 @@ public abstract class AbstractChat extends ChatBoilerplate {
     }
 
     @Override
+    public void receive(Message message) {
+	chatEventBus.fireEvent(new BeforeReceiveMessageEvent(message));
+	chatEventBus.fireEvent(new MessageReceivedEvent(message));
+    }
+
+    @Override
     public void send(final Message message) {
 	message.setFrom(session.getCurrentUser());
 	chatEventBus.fireEvent(new BeforeSendMessageEvent(message));
 	session.send(message);
 	chatEventBus.fireEvent(new MessageSentEvent(message));
-    }
-
-    protected void receive(final Message message) {
-	chatEventBus.fireEvent(new BeforeReceiveMessageEvent(message));
-	chatEventBus.fireEvent(new MessageReceivedEvent(message));
     }
 
 }

@@ -1,26 +1,12 @@
 package com.calclab.emite.xtesting;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-
-import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.AbstractSession;
-import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.Session;
+import com.calclab.emite.core.client.xmpp.session.SessionImpl;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.xtesting.matchers.EmiteAsserts;
-import com.calclab.emite.xtesting.matchers.IsPacketLike;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
-import com.calclab.suco.client.events.Listener;
 
 /**
  * Object of this class are used to test against session (any emite component).
@@ -29,184 +15,74 @@ import com.calclab.suco.client.events.Listener;
  * ask (and query) about the stazas that had been send.
  * 
  */
-public class SessionTester extends AbstractSession {
-    private XmppURI currentUser;
-    private final TigaseXMLService xmler;
-    private final ArrayList<IPacket> sent;
-    private IPacket lastIQSent;
-    private Listener<IPacket> lastIQListener;
+public class SessionTester extends SessionImpl implements Session {
+
+    private final XmppSessionTester tester;
 
     public SessionTester() {
-	this((XmppURI) null);
+	this(new XmppSessionTester());
     }
 
-    /**
-     * Create a new SessionTester and login if user provided
-     * 
-     * @param user
-     *            optional user to login
-     */
-    public SessionTester(final String user) {
-	this(XmppURI.uri(user));
+    public SessionTester(String user) {
+	this(new XmppSessionTester(user));
     }
 
-    /**
-     * Create a new SessionTester and login if user provided
-     * 
-     * @param user
-     *            optional user to login
-     */
-    public SessionTester(final XmppURI user) {
-	xmler = new TigaseXMLService();
-	sent = new ArrayList<IPacket>();
-	if (user != null) {
-	    setLoggedIn(user);
-	}
+    public SessionTester(XmppSessionTester delegate) {
+	super(delegate);
+	this.tester = delegate;
     }
 
-    public void answer(final IPacket iq) {
-	lastIQListener.onEvent(iq);
+    public void answer(IQ iq) {
+	tester.answer(iq);
     }
 
-    public void answer(final String iq) {
-	answer(xmler.toXML(iq));
+    public void answer(String iq) {
+	tester.answer(iq);
     }
 
     public void answerSuccess() {
-	answer(new IQ(Type.result));
+	tester.answerSuccess();
     }
 
-    public XmppURI getCurrentUser() {
-	return currentUser;
+    public void receives(Message message) {
+	tester.receives(message);
     }
 
-    public boolean isLoggedIn() {
-	return currentUser != null;
+    public void receives(Presence presence) {
+	tester.receives(presence);
     }
 
-    public void login(final Credentials credentials) {
-	setLoggedIn(credentials.getXmppUri());
+    public void receives(String xml) {
+	tester.receives(xml);
     }
 
-    public void logout() {
-	if (currentUser != null) {
-	    setState(Session.State.loggingOut);
-	    currentUser = null;
-	    setState(Session.State.disconnected);
-	}
+    public void setLoggedIn(String uri) {
+	tester.setLoggedIn(uri);
     }
 
-    public StreamSettings pause() {
-	return null;
+    public void setLoggedIn(XmppURI uri) {
+	tester.setLoggedIn(uri);
     }
 
-    public void receives(final Message message) {
-	fireMessage(message);
+    public void verifyIQSent(IQ iq) {
+	tester.verifyIQSent(iq);
     }
 
-    public void receives(final Presence presence) {
-	firePresence(presence);
+    public void verifyIQSent(String iq) {
+	tester.verifyIQSent(iq);
     }
 
-    public void receives(final String received) {
-	final IPacket stanza = xmler.toXML(received);
-	final String name = stanza.getName();
-	if (name.equals("message")) {
-	    fireMessage(new Message(stanza));
-	} else if (name.equals("presence")) {
-	    firePresence(new Presence(stanza));
-	} else if (name.equals("iq")) {
-	    fireIQ(new IQ(stanza));
-	} else {
-	    throw new RuntimeException("WHAT IS THIS? (" + name + "): " + stanza.toString());
-	}
+    public void verifyNotSent(String xml) {
+	tester.verifyNotSent(xml);
 
     }
 
-    public void resume(final XmppURI userURI, final StreamSettings settings) {
+    public void verifySent(IPacket packet) {
+	tester.verifySent(packet);
     }
 
-    public void send(final IPacket packet) {
-	sent.add(packet);
+    public void verifySent(String xml) {
+	tester.verifySent(xml);
     }
 
-    public void sendIQ(final String id, final IQ iq, final Listener<IPacket> listener) {
-	lastIQSent = iq;
-	lastIQListener = listener;
-    }
-
-    public void setCurrentUser(final XmppURI currentUser) {
-	this.currentUser = currentUser;
-    }
-
-    public void setLoggedIn(final String uri) {
-	setLoggedIn(XmppURI.uri(uri));
-    }
-
-    public void setLoggedIn(final XmppURI userURI) {
-	currentUser = userURI;
-	setState(State.loggedIn);
-    }
-
-    public void setReady() {
-	setState(State.ready);
-    }
-
-    @Override
-    public void setState(final State state) {
-	super.setState(state);
-    }
-
-    public Listener<IPacket> verifyIQSent(final IPacket iq) {
-	assertNotNull(lastIQSent);
-	EmiteAsserts.assertPacketLike(iq, lastIQSent);
-	return lastIQListener;
-    }
-
-    public void verifyIQSent(final String xml) {
-	verifyIQSent(xmler.toXML(xml));
-    }
-
-    public void verifyNotSent(final IPacket packet) {
-	assertNotContains(packet, sent);
-    }
-
-    public void verifyNotSent(final String xml) {
-	verifyNotSent(xmler.toXML(xml));
-    }
-
-    public void verifySent(final IPacket packet) {
-	assertContains(packet, sent);
-    }
-
-    public void verifySent(final String expected) {
-	final IPacket packet = xmler.toXML(expected);
-	verifySent(packet);
-    }
-
-    public void verifySentNothing() {
-	assertEquals("number of sent stanzas", 0, sent.size());
-    }
-
-    private void assertContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertTrue("Expected " + expected + " contained in " + buffer, isContained);
-    }
-
-    private void assertNotContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
-    }
-
-    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
-	boolean isContained = false;
-	final IsPacketLike matcher = new IsPacketLike(expected);
-	for (final IPacket packet : list) {
-	    buffer.append("[").append(packet.toString()).append("]");
-	    isContained = isContained ? isContained : matcher.matches(packet, System.out);
-	}
-	return isContained;
-    }
 }

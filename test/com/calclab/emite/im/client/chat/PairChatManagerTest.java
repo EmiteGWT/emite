@@ -23,7 +23,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {
-	final Message message = new Message(OTHER, MYSELF, null);
+	final Message message = new Message(null, MYSELF, OTHER);
 	message.addChild("gone", ChatStateManager.XMLNS);
 
 	final MockedListener<Chat> listener = addOnChatCreatedListener();
@@ -42,8 +42,8 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
     @Test
     public void managerShouldCreateOneChatForSameResource() {
 	final MockedListener<Chat> listener = addOnChatCreatedListener();
-	session.receives(new Message(uri("source@domain/resource1"), MYSELF, "message 1"));
-	session.receives(new Message(uri("source@domain/resource1"), MYSELF, "message 2"));
+	session.receives(new Message("message 1", MYSELF, uri("source@domain/resource1")));
+	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 	assertEquals(1, listener.getCalledTimes());
     }
 
@@ -123,7 +123,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	chatOrg.onMessageReceived(listenerOrg);
 	assertTrue("org listener empty", listenerOrg.isCalled(0));
 
-	session.receives(new Message(uri("COM@domain.com"), MYSELF, "message com 2"));
+	session.receives(new Message("message com 2", MYSELF, uri("COM@domain.com")));
 	assertTrue("com has one message", listenerCom.isCalled(1));
 	assertTrue("org has no message", listenerOrg.isCalled(0));
 
@@ -132,8 +132,8 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldReuseChatIfNotResouceSpecified() {
 	final MockedListener<Chat> listener = addOnChatCreatedListener();
-	session.receives(new Message(uri("source@domain"), MYSELF, "message 1"));
-	session.receives(new Message(uri("source@domain/resource1"), MYSELF, "message 2"));
+	session.receives(new Message("message 1", MYSELF, uri("source@domain")));
+	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 	assertTrue(listener.isCalled(1));
     }
 
@@ -143,7 +143,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	final Chat chat = manager.open(uri("someone@domain"));
 	assertTrue(listener.isCalledOnce());
 	assertTrue(listener.isCalledWithSame(chat));
-	session.receives(new Message(uri("someone@domain/resource"), MYSELF, "answer"));
+	session.receives(new Message("answer", MYSELF, uri("someone@domain/resource")));
 	assertTrue(listener.isCalled(1));
     }
 }

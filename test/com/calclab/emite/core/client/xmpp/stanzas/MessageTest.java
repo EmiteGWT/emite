@@ -14,7 +14,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 public class MessageTest {
     @Test
     public void shouldAddSubject() {
-	final Message message = new Message(uri("user1@domain/r"), uri("user2@domain/r"), "message")
+	final Message message = new Message("message", uri("user2@domain/r"), uri("user1@domain/r"))
 		.Subject("the subject");
 	assertEquals("the subject", message.getSubject());
     }
@@ -24,7 +24,7 @@ public class MessageTest {
 	final Message message = new Message();
 	assertNull(message.getBody());
 	assertEquals(0, message.getChildren(MatcherFactory.byName("body")).size());
-	final Message message2 = new Message(uri("me@domain"), uri("other@domain"), null, Message.Type.chat);
+	final Message message2 = new Message(null, uri("other@domain"), uri("me@domain"), Message.Type.chat);
 	assertEquals(0, message2.getChildren(MatcherFactory.byName("body")).size());
     }
 
@@ -37,7 +37,7 @@ public class MessageTest {
 
     @Test
     public void shouldReturnNullThread() {
-	final Message message = new Message(uri("user1@domain/r"), uri("user2@domain/r"), "message");
+	final Message message = new Message("message", uri("user2@domain/r"), uri("user1@domain/r"));
 	assertEquals(null, message.getThread());
     }
 

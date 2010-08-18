@@ -169,7 +169,7 @@ public class RoomChatStateManager {
 	if (ownState == null || !ownState.equals(chatState)) {
 	    ownState = chatState;
 	    GWT.log("Setting own status to: " + chatState.toString(), null);
-	    final Message message = new Message(null, room.getURI(), null);
+	    final Message message = new Message(null, room.getURI());
 	    message.addChild(chatState.toString(), XMLNS);
 	    room.send(message);
 	}

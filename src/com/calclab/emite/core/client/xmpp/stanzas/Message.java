@@ -69,37 +69,53 @@ public class Message extends BasicStanza {
      *            the message recipient
      */
     public Message(final String body, final XmppURI toURI) {
-	this(null, toURI, body, Type.chat);
+	this(body, toURI, null, Type.chat);
     }
 
     /**
      * Create a chat (type) message
      * 
-     * @param fromUri
-     * @param toURI
      * @param body
+     * @param toURI
+     * @param fromUri
      */
-    public Message(final XmppURI fromUri, final XmppURI toURI, final String body) {
-	this(fromUri, toURI, body, Type.chat);
+    public Message(final String body, final XmppURI toURI, final XmppURI fromUri) {
+	this(body, toURI, fromUri, Type.chat);
     }
 
     /**
      * Create a message
      * 
-     * @param fromUri
+     * @param body
      * @param toURI
-     * @param message
+     * @param fromUri
      */
-    public Message(final XmppURI fromUri, final XmppURI toURI, final String message, final Type type) {
+    public Message(final String body, final XmppURI toURI, final XmppURI fromUri, final Type type) {
 	super(PACKET_NAME, null);
 	setType(type);
 	setFrom(fromUri);
 	setTo(toURI);
-	setBody(message);
+	setBody(body);
+    }
+
+    /**
+     * Inconsistent param order. Use other constructor
+     */
+    @Deprecated
+    public Message(final XmppURI fromUri, final XmppURI toURI, final String body) {
+	this(body, toURI, fromUri, Type.chat);
+    }
+
+    /**
+     * Inconsistent param order. Use other constructor
+     */
+    @Deprecated
+    public Message(final XmppURI fromUri, final XmppURI toURI, final String message, final Type type) {
+	this(message, toURI, fromUri, type);
     }
 
     Message() {
-	this(null, null, null);
+	this((String) null, null, null, null);
     }
 
     public Message Body(final String body) {
