@@ -1,5 +1,7 @@
 package com.calclab.emite.xxamples.pingpong.client.events;
 
+import com.calclab.emite.core.client.events.ErrorEvent;
+import com.calclab.emite.core.client.events.ErrorHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
@@ -32,6 +34,15 @@ public class ChatManagerEventsSupervisor {
 	    }
 	}, false);
 	output.print("CHAT STATE " + chat.getURI() + " - " + chat.getChatState(), Style.event);
+
+	chat.addErrorHandler(new ErrorHandler() {
+	    @Override
+	    public void onError(ErrorEvent event) {
+		String stanza = event.getStanza() != null ? event.getStanza().toString() : "(no stanza)";
+		output.print("CHAT ERROR " + chat.getURI() + ": " + event.getErrorType() + "- "
+			+ event.getDescription() + ": " + stanza, Style.error);
+	    }
+	});
     }
 
 }

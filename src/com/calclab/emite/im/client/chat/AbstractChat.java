@@ -22,9 +22,12 @@
 package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.events.ErrorEvent;
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
 import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
 import com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent;
 import com.calclab.emite.im.client.chat.events.ChatStateChangedEvent;
@@ -36,7 +39,16 @@ public abstract class AbstractChat extends ChatBoilerplate {
 	super(session, properties);
 	assert properties.getState() != null : "State can't be null in chats";
 	setPreviousChatState(getChatState());
-
+	MessageReceivedEvent.bind(chatEventBus, new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		Message message = event.getMessage();
+		if (message.getType() == Type.error) {
+		    chatEventBus.fireEvent(new ErrorEvent(ChatErrors.errorMessage, "We received an error message",
+			    message));
+		}
+	    }
+	});
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
+import com.calclab.emite.xep.muc.client.Occupant;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
@@ -25,12 +26,17 @@ public class RoomManagerEventsSupervisor {
 	});
     }
 
-    protected void trackRoom(Room room, final PingPongDisplay display) {
+    protected void trackRoom(final Room room, final PingPongDisplay display) {
 	room.addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
 		display.print("ROOM OCCUPANT " + event.getOccupant().getNick() + " changed: " + event.getChangeType(),
 			Style.event);
+		String occupants = "";
+		for (Occupant occupant : room.getOccupants()) {
+		    occupants += occupant.getURI().getResource() + " ";
+		}
+		display.print("ROOM OCCUPANTS (" + room.getOccupantsCount() + "): " + occupants, Style.event);
 	    }
 	});
 

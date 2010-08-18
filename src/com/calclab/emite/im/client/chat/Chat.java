@@ -46,6 +46,8 @@ public interface Chat {
 	 * You are trying to send messages to a not ready chat
 	 */
 	public static final String sendNotReady = "sendNotReady";
+	public static final String errorMessage = "errorMessage";
+	public static final String errorPresence = "errorPresence";
     }
 
     /**

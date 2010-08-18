@@ -1,7 +1,7 @@
 package com.calclab.emite.core.client.conn;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
@@ -26,13 +26,13 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
     }
 
     @Override
-    public HandlerRegistration addConnectionHandler(final ConnectionStateHandler handler) {
-	return eventBus.addHandler(ConnectionStateEvent.getType(), handler);
+    public HandlerRegistration addConnectionResponseHandler(final ConnectionResponseHandler handler) {
+	return ConnectionResponseEvent.bind(eventBus, handler);
     }
 
     @Override
-    public HandlerRegistration addConnectionResponseHandler(final ConnectionResponseHandler handler) {
-	return ConnectionResponseEvent.bind(eventBus, handler);
+    public HandlerRegistration addConnectionStateChangedHandler(final ConnectionStateChangedHandler handler) {
+	return ConnectionStateChangedEvent.bind(eventBus, handler);
     }
 
     @Override
@@ -70,15 +70,15 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
     }
 
     protected void fireConnected() {
-	eventBus.fireEvent(new ConnectionStateEvent(ConnectionState.connected));
+	eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.connected));
     }
 
     protected void fireDisconnected(final String message) {
-	eventBus.fireEvent(new ConnectionStateEvent(ConnectionState.disconnected, message));
+	eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.disconnected, message));
     }
 
     protected void fireError(final String error) {
-	eventBus.fireEvent(new ConnectionStateEvent(ConnectionState.error, error));
+	eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.error, error));
     }
 
     protected void fireResponse(final String response) {
@@ -86,7 +86,7 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
     }
 
     protected void fireRetry(final Integer attempt, final Integer scedTime) {
-	eventBus.fireEvent(new ConnectionStateEvent(ConnectionState.waitingForRetry,
+	eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.waitingForRetry,
 		"The connection will try to re-connect in " + scedTime + " milliseconds.", scedTime));
     }
 

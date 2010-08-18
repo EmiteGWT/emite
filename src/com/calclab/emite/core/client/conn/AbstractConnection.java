@@ -1,6 +1,6 @@
 package com.calclab.emite.core.client.conn;
 
-import com.calclab.emite.core.client.conn.ConnectionStateEvent.ConnectionState;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener0;
@@ -19,9 +19,9 @@ public abstract class AbstractConnection {
     }
 
     public void onConnected(final Listener0 listener) {
-	delegate.addConnectionHandler(new ConnectionStateHandler() {
+	delegate.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionStateEvent event) {
+	    public void onStateChanged(final ConnectionStateChangedEvent event) {
 		if (event.is(ConnectionState.connected)) {
 		    listener.onEvent();
 		}
@@ -30,9 +30,9 @@ public abstract class AbstractConnection {
     }
 
     public void onDisconnected(final Listener<String> listener) {
-	delegate.addConnectionHandler(new ConnectionStateHandler() {
+	delegate.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionStateEvent event) {
+	    public void onStateChanged(final ConnectionStateChangedEvent event) {
 		if (event.is(ConnectionState.disconnected)) {
 		    listener.onEvent(event.getDescription());
 		}
@@ -41,9 +41,9 @@ public abstract class AbstractConnection {
     }
 
     public void onError(final Listener<String> listener) {
-	delegate.addConnectionHandler(new ConnectionStateHandler() {
+	delegate.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionStateEvent event) {
+	    public void onStateChanged(final ConnectionStateChangedEvent event) {
 		if (event.is(ConnectionState.error)) {
 		    listener.onEvent(event.getDescription());
 		}
@@ -62,9 +62,9 @@ public abstract class AbstractConnection {
     }
 
     public void onRetry(final Listener2<Integer, Integer> listener) {
-	delegate.addConnectionHandler(new ConnectionStateHandler() {
+	delegate.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 	    @Override
-	    public void onStateChanged(final ConnectionStateEvent event) {
+	    public void onStateChanged(final ConnectionStateChangedEvent event) {
 		if (event.is(ConnectionState.waitingForRetry)) {
 		    listener.onEvent(event.getValue(), 0);
 		}

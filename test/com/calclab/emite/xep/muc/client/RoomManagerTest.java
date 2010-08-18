@@ -19,6 +19,12 @@ import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
 import com.calclab.suco.testing.events.MockedListener;
 
+/**
+ * Room manager tests using the old event system (legacy)
+ * 
+ * @author dani
+ * 
+ */
 public class RoomManagerTest extends AbstractChatManagerTest {
 
     @Test

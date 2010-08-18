@@ -23,6 +23,7 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.List;
 
+import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -46,7 +47,6 @@ import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
-import com.google.gwt.core.client.GWT;
 
 /**
  * A Room implementation. You can create rooms using RoomManager.
@@ -56,7 +56,6 @@ import com.google.gwt.core.client.GWT;
 public class RoomChat extends RoomBoilerplate {
     protected static final PacketMatcher ROOM_CREATED = MatcherFactory.byNameAndXMLNS("x",
 	    "http://jabber.org/protocol/muc#user");
-    private static final String ERROR_STANZA = "room.errorStanza";
 
     /**
      * Create a new room with the given properties. Room are created by
@@ -300,12 +299,6 @@ public class RoomChat extends RoomBoilerplate {
 	return occupant;
     }
 
-    private void setError(BasicStanza stanza) {
-	GWT.log("ROOM - error stanza received");
-	properties.setData(ERROR_STANZA, stanza);
-	setState(State.locked);
-    }
-
     private void trackMessages() {
 	addMessageReceivedHandler(new MessageHandler() {
 	    @Override
@@ -314,9 +307,6 @@ public class RoomChat extends RoomBoilerplate {
 		if (message.getSubject() != null) {
 		    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
 			    .getSubject()));
-		}
-		if (message.getType() == Message.Type.error) {
-		    setError(message);
 		}
 	    }
 	});
@@ -334,7 +324,8 @@ public class RoomChat extends RoomBoilerplate {
 		final XmppURI occupantURI = presence.getFrom();
 		final Type type = presence.getType();
 		if (type == Type.error) {
-		    setError(presence);
+		    chatEventBus.fireEvent(new ErrorEvent(ChatErrors.errorPresence, "We received a presence error",
+			    presence));
 		} else if (type == Type.unavailable && occupantURI.equals(getURI())) {
 
 		} else if (type == Type.unavailable) {

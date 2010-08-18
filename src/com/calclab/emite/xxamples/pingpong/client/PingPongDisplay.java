@@ -1,6 +1,7 @@
 package com.calclab.emite.xxamples.pingpong.client;
 
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 
 public interface PingPongDisplay {
@@ -26,6 +27,10 @@ public interface PingPongDisplay {
     public Widget asWidget();
 
     public void clearOutput();
+
+    public HasText getCurrentUser();
+
+    public HasText getSessionStatus();
 
     public void print(String message, String style);
 

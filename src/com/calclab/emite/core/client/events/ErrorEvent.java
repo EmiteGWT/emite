@@ -1,5 +1,6 @@
 package com.calclab.emite.core.client.events;
 
+import com.calclab.emite.core.client.packet.IPacket;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -12,21 +13,17 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
     }
     private final String errorType;
     private final String description;
-    private final Object cause;
+    private final IPacket stanza;
 
-    public ErrorEvent(String errorType, String description, Object cause) {
+    public ErrorEvent(String errorType, String description, IPacket stanza) {
 	this.errorType = errorType;
 	this.description = description;
-	this.cause = cause;
+	this.stanza = stanza;
     }
 
     @Override
     public Type<ErrorHandler> getAssociatedType() {
 	return TYPE;
-    }
-
-    public Object getCause() {
-	return cause;
     }
 
     public String getDescription() {
@@ -35,6 +32,10 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 
     public String getErrorType() {
 	return errorType;
+    }
+
+    public IPacket getStanza() {
+	return stanza;
     }
 
     @Override

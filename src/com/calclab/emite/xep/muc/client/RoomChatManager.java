@@ -40,6 +40,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
@@ -128,6 +129,21 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	this.defaultHistoryOptions = defaultHistoryOptions;
     }
 
+    @Override
+    protected void addChat(final Chat chat) {
+	final XmppURI jid = chat.getURI().getJID();
+	roomsByJID.put(jid, (Room) chat);
+	super.addChat(chat);
+    }
+
+    @Override
+    protected Chat createChat(final ChatProperties properties) {
+	if (properties.getState() == null) {
+	    properties.setState(ChatStates.locked);
+	}
+	return new RoomChat(session, properties);
+    }
+
     /**
      * Forward the presence messages to the room event bus.
      */
@@ -169,17 +185,5 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 		}
 	    }
 	});
-    }
-
-    @Override
-    protected void addChat(final Chat chat) {
-	final XmppURI jid = chat.getURI().getJID();
-	roomsByJID.put(jid, (Room) chat);
-	super.addChat(chat);
-    }
-
-    @Override
-    protected Chat createChat(final ChatProperties properties) {
-	return new RoomChat(session, properties);
     }
 }

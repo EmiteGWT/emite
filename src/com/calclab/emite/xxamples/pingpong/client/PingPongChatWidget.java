@@ -14,6 +14,8 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay
     private final VerticalPanel panel;
     private final VerticalPanel header;
     private final Button clear;
+    private final Label currentUser;
+    private final Label sessionStatus;
 
     public PingPongChatWidget() {
 	header = new VerticalPanel();
@@ -21,14 +23,17 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay
 	login = new Button("Login");
 	logout = new Button("Logout");
 	clear = new Button("Clear");
+	currentUser = new Label("no user yet.");
+	sessionStatus = new Label("no session status yet.");
 	FlowPanel buttons = new FlowPanel();
+	buttons.add(currentUser);
+	buttons.add(sessionStatus);
 	buttons.add(login);
 	buttons.add(logout);
 	buttons.add(clear);
 	add(buttons);
 	panel = new VerticalPanel();
 	add(panel);
-
     }
 
     @Override
@@ -54,6 +59,16 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay
     @Override
     public void clearOutput() {
 	panel.clear();
+    }
+
+    @Override
+    public Label getCurrentUser() {
+	return currentUser;
+    }
+
+    @Override
+    public Label getSessionStatus() {
+	return sessionStatus;
     }
 
     @Override
