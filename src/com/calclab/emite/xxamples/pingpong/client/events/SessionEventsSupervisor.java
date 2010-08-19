@@ -20,7 +20,7 @@ public class SessionEventsSupervisor {
 
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
 	final XmppSession session = Suco.get(XmppSession.class);
-	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		display.print(("SESSION : " + event.getState()), Style.session);
@@ -34,7 +34,7 @@ public class SessionEventsSupervisor {
 		    refreshTime = 1000;
 		}
 	    }
-	}, true);
+	});
     }
 
     protected void trackSessionLength(final XmppSession session, final PingPongDisplay display) {

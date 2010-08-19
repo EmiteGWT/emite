@@ -27,12 +27,12 @@ public class ChatManagerEventsSupervisor {
     }
 
     protected void trackChat(final Chat chat, final PingPongDisplay output) {
-	chat.addChatStateChangedHandler(new StateChangedHandler() {
+	chat.addChatStateChangedHandler(false, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		output.print("CHAT STATE " + chat.getURI() + " changed: " + event.getState(), Style.event);
 	    }
-	}, false);
+	});
 	output.print("CHAT STATE " + chat.getURI() + " - " + chat.getChatState(), Style.event);
 
 	chat.addErrorHandler(new ErrorHandler() {

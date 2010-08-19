@@ -37,14 +37,14 @@ public class PingSessionPresenter {
 	output.printHeader("You need to open the pong example page in order to run the example", Style.important);
 
 	// WHEN LOGGED IN, SEND THE FIRST PING
-	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
 		if (event.is(SessionStates.ready)) {
 		    sendPing();
 		}
 	    }
-	}, true);
+	});
 
 	session.addMessageReceivedHandler(new MessageHandler() {
 	    @Override

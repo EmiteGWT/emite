@@ -29,8 +29,10 @@ public class RoomSubject {
      * 
      * @param room
      * @param subjectText
+     * @return true if the subject request has been sent
      */
-    public static void requestSubjectChange(Room room, final String subjectText) {
+    // TODO: check occupants affiliation to see if the user can do that!!
+    public static boolean requestSubjectChange(Room room, final String subjectText) {
 	XmppSession session = room.getSession();
 	final BasicStanza message = new BasicStanza("message", null);
 	message.setFrom(session.getCurrentUser());
@@ -39,6 +41,7 @@ public class RoomSubject {
 	final IPacket subject = message.addChild("subject", null);
 	subject.setText(subjectText);
 	session.send(message);
+	return true;
     }
 
     private static boolean hasRoom(Room room) {

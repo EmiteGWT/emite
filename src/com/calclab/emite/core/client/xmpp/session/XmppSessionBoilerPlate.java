@@ -39,8 +39,8 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
     }
 
     @Override
-    public HandlerRegistration addSessionStateChangedHandler(final StateChangedHandler handler,
-	    final boolean sendCurrent) {
+    public HandlerRegistration addSessionStateChangedHandler(final boolean sendCurrent,
+	    final StateChangedHandler handler) {
 	if (sendCurrent) {
 	    handler.onStateChanged(new SessionStateChangedEvent(getSessionState()));
 	}

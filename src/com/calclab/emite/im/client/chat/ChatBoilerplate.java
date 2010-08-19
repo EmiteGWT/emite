@@ -43,7 +43,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
-    public HandlerRegistration addChatStateChangedHandler(final StateChangedHandler handler, boolean sendCurrent) {
+    public HandlerRegistration addChatStateChangedHandler(boolean sendCurrent, final StateChangedHandler handler) {
 	if (sendCurrent) {
 	    handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
 	}
@@ -154,12 +154,12 @@ public abstract class ChatBoilerplate implements Chat {
 
     @Override
     public void onStateChanged(final Listener<State> listener) {
-	addChatStateChangedHandler(new StateChangedHandler() {
+	addChatStateChangedHandler(false, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
 		listener.onEvent(getState());
 	    }
-	}, false);
+	});
     }
 
     @Override

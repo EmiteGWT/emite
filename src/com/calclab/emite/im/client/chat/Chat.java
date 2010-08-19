@@ -104,12 +104,12 @@ public interface Chat {
 
     /**
      * Add a handler to know whenever a chat state property changed
-     * 
      * @param handler
      * @param sendCurrentStateAsEvent
+     * 
      * @return
      */
-    public HandlerRegistration addChatStateChangedHandler(StateChangedHandler handler, boolean sendCurrentState);
+    public HandlerRegistration addChatStateChangedHandler(boolean sendCurrentState, StateChangedHandler handler);
 
     /**
      * Add a handler to know when an error has occur in this chat

@@ -8,6 +8,7 @@ import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
+import com.calclab.emite.xep.muc.client.subject.RoomSubject;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
@@ -43,7 +44,7 @@ public class PingInviteRoomPresenter {
 	final Room room = (Room) manager.open(roomUri);
 
 	// When the room is ready, we invite other
-	room.addChatStateChangedHandler(new StateChangedHandler() {
+	room.addChatStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		if (event.is(ChatStates.ready)) {
@@ -52,25 +53,31 @@ public class PingInviteRoomPresenter {
 		    room.sendInvitationTo(other, "ping invite " + pings);
 		}
 	    }
-	}, true);
+	});
 
 	room.addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.isRemoved() && event.getOccupant().getUserUri().equalsNoResource(other)) {
-		    display.print("Invited removed... waiting to send invitation", Style.important);
-		    new Timer() {
-			@Override
-			public void run() {
-			    display.print("Sending invitation", Style.important);
-			    pings++;
-			    time += 1000;
-			    room.sendInvitationTo(other, "ping invite " + pings);
-			}
-		    }.schedule(time);
+		boolean isOtherOccupant = event.getOccupant().getUserUri().equalsNoResource(other);
+		if (isOtherOccupant) {
+		    if (event.isRemoved()) {
+			display.print("Invited removed... waiting to send invitation", Style.important);
+			new Timer() {
+			    @Override
+			    public void run() {
+				display.print("Sending invitation", Style.important);
+				pings++;
+				time += 1000;
+				room.sendInvitationTo(other, "ping invite " + pings);
+			    }
+			}.schedule(time);
+		    } else if (event.isAdded()) {
+			display.print("Change subject", Style.important);
+			RoomSubject.requestSubjectChange(room, "Subject ping" + pings);
+		    }
 		}
-
 	    }
 	});
+
     }
 }

@@ -78,7 +78,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 
     private void controlSessionStatus() {
 	// Control chat state when the user logout and login again
-	session.addSessionStateChangedHandler(new StateChangedHandler() {
+	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
 		if (event.is(SessionStates.loggedIn)) {
@@ -97,7 +97,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 		    }
 		}
 	    }
-	}, true);
+	});
 
     }
 

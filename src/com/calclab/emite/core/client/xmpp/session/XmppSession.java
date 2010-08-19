@@ -85,14 +85,14 @@ public interface XmppSession {
     /**
      * Add a handler to track session state changes. If sendCurrent is true, the
      * handler will receive the current session state just after been added.
-     * 
-     * @param handler
      * @param sendCurrent
      *            if true, the current session state will be sent to the handler
      *            just after addition
+     * @param handler
+     * 
      * @return
      */
-    public HandlerRegistration addSessionStateChangedHandler(StateChangedHandler handler, boolean sendCurrent);
+    public HandlerRegistration addSessionStateChangedHandler(boolean sendCurrent, StateChangedHandler handler);
 
     /**
      * Returns the current user xmpp uri

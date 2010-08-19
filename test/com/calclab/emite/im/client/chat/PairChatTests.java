@@ -45,7 +45,7 @@ public class PairChatTests {
     @Test
     public void shouldFireChatStateChanges() {
 	StateChangedTestHandler handler = new StateChangedTestHandler();
-	chat.addChatStateChangedHandler(handler, true);
+	chat.addChatStateChangedHandler(true, handler);
 	assertEquals(1, handler.getCalledTimes());
 	chat.setChatState(ChatStates.locked);
 	assertEquals(2, handler.getCalledTimes());

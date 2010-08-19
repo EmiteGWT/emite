@@ -119,12 +119,12 @@ public class SessionImpl implements Session {
 
     @Override
     public void onStateChanged(final Listener<Session> listener) {
-	delegate.addSessionStateChangedHandler(new StateChangedHandler() {
+	delegate.addSessionStateChangedHandler(false, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
 		listener.onEvent(SessionImpl.this);
 	    }
-	}, false);
+	});
     }
 
     @Override

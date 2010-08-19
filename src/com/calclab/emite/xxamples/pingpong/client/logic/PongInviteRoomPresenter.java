@@ -7,10 +7,14 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
+import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomInvitation;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
+import com.calclab.emite.xep.muc.client.subject.RoomSubject;
+import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedEvent;
+import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
@@ -44,7 +48,7 @@ public class PongInviteRoomPresenter {
 	    public void onRoomInvitation(RoomInvitationEvent event) {
 		RoomInvitation invitation = event.getRoomInvitation();
 		display.print("Room invitation received: " + invitation.getReason() + " - " + invitation.getInvitor()
-			+ " to " + invitation.getRoomURI(), Style.info);
+			+ " to " + invitation.getRoomURI(), Style.important);
 		display.print("We accept the invitation", Style.important);
 		manager.acceptRoomInvitation(invitation);
 	    }
@@ -56,30 +60,47 @@ public class PongInviteRoomPresenter {
 	    @Override
 	    public void onChatChanged(ChatChangedEvent event) {
 		if (event.isCreated()) {
-		    final Chat room = event.getChat();
-		    display.print("Room created: " + room.getURI(), Style.info);
-		    room.addChatStateChangedHandler(new StateChangedHandler() {
-			@Override
-			public void onStateChanged(StateChangedEvent event) {
-			    if (event.is(ChatStates.ready)) {
-				display.print("We entered the room: " + room.getURI(), Style.info);
-				pongs++;
-				room.send(new Message("Pong " + pongs));
-				new Timer() {
-				    @Override
-				    public void run() {
-					display.print("We close the room: " + room.getURI(), Style.important);
-					time += 2000;
-					manager.close(room);
-				    }
-
-				}.schedule(time);
-			    }
-			}
-		    }, true);
+		    manageNewRoom(manager, (Room) event.getChat());
 		}
 	    }
 	});
+
+    }
+
+    private void closeRoom(final RoomManager manager, final Chat room) {
+	new Timer() {
+	    @Override
+	    public void run() {
+		display.print("We close the room: " + room.getURI(), Style.important);
+		time += 2000;
+		manager.close(room);
+	    }
+
+	}.schedule(time);
+    }
+
+    private void manageNewRoom(final RoomManager manager, final Room room) {
+	display.print("Room created: " + room.getURI(), Style.info);
+	room.addChatStateChangedHandler(true, new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(StateChangedEvent event) {
+		if (event.is(ChatStates.ready)) {
+		    display.print("We entered the room: " + room.getURI(), Style.info);
+		    pongs++;
+		    room.send(new Message("Pong " + pongs));
+		    closeRoom(manager, room);
+		}
+	    }
+	});
+
+	RoomSubject.addRoomSubjectChangedHandler(room, new RoomSubjectChangedHandler() {
+	    @Override
+	    public void onSubjectChanged(RoomSubjectChangedEvent event) {
+		display.print("Subject changed: " + event.getSubject() + "(" + event.getOccupantUri() + ")",
+			Style.important);
+	    }
+	});
+
     }
 
 }

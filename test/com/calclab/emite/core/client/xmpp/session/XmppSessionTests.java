@@ -87,7 +87,7 @@ public class XmppSessionTests {
     @Test
     public void shouldEventStateChanges() {
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
-	session.addSessionStateChangedHandler(handler, false);
+	session.addSessionStateChangedHandler(false, handler);
 	session.setSessionState(SessionStates.ready);
 	assertSame(SessionStates.ready, handler.getLastState());
     }
@@ -112,7 +112,7 @@ public class XmppSessionTests {
     @Test
     public void shouldLoginWhenSessionCreated() {
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
-	session.addSessionStateChangedHandler(handler, false);
+	session.addSessionStateChangedHandler(false, handler);
 	eventBus.fireEvent(new SessionRequestResultEvent(uri("me@domain")));
 	assertSame(SessionStates.loggedIn, handler.getLastState());
     }

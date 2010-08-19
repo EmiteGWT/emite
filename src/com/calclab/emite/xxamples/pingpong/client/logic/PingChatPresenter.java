@@ -46,7 +46,7 @@ public class PingChatPresenter {
 	});
 
 	// SEND THE FIRST PING WHEN THE CHAT IS READY
-	chat.addChatStateChangedHandler(new StateChangedHandler() {
+	chat.addChatStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		if (event.is(ChatStates.ready)) {
@@ -54,7 +54,7 @@ public class PingChatPresenter {
 		}
 	    }
 
-	}, true);
+	});
     }
 
     protected ChatManager getChatManager() {
