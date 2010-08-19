@@ -17,8 +17,9 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentHandler;
-import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
-import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedHandler;
+import com.calclab.emite.xep.muc.client.subject.RoomSubject;
+import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedEvent;
+import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedHandler;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -62,16 +63,6 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
      */
     public HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentHandler handler) {
 	return RoomInvitationSentEvent.bind(chatEventBus, handler);
-    }
-
-    /**
-     * Add a handler to know when the subject of the room changes
-     * 
-     * @param handler
-     * @return
-     */
-    public HandlerRegistration addRoomSubjectChangedHandler(RoomSubjectChangedHandler handler) {
-	return RoomSubjectChangedEvent.bind(chatEventBus, handler);
     }
 
     @Override
@@ -149,10 +140,11 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     }
 
     public void onSubjectChanged(final Listener2<Occupant, String> listener) {
-	addRoomSubjectChangedHandler(new RoomSubjectChangedHandler() {
+	RoomSubject.addRoomSubjectChangedHandler(this, new RoomSubjectChangedHandler() {
 	    @Override
 	    public void onSubjectChanged(RoomSubjectChangedEvent event) {
-		listener.onEvent(event.getOccupant(), event.getSubject());
+		Occupant occupant = getOccupantByOccupantUri(event.getOccupantUri());
+		listener.onEvent(occupant, event.getSubject());
 	    }
 	});
     }
@@ -160,7 +152,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Override
     @Deprecated
     public void setSubject(String newSubject) {
-	requestSubjectChange(newSubject);
+	RoomSubject.requestSubjectChange(this, newSubject);
     }
 
     protected void addOccupant(Occupant occupant) {

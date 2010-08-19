@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay {
+public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 
     private final Button login;
     private final Button logout;
@@ -16,8 +16,10 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay
     private final Button clear;
     private final Label currentUser;
     private final Label sessionStatus;
+    private final int maxOutput;
 
-    public PingPongChatWidget() {
+    public PingPongWidget() {
+	maxOutput = 200;
 	header = new VerticalPanel();
 	add(header);
 	login = new Button("Login");
@@ -73,6 +75,10 @@ public class PingPongChatWidget extends VerticalPanel implements PingPongDisplay
 
     @Override
     public void print(final String text, final String style) {
+	int widgetCount = panel.getWidgetCount();
+	if (widgetCount == maxOutput) {
+	    panel.remove(widgetCount - 1);
+	}
 	final Label label = new Label(text);
 	label.addStyleName(style);
 	panel.insert(label, 0);

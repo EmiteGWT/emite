@@ -91,7 +91,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 	room.onOccupantAdded(listener);
 	session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='ROom@domain/otherUser'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item role='moderator' affiliation='owner' /></x></presence>");
+		+ "<item role='moderator' affiliation='owner' jid='user@domain' /></x></presence>");
 	assertTrue(listener.isCalledOnce());
     }
 
@@ -101,9 +101,9 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 
 	session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='room1@domain/otherUser'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item role='moderator' affiliation='owner' /></x></presence>");
+		+ "<item role='moderator' affiliation='owner' jid='otherUser@domain' /></x></presence>");
 	assertEquals(1, room.getOccupantsCount());
-	Occupant user = room.getOccupantByURI(uri("room1@domain/otherUser"));
+	Occupant user = room.getOccupantByOccupantUri(uri("room1@domain/otherUser"));
 	assertNotNull(user);
 	assertEquals(Affiliation.owner, user.getAffiliation());
 	assertEquals(Role.moderator, user.getRole());
@@ -112,7 +112,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<item role='participant' affiliation='member' /></x></presence>");
 	assertEquals(1, room.getOccupantsCount());
-	user = room.getOccupantByURI(uri("room1@domain/otherUser"));
+	user = room.getOccupantByOccupantUri(uri("room1@domain/otherUser"));
 	assertNotNull(user);
 	assertEquals(Affiliation.member, user.getAffiliation());
 	assertEquals(Role.participant, user.getRole());

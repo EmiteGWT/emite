@@ -87,6 +87,11 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    public XmppSession getSession() {
+	return session;
+    }
+
+    @Override
     public State getState() {
 	final String state = properties.getState();
 	try {

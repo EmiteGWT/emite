@@ -48,20 +48,13 @@ public class RoomTest extends AbstractChatTest {
 	final XmppURI occupantUri = uri("room@domain/user");
 	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "aff", "role", Show.unknown, null);
 	assertTrue(listener.isCalledOnce());
-	final Occupant result = room.getOccupantByURI(occupantUri);
+	final Occupant result = room.getOccupantByOccupantUri(occupantUri);
 	assertEquals(occupant, result);
     }
 
     @Test
-    public void shouldChangeSubject() {
-	room.requestSubjectChange("Some subject");
-	xmppSession.verifySent("<message type=\"groupchat\" from=\"" + userURI + "\" to=\"" + room.getURI().getJID()
-		+ "\"><subject>Some subject</subject></message></body>");
-    }
-
-    @Test
     public void shouldExitAndLockTheRoomWhenLoggedOut() {
-	receiveInstantRoomCreation(roomURI);
+	receiveInstantRoomCreation(userURI, roomURI);
 	xmppSession.logout();
 	assertEquals(Chat.State.locked, room.getState());
 	xmppSession.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
@@ -85,7 +78,7 @@ public class RoomTest extends AbstractChatTest {
 	room.getChatEventBus().fireEvent(
 		new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
 	assertEquals(1, subjectListener.getCalledTimes());
-	final Occupant occupant = room.getOccupantByURI(occupantURI);
+	final Occupant occupant = room.getOccupantByOccupantUri(occupantURI);
 	assertTrue(subjectListener.isCalledWithSame(occupant, "the subject"));
     }
 
@@ -99,7 +92,7 @@ public class RoomTest extends AbstractChatTest {
 	room.removeOccupant(occupantUri);
 	assertEquals(0, room.getOccupantsCount());
 	assertEquals(1, occupantRemoved.getCalledTimes());
-	assertNull(room.getOccupantByURI(occupantUri));
+	assertNull(room.getOccupantByOccupantUri(occupantUri));
     }
 
     @Test
@@ -121,7 +114,7 @@ public class RoomTest extends AbstractChatTest {
 	final MockedListener<State> stateChanged = new MockedListener<Chat.State>();
 	room.onStateChanged(stateChanged);
 	assertEquals(State.locked, room.getState());
-	receiveInstantRoomCreation(roomURI);
+	receiveInstantRoomCreation(userURI, roomURI);
 	assertTrue(stateChanged.isCalledOnce());
     }
 
@@ -138,10 +131,11 @@ public class RoomTest extends AbstractChatTest {
 	assertSame(occupant, occupant2);
     }
 
-    private void receiveInstantRoomCreation(final XmppURI room) {
+    private void receiveInstantRoomCreation(XmppURI userUri, final XmppURI room) {
 	xmppSession.receives("<presence to='user@domain/res' from='" + room + "'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item affiliation='owner' role='moderator'/><status code='201'/></x></presence>");
+		+ "<item affiliation='owner' role='moderator' jid='" + userUri
+		+ "' /><status code='201'/></x></presence>");
 	xmppSession.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
 		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
 		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");

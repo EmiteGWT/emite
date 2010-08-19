@@ -25,6 +25,7 @@ import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.ErrorHandler;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
@@ -177,6 +178,13 @@ public interface Chat {
      * @return the chat properties
      */
     public ChatProperties getProperties();
+
+    /**
+     * Get the xmpp session associated to this chat
+     * 
+     * @return
+     */
+    public XmppSession getSession();
 
     /**
      * Use getChatState

@@ -49,10 +49,12 @@ public class Occupant {
     private String statusMessage;
     private final XmppURI userUri;
 
-    public Occupant(final XmppURI userUri, XmppURI uri, final String affiliation, final String role, final Show show,
-	    final String statusMessage) {
+    public Occupant(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role,
+	    final Show show, final String statusMessage) {
+	assert userUri != null : "User uri can't be null in occupant";
+	assert occupantUri != null : "Occupant uri can't be null in occupant";
 	this.userUri = userUri;
-	this.occupantUri = uri;
+	this.occupantUri = occupantUri;
 	setAffiliation(affiliation);
 	setRole(role);
 	setShow(show);

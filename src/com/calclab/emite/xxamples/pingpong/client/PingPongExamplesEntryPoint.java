@@ -23,7 +23,7 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	final PingPongDisplay display = new PingPongChatWidget();
+	final PingPongDisplay display = new PingPongWidget();
 
 	EventBusFactory.setFactory(new Factory() {
 	    @Override

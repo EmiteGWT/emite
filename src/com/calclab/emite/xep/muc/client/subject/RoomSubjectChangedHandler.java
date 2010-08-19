@@ -1,4 +1,4 @@
-package com.calclab.emite.xep.muc.client.events;
+package com.calclab.emite.xep.muc.client.subject;
 
 import com.google.gwt.event.shared.EventHandler;
 

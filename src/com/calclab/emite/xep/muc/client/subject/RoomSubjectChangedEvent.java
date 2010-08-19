@@ -1,7 +1,7 @@
-package com.calclab.emite.xep.muc.client.events;
+package com.calclab.emite.xep.muc.client.subject;
 
 import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.xep.muc.client.Occupant;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -18,12 +18,12 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
     public static HandlerRegistration bind(EmiteEventBus eventBus, RoomSubjectChangedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
-    private final Occupant occupant;
 
     private final String subject;
+    private final XmppURI occupantUri;
 
-    public RoomSubjectChangedEvent(Occupant occupant, String subject) {
-	this.occupant = occupant;
+    public RoomSubjectChangedEvent(XmppURI occupantUri, String subject) {
+	this.occupantUri = occupantUri;
 	this.subject = subject;
     }
 
@@ -33,12 +33,12 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
     }
 
     /**
-     * The occupant that changes the subject
+     * Get modificator's occupant (room and nick) uri
      * 
      * @return
      */
-    public Occupant getOccupant() {
-	return occupant;
+    public XmppURI getOccupantUri() {
+	return occupantUri;
     }
 
     /**

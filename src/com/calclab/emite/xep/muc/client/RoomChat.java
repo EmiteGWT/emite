@@ -24,8 +24,6 @@ package com.calclab.emite.xep.muc.client;
 import java.util.List;
 
 import com.calclab.emite.core.client.events.ErrorEvent;
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
@@ -46,7 +44,6 @@ import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
-import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
 
 /**
  * A Room implementation. You can create rooms using RoomManager.
@@ -71,8 +68,6 @@ public class RoomChat extends RoomBoilerplate {
 	setChatState(ChatStates.locked);
 
 	trackRoomPresence();
-	trackSubjectChangeMessages();
-
     }
 
     /*
@@ -150,22 +145,6 @@ public class RoomChat extends RoomBoilerplate {
 	if (getState() == State.locked) {
 	    session.send(createEnterPresence(historyOptions));
 	}
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.calclab.emite.xep.muc.client.IRoom#setSubject(java.lang.String)
-     */
-    @Override
-    public void requestSubjectChange(final String subjectText) {
-	final BasicStanza message = new BasicStanza("message", null);
-	message.setFrom(session.getCurrentUser());
-	message.setTo(getURI().getJID());
-	message.setType(Message.Type.groupchat.toString());
-	final IPacket subject = message.addChild("subject", null);
-	subject.setText(subjectText);
-	session.send(message);
     }
 
     /*
@@ -327,21 +306,4 @@ public class RoomChat extends RoomBoilerplate {
 	});
     }
 
-    private void trackSubjectChangeMessages() {
-	addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		Message message = event.getMessage();
-		if (message.getSubject() != null) {
-		    Occupant occupant = getOccupantByOccupantUri(message.getFrom());
-		    if (occupant != null) {
-			chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupant, message.getSubject()));
-		    } else {
-			chatEventBus.fireEvent(new ErrorEvent(ChatErrors.occupantNotFound,
-				"The occupant of this message is not found", message));
-		    }
-		}
-	    }
-	});
-    }
 }
