@@ -32,98 +32,100 @@ public class Packet extends AbstractPacket {
     private Packet parent;
 
     public Packet(final String name) {
-        this(name, null);
+	this(name, null);
     }
 
     public Packet(final String name, final String xmlns) {
-        this.name = name;
-        this.attributes = new HashMap<String, String>();
-        this.children = new ArrayList<IPacket>();
-        if (xmlns != null) {
-            setAttribute("xmlns", xmlns);
-        }
-        parent = null;
+	this.name = name;
+	this.attributes = new HashMap<String, String>();
+	this.children = new ArrayList<IPacket>();
+	if (xmlns != null) {
+	    setAttribute("xmlns", xmlns);
+	}
+	parent = null;
     }
 
     public IPacket addChild(final IPacket child) {
-        children.add(child);
-        return child;
+	children.add(child);
+	return child;
     }
 
     public IPacket addChild(final String name) {
-        return addChild(name, null);
+	return addChild(name, null);
     }
 
     public IPacket addChild(final String name, final String xmlns) {
-        final Packet child = new Packet(name, xmlns);
-        child.parent = this;
-        add(child);
-        return child;
+	final Packet child = new Packet(name, xmlns);
+	child.parent = this;
+	add(child);
+	return child;
     }
 
     public String getAttribute(final String name) {
-        return attributes.get(name);
+	return attributes.get(name);
     }
 
     /**
      * WARNING: broken encapsulation
      */
     public HashMap<String, String> getAttributes() {
-        return attributes;
+	return attributes;
     }
 
     public List<? extends IPacket> getChildren() {
-        return children;
+	return children;
     }
 
     public int getChildrenCount() {
-        return children.size();
+	return children.size();
     }
 
     public String getName() {
-        return name;
+	return name;
     }
 
     public IPacket getParent() {
-        return parent;
+	return parent;
     }
 
     /**
      * Return a child (If it has a child)
      */
     public String getText() {
-        for (final IPacket child : children) {
-            if (child.getName() == null) {
-                return TextUtils.unescape(child.toString());
-            }
-        }
-        return null;
+	for (final IPacket child : children) {
+	    if (child.getName() == null) {
+		return TextUtils.unescape(child.toString());
+	    }
+	}
+	return null;
     }
 
     public boolean removeChild(final IPacket child) {
-        return children.remove(child);
+	return children.remove(child);
     }
 
     public void setAttribute(final String name, final String value) {
-        attributes.put(name, value);
+	attributes.put(name, value);
     }
 
     public void setText(final String value) {
-        children.clear();
-        children.add(new TextPacket(TextUtils.escape(value)));
+	children.clear();
+	if (value != null) {
+	    children.add(new TextPacket(TextUtils.escape(value)));
+	}
     }
 
     @Override
     public String toString() {
-        return PacketRenderer.toString(this);
+	return PacketRenderer.toString(this);
     }
 
     public IPacket With(final IPacket child) {
-        addChild(child);
-        return this;
+	addChild(child);
+	return this;
     }
 
     protected void add(final Packet node) {
-        children.add(node);
+	children.add(node);
     }
 }

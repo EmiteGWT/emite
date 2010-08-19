@@ -30,7 +30,11 @@ public class Credentials {
 	    throw new NullPointerException("uri can't be null in LoginCredentials");
 	}
 
-	this.uri = uri;
+	if (uri.getResource() == null) {
+	    this.uri = XmppURI.uri(uri.getNode(), uri.getHost(), "emite-" + System.currentTimeMillis());
+	} else {
+	    this.uri = uri;
+	}
 	this.encodedPassword = encodedPassword;
 	this.encodingMethod = encodingMethod;
     }

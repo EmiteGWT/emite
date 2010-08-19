@@ -25,8 +25,8 @@ public class PongSessionPresenter {
     }
 
     public void start() {
-	output.print("This is pong", Style.title);
-	output.print("Pong to: " + other, Style.info);
+	output.printHeader("This is pong session example", Style.title);
+	output.printHeader("Pong to: " + other, Style.info);
 	output.print("You need to open the ping example page in order to run the example", Style.important);
 
 	final Session session = Suco.get(Session.class);
