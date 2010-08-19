@@ -101,7 +101,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	// Clearing all queued stanzas
 	setCurrentBody(null);
 	// Create a new terminate stanza and force the send
-	createBody();
+	createBodyIfNeeded();
 	getCurrentBody().setAttribute("type", "terminate");
 	sendBody(true);
 	setActive(false);
@@ -115,7 +115,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 
     public StreamSettings pause() {
 	if (getStream() != null && getStream().sid != null) {
-	    createBody();
+	    createBodyIfNeeded();
 	    getCurrentBody().setAttribute("pause", getStream().maxPause);
 	    sendBody(true);
 	    return getStream();
@@ -124,7 +124,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     public void restartStream() {
-	createBody();
+	createBodyIfNeeded();
 	getCurrentBody().setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
 	getCurrentBody().setAttribute("xmpp:restart", "true");
 	getCurrentBody().setAttribute("to", getConnectionSettings().hostName);
@@ -139,7 +139,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     public void send(final IPacket packet) {
-	createBody();
+	createBodyIfNeeded();
 	getCurrentBody().addChild(packet);
 	sendBody();
 	fireStanzaSent(packet);
@@ -161,9 +161,9 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 		services.schedule(msecs, new ScheduledAction() {
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
+			    createBodyIfNeeded();
 			    // Whitespace keep-alive
-			    createBody();
-			    getCurrentBody().setText(" ");
+			    // getCurrentBody().setText(" ");
 			    sendBody();
 			}
 		    }
@@ -172,7 +172,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	}
     }
 
-    private void createBody() {
+    private void createBodyIfNeeded() {
 	if (getCurrentBody() == null) {
 	    final Packet body = new Packet("body");
 	    body.With("xmlns", "http://jabber.org/protocol/httpbind");
