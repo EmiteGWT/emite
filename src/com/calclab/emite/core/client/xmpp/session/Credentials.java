@@ -52,6 +52,6 @@ public class Credentials {
     }
 
     public boolean isAnoymous() {
-	return uri == ANONYMOUS;
+	return ANONYMOUS.getNode().equals(uri.getNode()) && ANONYMOUS.getHost().equals(uri.getHost());
     }
 }
