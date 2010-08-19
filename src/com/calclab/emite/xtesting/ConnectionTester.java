@@ -9,7 +9,6 @@ import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
@@ -32,7 +31,7 @@ public class ConnectionTester extends AbstractConnection implements Connection {
     private final EmiteEventBus eventBus;
 
     public ConnectionTester() {
-	super(new XmppBoshConnection(new GwtEmiteEventBus(), new ServicesTester()));
+	super(new XmppBoshConnection(EmiteTestsEventBus.create("et"), new ServicesTester()));
 	eventBus = delegate.getEventBus();
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();

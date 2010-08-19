@@ -1,6 +1,9 @@
 package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
+import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.EventBusFactory;
+import com.calclab.emite.core.client.events.EventBusFactory.Factory;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ConnectionEventsSupervisor;
@@ -21,7 +24,14 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
     @Override
     public void onModuleLoad() {
 	final PingPongDisplay display = new PingPongChatWidget();
-	new EventBusEventsSupervisor(display);
+
+	EventBusFactory.setFactory(new Factory() {
+	    @Override
+	    public EmiteEventBus create(String eventBusName) {
+		return new DisplayEventBus(eventBusName, display);
+	    }
+	});
+
 	RootPanel.get().add(display.asWidget());
 	new PingPongCommonPresenter(display);
 	new ConnectionEventsSupervisor(display);

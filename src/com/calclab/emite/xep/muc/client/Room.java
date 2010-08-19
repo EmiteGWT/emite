@@ -19,13 +19,28 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public interface Room extends Chat {
 
     /**
-     * Get the occupant by uri.
+     * Find an occupant with the given occupant uri
      * 
-     * @param uri
-     *            the uri (jid) of the occupant
-     * @return the occupant if exist, null otherwise
+     * @param occupantUri
+     *            occupant uri is the room jid with nick name as resource
+     * @return the occupant if found, null if not
      */
+    public abstract Occupant getOccupantByOccupantUri(XmppURI occupantUri);
+
+    /**
+     * Use getOccupantByOccupantUri
+     */
+    @Deprecated
     public abstract Occupant getOccupantByURI(XmppURI uri);
+
+    /**
+     * Find an occupant with the given user jid
+     * 
+     * @param userUri
+     *            the user's uri (resource is ignored)
+     * @return the occupant if found, null if not
+     */
+    public abstract Occupant getOccupantByUserUri(XmppURI userUri);
 
     /**
      * Return the current number of occupants of this room

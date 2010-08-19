@@ -83,7 +83,7 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     public void close() {
 	if (ChatStates.ready.equals(properties.getState())) {
-	    if (getOccupantByURI(session.getCurrentUser().getJID()) != null) {
+	    if (getOccupantByUserUri(session.getCurrentUser()) != null) {
 		session.send(new Presence(Type.unavailable, null, getURI()));
 	    }
 	    properties.setState(ChatStates.locked);
@@ -257,20 +257,6 @@ public class RoomChat extends RoomBoilerplate {
 	return code != null && code.equals("201");
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.calclab.emite.xep.muc.client.IRoom#removeOccupant(com.calclab.emite
-     * .core.client.xmpp.stanzas.XmppURI)
-     */
-    protected void removeOccupant(final XmppURI uri) {
-	final Occupant occupant = occupantsByURI.remove(uri);
-	if (occupant != null) {
-	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.removed, occupant));
-	}
-    }
-
     protected void requestCreateInstantRoom() {
 	final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
 	iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
@@ -286,13 +272,12 @@ public class RoomChat extends RoomBoilerplate {
 
     }
 
-    protected Occupant setOccupantPresence(final XmppURI uri, final String affiliation, final String role,
-	    final Show show, final String statusMessage) {
-	Occupant occupant = getOccupantByURI(uri);
+    protected Occupant setOccupantPresence(final XmppURI userUri, XmppURI occupantUri, final String affiliation,
+	    final String role, final Show show, final String statusMessage) {
+	Occupant occupant = getOccupantByOccupantUri(occupantUri);
 	if (occupant == null) {
-	    occupant = new Occupant(uri, affiliation, role, show, statusMessage);
-	    occupantsByURI.put(occupant.getURI(), occupant);
-	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.added, occupant));
+	    occupant = new Occupant(userUri, occupantUri, affiliation, role, show, statusMessage);
+	    addOccupant(occupant);
 	} else {
 	    occupant.setAffiliation(affiliation);
 	    occupant.setRole(role);
@@ -328,7 +313,9 @@ public class RoomChat extends RoomBoilerplate {
 			final IPacket item = child.getFirstChild("item");
 			final String affiliation = item.getAttribute("affiliation");
 			final String role = item.getAttribute("role");
-			setOccupantPresence(occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
+			final XmppURI userUri = XmppURI.uri(item.getAttribute("jid"));
+			setOccupantPresence(userUri, occupantURI, affiliation, role, presence.getShow(), presence
+				.getStatus());
 			if (isNewRoom(child)) {
 			    requestCreateInstantRoom();
 			} else {
@@ -346,8 +333,13 @@ public class RoomChat extends RoomBoilerplate {
 	    public void onMessage(MessageEvent event) {
 		Message message = event.getMessage();
 		if (message.getSubject() != null) {
-		    chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupantsByURI.get(message.getFrom()), message
-			    .getSubject()));
+		    Occupant occupant = getOccupantByOccupantUri(message.getFrom());
+		    if (occupant != null) {
+			chatEventBus.fireEvent(new RoomSubjectChangedEvent(occupant, message.getSubject()));
+		    } else {
+			chatEventBus.fireEvent(new ErrorEvent(ChatErrors.occupantNotFound,
+				"The occupant of this message is not found", message));
+		    }
 		}
 	    }
 	});

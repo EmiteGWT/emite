@@ -1,6 +1,6 @@
 package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -9,7 +9,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 
     private static final Type<RoomInvitationSentHandler> TYPE = new Type<RoomInvitationSentHandler>();
 
-    public static HandlerRegistration bind(GwtEmiteEventBus eventBus, RoomInvitationSentHandler handler) {
+    public static HandlerRegistration bind(EmiteEventBus eventBus, RoomInvitationSentHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
     private final XmppURI userJid;
@@ -22,12 +22,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
     }
 
     @Override
-    protected void dispatch(RoomInvitationSentHandler handler) {
-	handler.onRoomInvitationSent(this);
-    }
-
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<RoomInvitationSentHandler> getAssociatedType() {
+    public Type<RoomInvitationSentHandler> getAssociatedType() {
 	return TYPE;
     }
 
@@ -37,6 +32,11 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 
     public XmppURI getUserJid() {
 	return userJid;
+    }
+
+    @Override
+    protected void dispatch(RoomInvitationSentHandler handler) {
+	handler.onRoomInvitationSent(this);
     }
 
 }

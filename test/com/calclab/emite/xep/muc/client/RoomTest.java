@@ -45,10 +45,10 @@ public class RoomTest extends AbstractChatTest {
     public void shouldAddOccupantAndFireListeners() {
 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
 	room.onOccupantAdded(listener);
-	final XmppURI uri = uri("room@domain/name");
-	final Occupant occupant = room.setOccupantPresence(uri, "aff", "role", Show.unknown, null);
+	final XmppURI occupantUri = uri("room@domain/user");
+	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "aff", "role", Show.unknown, null);
 	assertTrue(listener.isCalledOnce());
-	final Occupant result = room.getOccupantByURI(uri);
+	final Occupant result = room.getOccupantByURI(occupantUri);
 	assertEquals(occupant, result);
     }
 
@@ -93,13 +93,13 @@ public class RoomTest extends AbstractChatTest {
     public void shouldRemoveOccupant() {
 	final MockedListener<Occupant> occupantRemoved = new MockedListener<Occupant>();
 	room.onOccupantRemoved(occupantRemoved);
-	final XmppURI uri = uri("room@domain/name");
-	room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
+	final XmppURI occupantUri = uri("room@domain/name");
+	room.setOccupantPresence(userURI, occupantUri, "owner", "participant", Show.notSpecified, null);
 	assertEquals(1, room.getOccupantsCount());
-	room.removeOccupant(uri);
+	room.removeOccupant(occupantUri);
 	assertEquals(0, room.getOccupantsCount());
 	assertEquals(1, occupantRemoved.getCalledTimes());
-	assertNull(room.getOccupantByURI(uri));
+	assertNull(room.getOccupantByURI(occupantUri));
     }
 
     @Test
@@ -129,9 +129,11 @@ public class RoomTest extends AbstractChatTest {
     public void shouldUpdateOccupantAndFireListeners() {
 	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
 	room.onOccupantModified(listener);
-	final XmppURI uri = uri("room@domain/name");
-	final Occupant occupant = room.setOccupantPresence(uri, "owner", "participant", Show.notSpecified, null);
-	final Occupant occupant2 = room.setOccupantPresence(uri, "admin", "moderator", Show.notSpecified, null);
+	final XmppURI occupantUri = uri("room@domain/name");
+	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "owner", "participant",
+		Show.notSpecified, null);
+	final Occupant occupant2 = room.setOccupantPresence(userURI, occupantUri, "admin", "moderator",
+		Show.notSpecified, null);
 	assertEquals(1, listener.getCalledTimes());
 	assertSame(occupant, occupant2);
     }

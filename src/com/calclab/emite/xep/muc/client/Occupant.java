@@ -24,6 +24,14 @@ package com.calclab.emite.xep.muc.client;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 
+/**
+ * A room occupant: each occupant in a room is identified as
+ * <room@service/nick>, where "nick" is the room nickname of the occupant as
+ * specified on entering the room or subsequently changed during the occupant's
+ * visit.
+ * 
+ * @see http://xmpp.org/extensions/xep-0045.html
+ */
 public class Occupant {
 
     public static enum Affiliation {
@@ -36,34 +44,46 @@ public class Occupant {
 
     private Affiliation affiliation;
     private Role role;
-    private final XmppURI uri;
+    private final XmppURI occupantUri;
     private Show show;
     private String statusMessage;
+    private final XmppURI userUri;
 
-    public Occupant(final XmppURI uri, final String affiliation, final String role,
-	    final Show show, final String statusMessage) {
-	this.uri = uri;
+    public Occupant(final XmppURI userUri, XmppURI uri, final String affiliation, final String role, final Show show,
+	    final String statusMessage) {
+	this.userUri = userUri;
+	this.occupantUri = uri;
 	setAffiliation(affiliation);
 	setRole(role);
 	setShow(show);
 	setStatusMessage(statusMessage);
     }
 
-    public Occupant(final XmppURI uri, final String affiliation, final String role,
-	    final String show, final String statusMessage) {
-	this.uri = uri;
-	setAffiliation(affiliation);
-	setRole(role);
-	setShow(show);
-	setStatusMessage(statusMessage);
-    }
-
+    /**
+     * Gets the affiliation of this occupant
+     * 
+     * @return
+     */
     public Affiliation getAffiliation() {
 	return affiliation;
     }
 
+    /**
+     * Get the nick of this occupant
+     * 
+     * @return
+     */
     public String getNick() {
-	return uri.getResource();
+	return occupantUri.getResource();
+    }
+
+    /**
+     * Get the occupant uri (the room jid and the nick as resource)
+     * 
+     * @return
+     */
+    public XmppURI getOccupantUri() {
+	return occupantUri;
     }
 
     public Role getRole() {
@@ -74,12 +94,32 @@ public class Occupant {
 	return show;
     }
 
+    /**
+     * Get the occupant status message
+     * 
+     * @return
+     */
     public String getStatusMessage() {
 	return statusMessage;
     }
 
+    /**
+     * Use getOccupantUri
+     * 
+     * @see getOccupantUri
+     */
+    @Deprecated
     public XmppURI getURI() {
-	return uri;
+	return occupantUri;
+    }
+
+    /**
+     * Gets the user uri associated to this occupant
+     * 
+     * @return
+     */
+    public XmppURI getUserUri() {
+	return userUri;
     }
 
     public void setAffiliation(final String affiliation) {
@@ -122,7 +162,6 @@ public class Occupant {
 
     @Override
     public String toString() {
-	return uri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage
-		+ ")";
+	return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
     }
 }

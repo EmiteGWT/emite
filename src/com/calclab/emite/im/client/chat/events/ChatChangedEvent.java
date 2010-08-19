@@ -26,6 +26,11 @@ public class ChatChangedEvent extends ChangedEvent<ChatChangedHandler> {
     }
 
     @Override
+    public String toDebugString() {
+	return super.toDebugString() + chat.getURI();
+    }
+
+    @Override
     protected void dispatch(final ChatChangedHandler handler) {
 	handler.onChatChanged(this);
     }

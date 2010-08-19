@@ -43,9 +43,9 @@ public class PongInviteRoomPresenter {
 	    @Override
 	    public void onRoomInvitation(RoomInvitationEvent event) {
 		RoomInvitation invitation = event.getRoomInvitation();
-		display.print("Room invitation: " + invitation.getReason() + " - " + invitation.getInvitor() + " to "
-			+ invitation.getRoomURI(), Style.received);
-		display.print("We accept the invitation", Style.info);
+		display.print("Room invitation received: " + invitation.getReason() + " - " + invitation.getInvitor()
+			+ " to " + invitation.getRoomURI(), Style.info);
+		display.print("We accept the invitation", Style.important);
 		manager.acceptRoomInvitation(invitation);
 	    }
 	});
@@ -55,27 +55,29 @@ public class PongInviteRoomPresenter {
 	manager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(ChatChangedEvent event) {
-		final Chat room = event.getChat();
-		display.print("Room created: " + room.getURI(), Style.info);
-		room.addChatStateChangedHandler(new StateChangedHandler() {
-		    @Override
-		    public void onStateChanged(StateChangedEvent event) {
-			if (event.is(ChatStates.ready)) {
-			    display.print("We entered the room: " + room.getURI(), Style.info);
-			    pongs++;
-			    room.send(new Message("Pong " + pongs));
-			    new Timer() {
-				@Override
-				public void run() {
-				    display.print("We close the room: " + room.getURI(), Style.important);
-				    time += 2000;
-				    manager.close(room);
-				}
+		if (event.isCreated()) {
+		    final Chat room = event.getChat();
+		    display.print("Room created: " + room.getURI(), Style.info);
+		    room.addChatStateChangedHandler(new StateChangedHandler() {
+			@Override
+			public void onStateChanged(StateChangedEvent event) {
+			    if (event.is(ChatStates.ready)) {
+				display.print("We entered the room: " + room.getURI(), Style.info);
+				pongs++;
+				room.send(new Message("Pong " + pongs));
+				new Timer() {
+				    @Override
+				    public void run() {
+					display.print("We close the room: " + room.getURI(), Style.important);
+					time += 2000;
+					manager.close(room);
+				    }
 
-			    }.schedule(time);
+				}.schedule(time);
+			    }
 			}
-		    }
-		}, true);
+		    }, true);
+		}
 	    }
 	});
     }

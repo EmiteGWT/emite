@@ -47,7 +47,7 @@ public class PingInviteRoomPresenter {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		if (event.is(ChatStates.ready)) {
-		    display.print("Room ready. Sending invitation to " + other, Style.info);
+		    display.print("Room ready. Sending invitation to " + other, Style.important);
 		    pings++;
 		    room.sendInvitationTo(other, "ping invite " + pings);
 		}
@@ -57,11 +57,12 @@ public class PingInviteRoomPresenter {
 	room.addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
 	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.isRemoved() && event.getOccupant().getURI().equalsNoResource(other)) {
-		    display.print("Invited removed... waiting to send invitation", Style.info);
+		if (event.isRemoved() && event.getOccupant().getUserUri().equalsNoResource(other)) {
+		    display.print("Invited removed... waiting to send invitation", Style.important);
 		    new Timer() {
 			@Override
 			public void run() {
+			    display.print("Sending invitation", Style.important);
 			    pings++;
 			    time += 1000;
 			    room.sendInvitationTo(other, "ping invite " + pings);

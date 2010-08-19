@@ -3,12 +3,11 @@ package com.calclab.emite.xtesting;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
+import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
@@ -25,7 +24,7 @@ public class XmppConnectionTester extends XmppConnectionBoilerPlate implements X
     private ConnectionSettings settings;
 
     public XmppConnectionTester() {
-	super(new GwtEmiteEventBus());
+	super(EmiteTestsEventBus.create("et"));
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
 	received = new ArrayList<IPacket>();

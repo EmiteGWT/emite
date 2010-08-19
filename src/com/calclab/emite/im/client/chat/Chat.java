@@ -48,6 +48,7 @@ public interface Chat {
 	public static final String sendNotReady = "sendNotReady";
 	public static final String errorMessage = "errorMessage";
 	public static final String errorPresence = "errorPresence";
+	public static final String occupantNotFound = "occupantNotFound";
     }
 
     /**

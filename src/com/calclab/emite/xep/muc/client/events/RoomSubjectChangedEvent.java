@@ -1,6 +1,6 @@
 package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.xep.muc.client.Occupant;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -15,7 +15,7 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
 
     private static final Type<RoomSubjectChangedHandler> TYPE = new Type<RoomSubjectChangedHandler>();
 
-    public static HandlerRegistration bind(GwtEmiteEventBus eventBus, RoomSubjectChangedHandler handler) {
+    public static HandlerRegistration bind(EmiteEventBus eventBus, RoomSubjectChangedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
     private final Occupant occupant;
@@ -25,11 +25,6 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
     public RoomSubjectChangedEvent(Occupant occupant, String subject) {
 	this.occupant = occupant;
 	this.subject = subject;
-    }
-
-    @Override
-    protected void dispatch(RoomSubjectChangedHandler handler) {
-	handler.onSubjectChanged(this);
     }
 
     @Override
@@ -53,6 +48,11 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
      */
     public String getSubject() {
 	return subject;
+    }
+
+    @Override
+    protected void dispatch(RoomSubjectChangedHandler handler) {
+	handler.onSubjectChanged(this);
     }
 
 }

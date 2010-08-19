@@ -8,16 +8,15 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerPlate;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
@@ -51,7 +50,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
      *            optional user to login
      */
     public XmppSessionTester(final XmppURI user) {
-	super(new GwtEmiteEventBus());
+	super(EmiteTestsEventBus.create("et"));
 	xmler = new TigaseXMLService();
 	sent = new ArrayList<IPacket>();
 	if (user != null) {
@@ -69,28 +68,6 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
     public void answerSuccess() {
 	answer(new IQ(Type.result));
-    }
-
-    private void assertContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertTrue("Expected " + expected + " contained in " + buffer, isContained);
-    }
-
-    private void assertNotContains(final IPacket expected, final ArrayList<IPacket> list) {
-	final StringBuffer buffer = new StringBuffer();
-	final boolean isContained = contains(expected, list, buffer);
-	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
-    }
-
-    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
-	boolean isContained = false;
-	final IsPacketLike matcher = new IsPacketLike(expected);
-	for (final IPacket packet : list) {
-	    buffer.append("[").append(packet.toString()).append("]");
-	    isContained = isContained ? isContained : matcher.matches(packet, System.out);
-	}
-	return isContained;
     }
 
     @Override
@@ -212,6 +189,28 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
     public void verifySentNothing() {
 	assertEquals("number of sent stanzas", 0, sent.size());
+    }
+
+    private void assertContains(final IPacket expected, final ArrayList<IPacket> list) {
+	final StringBuffer buffer = new StringBuffer();
+	final boolean isContained = contains(expected, list, buffer);
+	assertTrue("Expected " + expected + " contained in " + buffer, isContained);
+    }
+
+    private void assertNotContains(final IPacket expected, final ArrayList<IPacket> list) {
+	final StringBuffer buffer = new StringBuffer();
+	final boolean isContained = contains(expected, list, buffer);
+	assertFalse("Expected " + expected + " contained in\n" + buffer, isContained);
+    }
+
+    private boolean contains(final IPacket expected, final ArrayList<IPacket> list, final StringBuffer buffer) {
+	boolean isContained = false;
+	final IsPacketLike matcher = new IsPacketLike(expected);
+	for (final IPacket packet : list) {
+	    buffer.append("[").append(packet.toString()).append("]");
+	    isContained = isContained ? isContained : matcher.matches(packet, System.out);
+	}
+	return isContained;
     }
 
 }

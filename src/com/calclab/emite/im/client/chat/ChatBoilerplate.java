@@ -3,7 +3,7 @@ package com.calclab.emite.im.client.chat;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.ErrorHandler;
-import com.calclab.emite.core.client.events.GwtEmiteEventBus;
+import com.calclab.emite.core.client.events.EventBusFactory;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
@@ -22,14 +22,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public abstract class ChatBoilerplate implements Chat {
     protected final XmppSession session;
     protected final ChatProperties properties;
-    protected final GwtEmiteEventBus chatEventBus;
+    protected final EmiteEventBus chatEventBus;
 
     private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
 
     public ChatBoilerplate(XmppSession session, ChatProperties properties) {
 	this.session = session;
 	this.properties = properties;
-	chatEventBus = new GwtEmiteEventBus();
+	chatEventBus = EventBusFactory.create(properties.getUri().toString());
     }
 
     @Override

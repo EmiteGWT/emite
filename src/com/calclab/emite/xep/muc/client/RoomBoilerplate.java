@@ -24,11 +24,13 @@ import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 abstract class RoomBoilerplate extends AbstractChat implements Room {
-    protected final HashMap<XmppURI, Occupant> occupantsByURI;
+    private final HashMap<XmppURI, Occupant> occupantsByOccupantUri;
+    private final LinkedHashMap<XmppURI, Occupant> occupantsByUserUri;
 
     public RoomBoilerplate(XmppSession session, ChatProperties properties) {
 	super(session, properties);
-	occupantsByURI = new LinkedHashMap<XmppURI, Occupant>();
+	occupantsByOccupantUri = new LinkedHashMap<XmppURI, Occupant>();
+	occupantsByUserUri = new LinkedHashMap<XmppURI, Occupant>();
     }
 
     @Override
@@ -73,18 +75,29 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     }
 
     @Override
+    public Occupant getOccupantByOccupantUri(XmppURI occupantUri) {
+	return occupantsByOccupantUri.get(occupantUri);
+    }
+
+    @Override
+    @Deprecated
     public Occupant getOccupantByURI(final XmppURI uri) {
-	return occupantsByURI.get(uri);
+	return getOccupantByOccupantUri(uri);
+    }
+
+    @Override
+    public Occupant getOccupantByUserUri(XmppURI userUri) {
+	return occupantsByUserUri.get(userUri.getJID());
     }
 
     @Override
     public Collection<Occupant> getOccupants() {
-	return occupantsByURI.values();
+	return occupantsByOccupantUri.values();
     }
 
     @Override
     public int getOccupantsCount() {
-	return occupantsByURI.size();
+	return occupantsByOccupantUri.size();
     }
 
     /**
@@ -148,5 +161,19 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Deprecated
     public void setSubject(String newSubject) {
 	requestSubjectChange(newSubject);
+    }
+
+    protected void addOccupant(Occupant occupant) {
+	occupantsByOccupantUri.put(occupant.getOccupantUri(), occupant);
+	occupantsByUserUri.put(occupant.getUserUri().getJID(), occupant);
+	chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.added, occupant));
+    }
+
+    protected void removeOccupant(final XmppURI occupantUri) {
+	final Occupant occupant = occupantsByOccupantUri.remove(occupantUri);
+	if (occupant != null) {
+	    occupantsByUserUri.remove(occupant.getUserUri().getJID());
+	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.removed, occupant));
+	}
     }
 }
