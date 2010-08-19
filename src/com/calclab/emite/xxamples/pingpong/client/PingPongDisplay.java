@@ -19,6 +19,8 @@ public interface PingPongDisplay {
 	public static final String eventBus = "eventBus";
     }
 
+    public void addAction(String label, ClickHandler handler);
+
     public void addClearClickHandler(ClickHandler handler);
 
     public void addLoginClickHandler(ClickHandler handler);

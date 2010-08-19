@@ -160,6 +160,11 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	setSessionState(SessionStates.ready);
     }
 
+    @Override
+    public void setSessionState(String state) {
+	super.setSessionState(state);
+    }
+
     public IQResponseHandler verifyIQSent(final IPacket iq) {
 	assertNotNull(lastIQSent);
 	EmiteAsserts.assertPacketLike(iq, lastIQSent);

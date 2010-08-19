@@ -21,6 +21,7 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
     private final Label sessionStatus;
     private final int maxOutput;
     private boolean hideEvents;
+    private final FlowPanel buttons;
 
     public PingPongWidget() {
 	maxOutput = 500;
@@ -37,7 +38,7 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 	logout = new Button("Logout");
 	clear = new Button("Clear");
 	CheckBox hideEventsCheck = new CheckBox("Hide events");
-	FlowPanel buttons = new FlowPanel();
+	buttons = new FlowPanel();
 	buttons.add(login);
 	buttons.add(logout);
 	buttons.add(clear);
@@ -60,6 +61,11 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 	    }
 	});
 	hideEventsCheck.setValue(hideEvents);
+    }
+
+    @Override
+    public void addAction(String label, ClickHandler handler) {
+	buttons.add(new Button(label, handler));
     }
 
     @Override

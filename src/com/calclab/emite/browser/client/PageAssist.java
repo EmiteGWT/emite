@@ -217,8 +217,8 @@ public class PageAssist {
 	    map.put("rid", "" + stream.rid);
 	    map.put("sid", stream.sid);
 	    map.put("wait", stream.wait);
-	    map.put("inactivity", stream.inactivity);
-	    map.put("maxPause", stream.maxPause);
+	    map.put("inactivity", stream.getInactivityString());
+	    map.put("maxPause", stream.getMaxPauseString());
 	    map.put("user", user);
 	    final String serialized = map.serialize();
 	    Cookies.setCookie(PAUSE_COOKIE, serialized);
@@ -248,8 +248,8 @@ public class PageAssist {
 	    stream.rid = Integer.parseInt(map.get("rid"));
 	    stream.sid = map.get("sid");
 	    stream.wait = map.get("wait");
-	    stream.inactivity = map.get("inactivity");
-	    stream.maxPause = map.get("maxPause");
+	    stream.setInactivity(map.get("inactivity"));
+	    stream.setMaxPause(map.get("maxPause"));
 	    final XmppURI user = uri(map.get("user"));
 	    session.resume(user, stream);
 	    return true;

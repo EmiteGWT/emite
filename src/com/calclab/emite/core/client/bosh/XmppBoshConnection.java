@@ -116,7 +116,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     public StreamSettings pause() {
 	if (getStream() != null && getStream().sid != null) {
 	    createBodyIfNeeded();
-	    getCurrentBody().setAttribute("pause", getStream().maxPause);
+	    getCurrentBody().setAttribute("pause", getStream().getMaxPauseString());
 	    sendBody(true);
 	    return getStream();
 	}
@@ -150,15 +150,26 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
     }
 
+    /**
+     * After receiving a response from the connection manager, if none of the
+     * client's requests are still being held by the connection manager (and if
+     * the session is not a Polling Session), the client SHOULD make a new
+     * request as soon as possible. In any case, if no requests are being held,
+     * the client MUST make a new request before the maximum inactivity period
+     * has expired. The length of this period (in seconds) is specified by the
+     * 'inactivity' attribute in the session creation response.
+     * 
+     * @see http://xmpp.org/extensions/xep-0124.html#inactive
+     * @param ack
+     */
     private void continueConnection(final String ack) {
 	if (isConnected() && activeConnections == 0) {
 	    if (getCurrentBody() != null) {
 		sendBody();
 	    } else {
 		final long currentRID = getStream().rid;
-		// FIXME: hardcoded
-		final int msecs = 200;
-		services.schedule(msecs, new ScheduledAction() {
+		int waitTime = 300;
+		services.schedule(waitTime, new ScheduledAction() {
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
 			    createBodyIfNeeded();
@@ -236,8 +247,8 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	final StreamSettings stream = getStream();
 	stream.sid = response.getAttribute("sid");
 	stream.wait = response.getAttribute("wait");
-	stream.inactivity = response.getAttribute("inactivity");
-	stream.maxPause = response.getAttribute("maxpause");
+	stream.setInactivity(response.getAttribute("inactivity"));
+	stream.setMaxPause(response.getAttribute("maxpause"));
     }
 
     private boolean isTerminate(final String type) {

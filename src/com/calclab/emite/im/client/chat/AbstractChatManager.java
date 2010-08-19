@@ -91,7 +91,9 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 			    chat.open();
 			}
 		    }
-		} else if (event.is(SessionStates.loggingOut)) {
+		} else if (event.is(SessionStates.loggingOut) || event.is(SessionStates.disconnected)) {
+		    // check both states: loggingOut is preferred, but not
+		    // always fired (i.e. error)
 		    for (Chat chat : chats) {
 			chat.close();
 		    }
