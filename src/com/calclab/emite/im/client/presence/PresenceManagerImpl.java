@@ -21,67 +21,74 @@
  */
 package com.calclab.emite.im.client.presence;
 
-import java.util.Collection;
-
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.session.Session.State;
+import com.calclab.emite.core.client.events.ErrorEvent;
+import com.calclab.emite.core.client.events.PresenceEvent;
+import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.im.client.roster.Roster;
-import com.calclab.emite.im.client.roster.RosterItem;
+import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
+import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * @see PresenceManager
  */
-public class PresenceManagerImpl extends AbstractPresenceManager {
+public class PresenceManagerImpl implements PresenceManager {
+    private Presence ownPresence;
     static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
-    private final Session session;
+    private final XmppSession session;
 
-    public PresenceManagerImpl(final Session session, final Roster roster) {
+    public PresenceManagerImpl(final XmppSession session) {
 	this.session = session;
 	setOwnPresence(INITIAL_PRESENCE);
 
 	// Upon connecting to the server and becoming an active resource, a
 	// client SHOULD request the roster before sending initial presence
-	roster.onRosterRetrieved(new Listener<Collection<RosterItem>>() {
-	    public void onEvent(final Collection<RosterItem> parameter) {
-		GWT.log("Sending initial presence", null);
-		Presence ownPresence = getOwnPresence();
-		final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session
-			.getCurrentUser());
-		session.send(initialPresence);
-		setOwnPresence(initialPresence);
-		session.setReady();
-	    }
-	});
-
-	session.onPresence(new Listener<Presence>() {
-	    public void onEvent(final Presence presence) {
-		final Type type = presence.getType();
-		if (type == Type.probe) {
-		    session.send(getOwnPresence());
-		} else if (type == Type.error) {
-		    // FIXME: what should we do
-		    GWT.log("Error presence!!!", null);
-		}
-	    }
-	});
-
-	session.onStateChanged(new Listener<Session>() {
+	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
-	    public void onEvent(Session session) {
-		State state = session.getState();
-		if (state == Session.State.loggingOut) {
-		    logOut(session.getCurrentUser());
-		} else if (state == Session.State.disconnected) {
+	    public void onStateChanged(StateChangedEvent event) {
+		if (event.is(SessionStates.rosterReady)) {
+		    GWT.log("Sending initial presence", null);
+		    Presence ownPresence = getOwnPresence();
+		    final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(
+			    session.getCurrentUser());
+		    session.send(initialPresence);
+		    setOwnPresence(initialPresence);
+		    session.setSessionState(SessionStates.ready);
+		} else if (event.is(SessionStates.loggingOut)) {
+		    sendUnavailablePresence(session.getCurrentUser());
+		} else if (event.is(SessionStates.disconnected)) {
 		    setOwnPresence(INITIAL_PRESENCE);
 		}
 	    }
 	});
 
+	session.addPresenceReceivedHandler(new PresenceHandler() {
+	    @Override
+	    public void onPresence(PresenceEvent event) {
+		Presence presence = event.getPresence();
+		final Type type = presence.getType();
+		if (type == Type.probe) {
+		    session.send(getOwnPresence());
+		} else if (type == Type.error) {
+		    session.getEventBus().fireEvent(
+			    new ErrorEvent("presenceError", "we received an error presence", presence));
+		}
+	    }
+	});
+
+    }
+
+    @Override
+    public HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedHandler handler) {
+	return OwnPresenceChangedEvent.bind(session.getEventBus(), handler);
     }
 
     /**
@@ -98,6 +105,21 @@ public class PresenceManagerImpl extends AbstractPresenceManager {
 	setOwnPresence(presence);
     }
 
+    @Override
+    public Presence getOwnPresence() {
+	return ownPresence;
+    }
+
+    @Override
+    public void onOwnPresenceChanged(final Listener<Presence> listener) {
+	addOwnPresenceChangedHandler(new OwnPresenceChangedHandler() {
+	    @Override
+	    public void onOwnPresenceChanged(OwnPresenceChangedEvent event) {
+		listener.onEvent(event.getCurrentPresence());
+	    }
+	});
+    }
+
     /**
      * 5.1.5. Unavailable Presence (rfc 3921)
      * 
@@ -110,10 +132,16 @@ public class PresenceManagerImpl extends AbstractPresenceManager {
      * 
      * @param userURI
      */
-    private void logOut(final XmppURI userURI) {
+    private void sendUnavailablePresence(final XmppURI userURI) {
 	final Presence presence = new Presence(Type.unavailable, userURI, null);
 	session.send(presence);
 	setOwnPresence(presence);
+    }
+
+    private void setOwnPresence(Presence presence) {
+	Presence oldPresence = ownPresence;
+	ownPresence = presence;
+	session.getEventBus().fireEvent(new OwnPresenceChangedEvent(oldPresence, presence));
     }
 
 }

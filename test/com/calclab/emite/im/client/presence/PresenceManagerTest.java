@@ -1,37 +1,29 @@
 package com.calclab.emite.im.client.presence;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
-import static com.calclab.suco.testing.events.Eventito.anyListener;
-import static com.calclab.suco.testing.events.Eventito.fire;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.im.client.roster.Roster;
-import com.calclab.emite.im.client.roster.RosterItem;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class PresenceManagerTest {
 
     private PresenceManager manager;
-    private SessionTester session;
-    private Roster roster;
+    private XmppSessionTester session;
 
     @Before
     public void beforeTest() {
-	session = new SessionTester();
-	roster = mock(Roster.class);
-	manager = new PresenceManagerImpl(session, roster);
+	session = new XmppSessionTester();
+	manager = new PresenceManagerImpl(session);
     }
 
     @Test
@@ -76,12 +68,10 @@ public class PresenceManagerTest {
 	session.verifySent("<presence from='myself@domain' type='unavailable' />");
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void shouldSendInitialPresenceAfterRosterReady() {
-	session.setLoggedIn(uri("myself@domain"));
-
-	fire(new ArrayList<RosterItem>()).when(roster).onRosterRetrieved(anyListener());
+	session.setLoggedIn("myself@domain");
+	session.setSessionState(SessionStates.rosterReady);
 	session.verifySent("<presence from='myself@domain'></presence>");
     }
 

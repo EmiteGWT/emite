@@ -97,7 +97,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 	}, new Factory<PresenceManager>(PresenceManager.class) {
 	    @Override
 	    public PresenceManager create() {
-		return new PresenceManagerImpl($(Session.class), $(Roster.class));
+		return new PresenceManagerImpl($(XmppSession.class));
 	    }
 	});
 
