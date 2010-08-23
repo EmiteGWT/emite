@@ -22,195 +22,184 @@
 package com.calclab.emite.im.client.roster;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
+import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
+import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
+import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
+import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
+import com.calclab.emite.im.client.roster.events.RosterRetrievedHandler;
 import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
 
 /**
  * Roster Xmpp implementation.
  * 
  * @see Roster
  */
-public class RosterImpl extends AbstractRoster implements Roster {
+public class RosterImpl implements Roster {
 
-    private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
+    private final XmppRoster delegate;
 
-    private final Session session;
+    public RosterImpl(XmppRoster delegate) {
+	this.delegate = delegate;
+    }
 
-    public RosterImpl(final Session session) {
-	GWT.log("ROSTER - created");
-	this.session = session;
+    @Override
+    public void addItem(XmppURI jid, String name, String... groups) {
+	delegate.requestAddItem(jid, name, groups);
+    }
 
-	session.onStateChanged(new Listener<Session>() {
+    @Override
+    public Set<String> getGroupNames() {
+	return delegate.getGroupNames();
+    }
+
+    @Override
+    public Set<String> getGroups() {
+	return delegate.getGroupNames();
+    }
+
+    @Override
+    public RosterItem getItemByJID(XmppURI jid) {
+	return delegate.getItemByJID(jid);
+    }
+
+    @Override
+    public Collection<RosterItem> getItems() {
+	return delegate.getItems();
+    }
+
+    @Override
+    public Collection<RosterItem> getItemsByGroup(String groupName) {
+	return delegate.getItemsByGroup(groupName);
+    }
+
+    @Override
+    public RosterGroup getRosterGroup(String name) {
+	return delegate.getRosterGroup(name);
+    }
+
+    @Override
+    public Collection<RosterGroup> getRosterGroups() {
+	return delegate.getRosterGroups();
+    }
+
+    @Override
+    public boolean isRosterReady() {
+	return delegate.isRosterReady();
+    }
+
+    @Override
+    public void onGroupAdded(final Listener<RosterGroup> listener) {
+	delegate.addRosterGroupChangedHandler(new RosterGroupChangedHandler() {
 	    @Override
-	    public void onEvent(final Session session) {
-		if (session.getState() == Session.State.loggedIn) {
-		    requestRoster(session.getCurrentUser());
+	    public void onGroupChanged(RosterGroupChangedEvent event) {
+		if (event.isAdded()) {
+		    listener.onEvent(event.getRosterGroup());
 		}
 	    }
-	});
-
-	session.onPresence(new Listener<Presence>() {
-	    @Override
-	    public void onEvent(final Presence presence) {
-		final RosterItem item = getItemByJID(presence.getFrom());
-		if (item != null) {
-		    setPresence(presence, item);
-		}
-	    }
-
-	    private void setPresence(final Presence presence, final RosterItem item) {
-		final Presence.Type type = presence.getType();
-		if (type == Presence.Type.unavailable) {
-		    item.setAvailable(false);
-		} else {
-		    item.setAvailable(true);
-		}
-		final Show showReceived = presence.getShow();
-		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
-		item.setStatus(presence.getStatus());
-		fireItemChanged(item);
-	    }
-	});
-
-	session.onIQ(new Listener<IQ>() {
-	    @Override
-	    public void onEvent(final IQ iq) {
-		if (iq.isType(IQ.Type.set)) {
-		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
-		    if (query != null) {
-			for (final IPacket child : query.getChildren()) {
-			    handleItemChanged(RosterItem.parse(child));
-			}
-		    }
-		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
-		}
-	    }
-
 	});
     }
 
     @Override
-    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
-	if (getItemByJID(jid) == null) {
-	    addOrUpdateItem(jid, name, null, groups);
-	}
+    public void onGroupRemoved(final Listener<RosterGroup> listener) {
+	delegate.addRosterGroupChangedHandler(new RosterGroupChangedHandler() {
+	    @Override
+	    public void onGroupChanged(RosterGroupChangedEvent event) {
+		if (event.isRemoved()) {
+		    listener.onEvent(event.getRosterGroup());
+		}
+	    }
+	});
+
+    }
+
+    @Override
+    public void onItemAdded(final Listener<RosterItem> listener) {
+	delegate.addRosterItemChangedHandler(new RosterItemChangedHandler() {
+	    @Override
+	    public void onRosterItemChanged(RosterItemChangedEvent event) {
+		if (event.isAdded()) {
+		    listener.onEvent(event.getRosterItem());
+		}
+	    }
+	});
+    }
+
+    @Override
+    public void onItemChanged(final Listener<RosterItem> listener) {
+	delegate.addRosterItemChangedHandler(new RosterItemChangedHandler() {
+	    @Override
+	    public void onRosterItemChanged(RosterItemChangedEvent event) {
+		if (event.isModified()) {
+		    listener.onEvent(event.getRosterItem());
+		}
+	    }
+	});
+    }
+
+    @Override
+    public void onItemRemoved(final Listener<RosterItem> listener) {
+	delegate.addRosterItemChangedHandler(new RosterItemChangedHandler() {
+	    @Override
+	    public void onRosterItemChanged(RosterItemChangedEvent event) {
+		if (event.isRemoved()) {
+		    listener.onEvent(event.getRosterItem());
+		}
+	    }
+	});
+    }
+
+    @Override
+    public void onItemUpdated(Listener<RosterItem> listener) {
+	onItemChanged(listener);
+    }
+
+    @Override
+    public void onRosterRetrieved(final Listener<Collection<RosterItem>> listener) {
+	delegate.addRosterRetrievedHandler(new RosterRetrievedHandler() {
+	    @Override
+	    public void onRosterRetrieved(RosterRetrievedEvent event) {
+		listener.onEvent(event.getRosterItems());
+	    }
+	});
+    }
+
+    @Override
+    public void removeItem(XmppURI jid) {
+	delegate.requestRemoveItem(jid);
+    }
+
+    @Override
+    public void requestAddItem(XmppURI jid, String name, String... groups) {
+	delegate.requestAddItem(jid, name, groups);
     }
 
     @Override
     public void requestRemoveItem(XmppURI jid) {
-	final RosterItem item = getItemByJID(jid.getJID());
-	if (item != null) {
-	    final IQ iq = new IQ(Type.set);
-	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
-	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
-	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
-		@Override
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
+	delegate.requestRemoveItem(jid);
     }
 
     @Override
-    public void requestUpdateItem(final RosterItem item) {
-	if (getItemByJID(item.getJID()) != null) {
-	    final IQ iq = new IQ(Type.set);
-	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-	    session.sendIQ("roster", iq, new Listener<IPacket>() {
-		@Override
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
+    public void requestUpdateItem(RosterItem item) {
+	delegate.requestUpdateItem(item);
     }
 
     @Override
-    public void requestUpdateItems(final Collection<RosterItem> items) {
-	final IQ iq = new IQ(Type.set);
-	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
-	for (final RosterItem item : items) {
-	    item.addStanzaTo(rosterQuery);
-	}
-	session.sendIQ("roster", iq, new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket parameter) {
-	    }
-	});
+    public void requestUpdateItems(Collection<RosterItem> items) {
+	delegate.requestUpdateItems(items);
     }
 
     @Override
-    public void updateItem(final XmppURI jid, final String name, final String... groups) {
+    public void updateItem(XmppURI jid, String name, String... groups) {
 	final RosterItem oldItem = getItemByJID(jid);
 	if (oldItem != null) {
-	    final String newName = name == null ? oldItem.getName() : name;
-	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
+	    oldItem.setName(name);
+	    oldItem.setGroups(groups);
+	    requestUpdateItem(oldItem);
 	}
     }
 
-    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
-	    final String... groups) {
-	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
-	item.setGroups(groups);
-	final IQ iq = new IQ(Type.set);
-	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-	session.sendIQ("roster", iq, new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket parameter) {
-	    }
-	});
-    }
-
-    private void handleItemChanged(final RosterItem item) {
-	final RosterItem old = getItemByJID(item.getJID());
-	if (old == null) { // new item
-	    storeItem(item);
-	    fireItemAdded(item);
-	} else { // update or remove
-	    removeItem(old);
-	    final SubscriptionState subscriptionState = item.getSubscriptionState();
-	    if (subscriptionState == SubscriptionState.remove) {
-		fireItemRemoved(item);
-	    } else {
-		if (subscriptionState == SubscriptionState.to || subscriptionState == SubscriptionState.both) {
-		    // already subscribed, preserve available/show/status
-		    item.setAvailable(old.isAvailable());
-		    item.setShow(old.getShow());
-		    item.setStatus(old.getStatus());
-		}
-		storeItem(item);
-		fireItemChanged(item);
-	    }
-	}
-    }
-
-    private void requestRoster(final XmppURI user) {
-	GWT.log("ROSTER - request");
-	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket received) {
-		if (IQ.isSuccess(received)) {
-		    clearGroupAll();
-		    final List<? extends IPacket> children = received.getFirstChild("query").getChildren();
-		    for (final IPacket child : children) {
-			final RosterItem item = RosterItem.parse(child);
-			storeItem(item);
-		    }
-		    fireRosterReady(getItems());
-		    // session.setReady();
-		}
-	    }
-
-	});
-    }
 }

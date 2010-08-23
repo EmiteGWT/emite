@@ -24,10 +24,13 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
+import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
-import com.google.gwt.core.client.GWT;
+import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 
-public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster {
+public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster {
     private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
     public XmppRosterLogic(final XmppSession session) {
@@ -37,7 +40,7 @@ public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {
 		if (event.is(SessionStates.loggedIn)) {
-		    requestRoster(session.getCurrentUser());
+		    reRequestRoster();
 		}
 	    }
 	});
@@ -81,6 +84,11 @@ public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster
 		}
 	    }
 	});
+    }
+
+    @Override
+    public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
+	return RosterGroupChangedEvent.bind(eventBus, handler);
     }
 
     @Override
@@ -145,6 +153,41 @@ public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster
 	});
     }
 
+    @Override
+    public void reRequestRoster() {
+	if (session.getCurrentUser() != null) {
+	    IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
+	    session.sendIQ("roster", iq, new IQResponseHandler() {
+		@Override
+		public void onIQ(IQ iq) {
+		    if (IQ.isSuccess(iq)) {
+			clearGroupAll();
+			final List<? extends IPacket> children = iq.getFirstChild("query").getChildren();
+			for (final IPacket child : children) {
+			    final RosterItem item = RosterItem.parse(child);
+			    storeItem(item);
+			}
+			if (!rosterReady) {
+			    rosterReady = true;
+			    session.setSessionState(SessionStates.rosterReady);
+			}
+			eventBus.fireEvent(new RosterRetrievedEvent(getItems()));
+		    } else {
+			eventBus
+				.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
+		    }
+		}
+	    });
+	}
+    }
+
+    void storeItem(final RosterItem item) {
+	addToGroup(item, null);
+	for (final String groupName : item.getGroups()) {
+	    addToGroup(item, groupName);
+	}
+    }
+
     private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
 	    final String... groups) {
 	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
@@ -198,30 +241,6 @@ public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster
 	for (final String groupName : groupsToRemove) {
 	    removeGroup(groupName);
 	}
-    }
-
-    private void requestRoster(final XmppURI user) {
-	GWT.log("ROSTER - request");
-
-	IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
-	session.sendIQ("roster", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		if (IQ.isSuccess(iq)) {
-		    clearGroupAll();
-		    final List<? extends IPacket> children = iq.getFirstChild("query").getChildren();
-		    for (final IPacket child : children) {
-			final RosterItem item = RosterItem.parse(child);
-			storeItem(item);
-		    }
-		    rosterReady = true;
-		    session.setSessionState(SessionStates.rosterReady);
-		} else {
-		    eventBus.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
-		}
-	    }
-	});
-
     }
 
 }
