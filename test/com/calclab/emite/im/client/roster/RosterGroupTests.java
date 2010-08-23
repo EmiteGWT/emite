@@ -12,11 +12,11 @@ import com.calclab.suco.testing.events.MockedListener;
 
 public class RosterGroupTests {
 
-    private XmppRoster roster;
+    private RosterImpl roster;
 
     @Before
     public void setup() {
-	roster = new XmppRoster(new SessionTester());
+	roster = new RosterImpl(new SessionTester());
     }
 
     @Test

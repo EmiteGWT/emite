@@ -159,12 +159,9 @@ public interface Roster {
     void onRosterRetrieved(Listener<Collection<RosterItem>> listener);
 
     /**
-     * Send a request to remove item. No listener is called until the item is
-     * really removed from roster
-     * 
-     * @param jid
-     *            the jid (resource ignored) of the roster item to be removed
+     * Use requestRemoveItem instead
      */
+    @Deprecated
     void removeItem(XmppURI jid);
 
     /**
@@ -183,6 +180,15 @@ public interface Roster {
      *            <b>(optional!)</b> the groups you want to put the groups in
      */
     void requestAddItem(XmppURI jid, String name, String... groups);
+
+    /**
+     * Send a request to remove item. No listener is called until the item is
+     * really removed from roster
+     * 
+     * @param jid
+     *            the jid (resource ignored) of the roster item to be removed
+     */
+    void requestRemoveItem(XmppURI jid);
 
     /**
      * Request to update a item to the Roster. If the item.jid is not in the

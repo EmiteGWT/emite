@@ -1,0 +1,227 @@
+package com.calclab.emite.im.client.roster;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.calclab.emite.core.client.events.IQEvent;
+import com.calclab.emite.core.client.events.IQHandler;
+import com.calclab.emite.core.client.events.PresenceEvent;
+import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.RequestFailedEvent;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
+import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.packet.MatcherFactory;
+import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.packet.PacketMatcher;
+import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
+import com.google.gwt.core.client.GWT;
+
+public class XmppRosterLogic extends XmppRosterBoilerplate implements XmppRoster {
+    private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
+
+    public XmppRosterLogic(final XmppSession session) {
+	super(session);
+
+	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+	    @Override
+	    public void onStateChanged(StateChangedEvent event) {
+		if (event.is(SessionStates.loggedIn)) {
+		    requestRoster(session.getCurrentUser());
+		}
+	    }
+	});
+
+	session.addPresenceReceivedHandler(new PresenceHandler() {
+	    @Override
+	    public void onPresence(PresenceEvent event) {
+		Presence presence = event.getPresence();
+		final RosterItem item = getItemByJID(presence.getFrom());
+		if (item != null) {
+		    setPresence(presence, item);
+		}
+	    }
+
+	    private void setPresence(final Presence presence, final RosterItem item) {
+		final Presence.Type type = presence.getType();
+		if (type == Presence.Type.unavailable) {
+		    item.setAvailable(false);
+		} else {
+		    item.setAvailable(true);
+		}
+		final Show showReceived = presence.getShow();
+		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
+		item.setStatus(presence.getStatus());
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, item));
+	    }
+	});
+
+	session.addIQReceivedHandler(new IQHandler() {
+	    @Override
+	    public void onPacket(IQEvent event) {
+		IQ iq = event.getIQ();
+		if (iq.isType(IQ.Type.set)) {
+		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
+		    if (query != NoPacket.INSTANCE) {
+			for (final IPacket child : query.getChildren()) {
+			    handleItemChanged(RosterItem.parse(child));
+			}
+		    }
+		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
+		}
+	    }
+	});
+    }
+
+    @Override
+    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
+	if (getItemByJID(jid) == null) {
+	    addOrUpdateItem(jid, name, null, groups);
+	}
+    }
+
+    @Override
+    public void requestRemoveItem(XmppURI jid) {
+	final RosterItem item = getItemByJID(jid.getJID());
+	if (item != null) {
+	    final IQ iq = new IQ(Type.set);
+	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
+	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
+
+	    session.sendIQ("roster", iq, new IQResponseHandler() {
+		@Override
+		public void onIQ(IQ iq) {
+		    if (!IQ.isSuccess(iq)) {
+			eventBus.fireEvent(new RequestFailedEvent("rosterItemRemove", "remove roster item failed", iq));
+		    }
+		}
+	    });
+	}
+    }
+
+    @Override
+    public void requestUpdateItem(final RosterItem item) {
+	if (getItemByJID(item.getJID()) != null) {
+	    final IQ iq = new IQ(Type.set);
+	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
+
+	    session.sendIQ("roster", iq, new IQResponseHandler() {
+		@Override
+		public void onIQ(IQ iq) {
+		    if (!IQ.isSuccess(iq)) {
+			eventBus.fireEvent(new RequestFailedEvent("rosterItemUpdate", "update roster item failed", iq));
+		    }
+		}
+	    });
+	}
+    }
+
+    @Override
+    public void requestUpdateItems(final Collection<RosterItem> items) {
+	final IQ iq = new IQ(Type.set);
+	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
+	for (final RosterItem item : items) {
+	    item.addStanzaTo(rosterQuery);
+	}
+
+	session.sendIQ("roster", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(IQ iq) {
+		if (!IQ.isSuccess(iq)) {
+		    eventBus.fireEvent(new RequestFailedEvent("rosterItemsUpdate",
+			    "update several roster items failed", iq));
+		}
+	    }
+	});
+    }
+
+    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
+	    final String... groups) {
+	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
+	item.setGroups(groups);
+	final IQ iq = new IQ(Type.set);
+	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
+
+	session.sendIQ("roster", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(IQ iq) {
+		if (!IQ.isSuccess(iq)) {
+		    eventBus.fireEvent(new RequestFailedEvent("rosterItem", "roster item can't be updated", iq));
+		}
+	    }
+	});
+
+    }
+
+    private void handleItemChanged(final RosterItem item) {
+	final RosterItem old = getItemByJID(item.getJID());
+	if (old == null) { // new item
+	    storeItem(item);
+	    eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
+	} else { // update or remove
+	    removeItem(old);
+	    final SubscriptionState subscriptionState = item.getSubscriptionState();
+	    if (subscriptionState == SubscriptionState.remove) {
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, item));
+	    } else {
+		if (subscriptionState == SubscriptionState.to || subscriptionState == SubscriptionState.both) {
+		    // already subscribed, preserve available/show/status
+		    item.setAvailable(old.isAvailable());
+		    item.setShow(old.getShow());
+		    item.setStatus(old.getStatus());
+		}
+		storeItem(item);
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, item));
+	    }
+	}
+    }
+
+    private void removeItem(final RosterItem item) {
+	final ArrayList<String> groupsToRemove = new ArrayList<String>();
+	for (final String groupName : getGroupNames()) {
+	    final RosterGroup group = getRosterGroup(groupName);
+	    group.remove(item.getJID());
+	    if (group.getName() != null && group.getSize() == 0) {
+		groupsToRemove.add(groupName);
+	    }
+	}
+	for (final String groupName : groupsToRemove) {
+	    removeGroup(groupName);
+	}
+    }
+
+    private void requestRoster(final XmppURI user) {
+	GWT.log("ROSTER - request");
+
+	IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
+	session.sendIQ("roster", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(IQ iq) {
+		if (IQ.isSuccess(iq)) {
+		    clearGroupAll();
+		    final List<? extends IPacket> children = iq.getFirstChild("query").getChildren();
+		    for (final IPacket child : children) {
+			final RosterItem item = RosterItem.parse(child);
+			storeItem(item);
+		    }
+		    rosterReady = true;
+		    session.setSessionState(SessionStates.rosterReady);
+		} else {
+		    eventBus.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
+		}
+	    }
+	});
+
+    }
+
+}

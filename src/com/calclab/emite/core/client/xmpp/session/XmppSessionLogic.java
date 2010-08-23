@@ -209,26 +209,19 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     }
 
     @Override
-    public void setReady() {
-	if (isLoggedIn()) {
-	    setSessionState(XmppSession.SessionStates.ready);
-	}
-    }
-
-    @Override
-    public String toString() {
-	return "Session " + userUri + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
-		+ connection.toString();
-    }
-
-    @Override
-    protected void setSessionState(final String newState) {
+    public void setSessionState(final String newState) {
 	if (SessionStates.ready.equals(newState)) {
 	    sendQueuedStanzas();
 	} else if (SessionStates.disconnected.equals(newState)) {
 	    userUri = null;
 	}
 	super.setSessionState(newState);
+    }
+
+    @Override
+    public String toString() {
+	return "Session " + userUri + " in " + getSessionState() + " " + queuedStanzas.size() + " queued stanzas con="
+		+ connection.toString();
     }
 
     private void disconnect() {

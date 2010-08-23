@@ -1,216 +1,111 @@
-/*
- *
- * ((e)) emite: A pure gwt (Google Web Toolkit) xmpp (jabber) library
- *
- * (c) 2008-2009 The emite development team (see CREDITS for details)
- * This file is part of emite.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
 package com.calclab.emite.im.client.roster;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Listener;
-import com.google.gwt.core.client.GWT;
 
-/**
- * Roster Xmpp implementation.
- * 
- * @see Roster
- */
-public class XmppRoster extends AbstractRoster implements Roster {
+public interface XmppRoster {
+    /**
+     * Return the group names of this roster (null is one of the group names:
+     * all the roster group)
+     * 
+     * @return the group names of this roster
+     */
+    Set<String> getGroupNames();
 
-    private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
+    /**
+     * Find a roster item by its JID (it doesn't take care of the resource if
+     * given)
+     * 
+     * @param jid
+     *            the JID of the item (resource is ignored)
+     * @return the item if found in roster, null otherwise
+     */
+    RosterItem getItemByJID(XmppURI jid);
 
-    private final Session session;
+    /**
+     * Retrieve all the RosterItems of the Roster (a copy of the collection: can
+     * be modified)
+     * 
+     * @return the items of the roster
+     */
+    Collection<RosterItem> getItems();
 
-    public XmppRoster(final Session session) {
-	GWT.log("ROSTER - created");
-	this.session = session;
+    /**
+     * Retrieve all the items that belongs to the given group name
+     * 
+     * @param groupName
+     * @return a collection of items
+     */
+    Collection<RosterItem> getItemsByGroup(String groupName);
 
-	session.onStateChanged(new Listener<Session>() {
-	    @Override
-	    public void onEvent(final Session session) {
-		if (session.getState() == Session.State.loggedIn) {
-		    requestRoster(session.getCurrentUser());
-		}
-	    }
-	});
+    /**
+     * Return the roster group with the given name (can be null: see param)
+     * 
+     * @param name
+     *            the name of the group. If the name is null a RosterGroup with
+     *            all the items is returned
+     * @return the roster group object or null if doesn't exist
+     */
+    RosterGroup getRosterGroup(String name);
 
-	session.onPresence(new Listener<Presence>() {
-	    @Override
-	    public void onEvent(final Presence presence) {
-		final RosterItem item = getItemByJID(presence.getFrom());
-		if (item != null) {
-		    setPresence(presence, item);
-		}
-	    }
+    /**
+     * Return all the groups in the roster (included the "null" named group: the
+     * entired roster)
+     */
+    Collection<RosterGroup> getRosterGroups();
 
-	    private void setPresence(final Presence presence, final RosterItem item) {
-		final Presence.Type type = presence.getType();
-		if (type == Presence.Type.unavailable) {
-		    item.setAvailable(false);
-		} else {
-		    item.setAvailable(true);
-		}
-		final Show showReceived = presence.getShow();
-		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
-		item.setStatus(presence.getStatus());
-		fireItemChanged(item);
-	    }
-	});
+    /**
+     * Checks if a valid roster has been received in the login process
+     * 
+     * @return true if has a roster
+     */
+    boolean isRosterReady();
 
-	session.onIQ(new Listener<IQ>() {
-	    @Override
-	    public void onEvent(final IQ iq) {
-		if (iq.isType(IQ.Type.set)) {
-		    final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
-		    if (query != null) {
-			for (final IPacket child : query.getChildren()) {
-			    handleItemChanged(RosterItem.parse(child));
-			}
-		    }
-		    session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
-		}
-	    }
+    /**
+     * Request add a item to the Roster. No listener is called until the item is
+     * really added to the roster. When the item is effectively added, the
+     * Roster sends a subscription to the roster item's presence
+     * 
+     * If a item with a same JID is already present in the roster, nothing is
+     * done.
+     * 
+     * @param jid
+     *            the user JID (resource ignored)
+     * @param name
+     *            the item name
+     * @param groups
+     *            <b>(optional!)</b> the groups you want to put the groups in
+     */
+    void requestAddItem(XmppURI jid, String name, String... groups);
 
-	});
-    }
+    /**
+     * Send a request to remove item. No listener is called until the item is
+     * really removed from roster
+     * 
+     * @param jid
+     *            the jid (resource ignored) of the roster item to be removed
+     */
+    void requestRemoveItem(XmppURI jid);
 
-    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
-	    final String... groups) {
-	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
-	item.setGroups(groups);
-	final IQ iq = new IQ(Type.set);
-	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-	session.sendIQ("roster", iq, new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket parameter) {
-	    }
-	});
-    }
+    /**
+     * Request to update a item to the Roster. If the item.jid is not in the
+     * roster, the item is not updated. Notice that the subscription mode is
+     * IGNORED (you should use SubscriptionManager instead)
+     * 
+     * @param item
+     *            the roster item to be updated
+     * @see updateItem
+     */
+    void requestUpdateItem(RosterItem item);
 
-    private void handleItemChanged(final RosterItem item) {
-	final RosterItem old = getItemByJID(item.getJID());
-	if (old == null) { // new item
-	    storeItem(item);
-	    fireItemAdded(item);
-	} else { // update or remove
-	    removeItem(old);
-	    final SubscriptionState subscriptionState = item.getSubscriptionState();
-	    if (subscriptionState == SubscriptionState.remove) {
-		fireItemRemoved(item);
-	    } else {
-		if (subscriptionState == SubscriptionState.to || subscriptionState == SubscriptionState.both) {
-		    // already subscribed, preserve available/show/status
-		    item.setAvailable(old.isAvailable());
-		    item.setShow(old.getShow());
-		    item.setStatus(old.getStatus());
-		}
-		storeItem(item);
-		fireItemChanged(item);
-	    }
-	}
-    }
+    /**
+     * Request to update the given collection of roster items. If the any of the
+     * items is not previously on the roster, the item is not updated.
+     * 
+     * @param items
+     */
+    void requestUpdateItems(Collection<RosterItem> items);
 
-    @Override
-    public void removeItem(final XmppURI uri) {
-	final RosterItem item = getItemByJID(uri.getJID());
-	if (item != null) {
-	    final IQ iq = new IQ(Type.set);
-	    final IPacket itemNode = iq.addQuery("jabber:iq:roster").addChild("item", null);
-	    itemNode.With("subscription", "remove").With("jid", item.getJID().toString());
-	    session.sendIQ("remove-roster-item", iq, new Listener<IPacket>() {
-		@Override
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
-    }
-
-    @Override
-    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
-	if (getItemByJID(jid) == null) {
-	    addOrUpdateItem(jid, name, null, groups);
-	}
-    }
-
-    private void requestRoster(final XmppURI user) {
-	GWT.log("ROSTER - request");
-	session.sendIQ("roster", new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster"), new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket received) {
-		if (IQ.isSuccess(received)) {
-		    clearGroupAll();
-		    final List<? extends IPacket> children = received.getFirstChild("query").getChildren();
-		    for (final IPacket child : children) {
-			final RosterItem item = RosterItem.parse(child);
-			storeItem(item);
-		    }
-		    fireRosterReady(getItems());
-		    // session.setReady();
-		}
-	    }
-
-	});
-    }
-
-    @Override
-    public void requestUpdateItem(final RosterItem item) {
-	if (getItemByJID(item.getJID()) != null) {
-	    final IQ iq = new IQ(Type.set);
-	    item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-	    session.sendIQ("roster", iq, new Listener<IPacket>() {
-		@Override
-		public void onEvent(final IPacket parameter) {
-		}
-	    });
-	}
-    }
-
-    @Override
-    public void requestUpdateItems(final Collection<RosterItem> items) {
-	final IQ iq = new IQ(Type.set);
-	final IPacket rosterQuery = iq.addQuery("jabber:iq:roster");
-	for (final RosterItem item : items) {
-	    item.addStanzaTo(rosterQuery);
-	}
-	session.sendIQ("roster", iq, new Listener<IPacket>() {
-	    @Override
-	    public void onEvent(final IPacket parameter) {
-	    }
-	});
-    }
-
-    @Override
-    public void updateItem(final XmppURI jid, final String name, final String... groups) {
-	final RosterItem oldItem = getItemByJID(jid);
-	if (oldItem != null) {
-	    final String newName = name == null ? oldItem.getName() : name;
-	    addOrUpdateItem(jid, newName, oldItem.getSubscriptionState(), groups);
-	}
-    }
 }

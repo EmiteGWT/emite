@@ -73,7 +73,12 @@ public interface XmppSession {
 	/**
 	 * The session is binded
 	 */
-	protected static String binded = "binded";
+	protected static final String binded = "binded";
+
+	/**
+	 * The roster is ready
+	 */
+	public static final String rosterReady = "rosterReady";
     }
 
     public HandlerRegistration addIQReceivedHandler(IQHandler handler);
@@ -85,6 +90,7 @@ public interface XmppSession {
     /**
      * Add a handler to track session state changes. If sendCurrent is true, the
      * handler will receive the current session state just after been added.
+     * 
      * @param sendCurrent
      *            if true, the current session state will be sent to the handler
      *            just after addition
@@ -227,7 +233,11 @@ public interface XmppSession {
     public abstract void sendIQ(final String category, final IQ iq, final IQResponseHandler iqHandler);
 
     /**
-     * Presence managers should call this method when initial presence is sent
+     * Set the current session's state
+     * 
+     * @param state
+     *            the current session state
+     * @see SessionStates
      */
-    public void setReady();
+    public void setSessionState(String state);
 }

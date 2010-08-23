@@ -155,7 +155,6 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	setSessionState(SessionStates.loggedIn);
     }
 
-    @Override
     public void setReady() {
 	setSessionState(SessionStates.ready);
     }

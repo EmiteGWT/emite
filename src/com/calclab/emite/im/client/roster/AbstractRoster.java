@@ -57,14 +57,17 @@ public abstract class AbstractRoster implements Roster {
 	return getGroupNames();
     }
 
+    @Override
     public RosterItem getItemByJID(final XmppURI jid) {
 	return all.getItem(jid.getJID());
     }
 
+    @Override
     public Collection<RosterItem> getItems() {
 	return new ArrayList<RosterItem>(all.getItems());
     }
 
+    @Override
     public Collection<RosterItem> getItemsByGroup(final String groupName) {
 	final RosterGroup group = getRosterGroup(groupName);
 	return group != null ? group.getItems() : null;
@@ -116,12 +119,9 @@ public abstract class AbstractRoster implements Roster {
 	onRosterReady.add(listener);
     }
 
-    private void addToGroup(final RosterItem item, final String groupName) {
-	RosterGroup group = groups.get(groupName);
-	if (group == null) {
-	    group = addGroup(groupName);
-	}
-	group.add(item);
+    @Override
+    public void removeItem(final XmppURI jid) {
+	requestRemoveItem(jid);
     }
 
     protected RosterGroup addGroup(final String groupName) {
@@ -191,6 +191,13 @@ public abstract class AbstractRoster implements Roster {
 	for (final String groupName : item.getGroups()) {
 	    addToGroup(item, groupName);
 	}
+    }
 
+    private void addToGroup(final RosterItem item, final String groupName) {
+	RosterGroup group = groups.get(groupName);
+	if (group == null) {
+	    group = addGroup(groupName);
+	}
+	group.add(item);
     }
 }

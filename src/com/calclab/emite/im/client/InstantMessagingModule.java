@@ -33,7 +33,7 @@ import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
 import com.calclab.emite.im.client.roster.SubscriptionManagerImpl;
-import com.calclab.emite.im.client.roster.XmppRoster;
+import com.calclab.emite.im.client.roster.RosterImpl;
 import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
@@ -75,7 +75,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 	register(SessionComponent.class, new Factory<Roster>(Roster.class) {
 	    @Override
 	    public Roster create() {
-		return new XmppRoster($(Session.class));
+		return new RosterImpl($(Session.class));
 	    }
 	}, new Factory<ChatManager>(ChatManager.class) {
 	    @Override

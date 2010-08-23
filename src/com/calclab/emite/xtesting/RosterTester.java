@@ -138,13 +138,13 @@ public class RosterTester extends AbstractRoster {
     }
 
     @Override
-    public void removeItem(final XmppURI jid) {
-	removed.add(jid);
+    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
+	added.add(new ItemAdded(jid, name, groups));
     }
 
     @Override
-    public void requestAddItem(final XmppURI jid, final String name, final String... groups) {
-	added.add(new ItemAdded(jid, name, groups));
+    public void requestRemoveItem(final XmppURI jid) {
+	removed.add(jid);
     }
 
     @Override

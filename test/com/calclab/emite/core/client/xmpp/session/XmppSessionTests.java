@@ -123,7 +123,7 @@ public class XmppSessionTests {
 	session.send(new Message("the Message", uri("other@domain")));
 	assertEquals(0, connection.getSentSize());
 	eventBus.fireEvent(new SessionRequestResultEvent(uri("name@domain/resource")));
-	session.setReady();
+	session.setSessionState(SessionStates.ready);
 	assertEquals(1, connection.getSentSize());
     }
 

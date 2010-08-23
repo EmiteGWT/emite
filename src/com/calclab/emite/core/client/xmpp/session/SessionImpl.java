@@ -31,6 +31,7 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
@@ -44,17 +45,20 @@ import com.google.gwt.core.client.GWT;
 public class SessionImpl implements Session {
     private final XmppSession delegate;
 
-    public SessionImpl(final XmppSession delegate) {
-	this.delegate = delegate;
-    }
+    // private final HashMap<State, String> stateToString;
 
-    private State convertState(final String sessionState) {
-	try {
-	    return State.valueOf(sessionState);
-	} catch (final Exception e) {
-	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
-	    return State.unknown;
-	}
+    public SessionImpl(final XmppSession delegate) {
+	// this.stateToString = new HashMap<State, String>();
+	// stateToString.put(State.authorized, SessionStates.authorized);
+	// stateToString.put(State.connecting, SessionStates.connecting);
+	// stateToString.put(State.disconnected, SessionStates.disconnected);
+	// stateToString.put(State.error, SessionStates.error);
+	// stateToString.put(State.loggedIn, SessionStates.loggedIn);
+	// stateToString.put(State.loggingOut, SessionStates.loggingOut);
+	// stateToString.put(State.notAuthorized, SessionStates.notAuthorized);
+	// stateToString.put(State.ready, SessionStates.ready);
+	// stateToString.put(State.resume, SessionStates.resume);
+	this.delegate = delegate;
     }
 
     @Override
@@ -154,7 +158,16 @@ public class SessionImpl implements Session {
 
     @Override
     public void setReady() {
-	delegate.setReady();
+	delegate.setSessionState(SessionStates.ready);
+    }
+
+    private State convertState(final String sessionState) {
+	try {
+	    return State.valueOf(sessionState);
+	} catch (final Exception e) {
+	    GWT.log("STATE CONVERT ERROR!!!" + sessionState);
+	    return State.unknown;
+	}
     }
 
 }
