@@ -21,7 +21,6 @@
  */
 package com.calclab.emite.im.client;
 
-import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.SessionComponent;
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
@@ -92,7 +91,7 @@ public class InstantMessagingModule extends AbstractModule implements EntryPoint
 	}, new Factory<SubscriptionManager>(SubscriptionManager.class) {
 	    @Override
 	    public SubscriptionManager create() {
-		return new SubscriptionManagerImpl($(Session.class), $(Roster.class));
+		return new SubscriptionManagerImpl($(XmppSession.class), $(XmppRoster.class));
 	    }
 	}, new Factory<PresenceManager>(PresenceManager.class) {
 	    @Override

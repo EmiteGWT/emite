@@ -1,8 +1,7 @@
 package com.calclab.emite.im.client.roster;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Listener2;
-import com.google.gwt.core.client.GWT;
+import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
+import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
 
 /**
  * A little utility to handle subscriptions automatically. This component is not
@@ -31,17 +30,17 @@ public class SubscriptionHandler {
     public SubscriptionHandler(final SubscriptionManager manager) {
 	this.behaviour = Behaviour.none;
 
-	manager.onSubscriptionRequested(new Listener2<XmppURI, String>() {
+	manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
 	    @Override
-	    public void onEvent(XmppURI uri, String nick) {
-		GWT.log("Subscription requested: " + nick, null);
+	    public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
 		if (behaviour == Behaviour.acceptAll) {
-		    manager.approveSubscriptionRequest(uri, nick);
+		    manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
 		} else if (behaviour == Behaviour.refuseAll) {
-		    manager.refuseSubscriptionRequest(uri);
+		    manager.refuseSubscriptionRequest(event.getFrom());
 		}
 	    }
 	});
+
     }
 
     /**
