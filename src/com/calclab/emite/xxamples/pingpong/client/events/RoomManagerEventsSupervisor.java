@@ -34,7 +34,7 @@ public class RoomManagerEventsSupervisor {
 			Style.event);
 		String occupants = "";
 		for (Occupant occupant : room.getOccupants()) {
-		    occupants += occupant.getURI().getResource() + " ";
+		    occupants += occupant.getOccupantUri().getResource() + " ";
 		}
 		display.print("ROOM OCCUPANTS (" + room.getOccupantsCount() + "): " + occupants, Style.event);
 	    }

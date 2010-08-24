@@ -48,18 +48,19 @@ public class StateManager {
 	chatManager.onChatClosed(new Listener<Chat>() {
 	    public void onEvent(final Chat chat) {
 		GWT.log("Removing chat state to chat: " + chat.getID(), null);
-		final ChatStateManager chatStateManager = chat.getData(ChatStateManager.class);
+		final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(
+			ChatStateManager.KEY);
 		if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
 		    // We are closing, then we send the gone state
 		    chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
 		}
-		chat.setData(ChatStateManager.class, null);
+		chat.getProperties().setData(ChatStateManager.KEY, null);
 	    }
 	});
     }
 
     public ChatStateManager getChatState(final Chat chat) {
-	ChatStateManager chatStateManager = chat.getData(ChatStateManager.class);
+	ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
 	if (chatStateManager == null) {
 	    chatStateManager = createChatState(chat);
 	}
@@ -69,7 +70,7 @@ public class StateManager {
     private ChatStateManager createChatState(final Chat chat) {
 	GWT.log("Adding chat state to chat: " + chat.getID(), null);
 	final ChatStateManager chatStateManager = new ChatStateManager(chat);
-	chat.setData(ChatStateManager.class, chatStateManager);
+	chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
 	return chatStateManager;
     }
 

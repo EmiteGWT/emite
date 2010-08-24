@@ -49,13 +49,15 @@ public class MUCChatStateManager {
 	chatManager.onChatClosed(new Listener<Chat>() {
 	    public void onEvent(final Chat chat) {
 		GWT.log("Removing chat state to chat: " + chat.getID(), null);
-		chat.setData(RoomChatStateManager.class, null);
+		chat.getProperties().setData(RoomChatStateManager.KEY, null);
 	    }
 	});
     }
 
     public RoomChatStateManager getRoomOccupantsChatStateManager(final Room room) {
-	RoomChatStateManager stateManager = room.getData(RoomChatStateManager.class);
+
+	RoomChatStateManager stateManager = (RoomChatStateManager) room.getProperties().getData(
+		RoomChatStateManager.KEY);
 	if (stateManager == null) {
 	    stateManager = createChatState(room);
 	}
@@ -65,7 +67,7 @@ public class MUCChatStateManager {
     private RoomChatStateManager createChatState(final Room room) {
 	GWT.log("Adding chat state to chat: " + room.getID(), null);
 	final RoomChatStateManager stateManager = new RoomChatStateManager(room);
-	room.setData(RoomChatStateManager.class, stateManager);
+	room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
 	room.onBeforeSend(stateManager.doBeforeSend);
 	return stateManager;
     }

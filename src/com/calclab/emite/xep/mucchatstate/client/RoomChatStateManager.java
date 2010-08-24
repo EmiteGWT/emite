@@ -63,6 +63,7 @@ public class RoomChatStateManager {
     }
 
     public static final String XMLNS = "http://jabber.org/protocol/chatstates";
+    public static final String KEY = "RoomChatStateManager";
 
     private ChatState ownState;
     private final Map<XmppURI, ChatState> othersState;

@@ -159,14 +159,7 @@ public interface Chat {
     public String getChatState();
 
     /**
-     * Get the associated object of class 'type'
-     * 
-     * @param <T>
-     *            the class (key) of the associated object
-     * @param type
-     *            the class object itself
-     * @return the associated object if any, null otherwise
-     * @see setData
+     * USE getProperties.getData
      */
     @Deprecated
     public <T> T getData(Class<T> type);

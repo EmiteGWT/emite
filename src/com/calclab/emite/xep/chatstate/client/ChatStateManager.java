@@ -46,6 +46,8 @@ public class ChatStateManager {
 
     public static final String XMLNS = "http://jabber.org/protocol/chatstates";
 
+    public static final String KEY = "ChatStateManager";
+
     private ChatState ownState;
     private ChatState otherState;
     private final Chat chat;
