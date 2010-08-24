@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.xtesting.RosterTester;
+import com.calclab.emite.xtesting.RosterItemHelper;
 
 public class OrderByAvailabilityTests {
 
@@ -26,17 +26,17 @@ public class OrderByAvailabilityTests {
     public void setupItems() {
 	comparator = RosterItemsOrder.byAvailability;
 
-	available = RosterTester.createItem("unknown@test", "unknown", true, "group");
-	chat = RosterTester.createItem("chat@test", "chat", true, "group");
+	available = RosterItemHelper.createItem("unknown@test", "unknown", true, "group");
+	chat = RosterItemHelper.createItem("chat@test", "chat", true, "group");
 	chat.setShow(Show.chat);
-	dnd = RosterTester.createItem("dnd@test", "dnd", true, "group");
+	dnd = RosterItemHelper.createItem("dnd@test", "dnd", true, "group");
 	dnd.setShow(Show.dnd);
-	away = RosterTester.createItem("away@test", "away", true, "group");
+	away = RosterItemHelper.createItem("away@test", "away", true, "group");
 	away.setShow(Show.away);
-	xa = RosterTester.createItem("away@test", "away", true, "group");
+	xa = RosterItemHelper.createItem("away@test", "away", true, "group");
 	xa.setShow(Show.xa);
 
-	unavailable = RosterTester.createItem("unavailable@test", "unavailable", false, "group");
+	unavailable = RosterItemHelper.createItem("unavailable@test", "unavailable", false, "group");
     }
 
     @Test

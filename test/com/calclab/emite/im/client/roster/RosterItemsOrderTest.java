@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.xtesting.RosterTester;
+import com.calclab.emite.xtesting.RosterItemHelper;
 
 public class RosterItemsOrderTest {
 
@@ -20,9 +20,9 @@ public class RosterItemsOrderTest {
     @Before
     public void setup() {
 	group = new RosterGroup("myGroup");
-	group.add(RosterTester.createItem("test3@test", "test3", false, "myGroup"));
-	group.add(RosterTester.createItem("test2@test", "test2", true, "myGroup"));
-	group.add(RosterTester.createItem("test1@test", "test1", false, "myGroup"));
+	group.add(RosterItemHelper.createItem("test3@test", "test3", false, "myGroup"));
+	group.add(RosterItemHelper.createItem("test2@test", "test2", true, "myGroup"));
+	group.add(RosterItemHelper.createItem("test1@test", "test1", false, "myGroup"));
     }
 
     @Test
@@ -36,9 +36,9 @@ public class RosterItemsOrderTest {
     @Test
     public void shouldOrderAvailabiltyAndGroupAndName() {
 	final RosterGroup myGroup = new RosterGroup("myGroup");
-	myGroup.add(RosterTester.createItem("test2@test", "test2", true, "myGroup"));
-	myGroup.add(RosterTester.createItem("test1@test", "test1", false, "other"));
-	myGroup.add(RosterTester.createItem("test3@test", "test3", true));
+	myGroup.add(RosterItemHelper.createItem("test2@test", "test2", true, "myGroup"));
+	myGroup.add(RosterItemHelper.createItem("test1@test", "test1", false, "other"));
+	myGroup.add(RosterItemHelper.createItem("test3@test", "test3", true));
 	final Comparator<RosterItem> order = RosterItemsOrder.order(RosterItemsOrder.byAvailability,
 		RosterItemsOrder.groupedFirst, RosterItemsOrder.byName);
 	final ArrayList<RosterItem> list = myGroup.getItemList(order);
@@ -53,7 +53,7 @@ public class RosterItemsOrderTest {
     @SuppressWarnings("unchecked")
     @Test
     public void shouldOrderAvailableFirstBusyNext() {
-	final RosterItem busy = RosterTester.createItem("test0@test", "test0", true, "myGroup");
+	final RosterItem busy = RosterItemHelper.createItem("test0@test", "test0", true, "myGroup");
 	busy.setShow(Show.dnd);
 	group.add(busy);
 	final ArrayList<RosterItem> list = group.getItemList(RosterItemsOrder.order(RosterItemsOrder.byAvailability,
@@ -90,9 +90,9 @@ public class RosterItemsOrderTest {
     @Test
     public void shouldOrderByGroupedFirst() {
 	final RosterGroup myGroup = new RosterGroup("myGroup");
-	myGroup.add(RosterTester.createItem("test2@test", "test2", false));
-	myGroup.add(RosterTester.createItem("test1@test", "test1", false, "other"));
-	myGroup.add(RosterTester.createItem("test3@test", "test3", false, "myGroup"));
+	myGroup.add(RosterItemHelper.createItem("test2@test", "test2", false));
+	myGroup.add(RosterItemHelper.createItem("test1@test", "test1", false, "other"));
+	myGroup.add(RosterItemHelper.createItem("test3@test", "test3", false, "myGroup"));
 	final RosterItem firstItemNotSorted = myGroup.getItemList(null).get(0);
 	assertFalse("test3".equals(firstItemNotSorted.getName()));
 	final RosterItem firstItemSorted = myGroup.getItemList(RosterItemsOrder.groupedFirst).get(0);
