@@ -119,6 +119,22 @@ public class RosterItem {
     }
 
     /**
+     * Creates a new <item> stanza and appends to the parent
+     * 
+     * @param parent
+     *            the parent stanza to append the child to
+     * @return the child stanza created
+     */
+    public IPacket addStanzaTo(final IPacket parent) {
+	final IPacket packet = parent.addChild("item", null);
+	packet.With("jid", jid.toString()).With("name", name);
+	for (final String group : groups) {
+	    packet.addChild("group", null).setText(group);
+	}
+	return packet;
+    }
+
+    /**
      * Add the item to a group
      * 
      * @param group
@@ -304,25 +320,20 @@ public class RosterItem {
     }
 
     /**
-     * Creates a new <item> stanza and appends to the parent
+     * Return the available resources (is the actual backend implementation. Do
+     * not modify)
      * 
-     * @param parent
-     *            the parent stanza to append the child to
-     * @return the child stanza created
+     * @return
      */
-    IPacket addStanzaTo(final IPacket parent) {
-	final IPacket packet = parent.addChild("item", null);
-	packet.With("jid", jid.toString()).With("name", name);
-	for (final String group : groups) {
-	    packet.addChild("group", null).setText(group);
-	}
-	return packet;
-    }
-
     HashSet<String> getAvailableResources() {
 	return availableResources;
     }
 
+    /**
+     * Set the available resources (by copy: you can modify parameter)
+     * 
+     * @param availableResources
+     */
     void setAvaialableResources(HashSet<String> availableResources) {
 	this.availableResources.clear();
 	this.availableResources.addAll(availableResources);

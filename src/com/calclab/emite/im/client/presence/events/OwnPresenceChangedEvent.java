@@ -39,6 +39,11 @@ public class OwnPresenceChangedEvent extends GwtEvent<OwnPresenceChangedHandler>
     }
 
     @Override
+    public String toDebugString() {
+	return super.toDebugString() + currentPresence.toString();
+    }
+
+    @Override
     protected void dispatch(OwnPresenceChangedHandler handler) {
 	handler.onOwnPresenceChanged(this);
     }

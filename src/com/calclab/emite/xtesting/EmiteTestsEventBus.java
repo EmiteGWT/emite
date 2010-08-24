@@ -28,11 +28,12 @@ public class EmiteTestsEventBus extends HandlerManager implements EmiteEventBus 
     public EmiteTestsEventBus(String name) {
 	super(null);
 	this.name = name;
+	System.out.println("New event bus: " + name);
     }
 
     @Override
     public void fireEvent(GwtEvent<?> event) {
-	System.out.println("[" + name + "] " + event);
+	System.out.println("[" + name + "] " + event.toDebugString());
 	super.fireEvent(event);
     }
 

@@ -190,14 +190,12 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     @Override
     public void send(final IPacket packet) {
 	// Added a condition to check the connection is not retrying...
-	if (!connection.hasErrors()
-		&& (getSessionState() == XmppSession.SessionStates.loggedIn
-			|| getSessionState() == XmppSession.SessionStates.ready || getSessionState() == XmppSession.SessionStates.loggingOut)) {
-	    packet.setAttribute("from", userUri.toString());
-	    connection.send(packet);
-	} else {
+	if (connection.hasErrors() || userUri == null) {
 	    GWT.log("session queuing stanza" + packet, null);
 	    queuedStanzas.add(packet);
+	} else {
+	    packet.setAttribute("from", userUri.toString());
+	    connection.send(packet);
 	}
     }
 

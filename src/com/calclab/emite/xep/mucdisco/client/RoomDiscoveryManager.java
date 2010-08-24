@@ -17,10 +17,10 @@ public interface RoomDiscoveryManager {
      * @param callback
      *            a callback with the room items
      * 
-     * @see RoomItemsCallback
+     * @see ExistingRoomsCallback
      * @see http://xmpp.org/extensions/xep-0045.html#disco-rooms
      */
-    void discoverRooms(XmppURI targetUri, RoomItemsCallback callback);
+    void discoverRooms(XmppURI targetUri, ExistingRoomsCallback callback);
 
     /**
      * Discover if the given entity support muc

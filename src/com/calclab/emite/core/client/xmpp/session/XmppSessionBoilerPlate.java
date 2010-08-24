@@ -66,9 +66,11 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	login(new Credentials(uri, password, Credentials.ENCODING_NONE));
     }
 
-    public void setSessionState(final String state) {
-	this.state = state;
-	eventBus.fireEvent(new SessionStateChangedEvent(state));
+    public void setSessionState(final String newState) {
+	if (!newState.equals(state)) {
+	    this.state = newState;
+	    eventBus.fireEvent(new SessionStateChangedEvent(newState));
+	}
     }
 
     protected void fireIQ(final IQ iq) {

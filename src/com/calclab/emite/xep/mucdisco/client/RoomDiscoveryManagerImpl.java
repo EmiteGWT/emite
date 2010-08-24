@@ -19,17 +19,17 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
     }
 
     @Override
-    public void discoverRooms(XmppURI targetUri, final RoomItemsCallback callback) {
+    public void discoverRooms(XmppURI targetUri, final ExistingRoomsCallback callback) {
 	discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultHandler() {
 	    @Override
 	    public void onDiscoveryItemsResult(DiscoveryItemsResultEvent event) {
-		ArrayList<RoomItem> roomItems = new ArrayList<RoomItem>();
+		ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
 		if (event.hasResult()) {
 		    List<Item> items = event.getResults().getItems();
 		    for (Item item : items) {
-			roomItems.add(new RoomItem(XmppURI.uri(item.jid), item.name));
+			roomItems.add(new ExistingRoom(XmppURI.uri(item.jid), item.name));
 		    }
-		    callback.onRoomItems(roomItems);
+		    callback.onExistingRooms(roomItems);
 		}
 	    }
 	});
