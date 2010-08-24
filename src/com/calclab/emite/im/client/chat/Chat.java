@@ -104,6 +104,7 @@ public interface Chat {
 
     /**
      * Add a handler to know whenever a chat state property changed
+     * 
      * @param handler
      * @param sendCurrentStateAsEvent
      * 
@@ -225,8 +226,11 @@ public interface Chat {
      * listener to modify the message just before send it (a kind of interceptor
      * in aop programming)
      * 
+     * USE addBeforeReceiveMessageHandler
+     * 
      * @param listener
      *            the listener
+     * 
      */
     // TODO: deprecate
     public void onBeforeSend(Listener<Message> listener);

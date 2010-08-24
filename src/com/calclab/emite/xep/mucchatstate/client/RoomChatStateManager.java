@@ -33,10 +33,12 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xep.muc.client.Room;
-import com.calclab.suco.client.events.Event2;
+import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationEvent;
+import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationHandler;
 import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 
 /**
@@ -65,7 +67,6 @@ public class RoomChatStateManager {
     private ChatState ownState;
     private final Map<XmppURI, ChatState> othersState;
     private final Room room;
-    private final Event2<XmppURI, ChatState> onChatStateChanged;
     private final int inactiveDelay = 120 * 1000; // 2 minutes
     private final int pauseDelay = 10 * 1000; // 10 secondes
 
@@ -132,19 +133,21 @@ public class RoomChatStateManager {
 
     public RoomChatStateManager(final Room room) {
 	this.room = room;
-	onChatStateChanged = new Event2<XmppURI, ChatState>("roomOccupantsChatStateManager:onChatStateChanged");
 	othersState = new HashMap<XmppURI, ChatState>();
 	room.onMessageReceived(new Listener<Message>() {
 	    public void onEvent(final Message message) {
 		final ChatState state = getStateFromMessage(message);
 		if (state != null) {
 		    final XmppURI from = message.getFrom();
-		    GWT.log("Received chat status " + state + " from " + from, null);
 		    othersState.put(from, state);
-		    onChatStateChanged.fire(message.getFrom(), state);
+		    room.getChatEventBus().fireEvent(new RoomChatStateNotificationEvent(message.getFrom(), state));
 		}
 	    }
 	});
+    }
+
+    public HandlerRegistration addRoomChatStateNotificationHandler(RoomChatStateNotificationHandler handler) {
+	return RoomChatStateNotificationEvent.bind(room.getChatEventBus(), handler);
     }
 
     public ChatState getOtherState(final XmppURI occupantUri) {
@@ -157,7 +160,12 @@ public class RoomChatStateManager {
     }
 
     public void onChatStateChanged(final Listener2<XmppURI, ChatState> listener) {
-	onChatStateChanged.add(listener);
+	addRoomChatStateNotificationHandler(new RoomChatStateNotificationHandler() {
+	    @Override
+	    public void onRoomChatStateNotification(RoomChatStateNotificationEvent event) {
+		listener.onEvent(event.getFrom(), event.getChatState());
+	    }
+	});
     }
 
     public void setOwnState(final ChatState chatState) {

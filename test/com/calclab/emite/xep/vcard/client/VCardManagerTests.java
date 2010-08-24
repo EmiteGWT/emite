@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class VCardManagerTests {
@@ -58,12 +58,12 @@ public class VCardManagerTests {
     String OTHER_VCARD = "<iq from='test@domain' to='test2@domain'" + "type='get'><vCard xmlns='vcard-temp'/></iq>";
     String VCARD_SETTED = "<iq type='set'><vCard xmlns='vcard-temp'><FN>Peter Saint-Andre</FN><N><FAMILY>Saint-Andre</FAMILY><GIVEN>Peter</GIVEN><MIDDLE/></N><NICKNAME>stpeter</NICKNAME></vCard></iq>";
 
-    private SessionTester session;
+    private XmppSessionTester session;
     private VCardManager manager;
 
     @Before
     public void setup() {
-	session = new SessionTester("test@domain");
+	session = new XmppSessionTester("test@domain");
 	manager = new VCardManager(session);
     }
 

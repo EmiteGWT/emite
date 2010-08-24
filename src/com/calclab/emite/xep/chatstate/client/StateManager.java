@@ -70,7 +70,6 @@ public class StateManager {
 	GWT.log("Adding chat state to chat: " + chat.getID(), null);
 	final ChatStateManager chatStateManager = new ChatStateManager(chat);
 	chat.setData(ChatStateManager.class, chatStateManager);
-	chat.onBeforeSend(chatStateManager.doBeforeSend);
 	return chatStateManager;
     }
 

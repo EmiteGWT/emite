@@ -21,11 +21,15 @@
  */
 package com.calclab.emite.xep.chatstate.client;
 
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.suco.client.events.Event;
+import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationEvent;
+import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * XEP-0085: Chat State Notifications
@@ -46,41 +50,25 @@ public class ChatStateManager {
     private ChatState otherState;
     private final Chat chat;
     private NegotiationStatus negotiationStatus;
-    private final Event<ChatState> onChatStateChanged;
-
-    final Listener<Message> doBeforeSend = new Listener<Message>() {
-	public void onEvent(final Message message) {
-	    switch (negotiationStatus) {
-	    case notStarted:
-		negotiationStatus = NegotiationStatus.started;
-	    case accepted:
-		boolean alreadyWithState = false;
-		for (int i = 0; i < ChatState.values().length; i++) {
-		    if (message.hasChild(ChatState.values()[i].toString())) {
-			alreadyWithState = true;
-		    }
-		}
-		if (!alreadyWithState) {
-		    message.addChild(ChatState.active.toString(), XMLNS);
-		}
-		break;
-	    case rejected:
-	    case started:
-		// do nothing
-		break;
-	    }
-	}
-    };
 
     public ChatStateManager(final Chat chat) {
 	this.chat = chat;
-	this.onChatStateChanged = new Event<ChatState>("chatStateManager:onChatStateChanged");
 	negotiationStatus = NegotiationStatus.notStarted;
 	chat.onMessageReceived(new Listener<Message>() {
 	    public void onEvent(final Message message) {
 		onMessageReceived(chat, message);
 	    }
 	});
+	chat.addBeforeSendMessageHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		beforeSendMessage(event.getMessage());
+	    }
+	});
+    }
+
+    public HandlerRegistration addChatStateNotificationHandler(ChatStateNotificationHandler handler) {
+	return ChatStateNotificationEvent.bind(chat.getChatEventBus(), handler);
     }
 
     public NegotiationStatus getNegotiationStatus() {
@@ -96,7 +84,12 @@ public class ChatStateManager {
     }
 
     public void onChatStateChanged(final Listener<ChatState> listener) {
-	onChatStateChanged.add(listener);
+	addChatStateNotificationHandler(new ChatStateNotificationHandler() {
+	    @Override
+	    public void onChatStateChanged(ChatStateNotificationEvent event) {
+		listener.onEvent(event.getChatState());
+	    }
+	});
     }
 
     public void setOwnState(final ChatState chatState) {
@@ -129,8 +122,30 @@ public class ChatStateManager {
 		    negotiationStatus = NegotiationStatus.accepted;
 		}
 		GWT.log("Receiver other chat status: " + typeSt, null);
-		onChatStateChanged.fire(chatState);
+		chat.getChatEventBus().fireEvent(new ChatStateNotificationEvent(chatState));
 	    }
+	}
+    }
+
+    void beforeSendMessage(final Message message) {
+	switch (negotiationStatus) {
+	case notStarted:
+	    negotiationStatus = NegotiationStatus.started;
+	case accepted:
+	    boolean alreadyWithState = false;
+	    for (int i = 0; i < ChatState.values().length; i++) {
+		if (message.hasChild(ChatState.values()[i].toString())) {
+		    alreadyWithState = true;
+		}
+	    }
+	    if (!alreadyWithState) {
+		message.addChild(ChatState.active.toString(), XMLNS);
+	    }
+	    break;
+	case rejected:
+	case started:
+	    // do nothing
+	    break;
 	}
     }
 

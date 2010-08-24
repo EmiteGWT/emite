@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
 
+@Deprecated
 public class Event0 {
     private ArrayList<Listener0> listeners;
     private final String id;
