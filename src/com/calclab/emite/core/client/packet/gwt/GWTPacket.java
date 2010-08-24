@@ -28,7 +28,6 @@ import java.util.Map;
 
 import com.calclab.emite.core.client.packet.AbstractPacket;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketRenderer;
 import com.calclab.emite.core.client.packet.TextUtils;
 import com.google.gwt.xml.client.Element;
@@ -101,12 +100,6 @@ public class GWTPacket extends AbstractPacket {
 
     public Element getElement() {
 	return element;
-    }
-
-    @Override
-    public IPacket getFirstChild(final String childName) {
-	final NodeList nodes = element.getElementsByTagName(childName);
-	return nodes.getLength() > 0 ? new GWTPacket((Element) nodes.item(0)) : NoPacket.INSTANCE;
     }
 
     public String getName() {
