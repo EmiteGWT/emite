@@ -41,10 +41,8 @@ import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
-import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
-import com.calclab.suco.client.Suco;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -116,12 +114,6 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	final ChatProperties properties = new ChatProperties(uri);
 	properties.setData(HISTORY_OPTIONS_PROP, historyOptions);
 	return (Room) openChat(properties, true);
-    }
-
-    @Override
-    public void requestRoomDiscovery(final XmppURI hostUri, final RoomDiscoveryListener listener) {
-	final DiscoveryManager discoManager = Suco.get(DiscoveryManager.class);
-	discoManager.sendDiscoItemsQuery(session.getCurrentUser(), hostUri, listener);
     }
 
     @Override

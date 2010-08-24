@@ -21,120 +21,64 @@
  */
 package com.calclab.emite.xep.disco.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Event;
-import com.calclab.suco.client.events.Listener;
+import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultHandler;
+import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 
-public class DiscoveryManager {
-    private final Session session;
+/**
+ * The DiscoveryManager service (implements XEP-0030)
+ * 
+ * @see http://xmpp.org/extensions/xep-0030.html
+ */
+public interface DiscoveryManager {
 
-    public DiscoveryManager(final Session session) {
-	this.session = session;
-//	session.onStateChanged(new Listener<Session>() {
-//	    @Override
-//	    public void onEvent(Session session) {
-//		if (session.getState() == Session.State.loggedIn) {
-//		    sendDiscoQuery(session.getCurrentUser(), null, listener);
-//		}
-//	    }
-//	});
-    }
+    /**
+     * Adds a handler to know when a discovery information result has arrived
+     * from the server (remember: some responses are cached)
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addDiscoveryInfoResultHandler(DiscoveryInfoResultHandler handler);
 
-    public void sendDiscoQuery(final XmppURI uri, XmppURI hostUri, Listener<DiscoveryManagerResponse> listener) {
-	final IQ iq = new IQ(Type.get, hostUri != null ? hostUri : uri.getHostURI()).From(uri);
-	iq.addQuery("http://jabber.org/protocol/disco#info");
-	final Event<DiscoveryManagerResponse> onReady = new Event<DiscoveryManagerResponse>("discoveryManager:onReady");
-	onReady.add(listener);
-	final PacketMatcher filterQuery = MatcherFactory.byNameAndXMLNS("query",
-		"http://jabber.org/protocol/disco#info");
-	session.sendIQ("disco", iq, new Listener<IPacket>() {
-	    public void onEvent(final IPacket response) {
-		final IPacket query = response.getFirstChild(filterQuery);
-		onReady.fire(new DiscoveryManagerResponse(processIdentity(query.getChildren(MatcherFactory
-			.byName("identity"))), processFeatures(query.getChildren(MatcherFactory.byName("feature")))));
-	    }
-	});
-    }
+    /**
+     * A method to know if a given features are supported on a given entity. The
+     * callback receives true if ALL features are implemented
+     * 
+     * @param targetUri
+     *            the uri of the entity to query
+     * @param callback
+     *            the callback
+     * @param featureNames
+     *            the desired feature names
+     */
+    void areFeaturesSupported(XmppURI targetUri, FeatureSupportedCallback callback, String... featureName);
 
-    public void sendDiscoItemsQuery(final XmppURI uri, XmppURI hostUri, Listener<DiscoveryManagerResponse> listener) {
-	final IQ iq = new IQ(Type.get, hostUri != null ? hostUri : uri.getHostURI()).From(uri);
-	iq.addQuery("http://jabber.org/protocol/disco#items");
-	final Event<DiscoveryManagerResponse> onReady = new Event<DiscoveryManagerResponse>("discoveryManager:onReady");
-	onReady.add(listener);
-	final PacketMatcher filterQuery = MatcherFactory.byNameAndXMLNS("query",
-		"http://jabber.org/protocol/disco#items");
-	session.sendIQ("disco", iq, new Listener<IPacket>() {
-	    public void onEvent(final IPacket response) {
-		final IPacket query = response.getFirstChild(filterQuery);
-		onReady.fire(new DiscoveryManagerResponse(processItem(query.getChildren(MatcherFactory.byName("item")))));
-	    }
-	});
-    }
+    /**
+     * Sends a info query to the specified target uri. The handler (if any) will
+     * be called when a info result arrives. Notice that a
+     * DiscoveryInfoResultEvent can be a NOT successful response
+     * 
+     * @param targetUri
+     *            the target uri (required)
+     * @param handler
+     *            the handler (can be null)
+     * @see http://xmpp.org/extensions/xep-0030.html#info
+     */
+    void sendInfoQuery(XmppURI targetUri, DiscoveryInfoResultHandler handler);
 
-    private List<Feature> processFeatures(final List<? extends IPacket> children) {
-	List<Feature> features = new ArrayList<Feature>();
-	for (final IPacket child : children) {
-	    features.add(Feature.fromPacket(child));
-	}
-	return features;
-    }
+    /**
+     * Send a items query to the specified target uri. The handler (if any) wil
+     * be called when a items result arrives. Notice that a
+     * DiscoveryItemsResultEvent can be a NOT successful response
+     * 
+     * @param targetUri
+     *            the target uri (required)
+     * @param handler
+     *            the handler (can be null)
+     * @see http://xmpp.org/extensions/xep-0030.html#items
+     */
+    void sendItemsQuery(XmppURI targetUri, DiscoveryItemsResultHandler handler);
 
-    private List<Identity> processIdentity(final List<? extends IPacket> children) {
-	List<Identity> identities = new ArrayList<Identity>();
-	for (final IPacket child : children) {
-	    identities.add(Identity.fromPacket(child));
-	}
-	return identities;
-    }
-
-    private List<Item> processItem(final List<? extends IPacket> children) {
-	List<Item> items = new ArrayList<Item>();
-	for (final IPacket child : children) {
-	    items.add(Item.fromPacket(child));
-	}
-	return items;
-    }
-
-    public static class DiscoveryManagerResponse {
-	private List<Identity> identities;
-
-	private List<Feature> features;
-
-	private List<Item> items;
-
-	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features) {
-	    this(identities, features, null);
-	}
-
-	public DiscoveryManagerResponse(List<Item> items) {
-	    this(null, null, items);
-	}
-
-	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features, List<Item> items) {
-	    this.identities = identities;
-	    this.features = features;
-	    this.items = items;
-	}
-
-	public List<Identity> getIdentities() {
-	    return identities;
-	}
-
-	public List<Feature> getFeatures() {
-	    return features;
-	}
-
-	public List<Item> getItems() {
-	    return items;
-	}
-    }
 }

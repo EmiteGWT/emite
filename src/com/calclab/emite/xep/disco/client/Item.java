@@ -29,8 +29,8 @@ import com.calclab.emite.core.client.packet.IPacket;
  * <li>a 'name' attribute specifying a natural-language name for the entity;</li>
  * <li>a 'node' attribute specifying a hierarchical structure.</li>
  * </ul>
- *
- *
+ * 
+ * 
  */
 public class Item {
     public static Item fromPacket(final IPacket packet) {

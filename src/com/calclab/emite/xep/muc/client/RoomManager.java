@@ -21,13 +21,8 @@
  */
 package com.calclab.emite.xep.muc.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.xep.disco.client.DiscoveryManager.DiscoveryManagerResponse;
-import com.calclab.emite.xep.disco.client.Item;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -38,23 +33,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see ChatManager
  */
 public interface RoomManager extends ChatManager {
-    public static abstract class RoomDiscoveryListener implements Listener<DiscoveryManagerResponse> {
-
-	@Override
-	public void onEvent(DiscoveryManagerResponse parameter) {
-	    List<XmppURI> rooms = new ArrayList<XmppURI>();
-	    List<Item> items = parameter.getItems();
-	    if (items != null) {
-		for (Item item : items) {
-		    rooms.add(XmppURI.jid(item.jid));
-		}
-	    }
-	    process(rooms);
-	}
-
-	public abstract void process(List<XmppURI> rooms);
-    }
-
     /**
      * Accepts a room invitation event
      * 
@@ -88,8 +66,6 @@ public interface RoomManager extends ChatManager {
     public void onInvitationReceived(Listener<RoomInvitation> listener);
 
     public Room open(final XmppURI uri, HistoryOptions historyOptions);
-
-    public void requestRoomDiscovery(XmppURI hostUri, RoomDiscoveryListener listener);
 
     public void setDefaultHistoryOptions(HistoryOptions historyOptions);
 }

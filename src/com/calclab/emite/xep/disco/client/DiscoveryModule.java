@@ -21,9 +21,9 @@
  */
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.session.SessionComponent;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.suco.client.Suco;
+import com.calclab.suco.client.ioc.decorator.Singleton;
 import com.calclab.suco.client.ioc.module.AbstractModule;
 import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
@@ -47,10 +47,10 @@ public class DiscoveryModule extends AbstractModule implements EntryPoint {
 
     @Override
     public void onInstall() {
-	register(SessionComponent.class, new Factory<DiscoveryManager>(DiscoveryManager.class) {
+	register(Singleton.class, new Factory<DiscoveryManager>(DiscoveryManager.class) {
 	    @Override
 	    public DiscoveryManager create() {
-		return new DiscoveryManager($(Session.class));
+		return new DiscoveryManagerImpl($(XmppSession.class));
 	    }
 	});
     }
