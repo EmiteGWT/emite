@@ -24,6 +24,7 @@ package com.calclab.emite.im.client.roster;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.calclab.emite.core.client.packet.IPacket;
@@ -43,26 +44,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 public class RosterItem {
 
     private static final PacketMatcher GROUP_FILTER = MatcherFactory.byName("group");
-
-    private static Type parseAsk(final String ask) {
-	Type type;
-	try {
-	    type = Presence.Type.valueOf(ask);
-	} catch (final Exception e) {
-	    type = null;
-	}
-	return type;
-    }
-
-    private static SubscriptionState parseSubscriptionState(final String state) {
-	SubscriptionState subscriptionState;
-	try {
-	    subscriptionState = SubscriptionState.valueOf(state);
-	} catch (final Exception e) {
-	    subscriptionState = null;
-	}
-	return subscriptionState;
-    }
 
     /**
      * Create a new RosterItem based on given a <item> stanza
@@ -84,6 +65,26 @@ public class RosterItem {
 	return item;
     }
 
+    private static Type parseAsk(final String ask) {
+	Type type;
+	try {
+	    type = Presence.Type.valueOf(ask);
+	} catch (final Exception e) {
+	    type = null;
+	}
+	return type;
+    }
+
+    private static SubscriptionState parseSubscriptionState(final String state) {
+	SubscriptionState subscriptionState;
+	try {
+	    subscriptionState = SubscriptionState.valueOf(state);
+	} catch (final Exception e) {
+	    subscriptionState = null;
+	}
+	return subscriptionState;
+    }
+
     final ArrayList<String> groups;
     final XmppURI jid;
     String name;
@@ -92,7 +93,7 @@ public class RosterItem {
 
     private SubscriptionState subscriptionState;
     private final Type ask;
-    private boolean isAvailable;
+    private final HashSet<String> availableResources;
 
     /**
      * Create a RosterItem object
@@ -112,8 +113,8 @@ public class RosterItem {
 	this.subscriptionState = subscriptionState;
 	this.name = name;
 	groups = new ArrayList<String>();
+	availableResources = new HashSet<String>();
 	show = Show.unknown;
-	isAvailable = false;
 	status = null;
     }
 
@@ -197,7 +198,7 @@ public class RosterItem {
      * @return true if contact is available
      */
     public boolean isAvailable() {
-	return isAvailable;
+	return !availableResources.isEmpty();
     }
 
     /**
@@ -231,15 +232,24 @@ public class RosterItem {
     }
 
     /**
-     * Change the current available state of this item. Does NOT have any effect
-     * on server side. This method is called by the roster to reflect the state
-     * change of the items: usually you don't call this method.
+     * Change the current available state of this item. Availability is set per
+     * resource. If no resource given, this method has no effect.
+     * 
+     * Does NOT have any effect on server side. This method is called by the
+     * roster to reflect the state change of the items: usually you don't call
+     * this method.
      * 
      * @param status
      *            the new status
+     * @param resource
+     *            the resource (if any)
      */
-    public void setAvailable(final boolean isAvailable) {
-	this.isAvailable = isAvailable;
+    public void setAvailable(final boolean isAvailable, String resource) {
+	if (isAvailable) {
+	    availableResources.add(resource);
+	} else {
+	    availableResources.remove(resource);
+	}
     }
 
     /**
@@ -307,6 +317,15 @@ public class RosterItem {
 	    packet.addChild("group", null).setText(group);
 	}
 	return packet;
+    }
+
+    HashSet<String> getAvailableResources() {
+	return availableResources;
+    }
+
+    void setAvaialableResources(HashSet<String> availableResources) {
+	this.availableResources.clear();
+	this.availableResources.addAll(availableResources);
     }
 
     void setGroups(final String... groups) {

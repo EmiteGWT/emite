@@ -39,7 +39,8 @@ public class RosterTester extends AbstractRoster {
 	for (final String group : groups) {
 	    item.addToGroup(group);
 	}
-	item.setAvailable(isAvailable);
+	String resource = item.getJID().getResource();
+	item.setAvailable(isAvailable, resource);
 	return item;
     }
 

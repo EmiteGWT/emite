@@ -57,10 +57,11 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 	    private void setPresence(final Presence presence, final RosterItem item) {
 		final Presence.Type type = presence.getType();
+		final String resource = presence.getFrom().getResource();
 		if (type == Presence.Type.unavailable) {
-		    item.setAvailable(false);
+		    item.setAvailable(false, resource);
 		} else {
-		    item.setAvailable(true);
+		    item.setAvailable(true, resource);
 		}
 		final Show showReceived = presence.getShow();
 		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
@@ -219,7 +220,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	    } else {
 		if (subscriptionState == SubscriptionState.to || subscriptionState == SubscriptionState.both) {
 		    // already subscribed, preserve available/show/status
-		    item.setAvailable(old.isAvailable());
+		    item.setAvaialableResources(old.getAvailableResources());
 		    item.setShow(old.getShow());
 		    item.setStatus(old.getStatus());
 		}
