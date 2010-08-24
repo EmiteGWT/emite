@@ -4,6 +4,7 @@ war/ExampleEcho/
 war/ExampleIMChat/
 war/ExampleXmppSession/
 war/PingPongExamples/
+war/suco
 extras
 .svn
 **/.svn
