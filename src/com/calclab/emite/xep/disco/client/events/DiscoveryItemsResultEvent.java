@@ -18,15 +18,19 @@ public class DiscoveryItemsResultEvent extends GwtEvent<DiscoveryItemsResultHand
 	this(infoResult, null);
     }
 
+    private DiscoveryItemsResultEvent(DiscoveryItemsResults itemsResult, IPacket errorPacket) {
+	assert (itemsResult != null && errorPacket == null) || (itemsResult == null && errorPacket != null) : "Discovery event only can have or result or error";
+	this.itemsResult = itemsResult;
+	this.errorPacket = errorPacket;
+    }
+
     public DiscoveryItemsResultEvent(IPacket errorPacket) {
 	this(null, errorPacket);
     }
 
-    private DiscoveryItemsResultEvent(DiscoveryItemsResults itemsResult, IPacket errorPacket) {
-	assert itemsResult != null && errorPacket != null : "Discovery event only can have or result or error";
-	assert itemsResult == null && errorPacket == null : "Discovery event must have or result or error";
-	this.itemsResult = itemsResult;
-	this.errorPacket = errorPacket;
+    @Override
+    protected void dispatch(DiscoveryItemsResultHandler handler) {
+	handler.onDiscoveryItemsResult(this);
     }
 
     @Override
@@ -44,11 +48,6 @@ public class DiscoveryItemsResultEvent extends GwtEvent<DiscoveryItemsResultHand
 
     public boolean hasResult() {
 	return itemsResult != null;
-    }
-
-    @Override
-    protected void dispatch(DiscoveryItemsResultHandler handler) {
-	handler.onDiscoveryItemsResult(this);
     }
 
 }
