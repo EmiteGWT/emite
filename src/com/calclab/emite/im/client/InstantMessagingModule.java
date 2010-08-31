@@ -51,13 +51,18 @@ import com.google.gwt.core.client.GWT;
  * </p>
  * <ul>
  * <li>ChatManager: A facade that simplifies one to one chats</li>
- * <li>RosterManager: represents the user's roster. Can add, remove and update
+ * <li>XmppRoster: represents the user's roster. Can add, remove and update
  * roster items.</li>
  * <li>SubscriptionManager: handle all the presence subscription uses.
  * Automatically subscribes the presence of the roster items, so users usually
  * doesnt need to interact with this component directly.
  * <li>PresenceManager: handles user presence and takes care about initial
  * presence</li>
+ * </ul>
+ * 
+ * It also exports the following DEPRECATED components:
+ * <ul>
+ * <li>Roster</li>
  * </ul>
  * 
  * @see http://www.xmpp.org/rfcs/rfc3921.html

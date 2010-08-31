@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='emite.xep.storage'>
+<module>
   <inherits name="com.calclab.emite.core.EmiteCore" />
   <entry-point class="com.calclab.emite.xep.storage.client.PrivateStorageModule" />
 </module>
