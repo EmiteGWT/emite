@@ -2,14 +2,17 @@ package com.calclab.emite.xxamples.core.xmpp.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import com.calclab.emite.browser.client.BrowserGinjector;
 import com.calclab.emite.core.client.CoreGinjector;
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.session.Session.State;
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.PresenceEvent;
+import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.StateChangedEvent;
+import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
@@ -23,10 +26,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ExampleXmppSession implements EntryPoint {
 
-    public static interface ExampleXmppSessionGinjector extends CoreGinjector, BrowserGinjector {
-
-    }
-
     private VerticalPanel panel;
 
     @Override
@@ -39,28 +38,28 @@ public class ExampleXmppSession implements EntryPoint {
 		log("Emite example: xmpp sessions");
 
 		/*
-		 * We get the Session object. The most important object of Emite
-		 * Core module.
+		 * We get the Session object using the ginjector. This is NOT
+		 * the recommended way: it's better to inject into constructor
 		 */
-		GWT.log("Create session");
-		final Session session = Suco.get(Session.class);
+		GWT.log("Create a xmpp session");
+		CoreGinjector ginjector = GWT.create(CoreGinjector.class);
+		final XmppSession session = ginjector.getXmppSession();
 
-		GWT.log("Add event listeners");
+		GWT.log("Add event handlers");
 		/*
 		 * We track session state changes. We can only send messages
 		 * when the state == loggedIn.
 		 */
-		session.onStateChanged(new Listener<Session>() {
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 		    @Override
-		    public void onEvent(final Session session) {
-			final State state = session.getState();
-			if (state == Session.State.loggedIn) {
+		    public void onStateChanged(StateChangedEvent event) {
+			if (event.is(SessionStates.loggedIn)) {
 			    log("We are now online");
 			    sendHelloWorldMessage(session);
-			} else if (state == Session.State.disconnected) {
+			} else if (event.is(SessionStates.disconnected)) {
 			    log("We are now offline");
 			} else {
-			    log("Current state: " + state);
+			    log("Current state: " + event.getState());
 			}
 		    }
 		});
@@ -68,9 +67,10 @@ public class ExampleXmppSession implements EntryPoint {
 		/*
 		 * We show every incoming message in the GWT log console
 		 */
-		session.onMessage(new Listener<Message>() {
+		session.addMessageReceivedHandler(new MessageHandler() {
 		    @Override
-		    public void onEvent(final Message message) {
+		    public void onMessage(MessageEvent event) {
+			Message message = event.getMessage();
 			log("Messaged received from " + message.getFrom() + ":" + message.getBody());
 		    }
 		});
@@ -78,9 +78,11 @@ public class ExampleXmppSession implements EntryPoint {
 		/*
 		 * We show (log) every incoming presence stanzas
 		 */
-		session.onPresence(new Listener<Presence>() {
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+
 		    @Override
-		    public void onEvent(final Presence presence) {
+		    public void onPresence(PresenceEvent event) {
+			Presence presence = event.getPresence();
 			log("Presence received from " + presence.getFrom() + ": " + presence.toString());
 		    }
 		});
@@ -96,7 +98,7 @@ public class ExampleXmppSession implements EntryPoint {
     /**
      * The simplest way to send a message using the Session object
      */
-    private void sendHelloWorldMessage(final Session session) {
+    private void sendHelloWorldMessage(final XmppSession session) {
 	final Message message = new Message("hello world!", uri("everybody@world.org"));
 	session.send(message);
     }
