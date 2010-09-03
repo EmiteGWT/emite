@@ -14,7 +14,10 @@ public class PairChatSelectionStrategy implements ChatSelectionStrategy {
     public ChatProperties extractProperties(final BasicStanza stanza) {
 	ChatProperties properties = new ChatProperties(stanza.getFrom());
 	boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
-	properties.setShouldCreateNewChat(messageHasBody);
+	String stanzaType = stanza.getAttribute("type");
+	// We don't support groupchat here.
+	boolean isGroupChatMessage = stanzaType != null && stanzaType.equals("groupchat");
+	properties.setShouldCreateNewChat(messageHasBody && !isGroupChatMessage);
 	return properties;
     }
 
