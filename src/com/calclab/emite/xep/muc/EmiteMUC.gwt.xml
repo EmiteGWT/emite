@@ -2,5 +2,5 @@
 <module>
   <inherits name="com.calclab.emite.core.EmiteCore" />
   <inherits name="com.calclab.emite.im.EmiteIM" />
-  <entry-point class="com.calclab.emite.xep.muc.client.MUCModule" />
+  <entry-point class="com.calclab.emite.xep.muc.client.MucModule" />
 </module>

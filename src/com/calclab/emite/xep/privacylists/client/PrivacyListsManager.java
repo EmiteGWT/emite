@@ -26,6 +26,7 @@ import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
+import com.google.inject.Inject;
 
 /**
  * Will (i hope!) implement http://www.xmpp.org/extensions/xep-0016.html
@@ -33,6 +34,7 @@ import com.calclab.suco.client.events.Listener;
 public class PrivacyListsManager {
     private final Session session;
 
+    @Inject
     public PrivacyListsManager(final Session session) {
 	this.session = session;
     }
@@ -57,6 +59,7 @@ public class PrivacyListsManager {
 		.With("order", order.toString());
 
 	session.sendIQ("privacyLists", iq, new Listener<IPacket>() {
+	    @Override
 	    public void onEvent(final IPacket parameter) {
 		// here you can handle the response... i think in this case is
 		// not needed

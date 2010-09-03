@@ -1,27 +1,18 @@
 package com.calclab.emite.xep.vcard.client;
 
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.decorator.Singleton;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
-public class VCardModule extends AbstractModule implements EntryPoint {
+public class VCardModule extends AbstractGinModule implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	Suco.install(this);
     }
 
     @Override
-    protected void onInstall() {
-	register(Singleton.class, new Factory<VCardManager>(VCardManager.class) {
-	    @Override
-	    public VCardManager create() {
-		return new VCardManager($(XmppSession.class));
-	    }
-	});
+    protected void configure() {
+	bind(VCardManager.class).in(Singleton.class);
     }
 
 }

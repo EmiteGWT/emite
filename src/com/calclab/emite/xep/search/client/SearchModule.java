@@ -1,11 +1,8 @@
 package com.calclab.emite.xep.search.client;
 
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.decorator.Singleton;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
 /**
  * Implements XEP-0055: Jabber Search
@@ -17,25 +14,15 @@ import com.google.gwt.core.client.EntryPoint;
  * 
  * 
  */
-public class SearchModule extends AbstractModule implements EntryPoint {
-
-    public SearchModule() {
-	super();
-    }
+public class SearchModule extends AbstractGinModule implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	Suco.install(this);
     }
 
     @Override
-    protected void onInstall() {
-	register(Singleton.class, new Factory<SearchManager>(SearchManager.class) {
-	    @Override
-	    public SearchManager create() {
-		return new SearchManagerImpl($(Session.class));
-	    }
-	});
+    protected void configure() {
+	bind(SearchManager.class).to(SearchManagerImpl.class).in(Singleton.class);
     }
 
 }

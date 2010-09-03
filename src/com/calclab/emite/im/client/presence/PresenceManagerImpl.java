@@ -26,26 +26,32 @@ import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * @see PresenceManager
  */
+@Singleton
 public class PresenceManagerImpl implements PresenceManager {
     private Presence ownPresence;
     static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
     private final XmppSession session;
 
-    public PresenceManagerImpl(final XmppSession session) {
+    @Inject
+    public PresenceManagerImpl(final XmppSession session, SessionReady sessionReady) {
+	sessionReady.setEnabled(false);
 	this.session = session;
 	setOwnPresence(INITIAL_PRESENCE);
 

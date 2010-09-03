@@ -7,7 +7,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
@@ -23,7 +25,8 @@ public class PresenceManagerTest {
     @Before
     public void beforeTest() {
 	session = new XmppSessionTester();
-	manager = new PresenceManagerImpl(session);
+	SessionReady sessionReady = Mockito.mock(SessionReady.class);
+	manager = new PresenceManagerImpl(session, sessionReady);
     }
 
     @Test

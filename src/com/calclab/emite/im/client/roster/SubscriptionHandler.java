@@ -2,6 +2,8 @@ package com.calclab.emite.im.client.roster;
 
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * A little utility to handle subscriptions automatically. This component is not
@@ -14,6 +16,7 @@ import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHand
  * 
  * The default behaviour is none: do nothing
  */
+@Singleton
 public class SubscriptionHandler {
 
     public static enum Behaviour {
@@ -27,6 +30,7 @@ public class SubscriptionHandler {
 
     private Behaviour behaviour;
 
+    @Inject
     public SubscriptionHandler(final SubscriptionManager manager) {
 	this.behaviour = Behaviour.none;
 

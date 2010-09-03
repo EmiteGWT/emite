@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-  <inherits name="com.google.gwt.xml.XML" />
-  <inherits name="com.google.gwt.http.HTTP" />
-  <inherits name="com.calclab.suco.Suco" />
-  <entry-point class="com.calclab.emite.core.client.EmiteCoreModule" />
+	<inherits name="com.google.gwt.xml.XML" />
+	<inherits name="com.google.gwt.http.HTTP" />
+	<inherits name="com.google.gwt.inject.Inject" />
+	<entry-point
+		class="com.calclab.emite.core.client.EmiteCoreEntryPoint">
+	</entry-point>
 </module>

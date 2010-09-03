@@ -22,15 +22,27 @@
 package com.calclab.suco.client;
 
 import com.calclab.suco.client.ioc.Container;
+import com.calclab.suco.client.ioc.Provider;
+import com.calclab.suco.client.ioc.decorator.NoDecoration;
 import com.calclab.suco.client.ioc.module.SucoModule;
 
 /**
- * A singleton container, enough for most applications. In the (rare) case you
- * need multiple containers, you can use SucoFactory.
+ * A compatibility layer with gin
  */
 public class Suco {
 
     private static Container components = SucoFactory.create();
+
+    /**
+     * Simple method to add providers
+     * 
+     * @param <T>
+     * @param componentType
+     * @param provider
+     */
+    public static <T> void add(Class<T> componentType, Provider<T> provider) {
+	components.registerProvider(NoDecoration.instance, componentType, provider);
+    }
 
     /**
      * Obtain a instance from the Suco container

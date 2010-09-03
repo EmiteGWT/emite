@@ -21,29 +21,20 @@
  */
 package com.calclab.emite.xep.mucchatstate.client;
 
-import com.calclab.emite.core.client.xmpp.session.SessionComponent;
-import com.calclab.emite.xep.muc.client.RoomManager;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
-public class MUCChatStateModule extends AbstractModule implements EntryPoint {
-    public MUCChatStateModule() {
-	super();
+public class MucChatStateModule extends AbstractGinModule implements EntryPoint {
+
+    @Override
+    public void onModuleLoad() {
     }
 
     @Override
-    public void onInstall() {
-	register(SessionComponent.class, new Factory<MUCChatStateManager>(MUCChatStateManager.class) {
-	    @Override
-	    public MUCChatStateManager create() {
-		return new MUCChatStateManager($(RoomManager.class));
-	    }
-	});
+    protected void configure() {
+	bind(MucChatStateManager.class).in(Singleton.class);
+	bind(MucChatStateComponents.class).asEagerSingleton();
     }
 
-    public void onModuleLoad() {
-	Suco.install(this);
-    }
 }

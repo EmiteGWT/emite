@@ -7,13 +7,14 @@ import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultEvent;
 import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultHandler;
 import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultEvent;
 import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.inject.Inject;
 
 public class DiscoveryManagerImpl implements DiscoveryManager {
     private final XmppSession session;
@@ -21,6 +22,7 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
     private final HashMap<XmppURI, DiscoveryItemsResults> itemsResults;
     public static final PacketMatcher ERROR_MATCHER = MatcherFactory.byName("error");
 
+    @Inject
     public DiscoveryManagerImpl(final XmppSession xmppSession) {
 	this.session = xmppSession;
 	this.infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();

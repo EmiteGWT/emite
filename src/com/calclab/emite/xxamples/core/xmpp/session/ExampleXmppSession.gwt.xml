@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='ExampleXmppSession'>
 	<inherits name='com.google.gwt.user.User' />
-
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-
-	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
-	<inherits name='com.calclab.emite.reconnect.EmiteReconnect' />
-    <inherits name='com.calclab.emite.core.EmiteCore' />
+	<inherits name='com.calclab.emite.suco.EmiteSuco' />
 
 	<entry-point
 		class='com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession' />

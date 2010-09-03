@@ -31,14 +31,15 @@ import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.xep.avatar.client.events.HashPresenceReceivedEvent;
-import com.calclab.emite.xep.avatar.client.events.AvatarVCardReceivedEvent;
 import com.calclab.emite.xep.avatar.client.events.AvatarVCardHandler;
+import com.calclab.emite.xep.avatar.client.events.AvatarVCardReceivedEvent;
+import com.calclab.emite.xep.avatar.client.events.HashPresenceReceivedEvent;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.inject.Inject;
 
 /**
  * XEP-0153: vCard-Based Avatars (Version 1.0)
@@ -52,6 +53,7 @@ public class AvatarManager {
     private static final String BINVAL = "BINVAL";
     private final XmppSession session;
 
+    @Inject
     public AvatarManager(final XmppSession session) {
 	this.session = session;
 

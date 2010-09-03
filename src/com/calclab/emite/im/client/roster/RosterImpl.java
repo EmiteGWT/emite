@@ -32,16 +32,20 @@ import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedHandler;
 import com.calclab.suco.client.events.Listener;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Roster Xmpp implementation.
  * 
  * @see Roster
  */
+@Singleton
 public class RosterImpl implements Roster {
 
     private final XmppRoster delegate;
 
+    @Inject
     public RosterImpl(XmppRoster delegate) {
 	this.delegate = delegate;
     }

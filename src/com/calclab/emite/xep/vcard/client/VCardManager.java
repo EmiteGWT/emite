@@ -8,12 +8,14 @@ import com.calclab.emite.xep.vcard.client.events.VCardResponseEvent;
 import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.inject.Inject;
 
 public class VCardManager {
 
     private static final String ID_PREFIX = "vcard";
     private final XmppSession session;
 
+    @Inject
     public VCardManager(final XmppSession session) {
 	this.session = session;
     }

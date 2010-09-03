@@ -7,5 +7,5 @@
 	
 	<source path="client" />
 	<entry-point
-		class="com.calclab.emite.xep.mucdisco.client.EmiteMUCDiscoveryModule" />
+		class="com.calclab.emite.xep.mucdisco.client.MucDiscoveryModule" />
 </module>

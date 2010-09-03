@@ -9,11 +9,13 @@ import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
 import com.calclab.emite.xep.disco.client.Item;
 import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultEvent;
 import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
+import com.google.inject.Inject;
 
 public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 
     private final DiscoveryManager discoveryManager;
 
+    @Inject
     public RoomDiscoveryManagerImpl(DiscoveryManager discoveryManager) {
 	this.discoveryManager = discoveryManager;
     }

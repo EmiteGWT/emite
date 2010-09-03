@@ -23,14 +23,18 @@ package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Default ChatManager implementation. Use ChatManager interface instead
  * 
  * @see ChatManager
  */
+@Singleton
 public class PairChatManager extends AbstractChatManager implements ChatManager {
 
+    @Inject
     public PairChatManager(final XmppSession session) {
 	super(session, new PairChatSelectionStrategy());
     }

@@ -3,5 +3,5 @@
 	<inherits name="com.calclab.emite.xep.muc.EmiteMUC" />
 	<inherits name="com.calclab.emite.xep.chatstate.EmiteChatState" />
 	<entry-point
-		class="com.calclab.emite.xep.mucchatstate.client.MUCChatStateModule" />
+		class="com.calclab.emite.xep.mucchatstate.client.MucChatStateModule" />
 </module>

@@ -13,12 +13,15 @@ import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
 import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * A Bosh connection implementation.
  * 
  * @see XmppConnection
  */
+@Singleton
 public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     private int activeConnections;
     private final Services services;
@@ -26,8 +29,10 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     private boolean shouldCollectResponses;
     private final RetryControl retryControl = new RetryControl();
 
+    @Inject
     public XmppBoshConnection(final EmiteEventBus eventBus, final Services services) {
 	super(eventBus);
+	GWT.log("Creating XmppBoshConnection");
 	this.services = services;
 
 	listener = new ConnectorCallback() {
@@ -44,6 +49,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 			final int scedTime = retryControl.retry(e);
 			fireRetry(e, scedTime);
 			services.schedule(scedTime, new ScheduledAction() {
+			    @Override
 			    public void run() {
 				GWT.log("Error retry: " + e);
 				send(request);
@@ -83,6 +89,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	};
     }
 
+    @Override
     public void connect() {
 	assert getConnectionSettings() != null : "You should set user settings before connect!";
 	clearErrors();
@@ -96,6 +103,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	}
     }
 
+    @Override
     public void disconnect() {
 	GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
 	// Clearing all queued stanzas
@@ -109,10 +117,12 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	fireDisconnected("logged out");
     }
 
+    @Override
     public boolean isConnected() {
 	return getStream() != null;
     }
 
+    @Override
     public StreamSettings pause() {
 	if (getStream() != null && getStream().sid != null) {
 	    createBodyIfNeeded();
@@ -123,6 +133,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	return null;
     }
 
+    @Override
     public void restartStream() {
 	createBodyIfNeeded();
 	getCurrentBody().setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
@@ -131,6 +142,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	getCurrentBody().setAttribute("xml:lang", "en");
     }
 
+    @Override
     public boolean resume(final StreamSettings settings) {
 	setActive(true);
 	setStream(settings);
@@ -138,6 +150,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	return isActive();
     }
 
+    @Override
     public void send(final IPacket packet) {
 	createBodyIfNeeded();
 	getCurrentBody().addChild(packet);
@@ -170,6 +183,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 		final long currentRID = getStream().rid;
 		int waitTime = 300;
 		services.schedule(waitTime, new ScheduledAction() {
+		    @Override
 		    public void run() {
 			if (getCurrentBody() == null && getStream().rid == currentRID) {
 			    createBodyIfNeeded();

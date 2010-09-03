@@ -38,16 +38,21 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Default Session implementation. Use Session interface instead.
  */
+@Singleton
 public class SessionImpl implements Session {
     private final XmppSession delegate;
 
     // private final HashMap<State, String> stateToString;
 
+    @Inject
     public SessionImpl(final XmppSession delegate) {
+	GWT.log("Create SessionImpl");
 	// this.stateToString = new HashMap<State, String>();
 	// stateToString.put(State.authorized, SessionStates.authorized);
 	// stateToString.put(State.connecting, SessionStates.connecting);

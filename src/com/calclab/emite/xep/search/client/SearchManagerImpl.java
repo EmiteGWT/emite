@@ -14,12 +14,13 @@ import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
 import com.calclab.suco.client.events.Listener;
+import com.google.inject.Inject;
 
 public class SearchManagerImpl implements SearchManager {
     private static final String SHOULD_BE_CONNECTED = "You should be connected before use this service.";
@@ -30,6 +31,7 @@ public class SearchManagerImpl implements SearchManager {
     private final PacketMatcher filterQuery;
     private XmppURI host;
 
+    @Inject
     public SearchManagerImpl(final Session session) {
 	this.session = session;
 	filterQuery = MatcherFactory.byNameAndXMLNS("query", IQ_SEARCH);
@@ -42,8 +44,8 @@ public class SearchManagerImpl implements SearchManager {
 	    public void onEvent(final IPacket ipacket) {
 		final IQ response = new IQ(ipacket);
 		if (IQ.isSuccess(response)) {
-		    listener.onSuccess(processFieldsResults(session.getCurrentUser(), response
-			    .getFirstChild(filterQuery)));
+		    listener.onSuccess(processFieldsResults(session.getCurrentUser(),
+			    response.getFirstChild(filterQuery)));
 		} else {
 		    // TODO
 		    listener.onFailure(null);
@@ -63,8 +65,8 @@ public class SearchManagerImpl implements SearchManager {
 		    if (form.x().equals(NoPacket.INSTANCE)) {
 			// This is not a extended search. Try to create a form
 			// with returned fields
-			final SearchFields fieldResults = processFieldsResults(session.getCurrentUser(), response
-				.getFirstChild(filterQuery));
+			final SearchFields fieldResults = processFieldsResults(session.getCurrentUser(),
+				response.getFirstChild(filterQuery));
 			form = new Form(Form.Type.form);
 			form.addInstruction(fieldResults.getInstructions());
 			for (final String fieldName : fieldResults.getFieldNames()) {
@@ -142,6 +144,7 @@ public class SearchManagerImpl implements SearchManager {
 	    iq.addQuery(IQ_SEARCH);
 
 	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
+		@Override
 		public void onEvent(final IPacket received) {
 		    onResult.onEvent(received);
 		}
@@ -159,6 +162,7 @@ public class SearchManagerImpl implements SearchManager {
 		queryPacket.addChild(child);
 	    }
 	    session.sendIQ(SEARCH_CATEGORY, iq, new Listener<IPacket>() {
+		@Override
 		public void onEvent(final IPacket received) {
 		    onResult.onEvent(received);
 		}

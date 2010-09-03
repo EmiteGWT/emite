@@ -21,12 +21,9 @@
  */
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.decorator.Singleton;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
 /**
  * Implements XEP-0030: Service Discovery
@@ -39,25 +36,14 @@ import com.google.gwt.core.client.EntryPoint;
  *      NOT IMPLEMENTED
  * 
  */
-public class DiscoveryModule extends AbstractModule implements EntryPoint {
-
-    public DiscoveryModule() {
-	super();
-    }
-
-    @Override
-    public void onInstall() {
-	register(Singleton.class, new Factory<DiscoveryManager>(DiscoveryManager.class) {
-	    @Override
-	    public DiscoveryManager create() {
-		return new DiscoveryManagerImpl($(XmppSession.class));
-	    }
-	});
-    }
+public class DiscoveryModule extends AbstractGinModule implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	Suco.install(this);
     }
 
+    @Override
+    protected void configure() {
+	bind(DiscoveryManager.class).to(DiscoveryManagerImpl.class).in(Singleton.class);
+    }
 }

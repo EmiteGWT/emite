@@ -10,12 +10,14 @@ import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
 
 public class SessionReconnect {
     private boolean shouldReconnect;
     private Credentials lastSuccessfulCredentials;
     protected int reconnectionAttempts;
 
+    @Inject
     public SessionReconnect(final Connection connection, final Session session, final SASLManager saslManager) {
 	shouldReconnect = false;
 	reconnectionAttempts = 0;

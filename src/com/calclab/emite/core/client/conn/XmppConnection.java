@@ -5,6 +5,9 @@ import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.google.gwt.event.shared.HandlerRegistration;
 
+/**
+ * A connection to a zmpp server
+ */
 public interface XmppConnection {
 
     public abstract void connect();
@@ -34,9 +37,9 @@ public interface XmppConnection {
 
     public abstract void setSettings(ConnectionSettings settings);
 
-    HandlerRegistration addConnectionStateChangedHandler(ConnectionStateChangedHandler handler);
-
     HandlerRegistration addConnectionResponseHandler(ConnectionResponseHandler handler);
+
+    HandlerRegistration addConnectionStateChangedHandler(ConnectionStateChangedHandler handler);
 
     HandlerRegistration addStanzaReceivedHandler(StanzaHandler handler);
 

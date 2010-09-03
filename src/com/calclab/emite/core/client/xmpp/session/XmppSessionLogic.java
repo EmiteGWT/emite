@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -42,6 +42,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Default XmppSession logic implementation. You should use XmppSession
@@ -49,16 +51,22 @@ import com.google.gwt.core.client.GWT;
  * 
  * @see XmppSession
  */
+@Singleton
 public class XmppSessionLogic extends XmppSessionBoilerPlate {
     private XmppURI userUri;
     private final XmppConnection connection;
     private final IQManager iqManager;
     private final ArrayList<IPacket> queuedStanzas;
     private Credentials credentials;
+    private final SessionComponentsRegistry registry;
 
+    @Inject
     public XmppSessionLogic(final XmppConnection connection, final SASLManager saslManager,
-	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager) {
+	    final ResourceBindingManager bindingManager, final IMSessionManager iMSessionManager,
+	    SessionComponentsRegistry registry) {
 	super(connection.getEventBus());
+	GWT.log("Creating XmppSession");
+	this.registry = registry;
 	this.connection = connection;
 	iqManager = new IQManager();
 	queuedStanzas = new ArrayList<IPacket>();
@@ -153,6 +161,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
     @Override
     public void login(final Credentials credentials) {
+	if (registry.areComponentsCreated()) {
+	    registry.createComponents();
+	}
 	if (getSessionState() == XmppSession.SessionStates.disconnected) {
 	    setSessionState(XmppSession.SessionStates.connecting);
 	    connection.connect();

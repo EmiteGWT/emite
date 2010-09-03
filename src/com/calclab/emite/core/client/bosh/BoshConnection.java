@@ -26,12 +26,20 @@ import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * The old connection object. Will be deprecated.
+ * 
+ * Use XmppConecction instead.
+ * 
+ * @see XmppConnection
  */
+@Singleton
 public class BoshConnection extends AbstractConnection implements Connection {
 
+    @Inject
     public BoshConnection(final XmppConnection delegate) {
 	super(delegate);
     }

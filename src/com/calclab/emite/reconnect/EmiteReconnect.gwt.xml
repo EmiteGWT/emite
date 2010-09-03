@@ -4,5 +4,5 @@
 	<inherits name="com.calclab.emite.core.EmiteCore" />
 	<source path="client" />
 	<entry-point
-		class="com.calclab.emite.reconnect.client.ReconnectModule" />
+		class="com.calclab.emite.reconnect.client.EmiteReconnectEntryPoint" />
 </module>

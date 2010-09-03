@@ -2,6 +2,8 @@ package com.calclab.emite.xxamples.core.xmpp.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
+import com.calclab.emite.browser.client.BrowserGinjector;
+import com.calclab.emite.core.client.CoreGinjector;
 import com.calclab.emite.core.client.xmpp.session.Session;
 import com.calclab.emite.core.client.xmpp.session.Session.State;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -20,8 +22,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * Xmpp Session Example
  */
 public class ExampleXmppSession implements EntryPoint {
+
+    public static interface ExampleXmppSessionGinjector extends CoreGinjector, BrowserGinjector {
+
+    }
+
     private VerticalPanel panel;
 
+    @Override
     public void onModuleLoad() {
 	DeferredCommand.addCommand(new Command() {
 	    @Override
@@ -37,6 +45,7 @@ public class ExampleXmppSession implements EntryPoint {
 		GWT.log("Create session");
 		final Session session = Suco.get(Session.class);
 
+		GWT.log("Add event listeners");
 		/*
 		 * We track session state changes. We can only send messages
 		 * when the state == loggedIn.
@@ -60,6 +69,7 @@ public class ExampleXmppSession implements EntryPoint {
 		 * We show every incoming message in the GWT log console
 		 */
 		session.onMessage(new Listener<Message>() {
+		    @Override
 		    public void onEvent(final Message message) {
 			log("Messaged received from " + message.getFrom() + ":" + message.getBody());
 		    }
@@ -69,6 +79,7 @@ public class ExampleXmppSession implements EntryPoint {
 		 * We show (log) every incoming presence stanzas
 		 */
 		session.onPresence(new Listener<Presence>() {
+		    @Override
 		    public void onEvent(final Presence presence) {
 			log("Presence received from " + presence.getFrom() + ": " + presence.toString());
 		    }

@@ -28,24 +28,28 @@ import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * @see SubscriptionManager
  */
+@Singleton
 public class SubscriptionManagerImpl implements SubscriptionManager {
     protected static final PacketMatcher FILTER_NICK = MatcherFactory.byNameAndXMLNS("nick",
 	    "http://jabber.org/protocol/nick");
     private final XmppSession session;
     private final XmppRoster roster;
 
+    @Inject
     public SubscriptionManagerImpl(final XmppSession session, final XmppRoster roster) {
 	this.session = session;
 	this.roster = roster;
@@ -87,6 +91,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	return SubscriptionRequestReceivedEvent.bind(session.getEventBus(), handler);
     }
 
+    @Override
     public void approveSubscriptionRequest(final XmppURI jid, String nick) {
 	nick = nick != null ? nick : jid.getNode();
 	final RosterItem item = roster.getItemByJID(jid);
@@ -100,10 +105,12 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	session.send(new Presence(Type.subscribed, session.getCurrentUser().getJID(), jid.getJID()));
     }
 
+    @Override
     public void cancelSubscription(final XmppURI jid) {
 	session.send(new Presence(Type.unsubscribed, session.getCurrentUser().getJID(), jid.getJID()));
     }
 
+    @Override
     public void onSubscriptionRequested(final Listener2<XmppURI, String> listener) {
 	addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
 	    @Override
@@ -113,14 +120,17 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	});
     }
 
+    @Override
     public void refuseSubscriptionRequest(final XmppURI jid) {
 	session.send(new Presence(Type.unsubscribed, session.getCurrentUser().getJID(), jid.getJID()));
     }
 
+    @Override
     public void requestSubscribe(final XmppURI jid) {
 	session.send(new Presence(Type.subscribe, session.getCurrentUser().getJID(), jid.getJID()));
     }
 
+    @Override
     public void unsubscribe(final XmppURI jid) {
 	session.send(new Presence(Type.unsubscribe, session.getCurrentUser().getJID(), jid.getJID()));
     }

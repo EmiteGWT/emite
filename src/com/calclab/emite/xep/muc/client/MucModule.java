@@ -21,34 +21,21 @@
  */
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.session.SessionComponent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.Container;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
-public class MUCModule extends AbstractModule implements EntryPoint {
-    public static RoomManager getRoomManager(final Container components) {
-	return components.getInstance(RoomManager.class);
-    }
+public class MucModule extends AbstractGinModule implements EntryPoint {
 
-    public MUCModule() {
-	super();
-    }
-
+    @Override
     public void onModuleLoad() {
-	Suco.install(this);
+
     }
 
     @Override
-    protected void onInstall() {
-	register(SessionComponent.class, new Factory<RoomManager>(RoomManager.class) {
-	    @Override
-	    public RoomManager create() {
-		return new RoomChatManager($(XmppSession.class));
-	    }
-	});
+    protected void configure() {
+	bind(RoomManager.class).to(RoomChatManager.class).in(Singleton.class);
+	bind(MucComponents.class).asEagerSingleton();
     }
+
 }

@@ -30,7 +30,11 @@ import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationTransaction.State;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class SASLManager {
     private static final String SEP = new String(new char[] { 0 });
     private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
@@ -40,7 +44,9 @@ public class SASLManager {
     private final EmiteEventBus eventBus;
     private Credentials currentCredentials;
 
+    @Inject
     public SASLManager(final XmppConnection connection, final DecoderRegistry decoders) {
+	GWT.log("Creating SASLManager");
 	this.connection = connection;
 	eventBus = connection.getEventBus();
 	this.decoders = decoders;

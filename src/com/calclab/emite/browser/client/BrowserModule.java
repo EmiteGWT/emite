@@ -21,15 +21,8 @@
  */
 package com.calclab.emite.browser.client;
 
-import com.calclab.emite.core.client.conn.Connection;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.decorator.Singleton;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
 /**
  * In order to remove the (bosh) configuration from the source code and to
@@ -123,34 +116,11 @@ import com.google.gwt.user.client.DeferredCommand;
  * Remember that <b>emite</b> won't autologin if a session was previously
  * paused.
  */
-public class BrowserModule extends AbstractModule implements EntryPoint {
-
-    public BrowserModule() {
-	super();
-    }
+public class BrowserModule extends AbstractGinModule {
 
     @Override
-    protected void onInstall() {
-	register(Singleton.class, new Factory<AutoConfig>(AutoConfig.class) {
-	    @Override
-	    public AutoConfig create() {
-		return new AutoConfig($(Connection.class), $(XmppSession.class));
-	    }
-	});
+    protected void configure() {
+	bind(AutoConfig.class).in(Singleton.class);
+	bind(AutoConfigBoot.class).asEagerSingleton();
     }
-
-    @Override
-    public void onModuleLoad() {
-	Suco.install(this);
-	DeferredCommand.addCommand(new Command() {
-	    @Override
-	    public void execute() {
-		if (PageAssist.isMetaTrue("emite.autoConfig")) {
-		    Suco.get(AutoConfig.class);
-		}
-	    }
-	});
-
-    }
-
 }

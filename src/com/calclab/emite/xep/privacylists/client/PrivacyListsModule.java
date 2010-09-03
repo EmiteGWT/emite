@@ -21,12 +21,9 @@
  */
 package com.calclab.emite.xep.privacylists.client;
 
-import com.calclab.emite.core.client.xmpp.session.Session;
-import com.calclab.emite.core.client.xmpp.session.SessionComponent;
-import com.calclab.suco.client.Suco;
-import com.calclab.suco.client.ioc.module.AbstractModule;
-import com.calclab.suco.client.ioc.module.Factory;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
 
 /**
  * Future implementation of: http://www.xmpp.org/extensions/xep-0016.html
@@ -35,20 +32,15 @@ import com.google.gwt.core.client.EntryPoint;
  * 
  * @see PrivacyListsManager
  */
-public class PrivacyListsModule extends AbstractModule implements EntryPoint {
+public class PrivacyListsModule extends AbstractGinModule implements EntryPoint {
 
+    @Override
     public void onModuleLoad() {
-	Suco.install(this);
     }
 
     @Override
-    protected void onInstall() {
-	register(SessionComponent.class, new Factory<PrivacyListsManager>(PrivacyListsManager.class) {
-	    @Override
-	    public PrivacyListsManager create() {
-		return new PrivacyListsManager($(Session.class));
-	    }
-	});
+    protected void configure() {
+	bind(PrivacyListsManager.class).in(Singleton.class);
     }
 
 }

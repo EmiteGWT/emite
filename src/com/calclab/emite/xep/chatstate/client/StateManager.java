@@ -25,6 +25,7 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
 
 /**
  * XEP-0085: Chat State Notifications
@@ -37,15 +38,18 @@ import com.google.gwt.core.client.GWT;
  */
 public class StateManager {
 
+    @Inject
     public StateManager(final ChatManager chatManager) {
 
 	chatManager.onChatCreated(new Listener<Chat>() {
+	    @Override
 	    public void onEvent(final Chat chat) {
 		getChatState(chat);
 	    }
 	});
 
 	chatManager.onChatClosed(new Listener<Chat>() {
+	    @Override
 	    public void onEvent(final Chat chat) {
 		GWT.log("Removing chat state to chat: " + chat.getID(), null);
 		final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(

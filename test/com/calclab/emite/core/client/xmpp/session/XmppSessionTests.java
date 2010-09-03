@@ -47,7 +47,8 @@ public class XmppSessionTests {
 	saslManager = mock(SASLManager.class);
 	bindingManager = mock(ResourceBindingManager.class);
 	iMSessionManager = mock(IMSessionManager.class);
-	session = new XmppSessionLogic(connection, saslManager, bindingManager, iMSessionManager);
+	SessionComponentsRegistry registry = new SessionComponentsRegistry();
+	session = new XmppSessionLogic(connection, saslManager, bindingManager, iMSessionManager, registry);
 
     }
 

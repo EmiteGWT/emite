@@ -28,6 +28,9 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Handle the IM session request. Used by XmppSession (not need to be used by
@@ -35,10 +38,14 @@ import com.calclab.suco.client.events.Listener;
  * 
  * @see http://www.xmpp.org/extensions/xep-0206.html#preconditions-sasl
  */
+@Singleton
 public class IMSessionManager {
     private final XmppConnection connection;
 
+    @Inject
     public IMSessionManager(final XmppConnection connection) {
+	GWT.log("Creating IMSessionManager");
+
 	this.connection = connection;
 
 	connection.addStanzaReceivedHandler(new StanzaHandler() {

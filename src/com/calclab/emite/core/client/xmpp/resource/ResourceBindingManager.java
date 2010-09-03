@@ -28,11 +28,18 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class ResourceBindingManager {
     private final XmppConnection connection;
 
+    @Inject
     public ResourceBindingManager(final XmppConnection connection) {
+	GWT.log("Creating ResourceBindingManager");
+
 	this.connection = connection;
 
 	connection.addStanzaReceivedHandler(new StanzaHandler() {
