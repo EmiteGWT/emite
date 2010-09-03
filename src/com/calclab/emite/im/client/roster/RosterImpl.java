@@ -32,6 +32,7 @@ import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedHandler;
 import com.calclab.suco.client.events.Listener;
+import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -47,6 +48,7 @@ public class RosterImpl implements Roster {
 
     @Inject
     public RosterImpl(XmppRoster delegate) {
+	GWT.log("Creating RosterImpl");
 	this.delegate = delegate;
     }
 

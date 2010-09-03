@@ -219,39 +219,45 @@ public interface Chat {
      * listener to modify the message just before send it (a kind of interceptor
      * in aop programming)
      * 
-     * USE addBeforeReceiveMessageHandler
+     * USE addBeforeReceiveMessageHandler instead
      * 
      * @param listener
      *            the listener
      * 
      */
-    // TODO: deprecate
+    @Deprecated
     public void onBeforeSend(Listener<Message> listener);
 
     /**
      * Allows to modify the message just before inform about the reception
      * 
+     * Use addMessageReceivedHandler instead
+     * 
      * @param messageInterceptor
      */
-    // TODO: deprecate
+    @Deprecated
     public void onMessageReceived(Listener<Message> listener);
 
     /**
      * Attach a listener to know when a message has been sent
      * 
+     * Use addMessageSentHandler instead
+     * 
      * @param listener
      *            the listener to the events
      */
-    // TODO: deprecate
+    @Deprecated
     public void onMessageSent(Listener<Message> listener);
 
     /**
      * Add a listener to know when the chat state changed. You should send
      * messages while the state != ready
      * 
+     * Use addChatStateChangedHandler instead
+     * 
      * @param listener
      */
-    // TODO: deprecate
+    @Deprecated
     public void onStateChanged(Listener<State> listener);
 
     /**

@@ -29,6 +29,7 @@ import com.calclab.suco.client.ioc.module.SucoModule;
 /**
  * A compatibility layer with gin
  */
+@Deprecated
 public class Suco {
 
     private static Container components = SucoFactory.create();
