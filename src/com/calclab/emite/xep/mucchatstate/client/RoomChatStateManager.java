@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.calclab.emite.core.client.events.MessageEvent;
+import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
@@ -35,7 +37,6 @@ import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationEvent;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationHandler;
-import com.calclab.suco.client.events.Listener;
 import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -97,26 +98,6 @@ public class RoomChatStateManager {
      * then the standalone notification MUST also contain the <thread/> element.
      * </ul>
      */
-    final Listener<Message> doBeforeSend = new Listener<Message>() {
-	// Only Messages are listened not presence events
-	// But sendStateMessage goes through here.
-	public void onEvent(final Message message) {
-	    final boolean alreadyWithState = getStateFromMessage(message) != null;
-	    if (!alreadyWithState && ownState != ChatState.active
-		    && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
-		if (ownState == ChatState.composing) {
-		    pauseTimer.cancel();
-		}
-
-		GWT.log("Setting own status to: " + ownState + " because we send a body or a subject", null);
-		ownState = ChatState.active;
-		message.addChild(ChatState.active.toString(), XMLNS);
-	    }
-	    if (ownState != ChatState.inactive) {
-		inactiveTimer.schedule(inactiveDelay);
-	    }
-	}
-    };
 
     private final Timer inactiveTimer = new Timer() {
 	@Override
@@ -135,8 +116,34 @@ public class RoomChatStateManager {
     public RoomChatStateManager(final Room room) {
 	this.room = room;
 	othersState = new HashMap<XmppURI, ChatState>();
-	room.onMessageReceived(new Listener<Message>() {
-	    public void onEvent(final Message message) {
+
+	room.addBeforeSendMessageHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		// Only Messages are listened not presence events
+		// But sendStateMessage goes through here.
+		Message message = event.getMessage();
+		final boolean alreadyWithState = getStateFromMessage(message) != null;
+		if (!alreadyWithState && ownState != ChatState.active
+			&& NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
+		    if (ownState == ChatState.composing) {
+			pauseTimer.cancel();
+		    }
+
+		    GWT.log("Setting own status to: " + ownState + " because we send a body or a subject", null);
+		    ownState = ChatState.active;
+		    message.addChild(ChatState.active.toString(), XMLNS);
+		}
+		if (ownState != ChatState.inactive) {
+		    inactiveTimer.schedule(inactiveDelay);
+		}
+	    }
+	});
+
+	room.addMessageReceivedHandler(new MessageHandler() {
+	    @Override
+	    public void onMessage(MessageEvent event) {
+		Message message = event.getMessage();
 		final ChatState state = getStateFromMessage(message);
 		if (state != null) {
 		    final XmppURI from = message.getFrom();
@@ -145,6 +152,7 @@ public class RoomChatStateManager {
 		}
 	    }
 	});
+
     }
 
     public HandlerRegistration addRoomChatStateNotificationHandler(RoomChatStateNotificationHandler handler) {

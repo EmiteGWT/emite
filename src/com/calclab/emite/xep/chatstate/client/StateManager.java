@@ -23,7 +23,8 @@ package com.calclab.emite.xep.chatstate.client;
 
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.suco.client.events.Listener;
+import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
+import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 
@@ -41,26 +42,25 @@ public class StateManager {
     @Inject
     public StateManager(final ChatManager chatManager) {
 
-	chatManager.onChatCreated(new Listener<Chat>() {
+	chatManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override
-	    public void onEvent(final Chat chat) {
-		getChatState(chat);
+	    public void onChatChanged(ChatChangedEvent event) {
+		if (event.isCreated()) {
+		    getChatState(event.getChat());
+		} else if (event.isClosed()) {
+		    Chat chat = event.getChat();
+		    GWT.log("Removing chat state to chat: " + chat.getID(), null);
+		    final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(
+			    ChatStateManager.KEY);
+		    if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
+			// We are closing, then we send the gone state
+			chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
+		    }
+		    chat.getProperties().setData(ChatStateManager.KEY, null);
+		}
 	    }
 	});
 
-	chatManager.onChatClosed(new Listener<Chat>() {
-	    @Override
-	    public void onEvent(final Chat chat) {
-		GWT.log("Removing chat state to chat: " + chat.getID(), null);
-		final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(
-			ChatStateManager.KEY);
-		if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
-		    // We are closing, then we send the gone state
-		    chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
-		}
-		chat.getProperties().setData(ChatStateManager.KEY, null);
-	    }
-	});
     }
 
     public ChatStateManager getChatState(final Chat chat) {

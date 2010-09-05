@@ -17,18 +17,18 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 
 public class SearchManagerTest {
     private static final String XEP_0055_2_1_SAMPLE_2 = "<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search1' xml:lang='en'><query xmlns='jabber:iq:search'> <instructions>Fill in one or more fields to search for any matching Jabber users.</instructions> <first/> <last/> <nick/> <email/></query></iq>";
     private static final String XEP_0055_3_SAMPLE_7 = "<iq type='result' from='characters.shakespeare.lit' to='juliet@capulet.com/balcony' id='search3' xml:lang='en'> <query xmlns='jabber:iq:search'> <instructions>Use the enclosed form to search. If your Jabber client does not support Data Forms, visit http://shakespeare.lit/ </instructions> <x xmlns='jabber:x:data' type='form'> <title>User Directory Search</title> <instructions>Please provide the following information to search for Shakespearean characters.</instructions> <field type='hidden' var='FORM_TYPE'> <value>jabber:iq:search</value> </field> <field type='text-single' label='Given Name' var='first'/> <field type='text-single' label='Family Name' var='last'/> <field type='list-single' label='Gender' var='x-gender'> <option label='Male'><value>male</value></option> <option label='Female'><value>female</value></option> </field> </x> </query> </iq>";
 
-    private SessionTester session;
+    private XmppSessionTester session;
     private SearchManager manager;
 
     @Before
     public void setUp() {
-	session = new SessionTester();
+	session = new XmppSessionTester();
 	manager = new SearchManagerImpl(session);
 	manager.setHost(XmppURI.uri("search.service"));
 	session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));

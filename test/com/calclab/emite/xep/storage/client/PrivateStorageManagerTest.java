@@ -5,12 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class PrivateStorageManagerTest {
-    private SessionTester session;
+    private XmppSessionTester session;
     private PrivateStorageManager manager;
 
     String storeData = "<iq type=\"set\" ><query xmlns=\"jabber:iq:private\">"
@@ -23,7 +23,7 @@ public class PrivateStorageManagerTest {
 
     @Before
     public void setup() {
-	session = new SessionTester("test@domain");
+	session = new XmppSessionTester("test@domain");
 	manager = new PrivateStorageManager(session);
     }
 

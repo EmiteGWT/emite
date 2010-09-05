@@ -56,12 +56,14 @@ public class ChatStateManager {
     public ChatStateManager(final Chat chat) {
 	this.chat = chat;
 	negotiationStatus = NegotiationStatus.notStarted;
-	chat.onMessageReceived(new Listener<Message>() {
+
+	chat.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
-	    public void onEvent(final Message message) {
-		onMessageReceived(chat, message);
+	    public void onMessage(MessageEvent event) {
+		onMessageReceived(chat, event.getMessage());
 	    }
 	});
+
 	chat.addBeforeSendMessageHandler(new MessageHandler() {
 	    @Override
 	    public void onMessage(MessageEvent event) {
@@ -110,12 +112,6 @@ public class ChatStateManager {
 	}
     }
 
-    private void sendStateMessage(final ChatState chatState) {
-	final Message message = new Message(null, chat.getURI());
-	message.addChild(chatState.toString(), XMLNS);
-	chat.send(message);
-    }
-
     protected void onMessageReceived(final Chat chat, final Message message) {
 	for (int i = 0; i < ChatState.values().length; i++) {
 	    final ChatState chatState = ChatState.values()[i];
@@ -156,5 +152,11 @@ public class ChatStateManager {
 	    // do nothing
 	    break;
 	}
+    }
+
+    private void sendStateMessage(final ChatState chatState) {
+	final Message message = new Message(null, chat.getURI());
+	message.addChild(chatState.toString(), XMLNS);
+	chat.send(message);
     }
 }
