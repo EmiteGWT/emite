@@ -57,12 +57,14 @@ public interface RoomManager extends ChatManager {
     public HistoryOptions getDefaultHistoryOptions();
 
     /**
-     * Notify when a room invitation arrives. Use addRoomInvitationHandler
+     * Notify when a room invitation arrives.
+     * 
+     * Use addRoomInvitationHandler
      * 
      * @param listener
      *            the listener to be informed
      */
-    // TODO: deprecate
+    @Deprecated
     public void onInvitationReceived(Listener<RoomInvitation> listener);
 
     public Room open(final XmppURI uri, HistoryOptions historyOptions);

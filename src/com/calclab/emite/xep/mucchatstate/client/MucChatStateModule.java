@@ -33,7 +33,7 @@ public class MucChatStateModule extends AbstractGinModule implements EntryPoint 
 
     @Override
     protected void configure() {
-	bind(MucChatStateManager.class).in(Singleton.class);
+	bind(MUCChatStateManager.class).in(Singleton.class);
 	bind(MucChatStateComponents.class).asEagerSingleton();
     }
 

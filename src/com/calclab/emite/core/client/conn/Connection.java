@@ -30,12 +30,11 @@ import com.calclab.suco.client.events.Listener2;
 /**
  * A connection to a xmpp server.
  * 
- * Will be deprecated.
- * 
  * Use XmppConecction instead.
  * 
  * @see XmppConnection
  */
+@Deprecated
 public interface Connection {
     public abstract void connect();
 

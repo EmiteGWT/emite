@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
@@ -94,16 +94,36 @@ public interface Room extends Chat {
 
     public abstract boolean isUserMessage(Message message);
 
-    // TODO: deprecate
+    /**
+     * Use addBeforeInvitationSendHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onInvitationSent(Listener2<XmppURI, String> listener);
 
-    // TODO: deprecate
+    /**
+     * Use addOccupantChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public abstract void onOccupantAdded(Listener<Occupant> listener);
 
-    // TODO: deprecate
+    /**
+     * Use addOccupantChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public abstract void onOccupantModified(Listener<Occupant> listener);
 
-    // TODO: deprecate
+    /**
+     * Use addOccupantChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public abstract void onOccupantRemoved(Listener<Occupant> occupantRemoved);
 
     /**
@@ -111,7 +131,7 @@ public interface Room extends Chat {
      * 
      * @param subjectListener
      */
-    // TODO: deprecate
+    @Deprecated
     public abstract void onSubjectChanged(Listener2<Occupant, String> subjectListener);
 
     public void reEnter(final HistoryOptions historyOptions);

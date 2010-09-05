@@ -57,8 +57,10 @@ public interface PresenceManager {
     /**
      * Add a litener to the own's-presence-changed event
      * 
+     * Use addOwnPresenceChangedHandler
+     * 
      * @param listener
      */
-    // TODO: deprecate
+    @Deprecated
     void onOwnPresenceChanged(Listener<Presence> listener);
 }

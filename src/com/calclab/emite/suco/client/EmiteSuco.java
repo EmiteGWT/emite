@@ -26,7 +26,6 @@ import com.calclab.emite.xep.muc.client.MucGinjector;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xep.mucchatstate.client.MUCChatStateManager;
 import com.calclab.emite.xep.mucchatstate.client.MucChatStateGinjector;
-import com.calclab.emite.xep.mucchatstate.client.MucChatStateManager;
 import com.calclab.emite.xep.mucdisco.client.MucDiscoveryGinjector;
 import com.calclab.emite.xep.mucdisco.client.RoomDiscoveryManager;
 import com.calclab.emite.xep.search.client.SearchGinjector;
@@ -185,12 +184,6 @@ public class EmiteSuco {
     }
 
     public static void installMucChatState(final MucChatStateGinjector ginjector) {
-	install(MucChatStateManager.class, new Provider<MucChatStateManager>() {
-	    @Override
-	    public MucChatStateManager get() {
-		return ginjector.getMucChatStateManager();
-	    }
-	});
 	install(MUCChatStateManager.class, new Provider<MUCChatStateManager>() {
 	    @Override
 	    public MUCChatStateManager get() {

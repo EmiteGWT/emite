@@ -41,8 +41,11 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
 	return chats;
     }
 
+    /**
+     * Use addChatChangedHandler
+     */
     @Override
-    // TODO: deprecate
+    @Deprecated
     public void onChatClosed(final Listener<Chat> listener) {
 	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override
@@ -55,7 +58,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     }
 
     @Override
-    // TODO: deprecate
+    @Deprecated
     public void onChatCreated(final Listener<Chat> listener) {
 	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override
@@ -68,7 +71,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     }
 
     @Override
-    // TODO: deprecate
+    @Deprecated
     public void onChatOpened(final Listener<Chat> listener) {
 	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
 	    @Override

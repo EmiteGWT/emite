@@ -61,7 +61,7 @@ public class IMSessionManager {
 
     }
 
-    // TODO: deprecate
+    @Deprecated
     public void onSessionCreated(final Listener<XmppURI> listener) {
 	SessionRequestResultEvent.bind(connection.getEventBus(), new SessionRequestResultHandler() {
 	    @Override

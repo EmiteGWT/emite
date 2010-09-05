@@ -51,7 +51,12 @@ public abstract class AbstractConnection {
 	});
     }
 
-    // TODO: deprecate
+    /**
+     * Use addConnectionResponseHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onResponse(final Listener<String> listener) {
 	delegate.addConnectionResponseHandler(new ConnectionResponseHandler() {
 	    @Override

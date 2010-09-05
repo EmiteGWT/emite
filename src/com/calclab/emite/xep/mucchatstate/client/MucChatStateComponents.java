@@ -13,7 +13,7 @@ import com.google.inject.Provider;
 public class MucChatStateComponents {
 
     @Inject
-    public MucChatStateComponents(SessionComponentsRegistry registry, Provider<MucChatStateManager> provider) {
+    public MucChatStateComponents(SessionComponentsRegistry registry, Provider<MUCChatStateManager> provider) {
 	registry.addProvider(provider);
     }
 }

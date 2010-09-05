@@ -63,7 +63,7 @@ public class ResourceBindingManager {
 	connection.send(iq);
     }
 
-    // TODO: deprecate
+    @Deprecated
     public void onBinded(final Listener<XmppURI> listener) {
 	ResourceBindResultEvent.bind(connection.getEventBus(), new ResourceBindResultHandler() {
 	    @Override

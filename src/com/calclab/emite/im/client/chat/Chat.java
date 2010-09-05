@@ -71,8 +71,10 @@ public interface Chat {
     /**
      * Possible conversation states. Enum can't be extended so, this won't be
      * used anymore
+     * 
+     * Use ChatStates
      */
-    // TODO: deprecate
+    @Deprecated
     public static enum State {
 	ready, locked,
 	/**

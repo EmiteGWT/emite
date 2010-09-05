@@ -33,7 +33,9 @@ import com.calclab.suco.client.events.Listener;
  * The most important object in Xmpp emite module. You can login, send and
  * receive stanzas. It also allows you to pause and resume the session.
  * 
+ * Use XmppSession instead.
  */
+@Deprecated
 public interface Session {
 
     /**

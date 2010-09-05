@@ -74,7 +74,6 @@ public interface ChatManager {
      * @param uri
      * @return
      */
-    // TODO: deprecate
     public Chat getChat(XmppURI uri);
 
     public Collection<? extends Chat> getChats();
@@ -83,25 +82,34 @@ public interface ChatManager {
      * Event sent when the chat is closed (two reasons: the user closed the chat
      * or the session disconnected)
      * 
+     * Use addChatChangedHandler
+     * 
      * @param listener
      */
+    @Deprecated
     public void onChatClosed(Listener<Chat> listener);
 
     /**
      * Event sent when the chat is created (either by the user or by another
      * user)
      * 
+     * Use addChatChangedHandler
+     * 
      * @param listener
      */
+    @Deprecated
     public void onChatCreated(Listener<Chat> listener);
 
     /**
      * Event sent when the user request to open the chat (either if its created
      * or not previously)
      * 
+     * Use addChatChangedHandler
+     * 
      * @param listener
      *            receives the chat as parameter
      */
+    @Deprecated
     public void onChatOpened(Listener<Chat> listener);
 
     /**
