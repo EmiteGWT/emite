@@ -3,6 +3,7 @@ package com.calclab.emite.im.client.roster;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import static com.calclab.emite.xtesting.XmppRosterHelper.setRosterItems;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -50,6 +51,20 @@ public class XmppRosterTests {
 	assertTrue(roster.getItemByJID(uri("other@domain")).isAvailable());
 	session.receives("<presence type='unavailable' from='other@domain/resource1' />");
 	assertTrue(roster.getItemByJID(uri("other@domain")).isAvailable());
+    }
+
+    @Test
+    public void shouldFireChangedItemEventsInGroups() {
+	RosterItem item = newItem("other@domain");
+	item.addToGroup("simple");
+	setRosterItems(session, item);
+	RosterGroup group = roster.getRosterGroup("simple");
+	RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+	group.addRosterItemChangedHandler(handler);
+	assertNotNull(group);
+	session.receives("<presence from='other@domain'>"
+		+ "<show>dnd</show><status>message</status><priority>3</priority></presence>");
+	assertTrue(handler.hasEvent());
     }
 
     @Test

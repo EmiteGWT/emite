@@ -7,9 +7,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.EventBusFactory;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
@@ -19,71 +19,49 @@ import com.google.gwt.event.shared.HandlerRegistration;
 /**
  * Represents a group in a roster. All the roster itself is a group (with name
  * null)
- *
+ * 
  * @see Roster
  */
 public class RosterGroup implements Iterable<RosterItem> {
     private final String name;
     private final HashMap<XmppURI, RosterItem> itemsByJID;
-    private EmiteEventBus eventBus;
-    private final EmiteEventBus groupEventBus;
+    private final EmiteEventBus rosterGroupEventBus;
 
     /**
      * Creates a new roster group. If name is null, its supposed to be the
      * entire roster
-     *
+     * 
      * @param groupName
      *            the roster name, can be null
      * @param roster
      *            the roster object
      */
     public RosterGroup(final String groupName) {
-	this(groupName, null);
-	eventBus = groupEventBus;
-    }
-
-    /**
-     * Creates a new roster group. If name is null, its supposed to be the
-     * entire roster
-     *
-     * @param groupName
-     *            the roster name, can be null
-     * @param roster
-     *            the roster object
-     * @param eventBus
-     *            the event bus.
-     */
-    public RosterGroup(final String groupName, EmiteEventBus eventBus) {
 	name = groupName;
 	itemsByJID = new HashMap<XmppURI, RosterItem>();
-	groupEventBus = EventBusFactory.create("group-" + groupName);
-	this.eventBus = eventBus;
+	rosterGroupEventBus = EventBusFactory.create("group-" + groupName);
     }
 
     /**
      * Add a RosterItem to this group. A ItemAdded event is fired.
-     *
+     * 
      * @param item
      *            The item to be added. If there's a previously item with the
      *            same jid, it's replaced
      */
     public void add(final RosterItem item) {
 	itemsByJID.put(item.getJID(), item);
-	groupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
-    }
-
-    public HandlerRegistration addMainRosterItemChangedHandler(RosterItemChangedHandler handler) {
-	return RosterItemChangedEvent.bind(eventBus, handler);
+	rosterGroupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
     }
 
     public HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler) {
-	return RosterItemChangedEvent.bind(groupEventBus, handler);
+	return RosterItemChangedEvent.bind(rosterGroupEventBus, handler);
     }
 
     /**
      * Returns the RosterItem of the given JID or null if theres no RosterItem
      * for that jabber id.
-     *
+     * 
      * @param uri
      *            the jabber id (resource is ignored)
      * @return the RosterItem or null if no item found
@@ -95,15 +73,15 @@ public class RosterGroup implements Iterable<RosterItem> {
     /**
      * Return a modificable list of the roster items sorted by the given
      * comparator
-     *
+     * 
      * @param comparator
      *            The comparator using to sort the items. Can be null (and then
      *            no sort is performed)
-     *
+     * 
      * @return a modificable roster item list
-     *
+     * 
      * @see RosterItemsOrder
-     *
+     * 
      */
     public ArrayList<RosterItem> getItemList(final Comparator<RosterItem> comparator) {
 	final ArrayList<RosterItem> list = new ArrayList<RosterItem>(getItems());
@@ -116,7 +94,7 @@ public class RosterGroup implements Iterable<RosterItem> {
     /**
      * Return the collection of roster items in this group. This collection
      * should be not modified directly (since is the backend of the group).
-     *
+     * 
      * @return a view-only collection of roster items of this group with no
      *         specific order
      */
@@ -129,7 +107,7 @@ public class RosterGroup implements Iterable<RosterItem> {
     }
 
     public EmiteEventBus getRosterGroupEventBus() {
-	return groupEventBus;
+	return rosterGroupEventBus;
     }
 
     public int getSize() {
@@ -149,6 +127,12 @@ public class RosterGroup implements Iterable<RosterItem> {
 	return itemsByJID.values().iterator();
     }
 
+    /**
+     * Use addRosterItemChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onItemAdded(final Listener<RosterItem> listener) {
 	addRosterItemChangedHandler(new RosterItemChangedHandler() {
 	    @Override
@@ -160,6 +144,12 @@ public class RosterGroup implements Iterable<RosterItem> {
 	});
     }
 
+    /**
+     * Use addRosterItemChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onItemChanged(final Listener<RosterItem> listener) {
 	addRosterItemChangedHandler(new RosterItemChangedHandler() {
 	    @Override
@@ -171,6 +161,12 @@ public class RosterGroup implements Iterable<RosterItem> {
 	});
     }
 
+    /**
+     * Use addRosterItemChangedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onItemRemoved(final Listener<RosterItem> listener) {
 	addRosterItemChangedHandler(new RosterItemChangedHandler() {
 	    @Override
@@ -185,13 +181,9 @@ public class RosterGroup implements Iterable<RosterItem> {
     public RosterItem remove(final XmppURI jid) {
 	final RosterItem removed = itemsByJID.remove(jid);
 	if (removed != null) {
-	    groupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, removed));
+	    rosterGroupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, removed));
 	}
 	return removed;
-    }
-
-    protected void fireItemChange(final RosterItem item) {
-	groupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, item));
     }
 
     void clear() {

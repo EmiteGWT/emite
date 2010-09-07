@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.IQEvent;
 import com.calclab.emite.core.client.events.IQHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -12,6 +11,7 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.RequestFailedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
@@ -20,10 +20,10 @@ import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
@@ -72,8 +72,11 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 		final Show showReceived = presence.getShow();
 		item.setShow(showReceived == null ? Show.notSpecified : showReceived);
 		item.setStatus(presence.getStatus());
-		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, item));
+		RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
+		eventBus.fireEvent(event);
+		fireItemChangedInGroups(event);
 	    }
+
 	});
 
 	session.addIQReceivedHandler(new IQHandler() {
@@ -180,10 +183,18 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 			}
 			eventBus.fireEvent(new RosterRetrievedEvent(getItems()));
 		    } else {
-			eventBus.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
+			eventBus
+				.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
 		    }
 		}
 	    });
+	}
+    }
+
+    void storeItem(final RosterItem item) {
+	addToGroup(item, null);
+	for (final String groupName : item.getGroups()) {
+	    addToGroup(item, groupName);
 	}
     }
 
@@ -239,13 +250,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	}
 	for (final String groupName : groupsToRemove) {
 	    removeGroup(groupName);
-	}
-    }
-
-    void storeItem(final RosterItem item) {
-	addToGroup(item, null);
-	for (final String groupName : item.getGroups()) {
-	    addToGroup(item, groupName);
 	}
     }
 
