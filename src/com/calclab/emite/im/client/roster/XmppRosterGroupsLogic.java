@@ -17,7 +17,27 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
     public XmppRosterGroupsLogic(XmppSession session) {
 	super(session);
 	groups = new HashMap<String, RosterGroup>();
-	all = new RosterGroup(null);
+	all = new RosterGroup(null, eventBus);
+    }
+
+    protected RosterGroup addGroup(final String groupName) {
+	RosterGroup group;
+	group = groupName != null ? new RosterGroup(groupName, eventBus) : all;
+	groups.put(groupName, group);
+	eventBus.fireEvent(new RosterGroupChangedEvent(ChangeTypes.added, group));
+	return group;
+    }
+
+    protected void addToGroup(final RosterItem item, final String groupName) {
+	RosterGroup group = groups.get(groupName);
+	if (group == null) {
+	    group = addGroup(groupName);
+	}
+	group.add(item);
+    }
+
+    protected void clearGroupAll() {
+	all.clear();
     }
 
     @Override
@@ -49,26 +69,6 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
     @Override
     public Collection<RosterGroup> getRosterGroups() {
 	return groups.values();
-    }
-
-    protected RosterGroup addGroup(final String groupName) {
-	RosterGroup group;
-	group = groupName != null ? new RosterGroup(groupName) : all;
-	groups.put(groupName, group);
-	eventBus.fireEvent(new RosterGroupChangedEvent(ChangeTypes.added, group));
-	return group;
-    }
-
-    protected void addToGroup(final RosterItem item, final String groupName) {
-	RosterGroup group = groups.get(groupName);
-	if (group == null) {
-	    group = addGroup(groupName);
-	}
-	group.add(item);
-    }
-
-    protected void clearGroupAll() {
-	all.clear();
     }
 
     protected void removeGroup(final String groupName) {
