@@ -3,14 +3,12 @@ package com.calclab.emite.xxamples.im.chat.client;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.CoreGinjector;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.ImGinjector;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.google.gwt.core.client.EntryPoint;
@@ -25,13 +23,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ExampleIMChat implements EntryPoint {
 
-    /**
-     * A custom injector with the desired functionalities (not the recommended
-     * way for complex apps: use constructor injection)
-     */
-    private static interface ChatGinjector extends CoreGinjector, ImGinjector {
-
-    }
     private VerticalPanel output;
 
     private TextBox input;
@@ -46,7 +37,7 @@ public class ExampleIMChat implements EntryPoint {
 	final String user = PageAssist.getMeta("emite.chat");
 	log("Chat with user: " + user);
 
-	ChatGinjector ginjector = GWT.create(ChatGinjector.class);
+	ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
 	XmppSession session = ginjector.getXmppSession();
 
 	session.addSessionStateChangedHandler(true, new StateChangedHandler() {

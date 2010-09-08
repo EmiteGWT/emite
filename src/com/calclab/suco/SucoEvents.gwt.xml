@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='suco'>
+    <inherits name='com.google.gwt.core.Core' />
+    <entry-point class="com.calclab.suco.client.events.SucoEventsEntryPoint" />
+    <source path="client/events" />
+</module>

@@ -2,4 +2,5 @@
 <module rename-to='suco'>
 	<inherits name='com.google.gwt.core.Core' />
 	<entry-point class="com.calclab.suco.client.SucoEntryPoint" />
+	<source path="client" />
 </module>

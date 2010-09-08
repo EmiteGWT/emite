@@ -2,7 +2,6 @@ package com.calclab.emite.xxamples.core.xmpp.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import com.calclab.emite.core.client.CoreGinjector;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -42,7 +41,7 @@ public class ExampleXmppSession implements EntryPoint {
 		 * the recommended way: it's better to inject into constructor
 		 */
 		GWT.log("Create a xmpp session");
-		CoreGinjector ginjector = GWT.create(CoreGinjector.class);
+		ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
 		final XmppSession session = ginjector.getXmppSession();
 
 		GWT.log("Add event handlers");
