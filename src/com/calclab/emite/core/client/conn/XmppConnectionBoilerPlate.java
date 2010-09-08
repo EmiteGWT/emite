@@ -55,6 +55,14 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	return eventBus;
     }
 
+    /**
+     * @return the stream settings
+     */
+    @Override
+    public StreamSettings getStreamSettings() {
+	return stream;
+    }
+
     @Override
     public boolean hasErrors() {
 	return errors != 0;
@@ -96,10 +104,6 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	eventBus.fireEvent(new StanzaReceivedEvent(stanza));
     }
 
-    protected void fireStanzaSent(final IPacket packet) {
-	eventBus.fireEvent(new StanzaSentEvent(packet));
-    }
-
     protected ConnectionSettings getConnectionSettings() {
 	return connectionSettings;
     }
@@ -109,13 +113,6 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
      */
     protected Packet getCurrentBody() {
 	return currentBody;
-    }
-
-    /**
-     * @return the stream
-     */
-    protected StreamSettings getStream() {
-	return stream;
     }
 
     /**

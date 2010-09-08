@@ -3,6 +3,7 @@ package com.calclab.emite.core.client.bosh;
 import java.util.List;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
+import com.calclab.emite.core.client.conn.StanzaSentEvent;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.events.EmiteEventBus;
@@ -113,22 +114,22 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	getCurrentBody().setAttribute("type", "terminate");
 	sendBody(true);
 	setActive(false);
-	getStream().sid = null;
+	getStreamSettings().sid = null;
 	fireDisconnected("logged out");
     }
 
     @Override
     public boolean isConnected() {
-	return getStream() != null;
+	return getStreamSettings() != null;
     }
 
     @Override
     public StreamSettings pause() {
-	if (getStream() != null && getStream().sid != null) {
+	if (getStreamSettings() != null && getStreamSettings().sid != null) {
 	    createBodyIfNeeded();
-	    getCurrentBody().setAttribute("pause", getStream().getMaxPauseString());
+	    getCurrentBody().setAttribute("pause", getStreamSettings().getMaxPauseString());
 	    sendBody(true);
-	    return getStream();
+	    return getStreamSettings();
 	}
 	return null;
     }
@@ -155,12 +156,12 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	createBodyIfNeeded();
 	getCurrentBody().addChild(packet);
 	sendBody();
-	fireStanzaSent(packet);
+	eventBus.fireEvent(new StanzaSentEvent(packet));
     }
 
     @Override
     public String toString() {
-	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStream();
+	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStreamSettings();
     }
 
     /**
@@ -180,12 +181,12 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	    if (getCurrentBody() != null) {
 		sendBody();
 	    } else {
-		final long currentRID = getStream().rid;
+		final long currentRID = getStreamSettings().rid;
 		int waitTime = 300;
 		services.schedule(waitTime, new ScheduledAction() {
 		    @Override
 		    public void run() {
-			if (getCurrentBody() == null && getStream().rid == currentRID) {
+			if (getCurrentBody() == null && getStreamSettings().rid == currentRID) {
 			    createBodyIfNeeded();
 			    // Whitespace keep-alive
 			    // getCurrentBody().setText(" ");
@@ -201,9 +202,9 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	if (getCurrentBody() == null) {
 	    final Packet body = new Packet("body");
 	    body.With("xmlns", "http://jabber.org/protocol/httpbind");
-	    body.With("rid", getStream().getNextRid());
-	    if (getStream() != null) {
-		body.With("sid", getStream().sid);
+	    body.With("rid", getStreamSettings().getNextRid());
+	    if (getStreamSettings() != null) {
+		body.With("sid", getStreamSettings().sid);
 	    }
 	    setCurrentBody(body);
 	}
@@ -219,7 +220,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	body.setAttribute("xml:lang", "en");
 	body.setAttribute("ack", "1");
 	body.setAttribute("secure", Boolean.toString(userSettings.secure));
-	body.setAttribute("rid", getStream().getNextRid());
+	body.setAttribute("rid", getStreamSettings().getNextRid());
 	body.setAttribute("to", userSettings.hostName);
 	if (userSettings.routeHost != null && userSettings.routePort != null) {
 	    String routeHost = userSettings.routeHost;
@@ -239,11 +240,11 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 
     private void handleResponse(final IPacket response) {
 	if (isTerminate(response.getAttribute("type"))) {
-	    getStream().sid = null;
+	    getStreamSettings().sid = null;
 	    setActive(false);
 	    fireDisconnected("disconnected by server");
 	} else {
-	    if (getStream().sid == null) {
+	    if (getStreamSettings().sid == null) {
 		initStream(response);
 		fireConnected();
 	    }
@@ -258,7 +259,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     private void initStream(final IPacket response) {
-	final StreamSettings stream = getStream();
+	final StreamSettings stream = getStreamSettings();
 	stream.sid = response.getAttribute("sid");
 	stream.wait = response.getAttribute("wait");
 	stream.setInactivity(response.getAttribute("inactivity"));
@@ -279,7 +280,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	try {
 	    activeConnections++;
 	    services.send(getConnectionSettings().httpBase, request, listener);
-	    getStream().lastRequestTime = services.getCurrentTime();
+	    getStreamSettings().lastRequestTime = services.getCurrentTime();
 	} catch (final ConnectorException e) {
 	    activeConnections--;
 	    e.printStackTrace();
