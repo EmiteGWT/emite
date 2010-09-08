@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.suco.testing.events.MockedListener;
 
@@ -64,7 +65,7 @@ public class VCardManagerTests {
     @Before
     public void setup() {
 	session = new XmppSessionTester("test@domain");
-	manager = new VCardManager(session);
+	manager = new VCardManagerImpl(session);
     }
 
     @Test
@@ -86,7 +87,7 @@ public class VCardManagerTests {
 
     @Test
     public void shouldSendRetrievalRequest() {
-	manager.requestOwnVCard(null);
+	manager.requestOwnVCard((VCardResponseHandler) null);
 	final IQ iq = new IQ(IQ.Type.get).With("from", "test@domain");
 	iq.addChild("vCard", "vcard-temp");
 	session.verifyIQSent(iq);

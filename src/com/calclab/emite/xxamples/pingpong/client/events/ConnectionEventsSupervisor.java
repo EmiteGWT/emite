@@ -7,12 +7,12 @@ import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
-import com.calclab.suco.client.Suco;
+import com.google.inject.Inject;
 
 public class ConnectionEventsSupervisor {
 
-    public ConnectionEventsSupervisor(final PingPongDisplay display) {
-	XmppConnection connection = Suco.get(XmppConnection.class);
+    @Inject
+    public ConnectionEventsSupervisor(XmppConnection connection, final PingPongDisplay display) {
 	connection.addStanzaReceivedHandler(new StanzaHandler() {
 	    @Override
 	    public void onStanza(StanzaEvent event) {

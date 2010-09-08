@@ -66,8 +66,23 @@ public class SASLManager {
 	});
     }
 
+    /**
+     * Add a handler to know when an authorization transaction has a result
+     * 
+     * @param handler
+     */
+    public void addAuthorizationResultHandler(AuthorizationResultHandler handler) {
+	AuthorizationResultEvent.bind(eventBus, handler);
+    }
+
+    /**
+     * Use addAuthorizationResultHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onAuthorized(final Listener<AuthorizationTransaction> listener) {
-	AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
+	addAuthorizationResultHandler(new AuthorizationResultHandler() {
 	    @Override
 	    public void onAuthorization(final AuthorizationResultEvent event) {
 		final AuthorizationTransaction transaction = new AuthorizationTransaction(event.getCredentials());

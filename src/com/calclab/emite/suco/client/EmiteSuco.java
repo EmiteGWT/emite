@@ -41,6 +41,7 @@ import com.google.gwt.core.client.GWT;
 public class EmiteSuco {
 
     public static EmiteSucoGinjector install() {
+	GWT.log("USING EMITE SUCO COMPATIBILITY LAYER - DEPRECATED");
 	EmiteSucoGinjector ginjector = GWT.create(EmiteSucoGinjector.class);
 	installCore(ginjector);
 	installBrowser(ginjector);

@@ -5,6 +5,7 @@ import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.Connection
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -66,6 +67,7 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 
     @Override
     public void setSettings(final ConnectionSettings settings) {
+	GWT.log("Setting connection settings.");
 	connectionSettings = settings;
     }
 

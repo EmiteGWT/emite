@@ -36,7 +36,7 @@ public class ChatStateTest {
     public void shouldFireGone() {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("gone", ChatStateManager.XMLNS);
-	chatStateManager.onMessageReceived(pairChat, message);
+	chatStateManager.handleMessageReceived(pairChat, message);
 	assertTrue(stateListener.isCalledWithEquals(ChatState.gone));
     }
 
@@ -44,7 +44,7 @@ public class ChatStateTest {
     public void shouldFireOtherCompossing() {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("composing", ChatStateManager.XMLNS);
-	chatStateManager.onMessageReceived(pairChat, message);
+	chatStateManager.handleMessageReceived(pairChat, message);
 	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
     }
 
@@ -52,7 +52,7 @@ public class ChatStateTest {
     public void shouldFireOtherCompossingAsGmailDo() {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("cha:composing", ChatStateManager.XMLNS);
-	chatStateManager.onMessageReceived(pairChat, message);
+	chatStateManager.handleMessageReceived(pairChat, message);
 	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
     }
 
@@ -60,7 +60,7 @@ public class ChatStateTest {
     public void shouldFireOtherCompossingToWithoutResource() {
 	final Message message = new Message(null, OTHER.getJID(), MYSELF);
 	message.addChild("cha:composing", ChatStateManager.XMLNS);
-	chatStateManager.onMessageReceived(pairChat, message);
+	chatStateManager.handleMessageReceived(pairChat, message);
 	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
     }
 

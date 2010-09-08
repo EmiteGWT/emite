@@ -30,8 +30,11 @@ import com.calclab.suco.client.events.Listener;
 /**
  * Implements Roster management.
  * 
+ * Use XmppRoster
+ * 
  * @see http://www.xmpp.org/rfcs/rfc3921.html#roster
  */
+@Deprecated
 public interface Roster {
 
     /**
@@ -111,6 +114,7 @@ public interface Roster {
      * 
      * @param listener
      */
+    @Deprecated
     void onGroupAdded(Listener<RosterGroup> listener);
 
     /**
@@ -119,6 +123,7 @@ public interface Roster {
      * 
      * @param listener
      */
+    @Deprecated
     void onGroupRemoved(Listener<RosterGroup> listener);
 
     /**
@@ -126,6 +131,7 @@ public interface Roster {
      * 
      * @param listener
      */
+    @Deprecated
     void onItemAdded(Listener<RosterItem> listener);
 
     /**
@@ -133,6 +139,7 @@ public interface Roster {
      * 
      * @param listener
      */
+    @Deprecated
     void onItemChanged(Listener<RosterItem> listener);
 
     /**
@@ -140,6 +147,7 @@ public interface Roster {
      * 
      * @param listener
      */
+    @Deprecated
     void onItemRemoved(Listener<RosterItem> listener);
 
     /**
@@ -156,6 +164,7 @@ public interface Roster {
      *            a listener that receives the roster as collection of
      *            RosterItems
      */
+    @Deprecated
     void onRosterRetrieved(Listener<Collection<RosterItem>> listener);
 
     /**

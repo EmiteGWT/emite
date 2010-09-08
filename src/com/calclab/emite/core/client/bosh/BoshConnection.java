@@ -37,6 +37,7 @@ import com.google.inject.Singleton;
  * @see XmppConnection
  */
 @Singleton
+@Deprecated
 public class BoshConnection extends AbstractConnection implements Connection {
 
     @Inject

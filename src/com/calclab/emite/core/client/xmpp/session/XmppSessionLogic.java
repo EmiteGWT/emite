@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -161,7 +161,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
     @Override
     public void login(final Credentials credentials) {
-	if (registry.areComponentsCreated()) {
+	GWT.log("XmppSessionLogic - login");
+	if (!registry.areComponentsCreated()) {
+	    GWT.log("First login - Creating session components");
 	    registry.createComponents();
 	}
 	if (getSessionState() == XmppSession.SessionStates.disconnected) {

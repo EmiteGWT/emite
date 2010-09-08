@@ -39,8 +39,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.events.Listener;
@@ -101,6 +101,10 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	return defaultHistoryOptions;
     }
 
+    /**
+     * Use addRoomInvitationHandler
+     */
+    @Deprecated
     @Override
     public void onInvitationReceived(final Listener<RoomInvitation> listener) {
 	addRoomInvitationHandler(new RoomInvitationHandler() {
@@ -121,6 +125,21 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     @Override
     public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
 	this.defaultHistoryOptions = defaultHistoryOptions;
+    }
+
+    @Override
+    protected void addChat(final Chat chat) {
+	final XmppURI jid = chat.getURI().getJID();
+	roomsByJID.put(jid, (Room) chat);
+	super.addChat(chat);
+    }
+
+    @Override
+    protected Chat createChat(final ChatProperties properties) {
+	if (properties.getState() == null) {
+	    properties.setState(ChatStates.locked);
+	}
+	return new RoomChat(session, properties);
     }
 
     /**
@@ -164,20 +183,5 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 		}
 	    }
 	});
-    }
-
-    @Override
-    protected void addChat(final Chat chat) {
-	final XmppURI jid = chat.getURI().getJID();
-	roomsByJID.put(jid, (Room) chat);
-	super.addChat(chat);
-    }
-
-    @Override
-    protected Chat createChat(final ChatProperties properties) {
-	if (properties.getState() == null) {
-	    properties.setState(ChatStates.locked);
-	}
-	return new RoomChat(session, properties);
     }
 }

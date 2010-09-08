@@ -60,7 +60,7 @@ public class ChatStateManager {
 	chat.addMessageReceivedHandler(new MessageHandler() {
 	    @Override
 	    public void onMessage(MessageEvent event) {
-		onMessageReceived(chat, event.getMessage());
+		handleMessageReceived(chat, event.getMessage());
 	    }
 	});
 
@@ -88,6 +88,12 @@ public class ChatStateManager {
 	return ownState;
     }
 
+    /**
+     * Use addChatStateNotificationHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onChatStateChanged(final Listener<ChatState> listener) {
 	addChatStateNotificationHandler(new ChatStateNotificationHandler() {
 	    @Override
@@ -112,7 +118,7 @@ public class ChatStateManager {
 	}
     }
 
-    protected void onMessageReceived(final Chat chat, final Message message) {
+    protected void handleMessageReceived(final Chat chat, final Message message) {
 	for (int i = 0; i < ChatState.values().length; i++) {
 	    final ChatState chatState = ChatState.values()[i];
 	    final String typeSt = chatState.toString();

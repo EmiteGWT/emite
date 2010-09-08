@@ -142,7 +142,7 @@ public class RoomChat extends RoomBoilerplate {
      */
     @Override
     public void reEnter(final HistoryOptions historyOptions) {
-	if (getState() == State.locked) {
+	if (ChatStates.locked.equals(getChatState())) {
 	    session.send(createEnterPresence(historyOptions));
 	}
     }

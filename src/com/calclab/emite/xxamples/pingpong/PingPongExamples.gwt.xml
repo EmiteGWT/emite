@@ -3,6 +3,7 @@
 <module rename-to="PingPongExamples">
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<inherits name="com.calclab.suco.Suco" />
 	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 	<inherits name='com.calclab.emite.core.EmiteCore' />
 	<inherits name='com.calclab.emite.im.EmiteIM' />

@@ -168,6 +168,12 @@ public class RoomChatStateManager {
 	return ownState;
     }
 
+    /**
+     * Use addRoomChatStateNotificationHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onChatStateChanged(final Listener2<XmppURI, ChatState> listener) {
 	addRoomChatStateNotificationHandler(new RoomChatStateNotificationHandler() {
 	    @Override

@@ -12,9 +12,11 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.google.inject.Inject;
 
 public class RoomManagerEventsSupervisor {
 
+    @Inject
     public RoomManagerEventsSupervisor(RoomManager roomManager, final PingPongDisplay display) {
 	roomManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override

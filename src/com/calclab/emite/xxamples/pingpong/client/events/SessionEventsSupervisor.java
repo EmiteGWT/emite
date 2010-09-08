@@ -6,20 +6,20 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
-import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
 
 public class SessionEventsSupervisor {
 
     private long currentSessionLogin;
     private int refreshTime;
 
-    public SessionEventsSupervisor(final PingPongDisplay display) {
+    @Inject
+    public SessionEventsSupervisor(final XmppSession session, final PingPongDisplay display) {
 	this.currentSessionLogin = 0;
 	this.refreshTime = 1000;
 
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
-	final XmppSession session = Suco.get(XmppSession.class);
 	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 	    @Override
 	    public void onStateChanged(StateChangedEvent event) {

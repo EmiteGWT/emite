@@ -4,18 +4,23 @@ import com.calclab.emite.browser.client.PageAssist;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
-import com.calclab.suco.client.Suco;
+import com.calclab.emite.xxamples.pingpong.client.events.ConnectionEventsSupervisor;
+import com.calclab.emite.xxamples.pingpong.client.events.SessionEventsSupervisor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class PingPongCommonPresenter {
 
-    public PingPongCommonPresenter(final PingPongDisplay display) {
+    @Inject
+    public PingPongCommonPresenter(final XmppSession session, ConnectionEventsSupervisor connectionEventsSupervisor,
+	    SessionEventsSupervisor sessionEventsSupervisor, final PingPongDisplay display) {
+
 	display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.important);
 
 	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
-	final XmppSession session = Suco.get(XmppSession.class);
-
 	display.addLoginClickHandler(new ClickHandler() {
 	    @Override
 	    public void onClick(ClickEvent event) {

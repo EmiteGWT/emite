@@ -20,7 +20,6 @@ import com.google.gwt.user.client.DOM;
  * An utility class to perform actions based on meta tags
  */
 public class PageAssist {
-
     /**
      * Meta key to store the host param in bosh configuration
      */
@@ -221,6 +220,7 @@ public class PageAssist {
      * @return true if meta parameters value are presents, false otherwise
      */
     public static final boolean loginFromMeta(final XmppSession session) {
+	GWT.log("Loging in from meta data...");
 	final String userJID = getMeta(PARAM_JID);
 	final String password = getMeta(PARAM_PASSWORD);
 	String encodingMethod = getMeta(PARAM_PASSWORD_ENCODING);

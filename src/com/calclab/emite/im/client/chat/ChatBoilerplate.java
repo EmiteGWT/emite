@@ -91,7 +91,11 @@ public abstract class ChatBoilerplate implements Chat {
 	return session;
     }
 
+    /**
+     * Use getChatState
+     */
     @Override
+    @Deprecated
     public State getState() {
 	final String state = properties.getState();
 	try {
@@ -113,6 +117,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     public void onBeforeReceive(final Listener<Message> listener) {
 	addBeforeReceiveMessageHandler(new MessageHandler() {
 	    @Override
@@ -123,6 +128,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     public void onBeforeSend(final Listener<Message> listener) {
 	addBeforeSendMessageHandler(new MessageHandler() {
 	    @Override
@@ -133,6 +139,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     public void onMessageReceived(final Listener<Message> listener) {
 	addMessageReceivedHandler(new MessageHandler() {
 	    @Override
@@ -143,6 +150,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     public void onMessageSent(final Listener<Message> listener) {
 	addMessageSentHandler(new MessageHandler() {
 	    @Override
@@ -153,6 +161,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     public void onStateChanged(final Listener<State> listener) {
 	addChatStateChangedHandler(false, new StateChangedHandler() {
 	    @Override
@@ -163,6 +172,7 @@ public abstract class ChatBoilerplate implements Chat {
     }
 
     @Override
+    @Deprecated
     @SuppressWarnings("unchecked")
     public <T> T setData(final Class<T> type, final T value) {
 	String key = type != null ? type.toString() : null;

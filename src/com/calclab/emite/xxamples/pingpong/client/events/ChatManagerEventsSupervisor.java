@@ -11,9 +11,11 @@ import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.google.inject.Inject;
 
 public class ChatManagerEventsSupervisor {
 
+    @Inject
     public ChatManagerEventsSupervisor(ChatManager chatManager, final PingPongDisplay display) {
 	chatManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override

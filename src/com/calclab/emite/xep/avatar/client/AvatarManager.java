@@ -31,9 +31,9 @@ import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xep.avatar.client.events.AvatarVCardHandler;
 import com.calclab.emite.xep.avatar.client.events.AvatarVCardReceivedEvent;
 import com.calclab.emite.xep.avatar.client.events.HashPresenceReceivedEvent;
@@ -72,7 +72,7 @@ public class AvatarManager {
 
     }
 
-    public HandlerRegistration addAvatarVCardReceivedEvent(AvatarVCardHandler handler) {
+    public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardHandler handler) {
 	return AvatarVCardReceivedEvent.bind(session.getEventBus(), handler);
     }
 
@@ -80,6 +80,12 @@ public class AvatarManager {
 	return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
     }
 
+    /**
+     * Use addHashPresenceReceviedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onHashPresenceReceived(final Listener<Presence> listener) {
 	addHashPresenceReceviedHandler(new PresenceHandler() {
 	    @Override
@@ -89,8 +95,14 @@ public class AvatarManager {
 	});
     }
 
+    /**
+     * Use addAvatarVCardReceivedHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
     public void onVCardReceived(final Listener<AvatarVCard> listener) {
-	addAvatarVCardReceivedEvent(new AvatarVCardHandler() {
+	addAvatarVCardReceivedHandler(new AvatarVCardHandler() {
 	    @Override
 	    public void onAvatarVCard(AvatarVCardReceivedEvent event) {
 		listener.onEvent(event.getAvatarVCard());

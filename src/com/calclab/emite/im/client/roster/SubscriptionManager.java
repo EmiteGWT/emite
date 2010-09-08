@@ -65,10 +65,13 @@ public interface SubscriptionManager {
      * This listener is called when a INCOMING subscription request arrived (a
      * request to subscribe to the current logged in user's presence)
      * 
+     * Use addSubscriptionRequestReceivedHandler
+     * 
      * @param listener
      *            the listener to be called (with the jid of the entity and the
      *            nick name)
      */
+    @Deprecated
     public void onSubscriptionRequested(Listener2<XmppURI, String> listener);
 
     /**

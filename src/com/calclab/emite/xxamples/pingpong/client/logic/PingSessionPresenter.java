@@ -9,26 +9,29 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
-import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * Send pings to other jid using the XmppSession directly
  */
-public class PingSessionPresenter {
+public class PingSessionPresenter implements StartablePresenter {
     private final XmppSession session;
     private final XmppURI other;
     private final PingPongDisplay output;
     private int pings;
     private int waitTime;
 
-    public PingSessionPresenter(final XmppURI other, final PingPongDisplay output) {
+    @Inject
+    public PingSessionPresenter(XmppSession session, @Named("other") final XmppURI other, final PingPongDisplay output) {
+	this.session = session;
 	pings = 0;
 	waitTime = 2000;
 	this.other = other;
 	this.output = output;
-	session = Suco.get(XmppSession.class);
     }
 
     public void start() {

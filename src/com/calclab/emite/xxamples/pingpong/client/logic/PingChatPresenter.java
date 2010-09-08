@@ -10,19 +10,24 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
-import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
-public class PingChatPresenter {
+public class PingChatPresenter implements StartablePresenter {
 
     protected final XmppURI other;
     protected final PingPongDisplay display;
     protected int pings;
     protected int waitTime;
+    private final ChatManager chatManager;
 
-    public PingChatPresenter(XmppURI other, PingPongDisplay output) {
+    @Inject
+    public PingChatPresenter(ChatManager chatManager, @Named("other") XmppURI other, PingPongDisplay output) {
+	this.chatManager = chatManager;
 	this.other = other;
 	this.display = output;
 	pings = 0;
@@ -31,7 +36,8 @@ public class PingChatPresenter {
 
     public void start() {
 	// OPEN THE CHAT
-	ChatManager chatManager = getChatManager();
+	display.printHeader("This is ping chat example", Style.title);
+	display.printHeader("You need to open the pong example page in order to run the example", Style.important);
 
 	display.printHeader("Ping to: " + other, Style.info);
 
@@ -55,12 +61,6 @@ public class PingChatPresenter {
 	    }
 
 	});
-    }
-
-    protected ChatManager getChatManager() {
-	display.printHeader("This is ping chat example", Style.title);
-	display.printHeader("You need to open the pong example page in order to run the example", Style.important);
-	return Suco.get(ChatManager.class);
     }
 
     protected void sendPing(final Chat chat) {

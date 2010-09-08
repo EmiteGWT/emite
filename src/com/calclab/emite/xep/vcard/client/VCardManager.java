@@ -1,82 +1,78 @@
 package com.calclab.emite.xep.vcard.client;
 
-import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.vcard.client.events.VCardResponseEvent;
 import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.inject.Inject;
 
-public class VCardManager {
+/**
+ * The manager to VCards. Implements http://xmpp.org/extensions/xep-0054.html
+ * 
+ */
+public interface VCardManager {
 
-    private static final String ID_PREFIX = "vcard";
-    private final XmppSession session;
+    /**
+     * Use addVCardResponseHandler
+     * 
+     * @param listener
+     */
+    @Deprecated
+    void addOnVCardReceived(Listener<VCardResponse> listener);
 
-    @Inject
-    public VCardManager(final XmppSession session) {
-	this.session = session;
-    }
+    /**
+     * Adds a handler to know when a VCardResponse is received
+     * 
+     * @param handler
+     * @return
+     */
+    HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler);
 
-    public void addOnVCardReceived(final Listener<VCardResponse> listener) {
-	addVCardResponseHandler(new VCardResponseHandler() {
-	    @Override
-	    public void onVCardResponse(VCardResponseEvent event) {
-		listener.onEvent(event.getvCardResponse());
-	    }
-	});
-    }
+    /**
+     * Use the other getUserVCard
+     * 
+     * @param userJid
+     * @param listener
+     */
+    @Deprecated
+    void getUserVCard(XmppURI userJid, Listener<VCardResponse> listener);
 
-    public HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler) {
-	return VCardResponseEvent.bind(session.getEventBus(), handler);
-    }
+    /**
+     * Gets the VCard of the given user JID
+     * 
+     * @param userJid
+     * @param listener
+     */
+    void getUserVCard(XmppURI userJid, VCardResponseHandler handler);
 
-    public void getUserVCard(final XmppURI userJid, final Listener<VCardResponse> listener) {
-	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUser());
-	iq.setTo(userJid);
+    /**
+     * Use the other requestOwnVCard
+     * 
+     * @param listener
+     */
+    @Deprecated
+    void requestOwnVCard(Listener<VCardResponse> listener);
 
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, listener);
-	    }
-	});
+    /**
+     * Gets the current logged in user's vcard
+     * 
+     * @param handler
+     */
+    void requestOwnVCard(VCardResponseHandler handler);
 
-    }
+    /**
+     * Use the other updateOwnVCard
+     * 
+     * @param vcard
+     * @param listener
+     */
+    @Deprecated
+    void updateOwnVCard(VCard vcard, Listener<VCardResponse> listener);
 
-    public void requestOwnVCard(final Listener<VCardResponse> listener) {
-	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUser());
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, listener);
-	    }
-	});
-    }
-
-    public void updateOwnVCard(final VCard vcard, final Listener<VCardResponse> listener) {
-	final IQ iq = new IQ(IQ.Type.set);
-	iq.addChild(vcard);
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, listener);
-	    }
-	});
-
-    }
-
-    protected void handleVCard(final IQ result, final Listener<VCardResponse> listener) {
-	final VCardResponse response = new VCardResponse(result);
-	if (listener != null) {
-	    listener.onEvent(response);
-	}
-	session.getEventBus().fireEvent(new VCardResponseEvent(response));
-    }
+    /**
+     * Updates the current logged in user's vcard
+     * 
+     * @param vcard
+     * @param handler
+     */
+    void updateOwnVCard(VCard vcard, VCardResponseHandler handler);
 }

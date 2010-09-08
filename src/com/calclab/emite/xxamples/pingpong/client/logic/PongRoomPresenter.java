@@ -7,22 +7,27 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
-import com.calclab.suco.client.Suco;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * Receives pings from a room and send pongs back.
  * 
  */
-public class PongRoomPresenter {
+public class PongRoomPresenter implements StartablePresenter {
 
     private final XmppURI roomUri;
     private final PingPongDisplay display;
     private int pongs;
+    private final RoomManager roomManager;
 
-    public PongRoomPresenter(XmppURI roomUri, PingPongDisplay display) {
+    @Inject
+    public PongRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
+	this.roomManager = roomManager;
 	this.roomUri = roomUri;
 	this.display = display;
 	pongs = 0;
@@ -33,7 +38,6 @@ public class PongRoomPresenter {
 	display.printHeader("Pong from: " + roomUri, Style.info);
 	display.printHeader("You need to open the ping room example page in order to run the example", Style.important);
 
-	RoomManager roomManager = Suco.get(RoomManager.class);
 	new ChatManagerEventsSupervisor(roomManager, display);
 	new RoomManagerEventsSupervisor(roomManager, display);
 

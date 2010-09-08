@@ -16,19 +16,23 @@ import com.calclab.emite.xep.muc.client.subject.RoomSubject;
 import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedEvent;
 import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
-import com.calclab.suco.client.Suco;
 import com.google.gwt.user.client.Timer;
+import com.google.inject.Inject;
 
-public class PongInviteRoomPresenter {
+public class PongInviteRoomPresenter implements StartablePresenter {
 
     private final PingPongDisplay display;
     private int time;
     private int pongs;
+    private final RoomManager roomManager;
 
-    public PongInviteRoomPresenter(PingPongDisplay display) {
+    @Inject
+    public PongInviteRoomPresenter(RoomManager roomManager, PingPongDisplay display) {
+	this.roomManager = roomManager;
 	this.display = display;
 	this.time = 5000;
 	this.pongs = 0;
@@ -38,29 +42,28 @@ public class PongInviteRoomPresenter {
 	display.printHeader("This is pong invite room example", Style.title);
 	display.print("You need to open the ping invite room example page", Style.important);
 
-	final RoomManager manager = Suco.get(RoomManager.class);
-	new ChatManagerEventsSupervisor(manager, display);
-	new RoomManagerEventsSupervisor(manager, display);
+	new ChatManagerEventsSupervisor(roomManager, display);
+	new RoomManagerEventsSupervisor(roomManager, display);
 
 	// Accept the room invitations we receive
-	manager.addRoomInvitationHandler(new RoomInvitationHandler() {
+	roomManager.addRoomInvitationHandler(new RoomInvitationHandler() {
 	    @Override
 	    public void onRoomInvitation(RoomInvitationEvent event) {
 		RoomInvitation invitation = event.getRoomInvitation();
 		display.print("Room invitation received: " + invitation.getReason() + " - " + invitation.getInvitor()
 			+ " to " + invitation.getRoomURI(), Style.important);
 		display.print("We accept the invitation", Style.important);
-		manager.acceptRoomInvitation(invitation);
+		roomManager.acceptRoomInvitation(invitation);
 	    }
 	});
 
 	// When a room is opened (by the acceptRoomInvitation method) we stay
 	// for a while and then go out
-	manager.addChatChangedHandler(new ChatChangedHandler() {
+	roomManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override
 	    public void onChatChanged(ChatChangedEvent event) {
 		if (event.isCreated()) {
-		    manageNewRoom(manager, (Room) event.getChat());
+		    manageNewRoom(roomManager, (Room) event.getChat());
 		}
 	    }
 	});

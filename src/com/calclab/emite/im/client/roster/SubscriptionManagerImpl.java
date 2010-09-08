@@ -28,8 +28,8 @@ import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
@@ -111,6 +111,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
     }
 
     @Override
+    @Deprecated
     public void onSubscriptionRequested(final Listener2<XmppURI, String> listener) {
 	addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
 	    @Override

@@ -24,7 +24,7 @@ public class VCardResponseEvent extends GwtEvent<VCardResponseHandler> {
 	return TYPE;
     }
 
-    public VCardResponse getvCardResponse() {
+    public VCardResponse getVCardResponse() {
 	return vCardResponse;
     }
 

@@ -40,6 +40,7 @@ public class SessionComponentsRegistry {
     }
 
     public void createComponents() {
+	GWT.log("SessionComponentsRegistry - Create components");
 	assert componentsCreated == false : "Session only can be started once!";
 	for (Provider<?> provider : providers) {
 	    provider.get();

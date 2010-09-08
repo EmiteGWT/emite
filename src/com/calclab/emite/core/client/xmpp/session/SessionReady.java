@@ -38,7 +38,7 @@ public class SessionReady {
 
     @Inject
     public SessionReady(final XmppSession session) {
-	GWT.log("SESSION READY - created");
+	GWT.log("Creating SessionReady");
 	enabled = true;
 
 	session.addSessionStateChangedHandler(true, new StateChangedHandler() {

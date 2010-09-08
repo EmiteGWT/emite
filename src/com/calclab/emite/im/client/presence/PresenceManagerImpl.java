@@ -30,8 +30,8 @@ import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
 import com.calclab.suco.client.events.Listener;
@@ -51,6 +51,7 @@ public class PresenceManagerImpl implements PresenceManager {
 
     @Inject
     public PresenceManagerImpl(final XmppSession session, SessionReady sessionReady) {
+	GWT.log("Creating PresenceManagerImpl");
 	sessionReady.setEnabled(false);
 	this.session = session;
 	setOwnPresence(INITIAL_PRESENCE);
@@ -117,6 +118,7 @@ public class PresenceManagerImpl implements PresenceManager {
     }
 
     @Override
+    @Deprecated
     public void onOwnPresenceChanged(final Listener<Presence> listener) {
 	addOwnPresenceChangedHandler(new OwnPresenceChangedHandler() {
 	    @Override

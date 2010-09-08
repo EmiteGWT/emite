@@ -44,18 +44,25 @@ public interface Connection {
 
     public abstract boolean isConnected();
 
+    @Deprecated
     public abstract void onConnected(final Listener0 listener);
 
+    @Deprecated
     public abstract void onDisconnected(final Listener<String> listener);
 
+    @Deprecated
     public abstract void onError(final Listener<String> listener);
 
+    @Deprecated
     public abstract void onResponse(final Listener<String> listener);
 
+    @Deprecated
     public abstract void onRetry(final Listener2<Integer, Integer> listener);
 
+    @Deprecated
     public abstract void onStanzaReceived(final Listener<IPacket> listener);
 
+    @Deprecated
     public abstract void onStanzaSent(final Listener<IPacket> listener);
 
     /**

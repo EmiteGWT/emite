@@ -92,9 +92,11 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     }
 
     /**
-     * Add a listener to know when an invitation was sent
+     * Add a listener to know when an invitation was sent Use
+     * addRoomInvitationSentHandler
      */
     @Override
+    @Deprecated
     public void onInvitationSent(final Listener2<XmppURI, String> listener) {
 	addRoomInvitationSentHandler(new RoomInvitationSentHandler() {
 	    @Override
@@ -104,6 +106,10 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    /**
+     * Use addOccupantChangedHandler
+     */
+    @Deprecated
     @Override
     public void onOccupantAdded(final Listener<Occupant> listener) {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
@@ -116,6 +122,10 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    /**
+     * Use addOccupantChangedHandler
+     */
+    @Deprecated
     @Override
     public void onOccupantModified(final Listener<Occupant> listener) {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
@@ -128,6 +138,11 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    /**
+     * Use addOccupantChangedHandler
+     */
+    @Deprecated
+    @Override
     public void onOccupantRemoved(final Listener<Occupant> listener) {
 	addOccupantChangedHandler(new OccupantChangedHandler() {
 	    @Override
@@ -139,6 +154,10 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    /**
+     * Use RoomSubject.addRoomSubjectChangedHandler
+     */
+    @Deprecated
     public void onSubjectChanged(final Listener2<Occupant, String> listener) {
 	RoomSubject.addRoomSubjectChangedHandler(this, new RoomSubjectChangedHandler() {
 	    @Override
@@ -149,6 +168,9 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    /**
+     * Use RoomSubject.requestSubjectChange
+     */
     @Override
     @Deprecated
     public void setSubject(String newSubject) {

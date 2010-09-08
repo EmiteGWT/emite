@@ -9,16 +9,20 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
-import com.calclab.suco.client.Suco;
+import com.google.inject.Inject;
 
-public class PongChatPresenter {
+public class PongChatPresenter implements StartablePresenter {
 
     private final PingPongDisplay display;
     private int pongs;
+    private final ChatManager chatManager;
 
-    public PongChatPresenter(PingPongDisplay output) {
+    @Inject
+    public PongChatPresenter(ChatManager chatManager, PingPongDisplay output) {
+	this.chatManager = chatManager;
 	this.display = output;
 	this.pongs = 0;
     }
@@ -27,7 +31,6 @@ public class PongChatPresenter {
 	display.printHeader("This is pong chat", Style.title);
 	display.printHeader("You need to open the ping chat example page in order to run the example", Style.important);
 
-	ChatManager chatManager = Suco.get(ChatManager.class);
 	new ChatManagerEventsSupervisor(chatManager, display);
 	chatManager.addChatChangedHandler(new ChatChangedHandler() {
 	    @Override
