@@ -21,8 +21,8 @@
  */
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 /**
  * A room occupant: each occupant in a room is identified as
@@ -51,7 +51,6 @@ public class Occupant {
 
     public Occupant(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role,
 	    final Show show, final String statusMessage) {
-	assert userUri != null : "User uri can't be null in occupant";
 	assert occupantUri != null : "Occupant uri can't be null in occupant";
 	this.userUri = userUri;
 	this.occupantUri = occupantUri;

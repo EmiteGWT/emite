@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
@@ -37,6 +37,15 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Override
     public HandlerRegistration addBeforeRoomInvitationSendHandler(BeforeRoomInvitationSendHandler handler) {
 	return BeforeRoomInvitationSendEvent.bind(chatEventBus, handler);
+    }
+
+    protected void addOccupant(Occupant occupant) {
+	occupantsByOccupantUri.put(occupant.getOccupantUri(), occupant);
+	XmppURI userUri = occupant.getUserUri();
+	if (userUri != null) {
+	    occupantsByUserUri.put(userUri.getJID(), occupant);
+	}
+	chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.added, occupant));
     }
 
     /**
@@ -157,6 +166,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     /**
      * Use RoomSubject.addRoomSubjectChangedHandler
      */
+    @Override
     @Deprecated
     public void onSubjectChanged(final Listener2<Occupant, String> listener) {
 	RoomSubject.addRoomSubjectChangedHandler(this, new RoomSubjectChangedHandler() {
@@ -168,6 +178,17 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	});
     }
 
+    protected void removeOccupant(final XmppURI occupantUri) {
+	final Occupant occupant = occupantsByOccupantUri.remove(occupantUri);
+	if (occupant != null) {
+	    XmppURI userUri = occupant.getUserUri();
+	    if (userUri != null) {
+		occupantsByUserUri.remove(userUri.getJID());
+	    }
+	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.removed, occupant));
+	}
+    }
+
     /**
      * Use RoomSubject.requestSubjectChange
      */
@@ -175,19 +196,5 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Deprecated
     public void setSubject(String newSubject) {
 	RoomSubject.requestSubjectChange(this, newSubject);
-    }
-
-    protected void addOccupant(Occupant occupant) {
-	occupantsByOccupantUri.put(occupant.getOccupantUri(), occupant);
-	occupantsByUserUri.put(occupant.getUserUri().getJID(), occupant);
-	chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.added, occupant));
-    }
-
-    protected void removeOccupant(final XmppURI occupantUri) {
-	final Occupant occupant = occupantsByOccupantUri.remove(occupantUri);
-	if (occupant != null) {
-	    occupantsByUserUri.remove(occupant.getUserUri().getJID());
-	    chatEventBus.fireEvent(new OccupantChangedEvent(ChangeTypes.removed, occupant));
-	}
     }
 }
