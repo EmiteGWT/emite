@@ -7,8 +7,27 @@ import java.util.Date;
  */
 public interface XmppDateTimeFormatter {
 
+    String formatLegacyFormatXmppDateTime(Date dateTime);
+
+    /**
+     * This method allows to format a date using the deprecated
+     * "CCYYMMDDThh:mm:ss" format.
+     * 
+     * @param dateTime
+     *            The string to parse to a date.
+     * @return The parsed date.
+     */
     String formatXmppDateTime(Date dateTime);
 
-    Date parseXmppDateTime(String dateTime);
+    /**
+     * This method allows to parse a deprecated formatted date, with the
+     * "CCYYMMDDThh:mm:ss" format.
+     * 
+     * @param dateTime
+     *            The string to parse to a date.
+     * @return The parsed date.
+     */
+    Date parseLegacyFormatXmppDateTime(String dateTime);
 
+    Date parseXmppDateTime(String dateTime);
 }

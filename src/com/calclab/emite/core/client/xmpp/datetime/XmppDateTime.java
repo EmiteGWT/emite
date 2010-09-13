@@ -2,6 +2,7 @@ package com.calclab.emite.core.client.xmpp.datetime;
 
 import java.util.Date;
 
+import com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 /**
@@ -15,8 +16,16 @@ public class XmppDateTime {
 
     private static XmppDateTimeFormatter xdt = null;
 
+    public static String formatLegacyFormatXMPPDateTime(final Date dateTime) {
+	return xdt.formatLegacyFormatXmppDateTime(dateTime);
+    }
+
     public static String formatXMPPDateTime(final Date dateTime) {
 	return xdt.formatXmppDateTime(dateTime);
+    }
+
+    public static Date parseLegacyFormatXMPPDateTime(final String dateTime) {
+	return xdt.parseLegacyFormatXmppDateTime(dateTime);
     }
 
     public static Date parseXMPPDateTime(final String dateTime) {
@@ -37,9 +46,62 @@ public class XmppDateTime {
 	     */
 	    private final DateTimeFormat dtf = DateTimeFormat.getFormat("yyyy-MM-ddTHH:mm:ss[.sss]Z");
 
+	    private final DateTimeFormat deprecatedDtf = DateTimeFormat.getFormat("yyyyMMddTHH:mm:ss");
+
+	    @Override
+	    public String formatLegacyFormatXmppDateTime(Date dateTime) {
+		return deprecatedDtf.format(dateTime);
+	    }
+
 	    @Override
 	    public String formatXmppDateTime(final Date dateTime) {
 		return dtf.format(dateTime);
+	    }
+
+	    @Override
+	    public Date parseLegacyFormatXmppDateTime(String dateTime) {
+		return deprecatedDtf.parse(dateTime);
+	    }
+
+	    @Override
+	    public Date parseXmppDateTime(final String dateTime) {
+		return dtf.parse(dateTime);
+	    }
+	};
+    }
+
+    /**
+     * Change to GWT implementation
+     */
+    public static void useGWT21() {
+	xdt = new XmppDateTimeFormatter() {
+	    /*
+	     * CCYY-MM-DDThh:mm:ss[.sss]TZD
+	     */
+	    // private final
+	    // com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
+	    // dtf =
+	    // com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
+	    // .getFormat("yyyy-MM-dd'T'HH:mm:ss[.SSS][ZZZ]");
+	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat dtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
+		    .getFormat(PredefinedFormat.ISO_8601);
+
+	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat deprecatedDtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
+		    .getFormat("yyyyMMdd'T'HH:mm:ss");
+
+	    @Override
+	    public String formatLegacyFormatXmppDateTime(Date dateTime) {
+		return deprecatedDtf.format(dateTime);
+	    }
+
+	    @Override
+	    public String formatXmppDateTime(final Date dateTime) {
+		return dtf.format(dateTime);
+	    }
+
+	    @Override
+	    public Date parseLegacyFormatXmppDateTime(String dateTime) {
+		return deprecatedDtf.parse(dateTime);
 	    }
 
 	    @Override

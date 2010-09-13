@@ -1,0 +1,7 @@
+Emite
+A GWT XMPP (jabber, instant messaging protocol) library.
+
+http://code.google.com/p/emite/
+
+This software contains source code developed by Google Inc. (http://www.google.com/)
+  http://code.google.com/webtoolkit/terms.html

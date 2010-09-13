@@ -7,7 +7,7 @@ public class EmiteCoreEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	XmppDateTime.useGWT();
+	XmppDateTime.useGWT21();
     }
 
 }
