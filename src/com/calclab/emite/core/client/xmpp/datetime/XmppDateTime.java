@@ -3,6 +3,7 @@ package com.calclab.emite.core.client.xmpp.datetime;
 import java.util.Date;
 
 import com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 /**
@@ -78,13 +79,11 @@ public class XmppDateTime {
 	    /*
 	     * CCYY-MM-DDThh:mm:ss[.sss]TZD
 	     */
-	    // private final
-	    // com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
-	    // dtf =
-	    // com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
-	    // .getFormat("yyyy-MM-dd'T'HH:mm:ss[.SSS][ZZZ]");
 	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat dtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
 		    .getFormat(PredefinedFormat.ISO_8601);
+
+	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat noMillisDtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
+		    .getFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
 
 	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat deprecatedDtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
 		    .getFormat("yyyyMMdd'T'HH:mm:ss");
@@ -106,7 +105,16 @@ public class XmppDateTime {
 
 	    @Override
 	    public Date parseXmppDateTime(final String dateTime) {
-		return dtf.parse(dateTime);
+		String date = dateTime;
+		if (date.endsWith("Z")) { // Hack to replace unparseable "Z".
+		    date = dateTime.substring(0, dateTime.length() - 1) + "GMT";
+		}
+		try {
+		    return dtf.parse(date);
+		} catch (IllegalArgumentException e) {
+		    GWT.log("Cannot parse date-time '" + date + "' with normal pattern");
+		    return noMillisDtf.parse(date);
+		}
 	    }
 	};
     }

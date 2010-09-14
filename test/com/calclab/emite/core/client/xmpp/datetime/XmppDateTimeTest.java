@@ -19,8 +19,13 @@ public class XmppDateTimeTest {
 	Date date = cal.getTime();
 	assertEquals(date, XmppDateTime.parseLegacyFormatXMPPDateTime("19800415T17:15:02"));
 	assertEquals("19800415T17:15:02", XmppDateTime.formatLegacyFormatXMPPDateTime(date));
+	cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+	cal.set(Calendar.MILLISECOND, 0); // Curious... need to do it otherwise
+					  // the next test fails...
+	date = cal.getTime();
+	assertEquals(date, XmppDateTime.parseXMPPDateTime("1980-04-15T17:15:02Z"));
+	cal.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
 	cal.set(Calendar.MILLISECOND, 159);
-	cal.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 	date = cal.getTime();
 	assertEquals(date, XmppDateTime.parseXMPPDateTime("1980-04-15T17:15:02.159+01:00"));
 	// Cannot test it in another way, unfortunately the TimeZone of my
