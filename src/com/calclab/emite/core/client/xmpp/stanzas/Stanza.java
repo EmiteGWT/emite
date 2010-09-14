@@ -24,6 +24,8 @@ package com.calclab.emite.core.client.xmpp.stanzas;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public interface Stanza extends IPacket {
+    public Delay getDelay();
+
     public XmppURI getFrom();
 
     public String getFromAsString();
