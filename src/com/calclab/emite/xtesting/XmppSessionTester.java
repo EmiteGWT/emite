@@ -8,15 +8,18 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.IQReceivedEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerPlate;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
@@ -105,22 +108,22 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
     }
 
     public void receives(final Message message) {
-	fireMessage(message);
+	eventBus.fireEvent(new MessageReceivedEvent(message));
     }
 
     public void receives(final Presence presence) {
-	firePresence(presence);
+	eventBus.fireEvent(new PresenceReceivedEvent(presence));
     }
 
     public void receives(final String received) {
 	final IPacket stanza = xmler.toXML(received);
 	final String name = stanza.getName();
 	if (name.equals("message")) {
-	    fireMessage(new Message(stanza));
+	    eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
 	} else if (name.equals("presence")) {
-	    firePresence(new Presence(stanza));
+	    eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
 	} else if (name.equals("iq")) {
-	    fireIQ(new IQ(stanza));
+	    eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
 	} else {
 	    throw new RuntimeException("WHAT IS THIS? (" + name + "): " + stanza.toString());
 	}

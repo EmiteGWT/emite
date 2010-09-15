@@ -3,28 +3,19 @@ package com.calclab.emite.core.client.events;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.google.gwt.event.shared.GwtEvent;
 
-public class IQEvent extends GwtEvent<IQHandler> {
-
-    private static final Type<IQHandler> TYPE = new Type<IQHandler>();
-
-    public static Type<IQHandler> getType() {
-	return TYPE;
-    }
+public abstract class IQEvent extends GwtEvent<IQHandler> {
 
     private final IQ iq;
+    private final Type<IQHandler> type;
 
-    public IQEvent(final IQ iq) {
+    public IQEvent(Type<IQHandler> type, final IQ iq) {
+	this.type = type;
 	this.iq = iq;
     }
 
     @Override
-    protected void dispatch(final IQHandler handler) {
-	handler.onPacket(this);
-    }
-
-    @Override
     public Type<IQHandler> getAssociatedType() {
-	return getType();
+	return type;
     }
 
     public IQ getIQ() {
@@ -34,6 +25,11 @@ public class IQEvent extends GwtEvent<IQHandler> {
     @Override
     public String toDebugString() {
 	return super.toDebugString() + iq;
+    }
+
+    @Override
+    protected void dispatch(final IQHandler handler) {
+	handler.onPacket(this);
     }
 
 }

@@ -25,11 +25,15 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
+import com.calclab.emite.core.client.events.BeforeStanzaSendEvent;
+import com.calclab.emite.core.client.events.IQReceivedEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultHandler;
@@ -77,13 +81,13 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 		final IPacket stanza = event.getStanza();
 		final String name = stanza.getName();
 		if (name.equals("message")) {
-		    fireMessage(new Message(stanza));
+		    eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
 		} else if (name.equals("presence")) {
-		    firePresence(new Presence(stanza));
+		    eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
 		} else if (name.equals("iq")) {
 		    final String type = stanza.getAttribute("type");
 		    if ("get".equals(type) || "set".equals(type)) {
-			fireIQ(new IQ(stanza));
+			eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
 		    } else {
 			iqManager.handle(stanza);
 		    }
@@ -208,6 +212,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    queuedStanzas.add(packet);
 	} else {
 	    packet.setAttribute("from", userUri.toString());
+	    eventBus.fireEvent(new BeforeStanzaSendEvent(packet));
 	    connection.send(packet);
 	}
     }

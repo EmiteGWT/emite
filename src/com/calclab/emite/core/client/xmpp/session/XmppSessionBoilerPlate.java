@@ -1,16 +1,15 @@
 package com.calclab.emite.core.client.xmpp.session;
 
+import com.calclab.emite.core.client.events.BeforeStanzaSendEvent;
 import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.IQEvent;
 import com.calclab.emite.core.client.events.IQHandler;
+import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.PacketHandler;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -24,8 +23,13 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
     }
 
     @Override
+    public HandlerRegistration addBeforeSendStanzaHandler(PacketHandler handler) {
+	return BeforeStanzaSendEvent.bind(eventBus, handler);
+    }
+
+    @Override
     public HandlerRegistration addIQReceivedHandler(final IQHandler handler) {
-	return eventBus.addHandler(IQEvent.getType(), handler);
+	return IQReceivedEvent.bind(eventBus, handler);
     }
 
     @Override
@@ -52,6 +56,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	return eventBus;
     }
 
+    @Override
     public String getSessionState() {
 	return state;
     }
@@ -66,22 +71,11 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	login(new Credentials(uri, password, Credentials.ENCODING_NONE));
     }
 
+    @Override
     public void setSessionState(final String newState) {
 	if (!newState.equals(state)) {
 	    this.state = newState;
 	    eventBus.fireEvent(new SessionStateChangedEvent(newState));
 	}
-    }
-
-    protected void fireIQ(final IQ iq) {
-	eventBus.fireEvent(new IQEvent(iq));
-    }
-
-    protected void fireMessage(final Message message) {
-	eventBus.fireEvent(new MessageReceivedEvent(message));
-    }
-
-    protected void firePresence(final Presence presence) {
-	eventBus.fireEvent(new PresenceReceivedEvent(presence));
     }
 }

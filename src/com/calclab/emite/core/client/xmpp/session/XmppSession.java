@@ -4,6 +4,7 @@ import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.IQHandler;
 import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.PacketHandler;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -81,10 +82,37 @@ public interface XmppSession {
 	public static final String rosterReady = "rosterReady";
     }
 
+    /**
+     * Add a handler to know when a stanza is going to be send. Allows to modify
+     * a stanza before is sent to the server.
+     * 
+     * @param handler
+     * @return a way to remove the handler
+     */
+    public HandlerRegistration addBeforeSendStanzaHandler(PacketHandler handler);
+
+    /**
+     * Add a handler to know when a IQ has been received
+     * 
+     * @param handler
+     * @return a way to remove the handler
+     */
     public HandlerRegistration addIQReceivedHandler(IQHandler handler);
 
+    /**
+     * Add a handler to know when a Message has been received
+     * 
+     * @param handler
+     * @return a way to remove the handler
+     */
     public HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
 
+    /**
+     * Add a handler to know when a Presence has been received
+     * 
+     * @param handler
+     * @return a way to remove the handler
+     */
     public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
 
     /**
@@ -95,8 +123,9 @@ public interface XmppSession {
      *            if true, the current session state will be sent to the handler
      *            just after addition
      * @param handler
+     *            the handler itself
      * 
-     * @return
+     * @return a way to remove the handler
      */
     public HandlerRegistration addSessionStateChangedHandler(boolean sendCurrent, StateChangedHandler handler);
 
@@ -149,7 +178,7 @@ public interface XmppSession {
      * 
      * @param credentials
      */
-    public abstract void login(Credentials credentials);
+    public void login(Credentials credentials);
 
     /**
      * <p>
@@ -164,13 +193,13 @@ public interface XmppSession {
      * 
      * @see login
      */
-    public abstract void login(final XmppURI uri, final String password);
+    public void login(final XmppURI uri, final String password);
 
     /**
      * Start a logout process in the current session. Use obnLoggedOut to know
      * when you are really logged out.
      */
-    public abstract void logout();
+    public void logout();
 
     /**
      * Call this method to pause the session. You can use the given object
@@ -181,7 +210,7 @@ public interface XmppSession {
      * @return The StreamSettings object if the session was ready, null
      *         otherwise
      */
-    public abstract StreamSettings pause();
+    public StreamSettings pause();
 
     /**
      * Call this method to resume a session.
@@ -193,7 +222,7 @@ public interface XmppSession {
      * @param settings
      *            the stream settings given by the pause method
      */
-    public abstract void resume(XmppURI userURI, StreamSettings settings);
+    public void resume(XmppURI userURI, StreamSettings settings);
 
     /**
      * Send a stanza to the server. This method overrides the "from" uri
@@ -206,7 +235,7 @@ public interface XmppSession {
      * @param stanza
      *            the stanza to be sent
      */
-    public abstract void send(final IPacket stanza);
+    public void send(final IPacket stanza);
 
     /**
      * A helper method that allows to send a IQ stanza and attach a listener to
@@ -230,7 +259,7 @@ public interface XmppSession {
      *            be null
      * 
      */
-    public abstract void sendIQ(final String category, final IQ iq, final IQResponseHandler iqHandler);
+    public void sendIQ(final String category, final IQ iq, final IQResponseHandler iqHandler);
 
     /**
      * Set the current session's state
