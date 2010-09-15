@@ -19,12 +19,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.xep.delay.client;
 
 import java.util.Date;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 /**
  * Represents the delay of message delivery. It can be applied to any stanza. It

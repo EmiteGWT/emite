@@ -3,6 +3,7 @@ package com.calclab.emite.core.client.xmpp.datetime;
 import java.util.Date;
 
 import com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat.PredefinedFormat;
+import com.calclab.emite.core.client.xmpp.datetime.gwt.TimeZone;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
@@ -88,9 +89,11 @@ public class XmppDateTime {
 	    private final com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat deprecatedDtf = com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat
 		    .getFormat("yyyyMMdd'T'HH:mm:ss");
 
+	    private final TimeZone gmtTimeZone = TimeZone.createTimeZone(0);
+
 	    @Override
 	    public String formatLegacyFormatXmppDateTime(Date dateTime) {
-		return deprecatedDtf.format(dateTime);
+		return deprecatedDtf.format(dateTime, gmtTimeZone);
 	    }
 
 	    @Override
@@ -100,7 +103,11 @@ public class XmppDateTime {
 
 	    @Override
 	    public Date parseLegacyFormatXmppDateTime(String dateTime) {
-		return deprecatedDtf.parse(dateTime);
+		Date retValue = deprecatedDtf.parse(dateTime);
+		// The server always sends a GMT date, so we compensate the
+		// timezone offset.
+		retValue.setTime(retValue.getTime() - retValue.getTimezoneOffset() * 60 * 1000);
+		return retValue;
 	    }
 
 	    @Override

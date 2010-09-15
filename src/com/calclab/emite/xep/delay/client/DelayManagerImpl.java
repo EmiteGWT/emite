@@ -19,20 +19,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.xep.delay.client;
 
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.packet.PacketMatcher;
+import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 
-public interface Stanza extends IPacket {
-    public XmppURI getFrom();
+/**
+ * Default implementation of {@link DelayManager}.
+ * 
+ */
+public class DelayManagerImpl implements DelayManager {
 
-    public String getFromAsString();
+    @Override
+    public Delay getDelay(Stanza stanza) {
+	IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
 
-    public XmppURI getTo();
+	    @Override
+	    public boolean matches(IPacket packet) {
+		return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))
+			|| "delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
+	    }
+	});
+	if (delayPacket != NoPacket.INSTANCE) {
+	    return new Delay(delayPacket);
+	}
+	return null;
+    }
 
-    public String getToAsString();
-
-    public void setFrom(XmppURI from);
-
-    public void setTo(XmppURI to);
 }

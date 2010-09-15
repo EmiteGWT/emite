@@ -15,10 +15,11 @@ public class XmppDateTimeTest {
 	XmppDateTime.useGWT21();
 	Calendar cal = Calendar.getInstance();
 	cal.clear();
-	cal.set(1980, Calendar.APRIL, 15, 17, 15, 02);
+	cal.set(1980, Calendar.APRIL, 15, 15, 15, 02);
+	cal.add(Calendar.MILLISECOND, cal.getTimeZone().getOffset(cal.getTimeInMillis()));
 	Date date = cal.getTime();
-	assertEquals(date, XmppDateTime.parseLegacyFormatXMPPDateTime("19800415T17:15:02"));
-	assertEquals("19800415T17:15:02", XmppDateTime.formatLegacyFormatXMPPDateTime(date));
+	assertEquals(date, XmppDateTime.parseLegacyFormatXMPPDateTime("19800415T15:15:02"));
+	assertEquals("19800415T15:15:02", XmppDateTime.formatLegacyFormatXMPPDateTime(date));
 	cal.setTimeZone(TimeZone.getTimeZone("GMT"));
 	cal.set(Calendar.MILLISECOND, 0); // Curious... need to do it otherwise
 					  // the next test fails...

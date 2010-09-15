@@ -19,20 +19,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.xep.delay.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.google.gwt.inject.client.GinModules;
+import com.google.gwt.inject.client.Ginjector;
 
-public interface Stanza extends IPacket {
-    public XmppURI getFrom();
+/**
+ * Injector for the Delay module.
+ * 
+ */
+@GinModules(DelayModule.class)
+public interface DelayGinjector extends Ginjector {
 
-    public String getFromAsString();
-
-    public XmppURI getTo();
-
-    public String getToAsString();
-
-    public void setFrom(XmppURI from);
-
-    public void setTo(XmppURI to);
+    DelayManager getDelayManager();
 }

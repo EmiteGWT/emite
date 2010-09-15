@@ -19,20 +19,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.xep.delay.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 
-public interface Stanza extends IPacket {
-    public XmppURI getFrom();
+/**
+ * Manages retrieval of delay of stanzas. Implements XEP-0091 (deprecated) and
+ * XEP-0203.
+ * 
+ */
+public interface DelayManager {
 
-    public String getFromAsString();
-
-    public XmppURI getTo();
-
-    public String getToAsString();
-
-    public void setFrom(XmppURI from);
-
-    public void setTo(XmppURI to);
+    Delay getDelay(Stanza stanza);
 }

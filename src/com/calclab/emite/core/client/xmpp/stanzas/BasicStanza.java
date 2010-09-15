@@ -26,7 +26,6 @@ import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import com.calclab.emite.core.client.packet.DelegatedPacket;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 
 public class BasicStanza extends DelegatedPacket implements Stanza {
     protected static final String TYPE = "type";
@@ -40,22 +39,6 @@ public class BasicStanza extends DelegatedPacket implements Stanza {
 
     public BasicStanza(final String name, final String xmlns) {
 	super(new Packet(name, xmlns));
-    }
-
-    @Override
-    public Delay getDelay() {
-	IPacket delayPacket = getFirstChild(new PacketMatcher() {
-
-	    @Override
-	    public boolean matches(IPacket packet) {
-		return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))
-			|| "delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
-	    }
-	});
-	if (delayPacket != null) {
-	    return new Delay(delayPacket);
-	}
-	return null;
     }
 
     @Override
