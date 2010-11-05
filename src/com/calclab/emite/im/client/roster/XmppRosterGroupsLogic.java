@@ -21,6 +21,35 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
 	all = new RosterGroup(null);
     }
 
+    protected RosterGroup addGroup(final String groupName) {
+	RosterGroup group;
+	group = groupName != null ? new RosterGroup(groupName) : all;
+	groups.put(groupName, group);
+	eventBus.fireEvent(new RosterGroupChangedEvent(ChangeTypes.added, group));
+	return group;
+    }
+
+    protected void addToGroup(final RosterItem item, final String groupName) {
+	RosterGroup group = groups.get(groupName);
+	if (group == null) {
+	    group = addGroup(groupName);
+	}
+	group.add(item);
+    }
+
+    protected void clearGroupAll() {
+	all.clear();
+    }
+
+    protected void fireItemChangedInGroups(RosterItemChangedEvent event) {
+	XmppURI itemJID = event.getRosterItem().getJID();
+	for (RosterGroup group : groups.values()) {
+	    if (group.hasItem(itemJID)) {
+		group.getRosterGroupEventBus().fireEvent(event);
+	    }
+	}
+    }
+
     @Override
     public Set<String> getGroupNames() {
 	return groups.keySet();
@@ -50,35 +79,6 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
     @Override
     public Collection<RosterGroup> getRosterGroups() {
 	return groups.values();
-    }
-
-    protected RosterGroup addGroup(final String groupName) {
-	RosterGroup group;
-	group = groupName != null ? new RosterGroup(groupName) : all;
-	groups.put(groupName, group);
-	eventBus.fireEvent(new RosterGroupChangedEvent(ChangeTypes.added, group));
-	return group;
-    }
-
-    protected void addToGroup(final RosterItem item, final String groupName) {
-	RosterGroup group = groups.get(groupName);
-	if (group == null) {
-	    group = addGroup(groupName);
-	}
-	group.add(item);
-    }
-
-    protected void clearGroupAll() {
-	all.clear();
-    }
-
-    protected void fireItemChangedInGroups(RosterItemChangedEvent event) {
-	XmppURI itemJID = event.getRosterItem().getJID();
-	for (RosterGroup group : groups.values()) {
-	    if (group.hasItem(itemJID)) {
-		group.getRosterGroupEventBus().fireEvent(event);
-	    }
-	}
     }
 
     protected void removeGroup(final String groupName) {

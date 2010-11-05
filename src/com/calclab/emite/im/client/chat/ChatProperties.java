@@ -1,6 +1,7 @@
 package com.calclab.emite.im.client.chat;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
@@ -23,12 +24,53 @@ public class ChatProperties {
 	this(uri, null, null);
     }
 
+    /**
+     * Creates a new {@link ChatProperties} instance taking the data from the
+     * given properties instance. Note that this will not copy the initiator uri
+     * or state.
+     * 
+     * @param uri
+     *            the new uri for the properties.
+     * @param properties
+     *            the properties object to replicate.
+     */
+    public ChatProperties(final XmppURI uri, final ChatProperties properties) {
+	this(uri, null, null, properties);
+
+	for (Entry<String, Object> entry : properties.data.entrySet()) {
+	    this.setData(entry.getKey(), entry.getValue());
+	}
+    }
+
     public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state) {
 	this.uri = uri;
 	this.initiatorUri = initiatorUri;
 	this.state = state;
 	this.shouldCreateNewChat = true;
 	data = new HashMap<String, Object>();
+    }
+
+    /**
+     * Creates a new {@link ChatProperties} instance taking the data from the
+     * given properties instance. Note that this will not copy the initiator uri
+     * or state.
+     * 
+     * @param uri
+     *            the new uri for the properties.
+     * @param initiatorUri
+     *            the uri of the chat initiator.
+     * @param state
+     *            the chat state.
+     * @param properties
+     *            the properties object to replicate.
+     */
+    public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state,
+	    final ChatProperties properties) {
+	this(uri, initiatorUri, state);
+
+	for (Entry<String, Object> entry : properties.data.entrySet()) {
+	    this.setData(entry.getKey(), entry.getValue());
+	}
     }
 
     /**
@@ -127,5 +169,4 @@ public class ChatProperties {
     public boolean shouldCreateNewChat() {
 	return shouldCreateNewChat;
     }
-
 }

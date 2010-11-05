@@ -15,12 +15,6 @@ import com.calclab.suco.testing.events.MockedListener;
 
 public class PairChatManagerTest extends AbstractChatManagerTest {
 
-    private MockedListener<Chat> addOnChatCreatedListener() {
-	final MockedListener<Chat> listener = new MockedListener<Chat>();
-	manager.onChatCreated(listener);
-	return listener;
-    }
-
     @Test
     public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {
 	final Message message = new Message(null, MYSELF, OTHER);
@@ -31,12 +25,6 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	assertTrue(listener.isNotCalled());
 	manager.open(OTHER);
 	assertTrue(listener.isCalled());
-    }
-
-    @Override
-    protected PairChatManager createChatManager() {
-	final PairChatManager chatManagerDefault = new PairChatManager(session);
-	return chatManagerDefault;
     }
 
     @Test
@@ -145,5 +133,17 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	assertTrue(listener.isCalledWithSame(chat));
 	session.receives(new Message("answer", MYSELF, uri("someone@domain/resource")));
 	assertTrue(listener.isCalled(1));
+    }
+
+    private MockedListener<Chat> addOnChatCreatedListener() {
+	final MockedListener<Chat> listener = new MockedListener<Chat>();
+	manager.onChatCreated(listener);
+	return listener;
+    }
+
+    @Override
+    protected PairChatManager createChatManager() {
+	final PairChatManager chatManagerDefault = new PairChatManager(session);
+	return chatManagerDefault;
     }
 }

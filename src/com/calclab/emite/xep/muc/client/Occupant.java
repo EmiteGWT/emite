@@ -22,6 +22,7 @@
 package com.calclab.emite.xep.muc.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.HasJID;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 /**
@@ -32,7 +33,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  * 
  * @see http://xmpp.org/extensions/xep-0045.html
  */
-public class Occupant {
+public class Occupant implements HasJID {
 
     public static enum Affiliation {
 	admin, member, none, owner
@@ -165,4 +166,11 @@ public class Occupant {
     public String toString() {
 	return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
     }
+
+	/**
+	 * {@inheritDoc}. In this case this method will return the user's jid.
+	 */
+	public XmppURI getJID() {
+		return getUserUri().getJID();
+	}
 }

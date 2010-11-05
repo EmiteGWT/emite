@@ -30,10 +30,11 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
+import com.calclab.emite.core.client.xmpp.stanzas.HasJID;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 /**
  * Represents a item (contact) in the Roster. Usually you don't create this
@@ -41,7 +42,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
  * 
  * @see roster.getRoster();
  */
-public class RosterItem {
+public class RosterItem implements HasJID {
 
     private static final PacketMatcher GROUP_FILTER = MatcherFactory.byName("group");
 
@@ -53,8 +54,9 @@ public class RosterItem {
      * @return a new roster item instance
      */
     static RosterItem parse(final IPacket packet) {
-	final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet
-		.getAttribute("subscription")), packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
+	final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")),
+		parseSubscriptionState(packet.getAttribute("subscription")), packet.getAttribute("name"),
+		parseAsk(packet.getAttribute("ask")));
 	final List<? extends IPacket> groups = packet.getChildren(GROUP_FILTER);
 
 	String groupName;
@@ -159,6 +161,16 @@ public class RosterItem {
     }
 
     /**
+     * Return the available resources (is the actual backend implementation. Do
+     * not modify)
+     * 
+     * @return
+     */
+    HashSet<String> getAvailableResources() {
+	return availableResources;
+    }
+
+    /**
      * Get the name of all the groups this items belongs to.
      * 
      * @return the list of group names
@@ -173,6 +185,7 @@ public class RosterItem {
      * @see getXmppURI
      * @return the jid
      */
+    @Override
     public XmppURI getJID() {
 	return jid;
     }
@@ -248,6 +261,16 @@ public class RosterItem {
     }
 
     /**
+     * Set the available resources (by copy: you can modify parameter)
+     * 
+     * @param availableResources
+     */
+    void setAvaialableResources(HashSet<String> availableResources) {
+	this.availableResources.clear();
+	this.availableResources.addAll(availableResources);
+    }
+
+    /**
      * Change the current available state of this item. Availability is set per
      * resource. If no resource given, this method has no effect.
      * 
@@ -265,6 +288,13 @@ public class RosterItem {
 	    availableResources.add(resource);
 	} else {
 	    availableResources.remove(resource);
+	}
+    }
+
+    void setGroups(final String... groups) {
+	this.groups.clear();
+	for (final String group : groups) {
+	    addToGroup(group);
 	}
     }
 
@@ -317,33 +347,6 @@ public class RosterItem {
     @Override
     public String toString() {
 	return "RosterItem " + jid.toString();
-    }
-
-    /**
-     * Return the available resources (is the actual backend implementation. Do
-     * not modify)
-     * 
-     * @return
-     */
-    HashSet<String> getAvailableResources() {
-	return availableResources;
-    }
-
-    /**
-     * Set the available resources (by copy: you can modify parameter)
-     * 
-     * @param availableResources
-     */
-    void setAvaialableResources(HashSet<String> availableResources) {
-	this.availableResources.clear();
-	this.availableResources.addAll(availableResources);
-    }
-
-    void setGroups(final String... groups) {
-	this.groups.clear();
-	for (final String group : groups) {
-	    addToGroup(group);
-	}
     }
 
 }

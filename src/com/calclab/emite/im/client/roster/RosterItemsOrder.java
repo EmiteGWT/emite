@@ -7,10 +7,10 @@ public class RosterItemsOrder {
     public static final Comparator<RosterItem> byName = new Comparator<RosterItem>() {
 	@Override
 	public int compare(final RosterItem item1, final RosterItem item2) {
-	    if (item1.name != null && item2.name != null) {
-		return item1.name.compareTo(item2.name);
+	    if (item1.getName() != null && item2.getName() != null) {
+		return item1.getName().compareTo(item2.getName());
 	    } else {
-		return item1.jid.toString().compareTo(item2.jid.toString());
+		return item1.getJID().toString().compareTo(item2.getJID().toString());
 	    }
 
 	}
@@ -49,12 +49,20 @@ public class RosterItemsOrder {
 	    }
 	}
     };
+
     public static Comparator<RosterItem> groupedFirst = new Comparator<RosterItem>() {
 	@Override
 	public int compare(final RosterItem item1, final RosterItem item2) {
-	    final Integer item1Size = item1.groups.size();
-	    final Integer item2Size = item2.groups.size();
-	    return item2Size.compareTo(item1Size);
+	    final Integer item1Size = item1.getGroups().size();
+	    final Integer item2Size = item2.getGroups().size();
+
+	    if (((item1Size == 0) && (item2Size == 0)) || ((item1Size > 0) && (item2Size > 0))) {
+		return 0;
+	    } else if (item1Size == 0) {
+		return 1;
+	    } else {
+		return -1;
+	    }
 	}
     };
 

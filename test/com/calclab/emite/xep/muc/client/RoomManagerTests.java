@@ -10,6 +10,7 @@ import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 
@@ -34,9 +35,10 @@ public class RoomManagerTests {
     @Test
     public void shouldAcceptInvitations() {
 	ChatChangedTestHandler handler = new ChatChangedTestHandler();
+	ChatProperties properties = new ChatProperties(USER);
 	manager.addChatChangedHandler(handler);
 	RoomInvitation invitation = new RoomInvitation(uri("friend@host/resource"), uri("room@room.service"),
-		"theReason");
+		"theReason", properties);
 	manager.acceptRoomInvitation(invitation);
 	assertEquals(2, handler.getCalledTimes());
 	assertEquals(ChangeTypes.created, handler.getEvent(0).getChangeType());

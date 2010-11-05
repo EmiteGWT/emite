@@ -21,9 +21,11 @@
  */
 package com.calclab.emite.xep.muc.client;
 
+import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
+import com.google.inject.name.Names;
 
 public class MucModule extends AbstractGinModule implements EntryPoint {
 
@@ -36,6 +38,8 @@ public class MucModule extends AbstractGinModule implements EntryPoint {
     protected void configure() {
 	bind(RoomManager.class).to(RoomChatManager.class).in(Singleton.class);
 	bind(MucComponents.class).asEagerSingleton();
+	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class).in(
+		Singleton.class);
     }
 
 }

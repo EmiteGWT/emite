@@ -15,6 +15,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
 import com.calclab.suco.testing.events.MockedListener;
@@ -93,6 +94,28 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<item role='moderator' affiliation='owner' jid='user@domain' /></x></presence>");
 	assertTrue(listener.isCalledOnce());
+    }
+
+    /**
+     * Test to ensure that when an invitation is received, the resulting chat
+     * created has the same data properties.
+     */
+    @Test
+    public void shouldPreserveInvitationProperties() {
+	final RoomManager rooms = (RoomManager) manager;
+	final MockedListener<Chat> chatCreatedListener = new MockedListener<Chat>();
+	rooms.onChatCreated(chatCreatedListener);
+
+	final String reason = "theReason";
+	final XmppURI invitor = uri("friend@host/resource");
+	final XmppURI roomURI = uri("room@room.service");
+	final ChatProperties properties = new ChatProperties(roomURI);
+	final String testDataKey = "TEST_KEY";
+	final String testDataValue = "TEST_VALUE";
+	properties.setData(testDataKey, testDataValue);
+	rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason, properties));
+	final Chat room = chatCreatedListener.getValue(0);
+	assertEquals("Chat property not preserved", testDataValue, room.getProperties().getData(testDataKey));
     }
 
     @Test

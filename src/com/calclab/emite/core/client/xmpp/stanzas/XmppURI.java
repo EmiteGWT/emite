@@ -29,7 +29,7 @@ package com.calclab.emite.core.client.xmpp.stanzas;
  * <code>XMPP- = ["xmpp:"] node "@" host[ "/" resource]</code>
  * 
  */
-public class XmppURI {
+public class XmppURI implements HasJID {
     private static final XmppURIFactory factory = new XmppURIFactory();
 
     /**

@@ -51,34 +51,12 @@ public class PairChat extends AbstractChat {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-	if (obj == null) {
-	    return false;
-	}
-	if (this == obj) {
-	    return true;
-	}
-	final PairChat other = (PairChat) obj;
-	return id.equals(other.id);
-    }
-
-    @Override
     public String getID() {
 	return id;
     }
 
     public String getThread() {
 	return (String) properties.getData(PAIRCHAT_THREAD_PROP);
-    }
-
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + (getURI() == null ? 0 : getURI().hashCode());
-	final String thread = getThread();
-	result = prime * result + (thread == null ? 0 : thread.hashCode());
-	return result;
     }
 
     @Override
@@ -108,5 +86,4 @@ public class PairChat extends AbstractChat {
     private String generateChatID() {
 	return "chat: " + getURI().toString() + "-" + getThread();
     }
-
 }

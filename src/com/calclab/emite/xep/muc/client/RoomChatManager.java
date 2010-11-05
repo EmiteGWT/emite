@@ -40,12 +40,14 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
+import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * The default implementation of RoomManager. See RoomManager for javadoc.
@@ -61,9 +63,13 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     private final HashMap<XmppURI, Room> roomsByJID;
     private HistoryOptions defaultHistoryOptions;
 
-    @Inject
     public RoomChatManager(final XmppSession session) {
-	super(session, new RoomChatSelectionStrategy());
+	this(session, new RoomChatSelectionStrategy());
+    }
+
+    @Inject
+    public RoomChatManager(final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy) {
+	super(session, strategy);
 	roomsByJID = new HashMap<XmppURI, Room>();
 
 	forwardPresenceToRooms();
@@ -74,7 +80,10 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     public void acceptRoomInvitation(final RoomInvitation invitation) {
 	final XmppURI roomURI = invitation.getRoomURI();
 	final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUser().getNode());
-	open(uri);
+	
+	final ChatProperties properties = new ChatProperties(uri, invitation.getChatProperties());
+	
+	this.openChat(properties, true);
     }
 
     @Override
@@ -127,21 +136,6 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	this.defaultHistoryOptions = defaultHistoryOptions;
     }
 
-    @Override
-    protected void addChat(final Chat chat) {
-	final XmppURI jid = chat.getURI().getJID();
-	roomsByJID.put(jid, (Room) chat);
-	super.addChat(chat);
-    }
-
-    @Override
-    protected Chat createChat(final ChatProperties properties) {
-	if (properties.getState() == null) {
-	    properties.setState(ChatStates.locked);
-	}
-	return new RoomChat(session, properties);
-    }
-
     /**
      * Forward the presence messages to the room event bus.
      */
@@ -177,11 +171,30 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 		IPacket child;
 		if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
 		    Stanza invitationStanza = new BasicStanza(child);
+		    
+		    // We extract the chat properties from the message
+		    ChatProperties chatProperties = strategy.extractProperties(message);
+		    
 		    RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(),
-			    invitationStanza.getFirstChild("reason").getText());
+			    invitationStanza.getFirstChild("reason").getText(), chatProperties);
 		    session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
 		}
 	    }
 	});
+    }
+
+    @Override
+    protected void addChat(final Chat chat) {
+	final XmppURI jid = chat.getURI().getJID();
+	roomsByJID.put(jid, (Room) chat);
+	super.addChat(chat);
+    }
+
+    @Override
+    protected Chat createChat(final ChatProperties properties) {
+	if (properties.getState() == null) {
+	    properties.setState(ChatStates.locked);
+	}
+	return new RoomChat(session, properties);
     }
 }

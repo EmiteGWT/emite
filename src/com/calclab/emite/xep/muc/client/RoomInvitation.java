@@ -22,20 +22,29 @@
 package com.calclab.emite.xep.muc.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.ChatProperties;
 
 public class RoomInvitation {
-    private final XmppURI invitor;
-    private final XmppURI roomURI;
     private final String reason;
+    private final ChatProperties chatProperties;
 
     public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
-	this.invitor = invitor;
-	this.roomURI = roomURI;
+	this.chatProperties = new ChatProperties(roomURI, invitor, null);
 	this.reason = reason;
     }
 
+    public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason,
+	    final ChatProperties chatProperties) {
+	this.chatProperties = new ChatProperties(roomURI, invitor, null, chatProperties);
+	this.reason = reason;
+    }
+
+    public ChatProperties getChatProperties() {
+	return chatProperties;
+    }
+
     public XmppURI getInvitor() {
-	return invitor;
+	return chatProperties.getInitiatorUri();
     }
 
     public String getReason() {
@@ -43,7 +52,7 @@ public class RoomInvitation {
     }
 
     public XmppURI getRoomURI() {
-	return roomURI;
+	return chatProperties.getUri();
     }
 
 }
