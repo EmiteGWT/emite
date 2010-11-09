@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.IQEvent;
 import com.calclab.emite.core.client.events.IQHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -12,6 +11,7 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.RequestFailedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
@@ -20,10 +20,10 @@ import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
@@ -96,72 +96,9 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	});
     }
 
-    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
-	    final String... groups) {
-	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
-	item.setGroups(groups);
-	final IQ iq = new IQ(Type.set);
-	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
-
-	session.sendIQ("roster", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		if (!IQ.isSuccess(iq)) {
-		    eventBus.fireEvent(new RequestFailedEvent("rosterItem", "roster item can't be updated", iq));
-		}
-	    }
-	});
-
-    }
-
     @Override
     public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
 	return RosterGroupChangedEvent.bind(eventBus, handler);
-    }
-
-    private void handleItemChanged(final RosterItem item) {
-	final RosterItem old = getItemByJID(item.getJID());
-
-	RosterItemChangedEvent event;
-
-	if (old == null) { // new item
-	    storeItem(item);
-	    event = new RosterItemChangedEvent(ChangeTypes.added, item);
-	} else { // update or remove
-		 // removeItem(old);
-	    final SubscriptionState subscriptionState = item.getSubscriptionState();
-	    if (subscriptionState == SubscriptionState.remove) {
-		removeItem(old);
-		event = new RosterItemChangedEvent(ChangeTypes.removed, item);
-	    } else {
-		// if (subscriptionState == SubscriptionState.to ||
-		// subscriptionState == SubscriptionState.both) {
-		// // already subscribed, preserve available/show/status
-		// item.setAvaialableResources(old.getAvailableResources());
-		// item.setShow(old.getShow());
-		// item.setStatus(old.getStatus());
-		// }
-		// storeItem(item);
-		updateExistingItem(old, item);
-		event = new RosterItemChangedEvent(ChangeTypes.modified, item);
-	    }
-	}
-	eventBus.fireEvent(event);
-	// fireItemChangedInGroups(event);
-    }
-
-    private void removeItem(final RosterItem item) {
-	final ArrayList<String> groupsToRemove = new ArrayList<String>();
-	for (final String groupName : getGroupNames()) {
-	    final RosterGroup group = getRosterGroup(groupName);
-	    group.remove(item.getJID());
-	    if (group.getName() != null && group.getSize() == 0) {
-		groupsToRemove.add(groupName);
-	    }
-	}
-	for (final String groupName : groupsToRemove) {
-	    removeGroup(groupName);
-	}
     }
 
     @Override
@@ -246,17 +183,74 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 			}
 			eventBus.fireEvent(new RosterRetrievedEvent(getItems()));
 		    } else {
-			eventBus.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
+			eventBus
+				.fireEvent(new RequestFailedEvent("roster request", "couldn't retrieve the roster", iq));
 		    }
 		}
 	    });
 	}
     }
 
-    void storeItem(final RosterItem item) {
-	addToGroup(item, null);
-	for (final String groupName : item.getGroups()) {
-	    addToGroup(item, groupName);
+    private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState,
+	    final String... groups) {
+	final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
+	item.setGroups(groups);
+	final IQ iq = new IQ(Type.set);
+	item.addStanzaTo(iq.addQuery("jabber:iq:roster"));
+
+	session.sendIQ("roster", iq, new IQResponseHandler() {
+	    @Override
+	    public void onIQ(IQ iq) {
+		if (!IQ.isSuccess(iq)) {
+		    eventBus.fireEvent(new RequestFailedEvent("rosterItem", "roster item can't be updated", iq));
+		}
+	    }
+	});
+
+    }
+
+    private void handleItemChanged(final RosterItem item) {
+	final RosterItem old = getItemByJID(item.getJID());
+
+	RosterItemChangedEvent event;
+
+	if (old == null) { // new item
+	    storeItem(item);
+	    event = new RosterItemChangedEvent(ChangeTypes.added, item);
+	} else { // update or remove
+	    // removeItem(old);
+	    final SubscriptionState subscriptionState = item.getSubscriptionState();
+	    if (subscriptionState == SubscriptionState.remove) {
+		removeItem(old);
+		event = new RosterItemChangedEvent(ChangeTypes.removed, old);
+	    } else {
+		// if (subscriptionState == SubscriptionState.to ||
+		// subscriptionState == SubscriptionState.both) {
+		// // already subscribed, preserve available/show/status
+		// item.setAvaialableResources(old.getAvailableResources());
+		// item.setShow(old.getShow());
+		// item.setStatus(old.getStatus());
+		// }
+		// storeItem(item);
+		updateExistingItem(old, item);
+		event = new RosterItemChangedEvent(ChangeTypes.modified, old);
+	    }
+	}
+	eventBus.fireEvent(event);
+	// fireItemChangedInGroups(event);
+    }
+
+    private void removeItem(final RosterItem item) {
+	final ArrayList<String> groupsToRemove = new ArrayList<String>();
+	for (final String groupName : getGroupNames()) {
+	    final RosterGroup group = getRosterGroup(groupName);
+	    group.remove(item.getJID());
+	    if (group.getName() != null && group.getSize() == 0) {
+		groupsToRemove.add(groupName);
+	    }
+	}
+	for (final String groupName : groupsToRemove) {
+	    removeGroup(groupName);
 	}
     }
 
@@ -313,5 +307,12 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	    removeGroup(groupName);
 	}
 
+    }
+
+    void storeItem(final RosterItem item) {
+	addToGroup(item, null);
+	for (final String groupName : item.getGroups()) {
+	    addToGroup(item, groupName);
+	}
     }
 }
