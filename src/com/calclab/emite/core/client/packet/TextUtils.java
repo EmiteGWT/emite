@@ -21,7 +21,22 @@
  */
 package com.calclab.emite.core.client.packet;
 
+import com.google.gwt.regexp.shared.RegExp;
+
 public class TextUtils {
+
+    /* Pre-compile the regular expressions for the html escape/unescape methods */
+    private static final RegExp AMP_RE = RegExp.compile("&", "g");
+    private static final RegExp GT_RE = RegExp.compile(">", "g");
+    private static final RegExp LT_RE = RegExp.compile("<", "g");
+    private static final RegExp SQUOT_RE = RegExp.compile("\'", "g");
+    private static final RegExp QUOT_RE = RegExp.compile("\"", "g");
+
+    private static final RegExp AMP_HTML_RE = RegExp.compile("&amp;", "g");
+    private static final RegExp GT_HTML_RE = RegExp.compile("&gt;", "g");
+    private static final RegExp LT_HTML_RE = RegExp.compile("&lt;", "g");
+    private static final RegExp SQUOT_HTML_RE = RegExp.compile("&#039;", "g");
+    private static final RegExp QUOT_HTML_RE = RegExp.compile("&quot;", "g");
 
     // Original regexp from http://snippets.dzone.com/posts/show/452
     public static final String URL_REGEXP = "((ftp|http|https):\\/\\/(\\w+:{0,1}\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-\\/]))?)";
@@ -48,33 +63,51 @@ public class TextUtils {
     /*
      * This method escape only some dangerous html chars
      */
-    public static String escape(final String source) {
+    public static String escape(String source) {
 	if (source == null) {
 	    return null;
 	}
-	String result = source;
-	result = result.replaceAll("&", "&amp;");
-	result = result.replaceAll("\"", "&quot;");
-	// text = text.replaceAll("\'", "&#039;");
-	result = result.replaceAll("<", "&lt;");
-	result = result.replaceAll(">", "&gt;");
-	return result;
+	if (source.indexOf("&") != -1) {
+	    source = AMP_RE.replace(source, "&amp;");
+	}
+	if (source.indexOf("<") != -1) {
+	    source = LT_RE.replace(source, "&lt;");
+	}
+	if (source.indexOf(">") != -1) {
+	    source = GT_RE.replace(source, "&gt;");
+	}
+	if (source.indexOf("\"") != -1) {
+	    source = QUOT_RE.replace(source, "&quot;");
+	}
+	if (source.indexOf("\'") != -1) {
+	    source = SQUOT_RE.replace(source, "&#39;");
+	}
+	return source;
     }
 
     /*
      * This method unescape only some dangerous html chars for use in GWT Html
      * widget for instance
      */
-    public static String unescape(final String source) {
+    public static String unescape(String source) {
 	if (source == null) {
 	    return null;
 	}
-	String result = source;
-	result = result.replaceAll("&amp;", "&");
-	result = result.replaceAll("&quot;", "\"");
-	result = result.replaceAll("&#039;", "\'");
-	result = result.replaceAll("&lt;", "<");
-	result = result.replaceAll("&gt;", ">");
-	return result;
+	if (source.indexOf("&amp;") != -1) {
+	    source = AMP_HTML_RE.replace(source, "&");
+	}
+	if (source.indexOf("&lt;") != -1) {
+	    source = LT_HTML_RE.replace(source, "<");
+	}
+	if (source.indexOf("&gt;") != -1) {
+	    source = GT_HTML_RE.replace(source, ">");
+	}
+	if (source.indexOf("&quot;") != -1) {
+	    source = QUOT_HTML_RE.replace(source, "\"");
+	}
+	if (source.indexOf("&#39;") != -1) {
+	    source = SQUOT_HTML_RE.replace(source, "\'");
+	}
+	return source;
     }
 }

@@ -25,11 +25,11 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.events.BeforeStanzaSendEvent;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
