@@ -46,7 +46,7 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 	new RoomManagerEventsSupervisor(roomManager, display);
 
 	// Accept the room invitations we receive
-	roomManager.addRoomInvitationHandler(new RoomInvitationHandler() {
+	roomManager.addRoomInvitationReceivedHandler(new RoomInvitationHandler() {
 	    @Override
 	    public void onRoomInvitation(RoomInvitationEvent event) {
 		RoomInvitation invitation = event.getRoomInvitation();

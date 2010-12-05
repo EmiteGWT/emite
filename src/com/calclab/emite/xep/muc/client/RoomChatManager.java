@@ -87,7 +87,7 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     }
 
     @Override
-    public HandlerRegistration addRoomInvitationHandler(RoomInvitationHandler handler) {
+    public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationHandler handler) {
 	return RoomInvitationEvent.bind(session.getEventBus(), handler);
     }
 
@@ -116,7 +116,7 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     @Deprecated
     @Override
     public void onInvitationReceived(final Listener<RoomInvitation> listener) {
-	addRoomInvitationHandler(new RoomInvitationHandler() {
+	addRoomInvitationReceivedHandler(new RoomInvitationHandler() {
 	    @Override
 	    public void onRoomInvitation(RoomInvitationEvent event) {
 		listener.onEvent(event.getRoomInvitation());

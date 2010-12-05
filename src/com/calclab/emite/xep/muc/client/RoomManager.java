@@ -47,7 +47,7 @@ public interface RoomManager extends ChatManager {
      * @param handler
      * @return
      */
-    public HandlerRegistration addRoomInvitationHandler(RoomInvitationHandler handler);
+    public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationHandler handler);
 
     /**
      * Obtain the default history options applied to all new rooms
