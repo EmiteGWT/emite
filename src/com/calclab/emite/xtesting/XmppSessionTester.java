@@ -74,7 +74,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
     }
 
     @Override
-    public XmppURI getCurrentUser() {
+    public XmppURI getCurrentUserURI() {
 	return currentUser;
     }
 

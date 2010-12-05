@@ -35,7 +35,7 @@ public class RoomSubject {
     public static boolean requestSubjectChange(Room room, final String subjectText) {
 	XmppSession session = room.getSession();
 	final BasicStanza message = new BasicStanza("message", null);
-	message.setFrom(session.getCurrentUser());
+	message.setFrom(session.getCurrentUserURI());
 	message.setTo(room.getURI().getJID());
 	message.setType(Message.Type.groupchat.toString());
 	final IPacket subject = message.addChild("subject", null);

@@ -113,7 +113,7 @@ public abstract class ChatBoilerplate implements Chat {
 
     @Override
     public boolean isInitiatedByMe() {
-	return session.getCurrentUser() != null && session.getCurrentUser().equals(properties.getInitiatorUri());
+	return session.getCurrentUserURI() != null && session.getCurrentUserURI().equals(properties.getInitiatorUri());
     }
 
     @Override

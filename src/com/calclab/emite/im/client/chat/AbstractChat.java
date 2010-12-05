@@ -70,7 +70,7 @@ public abstract class AbstractChat extends ChatBoilerplate {
     @Override
     public void send(final Message message) {
 	if (ChatStates.ready.equals(getChatState())) {
-	    message.setFrom(session.getCurrentUser());
+	    message.setFrom(session.getCurrentUserURI());
 	    chatEventBus.fireEvent(new BeforeSendMessageEvent(message));
 	    session.send(message);
 	    chatEventBus.fireEvent(new MessageSentEvent(message));

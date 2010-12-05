@@ -62,7 +62,7 @@ public class VCardManagerImpl implements VCardManager {
     public void getUserVCard(XmppURI userJid, final VCardResponseHandler handler) {
 	final IQ iq = new IQ(IQ.Type.get);
 	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUser());
+	iq.setFrom(session.getCurrentUserURI());
 	iq.setTo(userJid);
 
 	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
@@ -89,7 +89,7 @@ public class VCardManagerImpl implements VCardManager {
     public void requestOwnVCard(final VCardResponseHandler handler) {
 	final IQ iq = new IQ(IQ.Type.get);
 	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUser());
+	iq.setFrom(session.getCurrentUserURI());
 	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
 	    @Override
 	    public void onIQ(IQ iq) {

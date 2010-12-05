@@ -149,7 +149,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     }
 
     @Override
-    public XmppURI getCurrentUser() {
+    public XmppURI getCurrentUserURI() {
 	return userUri;
     }
 

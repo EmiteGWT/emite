@@ -134,7 +134,7 @@ public interface XmppSession {
      * 
      * @return the current user xmpp uri
      */
-    public XmppURI getCurrentUser();
+    public XmppURI getCurrentUserURI();
 
     public EmiteEventBus getEventBus();
 

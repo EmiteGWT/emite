@@ -175,7 +175,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
     @Override
     public void reRequestRoster() {
-	if (session.getCurrentUser() != null) {
+	if (session.getCurrentUserURI() != null) {
 	    IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
 	    session.sendIQ("roster", iq, new IQResponseHandler() {
 		@Override

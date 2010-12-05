@@ -61,10 +61,12 @@ public interface XmppRoster {
     Collection<RosterItem> getItems();
 
     /**
-     * Retrieve all the items that belongs to the given group name
+     * Retrieve a read-only collection with all the items that belongs to the
+     * given group name.
      * 
      * @param groupName
-     * @return a collection of items
+     * @return a collection of items (this is the actual group backed. Do not
+     *         modify)
      */
     Collection<RosterItem> getItemsByGroup(String groupName);
 

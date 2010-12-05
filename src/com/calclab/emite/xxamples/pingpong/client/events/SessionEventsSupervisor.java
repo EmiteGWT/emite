@@ -26,7 +26,7 @@ public class SessionEventsSupervisor {
 		display.print(("SESSION : " + event.getState()), Style.session);
 		if (event.is(SessionStates.ready)) {
 		    currentSessionLogin = System.currentTimeMillis();
-		    display.getCurrentUser().setText("Logged as: " + session.getCurrentUser());
+		    display.getCurrentUser().setText("Logged as: " + session.getCurrentUserURI());
 		    trackSessionLength(session, display);
 		} else if (event.is(SessionStates.disconnected)) {
 		    display.getCurrentUser().setText(" Not logged in");

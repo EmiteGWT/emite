@@ -65,12 +65,12 @@ public class PresenceManagerImpl implements PresenceManager {
 		    GWT.log("Sending initial presence", null);
 		    Presence ownPresence = getOwnPresence();
 		    final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(
-			    session.getCurrentUser());
+			    session.getCurrentUserURI());
 		    session.send(initialPresence);
 		    setOwnPresence(initialPresence);
 		    session.setSessionState(SessionStates.ready);
 		} else if (event.is(SessionStates.loggingOut)) {
-		    sendUnavailablePresence(session.getCurrentUser());
+		    sendUnavailablePresence(session.getCurrentUserURI());
 		} else if (event.is(SessionStates.disconnected)) {
 		    setOwnPresence(INITIAL_PRESENCE);
 		}

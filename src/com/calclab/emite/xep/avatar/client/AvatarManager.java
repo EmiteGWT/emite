@@ -127,7 +127,7 @@ public class AvatarManager {
 	    @Override
 	    public void onIQ(IQ received) {
 		if (IQ.isSuccess(received) && received.hasChild(VCARD)
-			&& received.hasAttribute("to", session.getCurrentUser().toString())) {
+			&& received.hasAttribute("to", session.getCurrentUserURI().toString())) {
 		    final XmppURI from = XmppURI.jid(received.getAttribute("from"));
 		    final IPacket photo = received.getFirstChild(VCARD).getFirstChild(PHOTO);
 		    final String photoType = photo.getFirstChild(TYPE).getText();

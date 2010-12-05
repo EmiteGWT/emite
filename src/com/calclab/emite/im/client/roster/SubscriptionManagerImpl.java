@@ -102,12 +102,12 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	    requestSubscribe(jid);
 	}
 	// answer "subscribed" to the subscrition request
-	session.send(new Presence(Type.subscribed, session.getCurrentUser().getJID(), jid.getJID()));
+	session.send(new Presence(Type.subscribed, session.getCurrentUserURI().getJID(), jid.getJID()));
     }
 
     @Override
     public void cancelSubscription(final XmppURI jid) {
-	session.send(new Presence(Type.unsubscribed, session.getCurrentUser().getJID(), jid.getJID()));
+	session.send(new Presence(Type.unsubscribed, session.getCurrentUserURI().getJID(), jid.getJID()));
     }
 
     @Override
@@ -123,17 +123,17 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 
     @Override
     public void refuseSubscriptionRequest(final XmppURI jid) {
-	session.send(new Presence(Type.unsubscribed, session.getCurrentUser().getJID(), jid.getJID()));
+	session.send(new Presence(Type.unsubscribed, session.getCurrentUserURI().getJID(), jid.getJID()));
     }
 
     @Override
     public void requestSubscribe(final XmppURI jid) {
-	session.send(new Presence(Type.subscribe, session.getCurrentUser().getJID(), jid.getJID()));
+	session.send(new Presence(Type.subscribe, session.getCurrentUserURI().getJID(), jid.getJID()));
     }
 
     @Override
     public void unsubscribe(final XmppURI jid) {
-	session.send(new Presence(Type.unsubscribe, session.getCurrentUser().getJID(), jid.getJID()));
+	session.send(new Presence(Type.unsubscribe, session.getCurrentUserURI().getJID(), jid.getJID()));
     }
 
 }

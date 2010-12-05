@@ -49,7 +49,7 @@ public class SearchManagerImpl implements SearchManager {
 	    @Override
 	    public void onIQResult(final IQ response) {
 		if (IQ.isSuccess(response)) {
-		    listener.onSuccess(processFieldsResults(session.getCurrentUser(), response
+		    listener.onSuccess(processFieldsResults(session.getCurrentUserURI(), response
 			    .getFirstChild(filterQuery)));
 		} else {
 		    // TODO
@@ -69,7 +69,7 @@ public class SearchManagerImpl implements SearchManager {
 		    if (form.x().equals(NoPacket.INSTANCE)) {
 			// This is not a extended search. Try to create a form
 			// with returned fields
-			final SearchFields fieldResults = processFieldsResults(session.getCurrentUser(), response
+			final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(), response
 				.getFirstChild(filterQuery));
 			form = new Form(Form.Type.form);
 			form.addInstruction(fieldResults.getInstructions());
@@ -113,7 +113,7 @@ public class SearchManagerImpl implements SearchManager {
 	    @Override
 	    public void onIQResult(final IQ response) {
 		if (IQ.isSuccess(response)) {
-		    listener.onSuccess(processResults(session.getCurrentUser(), response.getFirstChild(filterQuery)));
+		    listener.onSuccess(processResults(session.getCurrentUserURI(), response.getFirstChild(filterQuery)));
 		} else {
 		    // TODO
 		    listener.onFailure(null);
@@ -153,7 +153,7 @@ public class SearchManagerImpl implements SearchManager {
     // FIXME: change listener for handler
     private void requestGenericSearchFields(final IQResultCallback callback) {
 	if (SessionStates.ready.equals(session.getSessionState())) {
-	    final XmppURI from = session.getCurrentUser();
+	    final XmppURI from = session.getCurrentUserURI();
 	    final IQ iq = new IQ(Type.get, host).From(from).With(XML_LANG, "en");
 	    iq.addQuery(IQ_SEARCH);
 
@@ -171,7 +171,7 @@ public class SearchManagerImpl implements SearchManager {
 
     private void searchGeneric(final List<IPacket> queryChilds, final IQResultCallback callback) {
 	if (SessionStates.ready.equals(session.getSessionState())) {
-	    final IQ iq = new IQ(IQ.Type.set, host).From(session.getCurrentUser()).With(XML_LANG, "en");
+	    final IQ iq = new IQ(IQ.Type.set, host).From(session.getCurrentUserURI()).With(XML_LANG, "en");
 	    final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
 	    for (final IPacket child : queryChilds) {
 		queryPacket.addChild(child);

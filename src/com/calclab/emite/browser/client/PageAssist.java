@@ -249,7 +249,7 @@ public class PageAssist {
 	GWT.log("Pausing connection...", null);
 	final StreamSettings stream = session.pause();
 	if (stream != null) {
-	    final String user = session.getCurrentUser().toString();
+	    final String user = session.getCurrentUserURI().toString();
 	    final SerializableMap map = new SerializableMap();
 	    map.put("rid", "" + stream.rid);
 	    map.put("sid", stream.sid);

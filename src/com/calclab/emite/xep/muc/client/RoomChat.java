@@ -169,7 +169,7 @@ public class RoomChat extends RoomBoilerplate {
     @Override
     public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
 	final BasicStanza message = new BasicStanza("message", null);
-	message.setFrom(session.getCurrentUser());
+	message.setFrom(session.getCurrentUserURI());
 	message.setTo(getURI().getJID());
 	final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
 	final IPacket invite = x.addChild("invite", null);
@@ -281,7 +281,7 @@ public class RoomChat extends RoomBoilerplate {
 			    presence));
 		} else if (type == Type.unavailable) {
 		    removeOccupant(occupantURI);
-		    if (occupantURI.equalsNoResource(session.getCurrentUser())) {
+		    if (occupantURI.equalsNoResource(session.getCurrentUserURI())) {
 			close();
 		    }
 		} else {

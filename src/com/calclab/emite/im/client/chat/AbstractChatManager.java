@@ -43,7 +43,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
     public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
 	Chat chat = getChat(properties, false);
 	if (chat == null && createIfNotFound) {
-	    properties.setInitiatorUri(session.getCurrentUser());
+	    properties.setInitiatorUri(session.getCurrentUserURI());
 	    chat = addNewChat(properties);
 	}
 	chat.open();
@@ -82,7 +82,7 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	    @Override
 	    public void onStateChanged(final StateChangedEvent event) {
 		if (event.is(SessionStates.loggedIn)) {
-		    final XmppURI currentUser = session.getCurrentUser();
+		    final XmppURI currentUser = session.getCurrentUserURI();
 		    if (currentChatUser == null) {
 			currentChatUser = currentUser;
 		    }

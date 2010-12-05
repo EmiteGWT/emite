@@ -68,7 +68,7 @@ public class SessionImpl implements Session {
 
     @Override
     public XmppURI getCurrentUser() {
-	return delegate.getCurrentUser();
+	return delegate.getCurrentUserURI();
     }
 
     @Override
