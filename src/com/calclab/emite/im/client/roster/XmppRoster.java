@@ -53,6 +53,16 @@ public interface XmppRoster {
     RosterItem getItemByJID(XmppURI jid);
 
     /**
+     * Get the name of this JID
+     * 
+     * @param jid
+     *            the JID of the entity you want the name from
+     * @return The item name if the entity is in the roster, or the short name
+     *         of the jid
+     */
+    String getJidName(XmppURI jid);
+
+    /**
      * Retrieve all the RosterItems of the Roster (a copy of the collection: can
      * be modified)
      * 
