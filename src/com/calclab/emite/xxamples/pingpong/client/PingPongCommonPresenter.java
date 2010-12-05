@@ -1,8 +1,8 @@
 package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
+import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.xxamples.pingpong.client.events.ConnectionEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.events.SessionEventsSupervisor;

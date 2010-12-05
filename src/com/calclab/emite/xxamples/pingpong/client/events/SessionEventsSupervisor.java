@@ -2,8 +2,8 @@ package com.calclab.emite.xxamples.pingpong.client.events;
 
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.google.gwt.user.client.Timer;

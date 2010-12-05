@@ -1,7 +1,7 @@
 package com.calclab.emite.xtesting;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.im.client.roster.RosterItem;

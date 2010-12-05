@@ -14,6 +14,7 @@ import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
+import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerPlate;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;

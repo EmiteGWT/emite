@@ -170,8 +170,8 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	    GWT.log("First login - Creating session components");
 	    registry.createComponents();
 	}
-	if (getSessionState() == XmppSession.SessionStates.disconnected) {
-	    setSessionState(XmppSession.SessionStates.connecting);
+	if (getSessionState() == SessionStates.disconnected) {
+	    setSessionState(SessionStates.connecting);
 	    connection.connect();
 	    this.credentials = credentials;
 	}
@@ -180,14 +180,14 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
     @Override
     public void logout() {
-	if (getSessionState() != XmppSession.SessionStates.disconnected && userUri != null) {
+	if (getSessionState() != SessionStates.disconnected && userUri != null) {
 	    // TODO : To be reviewed, preventing unvailable presences to be sent
 	    // so that only the 'terminate' is sent
 	    // Unvailabel are handled automatically by the server
 	    setSessionState(SessionStates.loggingOut);
 	    userUri = null;
 	    connection.disconnect();
-	    setSessionState(XmppSession.SessionStates.disconnected);
+	    setSessionState(SessionStates.disconnected);
 	}
     }
 
@@ -199,9 +199,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     @Override
     public void resume(final XmppURI userURI, final StreamSettings settings) {
 	this.userUri = userURI;
-	setSessionState(XmppSession.SessionStates.resume);
+	setSessionState(SessionStates.resume);
 	connection.resume(settings);
-	setSessionState(XmppSession.SessionStates.ready);
+	setSessionState(SessionStates.ready);
     }
 
     @Override
@@ -255,6 +255,6 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     private void setLoggedIn(final XmppURI userURI) {
 	this.userUri = userURI;
 	GWT.log("SESSION LOGGED IN");
-	setSessionState(XmppSession.SessionStates.loggedIn);
+	setSessionState(SessionStates.loggedIn);
     }
 }

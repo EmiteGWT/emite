@@ -31,7 +31,6 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;

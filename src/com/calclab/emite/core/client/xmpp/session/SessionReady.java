@@ -23,7 +23,6 @@ package com.calclab.emite.core.client.xmpp.session;
 
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;

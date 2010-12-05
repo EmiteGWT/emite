@@ -19,7 +19,6 @@ import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppConnectionTester;

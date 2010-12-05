@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
-import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
