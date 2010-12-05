@@ -43,29 +43,29 @@ public interface Chat {
      * Common chat errors
      */
     public static class ChatErrors {
-	/**
-	 * You are trying to send messages to a not ready chat
-	 */
-	public static final String sendNotReady = "sendNotReady";
-	public static final String errorMessage = "errorMessage";
-	public static final String errorPresence = "errorPresence";
-	public static final String occupantNotFound = "occupantNotFound";
+        /**
+         * You are trying to send messages to a not ready chat
+         */
+        public static final String sendNotReady = "sendNotReady";
+        public static final String errorMessage = "errorMessage";
+        public static final String errorPresence = "errorPresence";
+        public static final String occupantNotFound = "occupantNotFound";
     }
 
     /**
      * Possible conversation states.
      */
     public static class ChatStates {
-	/**
-	 * the chat is ready to be used
-	 */
-	public static final String ready = "ready";
-	/**
-	 * the chat is opened but can't be used (maybe waiting for a server
-	 * confirmation or because the session is closed or the connection is
-	 * lost)
-	 */
-	public static final String locked = "locked";
+        /**
+         * the chat is ready to be used
+         */
+        public static final String ready = "ready";
+        /**
+         * the chat is opened but can't be used (maybe waiting for a server
+         * confirmation or because the session is closed or the connection is
+         * lost)
+         */
+        public static final String locked = "locked";
     }
 
     /**
@@ -76,12 +76,12 @@ public interface Chat {
      */
     @Deprecated
     public static enum State {
-	ready, locked,
-	/**
-	 * Because the new extensible chat state system (using strings instead
-	 * of enums) this is used when a unknown (not in this enum) state is set
-	 */
-	unknown
+        ready, locked,
+        /**
+         * Because the new extensible chat state system (using strings instead
+         * of enums) this is used when a unknown (not in this enum) state is set
+         */
+        unknown
     }
 
     /**
@@ -105,12 +105,15 @@ public interface Chat {
     public HandlerRegistration addBeforeSendMessageHandler(MessageHandler handler);
 
     /**
-     * Add a handler to know whenever a chat state property changed
+     * Add a handler to know whenever a chat state property changed. Normally,
+     * the states are one of the ChatStates class.
      * 
      * @param handler
      * @param sendCurrentStateAsEvent
      * 
-     * @return
+     * @return a registration handler in order to allow remove the event's
+     *         handler
+     * @see ChatStates
      */
     public HandlerRegistration addChatStateChangedHandler(boolean sendCurrentState, StateChangedHandler handler);
 
