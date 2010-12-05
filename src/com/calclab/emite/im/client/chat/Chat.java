@@ -40,35 +40,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public interface Chat {
     /**
-     * Common chat errors
-     */
-    public static class ChatErrors {
-        /**
-         * You are trying to send messages to a not ready chat
-         */
-        public static final String sendNotReady = "sendNotReady";
-        public static final String errorMessage = "errorMessage";
-        public static final String errorPresence = "errorPresence";
-        public static final String occupantNotFound = "occupantNotFound";
-    }
-
-    /**
-     * Possible conversation states.
-     */
-    public static class ChatStates {
-        /**
-         * the chat is ready to be used
-         */
-        public static final String ready = "ready";
-        /**
-         * the chat is opened but can't be used (maybe waiting for a server
-         * confirmation or because the session is closed or the connection is
-         * lost)
-         */
-        public static final String locked = "locked";
-    }
-
-    /**
      * Possible conversation states. Enum can't be extended so, this won't be
      * used anymore
      * 

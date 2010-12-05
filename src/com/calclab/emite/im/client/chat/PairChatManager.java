@@ -22,7 +22,6 @@
 package com.calclab.emite.im.client.chat;
 
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;

@@ -41,7 +41,7 @@ import com.calclab.emite.im.client.chat.AbstractChatManager;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
 import com.calclab.suco.client.events.Listener;

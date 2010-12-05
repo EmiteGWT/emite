@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomChatManager;
 import com.calclab.emite.xtesting.XmppSessionTester;

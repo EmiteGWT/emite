@@ -8,7 +8,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
 import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;

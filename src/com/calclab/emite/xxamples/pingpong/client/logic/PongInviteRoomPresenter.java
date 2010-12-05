@@ -4,7 +4,7 @@ import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.emite.xep.muc.client.Room;

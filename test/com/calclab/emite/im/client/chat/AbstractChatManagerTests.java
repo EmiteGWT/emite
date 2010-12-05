@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.session.XmppSession.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.Chat.ChatStates;
 import com.calclab.emite.xtesting.XmppSessionTester;
 
 public abstract class AbstractChatManagerTests {
