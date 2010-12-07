@@ -27,7 +27,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
  * Manages retrieval of delay of stanzas. Implements XEP-0091 (deprecated) and
  * XEP-0203.
  * 
+ * USE: DelayHelper
  */
+@Deprecated
 public interface DelayManager {
 
     Delay getDelay(Stanza stanza);

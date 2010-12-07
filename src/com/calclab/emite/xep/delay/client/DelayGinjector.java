@@ -27,8 +27,11 @@ import com.google.gwt.inject.client.Ginjector;
 /**
  * Injector for the Delay module.
  * 
+ * 
+ * USE: DelayHelper directly
  */
 @GinModules(DelayModule.class)
+@Deprecated
 public interface DelayGinjector extends Ginjector {
 
     DelayManager getDelayManager();

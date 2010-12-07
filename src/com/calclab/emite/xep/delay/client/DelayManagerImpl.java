@@ -29,23 +29,25 @@ import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 /**
  * Default implementation of {@link DelayManager}.
  * 
+ * USE: DelayHelper directly
  */
+@Deprecated
 public class DelayManagerImpl implements DelayManager {
 
     @Override
     public Delay getDelay(Stanza stanza) {
-	IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
+        IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
 
-	    @Override
-	    public boolean matches(IPacket packet) {
-		return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))
-			|| "delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
-	    }
-	});
-	if (delayPacket != NoPacket.INSTANCE) {
-	    return new Delay(delayPacket);
-	}
-	return null;
+            @Override
+            public boolean matches(IPacket packet) {
+                return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns")) || "delay".equals(packet.getName())
+                        && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
+            }
+        });
+        if (delayPacket != NoPacket.INSTANCE) {
+            return new Delay(delayPacket);
+        }
+        return null;
     }
 
 }

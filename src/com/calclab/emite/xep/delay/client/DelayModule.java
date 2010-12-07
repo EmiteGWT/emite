@@ -29,16 +29,17 @@ import com.google.inject.Singleton;
  * Module to load {@link DelayManager}.
  * 
  */
+@Deprecated
 public class DelayModule extends AbstractGinModule implements EntryPoint {
-
-    @Override
-    protected void configure() {
-	bind(DelayManager.class).to(DelayManagerImpl.class).in(Singleton.class);
-    }
 
     @Override
     public void onModuleLoad() {
 
+    }
+
+    @Override
+    protected void configure() {
+        bind(DelayManager.class).to(DelayManagerImpl.class).in(Singleton.class);
     }
 
 }
