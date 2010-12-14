@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.IQEvent;
 import com.calclab.emite.core.client.events.IQHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -12,28 +11,25 @@ import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.RequestFailedEvent;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.util.NonBlockingCommandScheduler;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Command;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -42,13 +38,9 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
     private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
-    private final NonBlockingCommandScheduler commandScheduler;
-
     @Inject
     public XmppRosterLogic(final XmppSession session) {
         super(session);
-
-        commandScheduler = new NonBlockingCommandScheduler();
 
         GWT.log("Creating XmppRosterLogic");
 
@@ -74,17 +66,40 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
             private void setPresence(final Presence presence, final RosterItem item) {
                 final Presence.Type type = presence.getType();
                 final String resource = presence.getFrom().getResource();
+
+                boolean hasChanged = false;
+
+                final boolean wasAvailable = item.getAvailableResources().contains(resource);
+
                 if (type == Presence.Type.unavailable) {
-                    item.setAvailable(false, resource);
+                    if (wasAvailable) {
+                        hasChanged = true;
+                        item.setAvailable(false, resource);
+                    }
                 } else {
-                    item.setAvailable(true, resource);
+                    if (!wasAvailable) {
+                        hasChanged = true;
+                        item.setAvailable(true, resource);
+                    }
                 }
                 final Show showReceived = presence.getShow();
-                item.setShow(showReceived == null ? Show.notSpecified : showReceived);
-                item.setStatus(presence.getStatus());
-                RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
-                eventBus.fireEvent(event);
-                fireItemChangedInGroups(event);
+                final Show newShow = (showReceived == null ? Show.notSpecified : showReceived);
+
+                if (!newShow.equals(item.getShow())) {
+                    hasChanged = true;
+                    item.setShow(newShow);
+                }
+
+                if ((item.getStatus() == null && presence.getStatus() != null) || (item.getStatus() != null && !item.getStatus().equals(presence.getStatus()))) {
+                    hasChanged = true;
+                    item.setStatus(presence.getStatus());
+                }
+
+                if (hasChanged) {
+                    RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
+                    eventBus.fireEvent(event);
+                    fireItemChangedInGroups(event);
+                }
             }
 
         });
@@ -189,26 +204,10 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
                         clearGroupAll();
                         final List<? extends IPacket> children = iq.getFirstChild("query").getChildren();
 
-                        RepeatingCommand command = new RepeatingCommand() {
-
-                            int i = 0;
-
-                            @Override
-                            public boolean execute() {
-                                if (i >= children.size()) {
-                                    return false;
-                                }
-
-                                final RosterItem item = RosterItem.parse(children.get(i));
-                                storeItem(item);
-
-                                ++i;
-                                // Return true if we have more items
-                                return (i < children.size());
-                            }
-                        };
-
-                        Scheduler.get().scheduleIncremental(command);
+                        for (final IPacket child : children) {
+                            final RosterItem item = RosterItem.parse(child);
+                            storeItem(item);
+                        }
 
                         if (!rosterReady) {
                             rosterReady = true;
@@ -243,23 +242,20 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
     private void handleItemChanged(final RosterItem item) {
         final RosterItem old = getItemByJID(item.getJID());
 
-        RosterItemChangedEvent event;
-
         if (old == null) { // new item
             storeItem(item);
-            event = new RosterItemChangedEvent(ChangeTypes.added, item);
+            eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
         } else { // update or remove
             final SubscriptionState subscriptionState = item.getSubscriptionState();
             if (subscriptionState == SubscriptionState.remove) {
                 removeItem(old);
-                event = new RosterItemChangedEvent(ChangeTypes.removed, old);
+                eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, old));
             } else {
-                updateExistingItem(old, item);
-                event = new RosterItemChangedEvent(ChangeTypes.modified, old);
+                if (updateExistingItem(old, item)) {
+                    eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, old));
+                }
             }
         }
-        eventBus.fireEvent(event);
-        // fireItemChangedInGroups(event);
     }
 
     private void removeItem(final RosterItem item) {
@@ -276,9 +272,19 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         }
     }
 
-    private void updateExistingItem(final RosterItem item, final RosterItem newItem) {
-        item.setName(newItem.getName());
-        item.setSubscriptionState(newItem.getSubscriptionState());
+    private boolean updateExistingItem(final RosterItem item, final RosterItem newItem) {
+        boolean hasChanged = false;
+
+        if (((item.getSubscriptionState() == null) && (newItem.getSubscriptionState() != null))
+                || ((item.getSubscriptionState() != null) && !item.getSubscriptionState().equals(newItem.getSubscriptionState()))) {
+            item.setSubscriptionState(newItem.getSubscriptionState());
+            hasChanged = true;
+        }
+
+        if (((item.getName() == null) && (newItem.getName() != null)) || ((item.getName() != null) && !item.getName().equals(newItem.getName()))) {
+            item.setName(newItem.getName());
+            hasChanged = true;
+        }
 
         List<String> groups = item.getGroups();
         List<String> newGroups = newItem.getGroups();
@@ -286,14 +292,8 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         // Go through and remove any old groups which aren't on the new item
         for (final String group : groups) {
             if (!newGroups.contains(group)) {
-                commandScheduler.addCommand(new Command() {
-
-                    @Override
-                    public void execute() {
-                        item.removeFromGroup(group);
-                    }
-
-                });
+                item.removeFromGroup(group);
+                hasChanged = true;
             }
         }
 
@@ -302,31 +302,21 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         for (final String group : newGroups) {
             // Update the existing item
             if (!groups.contains(group)) {
-                commandScheduler.addCommand(new Command() {
-
-                    @Override
-                    public void execute() {
-                        item.addToGroup(group);
-                    }
-
-                });
+                item.addToGroup(group);
+                hasChanged = true;
             }
 
-            commandScheduler.addCommand(new Command() {
-                @Override
-                public void execute() {
-                    // And update the roster group accordingly
-                    RosterGroup rosterGroup = XmppRosterLogic.this.getRosterGroup(group);
+            // And update the roster group accordingly
+            RosterGroup rosterGroup = XmppRosterLogic.this.getRosterGroup(group);
 
-                    if (rosterGroup == null) {
-                        rosterGroup = addGroup(group);
-                    }
+            if (rosterGroup == null) {
+                rosterGroup = addGroup(group);
+            }
 
-                    if (!rosterGroup.hasItem(item.getJID())) {
-                        rosterGroup.add(item);
-                    }
-                }
-            });
+            if (!rosterGroup.hasItem(item.getJID())) {
+                rosterGroup.add(item);
+                hasChanged = true;
+            }
         }
 
         // And remove the item from any groups it may still be in
@@ -338,22 +328,17 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
                 if (rosterGroup.getSize() == 0) {
                     groupsToRemove.add(rosterGroup.getName());
+                    hasChanged = true;
                 }
             }
         }
 
         // Remove any groups which are now empty
         for (final String groupName : groupsToRemove) {
-            commandScheduler.addCommand(new Command() {
-
-                @Override
-                public void execute() {
-                    removeGroup(groupName);
-                }
-
-            });
+            removeGroup(groupName);
         }
 
+        return hasChanged;
     }
 
     void storeItem(final RosterItem item) {
