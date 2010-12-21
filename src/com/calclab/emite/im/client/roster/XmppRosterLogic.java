@@ -129,7 +129,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
     @Override
     public String getJidName(XmppURI jid) {
         RosterItem itemByJID = this.getItemByJID(jid);
-        return itemByJID != null ? itemByJID.getName() : jid.getShortName();
+        return ((itemByJID != null) && (itemByJID.getName() != null)) ? itemByJID.getName() : jid.getShortName();
     }
 
     @Override
