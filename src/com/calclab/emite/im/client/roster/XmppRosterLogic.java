@@ -251,9 +251,8 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
                 removeItem(old);
                 eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, old));
             } else {
-                if (updateExistingItem(old, item)) {
-                    eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, old));
-                }
+                updateExistingItem(old, item);
+                eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.modified, old));
             }
         }
     }
@@ -272,19 +271,9 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         }
     }
 
-    private boolean updateExistingItem(final RosterItem item, final RosterItem newItem) {
-        boolean hasChanged = false;
-
-        if (((item.getSubscriptionState() == null) && (newItem.getSubscriptionState() != null))
-                || ((item.getSubscriptionState() != null) && !item.getSubscriptionState().equals(newItem.getSubscriptionState()))) {
-            item.setSubscriptionState(newItem.getSubscriptionState());
-            hasChanged = true;
-        }
-
-        if (((item.getName() == null) && (newItem.getName() != null)) || ((item.getName() != null) && !item.getName().equals(newItem.getName()))) {
-            item.setName(newItem.getName());
-            hasChanged = true;
-        }
+    private void updateExistingItem(final RosterItem item, final RosterItem newItem) {
+        item.setSubscriptionState(newItem.getSubscriptionState());
+        item.setName(newItem.getName());
 
         List<String> groups = item.getGroups();
         List<String> newGroups = newItem.getGroups();
@@ -293,7 +282,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         for (final String group : groups) {
             if (!newGroups.contains(group)) {
                 item.removeFromGroup(group);
-                hasChanged = true;
             }
         }
 
@@ -303,7 +291,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
             // Update the existing item
             if (!groups.contains(group)) {
                 item.addToGroup(group);
-                hasChanged = true;
             }
 
             // And update the roster group accordingly
@@ -315,7 +302,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
             if (!rosterGroup.hasItem(item.getJID())) {
                 rosterGroup.add(item);
-                hasChanged = true;
             }
         }
 
@@ -328,7 +314,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
                 if (rosterGroup.getSize() == 0) {
                     groupsToRemove.add(rosterGroup.getName());
-                    hasChanged = true;
                 }
             }
         }
@@ -337,8 +322,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
         for (final String groupName : groupsToRemove) {
             removeGroup(groupName);
         }
-
-        return hasChanged;
     }
 
     void storeItem(final RosterItem item) {
