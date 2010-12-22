@@ -29,7 +29,6 @@ import java.util.Map;
 import com.calclab.emite.core.client.packet.AbstractPacket;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.PacketRenderer;
-import com.calclab.emite.core.client.packet.TextUtils;
 import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
@@ -41,135 +40,135 @@ public class GWTPacket extends AbstractPacket {
     private final Element element;
 
     public GWTPacket(final Element element) {
-	this.element = element;
+        this.element = element;
     }
 
     public IPacket addChild(final IPacket child) {
-	final Element childElement = ((GWTPacket) child).element;
-	element.appendChild(childElement);
-	return child;
+        final Element childElement = ((GWTPacket) child).element;
+        element.appendChild(childElement);
+        return child;
     }
 
     public IPacket addChild(final String nodeName) {
-	return addChild(nodeName, null);
+        return addChild(nodeName, null);
     }
 
     public IPacket addChild(final String nodeName, final String xmlns) {
-	final Element child = element.getOwnerDocument().createElement(nodeName);
-	element.appendChild(child);
-	return new GWTPacket(child);
+        final Element child = element.getOwnerDocument().createElement(nodeName);
+        element.appendChild(child);
+        return new GWTPacket(child);
     }
 
     public String getAttribute(final String name) {
-	return element.getAttribute(name);
+        return element.getAttribute(name);
     }
 
     public HashMap<String, String> getAttributes() {
-	final HashMap<String, String> map = new HashMap<String, String>();
-	final NamedNodeMap attributes = element.getAttributes();
-	for (int index = 0; index < attributes.getLength(); index++) {
-	    final Node attrib = attributes.item(index);
-	    map.put(attrib.getNodeName(), attrib.getNodeValue());
-	}
-	return map;
+        final HashMap<String, String> map = new HashMap<String, String>();
+        final NamedNodeMap attributes = element.getAttributes();
+        for (int index = 0; index < attributes.getLength(); index++) {
+            final Node attrib = attributes.item(index);
+            map.put(attrib.getNodeName(), attrib.getNodeValue());
+        }
+        return map;
     }
 
     public Map<String, String> getAttributtes() {
-	final HashMap<String, String> attributes = new HashMap<String, String>();
-	final NamedNodeMap original = element.getAttributes();
-	for (int index = 0; index < original.getLength(); index++) {
-	    final Node node = original.item(index);
-	    attributes.put(node.getNodeName(), node.getNodeValue());
-	}
-	return attributes;
+        final HashMap<String, String> attributes = new HashMap<String, String>();
+        final NamedNodeMap original = element.getAttributes();
+        for (int index = 0; index < original.getLength(); index++) {
+            final Node node = original.item(index);
+            attributes.put(node.getNodeName(), node.getNodeValue());
+        }
+        return attributes;
     }
 
     public List<? extends IPacket> getChildren() {
-	return wrap(element.getChildNodes());
+        return wrap(element.getChildNodes());
     }
 
     @Override
     public List<IPacket> getChildren(final String name) {
-	final NodeList nodes = element.getElementsByTagName(name);
-	return wrap(nodes);
+        final NodeList nodes = element.getElementsByTagName(name);
+        return wrap(nodes);
     }
 
     public int getChildrenCount() {
-	return element.getChildNodes().getLength();
+        return element.getChildNodes().getLength();
     }
 
     public Element getElement() {
-	return element;
+        return element;
     }
 
     public String getName() {
-	return element.getNodeName();
+        return element.getNodeName();
     }
 
     public IPacket getParent() {
-	return new GWTPacket((Element) element.getParentNode());
+        return new GWTPacket((Element) element.getParentNode());
     }
 
     public String getText() {
-	Node item;
-	final NodeList childs = element.getChildNodes();
-	for (int index = 0; index < childs.getLength(); index++) {
-	    item = childs.item(index);
-	    if (item.getNodeType() == Node.TEXT_NODE) {
-		return TextUtils.unescape(item.getNodeValue());
-	    }
-	}
-	return null;
+        Node item;
+        final NodeList childs = element.getChildNodes();
+        for (int index = 0; index < childs.getLength(); index++) {
+            item = childs.item(index);
+            if (item.getNodeType() == Node.TEXT_NODE) {
+                return item.getNodeValue();
+            }
+        }
+        return null;
     }
 
     public boolean removeChild(final IPacket child) {
-	final Element childElement = ((GWTPacket) child).element;
-	try {
-	    return element.removeChild(childElement) != null;
-	} catch (final DOMNodeException e) {
-	    return false;
-	}
+        final Element childElement = ((GWTPacket) child).element;
+        try {
+            return element.removeChild(childElement) != null;
+        } catch (final DOMNodeException e) {
+            return false;
+        }
     }
 
     public void setAttribute(final String name, final String value) {
-	if (value != null) {
-	    element.setAttribute(name, value);
-	} else {
-	    element.removeAttribute(name);
-	}
+        if (value != null) {
+            element.setAttribute(name, value);
+        } else {
+            element.removeAttribute(name);
+        }
     }
 
     public void setText(final String text) {
-	final NodeList nodes = element.getChildNodes();
-	for (int index = 0; index < nodes.getLength(); index++) {
-	    final Node child = nodes.item(index);
-	    if (child.getNodeType() == Node.TEXT_NODE) {
-		element.removeChild(child);
-	    }
-	}
-	if (text != null) {
-	    element.appendChild(element.getOwnerDocument().createTextNode(TextUtils.escape(text)));
-	}
+        final NodeList nodes = element.getChildNodes();
+        for (int index = 0; index < nodes.getLength(); index++) {
+            final Node child = nodes.item(index);
+            if (child.getNodeType() == Node.TEXT_NODE) {
+                element.removeChild(child);
+            }
+        }
+        if (text != null) {
+            element.appendChild(element.getOwnerDocument().createTextNode(text));
+        }
     }
 
     @Override
     public String toString() {
-	return PacketRenderer.toString(this);
+        return PacketRenderer.toString(this);
     }
 
     private List<IPacket> wrap(final NodeList nodes) {
-	int length;
-	if (nodes == null || (length = nodes.getLength()) == 0) {
-	    return EMPTY_LIST;
-	}
-	final ArrayList<IPacket> selected = new ArrayList<IPacket>();
-	for (int index = 0; index < length; index++) {
-	    final Node node = nodes.item(index);
-	    if (node.getNodeType() == Node.ELEMENT_NODE) {
-		selected.add(new GWTPacket((Element) node));
-	    } else if (node.getNodeType() == Node.TEXT_NODE) {
-	    }
-	}
-	return selected;
+        int length;
+        if (nodes == null || (length = nodes.getLength()) == 0) {
+            return EMPTY_LIST;
+        }
+        final ArrayList<IPacket> selected = new ArrayList<IPacket>();
+        for (int index = 0; index < length; index++) {
+            final Node node = nodes.item(index);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                selected.add(new GWTPacket((Element) node));
+            } else if (node.getNodeType() == Node.TEXT_NODE) {
+            }
+        }
+        return selected;
     }
 }
