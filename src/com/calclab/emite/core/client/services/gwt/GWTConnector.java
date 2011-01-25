@@ -41,48 +41,49 @@ public class GWTConnector {
     static List<Request> activeRequests = new ArrayList<Request>();
 
     static {
-	// On close it cancels all the pending requests except the "terminate"
-	// request
-	Window.addCloseHandler(new CloseHandler<Window>() {
-	    @Override
-	    public void onClose(final CloseEvent<Window> event) {
-		int i = activeRequests.size() - 2;
-		GWT.log("Cancelling " + (i + 1) + " pending requests.");
-		for (; i >= 0; i--) {
-		    activeRequests.get(i).cancel();
-		}
-		GWT.log("Cancelled all requests.");
-	    }
-	});
+        // On close it cancels all the pending requests except the "terminate"
+        // request
+        Window.addCloseHandler(new CloseHandler<Window>() {
+            @Override
+            public void onClose(final CloseEvent<Window> event) {
+                int i = activeRequests.size() - 2;
+                GWT.log("Cancelling " + (i + 1) + " pending requests.");
+                for (; i >= 0; i--) {
+                    activeRequests.get(i).cancel();
+                }
+                GWT.log("Cancelled all requests.");
+            }
+        });
     }
 
-    public static void send(final String httpBase, final String request, final ConnectorCallback listener)
-	    throws ConnectorException {
-	final RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, httpBase);
-	builder.setHeader("Content-Type", "text/xml; charset=utf-8");
-	// TODO : Hard coded timeout to 6s, but we should set it to the wait + a
-	// delta
-	// builder.setTimeoutMillis(6000);
-	try {
-	    final Request req = builder.sendRequest(request, new RequestCallback() {
-		public void onError(final Request req, final Throwable throwable) {
-		    GWT.log(("GWT CONNECTOR ERROR: " + throwable), null);
-		    activeRequests.remove(req);
-		    listener.onError(request, throwable);
-		}
+    public static void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+        final RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, httpBase);
+        builder.setHeader("Content-Type", "text/xml; charset=utf-8");
+        builder.setHeader("Cache-Control", "no-cache");
+        builder.setHeader("Pragma", "no-cache");
+        // TODO : Hard coded timeout to 6s, but we should set it to the wait + a
+        // delta
+        // builder.setTimeoutMillis(6000);
+        try {
+            final Request req = builder.sendRequest(request, new RequestCallback() {
+                public void onError(final Request req, final Throwable throwable) {
+                    GWT.log(("GWT CONNECTOR ERROR: " + throwable), null);
+                    activeRequests.remove(req);
+                    listener.onError(request, throwable);
+                }
 
-		public void onResponseReceived(final Request req, final Response res) {
-		    activeRequests.remove(req);
-		    listener.onResponseReceived(res.getStatusCode(), res.getText(), request);
-		}
-	    });
-	    activeRequests.add(req);
-	} catch (final RequestException e) {
-	    throw new ConnectorException(e.getMessage());
-	} catch (final Exception e) {
-	    GWT.log(("Some GWT connector exception: " + e), null);
-	    throw new ConnectorException(e.getMessage());
-	}
+                public void onResponseReceived(final Request req, final Response res) {
+                    activeRequests.remove(req);
+                    listener.onResponseReceived(res.getStatusCode(), res.getText(), request);
+                }
+            });
+            activeRequests.add(req);
+        } catch (final RequestException e) {
+            throw new ConnectorException(e.getMessage());
+        } catch (final Exception e) {
+            GWT.log(("Some GWT connector exception: " + e), null);
+            throw new ConnectorException(e.getMessage());
+        }
     }
 
 }
