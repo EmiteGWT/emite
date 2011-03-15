@@ -1,14 +1,7 @@
 target
-war/examplexmppsession
-war/EmiteFunctionalTests/
-war/ExampleEcho/
-war/ExampleIMChat/
-war/ExampleXmppSession/
-war/PingPongExamples/
-war/suco
 extras
-.svn
-**/.svn
+src/main/webapp/WEB-INF/deploy/
+src/main/webapp/com.*/*
 src/main/webapp/WEB-INF/classes
 war/com.*/*
 war/emite.*/*
