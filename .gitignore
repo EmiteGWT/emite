@@ -1,3 +1,4 @@
+target
 war/examplexmppsession
 war/EmiteFunctionalTests/
 war/ExampleEcho/
@@ -8,7 +9,7 @@ war/suco
 extras
 .svn
 **/.svn
-war/WEB-INF/classes
+src/main/webapp/WEB-INF/classes
 war/com.*/*
 war/emite.*/*
 
