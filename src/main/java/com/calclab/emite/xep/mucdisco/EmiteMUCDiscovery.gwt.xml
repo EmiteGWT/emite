@@ -4,8 +4,8 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.calclab.emite.xep.muc.EmiteMUC" />
     <inherits name="com.calclab.emite.xep.disco.EmiteDiscovery" />
-	
-	<source path="client" />
+
+	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
 	<entry-point
 		class="com.calclab.emite.xep.mucdisco.client.MucDiscoveryModule" />
 </module>

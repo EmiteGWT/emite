@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.2.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.2.0/distro-source/core/src/gwt-module.dtd">
 <module>
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
@@ -7,7 +8,6 @@
 	<entry-point
 		class='com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession' />
 
-	<!-- Specify the paths for translatable code                    -->
-	<source path='client' />
+	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
 
 </module>

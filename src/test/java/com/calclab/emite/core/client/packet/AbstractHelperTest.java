@@ -7,7 +7,7 @@ import org.junit.Assert;
 
 import com.calclab.emite.core.client.packet.PacketTestSuite.Helper;
 
-public abstract class AbstractHelper implements Helper {
+public abstract class AbstractHelperTest implements Helper {
     public void assertEquals(final Object expected, final Object actual) {
 	Assert.assertEquals(expected, actual);
     }
