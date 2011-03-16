@@ -1,5 +1,6 @@
-#Tue Mar 15 18:31:22 CET 2011
+#Tue Mar 15 19:52:28 CET 2011
 eclipse.preferences.version=1
-jarsExcludedFromWebInfLib=/Users/Dani/EmiteGWT/emite/lib/aopalliance.jar|/Users/Dani/EmiteGWT/emite/lib/commons-httpclient-3.1.jar|/Users/Dani/EmiteGWT/emite/lib/gin-1.0.jar|/Users/Dani/EmiteGWT/emite/lib/guice-2.0.jar|/Users/Dani/EmiteGWT/emite/lib/mockito-all-1.8.2.jar|/Users/Dani/EmiteGWT/emite/lib/tigase-xmltools-2.3.0.jar
+jarsExcludedFromWebInfLib=
+launchConfigExternalUrlPrefix=
 warSrcDir=src/main/webapp
 warSrcDirIsOutput=true

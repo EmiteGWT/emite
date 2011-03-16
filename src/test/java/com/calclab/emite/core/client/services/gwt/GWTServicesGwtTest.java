@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class GWTServicesTest extends GWTTestCase {
+public class GWTServicesGwtTest extends GWTTestCase {
 
     @Override
     public String getModuleName() {
