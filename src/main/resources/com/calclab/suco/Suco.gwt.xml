@@ -3,5 +3,5 @@
 <module>
 	<inherits name='com.google.gwt.core.Core' />
 	<entry-point class="com.calclab.suco.client.SucoEntryPoint" />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java"/>
+	<source path='client' />
 </module>

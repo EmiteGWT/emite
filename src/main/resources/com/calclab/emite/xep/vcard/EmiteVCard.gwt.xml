@@ -3,6 +3,6 @@
 <module>
 	<inherits name="com.calclab.emite.core.EmiteCore" />
 	<entry-point class="com.calclab.emite.xep.vcard.client.VCardModule" />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
+	<source path='client' />
 
 </module>

@@ -4,5 +4,5 @@
 	<inherits name="com.calclab.emite.core.EmiteCore" />
 	<entry-point
 		class="com.calclab.emite.im.client.EmiteIMEntryPoint" />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java"/>
+	<source path='client' />
 </module>

@@ -5,5 +5,5 @@
 	<inherits name="com.calclab.emite.im.EmiteIM" />
 	<entry-point
 		class="com.calclab.emite.xep.privacylists.client.PrivacyListsModule" />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
+	<source path='client' />
 </module>

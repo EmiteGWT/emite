@@ -4,5 +4,5 @@
 	<inherits name="com.calclab.emite.core.EmiteCore" />
 	<entry-point
 		class="com.calclab.emite.xep.storage.client.PrivateStorageModule" />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
+	<source path='client' />
 </module>

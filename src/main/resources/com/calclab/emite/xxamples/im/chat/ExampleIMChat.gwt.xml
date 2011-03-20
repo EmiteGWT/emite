@@ -8,5 +8,5 @@
 	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 	<entry-point
 		class='com.calclab.emite.xxamples.im.chat.client.ExampleIMChat' />
-	<source path='client' excludes="**/*Test.java,**/*Tests.java" />
+	<source path='client' />
 </module>
