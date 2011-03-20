@@ -1,10 +1,1 @@
 target
-extras
-src/main/webapp/WEB-INF/deploy/
-src/main/webapp/com.*/*
-src/main/webapp/WEB-INF/classes
-war/com.*/*
-war/emite.*/*
-
-
-
