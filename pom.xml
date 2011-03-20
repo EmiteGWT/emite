@@ -62,7 +62,7 @@
 			<groupId>tigase</groupId>
 			<artifactId>tigase-xmltools</artifactId>
 			<version>3.3.5</version>
-			<scope>test</scope>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
