@@ -21,7 +21,6 @@
  */
 package com.calclab.emite.xep.privacylists.client;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 
@@ -32,11 +31,7 @@ import com.google.inject.Singleton;
  * 
  * @see PrivacyListsManager
  */
-public class PrivacyListsModule extends AbstractGinModule implements EntryPoint {
-
-    @Override
-    public void onModuleLoad() {
-    }
+public class PrivacyListsModule extends AbstractGinModule {
 
     @Override
     protected void configure() {

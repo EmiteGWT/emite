@@ -22,17 +22,11 @@
 package com.calclab.emite.xep.muc.client;
 
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
-public class MucModule extends AbstractGinModule implements EntryPoint {
-
-    @Override
-    public void onModuleLoad() {
-
-    }
+public class MucModule extends AbstractGinModule {
 
     @Override
     protected void configure() {

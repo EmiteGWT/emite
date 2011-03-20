@@ -21,7 +21,6 @@
  */
 package com.calclab.emite.xep.delay.client;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 
@@ -30,12 +29,7 @@ import com.google.inject.Singleton;
  * 
  */
 @Deprecated
-public class DelayModule extends AbstractGinModule implements EntryPoint {
-
-    @Override
-    public void onModuleLoad() {
-
-    }
+public class DelayModule extends AbstractGinModule {
 
     @Override
     protected void configure() {

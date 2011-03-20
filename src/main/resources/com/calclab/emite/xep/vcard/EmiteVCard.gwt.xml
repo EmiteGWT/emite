@@ -2,7 +2,6 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.2.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.2.0/distro-source/core/src/gwt-module.dtd">
 <module>
 	<inherits name="com.calclab.emite.core.EmiteCore" />
-	<entry-point class="com.calclab.emite.xep.vcard.client.VCardModule" />
+	
 	<source path='client' />
-
 </module>
