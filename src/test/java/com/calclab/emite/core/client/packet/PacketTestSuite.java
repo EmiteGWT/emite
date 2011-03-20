@@ -1,3 +1,4 @@
+package com.calclab.emite.core.client.packet;
 /*
  *
  * ((e)) emite: A pure gwt (Google Web Toolkit) xmpp (jabber) library
@@ -19,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package com.calclab.emite.core.client.packet;
+
 
 import java.util.List;
 

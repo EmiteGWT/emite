@@ -25,11 +25,13 @@ import java.text.MessageFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
@@ -89,26 +91,22 @@ public class HttpConnector {
 	    public void run() {
 		final String id = HttpConnectorID.getNext();
 		debug("Connector [{0}] send: {1}", id, xml);
-		final HttpClientParams params = new HttpClientParams();
-		params.setConnectionManagerTimeout(10000);
-		final HttpClient client = new HttpClient(params);
+		final HttpClient client = new DefaultHttpClient();
 		int status = 0;
-		String response = null;
-		final PostMethod post = new PostMethod(httpBase);
+		String responseString = null;
+		final HttpPost post = new HttpPost(httpBase);
 
 		try {
-		    post.setRequestEntity(new StringRequestEntity(xml, "text/xml", "utf-8"));
+		    post.setEntity(new StringEntity(xml, "text/xml", "utf-8"));
 		    System.out.println("SENDING: " + xml);
-		    status = client.executeMethod(post);
-		    response = post.getResponseBodyAsString();
+		    HttpResponse response = client.execute(post);
+		    responseString = EntityUtils.toString(response.getEntity());
 		} catch (final Exception e) {
 		    callback.onError(xml, e);
 		    e.printStackTrace();
-		} finally {
-		    post.releaseConnection();
 		}
 
-		receiveService.execute(createResponseAction(xml, callback, id, status, response));
+		receiveService.execute(createResponseAction(xml, callback, id, status, responseString));
 	    }
 	};
     }

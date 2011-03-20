@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="**/*.java" kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
-	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
-	<classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.2/commons-codec-1.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/gwt/inject/gin/1.5.0/gin-1.5.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/inject/guice/3.0-rc2/guice-3.0-rc2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/inject/extensions/guice-assistedinject/3.0-rc2/guice-assistedinject-3.0-rc2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-servlet/2.2.0/gwt-servlet-2.2.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/google/gwt/gwt-user/2.2.0/gwt-user-2.2.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.7/junit-4.7.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/mockito/mockito-core/1.8.5/mockito-core-1.8.5.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/objenesis/objenesis/1.0/objenesis-1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/tigase/tigase-xmltools/2.3.0/tigase-xmltools-2.3.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" output="target/emite-0.7-SNAPSHOT/WEB-INF/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="target/emite-0.7-SNAPSHOT/WEB-INF/classes" path="target/generated-sources/gwt"/>
+	<classpathentry excluding="**" kind="src" output="target/emite-0.7-SNAPSHOT/WEB-INF/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="output" path="src/main/webapp/WEB-INF/classes"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/emite-0.7-SNAPSHOT/WEB-INF/classes"/>
 </classpath>
