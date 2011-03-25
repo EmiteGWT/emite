@@ -14,8 +14,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -29,7 +29,7 @@ public class ExampleXmppSession implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-	DeferredCommand.addCommand(new Command() {
+	Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 	    @Override
 	    public void execute() {
 		panel = new VerticalPanel();
