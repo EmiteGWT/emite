@@ -28,7 +28,6 @@ import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -187,54 +186,6 @@ public interface Chat {
      * @return
      */
     public boolean isReady();
-
-    public void onBeforeReceive(Listener<Message> listener);
-
-    /**
-     * A listener to know when a message is going to be sent. It allows the
-     * listener to modify the message just before send it (a kind of interceptor
-     * in aop programming)
-     * 
-     * USE addBeforeReceiveMessageHandler instead
-     * 
-     * @param listener
-     *            the listener
-     * 
-     */
-    @Deprecated
-    public void onBeforeSend(Listener<Message> listener);
-
-    /**
-     * Allows to modify the message just before inform about the reception
-     * 
-     * Use addMessageReceivedHandler instead
-     * 
-     * @param messageInterceptor
-     */
-    @Deprecated
-    public void onMessageReceived(Listener<Message> listener);
-
-    /**
-     * Attach a listener to know when a message has been sent
-     * 
-     * Use addMessageSentHandler instead
-     * 
-     * @param listener
-     *            the listener to the events
-     */
-    @Deprecated
-    public void onMessageSent(Listener<Message> listener);
-
-    /**
-     * Add a listener to know when the chat state changed. You should send
-     * messages while the state != ready
-     * 
-     * Use addChatStateChangedHandler instead
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onStateChanged(Listener<State> listener);
 
     /**
      * Open a chat. This method is normally called by the chat manager

@@ -18,10 +18,6 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentHandler;
 import com.calclab.emite.xep.muc.client.subject.RoomSubject;
-import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedEvent;
-import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedHandler;
-import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 abstract class RoomBoilerplate extends AbstractChat implements Room {
@@ -84,84 +80,6 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
     @Override
     public int getOccupantsCount() {
 	return occupantsByOccupantUri.size();
-    }
-
-    /**
-     * Add a listener to know when an invitation was sent Use
-     * addRoomInvitationSentHandler
-     */
-    @Override
-    @Deprecated
-    public void onInvitationSent(final Listener2<XmppURI, String> listener) {
-	addRoomInvitationSentHandler(new RoomInvitationSentHandler() {
-	    @Override
-	    public void onRoomInvitationSent(RoomInvitationSentEvent event) {
-		listener.onEvent(event.getUserJid(), event.getReasonText());
-	    }
-	});
-    }
-
-    /**
-     * Use addOccupantChangedHandler
-     */
-    @Deprecated
-    @Override
-    public void onOccupantAdded(final Listener<Occupant> listener) {
-	addOccupantChangedHandler(new OccupantChangedHandler() {
-	    @Override
-	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeTypes.added)) {
-		    listener.onEvent(event.getOccupant());
-		}
-	    }
-	});
-    }
-
-    /**
-     * Use addOccupantChangedHandler
-     */
-    @Deprecated
-    @Override
-    public void onOccupantModified(final Listener<Occupant> listener) {
-	addOccupantChangedHandler(new OccupantChangedHandler() {
-	    @Override
-	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeTypes.modified)) {
-		    listener.onEvent(event.getOccupant());
-		}
-	    }
-	});
-    }
-
-    /**
-     * Use addOccupantChangedHandler
-     */
-    @Deprecated
-    @Override
-    public void onOccupantRemoved(final Listener<Occupant> listener) {
-	addOccupantChangedHandler(new OccupantChangedHandler() {
-	    @Override
-	    public void onOccupantChanged(OccupantChangedEvent event) {
-		if (event.is(ChangeTypes.removed)) {
-		    listener.onEvent(event.getOccupant());
-		}
-	    }
-	});
-    }
-
-    /**
-     * Use RoomSubject.addRoomSubjectChangedHandler
-     */
-    @Override
-    @Deprecated
-    public void onSubjectChanged(final Listener2<Occupant, String> listener) {
-	RoomSubject.addRoomSubjectChangedHandler(this, new RoomSubjectChangedHandler() {
-	    @Override
-	    public void onSubjectChanged(RoomSubjectChangedEvent event) {
-		Occupant occupant = getOccupantByOccupantUri(event.getOccupantUri());
-		listener.onEvent(occupant, event.getSubject());
-	    }
-	});
     }
 
     /**

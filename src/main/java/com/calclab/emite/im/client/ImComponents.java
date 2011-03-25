@@ -3,7 +3,6 @@ package com.calclab.emite.im.client;
 import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.presence.PresenceManager;
-import com.calclab.emite.im.client.roster.Roster;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
 import com.calclab.emite.im.client.roster.XmppRoster;
@@ -22,13 +21,11 @@ public class ImComponents {
 
     @Inject
     public ImComponents(SessionComponentsRegistry registry, Provider<ChatManager> chatManager,
-	    Provider<PresenceManager> presenceManager, Provider<Roster> roster,
-	    Provider<SubscriptionManager> subscriptionManager, Provider<SubscriptionHandler> subcriptionHandler,
-	    Provider<XmppRoster> xmppRoster) {
+	    Provider<PresenceManager> presenceManager, Provider<SubscriptionManager> subscriptionManager,
+	    Provider<SubscriptionHandler> subcriptionHandler, Provider<XmppRoster> xmppRoster) {
 
 	registry.addProvider(chatManager);
 	registry.addProvider(presenceManager);
-	registry.addProvider(roster);
 	registry.addProvider(subscriptionManager);
 	registry.addProvider(subcriptionHandler);
 	registry.addProvider(xmppRoster);

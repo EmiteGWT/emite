@@ -34,7 +34,6 @@ import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
-import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -108,17 +107,6 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
     @Override
     public void cancelSubscription(final XmppURI jid) {
 	session.send(new Presence(Type.unsubscribed, session.getCurrentUserURI().getJID(), jid.getJID()));
-    }
-
-    @Override
-    @Deprecated
-    public void onSubscriptionRequested(final Listener2<XmppURI, String> listener) {
-	addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
-	    @Override
-	    public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
-		listener.onEvent(event.getFrom(), event.getNick());
-	    }
-	});
     }
 
     @Override

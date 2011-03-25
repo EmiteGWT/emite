@@ -23,7 +23,6 @@ package com.calclab.emite.im.client.presence;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -54,13 +53,4 @@ public interface PresenceManager {
      */
     Presence getOwnPresence();
 
-    /**
-     * Add a litener to the own's-presence-changed event
-     * 
-     * Use addOwnPresenceChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    void onOwnPresenceChanged(Listener<Presence> listener);
 }

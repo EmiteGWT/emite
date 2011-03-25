@@ -6,8 +6,6 @@ import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.emite.im.client.chat.PairChatSelectionStrategy;
 import com.calclab.emite.im.client.presence.PresenceManager;
 import com.calclab.emite.im.client.presence.PresenceManagerImpl;
-import com.calclab.emite.im.client.roster.Roster;
-import com.calclab.emite.im.client.roster.RosterImpl;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
 import com.calclab.emite.im.client.roster.SubscriptionManagerImpl;
@@ -32,7 +30,6 @@ public class ImModule extends AbstractGinModule {
     protected void configure() {
 	bind(ChatManager.class).to(PairChatManager.class).in(Singleton.class);
 	bind(PresenceManager.class).to(PresenceManagerImpl.class).in(Singleton.class);
-	bind(Roster.class).to(RosterImpl.class).in(Singleton.class);
 	bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class).in(Singleton.class);
 	bind(SubscriptionHandler.class).in(Singleton.class);
 	bind(XmppRoster.class).to(XmppRosterLogic.class).in(Singleton.class);

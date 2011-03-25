@@ -4,19 +4,15 @@ import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.ErrorHandler;
 import com.calclab.emite.core.client.events.EventBusFactory;
-import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
 import com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent;
 import com.calclab.emite.im.client.chat.events.ChatStateChangedEvent;
 import com.calclab.emite.im.client.chat.events.MessageSentEvent;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class ChatBoilerplate implements Chat {
@@ -114,61 +110,6 @@ public abstract class ChatBoilerplate implements Chat {
     @Override
     public boolean isInitiatedByMe() {
 	return session.getCurrentUserURI() != null && session.getCurrentUserURI().equals(properties.getInitiatorUri());
-    }
-
-    @Override
-    @Deprecated
-    public void onBeforeReceive(final Listener<Message> listener) {
-	addBeforeReceiveMessageHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		listener.onEvent(event.getMessage());
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onBeforeSend(final Listener<Message> listener) {
-	addBeforeSendMessageHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		listener.onEvent(event.getMessage());
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onMessageReceived(final Listener<Message> listener) {
-	addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		listener.onEvent(event.getMessage());
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onMessageSent(final Listener<Message> listener) {
-	addMessageSentHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		listener.onEvent(event.getMessage());
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onStateChanged(final Listener<State> listener) {
-	addChatStateChangedHandler(false, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(final StateChangedEvent event) {
-		listener.onEvent(getState());
-	    }
-	});
     }
 
     @Override

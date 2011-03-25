@@ -44,7 +44,6 @@ import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -108,20 +107,6 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
     @Override
     public HistoryOptions getDefaultHistoryOptions() {
 	return defaultHistoryOptions;
-    }
-
-    /**
-     * Use addRoomInvitationHandler
-     */
-    @Deprecated
-    @Override
-    public void onInvitationReceived(final Listener<RoomInvitation> listener) {
-	addRoomInvitationReceivedHandler(new RoomInvitationHandler() {
-	    @Override
-	    public void onRoomInvitation(RoomInvitationEvent event) {
-		listener.onEvent(event.getRoomInvitation());
-	    }
-	});
     }
 
     @Override

@@ -34,7 +34,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
@@ -115,17 +114,6 @@ public class PresenceManagerImpl implements PresenceManager {
     @Override
     public Presence getOwnPresence() {
 	return ownPresence;
-    }
-
-    @Override
-    @Deprecated
-    public void onOwnPresenceChanged(final Listener<Presence> listener) {
-	addOwnPresenceChangedHandler(new OwnPresenceChangedHandler() {
-	    @Override
-	    public void onOwnPresenceChanged(OwnPresenceChangedEvent event) {
-		listener.onEvent(event.getCurrentPresence());
-	    }
-	});
     }
 
     /**

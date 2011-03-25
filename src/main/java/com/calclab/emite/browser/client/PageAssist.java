@@ -3,7 +3,6 @@ package com.calclab.emite.browser.client;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
@@ -66,42 +65,6 @@ public class PageAssist {
     public static void closeSession(final XmppSession session) {
 	Cookies.removeCookie(PAUSE_COOKIE);
 	session.logout();
-    }
-
-    /**
-     * Will configure the given connection if PARAM_HTTPBASE <b>and</b>
-     * PARAM_HOST is present as html meta tags in the current html page
-     * 
-     * @param connection
-     *            The connection to be configured
-     * @return true if the configuration is perfomed (PARAM_HTTPBASE and
-     *         PARAM_HOST are present), false otherwise
-     */
-    @Deprecated
-    public static final boolean configureFromMeta(final Connection connection) {
-	GWT.log("Configuring connection...", null);
-	final String httpBase = getMeta(PARAM_HTTPBASE);
-	final String host = getMeta(PARAM_HOST);
-	final String routeHost = getMeta(PARAM_ROUTE_HOST);
-	final String routePortString = getMeta(PARAM_ROUTE_PORT);
-	final boolean secure = isMetaTrue(PARAM_SECURE);
-
-	Integer routePort = null;
-	if (routePortString != null) {
-	    try {
-		routePort = Integer.decode(routePortString);
-	    } catch (final NumberFormatException e) {
-
-	    }
-	}
-
-	if (host != null && httpBase != null) {
-	    GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
-	    connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
-	    return true;
-	} else {
-	    return false;
-	}
     }
 
     /**

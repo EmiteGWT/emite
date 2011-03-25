@@ -25,7 +25,6 @@ import java.util.HashMap;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.suco.client.events.Listener;
 
 /**
  * Handles IQ listeners and generates uniqe ids based on category strings. Used
@@ -58,12 +57,4 @@ class IQManager {
 	return key;
     }
 
-    public String register(final String category, final Listener<IPacket> listener) {
-	return register(category, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(final IQ iq) {
-		listener.onEvent(iq);
-	    }
-	});
-    }
 }

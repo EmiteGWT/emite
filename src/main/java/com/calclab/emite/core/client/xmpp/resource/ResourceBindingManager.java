@@ -27,7 +27,6 @@ import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -61,16 +60,6 @@ public class ResourceBindingManager {
 	iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
 
 	connection.send(iq);
-    }
-
-    @Deprecated
-    public void onBinded(final Listener<XmppURI> listener) {
-	ResourceBindResultEvent.bind(connection.getEventBus(), new ResourceBindResultHandler() {
-	    @Override
-	    public void onBinded(final ResourceBindResultEvent event) {
-		listener.onEvent(event.getXmppUri());
-	    }
-	});
     }
 
 }

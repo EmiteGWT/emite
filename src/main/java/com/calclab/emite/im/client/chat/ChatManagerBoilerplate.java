@@ -9,7 +9,6 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class ChatManagerBoilerplate implements ChatManager {
@@ -39,48 +38,6 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
     @Override
     public Collection<? extends Chat> getChats() {
 	return chats;
-    }
-
-    /**
-     * Use addChatChangedHandler
-     */
-    @Override
-    @Deprecated
-    public void onChatClosed(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isClosed()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onChatCreated(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isCreated()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
-    }
-
-    @Override
-    @Deprecated
-    public void onChatOpened(final Listener<Chat> listener) {
-	ChatChangedEvent.bind(managerEventBus, new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(final ChatChangedEvent event) {
-		if (event.isOpened()) {
-		    listener.onEvent(event.getChat());
-		}
-	    }
-	});
     }
 
     @Override

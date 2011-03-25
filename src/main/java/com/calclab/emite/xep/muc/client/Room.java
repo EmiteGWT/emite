@@ -11,8 +11,6 @@ import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentHandler;
 import com.calclab.emite.xep.muc.client.subject.RoomSubject;
-import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -102,46 +100,6 @@ public interface Room extends Chat {
     public abstract boolean isComingFromMe(final Message message);
 
     public abstract boolean isUserMessage(Message message);
-
-    /**
-     * Use addBeforeInvitationSendHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onInvitationSent(Listener2<XmppURI, String> listener);
-
-    /**
-     * Use addOccupantChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public abstract void onOccupantAdded(Listener<Occupant> listener);
-
-    /**
-     * Use addOccupantChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public abstract void onOccupantModified(Listener<Occupant> listener);
-
-    /**
-     * Use addOccupantChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public abstract void onOccupantRemoved(Listener<Occupant> occupantRemoved);
-
-    /**
-     * Use RoomSubject.addRoomSubjectChangedHandler
-     * 
-     * @param subjectListener
-     */
-    @Deprecated
-    public abstract void onSubjectChanged(Listener2<Occupant, String> subjectListener);
 
     public void reEnter(final HistoryOptions historyOptions);
 

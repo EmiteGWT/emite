@@ -37,7 +37,6 @@ import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationEvent;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationHandler;
-import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
@@ -166,21 +165,6 @@ public class RoomChatStateManager {
 
     public ChatState getOwnState() {
 	return ownState;
-    }
-
-    /**
-     * Use addRoomChatStateNotificationHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onChatStateChanged(final Listener2<XmppURI, ChatState> listener) {
-	addRoomChatStateNotificationHandler(new RoomChatStateNotificationHandler() {
-	    @Override
-	    public void onRoomChatStateNotification(RoomChatStateNotificationEvent event) {
-		listener.onEvent(event.getFrom(), event.getChatState());
-	    }
-	});
     }
 
     public void setOwnState(final ChatState chatState) {

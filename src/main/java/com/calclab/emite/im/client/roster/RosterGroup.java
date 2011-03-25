@@ -13,7 +13,6 @@ import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -125,57 +124,6 @@ public class RosterGroup implements Iterable<RosterItem> {
     @Override
     public Iterator<RosterItem> iterator() {
 	return itemsByJID.values().iterator();
-    }
-
-    /**
-     * Use addRosterItemChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onItemAdded(final Listener<RosterItem> listener) {
-	addRosterItemChangedHandler(new RosterItemChangedHandler() {
-	    @Override
-	    public void onRosterItemChanged(RosterItemChangedEvent event) {
-		if (event.isAdded()) {
-		    listener.onEvent(event.getRosterItem());
-		}
-	    }
-	});
-    }
-
-    /**
-     * Use addRosterItemChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onItemChanged(final Listener<RosterItem> listener) {
-	addRosterItemChangedHandler(new RosterItemChangedHandler() {
-	    @Override
-	    public void onRosterItemChanged(RosterItemChangedEvent event) {
-		if (event.isModified()) {
-		    listener.onEvent(event.getRosterItem());
-		}
-	    }
-	});
-    }
-
-    /**
-     * Use addRosterItemChangedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onItemRemoved(final Listener<RosterItem> listener) {
-	addRosterItemChangedHandler(new RosterItemChangedHandler() {
-	    @Override
-	    public void onRosterItemChanged(RosterItemChangedEvent event) {
-		if (event.isRemoved()) {
-		    listener.onEvent(event.getRosterItem());
-		}
-	    }
-	});
     }
 
     public RosterItem remove(final XmppURI jid) {

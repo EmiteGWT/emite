@@ -23,7 +23,6 @@ package com.calclab.emite.im.client.roster;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
-import com.calclab.suco.client.events.Listener2;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -60,19 +59,6 @@ public interface SubscriptionManager {
      *            the entity's jid (resource ignored)
      */
     public void cancelSubscription(XmppURI jid);
-
-    /**
-     * This listener is called when a INCOMING subscription request arrived (a
-     * request to subscribe to the current logged in user's presence)
-     * 
-     * Use addSubscriptionRequestReceivedHandler
-     * 
-     * @param listener
-     *            the listener to be called (with the jid of the entity and the
-     *            nick name)
-     */
-    @Deprecated
-    public void onSubscriptionRequested(Listener2<XmppURI, String> listener);
 
     /**
      * Refuse a previously subscription request stanza

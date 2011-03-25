@@ -27,7 +27,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationEvent;
 import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationHandler;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 
@@ -86,21 +85,6 @@ public class ChatStateManager {
 
     public ChatState getOwnState() {
 	return ownState;
-    }
-
-    /**
-     * Use addChatStateNotificationHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onChatStateChanged(final Listener<ChatState> listener) {
-	addChatStateNotificationHandler(new ChatStateNotificationHandler() {
-	    @Override
-	    public void onChatStateChanged(ChatStateNotificationEvent event) {
-		listener.onEvent(event.getChatState());
-	    }
-	});
     }
 
     public void setOwnState(final ChatState chatState) {

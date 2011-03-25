@@ -37,7 +37,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xep.avatar.client.events.AvatarVCardHandler;
 import com.calclab.emite.xep.avatar.client.events.AvatarVCardReceivedEvent;
 import com.calclab.emite.xep.avatar.client.events.HashPresenceReceivedEvent;
-import com.calclab.suco.client.events.Listener;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 
@@ -78,36 +77,6 @@ public class AvatarManager {
 
     public HandlerRegistration addHashPresenceReceviedHandler(PresenceHandler handler) {
 	return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
-    }
-
-    /**
-     * Use addHashPresenceReceviedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onHashPresenceReceived(final Listener<Presence> listener) {
-	addHashPresenceReceviedHandler(new PresenceHandler() {
-	    @Override
-	    public void onPresence(PresenceEvent event) {
-		listener.onEvent(event.getPresence());
-	    }
-	});
-    }
-
-    /**
-     * Use addAvatarVCardReceivedHandler
-     * 
-     * @param listener
-     */
-    @Deprecated
-    public void onVCardReceived(final Listener<AvatarVCard> listener) {
-	addAvatarVCardReceivedHandler(new AvatarVCardHandler() {
-	    @Override
-	    public void onAvatarVCard(AvatarVCardReceivedEvent event) {
-		listener.onEvent(event.getAvatarVCard());
-	    }
-	});
     }
 
     /**
