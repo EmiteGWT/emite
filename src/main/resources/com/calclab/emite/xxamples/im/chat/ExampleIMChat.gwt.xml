@@ -3,10 +3,11 @@
 <module>
 	<inherits name="com.google.gwt.user.User" />
 
-	<inherits name='com.calclab.emite.core.EmiteCore' />
 	<inherits name='com.calclab.emite.im.EmiteIM' />
 	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
+	
 	<entry-point
 		class='com.calclab.emite.xxamples.im.chat.client.ExampleIMChat' />
+		
 	<source path='client' />
 </module>

@@ -6,7 +6,4 @@
 	<inherits name="com.google.gwt.inject.Inject" />
 	
 	<source path='client' />
-	
-	<entry-point
-		class="com.calclab.emite.core.client.EmiteCoreEntryPoint" />
 </module>

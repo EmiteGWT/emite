@@ -2,12 +2,12 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.2.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.2.0/distro-source/core/src/gwt-module.dtd">
 <module>
 	<inherits name='com.google.gwt.user.User' />
-	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-	<inherits name='com.calclab.emite.suco.EmiteSuco' />
+
+	<inherits name='com.calclab.emite.im.EmiteIM' />
+	<inherits name='com.calclab.emite.browser.EmiteBrowser' />
 
 	<entry-point
 		class='com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession' />
 
 	<source path='client' />
-
 </module>
