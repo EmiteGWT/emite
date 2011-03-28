@@ -42,7 +42,8 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
     @Override
     public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
 	Chat chat = getChat(properties, false);
-	if (chat == null && createIfNotFound) {
+	if (chat == null) {
+		if (!createIfNotFound) return null;
 	    properties.setInitiatorUri(session.getCurrentUserURI());
 	    chat = addNewChat(properties);
 	}
