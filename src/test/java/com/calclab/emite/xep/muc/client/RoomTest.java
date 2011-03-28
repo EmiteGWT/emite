@@ -32,7 +32,7 @@ public class RoomTest extends AbstractChatTest {
 	userURI = uri("user@domain/res");
 	roomURI = uri("room@domain/nick");
 	session.setLoggedIn(userURI);
-	RoomChatManager manager = new RoomChatManager(xmppSession);
+	RoomChatManager manager = new RoomChatManager(session);
 	final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
 	room = (RoomChat) manager.openChat(properties, true);
     }
@@ -56,9 +56,9 @@ public class RoomTest extends AbstractChatTest {
     @Test
     public void shouldExitAndLockTheRoomWhenLoggedOut() {
 	receiveInstantRoomCreation(userURI, roomURI);
-	xmppSession.logout();
+	session.logout();
 	assertEquals("locked", room.getChatState());
-	xmppSession.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
+	session.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
     }
 
     @Test
@@ -100,14 +100,14 @@ public class RoomTest extends AbstractChatTest {
     @Test
     public void shouldSendRoomInvitation() {
 	room.sendInvitationTo(uri("otherUser@domain/resource"), "this is the reason");
-	xmppSession.verifySent("<message from='" + userURI + "' to='" + roomURI.getJID()
+	session.verifySent("<message from='" + userURI + "' to='" + roomURI.getJID()
 		+ "'><x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<invite to='otheruser@domain/resource'><reason>this is the reason</reason></invite></x></message>");
     }
 
     @Test
     public void shouldSendRoomPresenceWhenCreated() {
-	xmppSession
+	session
 		.verifySent("<presence to='room@domain/nick'><x xmlns='http://jabber.org/protocol/muc' /></presence>");
     }
 
@@ -134,14 +134,14 @@ public class RoomTest extends AbstractChatTest {
     }
 
     private void receiveInstantRoomCreation(XmppURI userUri, final XmppURI room) {
-	xmppSession.receives("<presence to='user@domain/res' from='" + room + "'>"
+	session.receives("<presence to='user@domain/res' from='" + room + "'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<item affiliation='owner' role='moderator' jid='" + userUri
 		+ "' /><status code='201'/></x></presence>");
-	xmppSession.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
+	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
 		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
 		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
-	xmppSession.answerSuccess();
+	session.answerSuccess();
     }
 
 }

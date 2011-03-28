@@ -16,7 +16,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.suco.testing.events.MockedListener2;
+import com.calclab.emite.xtesting.handlers.SubscriptionRequestReceivedTestHandler;
 
 public class SubscriptionManagerTests {
 
@@ -53,10 +53,10 @@ public class SubscriptionManagerTests {
 
     @Test
     public void shouldFireSubscriptionRequests() {
-	final MockedListener2<XmppURI, String> listener = new MockedListener2<XmppURI, String>();
-	manager.onSubscriptionRequested(listener);
+	final SubscriptionRequestReceivedTestHandler handler = new SubscriptionRequestReceivedTestHandler();
+	manager.addSubscriptionRequestReceivedHandler(handler);
 	session.receives("<presence to='user@local' from='friend@domain' type='subscribe' />");
-	assertEquals(1, listener.getCalledTimes());
+	assertEquals(1, handler.getCalledTimes());
     }
 
     @Test

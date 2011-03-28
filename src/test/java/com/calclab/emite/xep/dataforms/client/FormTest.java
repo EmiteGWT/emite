@@ -10,7 +10,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form.Type;
-import com.calclab.emite.xtesting.SessionTester;
+import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class FormTest {
@@ -25,7 +25,7 @@ public class FormTest {
     private static final String SEVERAL_INSTRUCTIONS = "<iq from='joogle@botster.shakespeare.lit' to='juliet@capulet.com/chamber' type='result' xml:lang='en' id='search2'> <command xmlns='http://jabber.org/protocol/commands' node='search' status='completed'> <x xmlns='jabber:x:data'type='form'> <title/> <instructions>First</instructions> <instructions>Second</instructions> <field var='test'type='boelean'label='description'> <desc/> <required/> <value>somevalue</value> <option label='option-label'><value>some-option-value</value></option> <option label='option-label'><value>some-option-value</value></option> </field> </x></command> </iq>";
     private static final String XEP_0055_2_1_SAMPLE_1 = "<iq type='get' from='romeo@montague.net/home' to='characters.shakespeare.lit' id='search1' xml:lang='en'>  <query xmlns='jabber:iq:search'/></iq>";
 
-    private SessionTester session;
+    private XmppSessionTester session;
 
     @Test
     public void parseFieldsInIQ() {
@@ -126,7 +126,7 @@ public class FormTest {
 
     @Before
     public void setUp() {
-	session = new SessionTester();
+	session = new XmppSessionTester();
 	session.setLoggedIn(XmppURI.uri("romeo@montague.net/home"));
 	session.setReady();
     }

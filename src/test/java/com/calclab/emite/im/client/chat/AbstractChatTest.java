@@ -7,18 +7,15 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.MessageTestHandler;
 
 public abstract class AbstractChatTest {
-    protected final SessionTester session;
-    protected XmppSessionTester xmppSession;
+    protected final XmppSessionTester session;
     protected static final XmppURI USER_URI = uri("self@domain/res");
 
     public AbstractChatTest() {
-	xmppSession = new XmppSessionTester();
-	session = new SessionTester(xmppSession);
+	session = new XmppSessionTester();
     }
 
     public abstract AbstractChat getChat();

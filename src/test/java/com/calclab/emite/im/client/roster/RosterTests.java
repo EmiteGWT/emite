@@ -17,12 +17,13 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
+import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
 import com.calclab.suco.testing.events.MockedListener;
 
 public class RosterTests {
 
     private XmppSessionTester session;
-    private Roster roster;
+    private XmppRoster roster;
 
     @Test
     public void addRosterStep1_shouldRequestAddItem() {
@@ -52,7 +53,7 @@ public class RosterTests {
     @Before
     public void beforeTests() {
 	session = new XmppSessionTester();
-	roster = new RosterImpl(new XmppRosterLogic(session));
+	roster = new XmppRosterLogic(session);
     }
 
     @Test
@@ -89,11 +90,11 @@ public class RosterTests {
     public void shouldHandleInitialPresence() {
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend' /></query></iq>");
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemChanged(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+	roster.addRosterItemChangedHandler(handler);
 	session.receives("<presence from='friend@domain' />");
 	final RosterItem item = roster.getItemByJID(uri("friend@domain"));
-	assertTrue(listener.isCalledWithSame(item));
+	assertEquals(item, handler.getLastRosterItem());
 	assertEquals(true, item.isAvailable());
     }
 
@@ -102,25 +103,25 @@ public class RosterTests {
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend' /></query></iq>");
 
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemChanged(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+	roster.addRosterItemChangedHandler(handler);
 	session.receives("<presence from='friend@domain'>"
 		+ "<show>dnd</show><status>message</status><priority>3</priority></presence>");
 	final RosterItem item = roster.getItemByJID(uri("friend@domain"));
 	assertEquals(Presence.Show.dnd, item.getShow());
 	assertEquals("message", item.getStatus());
-	assertTrue(listener.isCalledWithSame(item));
+	assertEquals(item, handler.getLastRosterItem());
     }
 
     @Test
     public void shouldHandleUnavailablePresence() {
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend' /></query></iq>");
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemChanged(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+	roster.addRosterItemChangedHandler(handler);
 	session.receives("<presence type='unavailable' from='friend@domain' />");
 	final RosterItem item = roster.getItemByJID(uri("friend@domain"));
-	assertTrue(listener.isCalledWithSame(item));
+	assertEquals(item, handler.getLastRosterItem());
 	assertEquals(false, item.isAvailable());
 
     }
@@ -145,12 +146,12 @@ public class RosterTests {
 
     @Test
     public void shouldRequestRemoveItem() {
-	roster.removeItem(uri("friend@domain"));
+	roster.requestRemoveItem(uri("friend@domain"));
 	session.verifyNotSent("<iq />");
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend'><group>Group1</group><group>Group2</group>"
 		+ "</item></query></iq>");
-	roster.removeItem(uri("friend@domain"));
+	roster.requestRemoveItem(uri("friend@domain"));
 	session.verifyIQSent("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' subscription='remove'/></query></iq>");
     }
@@ -168,9 +169,13 @@ public class RosterTests {
 		+ "</item></query></iq>");
 	final RosterItem item = roster.getItemByJID(uri("friend@domain"));
 	assertNotNull(item);
-	roster.updateItem(uri("no@one"), "name", "group");
+	RosterItem upd = new RosterItem(uri("no@one"), null, "name", null);
+	upd.setGroups("group");
+	roster.requestUpdateItem(upd);
 	session.verifySent("<iq type='result' id='theId' />");
-	roster.updateItem(uri("friend@domain"), "MyOldFriend", "Group1", "Group3");
+	upd = new RosterItem(uri("friend@domain"), null, "MyOldFriend", null);
+	upd.setGroups("Group1", "Group3");
+	roster.requestUpdateItem(upd);
 	session.verifyIQSent("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyOldFriend'><group>Group1</group><group>Group3</group>"
 		+ "</item></query></iq>");
@@ -210,8 +215,8 @@ public class RosterTests {
 
     @Test
     public void shouldUpdateItem() {
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemChanged(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+	roster.addRosterItemChangedHandler(handler);
 
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='Friend1'><group>GG1</group><group>GG2</group>"
@@ -219,7 +224,7 @@ public class RosterTests {
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='Friend2'><group>HH1</group><group>HH2</group>"
 		+ "</item></query></iq>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
 	assertEquals(1, roster.getItems().size());
 	assertEquals(3, roster.getGroupNames().size());
 	assertTrue(roster.getGroupNames().contains("HH1"));
