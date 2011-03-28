@@ -3,15 +3,15 @@ package com.calclab.emite.im.client.chat;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.ChatCreatedTestHandler;
+import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
 
 public class PairChatManagerTest extends AbstractChatManagerTest {
 
@@ -20,47 +20,47 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	final Message message = new Message(null, MYSELF, OTHER);
 	message.addChild("gone", ChatStateManager.XMLNS);
 
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	session.receives(message);
-	assertTrue(listener.isNotCalled());
+	assertTrue(handler.isNotCalled());
 	manager.open(OTHER);
-	assertTrue(listener.isCalled());
+	assertTrue(handler.isCalled());
     }
 
     @Test
     public void managerShouldCreateOneChatForSameResource() {
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	session.receives(new Message("message 1", MYSELF, uri("source@domain/resource1")));
 	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
-	assertEquals(1, listener.getCalledTimes());
+	assertEquals(1, handler.getCalledTimes());
     }
 
     @Test
     public void oneToOneChatsAreAlwaysReadyWhenCreated() {
 	final Chat chat = manager.open(uri("other@domain/resource"));
-	assertSame(Chat.State.ready, chat.getState());
+	assertEquals("equals", chat.getChatState());
     }
 
     @Test
     public void roomInvitationsShouldDontFireOnChatCreated() {
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	session.receives("<message to='" + MYSELF
 		+ "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 		+ "'><reason>Join to our conversation</reason></invite>"
 		+ "</x><x jid='someroom@domain' xmlns='jabber:x:conference' /></message>");
-	assertTrue(listener.isNotCalled());
+	assertTrue(handler.isNotCalled());
     }
 
     @Test
     public void roomInvitationsShouldDontFireOnChatCreatedButMustAfterOpenChat() {
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	session.receives("<message to='" + MYSELF
 		+ "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 		+ "'><reason>Join to our conversation</reason></invite>"
 		+ "</x><x jid='someroom@domain' xmlns='jabber:x:conference' /></message>");
-	assertTrue(listener.isNotCalled());
+	assertTrue(handler.isNotCalled());
 	manager.open(OTHER);
-	assertTrue(listener.isCalled());
+	assertTrue(handler.isCalled());
     }
 
     @Test
@@ -73,72 +73,72 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldBlockChatWhenClosingIt() {
 	final Chat chat = manager.open(uri("other@domain/resource"));
-	assertSame(Chat.State.ready, chat.getState());
+	assertEquals("ready", chat.getChatState());
 	manager.close(chat);
-	assertSame(Chat.State.locked, chat.getState());
+	assertEquals("locked", chat.getChatState());
     }
 
     @Test
     public void shouldCloseChatWhenLoggedOut() {
 	final Chat chat = manager.open(uri("name@domain/resouce"));
-	assertEquals(Chat.State.ready, chat.getState());
-	final MockedListener<State> listener = new MockedListener<State>();
-	chat.onStateChanged(listener);
+	assertEquals("ready", chat.getChatState());
+	final StateChangedTestHandler handler = new StateChangedTestHandler();
+	chat.addChatStateChangedHandler(true, handler);
 	session.logout();
-	assertTrue(listener.isCalledWithEquals(State.locked));
+	assertEquals("locked", handler.getLastState());
     }
 
     @Test
     public void shouldEventIncommingMessages() {
 	final Chat chat = manager.open(uri("someone@domain"));
-	final MockedListener<Message> listener = new MockedListener<Message>();
-	chat.onMessageReceived(listener);
+	final MessageTestHandler handler = new MessageTestHandler();
+	chat.addMessageReceivedHandler(handler);
 	session.receives("<message type='chat' id='purplee8b92642' to='user@domain' "
 		+ "from='someone@domain'><x xmlns='jabber:x:event'/><active"
 		+ "xmlns='http://jabber.org/protocol/chatstates'/></message>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 
     @Test
     public void shouldOpenDifferentsChatsForDifferentDomains() {
 	final Chat chatCom = manager.open(uri("COM@domain.com"));
-	final MockedListener<Message> listenerCom = new MockedListener<Message>();
-	chatCom.onMessageReceived(listenerCom);
-	assertTrue("com listener empty", listenerCom.isCalled(0));
+	final MessageTestHandler handlerCom = new MessageTestHandler();
+	chatCom.addMessageReceivedHandler(handlerCom);
+	assertTrue("com listener empty", handlerCom.isNotCalled());
 
 	final Chat chatOrg = manager.open(uri("ORG@domain.org"));
-	final MockedListener<Message> listenerOrg = new MockedListener<Message>();
-	chatOrg.onMessageReceived(listenerOrg);
-	assertTrue("org listener empty", listenerOrg.isCalled(0));
+	final MessageTestHandler handlerOrg = new MessageTestHandler();
+	chatOrg.addMessageReceivedHandler(handlerOrg);
+	assertTrue("org listener empty", handlerCom.isNotCalled());
 
 	session.receives(new Message("message com 2", MYSELF, uri("COM@domain.com")));
-	assertTrue("com has one message", listenerCom.isCalled(1));
-	assertTrue("org has no message", listenerOrg.isCalled(0));
+	assertTrue("com has one message", handlerCom.isCalledOnce());
+	assertTrue("org has no message", handlerOrg.isNotCalled());
 
     }
 
     @Test
     public void shouldReuseChatIfNotResouceSpecified() {
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	session.receives(new Message("message 1", MYSELF, uri("source@domain")));
 	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
-	assertTrue(listener.isCalled(1));
+	assertTrue(handler.isCalledOnce());
     }
 
     @Test
     public void shouldReuseChatWhenAnsweringWithDifferentResources() {
-	final MockedListener<Chat> listener = addOnChatCreatedListener();
+	final ChatCreatedTestHandler handler = addChatCreatedHandler();
 	final Chat chat = manager.open(uri("someone@domain"));
-	assertTrue(listener.isCalledOnce());
-	assertTrue(listener.isCalledWithSame(chat));
+	assertTrue(handler.isCalledOnce());
+	assertEquals(chat, handler.getLastChat());
 	session.receives(new Message("answer", MYSELF, uri("someone@domain/resource")));
-	assertTrue(listener.isCalled(1));
+	assertTrue(handler.isCalledOnce());
     }
 
-    private MockedListener<Chat> addOnChatCreatedListener() {
-	final MockedListener<Chat> listener = new MockedListener<Chat>();
-	manager.onChatCreated(listener);
-	return listener;
+    private ChatCreatedTestHandler addChatCreatedHandler() {
+	final ChatCreatedTestHandler handler = new ChatCreatedTestHandler();
+	manager.addChatChangedHandler(handler);
+	return handler;
     }
 
     @Override

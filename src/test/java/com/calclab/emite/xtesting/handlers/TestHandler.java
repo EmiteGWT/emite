@@ -30,6 +30,14 @@ public abstract class TestHandler<T> {
 	return getCalledTimes() == 1;
     }
 
+    public boolean isCalled() {
+	return getCalledTimes() > 0;
+    }
+
+    public boolean isNotCalled() {
+	return getCalledTimes() == 0;
+    }
+
     public void addEvent(final T event) {
 	events.add(event);
     }

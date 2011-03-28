@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.bosh.XmppBoshConnection;
-import com.calclab.emite.core.client.conn.AbstractConnection;
-import com.calclab.emite.core.client.conn.Connection;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
+import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
@@ -19,7 +18,7 @@ import com.calclab.emite.xtesting.services.TigaseXMLService;
  * test the Session)
  * 
  */
-public class ConnectionTester extends AbstractConnection implements Connection {
+public class ConnectionTester extends AbstractConnection implements XmppConnection {
 
     private boolean isConnected;
     private boolean paused;

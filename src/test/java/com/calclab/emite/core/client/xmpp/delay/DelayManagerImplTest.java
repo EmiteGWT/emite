@@ -14,18 +14,15 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.delay.client.Delay;
-import com.calclab.emite.xep.delay.client.DelayManager;
-import com.calclab.emite.xep.delay.client.DelayManagerImpl;
+import com.calclab.emite.xep.delay.client.DelayHelper;
 
 public class DelayManagerImplTest {
     @Test
     public void shouldGiveDelay() {
 	final BasicStanza stanza = new BasicStanza("name", "xmlns");
-	XmppDateTime.useGWT21();
 
 	XmppURI uri = uri("name@domain/resource");
 	stanza.setTo(uri);
@@ -35,8 +32,7 @@ public class DelayManagerImplTest {
 	delayNode.setAttribute("xmlns", "urn:xmpp:delay");
 	delayNode.setAttribute("from", "name@domain/resource");
 	delayNode.setAttribute("stamp", "1980-04-15T17:15:02.159+01:00");
-	DelayManager manager = new DelayManagerImpl();
-	Delay delay = manager.getDelay(stanza);
+	Delay delay = DelayHelper.getDelay(stanza);
 	assertNotNull(delay);
 	Calendar cal = Calendar.getInstance();
 	cal.clear();
@@ -51,7 +47,6 @@ public class DelayManagerImplTest {
     @Test
     public void shouldGiveDelayLegacyFormat() {
 	final BasicStanza stanza = new BasicStanza("name", "xmlns");
-	XmppDateTime.useGWT21();
 
 	XmppURI uri = uri("name@domain/resource");
 	stanza.setTo(uri);
@@ -61,8 +56,7 @@ public class DelayManagerImplTest {
 	delayNode.setAttribute("xmlns", "jabber:x:delay");
 	delayNode.setAttribute("from", "name@domain/resource");
 	delayNode.setAttribute("stamp", "19800415T15:15:02");
-	DelayManager manager = new DelayManagerImpl();
-	Delay delay = manager.getDelay(stanza);
+	Delay delay = DelayHelper.getDelay(stanza);
 	assertNotNull(delay);
 	Calendar cal = Calendar.getInstance();
 	cal.clear();

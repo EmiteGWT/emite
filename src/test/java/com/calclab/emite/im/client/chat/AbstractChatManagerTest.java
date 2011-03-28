@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 
 public abstract class AbstractChatManagerTest {
     protected static final XmppURI MYSELF = uri("self@domain");
@@ -32,18 +32,18 @@ public abstract class AbstractChatManagerTest {
     @Test
     public void shouldEventWhenAChatIsClosed() {
 	final Chat chat = manager.open(uri("other@domain/resource"));
-	final MockedListener<Chat> listener = new MockedListener<Chat>();
-	manager.onChatClosed(listener);
+	final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+	manager.addChatChangedHandler(handler);
 	manager.close(chat);
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 
     @Test
     public void shouldEventWhenChatCreated() {
-	final MockedListener<Chat> listener = new MockedListener<Chat>();
-	manager.onChatCreated(listener);
+	final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+	manager.addChatChangedHandler(handler);
 	manager.open(OTHER);
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 
     protected abstract ChatManager createChatManager();

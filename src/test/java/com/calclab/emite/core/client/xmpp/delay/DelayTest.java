@@ -12,14 +12,12 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.delay.client.Delay;
 
 public class DelayTest {
     @Test
     public void shouldCalculateDelay() {
-	XmppDateTime.useGWT21();
 
 	XmppURI uri = uri("name@domain/resource");
 	IPacket delayNode = new Packet("delay", "urn:xmpp:delay");
@@ -39,7 +37,6 @@ public class DelayTest {
 
     @Test
     public void shouldCalculateDelayLegacyFormat() {
-	XmppDateTime.useGWT21();
 
 	XmppURI uri = uri("name@domain/resource");
 	IPacket delayNode = new Packet("x", "jabber:x:delay");

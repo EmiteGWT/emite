@@ -9,7 +9,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
@@ -18,7 +17,9 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.ChatCreatedTestHandler;
+import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
 
 /**
  * Room manager tests using the old event system (legacy)
@@ -31,15 +32,15 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldAcceptInvitations() {
 	final RoomManager rooms = (RoomManager) manager;
-	final MockedListener<Chat> chatCreatedListener = new MockedListener<Chat>();
-	rooms.onChatCreated(chatCreatedListener);
+	final ChatCreatedTestHandler chatCreatedHandler = new ChatCreatedTestHandler();
+	rooms.addChatChangedHandler(chatCreatedHandler);
 
 	final String reason = "theReason";
 	final XmppURI invitor = uri("friend@host/resource");
 	final XmppURI roomURI = uri("room@room.service");
 	rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason));
-	assertTrue(chatCreatedListener.isCalledOnce());
-	final Chat room = chatCreatedListener.getValue(0);
+	assertTrue(chatCreatedHandler.isCalledOnce());
+	final Chat room = chatCreatedHandler.getLastChat();
 	assertEquals("room@room.service/self", room.getURI().toString());
     }
 
@@ -52,7 +53,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 		+ "<x xmlns='vcard-temp:x:update'><photo>af70fe6519d6a27a910c427c3bc551dcd36073e7</photo></x>"
 		+ "</presence>");
 	assertEquals(1, room.getOccupantsCount());
-	final Occupant occupant = room.getOccupantByURI(uri("room1@domain/otherUser2"));
+	final Occupant occupant = room.getOccupantByOccupantUri(uri("room1@domain/otherUser2"));
 	assertNotNull(occupant);
 	assertEquals(Affiliation.none, occupant.getAffiliation());
 	assertEquals(Role.participant, occupant.getRole());
@@ -71,11 +72,11 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldFireChatMessages() {
 	final Chat chat = manager.open(uri("room@rooms.domain/user"));
-	final MockedListener<Message> listener = new MockedListener<Message>();
-	chat.onMessageReceived(listener);
+	final MessageTestHandler handler = new MessageTestHandler();
+	chat.addMessageReceivedHandler(handler);
 	session.receives("<message from='room@rooms.domain/other' to='user@domain/resource' "
 		+ "type='groupchat'><body>the message body</body></message>");
-	assertEquals(1, listener.getCalledTimes());
+	assertEquals(1, handler.getCalledTimes());
     }
 
     @Test
@@ -88,12 +89,12 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldIgnoreLetterCaseInURIS() {
 	final Room room = (Room) manager.open(uri("ROOM@domain/nick"));
-	final MockedListener<Occupant> listener = new MockedListener<Occupant>();
-	room.onOccupantAdded(listener);
+	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
+	room.addOccupantChangedHandler(handler);
 	session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='ROom@domain/otherUser'>"
 		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
 		+ "<item role='moderator' affiliation='owner' jid='user@domain' /></x></presence>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 
     /**
@@ -103,8 +104,8 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldPreserveInvitationProperties() {
 	final RoomManager rooms = (RoomManager) manager;
-	final MockedListener<Chat> chatCreatedListener = new MockedListener<Chat>();
-	rooms.onChatCreated(chatCreatedListener);
+	final ChatCreatedTestHandler chatCreatedHandler = new ChatCreatedTestHandler();
+	rooms.addChatChangedHandler(chatCreatedHandler);
 
 	final String reason = "theReason";
 	final XmppURI invitor = uri("friend@host/resource");
@@ -114,7 +115,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 	final String testDataValue = "TEST_VALUE";
 	properties.setData(testDataKey, testDataValue);
 	rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason, properties));
-	final Chat room = chatCreatedListener.getValue(0);
+	final Chat room = chatCreatedHandler.getLastChat();
 	assertEquals("Chat property not preserved", testDataValue, room.getProperties().getData(testDataKey));
     }
 

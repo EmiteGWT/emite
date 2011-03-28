@@ -1,16 +1,15 @@
 package com.calclab.emite.im.client.chat;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.Chat.State;
 import com.calclab.emite.xtesting.SessionTester;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.MessageTestHandler;
 
 public abstract class AbstractChatTest {
     protected final SessionTester session;
@@ -27,28 +26,28 @@ public abstract class AbstractChatTest {
     @Test
     public void shouldInterceptIncomingMessages() {
 	final AbstractChat chat = getChat();
-	final MockedListener<Message> interceptor = new MockedListener<Message>();
-	chat.onBeforeReceive(interceptor);
+	final MessageTestHandler interceptor = new MessageTestHandler();
+	chat.addBeforeReceiveMessageHandler(interceptor);
 	final Message message = new Message("body", USER_URI, chat.getURI());
 	session.receives(message);
-	assertTrue(interceptor.isCalledWithSame(message));
+	assertEquals(message, interceptor.getLastMessage());
     }
 
     @Test
     public void shouldInterceptOutcomingMessages() {
 	final AbstractChat chat = getChat();
 	chat.setChatState(ChatStates.ready);
-	final MockedListener<Message> interceptor = new MockedListener<Message>();
-	chat.onBeforeSend(interceptor);
+	final MessageTestHandler interceptor = new MessageTestHandler();
+	chat.addBeforeSendMessageHandler(interceptor);
 	final Message message = new Message("body");
 	chat.send(message);
-	assertTrue(interceptor.isCalledWithSame(message));
+	assertEquals(message, interceptor.getLastMessage());
     }
 
     @Test
     public void shouldNotSendMessagesWhenStatusIsNotReady() {
 	final AbstractChat chat = getChat();
-	chat.setState(State.locked);
+	chat.setChatState("locked");
 	chat.send(new Message("a message"));
 	session.verifyNotSent("<message />");
     }

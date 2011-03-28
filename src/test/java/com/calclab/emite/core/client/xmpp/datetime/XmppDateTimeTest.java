@@ -12,7 +12,6 @@ public class XmppDateTimeTest {
 
     @Test
     public void testUseGWT21() {
-	XmppDateTime.useGWT21();
 	Calendar cal = Calendar.getInstance();
 	cal.clear();
 	cal.set(1980, Calendar.APRIL, 15, 15, 15, 02);

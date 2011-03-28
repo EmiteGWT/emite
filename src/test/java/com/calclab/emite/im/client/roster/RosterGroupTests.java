@@ -7,11 +7,11 @@ import com.calclab.emite.xtesting.XmppSessionTester;
 
 public class RosterGroupTests {
 
-    private RosterImpl roster;
+    private XmppRoster roster;
 
     @Before
     public void setup() {
-	roster = new RosterImpl(new XmppRosterLogic(new XmppSessionTester()));
+	roster = new XmppRosterLogic(new XmppSessionTester());
     }
 
     @Test
