@@ -86,7 +86,7 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldRemoveOccupant() {
-	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
+	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("removed");
 	room.addOccupantChangedHandler(handler);
 	final XmppURI occupantUri = uri("room@domain/name");
 	room.setOccupantPresence(userURI, occupantUri, "owner", "participant", Show.notSpecified, null);
@@ -122,7 +122,7 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldUpdateOccupantAndFireListeners() {
-	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
+	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("modified");
 	room.addOccupantChangedHandler(handler);
 	final XmppURI occupantUri = uri("room@domain/name");
 	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "owner", "participant",

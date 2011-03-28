@@ -32,7 +32,7 @@ public abstract class AbstractChatManagerTest {
     @Test
     public void shouldEventWhenAChatIsClosed() {
 	final Chat chat = manager.open(uri("other@domain/resource"));
-	final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+	final ChatChangedTestHandler handler = new ChatChangedTestHandler("closed");
 	manager.addChatChangedHandler(handler);
 	manager.close(chat);
 	assertTrue(handler.isCalledOnce());
@@ -40,7 +40,7 @@ public abstract class AbstractChatManagerTest {
 
     @Test
     public void shouldEventWhenChatCreated() {
-	final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+	final ChatChangedTestHandler handler = new ChatChangedTestHandler("created");
 	manager.addChatChangedHandler(handler);
 	manager.open(OTHER);
 	assertTrue(handler.isCalledOnce());
