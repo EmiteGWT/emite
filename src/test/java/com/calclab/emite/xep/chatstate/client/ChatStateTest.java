@@ -1,7 +1,7 @@
 package com.calclab.emite.xep.chatstate.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +13,12 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.PairChat;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xtesting.EmiteTestsEventBus;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.ChatStateNotificationTestHandler;
 
 public class ChatStateTest {
     private static final XmppURI MYSELF = uri("self@domain/res");
     private static final XmppURI OTHER = uri("other@domain/otherRes");
-    private MockedListener<ChatState> stateListener;
+    private ChatStateNotificationTestHandler stateHandler;
     private PairChat pairChat;
     private ChatStateManager chatStateManager;
 
@@ -28,8 +28,8 @@ public class ChatStateTest {
 	EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
 	Mockito.when(pairChat.getChatEventBus()).thenReturn(eventBus);
 	chatStateManager = new ChatStateManager(pairChat);
-	stateListener = new MockedListener<ChatState>();
-	chatStateManager.onChatStateChanged(stateListener);
+	stateHandler = new ChatStateNotificationTestHandler();
+	chatStateManager.addChatStateNotificationHandler(stateHandler);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ChatStateTest {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("gone", ChatStateManager.XMLNS);
 	chatStateManager.handleMessageReceived(pairChat, message);
-	assertTrue(stateListener.isCalledWithEquals(ChatState.gone));
+	assertEquals(ChatState.gone, stateHandler.getLastChatState());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ChatStateTest {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("composing", ChatStateManager.XMLNS);
 	chatStateManager.handleMessageReceived(pairChat, message);
-	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
+	assertEquals(ChatState.composing, stateHandler.getLastChatState());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ChatStateTest {
 	final Message message = new Message(null, OTHER, MYSELF);
 	message.addChild("cha:composing", ChatStateManager.XMLNS);
 	chatStateManager.handleMessageReceived(pairChat, message);
-	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
+	assertEquals(ChatState.composing, stateHandler.getLastChatState());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ChatStateTest {
 	final Message message = new Message(null, OTHER.getJID(), MYSELF);
 	message.addChild("cha:composing", ChatStateManager.XMLNS);
 	chatStateManager.handleMessageReceived(pairChat, message);
-	assertTrue(stateListener.isCalledWithEquals(ChatState.composing));
+	assertEquals(ChatState.composing, stateHandler.getLastChatState());
     }
 
 }

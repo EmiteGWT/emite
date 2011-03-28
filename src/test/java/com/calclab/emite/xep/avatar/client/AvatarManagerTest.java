@@ -1,17 +1,17 @@
 package com.calclab.emite.xep.avatar.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.suco.client.events.Listener;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.AvatarVCardTestHandler;
+import com.calclab.emite.xtesting.handlers.PresenceTestHandler;
 
 public class AvatarManagerTest {
     private AvatarManager avatarManager;
@@ -23,15 +23,15 @@ public class AvatarManagerTest {
 	avatarManager = new AvatarManager(session);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void managerShouldListenPresenceWithPhoto() {
-	final Listener<Presence> listener = Mockito.mock(Listener.class);
-	avatarManager.onHashPresenceReceived(listener);
+	final PresenceTestHandler handler = new PresenceTestHandler();
+	avatarManager.addHashPresenceReceviedHandler(handler);
 	final Presence presence = new Presence(XmppURI.uri(("juliet@capulet.com/balcony")));
 	presence.addChild("x", "vcard-temp:x:update").addChild("photo", null).setText("sha1-hash-of-image");
 	session.receives(presence);
-	Mockito.verify(listener).onEvent(presence);
+	assertTrue(handler.isCalledOnce());
+	assertEquals(presence, handler.getLastPresence());
     }
 
     @Test
@@ -49,8 +49,8 @@ public class AvatarManagerTest {
 
     @Test
     public void verifySendVcardRequest() {
-	final MockedListener<AvatarVCard> listener = new MockedListener<AvatarVCard>();
-	avatarManager.onVCardReceived(listener);
+	final AvatarVCardTestHandler handler = new AvatarVCardTestHandler();
+	avatarManager.addAvatarVCardReceivedHandler(handler);
 
 	session.setLoggedIn(uri("romeo@montague.net/orchard"));
 	avatarManager.requestVCard(XmppURI.uri("juliet@capulet.com"));
@@ -58,6 +58,6 @@ public class AvatarManagerTest {
 	session.answer("<iq from='juliet@capulet.com' to='romeo@montague.net/orchard' type='result'>"
 		+ "<vCard xmlns='vcard-temp'><PHOTO><TYPE>image/jpeg</TYPE>"
 		+ "<BINVAL>Base64-encoded-avatar-file-here!</BINVAL></PHOTO></vCard></iq>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 }

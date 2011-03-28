@@ -11,7 +11,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.VCardResponseTestHandler;
 
 public class VCardManagerTests {
     String VALID_VCARD = "<iq id='v1'\n" + "    to='stpeter@jabber.org/roundabout'\n" + "    type='result'>\n"
@@ -80,8 +80,8 @@ public class VCardManagerTests {
 
     @Test
     public void shouldRequestVCard() {
-	final MockedListener<VCardResponse> listener = new MockedListener<VCardResponse>();
-	manager.getUserVCard(XmppURI.uri("test2@domain"), listener);
+	final VCardResponseTestHandler handler = new VCardResponseTestHandler();
+	manager.getUserVCard(XmppURI.uri("test2@domain"), handler);
 	session.verifyIQSent(OTHER_VCARD);
     }
 
@@ -95,24 +95,24 @@ public class VCardManagerTests {
 
     @Test
     public void shouldSetOwnVCard() {
-	final MockedListener<VCardResponse> listener = new MockedListener<VCardResponse>();
+	final VCardResponseTestHandler handler = new VCardResponseTestHandler();
 	final VCard vCard = new VCard();
 	vCard.setDisplayName("Peter Saint-Andre");
 	vCard.setFamilyName("Saint-Andre");
 	vCard.setGivenName("Peter");
 	vCard.setMiddleName("");
 	vCard.setNickName("stpeter");
-	manager.updateOwnVCard(vCard, listener);
+	manager.updateOwnVCard(vCard, handler);
 	session.verifyIQSent(VCARD_SETTED);
     }
 
     private void shouldParseVCardImpl(final String vcard) {
-	final MockedListener<VCardResponse> listener = new MockedListener<VCardResponse>();
-	manager.requestOwnVCard(listener);
+	final VCardResponseTestHandler handler = new VCardResponseTestHandler();
+	manager.requestOwnVCard(handler);
 	session.verifyIQSent(new IQ(Type.get));
 	session.answer(vcard);
-	assertTrue(listener.isCalledOnce());
-	assertTrue(listener.getValue(0).hasVCard());
-	assertNotNull(listener.getValue(0).getVCard().getNickName());
+	assertTrue(handler.isCalledOnce());
+	assertTrue(handler.getLastVCardResponse().hasVCard());
+	assertNotNull(handler.getLastVCardResponse().getVCard().getNickName());
     }
 }
