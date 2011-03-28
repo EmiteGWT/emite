@@ -51,8 +51,8 @@ public class RosterItemsOrder {
     public static Comparator<RosterItem> groupedFirst = new Comparator<RosterItem>() {
         @Override
         public int compare(final RosterItem item1, final RosterItem item2) {
-            final Integer item1Size = item1.getGroups().size();
-            final Integer item2Size = item2.getGroups().size();
+            int item1Size = item1.getGroups().size();
+            int item2Size = item2.getGroups().size();
 
             if (((item1Size == 0) && (item2Size == 0)) || ((item1Size > 0) && (item2Size > 0))) {
                 return 0;

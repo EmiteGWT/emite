@@ -95,7 +95,7 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	eventBus.fireEvent(new ConnectionResponseEvent(response));
     }
 
-    protected void fireRetry(final Integer attempt, final Integer scedTime) {
+    protected void fireRetry(int attempt, int scedTime) {
 	eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.waitingForRetry,
 		"The connection will try to re-connect in " + scedTime + " milliseconds.", scedTime));
     }
