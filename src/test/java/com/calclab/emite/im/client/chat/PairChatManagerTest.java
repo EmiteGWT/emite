@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager;
-import com.calclab.emite.xtesting.handlers.ChatCreatedTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageTestHandler;
 import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
 
@@ -20,7 +20,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	final Message message = new Message(null, MYSELF, OTHER);
 	message.addChild("gone", ChatStateManager.XMLNS);
 
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	session.receives(message);
 	assertTrue(handler.isNotCalled());
 	manager.open(OTHER);
@@ -29,7 +29,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void managerShouldCreateOneChatForSameResource() {
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	session.receives(new Message("message 1", MYSELF, uri("source@domain/resource1")));
 	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 	assertEquals(1, handler.getCalledTimes());
@@ -43,7 +43,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void roomInvitationsShouldDontFireOnChatCreated() {
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	session.receives("<message to='" + MYSELF
 		+ "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 		+ "'><reason>Join to our conversation</reason></invite>"
@@ -53,7 +53,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void roomInvitationsShouldDontFireOnChatCreatedButMustAfterOpenChat() {
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	session.receives("<message to='" + MYSELF
 		+ "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 		+ "'><reason>Join to our conversation</reason></invite>"
@@ -119,7 +119,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void shouldReuseChatIfNotResouceSpecified() {
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	session.receives(new Message("message 1", MYSELF, uri("source@domain")));
 	session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 	assertTrue(handler.isCalledOnce());
@@ -127,7 +127,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 
     @Test
     public void shouldReuseChatWhenAnsweringWithDifferentResources() {
-	final ChatCreatedTestHandler handler = addChatCreatedHandler();
+	final ChatChangedTestHandler handler = addChatCreatedHandler();
 	final Chat chat = manager.open(uri("someone@domain"));
 	assertTrue(handler.isCalledOnce());
 	assertEquals(chat, handler.getLastChat());
@@ -135,8 +135,8 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	assertTrue(handler.isCalledOnce());
     }
 
-    private ChatCreatedTestHandler addChatCreatedHandler() {
-	final ChatCreatedTestHandler handler = new ChatCreatedTestHandler();
+    private ChatChangedTestHandler addChatCreatedHandler() {
+	final ChatChangedTestHandler handler = new ChatChangedTestHandler("created");
 	manager.addChatChangedHandler(handler);
 	return handler;
     }

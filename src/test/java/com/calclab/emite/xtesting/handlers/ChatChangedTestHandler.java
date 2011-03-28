@@ -4,15 +4,27 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 
-public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implements ChatChangedHandler {
+public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent>
+		implements ChatChangedHandler {
 
-    public Chat getLastChat() {
-	return hasEvent() ? getLastEvent().getChat() : null;
-    }
+	private final String type;
 
-    @Override
-    public void onChatChanged(ChatChangedEvent event) {
-	addEvent(event);
-    }
+	public ChatChangedTestHandler() {
+		this(null);
+	}
+	
+	public ChatChangedTestHandler(String type) {
+		this.type = type;
+	}
+
+	public Chat getLastChat() {
+		return hasEvent() ? getLastEvent().getChat() : null;
+	}
+
+	@Override
+	public void onChatChanged(ChatChangedEvent event) {
+		if (type == null || type.equals(event.getChangeType()))
+			addEvent(event);
+	}
 
 }

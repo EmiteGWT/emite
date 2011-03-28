@@ -17,7 +17,7 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
-import com.calclab.emite.xtesting.handlers.ChatCreatedTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageTestHandler;
 import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
 
@@ -32,7 +32,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldAcceptInvitations() {
 	final RoomManager rooms = (RoomManager) manager;
-	final ChatCreatedTestHandler chatCreatedHandler = new ChatCreatedTestHandler();
+	final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
 	rooms.addChatChangedHandler(chatCreatedHandler);
 
 	final String reason = "theReason";
@@ -104,7 +104,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
     @Test
     public void shouldPreserveInvitationProperties() {
 	final RoomManager rooms = (RoomManager) manager;
-	final ChatCreatedTestHandler chatCreatedHandler = new ChatCreatedTestHandler();
+	final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
 	rooms.addChatChangedHandler(chatCreatedHandler);
 
 	final String reason = "theReason";

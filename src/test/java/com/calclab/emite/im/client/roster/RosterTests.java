@@ -18,7 +18,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
-import com.calclab.suco.testing.events.MockedListener;
+import com.calclab.emite.xtesting.handlers.RosterRetrievedTestHandler;
 
 public class RosterTests {
 
@@ -35,13 +35,13 @@ public class RosterTests {
 
     @Test
     public void addRosterStep2_shouldAddItemFireListenerAndSendResponse() {
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemAdded(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler("added");
+	roster.addRosterItemChangedHandler(handler);
 
 	session.receives("<iq type='set' from='someone@domain' id='theId'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend'><group>Group1</group><group>Group2</group>"
 		+ "</item></query></iq>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
 	assertEquals(1, roster.getItems().size());
 	final RosterItem item = asList(roster.getItems()).get(0);
 	assertEquals("friend@domain", item.getJID().toString());
@@ -68,22 +68,22 @@ public class RosterTests {
 
     @Test
     public void shouldFireEventOnlyWhenRosterReady() {
-	final MockedListener<Collection<RosterItem>> listener = new MockedListener<Collection<RosterItem>>();
-	roster.onRosterRetrieved(listener);
+	final RosterRetrievedTestHandler handler = new RosterRetrievedTestHandler();
+	roster.addRosterRetrievedHandler(handler);
 
 	shouldRequestRosterOnLogin();
 	session.answer(new IQ(Type.error));
-	assertTrue(listener.isNotCalled());
+	assertTrue(handler.isNotCalled());
     }
 
     @Test
     public void shouldFireEventWhenRosterReady() {
-	final MockedListener<Collection<RosterItem>> listener = new MockedListener<Collection<RosterItem>>();
-	roster.onRosterRetrieved(listener);
+	final RosterRetrievedTestHandler handler = new RosterRetrievedTestHandler();
+	roster.addRosterRetrievedHandler(handler);
 
 	shouldRequestRosterOnLogin();
 	session.answer(serverRoster());
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
     }
 
     @Test
@@ -128,8 +128,8 @@ public class RosterTests {
 
     @Test
     public void shouldRemoveItems() {
-	final MockedListener<RosterItem> listener = new MockedListener<RosterItem>();
-	roster.onItemRemoved(listener);
+	final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler("removed");
+	roster.addRosterItemChangedHandler(handler);
 
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' name='MyFriend'><group>Group1</group><group>Group2</group>"
@@ -139,7 +139,7 @@ public class RosterTests {
 	session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>"
 		+ "<item jid='friend@domain' subscription='remove' name='MyFriend'><group>Group1</group>"
 		+ "</item></query></iq>");
-	assertTrue(listener.isCalledOnce());
+	assertTrue(handler.isCalledOnce());
 	assertEquals(0, roster.getItems().size());
 	assertEquals(1, roster.getGroupNames().size());
     }

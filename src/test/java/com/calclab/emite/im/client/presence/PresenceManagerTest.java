@@ -12,11 +12,10 @@ import org.mockito.Mockito;
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
 import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.PresenceTest;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.PresenceTestHandler;
+import com.calclab.emite.xtesting.handlers.OwnPresenceChangedTestHandler;
 
 public class PresenceManagerTest {
 
@@ -43,12 +42,12 @@ public class PresenceManagerTest {
     @Test
     public void shouldEventOwnPresence() {
 	session.setLoggedIn(uri("myself@domain"));
-	final PresenceTestHandler handler = new PresenceTestHandler();
+	final OwnPresenceChangedTestHandler handler = new OwnPresenceChangedTestHandler();
 	manager.addOwnPresenceChangedHandler(handler);
 	manager.changeOwnPresence(Presence.build("status", Show.away));
 	assertTrue(handler.isCalledOnce());
-	assertEquals("status", handler.getLastPresence().getStatus());
-	assertEquals(Show.away, handler.getLastPresence().getShow());
+	assertEquals("status", handler.getCurrentPresence().getStatus());
+	assertEquals(Show.away, handler.getCurrentPresence().getShow());
     }
 
     @Test
