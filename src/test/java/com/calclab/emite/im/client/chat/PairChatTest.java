@@ -43,8 +43,8 @@ public class PairChatTest extends AbstractChatTest {
     @Test
     public void shouldLockIfLogoutAndUnlockWhenLogginWithSameUser() {
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
-	pairChat.addChatStateChangedHandler(false, handler);
-	assertEquals("ready", pairChat.getChatState());
+	pairChat.addChatStateChangedHandler(true, handler);
+	assertEquals("ready", handler.getLastState());
 	session.logout();
 	assertEquals("locked", handler.getLastState());
 	session.login(USER_URI, "");

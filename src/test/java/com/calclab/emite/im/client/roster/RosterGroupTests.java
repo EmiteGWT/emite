@@ -3,15 +3,13 @@ package com.calclab.emite.im.client.roster;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.xtesting.XmppSessionTester;
-
 public class RosterGroupTests {
 
-    private XmppRoster roster;
+    //private XmppRoster roster;
 
     @Before
     public void setup() {
-	roster = new XmppRosterLogic(new XmppSessionTester());
+	//roster = new XmppRosterLogic(new XmppSessionTester());
     }
 
     @Test

@@ -38,7 +38,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
     @Test
     public void oneToOneChatsAreAlwaysReadyWhenCreated() {
 	final Chat chat = manager.open(uri("other@domain/resource"));
-	assertEquals("equals", chat.getChatState());
+	assertEquals("ready", chat.getChatState());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest {
 	final Chat chat = manager.open(uri("name@domain/resouce"));
 	assertEquals("ready", chat.getChatState());
 	final StateChangedTestHandler handler = new StateChangedTestHandler();
-	chat.addChatStateChangedHandler(true, handler);
+	chat.addChatStateChangedHandler(false, handler);
 	session.logout();
 	assertEquals("locked", handler.getLastState());
     }

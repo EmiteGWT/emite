@@ -26,11 +26,8 @@ import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
-import com.calclab.suco.client.ioc.Container;
-import com.calclab.suco.client.ioc.Provider;
-import com.calclab.suco.client.ioc.module.SucoModule;
 
-public class J2SEServicesModule implements Services, SucoModule {
+public class J2SEServicesModule implements Services {
     private final HttpConnector connector;
 
     private final ThreadScheduler scheduler;
@@ -46,14 +43,14 @@ public class J2SEServicesModule implements Services, SucoModule {
 	return scheduler.getCurrentTime();
     }
 
-    public void onInstall(final Container container) {
+    /*public void onInstall(final Container container) {
 	container.removeProvider(Services.class);
 	container.registerProvider(null, Services.class, new Provider<Services>() {
 	    public Services get() {
 		return J2SEServicesModule.this;
 	    }
 	});
-    }
+    }*/
 
     public void schedule(final int msecs, final ScheduledAction action) {
 	scheduler.schedule(msecs, action);
