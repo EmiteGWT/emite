@@ -21,8 +21,8 @@
  */
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.HasJID;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 /**
@@ -167,10 +167,11 @@ public class Occupant implements HasJID {
 	return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
     }
 
-	/**
-	 * {@inheritDoc}. In this case this method will return the user's jid.
-	 */
-	public XmppURI getJID() {
-		return getUserUri().getJID();
-	}
+    /**
+     * {@inheritDoc}. In this case this method will return the user's jid.
+     */
+    @Override
+    public XmppURI getJID() {
+	return getUserUri().getJID();
+    }
 }

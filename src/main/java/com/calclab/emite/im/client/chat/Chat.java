@@ -46,12 +46,12 @@ public interface Chat {
      */
     @Deprecated
     public static enum State {
-        ready, locked,
-        /**
-         * Because the new extensible chat state system (using strings instead
-         * of enums) this is used when a unknown (not in this enum) state is set
-         */
-        unknown
+	ready, locked,
+	/**
+	 * Because the new extensible chat state system (using strings instead
+	 * of enums) this is used when a unknown (not in this enum) state is set
+	 */
+	unknown
     }
 
     /**

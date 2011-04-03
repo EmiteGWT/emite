@@ -10,10 +10,10 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.SubscriptionRequestReceivedTestHandler;

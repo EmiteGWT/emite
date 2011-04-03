@@ -2,7 +2,6 @@ package com.calclab.emite.im.client.roster.events;
 
 import com.calclab.emite.core.client.events.ChangedEvent;
 import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.im.client.roster.RosterItem;
 import com.google.gwt.event.shared.HandlerRegistration;
 

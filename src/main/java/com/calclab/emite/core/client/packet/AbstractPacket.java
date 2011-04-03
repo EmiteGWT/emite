@@ -27,6 +27,7 @@ import java.util.List;
 
 public abstract class AbstractPacket implements IPacket {
 
+    @Override
     public List<? extends IPacket> getChildren(final PacketMatcher filter) {
 	final List<IPacket> list = new ArrayList<IPacket>();
 	for (final IPacket child : getChildren()) {
@@ -41,6 +42,7 @@ public abstract class AbstractPacket implements IPacket {
 	return getChildren(MatcherFactory.byName(name));
     }
 
+    @Override
     public IPacket getFirstChild(final PacketMatcher filter) {
 	for (final IPacket child : getChildren()) {
 	    if (filter.matches(child)) {
@@ -50,32 +52,39 @@ public abstract class AbstractPacket implements IPacket {
 	return NoPacket.INSTANCE;
     }
 
+    @Override
     public IPacket getFirstChild(final String name) {
 	return getFirstChild(MatcherFactory.byName(name));
     }
 
+    @Override
     public IPacket getFirstChildInDeep(final PacketMatcher filter) {
 	final LinkedList<IPacket> queue = new LinkedList<IPacket>();
 	queue.add(this);
 	return bfs(queue, filter);
     }
 
+    @Override
     public IPacket getFirstChildInDeep(final String name) {
 	return getFirstChildInDeep(MatcherFactory.byName(name));
     }
 
+    @Override
     public boolean hasAttribute(final String name) {
 	return getAttribute(name) != null;
     }
 
+    @Override
     public boolean hasAttribute(final String name, final String value) {
 	return value.equals(getAttribute(name));
     }
 
+    @Override
     public boolean hasChild(final String name) {
 	return getFirstChild(name) != NoPacket.INSTANCE;
     }
 
+    @Override
     public void setTextToChild(final String nodeName, final String text) {
 	if (text != null) {
 	    IPacket node = getFirstChild(nodeName);
@@ -92,6 +101,7 @@ public abstract class AbstractPacket implements IPacket {
 	return With(name, String.valueOf(value));
     }
 
+    @Override
     public IPacket With(final String name, final String value) {
 	setAttribute(name, value);
 	return this;

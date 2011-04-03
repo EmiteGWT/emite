@@ -12,6 +12,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
     public static HandlerRegistration bind(EmiteEventBus eventBus, RoomInvitationSentHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final XmppURI userJid;
 
     private final String reasonText;

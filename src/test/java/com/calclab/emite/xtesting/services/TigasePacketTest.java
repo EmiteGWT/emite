@@ -11,6 +11,7 @@ public class TigasePacketTest {
     @Test
     public void testPacket() {
 	PacketTestSuite.runPacketTests(new AbstractHelperTest() {
+	    @Override
 	    public IPacket createPacket(final String name) {
 		return new TigasePacket(name);
 	    }

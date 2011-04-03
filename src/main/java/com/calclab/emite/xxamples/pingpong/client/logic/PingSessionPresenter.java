@@ -9,8 +9,8 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
-import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -34,6 +34,7 @@ public class PingSessionPresenter implements StartablePresenter {
 	this.output = output;
     }
 
+    @Override
     public void start() {
 	output.printHeader("This is ping example", Style.title);
 	output.printHeader("Ping to: " + other, Style.info);

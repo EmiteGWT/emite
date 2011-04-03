@@ -16,8 +16,8 @@ public class SearchResultItem {
 	final IPacket lastChild = child.getFirstChild("last");
 	final IPacket nickChild = child.getFirstChild("nick");
 	final IPacket emailChild = child.getFirstChild("email");
-	return new SearchResultItem(jid, nickChild.getText(), firstChild.getText(), lastChild.getText(), emailChild
-		.getText());
+	return new SearchResultItem(jid, nickChild.getText(), firstChild.getText(), lastChild.getText(),
+		emailChild.getText());
     }
 
     private final XmppURI jid;

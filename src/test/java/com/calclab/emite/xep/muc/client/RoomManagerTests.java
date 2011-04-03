@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;

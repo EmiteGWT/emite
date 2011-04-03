@@ -27,11 +27,9 @@ public class VCardResponseTests {
 
     @Test
     public void shouldParseItemNotFound() {
-	String ITEM_NOT_FOUND = "<iq id='v1'\n" + "    to='stpeter@jabber.org/roundabout'\n"
-		+ "    type='error'>\n" + "  <vCard xmlns='vcard-temp'/>\n"
-		+ "  <error type='cancel'>\n"
-		+ "    <item-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>\n"
-		+ "  </error>\n" + "</iq>";
+	String ITEM_NOT_FOUND = "<iq id='v1'\n" + "    to='stpeter@jabber.org/roundabout'\n" + "    type='error'>\n"
+		+ "  <vCard xmlns='vcard-temp'/>\n" + "  <error type='cancel'>\n"
+		+ "    <item-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>\n" + "  </error>\n" + "</iq>";
 	IPacket result = TigaseXMLService.toPacket(ITEM_NOT_FOUND);
 	VCardResponse response = new VCardResponse(result);
 	assertEquals(IQ.Type.error, response.getType());

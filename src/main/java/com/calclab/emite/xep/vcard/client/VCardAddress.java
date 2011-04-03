@@ -8,6 +8,7 @@ public class VCardAddress extends VCardData {
     public static enum Data {
 	EXTADD, STREET, LOCALITY, REGION, PCODE, CTRY
     }
+
     public static enum Place {
 	WORK, HOME
     }

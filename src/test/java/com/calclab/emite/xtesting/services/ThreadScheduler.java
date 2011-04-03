@@ -31,6 +31,7 @@ public class ThreadScheduler {
 
     public void schedule(final int msecs, final ScheduledAction action) {
 	new Thread(new Runnable() {
+	    @Override
 	    public void run() {
 		synchronized (this) {
 		    try {

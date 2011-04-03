@@ -32,8 +32,8 @@ public class MucModule extends AbstractGinModule {
     protected void configure() {
 	bind(RoomManager.class).to(RoomChatManager.class).in(Singleton.class);
 	bind(MucComponents.class).asEagerSingleton();
-	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class).in(
-		Singleton.class);
+	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class)
+		.in(Singleton.class);
     }
 
 }

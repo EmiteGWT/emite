@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChat;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
@@ -79,7 +79,7 @@ public class RoomTest extends AbstractChatTest {
 	room.getChatEventBus().fireEvent(
 		new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
 	assertEquals(1, handler.getCalledTimes());
-	
+
 	assertEquals(occupantURI, handler.getLastEvent().getOccupantUri());
 	assertEquals("the subject", handler.getLastEvent().getSubject());
     }
@@ -107,8 +107,7 @@ public class RoomTest extends AbstractChatTest {
 
     @Test
     public void shouldSendRoomPresenceWhenCreated() {
-	session
-		.verifySent("<presence to='room@domain/nick'><x xmlns='http://jabber.org/protocol/muc' /></presence>");
+	session.verifySent("<presence to='room@domain/nick'><x xmlns='http://jabber.org/protocol/muc' /></presence>");
     }
 
     @Test

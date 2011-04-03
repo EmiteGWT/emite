@@ -56,32 +56,33 @@ public class TextUtils {
      * @return the result string
      */
     public static String ellipsis(final String text, final int length) {
-        return text == null ? "" : length == 0 ? text : text.length() > length ? text.substring(0, length - 3) + "..." : text;
+	return text == null ? "" : length == 0 ? text : text.length() > length ? text.substring(0, length - 3) + "..."
+		: text;
     }
 
     /*
      * This method escape only some dangerous html chars
      */
     public static String escape(String source) {
-        if (source == null) {
-            return null;
-        }
-        if (source.indexOf("&") != -1) {
-            source = AMP_RE.replace(source, "&amp;");
-        }
-        if (source.indexOf("<") != -1) {
-            source = LT_RE.replace(source, "&lt;");
-        }
-        if (source.indexOf(">") != -1) {
-            source = GT_RE.replace(source, "&gt;");
-        }
-        if (source.indexOf("\"") != -1) {
-            source = QUOT_RE.replace(source, "&quot;");
-        }
-        if (source.indexOf("\'") != -1) {
-            source = SQUOT_RE.replace(source, "&#39;");
-        }
-        return source;
+	if (source == null) {
+	    return null;
+	}
+	if (source.indexOf("&") != -1) {
+	    source = AMP_RE.replace(source, "&amp;");
+	}
+	if (source.indexOf("<") != -1) {
+	    source = LT_RE.replace(source, "&lt;");
+	}
+	if (source.indexOf(">") != -1) {
+	    source = GT_RE.replace(source, "&gt;");
+	}
+	if (source.indexOf("\"") != -1) {
+	    source = QUOT_RE.replace(source, "&quot;");
+	}
+	if (source.indexOf("\'") != -1) {
+	    source = SQUOT_RE.replace(source, "&#39;");
+	}
+	return source;
     }
 
     /*
@@ -89,24 +90,24 @@ public class TextUtils {
      * widget for instance
      */
     public static String unescape(String source) {
-        if (source == null) {
-            return null;
-        }
-        if (source.indexOf("&amp;") != -1) {
-            source = AMP_HTML_RE.replace(source, "&");
-        }
-        if (source.indexOf("&lt;") != -1) {
-            source = LT_HTML_RE.replace(source, "<");
-        }
-        if (source.indexOf("&gt;") != -1) {
-            source = GT_HTML_RE.replace(source, ">");
-        }
-        if (source.indexOf("&quot;") != -1) {
-            source = QUOT_HTML_RE.replace(source, "\"");
-        }
-        if (source.indexOf("&#39;") != -1) {
-            source = SQUOT_HTML_RE.replace(source, "\'");
-        }
-        return source;
+	if (source == null) {
+	    return null;
+	}
+	if (source.indexOf("&amp;") != -1) {
+	    source = AMP_HTML_RE.replace(source, "&");
+	}
+	if (source.indexOf("&lt;") != -1) {
+	    source = LT_HTML_RE.replace(source, "<");
+	}
+	if (source.indexOf("&gt;") != -1) {
+	    source = GT_HTML_RE.replace(source, ">");
+	}
+	if (source.indexOf("&quot;") != -1) {
+	    source = QUOT_HTML_RE.replace(source, "\"");
+	}
+	if (source.indexOf("&#39;") != -1) {
+	    source = SQUOT_HTML_RE.replace(source, "\'");
+	}
+	return source;
     }
 }

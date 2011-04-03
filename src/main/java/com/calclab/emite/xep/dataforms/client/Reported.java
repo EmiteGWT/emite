@@ -17,11 +17,11 @@ public class Reported extends AbstractItem {
     static final String REPORTED = "reported";
 
     public Reported() {
-        super(REPORTED);
+	super(REPORTED);
     }
 
     public Reported(final IPacket packet) {
-        super(packet);
+	super(packet);
     }
 
 }

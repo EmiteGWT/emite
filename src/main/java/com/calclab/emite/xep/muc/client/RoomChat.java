@@ -23,10 +23,10 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.List;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
@@ -37,9 +37,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStates;
@@ -293,8 +293,8 @@ public class RoomChat extends RoomBoilerplate {
 			final String affiliation = item.getAttribute("affiliation");
 			final String role = item.getAttribute("role");
 			final XmppURI userUri = XmppURI.uri(item.getAttribute("jid"));
-			setOccupantPresence(userUri, occupantURI, affiliation, role, presence.getShow(), presence
-				.getStatus());
+			setOccupantPresence(userUri, occupantURI, affiliation, role, presence.getShow(),
+				presence.getStatus());
 			if (isNewRoom(child)) {
 			    requestCreateInstantRoom();
 			} else {

@@ -45,16 +45,19 @@ public class TigasePacket extends AbstractPacket {
 	this(new Element(name));
     }
 
+    @Override
     public IPacket addChild(final IPacket child) {
 	final TigasePacket tigaseChild = (TigasePacket) child;
 	delegate.addChild(tigaseChild.delegate);
 	return child;
     }
 
+    @Override
     public IPacket addChild(final String nodeName) {
 	return addChild(nodeName, null);
     }
 
+    @Override
     public IPacket addChild(final String nodeName, final String xmlns) {
 	final TigasePacket child = new TigasePacket(nodeName);
 	child.setAttribute("xmlns", xmlns);
@@ -62,10 +65,12 @@ public class TigasePacket extends AbstractPacket {
 	return child;
     }
 
+    @Override
     public String getAttribute(final String name) {
 	return delegate.getAttribute(name);
     }
 
+    @Override
     public HashMap<String, String> getAttributes() {
 	final HashMap<String, String> atts = new HashMap<String, String>();
 	final Map<String, String> src = delegate.getAttributes();
@@ -75,24 +80,29 @@ public class TigasePacket extends AbstractPacket {
 	return atts;
     }
 
+    @Override
     public List<? extends IPacket> getChildren() {
 	final List<Element> children = delegate.getChildren();
 	return wrap(children);
     }
 
+    @Override
     public int getChildrenCount() {
 	final List<Element> children = delegate.getChildren();
 	return children != null ? children.size() : 0;
     }
 
+    @Override
     public String getName() {
 	return delegate.getName();
     }
 
+    @Override
     public String getText() {
 	return TextUtils.unescape(delegate.getCData());
     }
 
+    @Override
     public boolean removeChild(final IPacket child) {
 	return delegate.removeChild(((TigasePacket) child).delegate);
     }
@@ -101,10 +111,12 @@ public class TigasePacket extends AbstractPacket {
 	buffer.append(delegate.toString());
     }
 
+    @Override
     public void setAttribute(final String name, final String value) {
 	delegate.setAttribute(name, value);
     }
 
+    @Override
     public void setText(final String text) {
 	if (text != null)
 	    delegate.setCData(text);

@@ -70,6 +70,7 @@ public class HttpConnector {
     private Runnable createResponseAction(final String xml, final ConnectorCallback callback, final String id,
 	    final int status, final String response) {
 	final Runnable runnable = new Runnable() {
+	    @Override
 	    public void run() {
 		if (status == HttpStatus.SC_OK) {
 		    System.out.println("RECEIVED: " + response);
@@ -88,6 +89,7 @@ public class HttpConnector {
 
     private Runnable createSendAction(final String httpBase, final String xml, final ConnectorCallback callback) {
 	return new Runnable() {
+	    @Override
 	    public void run() {
 		final String id = HttpConnectorID.getNext();
 		debug("Connector [{0}] send: {1}", id, xml);

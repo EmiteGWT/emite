@@ -17,6 +17,7 @@ public class BeforeRoomInvitationSendEvent extends GwtEvent<BeforeRoomInvitation
     public static HandlerRegistration bind(EmiteEventBus eventBus, BeforeRoomInvitationSendHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final BasicStanza message;
 
     private final IPacket invitePacket;

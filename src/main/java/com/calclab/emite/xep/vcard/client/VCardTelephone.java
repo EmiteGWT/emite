@@ -8,9 +8,11 @@ public class VCardTelephone extends VCardData {
     public static enum Data {
 	POBOX, EXTADD, STREET, LOCALITY, REGION, PCODE, CTRY, NUMBER
     }
+
     public static enum Place {
 	WORK, HOME
     }
+
     public static enum Service {
 	POSTAL, PARCEL, DOM, INTL, PREF, VOICE
     }

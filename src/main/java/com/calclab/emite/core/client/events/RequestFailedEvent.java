@@ -14,6 +14,7 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
     public static HandlerRegistration bind(EmiteEventBus eventBus, RequestFailedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final String requestType;
     private final String description;
 

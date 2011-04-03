@@ -69,14 +69,14 @@ public class SessionStates {
      * Helper function to determine if the given state is disconnected
      */
     public static final boolean isDisconnected(String state) {
-        return disconnected.equals(state);
+	return disconnected.equals(state);
     }
 
     /**
      * Helper function to determine if the given state is ready
      */
     public static final boolean isReady(String state) {
-        return ready.equals(state) || rosterReady.equals(state);
+	return ready.equals(state) || rosterReady.equals(state);
     }
 
 }

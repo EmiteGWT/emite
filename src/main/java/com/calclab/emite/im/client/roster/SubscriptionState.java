@@ -25,7 +25,7 @@ package com.calclab.emite.im.client.roster;
  * Detailed information about possible subscription states, which are described
  * here from the user's (not contact's) perspective
  * 
- *@see http://www.xmpp.org/rfcs/rfc3921.html#substates
+ * @see http://www.xmpp.org/rfcs/rfc3921.html#substates
  */
 public enum SubscriptionState {
     /**

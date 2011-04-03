@@ -1,16 +1,16 @@
 package com.calclab.emite.xxamples.pingpong.client.logic;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
-import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.google.inject.Inject;
 
@@ -27,6 +27,7 @@ public class PongChatPresenter implements StartablePresenter {
 	this.pongs = 0;
     }
 
+    @Override
     public void start() {
 	display.printHeader("This is pong chat", Style.title);
 	display.printHeader("You need to open the ping chat example page in order to run the example", Style.important);

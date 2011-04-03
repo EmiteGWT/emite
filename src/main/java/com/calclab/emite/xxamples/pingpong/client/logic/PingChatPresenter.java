@@ -10,8 +10,8 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
-import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
@@ -34,6 +34,7 @@ public class PingChatPresenter implements StartablePresenter {
 	waitTime = 2000;
     }
 
+    @Override
     public void start() {
 	// OPEN THE CHAT
 	display.printHeader("This is ping chat example", Style.title);

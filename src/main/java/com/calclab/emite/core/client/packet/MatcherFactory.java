@@ -28,6 +28,7 @@ public class MatcherFactory {
     private static HashMap<String, PacketMatcher> byName = new HashMap<String, PacketMatcher>();
 
     public static final PacketMatcher ANY = new PacketMatcher() {
+	@Override
 	public boolean matches(final IPacket packet) {
 	    return true;
 	}
@@ -37,6 +38,7 @@ public class MatcherFactory {
 	PacketMatcher matcher = byName.get(nodeName);
 	if (matcher == null) {
 	    matcher = new PacketMatcher() {
+		@Override
 		public boolean matches(final IPacket packet) {
 		    return nodeName.equals(packet.getName());
 		}
@@ -48,6 +50,7 @@ public class MatcherFactory {
 
     public static PacketMatcher byNameAndXMLNS(final String nodeName, final String nodeXmls) {
 	return new PacketMatcher() {
+	    @Override
 	    public boolean matches(final IPacket packet) {
 		return nodeName.equals(packet.getName()) && packet.hasAttribute("xmlns", nodeXmls);
 	    }

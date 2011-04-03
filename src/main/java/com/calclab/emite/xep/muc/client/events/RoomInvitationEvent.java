@@ -11,6 +11,7 @@ public class RoomInvitationEvent extends GwtEvent<RoomInvitationHandler> {
     public static HandlerRegistration bind(EmiteEventBus eventBus, RoomInvitationHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final RoomInvitation roomInvitation;
 
     public RoomInvitationEvent(RoomInvitation roomInvitation) {

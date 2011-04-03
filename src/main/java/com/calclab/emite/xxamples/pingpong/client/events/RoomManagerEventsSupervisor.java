@@ -1,8 +1,8 @@
 package com.calclab.emite.xxamples.pingpong.client.events;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.calclab.emite.xep.muc.client.Occupant;

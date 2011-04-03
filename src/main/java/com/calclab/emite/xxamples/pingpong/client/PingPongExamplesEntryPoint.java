@@ -50,11 +50,10 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 	    presenter.start();
 	} else {
 
-	    display
-		    .printHeader(
-			    "You need to configure the pingpong.type meta tag!! "
-				    + " (possible values: ping, pong, pingChat, pongChat, pingRoom, pongRoom, pingInviteRoom, pongInviteRoom)",
-			    PingPongDisplay.Style.error);
+	    display.printHeader(
+		    "You need to configure the pingpong.type meta tag!! "
+			    + " (possible values: ping, pong, pingChat, pongChat, pingRoom, pongRoom, pingInviteRoom, pongInviteRoom)",
+		    PingPongDisplay.Style.error);
 	}
     }
 }

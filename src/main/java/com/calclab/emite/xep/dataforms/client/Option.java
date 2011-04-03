@@ -15,26 +15,26 @@ public class Option extends DelegatedPacket {
     private static final String VALUE = "value";
 
     public Option() {
-        super((new Packet(OPTION)));
+	super((new Packet(OPTION)));
     }
 
     public Option(final IPacket stanza) {
-        super(stanza);
+	super(stanza);
     }
 
     public String getLabel() {
-        return super.getAttribute(LABEL);
+	return super.getAttribute(LABEL);
     }
 
     public String getValue() {
-        return super.getFirstChild(VALUE).getText();
+	return super.getFirstChild(VALUE).getText();
     }
 
     public void setLabel(final String label) {
-        super.setAttribute(LABEL, label);
+	super.setAttribute(LABEL, label);
     }
 
     public void setValue(final String value) {
-        setTextToChild(VALUE, value);
+	setTextToChild(VALUE, value);
     }
 }

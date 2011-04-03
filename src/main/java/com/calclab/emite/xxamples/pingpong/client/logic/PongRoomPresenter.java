@@ -7,8 +7,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
-import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
 import com.google.inject.Inject;
@@ -33,6 +33,7 @@ public class PongRoomPresenter implements StartablePresenter {
 	pongs = 0;
     }
 
+    @Override
     public void start() {
 	display.printHeader("This is pong room example", Style.title);
 	display.printHeader("Pong from: " + roomUri, Style.info);

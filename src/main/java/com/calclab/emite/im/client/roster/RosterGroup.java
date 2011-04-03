@@ -7,9 +7,9 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.EventBusFactory;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;

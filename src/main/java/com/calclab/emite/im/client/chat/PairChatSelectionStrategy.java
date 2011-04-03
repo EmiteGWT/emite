@@ -16,18 +16,18 @@ public class PairChatSelectionStrategy implements ChatSelectionStrategy {
 
     @Override
     public ChatProperties extractProperties(final BasicStanza stanza) {
-        ChatProperties properties = new ChatProperties(stanza.getFrom());
-        boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
+	ChatProperties properties = new ChatProperties(stanza.getFrom());
+	boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
 
-        boolean shouldCreate = messageHasBody && !(("groupchat").equals(stanza.getAttribute("type")));
-        shouldCreate = shouldCreate && (stanza.getFirstChildInDeep(mucMatcher) == NoPacket.INSTANCE);
-        properties.setShouldCreateNewChat(shouldCreate);
-        return properties;
+	boolean shouldCreate = messageHasBody && !(("groupchat").equals(stanza.getAttribute("type")));
+	shouldCreate = shouldCreate && (stanza.getFirstChildInDeep(mucMatcher) == NoPacket.INSTANCE);
+	properties.setShouldCreateNewChat(shouldCreate);
+	return properties;
     }
 
     @Override
     public boolean isAssignable(final ChatProperties chatProperties, final ChatProperties properties) {
-        return chatProperties.getUri().equalsNoResource(properties.getUri());
+	return chatProperties.getUri().equalsNoResource(properties.getUri());
     }
 
 }

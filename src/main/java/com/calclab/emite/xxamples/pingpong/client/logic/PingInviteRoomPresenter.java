@@ -10,8 +10,8 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.subject.RoomSubject;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay;
-import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
+import com.calclab.emite.xxamples.pingpong.client.StartablePresenter;
 import com.calclab.emite.xxamples.pingpong.client.events.ChatManagerEventsSupervisor;
 import com.calclab.emite.xxamples.pingpong.client.events.RoomManagerEventsSupervisor;
 import com.google.gwt.user.client.Timer;
@@ -38,6 +38,7 @@ public class PingInviteRoomPresenter implements StartablePresenter {
 	this.pings = 0;
     }
 
+    @Override
     public void start() {
 	display.printHeader("This is ping invite room example", Style.title);
 	display.printHeader("You need to open the pong invite room example page in order to run the example",

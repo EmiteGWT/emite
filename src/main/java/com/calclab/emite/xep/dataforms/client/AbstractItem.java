@@ -20,25 +20,25 @@ public class AbstractItem extends DelegatedPacket {
     private List<Field> fields;
 
     public AbstractItem(final IPacket delegate) {
-        super(delegate);
+	super(delegate);
     }
 
     public AbstractItem(final String name) {
-        this(new Packet(name));
+	this(new Packet(name));
     }
 
     public void addField(final Field field) {
-        parseFields();
-        super.addChild(field);
-        fields.add(field);
+	parseFields();
+	super.addChild(field);
+	fields.add(field);
     }
 
     public List<Field> getFields() {
-        parseFields();
-        return fields;
+	parseFields();
+	return fields;
     }
 
     private void parseFields() {
-        fields = Field.parseFields(fields, this);
+	fields = Field.parseFields(fields, this);
     }
 }

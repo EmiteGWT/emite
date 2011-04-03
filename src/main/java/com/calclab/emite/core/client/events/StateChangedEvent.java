@@ -20,15 +20,15 @@ public abstract class StateChangedEvent extends GwtEvent<StateChangedHandler> {
      * @param state
      */
     protected StateChangedEvent(final Type<StateChangedHandler> type, final String state) {
-        assert type != null : "Type in StateChanged can't be null";
-        assert state != null : "State in StateChanged can't be null";
-        this.type = type;
-        this.state = state;
+	assert type != null : "Type in StateChanged can't be null";
+	assert state != null : "State in StateChanged can't be null";
+	this.type = type;
+	this.state = state;
     }
 
     @Override
     public Type<StateChangedHandler> getAssociatedType() {
-        return type;
+	return type;
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class StateChangedEvent extends GwtEvent<StateChangedHandler> {
      * @return event's state
      */
     public String getState() {
-        return state;
+	return state;
     }
 
     /**
@@ -47,17 +47,17 @@ public abstract class StateChangedEvent extends GwtEvent<StateChangedHandler> {
      * @return true if state is the event state
      */
     public boolean is(final String state) {
-        return this.state.equals(state);
+	return this.state.equals(state);
     }
 
     @Override
     public String toDebugString() {
-        return super.toDebugString() + state;
+	return super.toDebugString() + state;
     }
 
     @Override
     protected void dispatch(final StateChangedHandler handler) {
-        handler.onStateChanged(this);
+	handler.onStateChanged(this);
     }
 
 }

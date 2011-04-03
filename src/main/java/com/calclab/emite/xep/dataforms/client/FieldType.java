@@ -80,6 +80,6 @@ public final class FieldType {
     public static final String TEXT_SINGLE = "text-single";
 
     FieldType() {
-        // Final...
+	// Final...
     }
 }

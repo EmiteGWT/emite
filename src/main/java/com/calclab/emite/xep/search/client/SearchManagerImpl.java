@@ -15,8 +15,8 @@ import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
@@ -28,6 +28,7 @@ public class SearchManagerImpl implements SearchManager {
 	void onIQResult(IQ iq);
 
     }
+
     private static final String SHOULD_BE_CONNECTED = "You should be connected before use this service.";
     public static final String IQ_SEARCH = "jabber:iq:search";
     private static final String XML_LANG = "xml:lang";
@@ -49,8 +50,8 @@ public class SearchManagerImpl implements SearchManager {
 	    @Override
 	    public void onIQResult(final IQ response) {
 		if (IQ.isSuccess(response)) {
-		    listener.onSuccess(processFieldsResults(session.getCurrentUserURI(), response
-			    .getFirstChild(filterQuery)));
+		    listener.onSuccess(processFieldsResults(session.getCurrentUserURI(),
+			    response.getFirstChild(filterQuery)));
 		} else {
 		    // TODO
 		    listener.onFailure(null);
@@ -69,8 +70,8 @@ public class SearchManagerImpl implements SearchManager {
 		    if (form.x().equals(NoPacket.INSTANCE)) {
 			// This is not a extended search. Try to create a form
 			// with returned fields
-			final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(), response
-				.getFirstChild(filterQuery));
+			final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(),
+				response.getFirstChild(filterQuery));
 			form = new Form(Form.Type.form);
 			form.addInstruction(fieldResults.getInstructions());
 			for (final String fieldName : fieldResults.getFieldNames()) {

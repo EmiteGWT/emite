@@ -15,10 +15,10 @@ public class ChatStates {
     public static final String locked = "locked";
 
     public static final boolean isLocked(String state) {
-        return locked.equals(state);
+	return locked.equals(state);
     }
 
     public static final boolean isReady(String state) {
-        return ready.equals(state);
+	return ready.equals(state);
     }
 }

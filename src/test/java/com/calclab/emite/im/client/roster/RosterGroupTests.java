@@ -5,11 +5,11 @@ import org.junit.Test;
 
 public class RosterGroupTests {
 
-    //private XmppRoster roster;
+    // private XmppRoster roster;
 
     @Before
     public void setup() {
-	//roster = new XmppRosterLogic(new XmppSessionTester());
+	// roster = new XmppRosterLogic(new XmppSessionTester());
     }
 
     @Test

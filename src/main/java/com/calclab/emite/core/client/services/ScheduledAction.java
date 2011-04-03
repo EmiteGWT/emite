@@ -22,5 +22,5 @@
 package com.calclab.emite.core.client.services;
 
 public interface ScheduledAction {
-	void run();
+    void run();
 }

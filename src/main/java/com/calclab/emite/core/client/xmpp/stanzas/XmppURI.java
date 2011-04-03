@@ -140,6 +140,7 @@ public class XmppURI implements HasJID {
      * 
      * @return the JID of this URI
      */
+    @Override
     public XmppURI getJID() {
 	return uri(node, host, null);
     }

@@ -162,8 +162,8 @@ public class FormTest {
 	form.WithField(new Field(FieldType.TEXT_PRIVATE).Var("password").Value("v3r0na"));
 	form.WithField(new Field(FieldType.LIST_MULTI).Var("features").Value("news").Value("search"));
 	form.WithField(new Field(FieldType.LIST_SINGLE).Var("maxsubs").Value("50"));
-	form.WithField(new Field(FieldType.JID_MULTI).Var("invitelist").Value("juliet@capulet.com").Value(
-		"benvolio@montague.net"));
+	form.WithField(new Field(FieldType.JID_MULTI).Var("invitelist").Value("juliet@capulet.com")
+		.Value("benvolio@montague.net"));
 	session.send(form);
 	session.verifySent(parse(XEP_0004_5_1_SAMPLE_4).x());
     }

@@ -13,6 +13,7 @@ public class RoomChatStateNotificationEvent extends GwtEvent<RoomChatStateNotifi
     public static HandlerRegistration bind(EmiteEventBus eventBus, RoomChatStateNotificationHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final XmppURI from;
 
     private final ChatState chatState;

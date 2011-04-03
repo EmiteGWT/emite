@@ -29,6 +29,7 @@ public class ConnectionStateChangedEvent extends GwtEvent<ConnectionStateChanged
     public static HandlerRegistration bind(EmiteEventBus eventBus, ConnectionStateChangedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final String state;
     private final String description;
 

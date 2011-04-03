@@ -1,4 +1,5 @@
 package com.calclab.emite.core.client.packet;
+
 /*
  *
  * ((e)) emite: A pure gwt (Google Web Toolkit) xmpp (jabber) library
@@ -20,7 +21,6 @@ package com.calclab.emite.core.client.packet;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 
 import java.util.List;
 
@@ -46,6 +46,7 @@ public final class PacketTestSuite {
 	    this.delegate = delegate;
 	}
 
+	@Override
 	public void assertEquals(final Object expected, final Object actual) {
 	    delegate.assertEquals(expected, actual);
 	}
@@ -71,14 +72,17 @@ public final class PacketTestSuite {
 	    assertTrue("", condition);
 	}
 
+	@Override
 	public void assertTrue(final String message, final boolean condition) {
 	    delegate.assertTrue(message, condition);
 	}
 
+	@Override
 	public IPacket createPacket(final String nodeName) {
 	    return delegate.createPacket(nodeName);
 	}
 
+	@Override
 	public void log(final String message) {
 	    delegate.log(message);
 	}

@@ -19,6 +19,7 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
     public static HandlerRegistration bind(EmiteEventBus eventBus, ErrorHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final String errorType;
     private final String description;
     private final IPacket stanza;

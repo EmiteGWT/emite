@@ -14,8 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.RosterRetrievedTestHandler;

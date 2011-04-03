@@ -34,8 +34,8 @@ public class ImModule extends AbstractGinModule {
 	bind(SubscriptionHandler.class).in(Singleton.class);
 	bind(XmppRoster.class).to(XmppRosterLogic.class).in(Singleton.class);
 	bind(ImComponents.class).asEagerSingleton();
-	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class).in(
-		Singleton.class);
+	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class)
+		.in(Singleton.class);
     }
 
 }

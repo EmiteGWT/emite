@@ -16,6 +16,7 @@ public class OwnPresenceChangedEvent extends GwtEvent<OwnPresenceChangedHandler>
     public static HandlerRegistration bind(EmiteEventBus eventBus, OwnPresenceChangedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final Presence currentPresence;
 
     private final Presence oldPresence;

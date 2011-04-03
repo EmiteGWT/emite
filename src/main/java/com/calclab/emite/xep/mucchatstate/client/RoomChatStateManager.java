@@ -72,6 +72,7 @@ public class RoomChatStateManager {
     private final int pauseDelay = 10 * 1000; // 10 secondes
 
     PacketMatcher bodySubjectThreadMatchter = new PacketMatcher() {
+	@Override
 	public boolean matches(final IPacket packet) {
 	    final String nn = packet.getName();
 	    return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
@@ -187,6 +188,7 @@ public class RoomChatStateManager {
 
     private ChatState getStateFromMessage(final Message message) {
 	final IPacket stateNode = message.getFirstChild(new PacketMatcher() {
+	    @Override
 	    public boolean matches(final IPacket packet) {
 		final boolean vn = stateString.contains(packet.getName());
 		return vn;

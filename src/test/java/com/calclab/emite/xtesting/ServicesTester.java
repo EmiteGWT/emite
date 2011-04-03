@@ -55,6 +55,7 @@ public class ServicesTester implements Services {
 	this.requests = new ArrayList<Request>();
     }
 
+    @Override
     public long getCurrentTime() {
 	return 0;
     }
@@ -68,18 +69,22 @@ public class ServicesTester implements Services {
 	return requests.size();
     }
 
+    @Override
     public void schedule(final int msecs, final ScheduledAction action) {
     }
 
+    @Override
     public void send(final String httpBase, final String request, final ConnectorCallback listener)
 	    throws ConnectorException {
 	requests.add(new Request(httpBase, request, listener));
     }
 
+    @Override
     public String toString(final IPacket packet) {
 	return xmler.toString(packet);
     }
 
+    @Override
     public IPacket toXML(final String xml) {
 	return xmler.toXML(xml);
     }

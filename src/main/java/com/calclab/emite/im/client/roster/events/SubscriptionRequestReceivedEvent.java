@@ -12,6 +12,7 @@ public class SubscriptionRequestReceivedEvent extends GwtEvent<SubscriptionReque
     public static HandlerRegistration bind(EmiteEventBus eventBus, SubscriptionRequestReceivedHandler handler) {
 	return eventBus.addHandler(TYPE, handler);
     }
+
     private final String nick;
 
     private final XmppURI from;

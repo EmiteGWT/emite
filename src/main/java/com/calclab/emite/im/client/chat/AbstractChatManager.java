@@ -1,10 +1,10 @@
 package com.calclab.emite.im.client.chat;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -43,7 +43,8 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
     public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
 	Chat chat = getChat(properties, false);
 	if (chat == null) {
-		if (!createIfNotFound) return null;
+	    if (!createIfNotFound)
+		return null;
 	    properties.setInitiatorUri(session.getCurrentUserURI());
 	    chat = addNewChat(properties);
 	}

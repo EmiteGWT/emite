@@ -28,36 +28,36 @@ public class Field extends DelegatedPacket {
     private static final String REQUIRED = "required";
 
     public static List<Field> parseFields(final List<Field> fields, final IPacket packet) {
-        if (fields == null) {
-            final List<Field> fieldsTmp = new ArrayList<Field>();
-            for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(Field.FIELD))) {
-                fieldsTmp.add(new Field(fieldPacket));
-            }
-            return fieldsTmp;
-        }
-        return fields;
+	if (fields == null) {
+	    final List<Field> fieldsTmp = new ArrayList<Field>();
+	    for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(Field.FIELD))) {
+		fieldsTmp.add(new Field(fieldPacket));
+	    }
+	    return fieldsTmp;
+	}
+	return fields;
     }
 
     private List<Option> options;
     private List<String> values;
 
     public Field() {
-        this(new Packet(FIELD));
+	this(new Packet(FIELD));
     }
 
     public Field(final IPacket stanza) {
-        super(stanza);
+	super(stanza);
     }
 
     public Field(final String type) {
-        this();
-        setType(type);
+	this();
+	setType(type);
     }
 
     public void addOption(final Option option) {
-        parseOptions();
-        options.add(option);
-        addChild(option);
+	parseOptions();
+	options.add(option);
+	addChild(option);
     }
 
     /**
@@ -65,48 +65,48 @@ public class Field extends DelegatedPacket {
      * more than one <value/> and this field is only for the other types
      */
     public void addValue(final String value) {
-        parseValues();
-        values.add(value);
-        addChild(VALUE).setText(value);
+	parseValues();
+	values.add(value);
+	addChild(VALUE).setText(value);
     }
 
     public String getDesc() {
-        return getFirstChild(DESC).getText();
+	return getFirstChild(DESC).getText();
     }
 
     public String getLabel() {
-        return getAttribute(LABEL);
+	return getAttribute(LABEL);
     }
 
     public List<Option> getOptions() {
-        parseOptions();
-        return options;
+	parseOptions();
+	return options;
     }
 
     public String getType() {
-        return getAttribute(TYPE);
+	return getAttribute(TYPE);
     }
 
     public List<String> getValues() {
-        parseValues();
-        return values;
+	parseValues();
+	return values;
     }
 
     public String getVar() {
-        return super.getAttribute(VAR);
+	return super.getAttribute(VAR);
     }
 
     public boolean isRequired() {
-        return super.getFirstChild(REQUIRED) != NoPacket.INSTANCE;
+	return super.getFirstChild(REQUIRED) != NoPacket.INSTANCE;
     }
 
     public Field Required(final boolean required) {
-        setRequired(required);
-        return this;
+	setRequired(required);
+	return this;
     }
 
     public void setDesc(final String desc) {
-        super.setTextToChild(DESC, desc);
+	super.setTextToChild(DESC, desc);
     }
 
     /**
@@ -115,11 +115,11 @@ public class Field extends DelegatedPacket {
      */
 
     public void setLabel(final String label) {
-        super.setAttribute(LABEL, label);
+	super.setAttribute(LABEL, label);
     }
 
     public void setRequired(final boolean required) {
-        super.setTextToChild(REQUIRED, required ? "" : null);
+	super.setTextToChild(REQUIRED, required ? "" : null);
     }
 
     /**
@@ -127,39 +127,39 @@ public class Field extends DelegatedPacket {
      * the field data (if no 'type' is specified, the default is "text-single")
      */
     public void setType(final String type) {
-        super.setAttribute(TYPE, type);
+	super.setAttribute(TYPE, type);
     }
 
     public void setVar(final String var) {
-        super.setAttribute(VAR, var);
+	super.setAttribute(VAR, var);
     }
 
     public Field Value(final String value) {
-        addValue(value);
-        return this;
+	addValue(value);
+	return this;
     }
 
     public Field Var(final String var) {
-        setVar(var);
-        return this;
+	setVar(var);
+	return this;
     }
 
     private void parseOptions() {
-        if (options == null) {
-            options = new ArrayList<Option>();
-            for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName(Option.OPTION))) {
-                options.add(new Option(optionPacket));
-            }
-        }
+	if (options == null) {
+	    options = new ArrayList<Option>();
+	    for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName(Option.OPTION))) {
+		options.add(new Option(optionPacket));
+	    }
+	}
     }
 
     private void parseValues() {
-        if (values == null) {
-            values = new ArrayList<String>();
-            for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName(VALUE))) {
-                values.add(valuePacket.getText());
-            }
-        }
+	if (values == null) {
+	    values = new ArrayList<String>();
+	    for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName(VALUE))) {
+		values.add(valuePacket.getText());
+	    }
+	}
     }
 
 }

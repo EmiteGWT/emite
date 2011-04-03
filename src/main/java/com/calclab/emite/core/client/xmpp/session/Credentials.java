@@ -20,6 +20,7 @@ public class Credentials {
     public static Credentials createAnonymous() {
 	return new Credentials(ANONYMOUS, null, ENCODING_NONE);
     }
+
     XmppURI uri;
     String encodedPassword;
 

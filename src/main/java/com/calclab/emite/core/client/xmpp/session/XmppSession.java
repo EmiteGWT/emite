@@ -141,7 +141,7 @@ public interface XmppSession {
      * object (or other with the same data) to resume the session later.
      * 
      * @see http://www.xmpp.org/extensions/xep-0124.html#inactive
-     * @see Session.resume
+     * @see XmppSession.resume
      * @return The StreamSettings object if the session was ready, null
      *         otherwise
      */
@@ -151,7 +151,7 @@ public interface XmppSession {
      * Call this method to resume a session.
      * 
      * @see http://www.xmpp.org/extensions/xep-0124.html#inactive
-     * @see Session.pause
+     * @see XmppSession.pause
      * @param userURI
      *            the previous session user's uri
      * @param settings

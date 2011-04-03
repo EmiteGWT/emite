@@ -16,15 +16,15 @@ public class Item extends AbstractItem {
      */
 
     public Item() {
-        super(ITEM);
+	super(ITEM);
     }
 
     public Item(final IPacket packet) {
-        super(packet);
+	super(packet);
     }
 
     public Item WithField(final Field field) {
-        addField(field);
-        return this;
+	addField(field);
+	return this;
     }
 }
