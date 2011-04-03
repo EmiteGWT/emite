@@ -14,7 +14,7 @@ import com.calclab.emite.im.client.chat.ChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -27,7 +27,7 @@ public class ExampleEcho implements EntryPoint {
     @Override
     public void onModuleLoad() {
 	output = new VerticalPanel();
-	RootPanel.get("app").add(output);
+	RootLayoutPanel.get().add(output);
 
 	log("Example echo chat");
 	String self = PageAssist.getMeta("emite.user");

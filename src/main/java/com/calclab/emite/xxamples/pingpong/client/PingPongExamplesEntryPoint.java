@@ -7,7 +7,7 @@ import com.calclab.emite.core.client.events.EventBusFactory.Factory;
 import com.calclab.emite.xxamples.pingpong.client.PingPongDisplay.Style;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class PingPongExamplesEntryPoint implements EntryPoint {
 
@@ -23,7 +23,7 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 	});
 	ginjector.getPingPongCommonPresenter();
 
-	RootPanel.get().add(display.asWidget());
+	RootLayoutPanel.get().add(display.asWidget());
 
 	final String clientType = PageAssist.getMeta("pingpong.type");
 	display.print("Ping pong example type: " + clientType, Style.info);

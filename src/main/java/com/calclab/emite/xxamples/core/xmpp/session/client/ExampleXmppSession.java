@@ -17,7 +17,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -33,7 +33,7 @@ public class ExampleXmppSession implements EntryPoint {
 	    @Override
 	    public void execute() {
 		panel = new VerticalPanel();
-		RootPanel.get("app").add(panel);
+		RootLayoutPanel.get().add(panel);
 		log("Emite example: xmpp sessions");
 
 		/*

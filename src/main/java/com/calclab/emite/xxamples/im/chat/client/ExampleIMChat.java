@@ -13,11 +13,12 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -70,12 +71,12 @@ public class ExampleIMChat implements EntryPoint {
     }
 
     private void createUI() {
-	DockPanel dock = new DockPanel();
+	DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
 	input = new TextBox();
-	dock.add(input, DockPanel.SOUTH);
+	dock.addSouth(input, 50);
 	output = new VerticalPanel();
-	dock.add(output, DockPanel.SOUTH);
-	RootPanel.get("app").add(dock);
+	dock.add(output);
+	RootLayoutPanel.get().add(dock);
     }
 
     private void log(String text) {
