@@ -1,14 +1,19 @@
 package com.calclab.emite.core.client.xmpp.datetime;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 import org.junit.Test;
 
-public class XmppDateTimeTest {
+import com.google.gwt.junit.client.GWTTestCase;
+
+public class XmppDateTimeTest extends GWTTestCase {
+
+    @Override
+    public String getModuleName() {
+	return "com.calclab.emite.core.EmiteCore";
+    }
 
     @Test
     public void testUseGWT21() {

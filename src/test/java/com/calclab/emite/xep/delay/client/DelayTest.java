@@ -1,8 +1,6 @@
-package com.calclab.emite.core.client.xmpp.delay;
+package com.calclab.emite.xep.delay.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,8 +12,15 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.delay.client.Delay;
+import com.google.gwt.junit.client.GWTTestCase;
 
-public class DelayTest {
+public class DelayTest extends GWTTestCase {
+
+    @Override
+    public String getModuleName() {
+	return "com.calclab.emite.xep.delay.EmiteDelay";
+    }
+
     @Test
     public void shouldCalculateDelay() {
 
@@ -52,4 +57,5 @@ public class DelayTest {
 	assertEquals(uri, delay.getFrom());
 	assertEquals(date, delay.getStamp());
     }
+
 }

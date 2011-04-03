@@ -53,6 +53,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-dev</artifactId>
+      <version>${gwtVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <version>1.8.5</version>
@@ -67,7 +73,7 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.1</version>
+      <version>4.1.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

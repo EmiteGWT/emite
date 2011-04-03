@@ -113,7 +113,10 @@ public class TigasePacket extends AbstractPacket {
 
     @Override
     public void setAttribute(final String name, final String value) {
-	delegate.setAttribute(name, value);
+	if (value == null)
+	    delegate.removeAttribute(name);
+	else
+	    delegate.setAttribute(name, value);
     }
 
     @Override
