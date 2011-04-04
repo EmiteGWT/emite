@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/gin-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/guice-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-log-3.0.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

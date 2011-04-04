@@ -2,6 +2,7 @@ package com.calclab.emite.core.client.bosh;
 
 import java.util.List;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -32,136 +33,83 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 
     @Inject
     public XmppBoshConnection(final EmiteEventBus eventBus, final Services services) {
-	super(eventBus);
-	GWT.log("Creating XmppBoshConnection");
-	this.services = services;
+        super(eventBus);
+        GWT.log("Creating XmppBoshConnection");
+        this.services = services;
 
-	listener = new ConnectorCallback() {
+        listener = new ConnectorCallback() {
 
-	    @Override
-	    public void onError(final String request, final Throwable throwable) {
-		if (isActive()) {
-		    final int e = incrementErrors();
-		    GWT.log("Connection error n°" + e, throwable);
-		    if (e > retryControl.maxRetries) {
-			fireError("Connection error: " + throwable.toString());
-			disconnect();
-		    } else {
-			final int scedTime = retryControl.retry(e);
-			fireRetry(e, scedTime);
-			services.schedule(scedTime, new ScheduledAction() {
-			    @Override
-			    public void run() {
-				GWT.log("Error retry: " + e);
-				send(request);
-			    }
-			});
-		    }
-		}
-	    }
+            @Override
+            public void onError(final String request, final Throwable throwable) {
+                if (isActive()) {
+                    final int e = incrementErrors();
+                    GWT.log("Connection error n°" + e, throwable);
+                    if (e > retryControl.maxRetries) {
+                        fireError("Connection error: " + throwable.toString());
+                        disconnect();
+                    } else {
+                        final int scedTime = retryControl.retry(e);
+                        fireRetry(e, scedTime);
+                        services.schedule(scedTime, new ScheduledAction() {
+                            @Override
+                            public void run() {
+                                GWT.log("Error retry: " + e);
+                                send(request);
+                            }
+                        });
+                    }
+                }
+            }
 
-	    @Override
-	    public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
-		clearErrors();
-		activeConnections--;
-		if (isActive()) {
-		    // TODO: check if is the same code in other than FF and make
-		    // tests
-		    if (statusCode == 404) {
-			fireError("404 Connection Error (session removed ?!) : " + content);
-			disconnect();
-		    } else if (statusCode != 200 && statusCode != 0) {
-			// setActive(false);
-			// fireError("Bad status: " + statusCode);
-			onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
-		    } else {
-			final IPacket response = services.toXML(content);
-			if (response != null && "body".equals(response.getName())) {
-			    clearErrors();
-			    fireResponse(content);
-			    handleResponse(response);
-			} else {
-			    onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
-			    // fireError("Bad response: " + content);
-			}
-		    }
-		}
-	    }
-	};
+            @Override
+            public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
+
+                clearErrors();
+                activeConnections--;
+                if (isActive()) {
+                    // TODO: check if is the same code in other than FF and make
+                    // tests
+                    if (statusCode == 404) {
+                        fireError("404 Connection Error (session removed ?!) : " + content);
+                        Log.debug("onResponseReceived - 404 - disconnecting...");
+                        disconnect();
+                    } else if (statusCode != 200 && statusCode != 0) {
+                        // setActive(false);
+                        // fireError("Bad status: " + statusCode);
+                        Log.debug("onResponseReceived - non 200 status code - throwing exception...");
+                        onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
+                    } else {
+                        final IPacket response = services.toXML(content);
+                        if (response != null && "body".equals(response.getName())) {
+                            clearErrors();
+                            fireResponse(content);
+                            handleResponse(response);
+                        } else {
+                            Log.debug("onResponseReceived - invalid response body");
+                            onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
+                            // fireError("Bad response: " + content);
+                        }
+                    }
+                } else {
+                    // not active
+                    Log.debug("onResponseReceived - connection not active");
+                }
+            }
+        };
     }
 
     @Override
     public void connect() {
-	assert getConnectionSettings() != null : "You should set user settings before connect!";
-	clearErrors();
+        assert getConnectionSettings() != null : "You should set user settings before connect!";
+        clearErrors();
 
-	if (!isActive()) {
-	    setActive(true);
-	    setStream(new StreamSettings());
-	    activeConnections = 0;
-	    createInitialBody(getConnectionSettings());
-	    sendBody();
-	}
-    }
-
-    @Override
-    public void disconnect() {
-	GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
-	// Clearing all queued stanzas
-	setCurrentBody(null);
-	// Create a new terminate stanza and force the send
-	createBodyIfNeeded();
-	getCurrentBody().setAttribute("type", "terminate");
-	sendBody(true);
-	setActive(false);
-	getStreamSettings().sid = null;
-	fireDisconnected("logged out");
-    }
-
-    @Override
-    public boolean isConnected() {
-	return getStreamSettings() != null;
-    }
-
-    @Override
-    public StreamSettings pause() {
-	if (getStreamSettings() != null && getStreamSettings().sid != null) {
-	    createBodyIfNeeded();
-	    getCurrentBody().setAttribute("pause", getStreamSettings().getMaxPauseString());
-	    sendBody(true);
-	    return getStreamSettings();
-	}
-	return null;
-    }
-
-    @Override
-    public void restartStream() {
-	createBodyIfNeeded();
-	getCurrentBody().setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
-	getCurrentBody().setAttribute("xmpp:restart", "true");
-	getCurrentBody().setAttribute("to", getConnectionSettings().hostName);
-	getCurrentBody().setAttribute("xml:lang", "en");
-    }
-
-    @Override
-    public boolean resume(final StreamSettings settings) {
-	setActive(true);
-	setStream(settings);
-	continueConnection(null);
-	return isActive();
-    }
-
-    @Override
-    public void send(final IPacket packet) {
-	createBodyIfNeeded();
-	getCurrentBody().addChild(packet);
-	sendBody();
-	eventBus.fireEvent(new StanzaSentEvent(packet));
-    }
-
-    @Override
-    public String toString() {
-	return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStreamSettings();
+        if (!isActive()) {
+            setActive(true);
+            setStream(new StreamSettings());
+            activeConnections = 0;
+            createInitialBody(getConnectionSettings());
+            sendBody();
+        }
     }
 
     /**
@@ -177,98 +125,167 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
      * @param ack
      */
     private void continueConnection(final String ack) {
-	if (isConnected() && activeConnections == 0) {
-	    if (getCurrentBody() != null) {
-		sendBody();
-	    } else {
-		final long currentRID = getStreamSettings().rid;
-		int waitTime = 300;
-		services.schedule(waitTime, new ScheduledAction() {
-		    @Override
-		    public void run() {
-			if (getCurrentBody() == null && getStreamSettings().rid == currentRID) {
-			    createBodyIfNeeded();
-			    // Whitespace keep-alive
-			    // getCurrentBody().setText(" ");
-			    sendBody();
-			}
-		    }
-		});
-	    }
-	}
+        Log.debug("continueConnection() called");
+        if (isConnected() && activeConnections == 0) {
+            if (getCurrentBody() != null) {
+                sendBody();
+            } else {
+                final long currentRID = getStreamSettings().rid;
+                int waitTime = 300;
+                services.schedule(waitTime, new ScheduledAction() {
+                    @Override
+                    public void run() {
+                        if (getCurrentBody() == null && getStreamSettings().rid == currentRID) {
+                            createBodyIfNeeded();
+                            // Whitespace keep-alive
+                            // getCurrentBody().setText(" ");
+                            sendBody();
+                        }
+                    }
+                });
+            }
+        } else {
+
+        }
     }
 
     private void createBodyIfNeeded() {
-	if (getCurrentBody() == null) {
-	    final Packet body = new Packet("body");
-	    body.With("xmlns", "http://jabber.org/protocol/httpbind");
-	    body.With("rid", getStreamSettings().getNextRid());
-	    if (getStreamSettings() != null) {
-		body.With("sid", getStreamSettings().sid);
-	    }
-	    setCurrentBody(body);
-	}
+        Log.debug("createBodyIfNeeded() called.");
+        if (getCurrentBody() == null) {
+            final Packet body = new Packet("body");
+            body.With("xmlns", "http://jabber.org/protocol/httpbind");
+            body.With("rid", getStreamSettings().getNextRid());
+            if (getStreamSettings() != null) {
+                body.With("sid", getStreamSettings().sid);
+            }
+            setCurrentBody(body);
+        }
     }
 
     private void createInitialBody(final ConnectionSettings userSettings) {
-	final Packet body = new Packet("body");
-	body.setAttribute("content", "text/xml; charset=utf-8");
-	body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
-	body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
-	body.setAttribute("ver", userSettings.version);
-	body.setAttribute("xmpp:version", "1.0");
-	body.setAttribute("xml:lang", "en");
-	body.setAttribute("ack", "1");
-	body.setAttribute("secure", Boolean.toString(userSettings.secure));
-	body.setAttribute("rid", getStreamSettings().getNextRid());
-	body.setAttribute("to", userSettings.hostName);
-	if (userSettings.routeHost != null && userSettings.routePort != null) {
-	    String routeHost = userSettings.routeHost;
-	    if (routeHost == null) {
-		routeHost = userSettings.hostName;
-	    }
-	    Integer routePort = userSettings.routePort;
-	    if (routePort == null) {
-		routePort = 5222;
-	    }
-	    body.setAttribute("route", "xmpp:" + routeHost + ":" + routePort);
-	}
-	body.With("hold", userSettings.hold);
-	body.With("wait", userSettings.wait);
-	setCurrentBody(body);
+        final Packet body = new Packet("body");
+        body.setAttribute("content", "text/xml; charset=utf-8");
+        body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
+        body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
+        body.setAttribute("ver", userSettings.version);
+        body.setAttribute("xmpp:version", "1.0");
+        body.setAttribute("xml:lang", "en");
+        body.setAttribute("ack", "1");
+        body.setAttribute("secure", Boolean.toString(userSettings.secure));
+        body.setAttribute("rid", getStreamSettings().getNextRid());
+        body.setAttribute("to", userSettings.hostName);
+        if (userSettings.routeHost != null && userSettings.routePort != null) {
+            String routeHost = userSettings.routeHost;
+            if (routeHost == null) {
+                routeHost = userSettings.hostName;
+            }
+            Integer routePort = userSettings.routePort;
+            if (routePort == null) {
+                routePort = 5222;
+            }
+            body.setAttribute("route", "xmpp:" + routeHost + ":" + routePort);
+        }
+        body.With("hold", userSettings.hold);
+        body.With("wait", userSettings.wait);
+        setCurrentBody(body);
+    }
+
+    @Override
+    public void disconnect() {
+        Log.debug("disconnect() called");
+
+        int x = 20 / 0;
+        Log.debug("divided by zero: " + x);
+
+        GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
+        // Clearing all queued stanzas
+        setCurrentBody(null);
+        // Create a new terminate stanza and force the send
+        createBodyIfNeeded();
+        getCurrentBody().setAttribute("type", "terminate");
+        sendBody(true);
+        setActive(false);
+        getStreamSettings().sid = null;
+        fireDisconnected("logged out");
     }
 
     private void handleResponse(final IPacket response) {
-	if (isTerminate(response.getAttribute("type"))) {
-	    getStreamSettings().sid = null;
-	    setActive(false);
-	    fireDisconnected("disconnected by server");
-	} else {
-	    if (getStreamSettings().sid == null) {
-		initStream(response);
-		fireConnected();
-	    }
-	    shouldCollectResponses = true;
-	    final List<? extends IPacket> stanzas = response.getChildren();
-	    for (final IPacket stanza : stanzas) {
-		fireStanzaReceived(stanza);
-	    }
-	    shouldCollectResponses = false;
-	    continueConnection(response.getAttribute("ack"));
-	}
+        Log.debug("handleResponse() called");
+        if (isTerminate(response.getAttribute("type"))) {
+            Log.debug("handleResponse() terminate condition");
+            getStreamSettings().sid = null;
+            setActive(false);
+            fireDisconnected("disconnected by server");
+        } else {
+            Log.debug("handleResponse() non-terminate condition");
+            if (getStreamSettings().sid == null) {
+                initStream(response);
+                fireConnected();
+            }
+            shouldCollectResponses = true;
+            final List<? extends IPacket> stanzas = response.getChildren();
+            for (final IPacket stanza : stanzas) {
+                fireStanzaReceived(stanza);
+            }
+            shouldCollectResponses = false;
+            continueConnection(response.getAttribute("ack"));
+        }
     }
 
     private void initStream(final IPacket response) {
-	final StreamSettings stream = getStreamSettings();
-	stream.sid = response.getAttribute("sid");
-	stream.wait = response.getAttribute("wait");
-	stream.setInactivity(response.getAttribute("inactivity"));
-	stream.setMaxPause(response.getAttribute("maxpause"));
+        final StreamSettings stream = getStreamSettings();
+        stream.sid = response.getAttribute("sid");
+        stream.wait = response.getAttribute("wait");
+        stream.setInactivity(response.getAttribute("inactivity"));
+        stream.setMaxPause(response.getAttribute("maxpause"));
+    }
+
+    @Override
+    public boolean isConnected() {
+        Boolean isConnected = getStreamSettings() != null;
+        Log.debug("isConnected() called with result: " + isConnected);
+        return isConnected;
     }
 
     private boolean isTerminate(final String type) {
-	// Openfire bug: terminal instead of terminate
-	return "terminate".equals(type) || "terminal".equals(type);
+        // Openfire bug: terminal instead of terminate
+        return "terminate".equals(type) || "terminal".equals(type);
+    }
+
+    @Override
+    public StreamSettings pause() {
+        if (getStreamSettings() != null && getStreamSettings().sid != null) {
+            createBodyIfNeeded();
+            getCurrentBody().setAttribute("pause", getStreamSettings().getMaxPauseString());
+            sendBody(true);
+            return getStreamSettings();
+        }
+        return null;
+    }
+
+    @Override
+    public void restartStream() {
+        createBodyIfNeeded();
+        getCurrentBody().setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
+        getCurrentBody().setAttribute("xmpp:restart", "true");
+        getCurrentBody().setAttribute("to", getConnectionSettings().hostName);
+        getCurrentBody().setAttribute("xml:lang", "en");
+    }
+
+    @Override
+    public boolean resume(final StreamSettings settings) {
+        setActive(true);
+        setStream(settings);
+        continueConnection(null);
+        return isActive();
+    }
+
+    @Override
+    public void send(final IPacket packet) {
+        createBodyIfNeeded();
+        getCurrentBody().addChild(packet);
+        sendBody();
+        eventBus.fireEvent(new StanzaSentEvent(packet));
     }
 
     /**
@@ -277,30 +294,37 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
      * @param request
      */
     private void send(final String request) {
-	try {
-	    activeConnections++;
-	    services.send(getConnectionSettings().httpBase, request, listener);
-	    getStreamSettings().lastRequestTime = services.getCurrentTime();
-	} catch (final ConnectorException e) {
-	    activeConnections--;
-	    e.printStackTrace();
-	}
+        try {
+            activeConnections++;
+            Log.debug("send() - sending a new request...");
+            services.send(getConnectionSettings().httpBase, request, listener);
+            getStreamSettings().lastRequestTime = services.getCurrentTime();
+        } catch (final ConnectorException e) {
+            Log.debug("send() - ConnectorException: " + e.getMessage());
+            activeConnections--;
+            e.printStackTrace();
+        }
     }
 
     private void sendBody() {
-	sendBody(false);
+        sendBody(false);
     }
 
     private void sendBody(final boolean force) {
-	// TODO: better semantics
-	if (force || !shouldCollectResponses && isActive() && activeConnections < getConnectionSettings().maxRequests
-		&& !hasErrors()) {
-	    final String request = services.toString(getCurrentBody());
-	    setCurrentBody(null);
-	    send(request);
-	} else {
-	    GWT.log("Send body simply queued", null);
-	}
+        Log.debug("sendBody() called with force: " + force);
+        // TODO: better semantics
+        if (force || !shouldCollectResponses && isActive() && activeConnections < getConnectionSettings().maxRequests && !hasErrors()) {
+            final String request = services.toString(getCurrentBody());
+            setCurrentBody(null);
+            send(request);
+        } else {
+            GWT.log("Send body simply queued", null);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Bosh in " + (isActive() ? "active" : "inactive") + " stream=" + getStreamSettings();
     }
 
 }

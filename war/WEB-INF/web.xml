@@ -14,16 +14,15 @@
 		</init-param>
 		<init-param>
 			<param-name>remoteServer</param-name>
-			<param-value>localhost</param-value>
+			<param-value>tomsurevine</param-value>
 		</init-param>
 		<init-param>
 			<param-name>remotePort</param-name>
-			<param-value>5280</param-value>
+			<param-value>7070</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Proxy</servlet-name>
-		<url-pattern>/proxy
-    </url-pattern>
+		<url-pattern>/proxy</url-pattern>
 	</servlet-mapping>
 </web-app>
