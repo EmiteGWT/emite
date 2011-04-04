@@ -60,6 +60,16 @@ public class PageAssist {
      * Meta key to store the route host port number param in bosh configuration
      */
     static final String PARAM_SECURE = "emite.secure";
+    
+    /**
+     * Meta key to store the "wait" BOSH parameter
+     */
+    static final String PARAM_BOSH_WAIT = "emite.bosh.wait";
+    
+    /**
+     * Meta key to store the "hold" BOSH parameter
+     */
+    static final String PARAM_BOSH_HOLD = "emite.bosh.hold";
 
     private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
@@ -118,21 +128,14 @@ public class PageAssist {
 	final String httpBase = getMeta(PARAM_HTTPBASE);
 	final String host = getMeta(PARAM_HOST);
 	final String routeHost = getMeta(PARAM_ROUTE_HOST);
-	final String routePortString = getMeta(PARAM_ROUTE_PORT);
+	final Integer routePort = getMetaInteger(PARAM_ROUTE_PORT);
 	final boolean secure = isMetaTrue(PARAM_SECURE);
-
-	Integer routePort = null;
-	if (routePortString != null) {
-	    try {
-		routePort = Integer.decode(routePortString);
-	    } catch (final NumberFormatException e) {
-
-	    }
-	}
+	final Integer wait = getMetaInteger(PARAM_BOSH_WAIT);
+	final Integer hold = getMetaInteger(PARAM_BOSH_HOLD);
 
 	if (host != null && httpBase != null) {
 	    GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
-	    connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
+	    connection.setSettings(new ConnectionSettings(httpBase, host, wait, hold, routeHost, routePort, secure));
 	    return true;
 	} else {
 	    return false;
@@ -169,6 +172,28 @@ public class PageAssist {
 	    value = element.getPropertyString("content");
 	}
 	return value;
+    }
+    
+    /**
+     * Return an int value for the meta
+     * 
+     * @param id
+     *            the 'id' value of the desired meta tag
+     * @return the int value of the meta tag, null if it is invalid or doesn't exist
+     * @see PageAssist#getMeta(String)
+     */
+    public static Integer getMetaInteger(final String id) {
+    	final String metaValue = getMeta(id);
+    	
+    	if(metaValue != null) {
+	    	try {
+	    		return new Integer(metaValue);
+	    	} catch(final NumberFormatException eNF) {
+	    		GWT.log("Invalid meta value for " + id + " : " + metaValue);
+	    	}
+    	}
+    	
+		return null;
     }
 
     public static boolean isMetaFalse(final String id) {
