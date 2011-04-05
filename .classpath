@@ -13,5 +13,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/gwt-log-3.0.1.jar"/>
 	<classpathentry kind="output" path="target/emite-0.7-SNAPSHOT/WEB-INF/classes"/>
 </classpath>
