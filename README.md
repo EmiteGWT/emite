@@ -13,8 +13,8 @@ Summary of functionalities:
 * Multi user chat (rooms) support
 * Other XEP currently implemented: avatar, delay, chat states, search, storage, vcard, privacylists, dataform, service discovery
 * Well tested (junit tests)
-* GWT 2.0 Ready
-
+* GWT 2.0 ready
+* Maven ready
 
 ### License
 Our license is the (GNU Lesser GPL v3)[http://www.fsf.org/licensing/licenses/lgpl-3.0.html]

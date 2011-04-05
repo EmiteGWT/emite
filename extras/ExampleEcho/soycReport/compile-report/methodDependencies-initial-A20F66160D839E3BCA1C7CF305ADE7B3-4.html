@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.event.logical.shared</h2>
+<a name="com.google.gwt.event.logical.shared.CloseEvent"><h3 class="soyc-class-header">Class: com.google.gwt.event.logical.shared.CloseEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::$dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::dispatch</li>
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::CloseEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::fire</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::getAssociatedType</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseEvent::fire</li>
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.event.logical.shared.CloseHandler"><h3 class="soyc-class-header">Class: com.google.gwt.event.logical.shared.CloseHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.CloseHandler::onClose</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseHandler::$clinit</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.event.logical.shared.HasAttachHandlers"><h3 class="soyc-class-header">Class: com.google.gwt.event.logical.shared.HasAttachHandlers</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.HasAttachHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.event.logical.shared.HasCloseHandlers"><h3 class="soyc-class-header">Class: com.google.gwt.event.logical.shared.HasCloseHandlers</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.HasCloseHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.event.logical.shared.HasResizeHandlers"><h3 class="soyc-class-header">Class: com.google.gwt.event.logical.shared.HasResizeHandlers</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.event.logical.shared.HasResizeHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initWindowCloseHandlerImpl</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

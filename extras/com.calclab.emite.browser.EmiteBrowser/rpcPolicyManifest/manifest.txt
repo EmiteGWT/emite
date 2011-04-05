@@ -1,0 +1,2 @@
+# Module com.calclab.emite.browser.EmiteBrowser
+# RPC service class, partial path of RPC policy file

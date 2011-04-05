@@ -1,0 +1,1369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.core.client.xmpp.stanzas</h2>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.BasicStanza"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.BasicStanza</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza::$setFrom</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza::$setTo</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza::$setType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence::Presence</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza::BasicStanza</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::Message</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.BasicStanza::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.HasJID"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.HasJID</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.HasJID</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.IQ$Type"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.IQ$Type</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::IQ$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::getClass</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.IQ$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.IQ"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.IQ</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::$WithQuery</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::$addQuery</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::IQ</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::With</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::$addStanzaTo</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.IQ::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Message$Type$Map"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Message$Type$Map</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message$Type$Map</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Message$Type"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Message$Type</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::Message$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::getClass</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message$Type::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Message"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Message</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::$getType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::createChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::$setBody</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Message::Message</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::$setThread</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::$setType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::Message</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Message::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Presence$Show$Map"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Presence$Show$Map</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show$Map</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence::$getShow</li>
+<li>com.calclab.emite.xep.muc.client.RoomChat$2::onPresence</li>
+<li>com.calclab.emite.core.client.events.PresenceHandler::$clinit</li>
+<li>com.calclab.emite.xep.muc.client.RoomChat::RoomChat</li>
+<li>com.calclab.emite.xep.muc.client.RoomChatManager::createChat</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$RoomChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$muc$client$RoomManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.muc.client.MucComponents::MucComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$MucComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Presence$Show"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Presence$Show</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::RosterItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::Presence$Show</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::$clinit</li>
+<li>com.calclab.emite.im.client.roster.RosterItem::RosterItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::$clinit</li>
+<li>com.calclab.emite.im.client.roster.RosterItem::RosterItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::getClass</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Show::$clinit</li>
+<li>com.calclab.emite.im.client.roster.RosterItem::RosterItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Presence$Type$Map"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Presence$Type$Map</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type$Map</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::parseAsk</li>
+<li>com.calclab.emite.im.client.roster.RosterItem::parse</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Presence$Type"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Presence$Type</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::Presence$Type</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::getClass</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.Presence$Type::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Presence"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Presence</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence::$getShow</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xep.muc.client.RoomChat$2::onPresence</li>
+<li>com.calclab.emite.core.client.events.PresenceHandler::$clinit</li>
+<li>com.calclab.emite.xep.muc.client.RoomChat::RoomChat</li>
+<li>com.calclab.emite.xep.muc.client.RoomChatManager::createChat</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$RoomChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$muc$client$RoomManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.muc.client.MucComponents::MucComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$MucComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence::$getType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xep.muc.client.RoomChat$2::onPresence</li>
+<li>com.calclab.emite.core.client.events.PresenceHandler::$clinit</li>
+<li>com.calclab.emite.xep.muc.client.RoomChat::RoomChat</li>
+<li>com.calclab.emite.xep.muc.client.RoomChatManager::createChat</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$RoomChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$muc$client$RoomManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.muc.client.MucComponents::MucComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$muc$client$MucComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence::Presence</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Presence::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.Stanza"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.Stanza</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.Stanza</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.XmppURI"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.XmppURI</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$equalsNoResource</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</li>
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$getJID</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::XmppURI</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::XmppURIFactory</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$clinit</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$cache</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::uri</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$clinit</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::XmppURIFactory</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$clinit</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURI::$clinit</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</li>
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.stanzas.XmppUriParser::parse</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.stanzas.XmppURIFactory::$parse</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

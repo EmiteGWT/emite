@@ -1,0 +1,1882 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.im.client.roster</h2>
+<a name="com.calclab.emite.im.client.roster.Roster"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.Roster</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.Roster</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$com$calclab$emite$im$client$roster$RosterImpl_RosterImpl_methodInjection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.RosterGroup"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.RosterGroup</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterGroup::$getItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$getItemByJID</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::$getItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$getItemByJID</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::$hasItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$updateExistingItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::$remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$removeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::RosterGroup</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterGroup::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.RosterImpl"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.RosterImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$com$calclab$emite$im$client$roster$RosterImpl_RosterImpl_methodInjection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterImpl::RosterImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$com$calclab$emite$im$client$roster$RosterImpl_RosterImpl_methodInjection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterImpl::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$com$calclab$emite$im$client$roster$RosterImpl_RosterImpl_methodInjection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.RosterItem"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.RosterItem</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$addToGroup</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::$setGroups</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::$setSubscriptionState</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$setGroups</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$setName</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$updateExistingItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$setStatus</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$2::$setPresence</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$2::onPresence</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::$setSubscriptionState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::RosterItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::parse</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::parseAsk</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::parse</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::parseSubscriptionState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::parse</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.RosterItem::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionHandler$1"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionHandler$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$1::SubscriptionHandler$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::SubscriptionHandler$Behaviour</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::$clinit</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::$clinit</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::getClass</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler$Behaviour::$clinit</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionHandler"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionHandler::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionManager"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionManager</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::SubscriptionManagerImpl$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::SubscriptionManagerImpl$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionManagerImpl"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionManagerImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$refuseSubscriptionRequest</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$requestSubscribe</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionState$Map"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionState$Map</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionState$Map</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.RosterItem::parseSubscriptionState</li>
+<li>com.calclab.emite.im.client.roster.RosterItem::parse</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.SubscriptionState"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.SubscriptionState</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionState::SubscriptionState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionState::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionState::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionState::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.SubscriptionState::values</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionState::getClass</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionState::$clinit</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRoster"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRoster</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRoster</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterBoilerplate"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterBoilerplate</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterBoilerplate::XmppRosterBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::XmppRosterGroupsLogic</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterBoilerplate::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterGroupsLogic"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterGroupsLogic</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$fireItemChangedInGroups</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$2::$setPresence</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$2::onPresence</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$getItemByJID</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$removeGroup</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$removeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::XmppRosterGroupsLogic</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic$1"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$1::XmppRosterLogic$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic$2"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$2::$setPresence</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$2::onPresence</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$2::XmppRosterLogic$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$2::onPresence</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic$3"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic$3</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$3</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$3::XmppRosterLogic$3</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$3::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic$7"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic$7</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$7</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$7::XmppRosterLogic$7</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$7::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic$8"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic$8</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$8</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$8::XmppRosterLogic$8</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$8::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$addOrUpdateItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic$8::onIQ</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.IQManager::$handle</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.XmppRosterLogic"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.XmppRosterLogic</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$removeItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$requestAddItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$approveSubscriptionRequest</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$2::$onRosterItemChanged</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::$updateExistingItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.XmppRosterLogic::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

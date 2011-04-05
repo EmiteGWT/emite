@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Application breakdown analysis
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Application breakdown analysis</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2></h2>
+<div id="bd"><h2><a style="cursor:default;" onMouseOver="show('packageBreakdownPopup');" onMouseOut="hide('packageBreakdownPopup');">Package breakdown</a></h2></div>
+<div id="packageBreakdownPopup" style="visibility:hidden; position:absolute;">
+<table bgcolor="#c5d7ef" width="200">
+<tr><td><b>Package breakdown</b></td></tr>
+<tr><td bgcolor="#e5ecf9">The package breakdown blames pieces of JavaScript code on Java packages wherever possible.  Note that this is not possible for all code, so the sizes of the packages here will not normally add up to the full code size.  More specifically, the sum will exclude strings, whitespace, and a few pieces of JavaScript code that are produced during compilation but cannot be attributed to any Java package.</td></tr></table></div>
+<iframe class='soyc-iframe-package' src="total-2-packageBreakdown.html" scrolling=auto></iframe>
+<h2><a style="cursor:default;" onMouseOver="show('codeTypeBreakdownPopup');" onMouseOut="hide('codeTypeBreakdownPopup');">Code type breakdown</a></h2>
+<div id="codeTypeBreakdownPopup" style="visibility:hidden; position:absolute;">
+<table bgcolor="#c5d7ef" width="200">
+<tr><td><b>Code type breakdown</b></td></tr>
+<tr><td bgcolor="#e5ecf9">The code type breakdown breaks down the JavaScript code according to its type or function.  For example, it tells you how much of your code can be attributed to JRE, GWT-RPC, etc.  As above, strings and some other JavaScript snippets are not included in the breakdown.</td></tr></table></div>
+<iframe class='soyc-iframe-code' src="total-2-codeTypeBreakdown.html" scrolling=auto></iframe>
+</div>
+</div>
+</body>
+</html>

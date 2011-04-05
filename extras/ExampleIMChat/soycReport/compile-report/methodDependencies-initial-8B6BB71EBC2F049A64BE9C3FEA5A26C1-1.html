@@ -1,0 +1,1198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.user.client</h2>
+<a name="com.google.gwt.user.client.Command"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Command</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Command</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Command::execute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.CommandCanceledException"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.CommandCanceledException</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandCanceledException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</li>
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandCanceledException::CommandCanceledException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</li>
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandCanceledException::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</li>
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.CommandExecutor$1"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.CommandExecutor$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$1::CommandExecutor$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$1::run</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.CommandExecutor$2"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.CommandExecutor$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$2::CommandExecutor$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$2::run</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.CommandExecutor$CircularIterator"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.CommandExecutor$CircularIterator</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor$CircularIterator::CommandExecutor$CircularIterator</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$getLast</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</li>
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$next</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor$CircularIterator::next</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</li>
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::$setEnd</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::CommandExecutor$CircularIterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor$CircularIterator::next</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.CommandExecutor"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.CommandExecutor</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::$doCommandCanceled</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor$1::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::$submit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::CommandExecutor</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.CommandExecutor::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Cookies"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Cookies</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::setCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::ensureCookies</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::getCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::resumeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::getCookie</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::resumeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::loadCookies</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::ensureCookies</li>
+<li>com.google.gwt.user.client.Cookies::getCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::resumeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::needsRefresh</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::ensureCookies</li>
+<li>com.google.gwt.user.client.Cookies::getCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::resumeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::removeCookie</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::closeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::removeCookieNative</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::removeCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::closeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::setCookie</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::setCookieImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::setCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Cookies::uriEncode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Cookies::setCookie</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.DOM"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.DOM</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DOM</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImplMozilla::$sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.Widget::onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.DockPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DOM::dispatchEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImplMozilla::$sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.Widget::onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.DockPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DOM::previewEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImplMozilla::$sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.Widget::onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.DockPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DOM::setStyleAttribute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.DockPanel::$realizeTable</li>
+<li>com.google.gwt.user.client.ui.DockPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.DockPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.DeferredCommand"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.DeferredCommand</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DeferredCommand</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.DeferredCommand::addCommand</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.EventListener"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.EventListener</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.EventListener</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.EventListener::onBrowserEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImplMozilla::$sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.Widget::onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.DockPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.TakesValue"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.TakesValue</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.TakesValue</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasValue::$clinit</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Timer$1"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Timer$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer$1::Timer$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer$1::onClose</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Timer"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Timer</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer$1::onClose</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::$schedule</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::clearInterval</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$cancel</li>
+<li>com.google.gwt.user.client.Timer$1::onClose</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::clearTimeout</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$cancel</li>
+<li>com.google.gwt.user.client.Timer$1::onClose</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::createTimeout</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::fire</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Timer::run</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Window$ClosingEvent"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Window$ClosingEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$ClosingEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosing</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$ClosingEvent::Window$ClosingEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosing</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$ClosingEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.shared.SimpleEventBus::$doFire</li>
+<li>com.google.gwt.event.shared.SimpleEventBus::$fireEvent</li>
+<li>com.google.gwt.event.shared.HandlerManager::$fireEvent</li>
+<li>com.google.gwt.user.client.Window::onClosing</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$ClosingEvent::getAssociatedType</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.shared.SimpleEventBus::$doFire</li>
+<li>com.google.gwt.event.shared.SimpleEventBus::$fireEvent</li>
+<li>com.google.gwt.event.shared.HandlerManager::$fireEvent</li>
+<li>com.google.gwt.user.client.Window::onClosing</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$ClosingEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosing</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Window$WindowHandlers"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Window$WindowHandlers</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$WindowHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$WindowHandlers::Window$WindowHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window$WindowHandlers::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::onClosed</li>
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.Window"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.Window</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window::addCloseHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window::addHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window::onClosed</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.Window::onClosing</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImpl::$initWindowCloseHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$createUI</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

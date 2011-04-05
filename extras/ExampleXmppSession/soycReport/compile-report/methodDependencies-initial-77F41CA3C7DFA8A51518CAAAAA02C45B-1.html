@@ -1,0 +1,466 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.im.client.roster.events</h2>
+<a name="com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent::RosterGroupChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.events.RosterItemChangedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.RosterItemChangedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::$dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::RosterItemChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::bind</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterGroupsLogic::$addToGroup</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$storeItem</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$handleItemChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$3::$onPacket</li>
+<li>com.calclab.emite.core.client.events.IQEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.events.IQEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl$8::get</li>
+<li>com.google.inject.Provider::$clinit</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.events.RosterItemChangedHandler"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.RosterItemChangedHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterItemChangedHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.events.RosterRetrievedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.RosterRetrievedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterRetrievedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterRetrievedEvent::RosterRetrievedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterRetrievedEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterRetrievedEvent::getAssociatedType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.RosterRetrievedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$7::onIQ</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::$reRequestRoster</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic$1::onStateChanged</li>
+<li>com.calclab.emite.im.client.roster.XmppRosterLogic::XmppRosterLogic</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$XmppRosterLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$RosterImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$Roster$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::$dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::SubscriptionRequestReceivedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::bind</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::$addSubscriptionRequestReceivedHandler</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::getAssociatedType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl$1::onPresence</li>
+<li>com.calclab.emite.im.client.roster.SubscriptionManagerImpl::SubscriptionManagerImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionManagerImpl$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.roster.SubscriptionHandler::SubscriptionHandler</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$roster$SubscriptionHandler$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

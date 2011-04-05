@@ -1,0 +1,2 @@
+# Module com.calclab.emite.xep.storage.EmitePrivateStorage
+# RPC service class, partial path of RPC policy file

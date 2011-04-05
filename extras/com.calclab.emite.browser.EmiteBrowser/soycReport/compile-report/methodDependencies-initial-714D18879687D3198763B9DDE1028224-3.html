@@ -1,0 +1,1642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: java.util</h2>
+<a name="java.util.AbstractCollection"><h3 class="soyc-class-header">Class: java.util.AbstractCollection</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractCollection::contains</li>
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::contains</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::size</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::add</li>
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractCollection::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractHashMap$EntrySet"><h3 class="soyc-class-header">Class: java.util.AbstractHashMap$EntrySet</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::$iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::$size</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::AbstractHashMap$EntrySet</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::contains</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySet::size</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractHashMap$EntrySetIterator"><h3 class="soyc-class-header">Class: java.util.AbstractHashMap$EntrySetIterator</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::$hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::$next</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$EntrySetIterator::next</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractHashMap$MapEntryNull"><h3 class="soyc-class-header">Class: java.util.AbstractHashMap$MapEntryNull</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull::AbstractHashMap$MapEntryNull</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull::getKey</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull::getValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryNull::setValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractHashMap$MapEntryString"><h3 class="soyc-class-header">Class: java.util.AbstractHashMap$MapEntryString</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString::AbstractHashMap$MapEntryString</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString::getKey</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString::getValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap$MapEntryString::setValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractHashMap"><h3 class="soyc-class-header">Class: java.util.AbstractHashMap</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$addAllStringEntries</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$clearImpl</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::AbstractHashMap</li>
+<li>java.util.HashMap::HashMap</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$containsKey</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySet::contains</li>
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$get</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$getHashValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$getStringValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$MapEntryString::getValue</li>
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$hasHashValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$hasStringValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$put</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$putHashValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$putNullSlot</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::$putStringValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$MapEntryString::setValue</li>
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::AbstractHashMap</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.HashMap::HashMap</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::equalsBridge</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractHashMap::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::getClass__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractList$IteratorImpl"><h3 class="soyc-class-header">Class: java.util.AbstractList$IteratorImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList$IteratorImpl::AbstractList$IteratorImpl</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::$hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::$next</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::AbstractList$IteratorImpl</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList$IteratorImpl::next</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractList"><h3 class="soyc-class-header">Class: java.util.AbstractList</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::$iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::checkIndex</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.ArrayList::$get</li>
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::indexOutOfBounds</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::checkIndex</li>
+<li>java.util.ArrayList::$get</li>
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractList::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractMap"><h3 class="soyc-class-header">Class: java.util.AbstractMap</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMap</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMap::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMap::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::getClass__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMap::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMap::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractMapEntry"><h3 class="soyc-class-header">Class: java.util.AbstractMapEntry</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMapEntry</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMapEntry::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMapEntry::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMapEntry::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractMapEntry::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.AbstractSet"><h3 class="soyc-class-header">Class: java.util.AbstractSet</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractSet</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractSet::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractSet::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.AbstractSet::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.ArrayList"><h3 class="soyc-class-header">Class: java.util.ArrayList</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.ArrayList::ArrayList</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::$add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::$get</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::$indexOf</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.ArrayList::contains</li>
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::$size</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::add</li>
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::ArrayList</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::contains</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::size</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList::add</li>
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.ArrayList::splice</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.ArrayList::$add</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Collection"><h3 class="soyc-class-header">Class: java.util.Collection</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Collection</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Collection::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Collection::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Collection::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.HashMap"><h3 class="soyc-class-header">Class: java.util.HashMap</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.HashMap</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.HashMap::$equals</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySet::contains</li>
+<li>java.util.AbstractSet::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.HashMap::HashMap</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.HashMap::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::getClass__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Iterator"><h3 class="soyc-class-header">Class: java.util.Iterator</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Iterator</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Iterator::hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Iterator::next</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractSet::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.List"><h3 class="soyc-class-header">Class: java.util.List</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.List</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.List::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$addAllStringEntries</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.List::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.List::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Map$Entry"><h3 class="soyc-class-header">Class: java.util.Map$Entry</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry::getKey</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry::getValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMapEntry::hashCode</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map$Entry::setValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Map"><h3 class="soyc-class-header">Class: java.util.Map</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Map::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.MapEntryImpl"><h3 class="soyc-class-header">Class: java.util.MapEntryImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::$getValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::MapEntryImpl</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::getKey</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::getValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.MapEntryImpl::setValue</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap::$putHashValue</li>
+<li>java.util.AbstractHashMap::$put</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.NoSuchElementException"><h3 class="soyc-class-header">Class: java.util.NoSuchElementException</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.NoSuchElementException</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.NoSuchElementException::NoSuchElementException</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.NoSuchElementException::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractList$IteratorImpl::$next</li>
+<li>java.util.AbstractList::hashCode</li>
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.RandomAccess"><h3 class="soyc-class-header">Class: java.util.RandomAccess</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.RandomAccess</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractHashMap$EntrySetIterator::AbstractHashMap$EntrySetIterator</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Set"><h3 class="soyc-class-header">Class: java.util.Set</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Set</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Set::add</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.Set::$clinit</li>
+<li>java.util.AbstractMap::hashCode</li>
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Set::equals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Set::hashCode</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.JavaScriptObject::hashCode__devirtual$</li>
+<li>java.lang.Object::toString</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<a name="java.util.Utility"><h3 class="soyc-class-header">Class: java.util.Utility</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Utility</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.Utility::equalsWithNullCheck</li>
+<li>java.util.AbstractMap::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>java.util.Utility::equalsWithNullCheck</a>
+<ul class="soyc-call-stack-list">
+<li>java.util.AbstractMap::equals</li>
+<li>com.google.gwt.core.client.JavaScriptObject::equals__devirtual$</li>
+<li>java.util.AbstractHashMap::equalsBridge</li>
+<li>java.util.AbstractHashMap::$getHashValue</li>
+<li>java.util.AbstractHashMap::$get</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.gwt.DateTimeFormat::getFormat</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::$$init</li>
+<li>com.calclab.emite.core.client.xmpp.datetime.XmppDateTime$2::XmppDateTime$2</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

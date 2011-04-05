@@ -1,0 +1,884 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.core.client.bosh</h2>
+<a name="com.calclab.emite.core.client.bosh.StreamSettings"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.bosh.StreamSettings</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.StreamSettings::$getNextRid</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$createBodyIfNeeded</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings::$getNextRid</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$createBodyIfNeeded</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings::$setInactivity</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$initStream</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings::$setMaxPause</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$initStream</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings::StreamSettings</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$connect</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::$login</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.StreamSettings::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$connect</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::$login</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1::XmppBoshConnection$1$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1$1::run</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.services.ScheduledAction::$clinit</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.bosh.XmppBoshConnection$1"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.bosh.XmppBoshConnection$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::XmppBoshConnection$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::XmppBoshConnection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::XmppBoshConnection</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.bosh.XmppBoshConnection$2"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.bosh.XmppBoshConnection$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$continueConnection</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$2::XmppBoshConnection$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$continueConnection</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$continueConnection</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection$2::run</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$continueConnection</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.bosh.XmppBoshConnection"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.bosh.XmppBoshConnection</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$connect</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::$login</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$continueConnection</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$createBodyIfNeeded</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$createInitialBody</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$connect</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::$login</li>
+<li>com.calclab.emite.browser.client.PageAssist::loginFromMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$disconnect</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onError</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector$2::$onError</li>
+<li>com.google.gwt.http.client.Request::$fireOnTimeout</li>
+<li>com.google.gwt.http.client.Request$3::run</li>
+<li>com.google.gwt.http.client.Request::Request</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$initStream</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$isTerminate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$handleResponse</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$restartStream</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$3::$onAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::$dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$resume</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::$resume</li>
+<li>com.calclab.emite.browser.client.PageAssist::resumeSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::$toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::XmppBoshConnection</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.bosh.XmppBoshConnection::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongGinjectorImpl::PingPongGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.pingpong.client.PingPongExamplesEntryPoint::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

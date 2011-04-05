@@ -1,0 +1,2 @@
+# Module com.calclab.emite.xep.muc.EmiteMUC
+# RPC service class, partial path of RPC policy file

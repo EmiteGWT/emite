@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.inject.client</h2>
+<a name="com.google.gwt.inject.client.AbstractGinModule"><h3 class="soyc-class-header">Class: com.google.gwt.inject.client.AbstractGinModule</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.inject.client.AbstractGinModule</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.inject.client.AbstractGinModule::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.inject.client.GinModule"><h3 class="soyc-class-header">Class: com.google.gwt.inject.client.GinModule</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.inject.client.GinModule</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$bosh$XmppBoshConnection$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.inject.client.Ginjector"><h3 class="soyc-class-header">Class: com.google.gwt.inject.client.Ginjector</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.inject.client.Ginjector</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.CoreGinjector::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjector::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

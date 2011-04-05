@@ -1,0 +1,987 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.core.client.xmpp.sasl</h2>
+<a name="com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::bind</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::$dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::dispatch</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::AuthorizationResultEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::bind</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::getAssociatedType</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent::toDebugString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultHandler"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.Base64Coder"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.Base64Coder</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.Base64Coder</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$encodeForPlainMethod</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.Base64Coder::decode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2::decode</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.Base64Coder::encode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$encodeForPlainMethod</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.Base64Coder::toByte</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$encodeForPlainMethod</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.Base64Coder::toChar</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2::decode</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1::DecoderRegistry$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1::decode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2::DecoderRegistry$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2::decode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::$getDecoder</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::$getDecoder</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::$register</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder::decode</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.PasswordDecoder::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.DecoderRegistry::DecoderRegistry</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$DecoderRegistry$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.SASLManager$1"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.SASLManager$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::SASLManager$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager$1::onStanza</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.core.client.xmpp.sasl.SASLManager"><h3 class="soyc-class-header">Class: com.calclab.emite.core.client.xmpp.sasl.SASLManager</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createAnonymousAuthorization</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$encodeForPlainMethod</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$createPlainAuthorization</li>
+<li>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::$sendAuthorizationRequest</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic$1::onStanza</li>
+<li>com.calclab.emite.core.client.conn.StanzaHandler::$clinit</li>
+<li>com.calclab.emite.core.client.xmpp.session.XmppSessionLogic::XmppSessionLogic</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::SASLManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.core.client.xmpp.sasl.SASLManager::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$sasl$SASLManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$core$client$xmpp$session$XmppSessionLogic$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

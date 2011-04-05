@@ -1,16 +1,1 @@
-war/examplexmppsession
-war/EmiteFunctionalTests/
-war/ExampleEcho/
-war/ExampleIMChat/
-war/ExampleXmppSession/
-war/PingPongExamples/
-war/suco
-extras
-.svn
-**/.svn
-war/WEB-INF/classes
-war/com.*/*
-war/emite.*/*
-
-
-
+target

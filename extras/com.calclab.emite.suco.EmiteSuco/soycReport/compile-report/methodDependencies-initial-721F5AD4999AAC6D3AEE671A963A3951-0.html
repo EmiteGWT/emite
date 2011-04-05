@@ -1,0 +1,473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.im.client.chat.events</h2>
+<a name="com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::receive</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent::BeforeReceiveMessageEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::receive</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::receive</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent::bind</li>
+<li>com.calclab.emite.im.client.chat.ChatBoilerplate::$addBeforeSendMessageHandler</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::ChatStateManager</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::$createChatState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::$getChatState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent::BeforeSendMessageEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent::bind</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.ChatBoilerplate::$addBeforeSendMessageHandler</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::ChatStateManager</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::$createChatState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::$getChatState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.events.ChatChangedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.ChatChangedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::bind</li>
+<li>com.calclab.emite.im.client.chat.ChatManagerBoilerplate::$addChatChangedHandler</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::StateManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::ChatChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::bind</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.ChatManagerBoilerplate::$addChatChangedHandler</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager::StateManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedEvent::toDebugString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.events.ChatChangedHandler"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.ChatChangedHandler</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedHandler</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xep.chatstate.client.StateManager::StateManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatChangedHandler::onChatChanged</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.events.ChatStateChangedEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.ChatStateChangedEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatStateChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$setChatState</li>
+<li>com.calclab.emite.im.client.chat.PairChat::open</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</li>
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatStateChangedEvent::ChatStateChangedEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$setChatState</li>
+<li>com.calclab.emite.im.client.chat.PairChat::open</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</li>
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.ChatStateChangedEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$setChatState</li>
+<li>com.calclab.emite.im.client.chat.PairChat::open</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</li>
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.events.MessageSentEvent"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.events.MessageSentEvent</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.MessageSentEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.MessageSentEvent::MessageSentEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.events.MessageSentEvent::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::$send</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::send</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$sendStateMessage</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateManager::$setOwnState</li>
+<li>com.calclab.emite.xep.chatstate.client.StateManager$1::onChatChanged</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::$dispatch</li>
+<li>com.calclab.emite.im.client.chat.events.ChatChangedEvent::dispatch</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$get_Key$type$com$calclab$emite$xep$chatstate$client$StateManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xep.chatstate.client.ChatStateComponents::ChatStateComponents</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$xep$chatstate$client$ChatStateComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

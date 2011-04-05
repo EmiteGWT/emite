@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.dom.client</h2>
+<a name="com.google.gwt.dom.client.DOMImpl"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.DOMImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$createScriptElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.DOMImplTrident"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.DOMImplTrident</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplTrident</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImplTrident::$createElementInternal</li>
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplTrident::$createElementInternal</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplTrident::$getAttribute</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Document"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Document</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.Document::get</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::$getBody</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::$getElementById</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::$getElementsByTagName</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::get</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Element"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Element</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.ScriptElement::$setText</li>
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element::$getPropertyString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Node"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Node</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.ScriptElement::$setText</li>
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node::$removeChild</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.NodeList"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.NodeList</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.NodeList::$getLength</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList::$getItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList::$getLength</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.ScriptElement"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.ScriptElement</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.ScriptElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.ScriptElement::$setText</li>
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.ScriptElement::$setText</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImpl::$createScriptElement</li>
+<li>com.google.gwt.user.client.impl.WindowImplIE::$initHandler</li>
+<li>com.google.gwt.user.client.Window::maybeInitializeCloseHandlers</li>
+<li>com.google.gwt.user.client.Window::addCloseHandler</li>
+<li>com.google.gwt.user.client.Timer::$clinit</li>
+<li>com.google.gwt.user.client.CommandExecutor::$$init</li>
+<li>com.google.gwt.user.client.CommandExecutor::CommandExecutor</li>
+<li>com.google.gwt.user.client.DeferredCommand::$clinit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

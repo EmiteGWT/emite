@@ -1,0 +1,802 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.calclab.emite.im.client.chat</h2>
+<a name="com.calclab.emite.im.client.chat.AbstractChat$1"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.AbstractChat$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat$1::AbstractChat$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat$1::onMessage</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.AbstractChat"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.AbstractChat</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat::$send</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChat::$send</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho$2::onMessage</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat::$setChatState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</li>
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChat::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.AbstractChatManager$1"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.AbstractChatManager$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$1::AbstractChatManager$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$1::onStateChanged</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.events.StateChangedHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.AbstractChatManager$2"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.AbstractChatManager$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$2::AbstractChatManager$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.AbstractChatManager"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.AbstractChatManager</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager::$getChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager::$openChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.AbstractChatManager::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.Chat"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.Chat</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.Chat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.ChatBoilerplate"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.ChatBoilerplate</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatBoilerplate::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatBoilerplate::$setPreviousChatState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatBoilerplate::ChatBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatBoilerplate::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.ChatManager"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.ChatManager</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.ChatManagerBoilerplate"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.ChatManagerBoilerplate</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatManagerBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatManagerBoilerplate::ChatManagerBoilerplate</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatManagerBoilerplate::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.ChatProperties"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.ChatProperties</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatProperties</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$extractProperties</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatProperties::$setData</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.ChatBoilerplate::$setPreviousChatState</li>
+<li>com.calclab.emite.im.client.chat.AbstractChat::AbstractChat</li>
+<li>com.calclab.emite.im.client.chat.PairChat::PairChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatProperties::$setState</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatProperties::ChatProperties</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$extractProperties</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatProperties::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$extractProperties</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.ChatSelectionStrategy"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.ChatSelectionStrategy</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.ChatSelectionStrategy</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatSelectionStrategy$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.PairChat"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.PairChat</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChat::$send</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho$2::onMessage</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChat::PairChat</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChat::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChat::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$addNewChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.PairChatManager"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.PairChatManager</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatManager::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.calclab.emite.im.client.chat.PairChatSelectionStrategy"><h3 class="soyc-class-header">Class: com.calclab.emite.im.client.chat.PairChatSelectionStrategy</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::PairChatSelectionStrategy</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatSelectionStrategy$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$extractProperties</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$extractProperties</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::$isAssignable</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::$getChat</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager$2::onMessage</li>
+<li>com.calclab.emite.core.client.events.MessageHandler::$clinit</li>
+<li>com.calclab.emite.im.client.chat.AbstractChatManager::AbstractChatManager</li>
+<li>com.calclab.emite.im.client.chat.PairChatManager::PairChatManager</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::PairChatSelectionStrategy</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatSelectionStrategy$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.calclab.emite.im.client.chat.PairChatSelectionStrategy::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatSelectionStrategy$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$chat$PairChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$get_Key$type$com$calclab$emite$im$client$chat$ChatManager$_annotation$$none$$</li>
+<li>com.calclab.emite.im.client.ImComponents::ImComponents</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::$create_Key$type$com$calclab$emite$im$client$ImComponents$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.echo.client.EchoGinjectorImpl::EchoGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

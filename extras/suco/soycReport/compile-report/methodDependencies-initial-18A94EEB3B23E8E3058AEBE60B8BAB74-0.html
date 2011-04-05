@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.lang</h2>
+<a name="com.google.gwt.lang.Array$ExpandoWrapper"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Array$ExpandoWrapper</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array$ExpandoWrapper</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array$ExpandoWrapper::initExpandos</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array$ExpandoWrapper::$clinit</li>
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array$ExpandoWrapper::makeEmptyJsArray</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array$ExpandoWrapper::$clinit</li>
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array$ExpandoWrapper::wrapArray</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<a name="com.google.gwt.lang.Array"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Array</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::Array</li>
+<li>com.google.gwt.lang.Array$ExpandoWrapper::$clinit</li>
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array::Array</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array$ExpandoWrapper::$clinit</li>
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array::createFromSeed</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array::initDim</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Array::initValues</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<a name="com.google.gwt.lang.Cast"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Cast</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::isNotNull</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::canCast</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::instanceOf</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::dynamicCastJso</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$createStackTrace</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::getNullMethod</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::instanceOfJso</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$createStackTrace</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::instanceOf</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::instanceOfJso</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$createStackTrace</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::isNotNull</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::isNull</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.SchedulerImpl::push</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::jsEquals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::dynamicCastJso</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$createStackTrace</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Cast::jsNotEquals</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::instanceOf</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<a name="com.google.gwt.lang.EntryMethodHolder"><h3 class="soyc-class-header">Class: com.google.gwt.lang.EntryMethodHolder</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.EntryMethodHolder</a>
+<ul class="soyc-call-stack-list">
+</ul>
+</div>
+<a name="com.google.gwt.lang.Exceptions"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Exceptions</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Exceptions</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Exceptions::caught</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<a name="com.google.gwt.lang.Stats"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Stats</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Stats</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Stats::isStatsAvailable</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Stats::isStatsAvailable</a>
+<ul class="soyc-call-stack-list">
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Stats::onModuleStart</a>
+<ul class="soyc-call-stack-list">
+</ul>
+</div>
+<a name="com.google.gwt.lang.Util"><h3 class="soyc-class-header">Class: com.google.gwt.lang.Util</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Util</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Util::setCastableTypeMap</li>
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Util::getTypeMarker</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Cast::instanceOfJso</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$createStackTrace</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.lang.Util::setCastableTypeMap</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.lang.Array::initValues</li>
+<li>com.google.gwt.lang.Array::initDim</li>
+<li>com.google.gwt.core.client.impl.StackTraceCreator$Collector::$fillInStackTrace</li>
+<li>java.lang.Throwable::Throwable</li>
+<li>java.lang.Exception::Exception</li>
+<li>java.lang.RuntimeException::RuntimeException</li>
+<li>com.google.gwt.core.client.JavaScriptException::JavaScriptException</li>
+<li>com.google.gwt.lang.Exceptions::caught</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::runScheduledTasks</li>
+<li>com.google.gwt.core.client.impl.SchedulerImpl::$flushEntryCommands</li>
+<li>com.google.gwt.core.client.impl.Impl::enter</li>
+<li>com.google.gwt.core.client.impl.Impl::entry0</li>
+<li>com.google.gwt.core.client.impl.Impl::entry</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

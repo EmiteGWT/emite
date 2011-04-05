@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.dom.client</h2>
+<a name="com.google.gwt.dom.client.DOMImpl"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.DOMImpl</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImpl::$getAttribute</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$createElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$eventGetType</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$getAttribute</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$getParentElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImpl::$toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.UIObject::toString</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.DOMImplSafari"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.DOMImplSafari</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplSafari</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImplSafari::$isOrHasChild</li>
+<li>com.google.gwt.user.client.ui.Widget::onBrowserEvent</li>
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplSafari::$isOrHasChild</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::onBrowserEvent</li>
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.DOMImplStandard"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.DOMImplStandard</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplStandard</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.DOMImplStandard::$eventGetRelatedTarget</li>
+<li>com.google.gwt.user.client.ui.Widget::onBrowserEvent</li>
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplStandard::$eventGetRelatedTarget</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::onBrowserEvent</li>
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplStandard::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.DOMImplStandard::$setInnerText</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.DirectionalTextHelper::$setTextOrHtml</li>
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession::$log</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Document"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Document</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.Document::$getElementsByTagName</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::$getElementById</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::$getElementsByTagName</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Document::get</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Element"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Element</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.Element::$getPropertyString</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element::$getPropertyString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element::$getStyle</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AbsolutePanel::changeToStaticPositioning</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::remove</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Element::$setPropertyString</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Node"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Node</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.Document::$getElementsByTagName</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Node::$removeChild</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.NodeList"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.NodeList</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.NodeList::$getLength</li>
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList::$getItem</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.NodeList::$getLength</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.browser.client.PageAssist::getMeta</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot$1::execute</li>
+<li>com.google.gwt.user.client.Command::$clinit</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.suco.client.EmiteSucoGinjectorImpl::EmiteSucoGinjectorImpl</li>
+<li>com.calclab.emite.suco.client.EmiteSuco::install</li>
+</ul>
+</div>
+<a name="com.google.gwt.dom.client.Style"><h3 class="soyc-class-header">Class: com.google.gwt.dom.client.Style</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Style</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.dom.client.Style::$setPropertyImpl</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::changeToStaticPositioning</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::remove</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.dom.client.Style::$setPropertyImpl</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AbsolutePanel::changeToStaticPositioning</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::remove</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.core.xmpp.session.client.ExampleXmppSession$1::execute</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

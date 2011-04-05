@@ -1,0 +1,2 @@
+# Module emite.xep.privacylists
+# RPC service class, partial path of RPC policy file

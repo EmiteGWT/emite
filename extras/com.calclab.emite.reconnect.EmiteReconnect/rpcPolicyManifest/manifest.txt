@@ -1,0 +1,2 @@
+# Module com.calclab.emite.reconnect.EmiteReconnect
+# RPC service class, partial path of RPC policy file

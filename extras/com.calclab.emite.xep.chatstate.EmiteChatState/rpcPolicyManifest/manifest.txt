@@ -1,0 +1,2 @@
+# Module com.calclab.emite.xep.chatstate.EmiteChatState
+# RPC service class, partial path of RPC policy file

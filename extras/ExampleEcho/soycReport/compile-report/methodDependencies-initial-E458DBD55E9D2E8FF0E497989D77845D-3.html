@@ -1,0 +1,1206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.user.client.ui</h2>
+<a name="com.google.gwt.user.client.ui.AbsolutePanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.AbsolutePanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel::AbsolutePanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::RootPanel</li>
+<li>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel::RootPanel$DefaultRootPanel</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel::changeToStaticPositioning</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AbsolutePanel::remove</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AbsolutePanel::remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.AttachDetachException$1"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.AttachDetachException$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$1::AttachDetachException$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$1::execute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.AttachDetachException$2"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.AttachDetachException$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$2::AttachDetachException$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$2::execute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::$clinit</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.AttachDetachException$Command"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.AttachDetachException$Command</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$Command</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::$clinit</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException$Command::execute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.AttachDetachException"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.AttachDetachException</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException::AttachDetachException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.CellPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.CellPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.CellPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.CellPanel::CellPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.CellPanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.ComplexPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.ComplexPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::ComplexPanel</li>
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::$add</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::$remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::ComplexPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.ComplexPanel::remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.DirectionalTextHelper"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.DirectionalTextHelper</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.DirectionalTextHelper</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.LabelBase::LabelBase</li>
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.DirectionalTextHelper::$setTextOrHtml</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.DirectionalTextHelper::DirectionalTextHelper</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.LabelBase::LabelBase</li>
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.DirectionalTextHelper::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.LabelBase::LabelBase</li>
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasAlignment"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasAlignment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasAlignment</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasAutoHorizontalAlignment"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasAutoHorizontalAlignment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasAutoHorizontalAlignment</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasDirectionalText"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasDirectionalText</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasDirectionalText</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasHorizontalAlignment$AutoHorizontalAlignmentConstant"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasHorizontalAlignment$AutoHorizontalAlignmentConstant</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment$AutoHorizontalAlignmentConstant</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasHorizontalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment$AutoHorizontalAlignmentConstant::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasHorizontalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasHorizontalAlignment$HorizontalAlignmentConstant"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasHorizontalAlignment$HorizontalAlignmentConstant</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment$HorizontalAlignmentConstant</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasHorizontalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment$HorizontalAlignmentConstant::HasHorizontalAlignment$HorizontalAlignmentConstant</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasHorizontalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment$HorizontalAlignmentConstant::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasHorizontalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasHorizontalAlignment"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasHorizontalAlignment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasHorizontalAlignment</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasText"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasText</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasText</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasDirectionalText::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasVerticalAlignment$VerticalAlignmentConstant"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasVerticalAlignment$VerticalAlignmentConstant</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasVerticalAlignment$VerticalAlignmentConstant</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasVerticalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasVerticalAlignment$VerticalAlignmentConstant::HasVerticalAlignment$VerticalAlignmentConstant</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasVerticalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasVerticalAlignment$VerticalAlignmentConstant::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasVerticalAlignment::$clinit</li>
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasVerticalAlignment"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasVerticalAlignment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasVerticalAlignment</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasAlignment::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasWidgets$ForIsWidget"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasWidgets$ForIsWidget</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasWidgets$ForIsWidget</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasWidgets"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasWidgets</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasWidgets</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.HasWidgets$ForIsWidget::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasWidgets::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.HasWordWrap"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.HasWordWrap</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.HasWordWrap</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.IndexedPanel$ForIsWidget"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.IndexedPanel$ForIsWidget</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.IndexedPanel$ForIsWidget</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.IndexedPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.IndexedPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.IndexedPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.IndexedPanel$ForIsWidget::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.InsertPanel$ForIsWidget"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.InsertPanel$ForIsWidget</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.InsertPanel$ForIsWidget</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.InsertPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.InsertPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.InsertPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.InsertPanel$ForIsWidget::$clinit</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.IsWidget"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.IsWidget</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.IsWidget</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.Label"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.Label</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Label</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Label::Label</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Label::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.LabelBase"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.LabelBase</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.LabelBase</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.LabelBase::LabelBase</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Label::Label</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.LabelBase::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.Panel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.Panel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Panel</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Panel::doAttachChildren</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Panel::doDetachChildren</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Panel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.RootPanel$1"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.RootPanel$1</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::$clinit</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$1::RootPanel$1</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::$clinit</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$1::execute</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$1::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::$clinit</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.RootPanel$2"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.RootPanel$2</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$2::RootPanel$2</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$2::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$2::onClose</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.event.logical.shared.CloseHandler::$clinit</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel::RootPanel$DefaultRootPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.RootPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.RootPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::RootPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel::RootPanel$DefaultRootPanel</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::detachNow</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::detachWidgets</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel$2::onClose</li>
+<li>com.google.gwt.event.logical.shared.CloseHandler::$clinit</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::get</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::getBodyElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel$DefaultRootPanel::RootPanel$DefaultRootPanel</li>
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.RootPanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::get</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.SourcesClickEvents"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.SourcesClickEvents</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.SourcesClickEvents</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.SourcesMouseEvents"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.SourcesMouseEvents</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.SourcesMouseEvents</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.UIObject"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.UIObject</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.UIObject</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.UIObject::$setElement</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.UIObject::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.UIObject::toString</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.VerticalPanel"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.VerticalPanel</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::$add</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::$createAlignedTd</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.VerticalPanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.VerticalPanel::remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.Widget"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.Widget</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::$onAttach</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::$onDetach</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::$removeFromParent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::$setParent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::doAttachChildren</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::doDetachChildren</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.Widget::onBrowserEvent</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.DOM::dispatchEvent</li>
+<li>com.google.gwt.user.client.impl.DOMImplTrident::$initEventSystem</li>
+<li>com.google.gwt.user.client.impl.DOMImpl::$maybeInitializeEventSystem</li>
+<li>com.google.gwt.user.client.DOM::sinkEvents</li>
+<li>com.google.gwt.user.client.ui.Widget::$onAttach</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException$1::execute</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::WidgetCollection$WidgetIterator</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::$next</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::next</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::WidgetCollection$WidgetIterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::hasNext</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection$WidgetIterator::next</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::iterator</li>
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.user.client.ui.WidgetCollection"><h3 class="soyc-class-header">Class: com.google.gwt.user.client.ui.WidgetCollection</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::$clinit</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$$init</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::ComplexPanel</li>
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::$indexOf</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.WidgetCollection::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::$insert</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.WidgetCollection::$add</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::$iterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::$remove</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$remove</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::remove</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::WidgetCollection</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$$init</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::ComplexPanel</li>
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.ComplexPanel::$$init</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::ComplexPanel</li>
+<li>com.google.gwt.user.client.ui.CellPanel::CellPanel</li>
+<li>com.google.gwt.user.client.ui.VerticalPanel::VerticalPanel</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.user.client.ui.WidgetCollection::iterator</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.user.client.ui.AttachDetachException::tryCommand</li>
+<li>com.google.gwt.user.client.ui.Panel::doDetachChildren</li>
+<li>com.google.gwt.user.client.ui.Widget::$onDetach</li>
+<li>com.google.gwt.user.client.ui.RootPanel::detachNow</li>
+<li>com.google.gwt.user.client.ui.Widget::$removeFromParent</li>
+<li>com.google.gwt.user.client.ui.ComplexPanel::$add</li>
+<li>com.google.gwt.user.client.ui.AbsolutePanel::$add</li>
+<li>com.calclab.emite.xxamples.im.echo.client.ExampleEcho::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<script type="text/javascript">
+function show(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Visible";
+}
+function hide(elementName)
+{
+hp = document.getElementById(elementName);
+hp.style.visibility = "Hidden";
+}
+</script>
+<title>
+Method Dependencies for Initially Live Code
+</title>
+<style type="text/css" media="screen">
+@import url('goog.css');
+@import url('inlay.css');
+@import url('soyc.css');
+</style>
+</head>
+<body>
+<div class="g-doc">
+<div id="hd" class="g-section g-tpl-50-50 g-split">
+<div class="g-unit g-first">
+<p>
+<a href="index.html" id="gwt-logo" class="soyc-ir"><span>Google Web Toolkit</span></a>
+</p>
+</div>
+<div class="g-unit">
+</div>
+</div>
+<div id="soyc-appbar-lrg">
+<div class="g-section g-tpl-75-25 g-split">
+<div class="g-unit g-first">
+<h1>Method Dependencies for Initially Live Code</h1>
+</div>
+<div class="g-unit"></div>
+</div>
+</div>
+<div id="bd">
+<h2>Showing Package: com.google.gwt.xml.client</h2>
+<a name="com.google.gwt.xml.client.Attr"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Attr</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Attr</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.CDATASection"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.CDATASection</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.CDATASection</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.CharacterData"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.CharacterData</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.CharacterData</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.Comment"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Comment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Comment</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.DOMException"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.DOMException</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.DOMException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.DOMException::DOMException</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.DOMParseException::DOMParseException</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.DOMException::getClass</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.Document"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Document</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Document</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.DocumentFragment"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.DocumentFragment</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.DocumentFragment</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.Element"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Element</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Element</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.NamedNodeMap"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.NamedNodeMap</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.NamedNodeMap</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.packet.gwt.GWTPacket::getAttributes</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.Node"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Node</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Node</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.NodeList"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.NodeList</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.NodeList</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.ProcessingInstruction"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.ProcessingInstruction</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.ProcessingInstruction</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.Text"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.Text</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.Text</a>
+<ul class="soyc-call-stack-list">
+<li>com.google.gwt.xml.client.impl.NodeImpl::build</li>
+<li>com.google.gwt.xml.client.impl.XMLParserImpl::$parse</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+<a name="com.google.gwt.xml.client.XMLParser"><h3 class="soyc-class-header">Class: com.google.gwt.xml.client.XMLParser</a></h3>
+<div class='main'>
+<a class='toggle soyc-call-stack-link' onclick='toggle.call(this)'><span class='calledBy'> Call stack: </span>com.google.gwt.xml.client.XMLParser</a>
+<ul class="soyc-call-stack-list">
+<li>com.calclab.emite.core.client.services.gwt.GWTXMLService::toXML</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection$1::$onResponseReceived</li>
+<li>com.google.gwt.http.client.Request::$fireOnResponseReceived</li>
+<li>com.google.gwt.http.client.RequestBuilder$1::onReadyStateChange</li>
+<li>com.google.gwt.xhr.client.ReadyStateChangeHandler::$clinit</li>
+<li>com.google.gwt.http.client.RequestBuilder::$doSend</li>
+<li>com.google.gwt.http.client.RequestBuilder::$sendRequest</li>
+<li>com.calclab.emite.core.client.services.gwt.GWTConnector::send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$send</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$sendBody</li>
+<li>com.calclab.emite.core.client.bosh.XmppBoshConnection::$pause</li>
+<li>com.calclab.emite.browser.client.PageAssist::pauseSession</li>
+<li>com.calclab.emite.browser.client.AutoConfig$1::onClose</li>
+<li>com.calclab.emite.browser.client.AutoConfig::$initialize</li>
+<li>com.calclab.emite.browser.client.AutoConfig::AutoConfig</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$get_Key$type$com$calclab$emite$browser$client$AutoConfig$_annotation$$none$$</li>
+<li>com.google.gwt.user.client.CommandExecutor::$doExecuteCommands</li>
+<li>com.google.gwt.user.client.CommandExecutor$2::run</li>
+<li>com.google.gwt.user.client.Timer::fire</li>
+<li>com.google.gwt.user.client.Timer::createTimeout</li>
+<li>com.google.gwt.user.client.Timer::$schedule</li>
+<li>com.google.gwt.user.client.CommandExecutor::$maybeStartExecutionTimer</li>
+<li>com.google.gwt.user.client.CommandExecutor::$submit</li>
+<li>com.google.gwt.user.client.DeferredCommand::addCommand</li>
+<li>com.calclab.emite.browser.client.AutoConfigBoot::AutoConfigBoot</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::$create_Key$type$com$calclab$emite$browser$client$AutoConfigBoot$_annotation$$none$$</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChatGinjectorImpl::ExampleIMChatGinjectorImpl</li>
+<li>com.calclab.emite.xxamples.im.chat.client.ExampleIMChat::$onModuleLoad</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
