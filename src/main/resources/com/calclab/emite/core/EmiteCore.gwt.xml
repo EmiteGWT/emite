@@ -5,9 +5,9 @@
 	<inherits name="com.google.gwt.http.HTTP" />
 	<inherits name="com.google.gwt.inject.Inject" />
 	<inherits name="com.calclab.suco.SucoEvents" />
-	
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+
 	<source path='client' />
-	
-	<entry-point
-		class="com.calclab.emite.core.client.EmiteCoreEntryPoint" />
+
+	<entry-point class="com.calclab.emite.core.client.EmiteCoreEntryPoint" />
 </module>
