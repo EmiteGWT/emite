@@ -42,6 +42,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
             @Override
             public void onError(final String request, final Throwable throwable) {
                 if (isActive()) {
+                    Log.debug("onError : " + request + " : " + throwable.toString());
                     final int e = incrementErrors();
                     GWT.log("Connection error n°" + e, throwable);
                     if (e > retryControl.maxRetries) {
@@ -58,6 +59,8 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
                             }
                         });
                     }
+                } else {
+                    Log.debug("onError (not active) : " + request + " : " + throwable.toString());
                 }
             }
 
@@ -71,12 +74,12 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
                     // tests
                     if (statusCode == 404) {
                         fireError("404 Connection Error (session removed ?!) : " + content);
-                        Log.debug("onResponseReceived - 404 - disconnecting...");
+                        Log.debug("onResponseReceived - 404 : " + originalRequest + " -> " + content);
                         disconnect();
                     } else if (statusCode != 200 && statusCode != 0) {
                         // setActive(false);
                         // fireError("Bad status: " + statusCode);
-                        Log.debug("onResponseReceived - non 200 status code - throwing exception...");
+                        Log.debug("onResponseReceived - non200 : " + statusCode + " : " + originalRequest + " -> " + content);
                         onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
                     } else {
                         final IPacket response = services.toXML(content);
@@ -85,14 +88,13 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
                             fireResponse(content);
                             handleResponse(response);
                         } else {
-                            Log.debug("onResponseReceived - invalid response body");
                             onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
                             // fireError("Bad response: " + content);
                         }
                     }
                 } else {
                     // not active
-                    Log.debug("onResponseReceived - connection not active");
+                    Log.debug("onResponseReceived - connection not active: " + statusCode + " " + content);
                 }
             }
         };
@@ -125,7 +127,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
      * @param ack
      */
     private void continueConnection(final String ack) {
-        Log.debug("continueConnection() called");
         if (isConnected() && activeConnections == 0) {
             if (getCurrentBody() != null) {
                 sendBody();
@@ -150,7 +151,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     private void createBodyIfNeeded() {
-        Log.debug("createBodyIfNeeded() called.");
         if (getCurrentBody() == null) {
             final Packet body = new Packet("body");
             body.With("xmlns", "http://jabber.org/protocol/httpbind");
@@ -193,10 +193,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     @Override
     public void disconnect() {
         Log.debug("disconnect() called");
-
-        int x = 20 / 0;
-        Log.debug("divided by zero: " + x);
-
         GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
         // Clearing all queued stanzas
         setCurrentBody(null);
@@ -210,14 +206,11 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     private void handleResponse(final IPacket response) {
-        Log.debug("handleResponse() called");
         if (isTerminate(response.getAttribute("type"))) {
-            Log.debug("handleResponse() terminate condition");
             getStreamSettings().sid = null;
             setActive(false);
             fireDisconnected("disconnected by server");
         } else {
-            Log.debug("handleResponse() non-terminate condition");
             if (getStreamSettings().sid == null) {
                 initStream(response);
                 fireConnected();
@@ -243,7 +236,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     @Override
     public boolean isConnected() {
         Boolean isConnected = getStreamSettings() != null;
-        Log.debug("isConnected() called with result: " + isConnected);
         return isConnected;
     }
 
@@ -296,11 +288,10 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     private void send(final String request) {
         try {
             activeConnections++;
-            Log.debug("send() - sending a new request...");
             services.send(getConnectionSettings().httpBase, request, listener);
             getStreamSettings().lastRequestTime = services.getCurrentTime();
         } catch (final ConnectorException e) {
-            Log.debug("send() - ConnectorException: " + e.getMessage());
+            Log.debug("send() - ConnectorException: " + e);
             activeConnections--;
             e.printStackTrace();
         }
@@ -311,7 +302,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
     }
 
     private void sendBody(final boolean force) {
-        Log.debug("sendBody() called with force: " + force);
         // TODO: better semantics
         if (force || !shouldCollectResponses && isActive() && activeConnections < getConnectionSettings().maxRequests && !hasErrors()) {
             final String request = services.toString(getCurrentBody());
