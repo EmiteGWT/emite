@@ -7,7 +7,7 @@
 	<groupId>com.calclab</groupId>
 	<artifactId>emite</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.6-surevine-1.7.0</version>
 	<name>Emite XMPP Library</name>
 
 	<properties>
