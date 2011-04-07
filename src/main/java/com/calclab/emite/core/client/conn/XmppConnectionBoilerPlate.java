@@ -66,7 +66,6 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
     }
 
     protected void fireResponse(final String response) {
-        Log.debug("fireResponse() response with content: " + response);
         eventBus.fireEvent(new ConnectionResponseEvent(response));
     }
 
@@ -127,7 +126,6 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
      * 
      */
     protected void setActive(final boolean active) {
-        Log.debug("setActive() called with state: " + active);
         this.active = active;
     }
 
