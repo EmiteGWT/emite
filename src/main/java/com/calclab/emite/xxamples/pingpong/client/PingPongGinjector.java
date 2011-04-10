@@ -1,12 +1,6 @@
-/**
- * 
- */
 package com.calclab.emite.xxamples.pingpong.client;
 
-import com.calclab.emite.browser.client.BrowserGinjector;
-import com.calclab.emite.core.client.CoreGinjector;
-import com.calclab.emite.im.client.ImGinjector;
-import com.calclab.emite.xep.muc.client.MucGinjector;
+import com.calclab.emite.browser.client.BrowserModule;
 import com.calclab.emite.xxamples.pingpong.client.logic.PingChatPresenter;
 import com.calclab.emite.xxamples.pingpong.client.logic.PingInviteRoomPresenter;
 import com.calclab.emite.xxamples.pingpong.client.logic.PingRoomPresenter;
@@ -16,9 +10,10 @@ import com.calclab.emite.xxamples.pingpong.client.logic.PongInviteRoomPresenter;
 import com.calclab.emite.xxamples.pingpong.client.logic.PongRoomPresenter;
 import com.calclab.emite.xxamples.pingpong.client.logic.PongSessionPresenter;
 import com.google.gwt.inject.client.GinModules;
+import com.google.gwt.inject.client.Ginjector;
 
-@GinModules(PingPongModule.class)
-public interface PingPongGinjector extends CoreGinjector, ImGinjector, MucGinjector, BrowserGinjector {
+@GinModules({PingPongModule.class, BrowserModule.class})
+public interface PingPongGinjector extends Ginjector {
 
     PingChatPresenter getPingChatPresenter();
 

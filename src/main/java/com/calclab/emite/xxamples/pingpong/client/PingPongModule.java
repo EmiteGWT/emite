@@ -1,7 +1,10 @@
 package com.calclab.emite.xxamples.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
+import com.calclab.emite.core.client.CoreModule;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.ImModule;
+import com.calclab.emite.xep.muc.client.MucModule;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -23,6 +26,9 @@ public class PingPongModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+	install(new CoreModule());
+	install(new ImModule());
+	install(new MucModule());
 	bind(PingPongDisplay.class).to(PingPongWidget.class).in(Singleton.class);
     }
 }
