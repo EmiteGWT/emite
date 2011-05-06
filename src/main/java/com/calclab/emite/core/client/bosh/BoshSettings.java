@@ -30,9 +30,8 @@ import com.calclab.emite.core.client.conn.ConnectionSettings;
 @Deprecated
 public class BoshSettings extends ConnectionSettings {
 
-    public BoshSettings(final String httpBase, final String hostName, final String routeHost, final Integer routePort,
-	    final boolean secure) {
-	super(httpBase, hostName, routeHost, routePort, secure);
-    }
+	public BoshSettings(final String httpBase, final String hostName, final String routeHost, final Integer routePort, final boolean secure) {
+		super(httpBase, hostName, routeHost, routePort, secure);
+	}
 
 }

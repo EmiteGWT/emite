@@ -36,58 +36,58 @@ import com.calclab.emite.xep.dataforms.client.Form;
  */
 public interface SearchManager {
 
-    /**
-     * Set the host service where send the requests. Usually you send all the
-     * request to same service, so its common to setup once (probably from a
-     * meta tag)
-     * 
-     * @param host
-     *            the jid of the search service
-     */
-    public void setHost(XmppURI host);
+	/**
+	 * Set the host service where send the requests. Usually you send all the
+	 * request to same service, so its common to setup once (probably from a
+	 * meta tag)
+	 * 
+	 * @param host
+	 *            the jid of the search service
+	 */
+	public void setHost(XmppURI host);
 
-    /**
-     * Request available search fields using simple search
-     * 
-     * @param onResult
-     *            A SearchResult with a list of string with the available name
-     *            fields
-     * 
-     * @see SearchResult
-     */
-    void requestSearchFields(ResultListener<SearchFields> listener);
+	/**
+	 * Request available search fields using simple search
+	 * 
+	 * @param onResult
+	 *            A SearchResult with a list of string with the available name
+	 *            fields
+	 * 
+	 * @see SearchResult
+	 */
+	void requestSearchFields(ResultListener<SearchFields> listener);
 
-    /**
-     * Request available search fields using extended search
-     * 
-     * @param onResult
-     *            A SearchResult with a search form
-     * 
-     * @see SearchResult
-     */
+	/**
+	 * Request available search fields using extended search
+	 * 
+	 * @param onResult
+	 *            A SearchResult with a search form
+	 * 
+	 * @see SearchResult
+	 */
 
-    void requestSearchForm(ResultListener<Form> listener);
+	void requestSearchForm(ResultListener<Form> listener);
 
-    /**
-     * Perform a extended search
-     * 
-     * @param searchForm
-     *            the search form
-     * @param listener
-     *            the listener with a form with the results
-     */
-    void search(Form searchForm, ResultListener<Form> listener);
+	/**
+	 * Perform a extended search
+	 * 
+	 * @param searchForm
+	 *            the search form
+	 * @param listener
+	 *            the listener with a form with the results
+	 */
+	void search(Form searchForm, ResultListener<Form> listener);
 
-    /**
-     * Perform a simple search
-     * 
-     * @param query
-     *            A HashMap with names and values
-     * @param onResult
-     *            A SearchResult with a list of returned items
-     * 
-     * @see SearchResult
-     */
-    void search(HashMap<String, String> query, ResultListener<List<SearchResultItem>> listener);
+	/**
+	 * Perform a simple search
+	 * 
+	 * @param query
+	 *            A HashMap with names and values
+	 * @param onResult
+	 *            A SearchResult with a list of returned items
+	 * 
+	 * @see SearchResult
+	 */
+	void search(HashMap<String, String> query, ResultListener<List<SearchResultItem>> listener);
 
 }

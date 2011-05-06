@@ -34,118 +34,118 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
 public class ChatStateManager {
-    public static enum ChatState {
-	active, composing, pause, inactive, gone
-    }
-
-    public static enum NegotiationStatus {
-	notStarted, started, rejected, accepted
-    }
-
-    public static final String XMLNS = "http://jabber.org/protocol/chatstates";
-
-    public static final String KEY = "ChatStateManager";
-
-    private ChatState ownState;
-    private ChatState otherState;
-    private final Chat chat;
-    private NegotiationStatus negotiationStatus;
-
-    public ChatStateManager(final Chat chat) {
-	this.chat = chat;
-	negotiationStatus = NegotiationStatus.notStarted;
-
-	chat.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		handleMessageReceived(chat, event.getMessage());
-	    }
-	});
-
-	chat.addBeforeSendMessageHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		beforeSendMessage(event.getMessage());
-	    }
-	});
-    }
-
-    public HandlerRegistration addChatStateNotificationHandler(ChatStateNotificationHandler handler) {
-	return ChatStateNotificationEvent.bind(chat.getChatEventBus(), handler);
-    }
-
-    public NegotiationStatus getNegotiationStatus() {
-	return negotiationStatus;
-    }
-
-    public ChatState getOtherState() {
-	return otherState;
-    }
-
-    public ChatState getOwnState() {
-	return ownState;
-    }
-
-    public void setOwnState(final ChatState chatState) {
-	// From XEP: a client MUST NOT send a second instance of any given
-	// standalone notification (i.e., a standalone notification MUST be
-	// followed by a different state, not repetition of the same state).
-	// However, every content message SHOULD contain an <active/>
-	// notification.
-	if (negotiationStatus.equals(NegotiationStatus.accepted)) {
-	    if (ownState == null || !ownState.equals(chatState)) {
-		this.ownState = chatState;
-		GWT.log("Setting own status to: " + chatState.toString(), null);
-		sendStateMessage(chatState);
-	    }
+	public static enum ChatState {
+		active, composing, pause, inactive, gone
 	}
-    }
 
-    protected void handleMessageReceived(final Chat chat, final Message message) {
-	for (int i = 0; i < ChatState.values().length; i++) {
-	    final ChatState chatState = ChatState.values()[i];
-	    final String typeSt = chatState.toString();
-	    if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
-		otherState = chatState;
-		if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
-		    sendStateMessage(ChatState.active);
-		}
-		if (chatState.equals(ChatState.gone)) {
-		    negotiationStatus = NegotiationStatus.notStarted;
-		} else {
-		    negotiationStatus = NegotiationStatus.accepted;
-		}
-		GWT.log("Receiver other chat status: " + typeSt, null);
-		chat.getChatEventBus().fireEvent(new ChatStateNotificationEvent(chatState));
-	    }
+	public static enum NegotiationStatus {
+		notStarted, started, rejected, accepted
 	}
-    }
 
-    void beforeSendMessage(final Message message) {
-	switch (negotiationStatus) {
-	case notStarted:
-	    negotiationStatus = NegotiationStatus.started;
-	case accepted:
-	    boolean alreadyWithState = false;
-	    for (int i = 0; i < ChatState.values().length; i++) {
-		if (message.hasChild(ChatState.values()[i].toString())) {
-		    alreadyWithState = true;
-		}
-	    }
-	    if (!alreadyWithState) {
-		message.addChild(ChatState.active.toString(), XMLNS);
-	    }
-	    break;
-	case rejected:
-	case started:
-	    // do nothing
-	    break;
+	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
+
+	public static final String KEY = "ChatStateManager";
+
+	private ChatState ownState;
+	private ChatState otherState;
+	private final Chat chat;
+	private NegotiationStatus negotiationStatus;
+
+	public ChatStateManager(final Chat chat) {
+		this.chat = chat;
+		negotiationStatus = NegotiationStatus.notStarted;
+
+		chat.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				handleMessageReceived(chat, event.getMessage());
+			}
+		});
+
+		chat.addBeforeSendMessageHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				beforeSendMessage(event.getMessage());
+			}
+		});
 	}
-    }
 
-    private void sendStateMessage(final ChatState chatState) {
-	final Message message = new Message(null, chat.getURI());
-	message.addChild(chatState.toString(), XMLNS);
-	chat.send(message);
-    }
+	public HandlerRegistration addChatStateNotificationHandler(ChatStateNotificationHandler handler) {
+		return ChatStateNotificationEvent.bind(chat.getChatEventBus(), handler);
+	}
+
+	public NegotiationStatus getNegotiationStatus() {
+		return negotiationStatus;
+	}
+
+	public ChatState getOtherState() {
+		return otherState;
+	}
+
+	public ChatState getOwnState() {
+		return ownState;
+	}
+
+	public void setOwnState(final ChatState chatState) {
+		// From XEP: a client MUST NOT send a second instance of any given
+		// standalone notification (i.e., a standalone notification MUST be
+		// followed by a different state, not repetition of the same state).
+		// However, every content message SHOULD contain an <active/>
+		// notification.
+		if (negotiationStatus.equals(NegotiationStatus.accepted)) {
+			if (ownState == null || !ownState.equals(chatState)) {
+				this.ownState = chatState;
+				GWT.log("Setting own status to: " + chatState.toString(), null);
+				sendStateMessage(chatState);
+			}
+		}
+	}
+
+	protected void handleMessageReceived(final Chat chat, final Message message) {
+		for (int i = 0; i < ChatState.values().length; i++) {
+			final ChatState chatState = ChatState.values()[i];
+			final String typeSt = chatState.toString();
+			if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
+				otherState = chatState;
+				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
+					sendStateMessage(ChatState.active);
+				}
+				if (chatState.equals(ChatState.gone)) {
+					negotiationStatus = NegotiationStatus.notStarted;
+				} else {
+					negotiationStatus = NegotiationStatus.accepted;
+				}
+				GWT.log("Receiver other chat status: " + typeSt, null);
+				chat.getChatEventBus().fireEvent(new ChatStateNotificationEvent(chatState));
+			}
+		}
+	}
+
+	void beforeSendMessage(final Message message) {
+		switch (negotiationStatus) {
+		case notStarted:
+			negotiationStatus = NegotiationStatus.started;
+		case accepted:
+			boolean alreadyWithState = false;
+			for (int i = 0; i < ChatState.values().length; i++) {
+				if (message.hasChild(ChatState.values()[i].toString())) {
+					alreadyWithState = true;
+				}
+			}
+			if (!alreadyWithState) {
+				message.addChild(ChatState.active.toString(), XMLNS);
+			}
+			break;
+		case rejected:
+		case started:
+			// do nothing
+			break;
+		}
+	}
+
+	private void sendStateMessage(final ChatState chatState) {
+		final Message message = new Message(null, chat.getURI());
+		message.addChild(chatState.toString(), XMLNS);
+		chat.send(message);
+	}
 }

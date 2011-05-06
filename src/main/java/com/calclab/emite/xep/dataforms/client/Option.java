@@ -30,31 +30,31 @@ import com.calclab.emite.core.client.packet.Packet;
  */
 public class Option extends DelegatedPacket {
 
-    public static final String OPTION = "option";
-    private static final String LABEL = "label";
-    private static final String VALUE = "value";
+	public static final String OPTION = "option";
+	private static final String LABEL = "label";
+	private static final String VALUE = "value";
 
-    public Option() {
-	super((new Packet(OPTION)));
-    }
+	public Option() {
+		super((new Packet(OPTION)));
+	}
 
-    public Option(final IPacket stanza) {
-	super(stanza);
-    }
+	public Option(final IPacket stanza) {
+		super(stanza);
+	}
 
-    public String getLabel() {
-	return super.getAttribute(LABEL);
-    }
+	public String getLabel() {
+		return super.getAttribute(LABEL);
+	}
 
-    public String getValue() {
-	return super.getFirstChild(VALUE).getText();
-    }
+	public String getValue() {
+		return super.getFirstChild(VALUE).getText();
+	}
 
-    public void setLabel(final String label) {
-	super.setAttribute(LABEL, label);
-    }
+	public void setLabel(final String label) {
+		super.setAttribute(LABEL, label);
+	}
 
-    public void setValue(final String value) {
-	setTextToChild(VALUE, value);
-    }
+	public void setValue(final String value) {
+		setTextToChild(VALUE, value);
+	}
 }

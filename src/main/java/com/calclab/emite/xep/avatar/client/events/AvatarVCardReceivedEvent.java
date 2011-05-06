@@ -27,30 +27,30 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class AvatarVCardReceivedEvent extends GwtEvent<AvatarVCardHandler> {
 
-    private static final Type<AvatarVCardHandler> TYPE = new Type<AvatarVCardHandler>();
+	private static final Type<AvatarVCardHandler> TYPE = new Type<AvatarVCardHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, AvatarVCardHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, AvatarVCardHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final AvatarVCard avatarVCard;
+	private final AvatarVCard avatarVCard;
 
-    public AvatarVCardReceivedEvent(AvatarVCard avatarVCard) {
-	this.avatarVCard = avatarVCard;
-    }
+	public AvatarVCardReceivedEvent(AvatarVCard avatarVCard) {
+		this.avatarVCard = avatarVCard;
+	}
 
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<AvatarVCardHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<AvatarVCardHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public AvatarVCard getAvatarVCard() {
-	return avatarVCard;
-    }
+	public AvatarVCard getAvatarVCard() {
+		return avatarVCard;
+	}
 
-    @Override
-    protected void dispatch(AvatarVCardHandler handler) {
-	handler.onAvatarVCard(this);
-    }
+	@Override
+	protected void dispatch(AvatarVCardHandler handler) {
+		handler.onAvatarVCard(this);
+	}
 
 }

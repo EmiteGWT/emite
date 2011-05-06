@@ -39,42 +39,42 @@ import com.google.inject.Singleton;
 @Singleton
 public class SubscriptionHandler {
 
-    public static enum Behaviour {
-	/** do nothing **/
-	none,
-	/** accept all subscription request **/
-	acceptAll,
-	/** refuses all subscription request **/
-	refuseAll
-    }
+	public static enum Behaviour {
+		/** do nothing **/
+		none,
+		/** accept all subscription request **/
+		acceptAll,
+		/** refuses all subscription request **/
+		refuseAll
+	}
 
-    private Behaviour behaviour;
+	private Behaviour behaviour;
 
-    @Inject
-    public SubscriptionHandler(final SubscriptionManager manager) {
-	this.behaviour = Behaviour.none;
+	@Inject
+	public SubscriptionHandler(final SubscriptionManager manager) {
+		this.behaviour = Behaviour.none;
 
-	manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
-	    @Override
-	    public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
-		if (behaviour == Behaviour.acceptAll) {
-		    manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
-		} else if (behaviour == Behaviour.refuseAll) {
-		    manager.refuseSubscriptionRequest(event.getFrom());
-		}
-	    }
-	});
+		manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
+			@Override
+			public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
+				if (behaviour == Behaviour.acceptAll) {
+					manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
+				} else if (behaviour == Behaviour.refuseAll) {
+					manager.refuseSubscriptionRequest(event.getFrom());
+				}
+			}
+		});
 
-    }
+	}
 
-    /**
-     * Change the behaviour
-     * 
-     * @param behaviour
-     *            the desired new behaviour
-     */
-    public void setBehaviour(Behaviour behaviour) {
-	this.behaviour = behaviour;
-    }
+	/**
+	 * Change the behaviour
+	 * 
+	 * @param behaviour
+	 *            the desired new behaviour
+	 */
+	public void setBehaviour(Behaviour behaviour) {
+		this.behaviour = behaviour;
+	}
 
 }

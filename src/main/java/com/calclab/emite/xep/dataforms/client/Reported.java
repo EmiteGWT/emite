@@ -34,14 +34,14 @@ import com.calclab.emite.core.client.packet.IPacket;
  */
 public class Reported extends AbstractItem {
 
-    static final String REPORTED = "reported";
+	static final String REPORTED = "reported";
 
-    public Reported() {
-	super(REPORTED);
-    }
+	public Reported() {
+		super(REPORTED);
+	}
 
-    public Reported(final IPacket packet) {
-	super(packet);
-    }
+	public Reported(final IPacket packet) {
+		super(packet);
+	}
 
 }

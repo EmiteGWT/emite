@@ -20,67 +20,67 @@ import com.calclab.emite.xtesting.handlers.SubscriptionRequestReceivedTestHandle
 
 public class SubscriptionManagerTests {
 
-    private XmppSessionTester session;
-    private SubscriptionManager manager;
-    private XmppRoster roster;
-    private EmiteEventBus eventBus;
+	private XmppSessionTester session;
+	private SubscriptionManager manager;
+	private XmppRoster roster;
+	private EmiteEventBus eventBus;
 
-    @Before
-    public void beforeTests() {
-	session = new XmppSessionTester();
-	eventBus = session.getEventBus();
-	roster = mock(XmppRoster.class);
-	manager = new SubscriptionManagerImpl(session, roster);
-	session.login(uri("user@local"), "anything");
-    }
+	@Before
+	public void beforeTests() {
+		session = new XmppSessionTester();
+		eventBus = session.getEventBus();
+		roster = mock(XmppRoster.class);
+		manager = new SubscriptionManagerImpl(session, roster);
+		session.login(uri("user@local"), "anything");
+	}
 
-    @Test
-    public void shouldApproveSubscriptionRequestsAndAddItemToTheRosterIfNotThere() {
-	final XmppURI otherEntityJID = XmppURI.jid("other@domain");
-	when(roster.getItemByJID(eq(otherEntityJID))).thenReturn(null);
+	@Test
+	public void shouldApproveSubscriptionRequestsAndAddItemToTheRosterIfNotThere() {
+		final XmppURI otherEntityJID = XmppURI.jid("other@domain");
+		when(roster.getItemByJID(eq(otherEntityJID))).thenReturn(null);
 
-	manager.approveSubscriptionRequest(otherEntityJID, "nick");
-	verify(roster).requestAddItem(eq(otherEntityJID), eq("nick"));
-	session.verifySent("<presence type='subscribed' to='other@domain' />");
-	session.verifySent("<presence type='subscribe' to='other@domain' />");
-    }
+		manager.approveSubscriptionRequest(otherEntityJID, "nick");
+		verify(roster).requestAddItem(eq(otherEntityJID), eq("nick"));
+		session.verifySent("<presence type='subscribed' to='other@domain' />");
+		session.verifySent("<presence type='subscribe' to='other@domain' />");
+	}
 
-    @Test
-    public void shouldCancelSubscription() {
-	manager.cancelSubscription(uri("friend@domain"));
-	session.verifySent("<presence from='user@local' to='friend@domain' type='unsubscribed' />");
-    }
+	@Test
+	public void shouldCancelSubscription() {
+		manager.cancelSubscription(uri("friend@domain"));
+		session.verifySent("<presence from='user@local' to='friend@domain' type='unsubscribed' />");
+	}
 
-    @Test
-    public void shouldFireSubscriptionRequests() {
-	final SubscriptionRequestReceivedTestHandler handler = new SubscriptionRequestReceivedTestHandler();
-	manager.addSubscriptionRequestReceivedHandler(handler);
-	session.receives("<presence to='user@local' from='friend@domain' type='subscribe' />");
-	assertEquals(1, handler.getCalledTimes());
-    }
+	@Test
+	public void shouldFireSubscriptionRequests() {
+		final SubscriptionRequestReceivedTestHandler handler = new SubscriptionRequestReceivedTestHandler();
+		manager.addSubscriptionRequestReceivedHandler(handler);
+		session.receives("<presence to='user@local' from='friend@domain' type='subscribe' />");
+		assertEquals(1, handler.getCalledTimes());
+	}
 
-    @Test
-    public void shouldSendSubscriptionRequest() {
-	manager.requestSubscribe(uri("name@domain/RESOURCE"));
-	session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
-    }
+	@Test
+	public void shouldSendSubscriptionRequest() {
+		manager.requestSubscribe(uri("name@domain/RESOURCE"));
+		session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
+	}
 
-    @Test
-    public void shouldSendSubscriptionRequestOnNewRosterItem_addRosterStep1() {
+	@Test
+	public void shouldSendSubscriptionRequestOnNewRosterItem_addRosterStep1() {
 
-	// only NONE subscription
-	RosterItem item = new RosterItem(uri("name@domain"), SubscriptionState.both, "TheName", null);
-	eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
-	session.verifyNotSent("<presence />");
+		// only NONE subscription
+		RosterItem item = new RosterItem(uri("name@domain"), SubscriptionState.both, "TheName", null);
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
+		session.verifyNotSent("<presence />");
 
-	RosterItem item2 = new RosterItem(uri("name@domain"), SubscriptionState.none, "TheName", Type.subscribe);
-	eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item2));
-	session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
-    }
+		RosterItem item2 = new RosterItem(uri("name@domain"), SubscriptionState.none, "TheName", Type.subscribe);
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item2));
+		session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
+	}
 
-    @Test
-    public void shouldUnsubscribe() {
-	manager.unsubscribe(uri("friend@domain"));
-	session.verifySent("<presence from='user@local' to='friend@domain' type='unsubscribe' />");
-    }
+	@Test
+	public void shouldUnsubscribe() {
+		manager.unsubscribe(uri("friend@domain"));
+		session.verifySent("<presence from='user@local' to='friend@domain' type='unsubscribe' />");
+	}
 }

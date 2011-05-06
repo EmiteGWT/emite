@@ -24,35 +24,35 @@ import java.util.HashMap;
 
 public class MatcherFactory {
 
-    private static HashMap<String, PacketMatcher> byName = new HashMap<String, PacketMatcher>();
+	private static HashMap<String, PacketMatcher> byName = new HashMap<String, PacketMatcher>();
 
-    public static final PacketMatcher ANY = new PacketMatcher() {
-	@Override
-	public boolean matches(final IPacket packet) {
-	    return true;
-	}
-    };
-
-    public static PacketMatcher byName(final String nodeName) {
-	PacketMatcher matcher = byName.get(nodeName);
-	if (matcher == null) {
-	    matcher = new PacketMatcher() {
+	public static final PacketMatcher ANY = new PacketMatcher() {
 		@Override
 		public boolean matches(final IPacket packet) {
-		    return nodeName.equals(packet.getName());
+			return true;
 		}
-	    };
-	    byName.put(nodeName, matcher);
-	}
-	return matcher;
-    }
-
-    public static PacketMatcher byNameAndXMLNS(final String nodeName, final String nodeXmls) {
-	return new PacketMatcher() {
-	    @Override
-	    public boolean matches(final IPacket packet) {
-		return nodeName.equals(packet.getName()) && packet.hasAttribute("xmlns", nodeXmls);
-	    }
 	};
-    }
+
+	public static PacketMatcher byName(final String nodeName) {
+		PacketMatcher matcher = byName.get(nodeName);
+		if (matcher == null) {
+			matcher = new PacketMatcher() {
+				@Override
+				public boolean matches(final IPacket packet) {
+					return nodeName.equals(packet.getName());
+				}
+			};
+			byName.put(nodeName, matcher);
+		}
+		return matcher;
+	}
+
+	public static PacketMatcher byNameAndXMLNS(final String nodeName, final String nodeXmls) {
+		return new PacketMatcher() {
+			@Override
+			public boolean matches(final IPacket packet) {
+				return nodeName.equals(packet.getName()) && packet.hasAttribute("xmlns", nodeXmls);
+			}
+		};
+	}
 }

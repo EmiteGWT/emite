@@ -21,5 +21,5 @@
 package com.calclab.emite.core.client.packet;
 
 public interface PacketMatcher {
-    boolean matches(IPacket packet);
+	boolean matches(IPacket packet);
 }

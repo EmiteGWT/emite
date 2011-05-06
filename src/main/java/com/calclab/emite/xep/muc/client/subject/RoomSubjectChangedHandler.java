@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface RoomSubjectChangedHandler extends EventHandler {
 
-    void onSubjectChanged(RoomSubjectChangedEvent event);
+	void onSubjectChanged(RoomSubjectChangedEvent event);
 
 }

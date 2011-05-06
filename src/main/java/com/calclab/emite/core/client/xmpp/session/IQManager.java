@@ -31,29 +31,29 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
  * 
  */
 class IQManager {
-    private int id;
-    private final HashMap<String, IQResponseHandler> handlers;
+	private int id;
+	private final HashMap<String, IQResponseHandler> handlers;
 
-    public IQManager() {
-	id = 0;
-	handlers = new HashMap<String, IQResponseHandler>();
-    }
-
-    public boolean handle(final IPacket received) {
-	final String key = received.getAttribute("id");
-	final IQResponseHandler handler = handlers.remove(key);
-	final boolean isHandled = handler != null;
-	if (isHandled) {
-	    handler.onIQ(new IQ(received));
+	public IQManager() {
+		id = 0;
+		handlers = new HashMap<String, IQResponseHandler>();
 	}
-	return isHandled;
-    }
 
-    public String register(final String category, final IQResponseHandler handler) {
-	id++;
-	final String key = category + "_" + id;
-	handlers.put(key, handler);
-	return key;
-    }
+	public boolean handle(final IPacket received) {
+		final String key = received.getAttribute("id");
+		final IQResponseHandler handler = handlers.remove(key);
+		final boolean isHandled = handler != null;
+		if (isHandled) {
+			handler.onIQ(new IQ(received));
+		}
+		return isHandled;
+	}
+
+	public String register(final String category, final IQResponseHandler handler) {
+		id++;
+		final String key = category + "_" + id;
+		handlers.put(key, handler);
+		return key;
+	}
 
 }

@@ -40,43 +40,43 @@ import com.google.inject.name.Named;
  */
 public class PongRoomPresenter implements StartablePresenter {
 
-    private final XmppURI roomUri;
-    private final PingPongDisplay display;
-    private int pongs;
-    private final RoomManager roomManager;
+	private final XmppURI roomUri;
+	private final PingPongDisplay display;
+	private int pongs;
+	private final RoomManager roomManager;
 
-    @Inject
-    public PongRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
-	this.roomManager = roomManager;
-	this.roomUri = roomUri;
-	this.display = display;
-	pongs = 0;
-    }
+	@Inject
+	public PongRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
+		this.roomManager = roomManager;
+		this.roomUri = roomUri;
+		this.display = display;
+		pongs = 0;
+	}
 
-    @Override
-    public void start() {
-	display.printHeader("This is pong room example", Style.title);
-	display.printHeader("Pong from: " + roomUri, Style.info);
-	display.printHeader("You need to open the ping room example page in order to run the example", Style.important);
+	@Override
+	public void start() {
+		display.printHeader("This is pong room example", Style.title);
+		display.printHeader("Pong from: " + roomUri, Style.info);
+		display.printHeader("You need to open the ping room example page in order to run the example", Style.important);
 
-	new ChatManagerEventsSupervisor(roomManager, display);
-	new RoomManagerEventsSupervisor(roomManager, display);
+		new ChatManagerEventsSupervisor(roomManager, display);
+		new RoomManagerEventsSupervisor(roomManager, display);
 
-	// Because is a RoomManager, we know this MUST be a room
-	final Room room = (Room) roomManager.open(roomUri);
-	room.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		Message message = event.getMessage();
-		display.print(("RECEIVED: " + message.getBody()), Style.received);
-		pongs++;
-		if (room.isUserMessage(message) && !room.isComingFromMe(message)) {
-		    final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";
-		    room.send(new Message(body));
-		    display.print("SENT: " + body, Style.sent);
-		}
-	    }
-	});
-    }
+		// Because is a RoomManager, we know this MUST be a room
+		final Room room = (Room) roomManager.open(roomUri);
+		room.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				Message message = event.getMessage();
+				display.print(("RECEIVED: " + message.getBody()), Style.received);
+				pongs++;
+				if (room.isUserMessage(message) && !room.isComingFromMe(message)) {
+					final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";
+					room.send(new Message(body));
+					display.print("SENT: " + body, Style.sent);
+				}
+			}
+		});
+	}
 
 }

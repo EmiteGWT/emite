@@ -45,80 +45,80 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ExampleXmppSession implements EntryPoint {
 
-    private VerticalPanel panel;
+	private VerticalPanel panel;
 
-    @Override
-    public void onModuleLoad() {
-	Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-	    @Override
-	    public void execute() {
-		panel = new VerticalPanel();
-		RootLayoutPanel.get().add(panel);
-		log("Emite example: xmpp sessions");
+	@Override
+	public void onModuleLoad() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				panel = new VerticalPanel();
+				RootLayoutPanel.get().add(panel);
+				log("Emite example: xmpp sessions");
 
-		/*
-		 * We get the Session object using the ginjector. This is NOT
-		 * the recommended way: it's better to inject into constructor
-		 */
-		GWT.log("Create a xmpp session");
-		ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
-		final XmppSession session = ginjector.getXmppSession();
+				/*
+				 * We get the Session object using the ginjector. This is NOT
+				 * the recommended way: it's better to inject into constructor
+				 */
+				GWT.log("Create a xmpp session");
+				ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
+				final XmppSession session = ginjector.getXmppSession();
 
-		GWT.log("Add event handlers");
-		/*
-		 * We track session state changes. We can only send messages
-		 * when the state == loggedIn.
-		 */
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-		    @Override
-		    public void onStateChanged(StateChangedEvent event) {
-			if (event.is(SessionStates.loggedIn)) {
-			    log("We are now online");
-			    sendHelloWorldMessage(session);
-			} else if (event.is(SessionStates.disconnected)) {
-			    log("We are now offline");
-			} else {
-			    log("Current state: " + event.getState());
+				GWT.log("Add event handlers");
+				/*
+				 * We track session state changes. We can only send messages
+				 * when the state == loggedIn.
+				 */
+				session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+					@Override
+					public void onStateChanged(StateChangedEvent event) {
+						if (event.is(SessionStates.loggedIn)) {
+							log("We are now online");
+							sendHelloWorldMessage(session);
+						} else if (event.is(SessionStates.disconnected)) {
+							log("We are now offline");
+						} else {
+							log("Current state: " + event.getState());
+						}
+					}
+				});
+
+				/*
+				 * We show every incoming message in the GWT log console
+				 */
+				session.addMessageReceivedHandler(new MessageHandler() {
+					@Override
+					public void onMessage(MessageEvent event) {
+						Message message = event.getMessage();
+						log("Messaged received from " + message.getFrom() + ":" + message.getBody());
+					}
+				});
+
+				/*
+				 * We show (log) every incoming presence stanzas
+				 */
+				session.addPresenceReceivedHandler(new PresenceHandler() {
+
+					@Override
+					public void onPresence(PresenceEvent event) {
+						Presence presence = event.getPresence();
+						log("Presence received from " + presence.getFrom() + ": " + presence.toString());
+					}
+				});
 			}
-		    }
 		});
 
-		/*
-		 * We show every incoming message in the GWT log console
-		 */
-		session.addMessageReceivedHandler(new MessageHandler() {
-		    @Override
-		    public void onMessage(MessageEvent event) {
-			Message message = event.getMessage();
-			log("Messaged received from " + message.getFrom() + ":" + message.getBody());
-		    }
-		});
+	}
 
-		/*
-		 * We show (log) every incoming presence stanzas
-		 */
-		session.addPresenceReceivedHandler(new PresenceHandler() {
+	private void log(final String text) {
+		panel.add(new Label(text));
+	}
 
-		    @Override
-		    public void onPresence(PresenceEvent event) {
-			Presence presence = event.getPresence();
-			log("Presence received from " + presence.getFrom() + ": " + presence.toString());
-		    }
-		});
-	    }
-	});
-
-    }
-
-    private void log(final String text) {
-	panel.add(new Label(text));
-    }
-
-    /**
-     * The simplest way to send a message using the Session object
-     */
-    private void sendHelloWorldMessage(final XmppSession session) {
-	final Message message = new Message("hello world!", uri("everybody@world.org"));
-	session.send(message);
-    }
+	/**
+	 * The simplest way to send a message using the Session object
+	 */
+	private void sendHelloWorldMessage(final XmppSession session) {
+		final Message message = new Message("hello world!", uri("everybody@world.org"));
+		session.send(message);
+	}
 }

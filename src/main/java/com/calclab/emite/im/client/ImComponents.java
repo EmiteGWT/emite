@@ -39,15 +39,14 @@ import com.google.inject.Singleton;
 @Singleton
 public class ImComponents {
 
-    @Inject
-    public ImComponents(SessionComponentsRegistry registry, Provider<ChatManager> chatManager,
-	    Provider<PresenceManager> presenceManager, Provider<SubscriptionManager> subscriptionManager,
-	    Provider<SubscriptionHandler> subcriptionHandler, Provider<XmppRoster> xmppRoster) {
+	@Inject
+	public ImComponents(SessionComponentsRegistry registry, Provider<ChatManager> chatManager, Provider<PresenceManager> presenceManager,
+			Provider<SubscriptionManager> subscriptionManager, Provider<SubscriptionHandler> subcriptionHandler, Provider<XmppRoster> xmppRoster) {
 
-	registry.addProvider(chatManager);
-	registry.addProvider(presenceManager);
-	registry.addProvider(subscriptionManager);
-	registry.addProvider(subcriptionHandler);
-	registry.addProvider(xmppRoster);
-    }
+		registry.addProvider(chatManager);
+		registry.addProvider(presenceManager);
+		registry.addProvider(subscriptionManager);
+		registry.addProvider(subcriptionHandler);
+		registry.addProvider(xmppRoster);
+	}
 }

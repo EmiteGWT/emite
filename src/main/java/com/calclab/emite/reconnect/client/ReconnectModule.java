@@ -29,9 +29,9 @@ import com.google.inject.Singleton;
  */
 public class ReconnectModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(SessionReconnect.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(SessionReconnect.class).in(Singleton.class);
+	}
 
 }

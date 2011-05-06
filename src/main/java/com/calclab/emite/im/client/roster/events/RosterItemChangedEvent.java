@@ -33,26 +33,26 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class RosterItemChangedEvent extends ChangedEvent<RosterItemChangedHandler> {
 
-    private static final Type<RosterItemChangedHandler> TYPE = new Type<RosterItemChangedHandler>();
+	private static final Type<RosterItemChangedHandler> TYPE = new Type<RosterItemChangedHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, RosterItemChangedHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, RosterItemChangedHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final RosterItem rosterItem;
+	private final RosterItem rosterItem;
 
-    public RosterItemChangedEvent(String changeType, RosterItem rosterItem) {
-	super(TYPE, changeType);
-	this.rosterItem = rosterItem;
-    }
+	public RosterItemChangedEvent(String changeType, RosterItem rosterItem) {
+		super(TYPE, changeType);
+		this.rosterItem = rosterItem;
+	}
 
-    public RosterItem getRosterItem() {
-	return rosterItem;
-    }
+	public RosterItem getRosterItem() {
+		return rosterItem;
+	}
 
-    @Override
-    protected void dispatch(RosterItemChangedHandler handler) {
-	handler.onRosterItemChanged(this);
-    }
+	@Override
+	protected void dispatch(RosterItemChangedHandler handler) {
+		handler.onRosterItemChanged(this);
+	}
 
 }

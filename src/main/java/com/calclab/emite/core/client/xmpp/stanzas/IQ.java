@@ -23,96 +23,96 @@ package com.calclab.emite.core.client.xmpp.stanzas;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public class IQ extends BasicStanza {
-    public static enum Type {
-	error, get, result, set
-    }
-
-    private static final String NAME = "iq";
-
-    public static Type getType(IPacket packet) {
-	try {
-	    return Type.valueOf(packet.getAttribute(TYPE));
-	} catch (final IllegalArgumentException e) {
-	    return null;
+	public static enum Type {
+		error, get, result, set
 	}
-    }
 
-    /**
-     * Use isType
-     */
-    @Deprecated
-    public static boolean isSet(final IPacket iq) {
-	return iq.hasAttribute(TYPE, "set");
-    }
+	private static final String NAME = "iq";
 
-    public static boolean isSuccess(final IPacket iq) {
-	return iq.hasAttribute(TYPE, "result");
-    }
-
-    public static boolean isType(Type type, final IPacket iq) {
-	return iq.hasAttribute(TYPE, type.toString());
-    }
-
-    public IQ(final IPacket stanza) {
-	super(stanza);
-    }
-
-    public IQ(final Type type) {
-	super(NAME, null);
-	if (type != null) {
-	    setType(type.toString());
+	public static Type getType(IPacket packet) {
+		try {
+			return Type.valueOf(packet.getAttribute(TYPE));
+		} catch (final IllegalArgumentException e) {
+			return null;
+		}
 	}
-    }
 
-    /**
-     * Create a new IQ
-     * 
-     * @param type
-     *            type of the IQ
-     * @param to
-     *            iq recipient
-     */
-    public IQ(final Type type, final XmppURI to) {
-	this(type);
-	super.setTo(to);
-    }
+	/**
+	 * Use isType
+	 */
+	@Deprecated
+	public static boolean isSet(final IPacket iq) {
+		return iq.hasAttribute(TYPE, "set");
+	}
 
-    public IPacket addQuery(final String xmlns) {
-	final IPacket query = addChild("query", xmlns);
-	return query;
-    }
+	public static boolean isSuccess(final IPacket iq) {
+		return iq.hasAttribute(TYPE, "result");
+	}
 
-    public IQ From(final XmppURI fromURI) {
-	setFrom(fromURI);
-	return this;
-    }
+	public static boolean isType(Type type, final IPacket iq) {
+		return iq.hasAttribute(TYPE, type.toString());
+	}
 
-    public Type getType() {
-	return getType(this);
-    }
+	public IQ(final IPacket stanza) {
+		super(stanza);
+	}
 
-    public IPacket Includes(final String name, final String xmlns) {
-	addChild(name, xmlns);
-	return this;
-    }
+	public IQ(final Type type) {
+		super(NAME, null);
+		if (type != null) {
+			setType(type.toString());
+		}
+	}
 
-    public boolean isType(Type type) {
-	return IQ.isType(type, this);
-    }
+	/**
+	 * Create a new IQ
+	 * 
+	 * @param type
+	 *            type of the IQ
+	 * @param to
+	 *            iq recipient
+	 */
+	public IQ(final Type type, final XmppURI to) {
+		this(type);
+		super.setTo(to);
+	}
 
-    public IQ To(final XmppURI toURI) {
-	setTo(toURI);
-	return this;
-    }
+	public IPacket addQuery(final String xmlns) {
+		final IPacket query = addChild("query", xmlns);
+		return query;
+	}
 
-    @Override
-    public IQ With(String name, String value) {
-	return (IQ) super.With(name, value);
-    }
+	public IQ From(final XmppURI fromURI) {
+		setFrom(fromURI);
+		return this;
+	}
 
-    public IQ WithQuery(final String xmlns) {
-	addQuery(xmlns);
-	return this;
-    }
+	public Type getType() {
+		return getType(this);
+	}
+
+	public IPacket Includes(final String name, final String xmlns) {
+		addChild(name, xmlns);
+		return this;
+	}
+
+	public boolean isType(Type type) {
+		return IQ.isType(type, this);
+	}
+
+	public IQ To(final XmppURI toURI) {
+		setTo(toURI);
+		return this;
+	}
+
+	@Override
+	public IQ With(String name, String value) {
+		return (IQ) super.With(name, value);
+	}
+
+	public IQ WithQuery(final String xmlns) {
+		addQuery(xmlns);
+		return this;
+	}
 
 }

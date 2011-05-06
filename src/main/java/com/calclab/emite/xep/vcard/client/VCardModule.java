@@ -28,9 +28,9 @@ import com.google.inject.Singleton;
  */
 public class VCardModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(VCardManager.class).to(VCardManagerImpl.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(VCardManager.class).to(VCardManagerImpl.class).in(Singleton.class);
+	}
 
 }

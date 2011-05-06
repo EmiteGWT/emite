@@ -33,53 +33,53 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public interface SubscriptionManager {
 
-    /**
-     * Add a handler to know when a subscription request has arrived
-     * 
-     * @param handler
-     * @return
-     */
-    public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedHandler handler);
+	/**
+	 * Add a handler to know when a subscription request has arrived
+	 * 
+	 * @param handler
+	 * @return
+	 */
+	public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedHandler handler);
 
-    /**
-     * Approves previously subscription request stanza
-     * 
-     * @param jid
-     *            the other entity's JID
-     * @param nick
-     *            the desired roster nick
-     */
-    public void approveSubscriptionRequest(XmppURI jid, String nick);
+	/**
+	 * Approves previously subscription request stanza
+	 * 
+	 * @param jid
+	 *            the other entity's JID
+	 * @param nick
+	 *            the desired roster nick
+	 */
+	public void approveSubscriptionRequest(XmppURI jid, String nick);
 
-    /**
-     * Cancels a previously-granted subscription
-     * 
-     * @param jid
-     *            the entity's jid (resource ignored)
-     */
-    public void cancelSubscription(XmppURI jid);
+	/**
+	 * Cancels a previously-granted subscription
+	 * 
+	 * @param jid
+	 *            the entity's jid (resource ignored)
+	 */
+	public void cancelSubscription(XmppURI jid);
 
-    /**
-     * Refuse a previously subscription request stanza
-     * 
-     * @param jid
-     *            the other entity's JID
-     */
-    public void refuseSubscriptionRequest(XmppURI jid);
+	/**
+	 * Refuse a previously subscription request stanza
+	 * 
+	 * @param jid
+	 *            the other entity's JID
+	 */
+	public void refuseSubscriptionRequest(XmppURI jid);
 
-    /**
-     * Send a request to subscribe to another entity's presence
-     * 
-     * @param jid
-     *            the another entity's jid (resource ignored)
-     */
-    public void requestSubscribe(XmppURI jid);
+	/**
+	 * Send a request to subscribe to another entity's presence
+	 * 
+	 * @param jid
+	 *            the another entity's jid (resource ignored)
+	 */
+	public void requestSubscribe(XmppURI jid);
 
-    /**
-     * Unsubscribes from the presence of another entity
-     * 
-     * @param jid
-     *            the another entity's jid (resource ignored)
-     */
-    public void unsubscribe(XmppURI jid);
+	/**
+	 * Unsubscribes from the presence of another entity
+	 * 
+	 * @param jid
+	 *            the another entity's jid (resource ignored)
+	 */
+	public void unsubscribe(XmppURI jid);
 }

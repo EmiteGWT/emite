@@ -117,9 +117,9 @@ import com.google.inject.Singleton;
  */
 public class BrowserModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(AutoConfig.class).in(Singleton.class);
-	bind(AutoConfigBoot.class).asEagerSingleton();
-    }
+	@Override
+	protected void configure() {
+		bind(AutoConfig.class).in(Singleton.class);
+		bind(AutoConfigBoot.class).asEagerSingleton();
+	}
 }

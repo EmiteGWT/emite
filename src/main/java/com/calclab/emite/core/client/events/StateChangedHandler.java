@@ -29,10 +29,10 @@ import com.google.gwt.event.shared.EventHandler;
  * 
  */
 public interface StateChangedHandler extends EventHandler {
-    /**
-     * Called when the state has changed
-     * 
-     * @param event
-     */
-    void onStateChanged(StateChangedEvent event);
+	/**
+	 * Called when the state has changed
+	 * 
+	 * @param event
+	 */
+	void onStateChanged(StateChangedEvent event);
 }

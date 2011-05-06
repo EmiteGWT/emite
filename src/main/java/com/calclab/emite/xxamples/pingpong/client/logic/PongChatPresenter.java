@@ -36,47 +36,47 @@ import com.google.inject.Inject;
 
 public class PongChatPresenter implements StartablePresenter {
 
-    private final PingPongDisplay display;
-    private int pongs;
-    private final ChatManager chatManager;
+	private final PingPongDisplay display;
+	private int pongs;
+	private final ChatManager chatManager;
 
-    @Inject
-    public PongChatPresenter(ChatManager chatManager, PingPongDisplay output) {
-	this.chatManager = chatManager;
-	this.display = output;
-	this.pongs = 0;
-    }
+	@Inject
+	public PongChatPresenter(ChatManager chatManager, PingPongDisplay output) {
+		this.chatManager = chatManager;
+		this.display = output;
+		this.pongs = 0;
+	}
 
-    @Override
-    public void start() {
-	display.printHeader("This is pong chat", Style.title);
-	display.printHeader("You need to open the ping chat example page in order to run the example", Style.important);
+	@Override
+	public void start() {
+		display.printHeader("This is pong chat", Style.title);
+		display.printHeader("You need to open the ping chat example page in order to run the example", Style.important);
 
-	new ChatManagerEventsSupervisor(chatManager, display);
-	chatManager.addChatChangedHandler(new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(ChatChangedEvent event) {
-		if (event.is(ChangeTypes.created)) {
-		    Chat chat = event.getChat();
-		    listenToChat(chat);
-		}
-	    }
-	});
-    }
+		new ChatManagerEventsSupervisor(chatManager, display);
+		chatManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(ChatChangedEvent event) {
+				if (event.is(ChangeTypes.created)) {
+					Chat chat = event.getChat();
+					listenToChat(chat);
+				}
+			}
+		});
+	}
 
-    private void listenToChat(final Chat chat) {
-	chat.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		Message message = event.getMessage();
-		display.print(("RECEIVED: " + message.getBody()), Style.received);
-		pongs++;
-		final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";
-		chat.send(new Message(body));
-		display.print("SENT: " + body, Style.sent);
+	private void listenToChat(final Chat chat) {
+		chat.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				Message message = event.getMessage();
+				display.print(("RECEIVED: " + message.getBody()), Style.received);
+				pongs++;
+				final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";
+				chat.send(new Message(body));
+				display.print("SENT: " + body, Style.sent);
 
-	    }
-	});
-    }
+			}
+		});
+	}
 
 }

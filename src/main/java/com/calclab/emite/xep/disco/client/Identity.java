@@ -30,17 +30,17 @@ import com.calclab.emite.core.client.packet.IPacket;
  * 
  */
 public class Identity {
-    public static Identity fromPacket(final IPacket packet) {
-	return new Identity(packet.getAttribute("category"), packet.getAttribute("type"), packet.getAttribute("name"));
-    }
+	public static Identity fromPacket(final IPacket packet) {
+		return new Identity(packet.getAttribute("category"), packet.getAttribute("type"), packet.getAttribute("name"));
+	}
 
-    public final String category;
-    public final String type;
-    public final String name;
+	public final String category;
+	public final String type;
+	public final String name;
 
-    public Identity(final String category, final String type, final String name) {
-	this.category = category;
-	this.type = type;
-	this.name = name;
-    }
+	public Identity(final String category, final String type, final String name) {
+		this.category = category;
+		this.type = type;
+		this.name = name;
+	}
 }

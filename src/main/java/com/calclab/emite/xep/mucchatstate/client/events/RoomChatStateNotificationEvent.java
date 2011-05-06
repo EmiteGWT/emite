@@ -28,37 +28,37 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class RoomChatStateNotificationEvent extends GwtEvent<RoomChatStateNotificationHandler> {
 
-    private static final Type<RoomChatStateNotificationHandler> TYPE = new Type<RoomChatStateNotificationHandler>();
+	private static final Type<RoomChatStateNotificationHandler> TYPE = new Type<RoomChatStateNotificationHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, RoomChatStateNotificationHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, RoomChatStateNotificationHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final XmppURI from;
+	private final XmppURI from;
 
-    private final ChatState chatState;
+	private final ChatState chatState;
 
-    public RoomChatStateNotificationEvent(XmppURI from, ChatState chatState) {
-	this.from = from;
-	this.chatState = chatState;
-    }
+	public RoomChatStateNotificationEvent(XmppURI from, ChatState chatState) {
+		this.from = from;
+		this.chatState = chatState;
+	}
 
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<RoomChatStateNotificationHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<RoomChatStateNotificationHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public ChatState getChatState() {
-	return chatState;
-    }
+	public ChatState getChatState() {
+		return chatState;
+	}
 
-    public XmppURI getFrom() {
-	return from;
-    }
+	public XmppURI getFrom() {
+		return from;
+	}
 
-    @Override
-    protected void dispatch(RoomChatStateNotificationHandler handler) {
-	handler.onRoomChatStateNotification(this);
-    }
+	@Override
+	protected void dispatch(RoomChatStateNotificationHandler handler) {
+		handler.onRoomChatStateNotification(this);
+	}
 
 }

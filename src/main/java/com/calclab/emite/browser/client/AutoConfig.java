@@ -44,64 +44,64 @@ import com.google.inject.Inject;
  */
 public class AutoConfig {
 
-    private static final String LOGIN = "login";
-    private static final String RESUME = "resume";
-    private static final String RESUME_OR_LOGIN = "resumeOrLogin";
-    private static final String PARAM_SESSION = "emite.session";
-    protected static final String LOGOUT = "logout";
+	private static final String LOGIN = "login";
+	private static final String RESUME = "resume";
+	private static final String RESUME_OR_LOGIN = "resumeOrLogin";
+	private static final String PARAM_SESSION = "emite.session";
+	protected static final String LOGOUT = "logout";
 
-    private final XmppConnection connection;
-    private final XmppSession session;
+	private final XmppConnection connection;
+	private final XmppSession session;
 
-    @Inject
-    public AutoConfig(final XmppConnection connection, final XmppSession session) {
-	GWT.log("Creating AutoConfig");
-	this.connection = connection;
-	this.session = session;
-	initialize();
-    }
-
-    private void initialize() {
-	PageAssist.configureFromMeta(connection);
-	final String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
-	if (sessionBehaviour != null) {
-	    GWT.log("PageController - initializing...", null);
-	    prepareOnCloseAction(sessionBehaviour);
-	    prepareOnOpenAction(sessionBehaviour);
-	    GWT.log("PageController - done.", null);
+	@Inject
+	public AutoConfig(final XmppConnection connection, final XmppSession session) {
+		GWT.log("Creating AutoConfig");
+		this.connection = connection;
+		this.session = session;
+		initialize();
 	}
-    }
 
-    private void prepareOnCloseAction(final String sessionBehaviour) {
-	GWT.log("PageController - configuring close action...", null);
-	Window.addCloseHandler(new CloseHandler<Window>() {
-	    @Override
-	    public void onClose(final CloseEvent<Window> arg0) {
-		if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
-		    GWT.log("PAUSING SESSION...");
-		    PageAssist.pauseSession(session);
-		} else if (LOGIN.equals(sessionBehaviour)) {
-		    GWT.log("LOGGIN OUT SESSION...");
-		    PageAssist.closeSession(session);
-		} else if (LOGOUT.equals(sessionBehaviour)) {
-		    GWT.log("LOGGIN OUT SESSION...");
-		    PageAssist.closeSession(session);
+	private void initialize() {
+		PageAssist.configureFromMeta(connection);
+		final String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
+		if (sessionBehaviour != null) {
+			GWT.log("PageController - initializing...", null);
+			prepareOnCloseAction(sessionBehaviour);
+			prepareOnOpenAction(sessionBehaviour);
+			GWT.log("PageController - done.", null);
 		}
-	    }
-	});
-    }
-
-    private void prepareOnOpenAction(final String sessionBehaviour) {
-	GWT.log("SESSION BEHAVIOUR: " + sessionBehaviour);
-	if (sessionBehaviour.equals(LOGIN)) {
-	    PageAssist.loginFromMeta(session);
-	} else if (sessionBehaviour.equals(RESUME)) {
-	    PageAssist.resumeSession(session);
-	} else if (sessionBehaviour.equals(RESUME_OR_LOGIN)) {
-	    if (!PageAssist.resumeSession(session)) {
-		PageAssist.loginFromMeta(session);
-	    }
 	}
-    }
+
+	private void prepareOnCloseAction(final String sessionBehaviour) {
+		GWT.log("PageController - configuring close action...", null);
+		Window.addCloseHandler(new CloseHandler<Window>() {
+			@Override
+			public void onClose(final CloseEvent<Window> arg0) {
+				if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
+					GWT.log("PAUSING SESSION...");
+					PageAssist.pauseSession(session);
+				} else if (LOGIN.equals(sessionBehaviour)) {
+					GWT.log("LOGGIN OUT SESSION...");
+					PageAssist.closeSession(session);
+				} else if (LOGOUT.equals(sessionBehaviour)) {
+					GWT.log("LOGGIN OUT SESSION...");
+					PageAssist.closeSession(session);
+				}
+			}
+		});
+	}
+
+	private void prepareOnOpenAction(final String sessionBehaviour) {
+		GWT.log("SESSION BEHAVIOUR: " + sessionBehaviour);
+		if (sessionBehaviour.equals(LOGIN)) {
+			PageAssist.loginFromMeta(session);
+		} else if (sessionBehaviour.equals(RESUME)) {
+			PageAssist.resumeSession(session);
+		} else if (sessionBehaviour.equals(RESUME_OR_LOGIN)) {
+			if (!PageAssist.resumeSession(session)) {
+				PageAssist.loginFromMeta(session);
+			}
+		}
+	}
 
 }

@@ -27,14 +27,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class ChatStateChangedEvent extends StateChangedEvent {
 
-    private static final Type<StateChangedHandler> TYPE = new Type<StateChangedHandler>();
+	private static final Type<StateChangedHandler> TYPE = new Type<StateChangedHandler>();
 
-    public static HandlerRegistration bind(final EmiteEventBus eventBus, final StateChangedHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final StateChangedHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    public ChatStateChangedEvent(final String state) {
-	super(TYPE, state);
-    }
+	public ChatStateChangedEvent(final String state) {
+		super(TYPE, state);
+	}
 
 }

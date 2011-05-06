@@ -26,14 +26,14 @@ import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public class SessionStateChangedEvent extends StateChangedEvent {
-    private static final Type<StateChangedHandler> TYPE = new Type<StateChangedHandler>();
+	private static final Type<StateChangedHandler> TYPE = new Type<StateChangedHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, StateChangedHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, StateChangedHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    public SessionStateChangedEvent(final String state) {
-	super(TYPE, state);
-    }
+	public SessionStateChangedEvent(final String state) {
+		super(TYPE, state);
+	}
 
 }

@@ -25,10 +25,10 @@ import com.google.inject.Singleton;
 
 public class MucChatStateModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(MUCChatStateManager.class).in(Singleton.class);
-	bind(MucChatStateComponents.class).asEagerSingleton();
-    }
+	@Override
+	protected void configure() {
+		bind(MUCChatStateManager.class).in(Singleton.class);
+		bind(MucChatStateComponents.class).asEagerSingleton();
+	}
 
 }

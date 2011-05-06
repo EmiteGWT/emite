@@ -38,38 +38,37 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class IMSessionManager {
-    private final XmppConnection connection;
+	private final XmppConnection connection;
 
-    @Inject
-    public IMSessionManager(final XmppConnection connection) {
-	GWT.log("Creating IMSessionManager");
+	@Inject
+	public IMSessionManager(final XmppConnection connection) {
+		GWT.log("Creating IMSessionManager");
 
-	this.connection = connection;
+		this.connection = connection;
 
-	connection.addStanzaReceivedHandler(new StanzaHandler() {
-	    @Override
-	    public void onStanza(final StanzaEvent event) {
-		final IPacket stanza = event.getStanza();
-		if ("im-session-request".equals(stanza.getAttribute("id"))) {
-		    connection.getEventBus().fireEvent(
-			    new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
-		}
-	    }
-	});
+		connection.addStanzaReceivedHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(final StanzaEvent event) {
+				final IPacket stanza = event.getStanza();
+				if ("im-session-request".equals(stanza.getAttribute("id"))) {
+					connection.getEventBus().fireEvent(new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
+				}
+			}
+		});
 
-    }
+	}
 
-    /**
-     * Request the session
-     * 
-     * @param uri
-     */
-    public void requestSession(final XmppURI uri) {
-	final IQ iq = new IQ(IQ.Type.set, uri.getHostURI());
-	iq.setFrom(uri);
-	iq.setAttribute("id", "im-session-request");
-	iq.Includes("session", "urn:ietf:params:xml:ns:xmpp-session");
+	/**
+	 * Request the session
+	 * 
+	 * @param uri
+	 */
+	public void requestSession(final XmppURI uri) {
+		final IQ iq = new IQ(IQ.Type.set, uri.getHostURI());
+		iq.setFrom(uri);
+		iq.setAttribute("id", "im-session-request");
+		iq.Includes("session", "urn:ietf:params:xml:ns:xmpp-session");
 
-	connection.send(iq);
-    }
+		connection.send(iq);
+	}
 }

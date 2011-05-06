@@ -26,5 +26,5 @@ package com.calclab.emite.core.client.xmpp.sasl;
  * @author dani
  */
 public interface PasswordDecoder {
-    String decode(String encodingMethod, String encodedPassword);
+	String decode(String encodingMethod, String encodedPassword);
 }

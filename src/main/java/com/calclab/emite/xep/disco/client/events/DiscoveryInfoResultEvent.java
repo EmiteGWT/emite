@@ -28,50 +28,50 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class DiscoveryInfoResultEvent extends GwtEvent<DiscoveryInfoResultHandler> {
 
-    private static final Type<DiscoveryInfoResultHandler> TYPE = new Type<DiscoveryInfoResultHandler>();
+	private static final Type<DiscoveryInfoResultHandler> TYPE = new Type<DiscoveryInfoResultHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, DiscoveryInfoResultHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, DiscoveryInfoResultHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final DiscoveryInfoResults infoResult;
-    private final IPacket errorPacket;
+	private final DiscoveryInfoResults infoResult;
+	private final IPacket errorPacket;
 
-    public DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult) {
-	this(infoResult, null);
-    }
+	public DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult) {
+		this(infoResult, null);
+	}
 
-    public DiscoveryInfoResultEvent(IPacket errorPacket) {
-	this(null, errorPacket);
-    }
+	public DiscoveryInfoResultEvent(IPacket errorPacket) {
+		this(null, errorPacket);
+	}
 
-    private DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult, IPacket errorPacket) {
-	assert infoResult != null && errorPacket != null : "Discovery event only can have or result or error";
-	assert infoResult == null && errorPacket == null : "Discovery event must have or result or error";
-	this.infoResult = infoResult;
-	this.errorPacket = errorPacket;
-    }
+	private DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult, IPacket errorPacket) {
+		assert infoResult != null && errorPacket != null : "Discovery event only can have or result or error";
+		assert infoResult == null && errorPacket == null : "Discovery event must have or result or error";
+		this.infoResult = infoResult;
+		this.errorPacket = errorPacket;
+	}
 
-    @Override
-    public Type<DiscoveryInfoResultHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public Type<DiscoveryInfoResultHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public IPacket getErrorPacket() {
-	return errorPacket;
-    }
+	public IPacket getErrorPacket() {
+		return errorPacket;
+	}
 
-    public DiscoveryInfoResults getResults() {
-	return infoResult;
-    }
+	public DiscoveryInfoResults getResults() {
+		return infoResult;
+	}
 
-    public boolean hasResult() {
-	return infoResult != null;
-    }
+	public boolean hasResult() {
+		return infoResult != null;
+	}
 
-    @Override
-    protected void dispatch(DiscoveryInfoResultHandler handler) {
-	handler.onDiscoveryInfoResult(this);
-    }
+	@Override
+	protected void dispatch(DiscoveryInfoResultHandler handler) {
+		handler.onDiscoveryInfoResult(this);
+	}
 
 }

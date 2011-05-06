@@ -28,14 +28,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class BeforeReceiveMessageEvent extends MessageEvent {
 
-    private static final Type<MessageHandler> TYPE = new Type<MessageHandler>();
+	private static final Type<MessageHandler> TYPE = new Type<MessageHandler>();
 
-    public static HandlerRegistration bind(final EmiteEventBus eventBus, final MessageHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final MessageHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    public BeforeReceiveMessageEvent(final Message message) {
-	super(TYPE, message);
-    }
+	public BeforeReceiveMessageEvent(final Message message) {
+		super(TYPE, message);
+	}
 
 }

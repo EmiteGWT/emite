@@ -29,25 +29,25 @@ import com.google.gwt.event.shared.HandlerManager;
 
 public class DisplayEventBus extends HandlerManager implements EmiteEventBus {
 
-    private final PingPongDisplay display;
-    private final String eventBusName;
+	private final PingPongDisplay display;
+	private final String eventBusName;
 
-    public DisplayEventBus(String eventBusName, PingPongDisplay display) {
-	super(null);
-	this.eventBusName = eventBusName;
-	this.display = display;
-	display.print("New event bus: " + eventBusName, Style.eventBus);
-    }
+	public DisplayEventBus(String eventBusName, PingPongDisplay display) {
+		super(null);
+		this.eventBusName = eventBusName;
+		this.display = display;
+		display.print("New event bus: " + eventBusName, Style.eventBus);
+	}
 
-    @Override
-    public void fireEvent(final GwtEvent<?> event) {
-	Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-	    @Override
-	    public void execute() {
-		display.print("[" + eventBusName + "] " + event.toDebugString(), Style.eventBus);
-		DisplayEventBus.super.fireEvent(event);
-	    }
-	});
-    }
+	@Override
+	public void fireEvent(final GwtEvent<?> event) {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				display.print("[" + eventBusName + "] " + event.toDebugString(), Style.eventBus);
+				DisplayEventBus.super.fireEvent(event);
+			}
+		});
+	}
 
 }

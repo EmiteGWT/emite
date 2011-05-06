@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface PacketHandler extends EventHandler {
 
-    void onPacket(PacketEvent event);
+	void onPacket(PacketEvent event);
 
 }

@@ -27,32 +27,32 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class ChatChangedEvent extends ChangedEvent<ChatChangedHandler> {
 
-    private static final Type<ChatChangedHandler> TYPE = new Type<ChatChangedHandler>();
+	private static final Type<ChatChangedHandler> TYPE = new Type<ChatChangedHandler>();
 
-    public static HandlerRegistration bind(final EmiteEventBus eventBus, final ChatChangedHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ChatChangedHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final Chat chat;
+	private final Chat chat;
 
-    public ChatChangedEvent(final String changeType, final Chat chat) {
-	super(TYPE, changeType);
-	assert chat != null : "Chat can't be null in ChatChangedEvent";
-	this.chat = chat;
-    }
+	public ChatChangedEvent(final String changeType, final Chat chat) {
+		super(TYPE, changeType);
+		assert chat != null : "Chat can't be null in ChatChangedEvent";
+		this.chat = chat;
+	}
 
-    public Chat getChat() {
-	return chat;
-    }
+	public Chat getChat() {
+		return chat;
+	}
 
-    @Override
-    public String toDebugString() {
-	return super.toDebugString() + chat.getURI();
-    }
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + chat.getURI();
+	}
 
-    @Override
-    protected void dispatch(final ChatChangedHandler handler) {
-	handler.onChatChanged(this);
-    }
+	@Override
+	protected void dispatch(final ChatChangedHandler handler) {
+		handler.onChatChanged(this);
+	}
 
 }

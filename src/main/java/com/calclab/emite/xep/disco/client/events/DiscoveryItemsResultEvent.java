@@ -30,44 +30,44 @@ import com.google.gwt.event.shared.GwtEvent;
  */
 public class DiscoveryItemsResultEvent extends GwtEvent<DiscoveryItemsResultHandler> {
 
-    private static final Type<DiscoveryItemsResultHandler> TYPE = new Type<DiscoveryItemsResultHandler>();
-    private final DiscoveryItemsResults itemsResult;
-    private final IPacket errorPacket;
+	private static final Type<DiscoveryItemsResultHandler> TYPE = new Type<DiscoveryItemsResultHandler>();
+	private final DiscoveryItemsResults itemsResult;
+	private final IPacket errorPacket;
 
-    public DiscoveryItemsResultEvent(DiscoveryItemsResults infoResult) {
-	this(infoResult, null);
-    }
+	public DiscoveryItemsResultEvent(DiscoveryItemsResults infoResult) {
+		this(infoResult, null);
+	}
 
-    private DiscoveryItemsResultEvent(DiscoveryItemsResults itemsResult, IPacket errorPacket) {
-	assert (itemsResult != null && errorPacket == null) || (itemsResult == null && errorPacket != null) : "Discovery event only can have or result or error";
-	this.itemsResult = itemsResult;
-	this.errorPacket = errorPacket;
-    }
+	private DiscoveryItemsResultEvent(DiscoveryItemsResults itemsResult, IPacket errorPacket) {
+		assert (itemsResult != null && errorPacket == null) || (itemsResult == null && errorPacket != null) : "Discovery event only can have or result or error";
+		this.itemsResult = itemsResult;
+		this.errorPacket = errorPacket;
+	}
 
-    public DiscoveryItemsResultEvent(IPacket errorPacket) {
-	this(null, errorPacket);
-    }
+	public DiscoveryItemsResultEvent(IPacket errorPacket) {
+		this(null, errorPacket);
+	}
 
-    @Override
-    protected void dispatch(DiscoveryItemsResultHandler handler) {
-	handler.onDiscoveryItemsResult(this);
-    }
+	@Override
+	protected void dispatch(DiscoveryItemsResultHandler handler) {
+		handler.onDiscoveryItemsResult(this);
+	}
 
-    @Override
-    public GwtEvent.Type<DiscoveryItemsResultHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public GwtEvent.Type<DiscoveryItemsResultHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public IPacket getErrorPacket() {
-	return errorPacket;
-    }
+	public IPacket getErrorPacket() {
+		return errorPacket;
+	}
 
-    public DiscoveryItemsResults getResults() {
-	return itemsResult;
-    }
+	public DiscoveryItemsResults getResults() {
+		return itemsResult;
+	}
 
-    public boolean hasResult() {
-	return itemsResult != null;
-    }
+	public boolean hasResult() {
+		return itemsResult != null;
+	}
 
 }

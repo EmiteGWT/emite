@@ -27,12 +27,12 @@ package com.calclab.emite.xep.disco.client;
  */
 public interface FeatureSupportedCallback {
 
-    /**
-     * This method is called when the DiscoveryManager knows if some features
-     * are supported for a given entity
-     * 
-     * @param areFeaturedSupported
-     */
-    void onFeaturesSupported(boolean areFeaturedSupported);
+	/**
+	 * This method is called when the DiscoveryManager knows if some features
+	 * are supported for a given entity
+	 * 
+	 * @param areFeaturedSupported
+	 */
+	void onFeaturesSupported(boolean areFeaturedSupported);
 
 }

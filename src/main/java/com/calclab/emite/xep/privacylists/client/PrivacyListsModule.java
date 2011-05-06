@@ -32,9 +32,9 @@ import com.google.inject.Singleton;
  */
 public class PrivacyListsModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(PrivacyListsManager.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(PrivacyListsManager.class).in(Singleton.class);
+	}
 
 }

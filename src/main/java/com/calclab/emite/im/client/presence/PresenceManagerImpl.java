@@ -43,100 +43,98 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class PresenceManagerImpl implements PresenceManager {
-    private Presence ownPresence;
-    static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
-    private final XmppSession session;
+	private Presence ownPresence;
+	static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
+	private final XmppSession session;
 
-    @Inject
-    public PresenceManagerImpl(final XmppSession session, SessionReady sessionReady) {
-	GWT.log("Creating PresenceManagerImpl");
-	sessionReady.setEnabled(false);
-	this.session = session;
-	setOwnPresence(INITIAL_PRESENCE);
+	@Inject
+	public PresenceManagerImpl(final XmppSession session, SessionReady sessionReady) {
+		GWT.log("Creating PresenceManagerImpl");
+		sessionReady.setEnabled(false);
+		this.session = session;
+		setOwnPresence(INITIAL_PRESENCE);
 
-	// Upon connecting to the server and becoming an active resource, a
-	// client SHOULD request the roster before sending initial presence
-	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(StateChangedEvent event) {
-		if (event.is(SessionStates.rosterReady)) {
-		    GWT.log("Sending initial presence", null);
-		    Presence ownPresence = getOwnPresence();
-		    final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(
-			    session.getCurrentUserURI());
-		    session.send(initialPresence);
-		    setOwnPresence(initialPresence);
-		    session.setSessionState(SessionStates.ready);
-		} else if (event.is(SessionStates.loggingOut)) {
-		    sendUnavailablePresence(session.getCurrentUserURI());
-		} else if (event.is(SessionStates.disconnected)) {
-		    setOwnPresence(INITIAL_PRESENCE);
-		}
-	    }
-	});
+		// Upon connecting to the server and becoming an active resource, a
+		// client SHOULD request the roster before sending initial presence
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(StateChangedEvent event) {
+				if (event.is(SessionStates.rosterReady)) {
+					GWT.log("Sending initial presence", null);
+					Presence ownPresence = getOwnPresence();
+					final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session.getCurrentUserURI());
+					session.send(initialPresence);
+					setOwnPresence(initialPresence);
+					session.setSessionState(SessionStates.ready);
+				} else if (event.is(SessionStates.loggingOut)) {
+					sendUnavailablePresence(session.getCurrentUserURI());
+				} else if (event.is(SessionStates.disconnected)) {
+					setOwnPresence(INITIAL_PRESENCE);
+				}
+			}
+		});
 
-	session.addPresenceReceivedHandler(new PresenceHandler() {
-	    @Override
-	    public void onPresence(PresenceEvent event) {
-		Presence presence = event.getPresence();
-		final Type type = presence.getType();
-		if (type == Type.probe) {
-		    session.send(getOwnPresence());
-		} else if (type == Type.error) {
-		    session.getEventBus().fireEvent(
-			    new ErrorEvent("presenceError", "we received an error presence", presence));
-		}
-	    }
-	});
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(PresenceEvent event) {
+				Presence presence = event.getPresence();
+				final Type type = presence.getType();
+				if (type == Type.probe) {
+					session.send(getOwnPresence());
+				} else if (type == Type.error) {
+					session.getEventBus().fireEvent(new ErrorEvent("presenceError", "we received an error presence", presence));
+				}
+			}
+		});
 
-    }
+	}
 
-    @Override
-    public HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedHandler handler) {
-	return OwnPresenceChangedEvent.bind(session.getEventBus(), handler);
-    }
+	@Override
+	public HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedHandler handler) {
+		return OwnPresenceChangedEvent.bind(session.getEventBus(), handler);
+	}
 
-    /**
-     * Set the logged in user's presence. If the user is not logged in, the
-     * presence is sent just after the initial presence
-     * 
-     * @see http://www.xmpp.org/rfcs/rfc3921.html#presence
-     * 
-     * @param presence
-     */
-    @Override
-    public void changeOwnPresence(final Presence presence) {
-	session.send(presence);
-	setOwnPresence(presence);
-    }
+	/**
+	 * Set the logged in user's presence. If the user is not logged in, the
+	 * presence is sent just after the initial presence
+	 * 
+	 * @see http://www.xmpp.org/rfcs/rfc3921.html#presence
+	 * 
+	 * @param presence
+	 */
+	@Override
+	public void changeOwnPresence(final Presence presence) {
+		session.send(presence);
+		setOwnPresence(presence);
+	}
 
-    @Override
-    public Presence getOwnPresence() {
-	return ownPresence;
-    }
+	@Override
+	public Presence getOwnPresence() {
+		return ownPresence;
+	}
 
-    /**
-     * 5.1.5. Unavailable Presence (rfc 3921)
-     * 
-     * Before ending its session with a server, a client SHOULD gracefully
-     * become unavailable by sending a final presence stanza that possesses no
-     * 'to' attribute and that possesses a 'type' attribute whose value is
-     * "unavailable" (optionally, the final presence stanza MAY contain one or
-     * more <status/> elements specifying the reason why the user is no longer
-     * available).
-     * 
-     * @param userURI
-     */
-    private void sendUnavailablePresence(final XmppURI userURI) {
-	final Presence presence = new Presence(Type.unavailable, userURI, null);
-	session.send(presence);
-	setOwnPresence(presence);
-    }
+	/**
+	 * 5.1.5. Unavailable Presence (rfc 3921)
+	 * 
+	 * Before ending its session with a server, a client SHOULD gracefully
+	 * become unavailable by sending a final presence stanza that possesses no
+	 * 'to' attribute and that possesses a 'type' attribute whose value is
+	 * "unavailable" (optionally, the final presence stanza MAY contain one or
+	 * more <status/> elements specifying the reason why the user is no longer
+	 * available).
+	 * 
+	 * @param userURI
+	 */
+	private void sendUnavailablePresence(final XmppURI userURI) {
+		final Presence presence = new Presence(Type.unavailable, userURI, null);
+		session.send(presence);
+		setOwnPresence(presence);
+	}
 
-    private void setOwnPresence(Presence presence) {
-	Presence oldPresence = ownPresence;
-	ownPresence = presence;
-	session.getEventBus().fireEvent(new OwnPresenceChangedEvent(oldPresence, presence));
-    }
+	private void setOwnPresence(Presence presence) {
+		Presence oldPresence = ownPresence;
+		ownPresence = presence;
+		session.getEventBus().fireEvent(new OwnPresenceChangedEvent(oldPresence, presence));
+	}
 
 }

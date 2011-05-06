@@ -9,10 +9,10 @@ import com.calclab.emite.core.client.packet.Packet;
 
 public class FeatureTest {
 
-    @Test
-    public void shouldParsePacket() {
-	final IPacket packet = new Packet("feature").With("var", "protocol");
-	final Feature feature = Feature.fromPacket(packet);
-	assertEquals("protocol", feature.var);
-    }
+	@Test
+	public void shouldParsePacket() {
+		final IPacket packet = new Packet("feature").With("var", "protocol");
+		final Feature feature = Feature.fromPacket(packet);
+		assertEquals("protocol", feature.var);
+	}
 }

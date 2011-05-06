@@ -23,124 +23,117 @@ import com.calclab.emite.xtesting.handlers.RoomSubjectChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
 
 public class RoomTest extends AbstractChatTest {
-    private RoomChat room;
-    private XmppURI userURI;
-    private XmppURI roomURI;
+	private RoomChat room;
+	private XmppURI userURI;
+	private XmppURI roomURI;
 
-    @Before
-    public void beforeTests() {
-	userURI = uri("user@domain/res");
-	roomURI = uri("room@domain/nick");
-	session.setLoggedIn(userURI);
-	RoomChatManager manager = new RoomChatManager(session);
-	final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
-	room = (RoomChat) manager.openChat(properties, true);
-    }
+	@Before
+	public void beforeTests() {
+		userURI = uri("user@domain/res");
+		roomURI = uri("room@domain/nick");
+		session.setLoggedIn(userURI);
+		RoomChatManager manager = new RoomChatManager(session);
+		final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
+		room = (RoomChat) manager.openChat(properties, true);
+	}
 
-    @Override
-    public AbstractChat getChat() {
-	return room;
-    }
+	@Override
+	public AbstractChat getChat() {
+		return room;
+	}
 
-    @Test
-    public void shouldAddOccupantAndFireListeners() {
-	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
-	room.addOccupantChangedHandler(handler);
-	final XmppURI occupantUri = uri("room@domain/user");
-	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "aff", "role", Show.unknown, null);
-	assertTrue(handler.isCalledOnce());
-	final Occupant result = room.getOccupantByOccupantUri(occupantUri);
-	assertEquals(occupant, result);
-    }
+	@Test
+	public void shouldAddOccupantAndFireListeners() {
+		final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
+		room.addOccupantChangedHandler(handler);
+		final XmppURI occupantUri = uri("room@domain/user");
+		final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "aff", "role", Show.unknown, null);
+		assertTrue(handler.isCalledOnce());
+		final Occupant result = room.getOccupantByOccupantUri(occupantUri);
+		assertEquals(occupant, result);
+	}
 
-    @Test
-    public void shouldExitAndLockTheRoomWhenLoggedOut() {
-	receiveInstantRoomCreation(userURI, roomURI);
-	session.logout();
-	assertEquals("locked", room.getChatState());
-	session.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
-    }
+	@Test
+	public void shouldExitAndLockTheRoomWhenLoggedOut() {
+		receiveInstantRoomCreation(userURI, roomURI);
+		session.logout();
+		assertEquals("locked", room.getChatState());
+		session.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
+	}
 
-    @Test
-    public void shouldFireListenersWhenMessage() {
-	final MessageTestHandler handler = new MessageTestHandler();
-	room.addMessageReceivedHandler(handler);
-	final Message message = new Message("message", uri("room@domain"), uri("someone@domain/res"));
-	room.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
-	assertEquals(message, handler.getLastMessage());
-    }
+	@Test
+	public void shouldFireListenersWhenMessage() {
+		final MessageTestHandler handler = new MessageTestHandler();
+		room.addMessageReceivedHandler(handler);
+		final Message message = new Message("message", uri("room@domain"), uri("someone@domain/res"));
+		room.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
+		assertEquals(message, handler.getLastMessage());
+	}
 
-    @Test
-    public void shouldFireListenersWhenSubjectChange() {
-	final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
-	RoomSubject.addRoomSubjectChangedHandler(room, handler);
+	@Test
+	public void shouldFireListenersWhenSubjectChange() {
+		final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
+		RoomSubject.addRoomSubjectChangedHandler(room, handler);
 
-	final XmppURI occupantURI = uri("someone@domain/res");
-	room.getChatEventBus().fireEvent(
-		new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
-	assertEquals(1, handler.getCalledTimes());
+		final XmppURI occupantURI = uri("someone@domain/res");
+		room.getChatEventBus().fireEvent(new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
+		assertEquals(1, handler.getCalledTimes());
 
-	assertEquals(occupantURI, handler.getLastEvent().getOccupantUri());
-	assertEquals("the subject", handler.getLastEvent().getSubject());
-    }
+		assertEquals(occupantURI, handler.getLastEvent().getOccupantUri());
+		assertEquals("the subject", handler.getLastEvent().getSubject());
+	}
 
-    @Test
-    public void shouldRemoveOccupant() {
-	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("removed");
-	room.addOccupantChangedHandler(handler);
-	final XmppURI occupantUri = uri("room@domain/name");
-	room.setOccupantPresence(userURI, occupantUri, "owner", "participant", Show.notSpecified, null);
-	assertEquals(1, room.getOccupantsCount());
-	room.removeOccupant(occupantUri);
-	assertEquals(0, room.getOccupantsCount());
-	assertEquals(1, handler.getCalledTimes());
-	assertNull(room.getOccupantByOccupantUri(occupantUri));
-    }
+	@Test
+	public void shouldRemoveOccupant() {
+		final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("removed");
+		room.addOccupantChangedHandler(handler);
+		final XmppURI occupantUri = uri("room@domain/name");
+		room.setOccupantPresence(userURI, occupantUri, "owner", "participant", Show.notSpecified, null);
+		assertEquals(1, room.getOccupantsCount());
+		room.removeOccupant(occupantUri);
+		assertEquals(0, room.getOccupantsCount());
+		assertEquals(1, handler.getCalledTimes());
+		assertNull(room.getOccupantByOccupantUri(occupantUri));
+	}
 
-    @Test
-    public void shouldSendRoomInvitation() {
-	room.sendInvitationTo(uri("otherUser@domain/resource"), "this is the reason");
-	session.verifySent("<message from='" + userURI + "' to='" + roomURI.getJID()
-		+ "'><x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<invite to='otheruser@domain/resource'><reason>this is the reason</reason></invite></x></message>");
-    }
+	@Test
+	public void shouldSendRoomInvitation() {
+		room.sendInvitationTo(uri("otherUser@domain/resource"), "this is the reason");
+		session.verifySent("<message from='" + userURI + "' to='" + roomURI.getJID() + "'><x xmlns='http://jabber.org/protocol/muc#user'>"
+				+ "<invite to='otheruser@domain/resource'><reason>this is the reason</reason></invite></x></message>");
+	}
 
-    @Test
-    public void shouldSendRoomPresenceWhenCreated() {
-	session.verifySent("<presence to='room@domain/nick'><x xmlns='http://jabber.org/protocol/muc' /></presence>");
-    }
+	@Test
+	public void shouldSendRoomPresenceWhenCreated() {
+		session.verifySent("<presence to='room@domain/nick'><x xmlns='http://jabber.org/protocol/muc' /></presence>");
+	}
 
-    @Test
-    public void shouldUnlockWhenInstantRoomIsCreated() {
-	final StateChangedTestHandler handler = new StateChangedTestHandler();
-	room.addChatStateChangedHandler(false, handler);
-	assertEquals("locked", room.getChatState());
-	receiveInstantRoomCreation(userURI, roomURI);
-	assertTrue(handler.isCalledOnce());
-    }
+	@Test
+	public void shouldUnlockWhenInstantRoomIsCreated() {
+		final StateChangedTestHandler handler = new StateChangedTestHandler();
+		room.addChatStateChangedHandler(false, handler);
+		assertEquals("locked", room.getChatState());
+		receiveInstantRoomCreation(userURI, roomURI);
+		assertTrue(handler.isCalledOnce());
+	}
 
-    @Test
-    public void shouldUpdateOccupantAndFireListeners() {
-	final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("modified");
-	room.addOccupantChangedHandler(handler);
-	final XmppURI occupantUri = uri("room@domain/name");
-	final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "owner", "participant",
-		Show.notSpecified, null);
-	final Occupant occupant2 = room.setOccupantPresence(userURI, occupantUri, "admin", "moderator",
-		Show.notSpecified, null);
-	assertEquals(1, handler.getCalledTimes());
-	assertSame(occupant, occupant2);
-    }
+	@Test
+	public void shouldUpdateOccupantAndFireListeners() {
+		final OccupantChangedTestHandler handler = new OccupantChangedTestHandler("modified");
+		room.addOccupantChangedHandler(handler);
+		final XmppURI occupantUri = uri("room@domain/name");
+		final Occupant occupant = room.setOccupantPresence(userURI, occupantUri, "owner", "participant", Show.notSpecified, null);
+		final Occupant occupant2 = room.setOccupantPresence(userURI, occupantUri, "admin", "moderator", Show.notSpecified, null);
+		assertEquals(1, handler.getCalledTimes());
+		assertSame(occupant, occupant2);
+	}
 
-    private void receiveInstantRoomCreation(XmppURI userUri, final XmppURI room) {
-	session.receives("<presence to='user@domain/res' from='" + room + "'>"
-		+ "<x xmlns='http://jabber.org/protocol/muc#user'>"
-		+ "<item affiliation='owner' role='moderator' jid='" + userUri
-		+ "' /><status code='201'/></x></presence>");
-	session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>"
-		+ "<query xmlns='http://jabber.org/protocol/muc#owner'>"
-		+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
-	session.answerSuccess();
-    }
+	private void receiveInstantRoomCreation(XmppURI userUri, final XmppURI room) {
+		session.receives("<presence to='user@domain/res' from='" + room + "'>" + "<x xmlns='http://jabber.org/protocol/muc#user'>"
+				+ "<item affiliation='owner' role='moderator' jid='" + userUri + "' /><status code='201'/></x></presence>");
+		session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>" + "<query xmlns='http://jabber.org/protocol/muc#owner'>"
+				+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
+		session.answerSuccess();
+	}
 
 }

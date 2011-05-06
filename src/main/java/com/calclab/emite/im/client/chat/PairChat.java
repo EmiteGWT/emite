@@ -35,54 +35,54 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
  * @see Chat
  */
 public class PairChat extends AbstractChat {
-    private static final String PAIRCHAT_THREAD_PROP = "pairchat.thred";
-    private final String id;
+	private static final String PAIRCHAT_THREAD_PROP = "pairchat.thred";
+	private final String id;
 
-    /**
-     * Create a new pair chat. Pair chats are created by PairChatManager
-     * 
-     * @param session
-     * @param properties
-     */
-    PairChat(final XmppSession session, final ChatProperties properties) {
-	super(session, properties);
-	id = generateChatID();
-    }
-
-    @Override
-    public String getID() {
-	return id;
-    }
-
-    public String getThread() {
-	return (String) properties.getData(PAIRCHAT_THREAD_PROP);
-    }
-
-    @Override
-    public void open() {
-	if (session.isReady()) {
-	    setChatState(ChatStates.ready);
+	/**
+	 * Create a new pair chat. Pair chats are created by PairChatManager
+	 * 
+	 * @param session
+	 * @param properties
+	 */
+	PairChat(final XmppSession session, final ChatProperties properties) {
+		super(session, properties);
+		id = generateChatID();
 	}
-    }
 
-    @Override
-    public void send(final Message message) {
-	message.setThread(getThread());
-	message.setType(Type.chat);
-	message.setTo(getURI());
-	super.send(message);
-    }
+	@Override
+	public String getID() {
+		return id;
+	}
 
-    public void setThread(final String thread) {
-	properties.setData(PAIRCHAT_THREAD_PROP, thread);
-    }
+	public String getThread() {
+		return (String) properties.getData(PAIRCHAT_THREAD_PROP);
+	}
 
-    @Override
-    public String toString() {
-	return id;
-    }
+	@Override
+	public void open() {
+		if (session.isReady()) {
+			setChatState(ChatStates.ready);
+		}
+	}
 
-    private String generateChatID() {
-	return "chat: " + getURI().toString() + "-" + getThread();
-    }
+	@Override
+	public void send(final Message message) {
+		message.setThread(getThread());
+		message.setType(Type.chat);
+		message.setTo(getURI());
+		super.send(message);
+	}
+
+	public void setThread(final String thread) {
+		properties.setData(PAIRCHAT_THREAD_PROP, thread);
+	}
+
+	@Override
+	public String toString() {
+		return id;
+	}
+
+	private String generateChatID() {
+		return "chat: " + getURI().toString() + "-" + getThread();
+	}
 }

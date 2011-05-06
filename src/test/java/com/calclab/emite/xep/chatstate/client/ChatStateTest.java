@@ -16,52 +16,52 @@ import com.calclab.emite.xtesting.EmiteTestsEventBus;
 import com.calclab.emite.xtesting.handlers.ChatStateNotificationTestHandler;
 
 public class ChatStateTest {
-    private static final XmppURI MYSELF = uri("self@domain/res");
-    private static final XmppURI OTHER = uri("other@domain/otherRes");
-    private ChatStateNotificationTestHandler stateHandler;
-    private PairChat pairChat;
-    private ChatStateManager chatStateManager;
+	private static final XmppURI MYSELF = uri("self@domain/res");
+	private static final XmppURI OTHER = uri("other@domain/otherRes");
+	private ChatStateNotificationTestHandler stateHandler;
+	private PairChat pairChat;
+	private ChatStateManager chatStateManager;
 
-    @Before
-    public void aaCreate() {
-	pairChat = Mockito.mock(PairChat.class);
-	EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
-	Mockito.when(pairChat.getChatEventBus()).thenReturn(eventBus);
-	chatStateManager = new ChatStateManager(pairChat);
-	stateHandler = new ChatStateNotificationTestHandler();
-	chatStateManager.addChatStateNotificationHandler(stateHandler);
-    }
+	@Before
+	public void aaCreate() {
+		pairChat = Mockito.mock(PairChat.class);
+		EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
+		Mockito.when(pairChat.getChatEventBus()).thenReturn(eventBus);
+		chatStateManager = new ChatStateManager(pairChat);
+		stateHandler = new ChatStateNotificationTestHandler();
+		chatStateManager.addChatStateNotificationHandler(stateHandler);
+	}
 
-    @Test
-    public void shouldFireGone() {
-	final Message message = new Message(null, OTHER, MYSELF);
-	message.addChild("gone", ChatStateManager.XMLNS);
-	chatStateManager.handleMessageReceived(pairChat, message);
-	assertEquals(ChatState.gone, stateHandler.getLastChatState());
-    }
+	@Test
+	public void shouldFireGone() {
+		final Message message = new Message(null, OTHER, MYSELF);
+		message.addChild("gone", ChatStateManager.XMLNS);
+		chatStateManager.handleMessageReceived(pairChat, message);
+		assertEquals(ChatState.gone, stateHandler.getLastChatState());
+	}
 
-    @Test
-    public void shouldFireOtherCompossing() {
-	final Message message = new Message(null, OTHER, MYSELF);
-	message.addChild("composing", ChatStateManager.XMLNS);
-	chatStateManager.handleMessageReceived(pairChat, message);
-	assertEquals(ChatState.composing, stateHandler.getLastChatState());
-    }
+	@Test
+	public void shouldFireOtherCompossing() {
+		final Message message = new Message(null, OTHER, MYSELF);
+		message.addChild("composing", ChatStateManager.XMLNS);
+		chatStateManager.handleMessageReceived(pairChat, message);
+		assertEquals(ChatState.composing, stateHandler.getLastChatState());
+	}
 
-    @Test
-    public void shouldFireOtherCompossingAsGmailDo() {
-	final Message message = new Message(null, OTHER, MYSELF);
-	message.addChild("cha:composing", ChatStateManager.XMLNS);
-	chatStateManager.handleMessageReceived(pairChat, message);
-	assertEquals(ChatState.composing, stateHandler.getLastChatState());
-    }
+	@Test
+	public void shouldFireOtherCompossingAsGmailDo() {
+		final Message message = new Message(null, OTHER, MYSELF);
+		message.addChild("cha:composing", ChatStateManager.XMLNS);
+		chatStateManager.handleMessageReceived(pairChat, message);
+		assertEquals(ChatState.composing, stateHandler.getLastChatState());
+	}
 
-    @Test
-    public void shouldFireOtherCompossingToWithoutResource() {
-	final Message message = new Message(null, OTHER.getJID(), MYSELF);
-	message.addChild("cha:composing", ChatStateManager.XMLNS);
-	chatStateManager.handleMessageReceived(pairChat, message);
-	assertEquals(ChatState.composing, stateHandler.getLastChatState());
-    }
+	@Test
+	public void shouldFireOtherCompossingToWithoutResource() {
+		final Message message = new Message(null, OTHER.getJID(), MYSELF);
+		message.addChild("cha:composing", ChatStateManager.XMLNS);
+		chatStateManager.handleMessageReceived(pairChat, message);
+		assertEquals(ChatState.composing, stateHandler.getLastChatState());
+	}
 
 }

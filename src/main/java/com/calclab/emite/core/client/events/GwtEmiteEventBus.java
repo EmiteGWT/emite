@@ -26,18 +26,18 @@ import com.google.gwt.event.shared.HandlerManager;
 
 public class GwtEmiteEventBus extends HandlerManager implements EmiteEventBus {
 
-    private final String eventBusName;
+	private final String eventBusName;
 
-    GwtEmiteEventBus(String eventBusName) {
-	super(null);
-	this.eventBusName = eventBusName;
-	GWT.log("New EventBus: " + eventBusName);
-    }
+	GwtEmiteEventBus(String eventBusName) {
+		super(null);
+		this.eventBusName = eventBusName;
+		GWT.log("New EventBus: " + eventBusName);
+	}
 
-    @Override
-    public void fireEvent(final GwtEvent<?> event) {
-	GWT.log("[" + eventBusName + "] " + event.toDebugString());
-	super.fireEvent(event);
-    }
+	@Override
+	public void fireEvent(final GwtEvent<?> event) {
+		GWT.log("[" + eventBusName + "] " + event.toDebugString());
+		super.fireEvent(event);
+	}
 
 }

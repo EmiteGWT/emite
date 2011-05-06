@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface SessionRequestResultHandler extends EventHandler {
 
-    void onSessionRequestResult(SessionRequestResultEvent event);
+	void onSessionRequestResult(SessionRequestResultEvent event);
 
 }

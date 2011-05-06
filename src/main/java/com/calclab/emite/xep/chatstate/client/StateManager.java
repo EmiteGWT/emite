@@ -38,43 +38,42 @@ import com.google.inject.Inject;
  */
 public class StateManager {
 
-    @Inject
-    public StateManager(final ChatManager chatManager) {
+	@Inject
+	public StateManager(final ChatManager chatManager) {
 
-	chatManager.addChatChangedHandler(new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(ChatChangedEvent event) {
-		if (event.isCreated()) {
-		    getChatState(event.getChat());
-		} else if (event.isClosed()) {
-		    Chat chat = event.getChat();
-		    GWT.log("Removing chat state to chat: " + chat.getID(), null);
-		    final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(
-			    ChatStateManager.KEY);
-		    if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
-			// We are closing, then we send the gone state
-			chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
-		    }
-		    chat.getProperties().setData(ChatStateManager.KEY, null);
-		}
-	    }
-	});
+		chatManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(ChatChangedEvent event) {
+				if (event.isCreated()) {
+					getChatState(event.getChat());
+				} else if (event.isClosed()) {
+					Chat chat = event.getChat();
+					GWT.log("Removing chat state to chat: " + chat.getID(), null);
+					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
+					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
+						// We are closing, then we send the gone state
+						chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
+					}
+					chat.getProperties().setData(ChatStateManager.KEY, null);
+				}
+			}
+		});
 
-    }
-
-    public ChatStateManager getChatState(final Chat chat) {
-	ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
-	if (chatStateManager == null) {
-	    chatStateManager = createChatState(chat);
 	}
-	return chatStateManager;
-    }
 
-    private ChatStateManager createChatState(final Chat chat) {
-	GWT.log("Adding chat state to chat: " + chat.getID(), null);
-	final ChatStateManager chatStateManager = new ChatStateManager(chat);
-	chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
-	return chatStateManager;
-    }
+	public ChatStateManager getChatState(final Chat chat) {
+		ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
+		if (chatStateManager == null) {
+			chatStateManager = createChatState(chat);
+		}
+		return chatStateManager;
+	}
+
+	private ChatStateManager createChatState(final Chat chat) {
+		GWT.log("Adding chat state to chat: " + chat.getID(), null);
+		final ChatStateManager chatStateManager = new ChatStateManager(chat);
+		chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
+		return chatStateManager;
+	}
 
 }

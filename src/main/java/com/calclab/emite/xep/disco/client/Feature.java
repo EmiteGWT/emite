@@ -24,14 +24,14 @@ import com.calclab.emite.core.client.packet.IPacket;
 
 public class Feature {
 
-    public static Feature fromPacket(final IPacket packet) {
-	return new Feature(packet.getAttribute("var"));
-    }
+	public static Feature fromPacket(final IPacket packet) {
+		return new Feature(packet.getAttribute("var"));
+	}
 
-    public final String var;
+	public final String var;
 
-    public Feature(final String var) {
-	this.var = var;
-    }
+	public Feature(final String var) {
+		this.var = var;
+	}
 
 }

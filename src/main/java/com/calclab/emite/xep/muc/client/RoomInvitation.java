@@ -24,34 +24,33 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 
 public class RoomInvitation {
-    private final String reason;
-    private final ChatProperties chatProperties;
+	private final String reason;
+	private final ChatProperties chatProperties;
 
-    public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
-	this.chatProperties = new ChatProperties(roomURI, invitor, null);
-	this.reason = reason;
-    }
+	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
+		this.chatProperties = new ChatProperties(roomURI, invitor, null);
+		this.reason = reason;
+	}
 
-    public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason,
-	    final ChatProperties chatProperties) {
-	this.chatProperties = new ChatProperties(roomURI, invitor, null, chatProperties);
-	this.reason = reason;
-    }
+	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason, final ChatProperties chatProperties) {
+		this.chatProperties = new ChatProperties(roomURI, invitor, null, chatProperties);
+		this.reason = reason;
+	}
 
-    public ChatProperties getChatProperties() {
-	return chatProperties;
-    }
+	public ChatProperties getChatProperties() {
+		return chatProperties;
+	}
 
-    public XmppURI getInvitor() {
-	return chatProperties.getInitiatorUri();
-    }
+	public XmppURI getInvitor() {
+		return chatProperties.getInitiatorUri();
+	}
 
-    public String getReason() {
-	return reason;
-    }
+	public String getReason() {
+		return reason;
+	}
 
-    public XmppURI getRoomURI() {
-	return chatProperties.getUri();
-    }
+	public XmppURI getRoomURI() {
+		return chatProperties.getUri();
+	}
 
 }

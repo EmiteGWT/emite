@@ -32,118 +32,118 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 
 public abstract class AbstractChatManager extends ChatManagerBoilerplate {
-    private XmppURI currentChatUser;
+	private XmppURI currentChatUser;
 
-    public AbstractChatManager(final XmppSession session, final ChatSelectionStrategy strategy) {
-	super(session, strategy);
-	forwardMessagesToChats();
-	controlSessionStatus();
-    }
-
-    @Override
-    public void close(final Chat chat) {
-	chat.close();
-	getChats().remove(chat);
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.closed, chat));
-    }
-
-    @Override
-    public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
-	for (final Chat chat : chats) {
-	    if (strategy.isAssignable(chat.getProperties(), properties)) {
-		return chat;
-	    }
+	public AbstractChatManager(final XmppSession session, final ChatSelectionStrategy strategy) {
+		super(session, strategy);
+		forwardMessagesToChats();
+		controlSessionStatus();
 	}
-	if (createIfNotFound) {
+
+	@Override
+	public void close(final Chat chat) {
+		chat.close();
+		getChats().remove(chat);
+		managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.closed, chat));
 	}
-	return null;
-    }
 
-    @Override
-    public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
-	Chat chat = getChat(properties, false);
-	if (chat == null) {
-	    if (!createIfNotFound)
-		return null;
-	    properties.setInitiatorUri(session.getCurrentUserURI());
-	    chat = addNewChat(properties);
-	}
-	chat.open();
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.opened, chat));
-	return chat;
-    }
-
-    protected void addChat(final Chat chat) {
-	chats.add(chat);
-    }
-
-    /**
-     * This method creates a new chat, add it to the pool and fire the event
-     * 
-     * @param properties
-     */
-    protected Chat addNewChat(final ChatProperties properties) {
-	final Chat chat = createChat(properties);
-	addChat(chat);
-	managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.created, chat));
-	return chat;
-    }
-
-    /**
-     * A template method: the subclass must return a new object of class Chat
-     * 
-     * @param properties
-     *            the properties of the chat
-     * @return a new chat. must not be null
-     */
-    protected abstract Chat createChat(ChatProperties properties);
-
-    private void controlSessionStatus() {
-	// Control chat state when the user logout and login again
-	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(final StateChangedEvent event) {
-		if (event.is(SessionStates.loggedIn)) {
-		    final XmppURI currentUser = session.getCurrentUserURI();
-		    if (currentChatUser == null) {
-			currentChatUser = currentUser;
-		    }
-		    if (currentUser.equalsNoResource(currentChatUser)) {
-			for (Chat chat : chats) {
-			    chat.open();
+	@Override
+	public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
+		for (final Chat chat : chats) {
+			if (strategy.isAssignable(chat.getProperties(), properties)) {
+				return chat;
 			}
-		    }
-		} else if (event.is(SessionStates.loggingOut) || event.is(SessionStates.disconnected)) {
-		    // check both states: loggingOut is preferred, but not
-		    // always fired (i.e. error)
-		    for (Chat chat : chats) {
-			chat.close();
-		    }
 		}
-	    }
-	});
+		if (createIfNotFound) {
+		}
+		return null;
+	}
 
-    }
-
-    private void forwardMessagesToChats() {
-	session.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(final MessageEvent event) {
-		final Message message = event.getMessage();
-		final ChatProperties properties = strategy.extractProperties(message);
-		if (properties != null) {
-		    Chat chat = getChat(properties, false);
-		    if (chat == null && properties.shouldCreateNewChat()) {
-			// we need to create a chat for this incoming message
-			properties.setInitiatorUri(properties.getUri());
+	@Override
+	public Chat openChat(final ChatProperties properties, final boolean createIfNotFound) {
+		Chat chat = getChat(properties, false);
+		if (chat == null) {
+			if (!createIfNotFound)
+				return null;
+			properties.setInitiatorUri(session.getCurrentUserURI());
 			chat = addNewChat(properties);
-		    }
-		    if (chat != null) {
-			chat.receive(message);
-		    }
 		}
-	    }
-	});
-    }
+		chat.open();
+		managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.opened, chat));
+		return chat;
+	}
+
+	protected void addChat(final Chat chat) {
+		chats.add(chat);
+	}
+
+	/**
+	 * This method creates a new chat, add it to the pool and fire the event
+	 * 
+	 * @param properties
+	 */
+	protected Chat addNewChat(final ChatProperties properties) {
+		final Chat chat = createChat(properties);
+		addChat(chat);
+		managerEventBus.fireEvent(new ChatChangedEvent(ChangeTypes.created, chat));
+		return chat;
+	}
+
+	/**
+	 * A template method: the subclass must return a new object of class Chat
+	 * 
+	 * @param properties
+	 *            the properties of the chat
+	 * @return a new chat. must not be null
+	 */
+	protected abstract Chat createChat(ChatProperties properties);
+
+	private void controlSessionStatus() {
+		// Control chat state when the user logout and login again
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(final StateChangedEvent event) {
+				if (event.is(SessionStates.loggedIn)) {
+					final XmppURI currentUser = session.getCurrentUserURI();
+					if (currentChatUser == null) {
+						currentChatUser = currentUser;
+					}
+					if (currentUser.equalsNoResource(currentChatUser)) {
+						for (Chat chat : chats) {
+							chat.open();
+						}
+					}
+				} else if (event.is(SessionStates.loggingOut) || event.is(SessionStates.disconnected)) {
+					// check both states: loggingOut is preferred, but not
+					// always fired (i.e. error)
+					for (Chat chat : chats) {
+						chat.close();
+					}
+				}
+			}
+		});
+
+	}
+
+	private void forwardMessagesToChats() {
+		session.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
+				final ChatProperties properties = strategy.extractProperties(message);
+				if (properties != null) {
+					Chat chat = getChat(properties, false);
+					if (chat == null && properties.shouldCreateNewChat()) {
+						// we need to create a chat for this incoming message
+						properties.setInitiatorUri(properties.getUri());
+						chat = addNewChat(properties);
+					}
+					if (chat != null) {
+						chat.receive(message);
+					}
+				}
+			}
+		});
+	}
 
 }

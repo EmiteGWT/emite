@@ -27,17 +27,17 @@ import com.google.gwt.user.client.Timer;
 
 public class GWTScheduler {
 
-    public static long getCurrentTime() {
-	return new Date().getTime();
-    }
+	public static long getCurrentTime() {
+		return new Date().getTime();
+	}
 
-    public static void schedule(final int msecs, final ScheduledAction action) {
-	new Timer() {
-	    @Override
-	    public void run() {
-		action.run();
-	    }
-	}.schedule(msecs);
-    }
+	public static void schedule(final int msecs, final ScheduledAction action) {
+		new Timer() {
+			@Override
+			public void run() {
+				action.run();
+			}
+		}.schedule(msecs);
+	}
 
 }

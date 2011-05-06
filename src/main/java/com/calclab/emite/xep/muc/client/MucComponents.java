@@ -32,8 +32,8 @@ import com.google.inject.Provider;
  */
 public class MucComponents {
 
-    @Inject
-    public MucComponents(SessionComponentsRegistry registry, Provider<RoomManager> provider) {
-	registry.addProvider(provider);
-    }
+	@Inject
+	public MucComponents(SessionComponentsRegistry registry, Provider<RoomManager> provider) {
+		registry.addProvider(provider);
+	}
 }

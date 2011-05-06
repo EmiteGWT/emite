@@ -43,89 +43,88 @@ import com.google.inject.Inject;
  * XEP-0153: vCard-Based Avatars (Version 1.0)
  */
 public class AvatarManager {
-    private static final PacketMatcher FILTER_X = MatcherFactory.byName("x");
-    private static final String VCARD = "vCard";
-    private static final String XMLNS = "vcard-temp";
-    private static final String PHOTO = "PHOTO";
-    private static final String TYPE = "TYPE";
-    private static final String BINVAL = "BINVAL";
-    private final XmppSession session;
+	private static final PacketMatcher FILTER_X = MatcherFactory.byName("x");
+	private static final String VCARD = "vCard";
+	private static final String XMLNS = "vcard-temp";
+	private static final String PHOTO = "PHOTO";
+	private static final String TYPE = "TYPE";
+	private static final String BINVAL = "BINVAL";
+	private final XmppSession session;
 
-    @Inject
-    public AvatarManager(final XmppSession session) {
-	this.session = session;
+	@Inject
+	public AvatarManager(final XmppSession session) {
+		this.session = session;
 
-	session.addPresenceReceivedHandler(new PresenceHandler() {
-	    @Override
-	    public void onPresence(PresenceEvent event) {
-		Presence presence = event.getPresence();
-		final List<? extends IPacket> children = presence.getChildren(FILTER_X);
-		for (final IPacket child : children) {
-		    if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
-			session.getEventBus().fireEvent(new HashPresenceReceivedEvent(presence));
-		    }
-		}
-	    }
-	});
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(PresenceEvent event) {
+				Presence presence = event.getPresence();
+				final List<? extends IPacket> children = presence.getChildren(FILTER_X);
+				for (final IPacket child : children) {
+					if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
+						session.getEventBus().fireEvent(new HashPresenceReceivedEvent(presence));
+					}
+				}
+			}
+		});
 
-    }
+	}
 
-    public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardHandler handler) {
-	return AvatarVCardReceivedEvent.bind(session.getEventBus(), handler);
-    }
+	public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardHandler handler) {
+		return AvatarVCardReceivedEvent.bind(session.getEventBus(), handler);
+	}
 
-    public HandlerRegistration addHashPresenceReceviedHandler(PresenceHandler handler) {
-	return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
-    }
+	public HandlerRegistration addHashPresenceReceviedHandler(PresenceHandler handler) {
+		return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
+	}
 
-    /**
-     * When the recipient's client receives the hash of the avatar image, it
-     * SHOULD check the hash to determine if it already has a cached copy of
-     * that avatar image. If not, it retrieves the sender's full vCard in
-     * accordance with the protocol flow described in XEP-0054 (note that this
-     * request is sent to the user's bare JID, not full JID):
-     * 
-     * @param otherJID
-     */
-    public void requestVCard(final XmppURI otherJID) {
-	final IQ iq = new IQ(Type.get, otherJID);
-	iq.addChild(VCARD, XMLNS);
+	/**
+	 * When the recipient's client receives the hash of the avatar image, it
+	 * SHOULD check the hash to determine if it already has a cached copy of
+	 * that avatar image. If not, it retrieves the sender's full vCard in
+	 * accordance with the protocol flow described in XEP-0054 (note that this
+	 * request is sent to the user's bare JID, not full JID):
+	 * 
+	 * @param otherJID
+	 */
+	public void requestVCard(final XmppURI otherJID) {
+		final IQ iq = new IQ(Type.get, otherJID);
+		iq.addChild(VCARD, XMLNS);
 
-	session.sendIQ("avatar", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ received) {
-		if (IQ.isSuccess(received) && received.hasChild(VCARD)
-			&& received.hasAttribute("to", session.getCurrentUserURI().toString())) {
-		    final XmppURI from = XmppURI.jid(received.getAttribute("from"));
-		    final IPacket photo = received.getFirstChild(VCARD).getFirstChild(PHOTO);
-		    final String photoType = photo.getFirstChild(TYPE).getText();
-		    final String photoBinval = photo.getFirstChild(BINVAL).getText();
-		    final AvatarVCard avatar = new AvatarVCard(from, null, photoType, photoBinval);
-		    session.getEventBus().fireEvent(new AvatarVCardReceivedEvent(avatar));
-		}
-	    }
-	});
+		session.sendIQ("avatar", iq, new IQResponseHandler() {
+			@Override
+			public void onIQ(IQ received) {
+				if (IQ.isSuccess(received) && received.hasChild(VCARD) && received.hasAttribute("to", session.getCurrentUserURI().toString())) {
+					final XmppURI from = XmppURI.jid(received.getAttribute("from"));
+					final IPacket photo = received.getFirstChild(VCARD).getFirstChild(PHOTO);
+					final String photoType = photo.getFirstChild(TYPE).getText();
+					final String photoBinval = photo.getFirstChild(BINVAL).getText();
+					final AvatarVCard avatar = new AvatarVCard(from, null, photoType, photoBinval);
+					session.getEventBus().fireEvent(new AvatarVCardReceivedEvent(avatar));
+				}
+			}
+		});
 
-    }
+	}
 
-    public void setVCardAvatar(final String photoBinary) {
-	final IQ iq = new IQ(Type.set, null);
-	final IPacket vcard = iq.addChild(VCARD, XMLNS);
-	vcard.With("xdbns", XMLNS).With("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
-	vcard.setAttribute("xdbns", XMLNS);
-	vcard.setAttribute("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
-	vcard.setAttribute("version", "2.0");
-	vcard.addChild(PHOTO, null).addChild(BINVAL, null).setText(photoBinary);
-	session.sendIQ("avatar", iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		if (IQ.isSuccess(iq)) {
-		    // TODO: add behaviour
-		} else {
-		    // TODO: add behaviour (fire ErrorEvent)
-		}
-	    }
-	});
-    }
+	public void setVCardAvatar(final String photoBinary) {
+		final IQ iq = new IQ(Type.set, null);
+		final IPacket vcard = iq.addChild(VCARD, XMLNS);
+		vcard.With("xdbns", XMLNS).With("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
+		vcard.setAttribute("xdbns", XMLNS);
+		vcard.setAttribute("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
+		vcard.setAttribute("version", "2.0");
+		vcard.addChild(PHOTO, null).addChild(BINVAL, null).setText(photoBinary);
+		session.sendIQ("avatar", iq, new IQResponseHandler() {
+			@Override
+			public void onIQ(IQ iq) {
+				if (IQ.isSuccess(iq)) {
+					// TODO: add behaviour
+				} else {
+					// TODO: add behaviour (fire ErrorEvent)
+				}
+			}
+		});
+	}
 
 }

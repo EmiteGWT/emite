@@ -31,35 +31,34 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class GWTServices implements Services {
-    @Inject
-    public GWTServices() {
-	GWT.log("Creating GWTServices");
-    }
+	@Inject
+	public GWTServices() {
+		GWT.log("Creating GWTServices");
+	}
 
-    @Override
-    public long getCurrentTime() {
-	return GWTScheduler.getCurrentTime();
-    }
+	@Override
+	public long getCurrentTime() {
+		return GWTScheduler.getCurrentTime();
+	}
 
-    @Override
-    public void schedule(final int msecs, final ScheduledAction action) {
-	GWTScheduler.schedule(msecs, action);
-    }
+	@Override
+	public void schedule(final int msecs, final ScheduledAction action) {
+		GWTScheduler.schedule(msecs, action);
+	}
 
-    @Override
-    public void send(final String httpBase, final String request, final ConnectorCallback listener)
-	    throws ConnectorException {
-	GWTConnector.send(httpBase, request, listener);
-    }
+	@Override
+	public void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+		GWTConnector.send(httpBase, request, listener);
+	}
 
-    @Override
-    public String toString(final IPacket packet) {
-	return GWTXMLService.toString(packet);
-    }
+	@Override
+	public String toString(final IPacket packet) {
+		return GWTXMLService.toString(packet);
+	}
 
-    @Override
-    public IPacket toXML(final String xml) {
-	return GWTXMLService.toXML(xml);
-    }
+	@Override
+	public IPacket toXML(final String xml) {
+		return GWTXMLService.toXML(xml);
+	}
 
 }

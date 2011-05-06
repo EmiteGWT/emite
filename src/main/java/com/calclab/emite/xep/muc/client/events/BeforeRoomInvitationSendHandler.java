@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface BeforeRoomInvitationSendHandler extends EventHandler {
 
-    void onBeforeInvitationSend(BeforeRoomInvitationSendEvent event);
+	void onBeforeInvitationSend(BeforeRoomInvitationSendEvent event);
 
 }

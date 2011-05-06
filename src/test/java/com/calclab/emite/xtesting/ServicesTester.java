@@ -35,58 +35,57 @@ import com.calclab.emite.xtesting.services.TigaseXMLService;
  * 
  */
 public class ServicesTester implements Services {
-    public static class Request {
-	public final String httpBase;
-	public final String request;
-	public final ConnectorCallback listener;
+	public static class Request {
+		public final String httpBase;
+		public final String request;
+		public final ConnectorCallback listener;
 
-	public Request(final String httpBase, final String request, final ConnectorCallback listener) {
-	    this.httpBase = httpBase;
-	    this.request = request;
-	    this.listener = listener;
+		public Request(final String httpBase, final String request, final ConnectorCallback listener) {
+			this.httpBase = httpBase;
+			this.request = request;
+			this.listener = listener;
+		}
+
 	}
 
-    }
+	public static final TigaseXMLService xmler = TigaseXMLService.instance;
+	private final ArrayList<Request> requests;
 
-    public static final TigaseXMLService xmler = TigaseXMLService.instance;
-    private final ArrayList<Request> requests;
+	public ServicesTester() {
+		this.requests = new ArrayList<Request>();
+	}
 
-    public ServicesTester() {
-	this.requests = new ArrayList<Request>();
-    }
+	@Override
+	public long getCurrentTime() {
+		return 0;
+	}
 
-    @Override
-    public long getCurrentTime() {
-	return 0;
-    }
+	public IPacket getSentPacket(final int index) {
+		final String request = requests.get(index).request;
+		return xmler.toXML(request);
+	}
 
-    public IPacket getSentPacket(final int index) {
-	final String request = requests.get(index).request;
-	return xmler.toXML(request);
-    }
+	public int requestSentCount() {
+		return requests.size();
+	}
 
-    public int requestSentCount() {
-	return requests.size();
-    }
+	@Override
+	public void schedule(final int msecs, final ScheduledAction action) {
+	}
 
-    @Override
-    public void schedule(final int msecs, final ScheduledAction action) {
-    }
+	@Override
+	public void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+		requests.add(new Request(httpBase, request, listener));
+	}
 
-    @Override
-    public void send(final String httpBase, final String request, final ConnectorCallback listener)
-	    throws ConnectorException {
-	requests.add(new Request(httpBase, request, listener));
-    }
+	@Override
+	public String toString(final IPacket packet) {
+		return xmler.toString(packet);
+	}
 
-    @Override
-    public String toString(final IPacket packet) {
-	return xmler.toString(packet);
-    }
-
-    @Override
-    public IPacket toXML(final String xml) {
-	return xmler.toXML(xml);
-    }
+	@Override
+	public IPacket toXML(final String xml) {
+		return xmler.toXML(xml);
+	}
 
 }

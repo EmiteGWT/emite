@@ -32,27 +32,27 @@ import com.calclab.emite.xxamples.pingpong.client.logic.PongSessionPresenter;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-@GinModules({PingPongModule.class, BrowserModule.class})
+@GinModules({ PingPongModule.class, BrowserModule.class })
 public interface PingPongGinjector extends Ginjector {
 
-    PingChatPresenter getPingChatPresenter();
+	PingChatPresenter getPingChatPresenter();
 
-    PingInviteRoomPresenter getPingInviteRoomPresenter();
+	PingInviteRoomPresenter getPingInviteRoomPresenter();
 
-    PingPongCommonPresenter getPingPongCommonPresenter();
+	PingPongCommonPresenter getPingPongCommonPresenter();
 
-    PingPongDisplay getPingPongDisplay();
+	PingPongDisplay getPingPongDisplay();
 
-    PingRoomPresenter getPingRoomPresenter();
+	PingRoomPresenter getPingRoomPresenter();
 
-    PingSessionPresenter getPingSessionPresenter();
+	PingSessionPresenter getPingSessionPresenter();
 
-    PongChatPresenter getPongChatPresenter();
+	PongChatPresenter getPongChatPresenter();
 
-    PongInviteRoomPresenter getPongInviteRoomPresenter();
+	PongInviteRoomPresenter getPongInviteRoomPresenter();
 
-    PongRoomPresenter getPongRoomPresenter();
+	PongRoomPresenter getPongRoomPresenter();
 
-    PongSessionPresenter getPongSessionPresenter();
+	PongSessionPresenter getPongSessionPresenter();
 
 }

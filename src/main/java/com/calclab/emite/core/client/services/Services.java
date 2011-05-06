@@ -23,21 +23,21 @@ package com.calclab.emite.core.client.services;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public interface Services {
-    long getCurrentTime();
+	long getCurrentTime();
 
-    void schedule(int msecs, ScheduledAction action);
+	void schedule(int msecs, ScheduledAction action);
 
-    void send(String httpBase, String request, ConnectorCallback listener) throws ConnectorException;
+	void send(String httpBase, String request, ConnectorCallback listener) throws ConnectorException;
 
-    String toString(IPacket iPacket);
+	String toString(IPacket iPacket);
 
-    /**
-     * Convert xml to IPacket
-     * 
-     * @param xml
-     *            text
-     * @return IPacket or NoPacket.INSTANCE if problems
-     */
-    IPacket toXML(String xml);
+	/**
+	 * Convert xml to IPacket
+	 * 
+	 * @param xml
+	 *            text
+	 * @return IPacket or NoPacket.INSTANCE if problems
+	 */
+	IPacket toXML(String xml);
 
 }

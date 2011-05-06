@@ -32,33 +32,33 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class ResourceBindingManager {
-    private final XmppConnection connection;
+	private final XmppConnection connection;
 
-    @Inject
-    public ResourceBindingManager(final XmppConnection connection) {
-	GWT.log("Creating ResourceBindingManager");
+	@Inject
+	public ResourceBindingManager(final XmppConnection connection) {
+		GWT.log("Creating ResourceBindingManager");
 
-	this.connection = connection;
+		this.connection = connection;
 
-	connection.addStanzaReceivedHandler(new StanzaHandler() {
-	    @Override
-	    public void onStanza(final StanzaEvent event) {
-		final IPacket received = event.getStanza();
-		if ("bind-resource".equals(received.getAttribute("id"))) {
-		    final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
-		    connection.getEventBus().fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
-		}
-	    }
-	});
+		connection.addStanzaReceivedHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(final StanzaEvent event) {
+				final IPacket received = event.getStanza();
+				if ("bind-resource".equals(received.getAttribute("id"))) {
+					final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
+					connection.getEventBus().fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
+				}
+			}
+		});
 
-    }
+	}
 
-    public void bindResource(final String resource) {
-	final IQ iq = new IQ(IQ.Type.set);
-	iq.setId("bind-resource");
-	iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
+	public void bindResource(final String resource) {
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.setId("bind-resource");
+		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
 
-	connection.send(iq);
-    }
+		connection.send(iq);
+	}
 
 }

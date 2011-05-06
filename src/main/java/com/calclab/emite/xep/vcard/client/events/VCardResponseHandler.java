@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface VCardResponseHandler extends EventHandler {
 
-    void onVCardResponse(VCardResponseEvent event);
+	void onVCardResponse(VCardResponseEvent event);
 
 }

@@ -27,30 +27,30 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class VCardResponseEvent extends GwtEvent<VCardResponseHandler> {
 
-    private static final Type<VCardResponseHandler> TYPE = new Type<VCardResponseHandler>();
+	private static final Type<VCardResponseHandler> TYPE = new Type<VCardResponseHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, VCardResponseHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, VCardResponseHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final VCardResponse vCardResponse;
+	private final VCardResponse vCardResponse;
 
-    public VCardResponseEvent(VCardResponse vCardResponse) {
-	this.vCardResponse = vCardResponse;
-    }
+	public VCardResponseEvent(VCardResponse vCardResponse) {
+		this.vCardResponse = vCardResponse;
+	}
 
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<VCardResponseHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<VCardResponseHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public VCardResponse getVCardResponse() {
-	return vCardResponse;
-    }
+	public VCardResponse getVCardResponse() {
+		return vCardResponse;
+	}
 
-    @Override
-    protected void dispatch(VCardResponseHandler handler) {
-	handler.onVCardResponse(this);
-    }
+	@Override
+	protected void dispatch(VCardResponseHandler handler) {
+		handler.onVCardResponse(this);
+	}
 
 }

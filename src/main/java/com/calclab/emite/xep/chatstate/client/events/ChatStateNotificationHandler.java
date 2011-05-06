@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ChatStateNotificationHandler extends EventHandler {
 
-    void onChatStateChanged(ChatStateNotificationEvent event);
+	void onChatStateChanged(ChatStateNotificationEvent event);
 
 }

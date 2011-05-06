@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ConnectionResponseHandler extends EventHandler {
 
-    void onResponse(ConnectionResponseEvent event);
+	void onResponse(ConnectionResponseEvent event);
 
 }

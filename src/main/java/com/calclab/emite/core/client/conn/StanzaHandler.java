@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface StanzaHandler extends EventHandler {
 
-    void onStanza(StanzaEvent event);
+	void onStanza(StanzaEvent event);
 
 }

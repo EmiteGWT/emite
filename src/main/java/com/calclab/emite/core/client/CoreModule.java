@@ -55,21 +55,21 @@ import com.google.inject.Singleton;
  */
 public class CoreModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(Services.class).to(GWTServices.class).in(Singleton.class);
-	bind(XmppConnection.class).to(XmppBoshConnection.class).in(Singleton.class);
-	bind(XmppSession.class).to(XmppSessionLogic.class).in(Singleton.class);
-	bind(IMSessionManager.class).in(Singleton.class);
-	bind(SASLManager.class).in(Singleton.class);
-	bind(ResourceBindingManager.class).in(Singleton.class);
-	bind(SessionComponentsRegistry.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(Services.class).to(GWTServices.class).in(Singleton.class);
+		bind(XmppConnection.class).to(XmppBoshConnection.class).in(Singleton.class);
+		bind(XmppSession.class).to(XmppSessionLogic.class).in(Singleton.class);
+		bind(IMSessionManager.class).in(Singleton.class);
+		bind(SASLManager.class).in(Singleton.class);
+		bind(ResourceBindingManager.class).in(Singleton.class);
+		bind(SessionComponentsRegistry.class).in(Singleton.class);
+	}
 
-    @Provides
-    @Singleton
-    EmiteEventBus provideEmiteEventBus() {
-	return EventBusFactory.create("emite");
-    }
+	@Provides
+	@Singleton
+	EmiteEventBus provideEmiteEventBus() {
+		return EventBusFactory.create("emite");
+	}
 
 }

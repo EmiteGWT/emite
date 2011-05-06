@@ -36,36 +36,36 @@ import com.google.inject.Singleton;
 @Singleton
 public class SessionComponentsRegistry {
 
-    private final HashSet<Provider<?>> providers;
-    private boolean componentsCreated;
+	private final HashSet<Provider<?>> providers;
+	private boolean componentsCreated;
 
-    @Inject
-    public SessionComponentsRegistry() {
-	GWT.log("Creating SessionComponentsRegistry");
+	@Inject
+	public SessionComponentsRegistry() {
+		GWT.log("Creating SessionComponentsRegistry");
 
-	this.providers = new HashSet<Provider<?>>();
-	this.componentsCreated = false;
-    }
-
-    public void addProvider(Provider<?> provider) {
-	if (componentsCreated) {
-	    provider.get();
-	} else {
-	    providers.add(provider);
+		this.providers = new HashSet<Provider<?>>();
+		this.componentsCreated = false;
 	}
-    }
 
-    public boolean areComponentsCreated() {
-	return componentsCreated;
-    }
-
-    public void createComponents() {
-	GWT.log("SessionComponentsRegistry - Create components");
-	assert componentsCreated == false : "Session only can be started once!";
-	for (Provider<?> provider : providers) {
-	    provider.get();
+	public void addProvider(Provider<?> provider) {
+		if (componentsCreated) {
+			provider.get();
+		} else {
+			providers.add(provider);
+		}
 	}
-	providers.clear();
-	this.componentsCreated = true;
-    }
+
+	public boolean areComponentsCreated() {
+		return componentsCreated;
+	}
+
+	public void createComponents() {
+		GWT.log("SessionComponentsRegistry - Create components");
+		assert componentsCreated == false : "Session only can be started once!";
+		for (Provider<?> provider : providers) {
+			provider.get();
+		}
+		providers.clear();
+		this.componentsCreated = true;
+	}
 }

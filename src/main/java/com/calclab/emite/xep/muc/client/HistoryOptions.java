@@ -29,45 +29,45 @@ import java.util.Date;
  */
 public class HistoryOptions {
 
-    public static final String KEY = "RoomHistoryOptions";
+	public static final String KEY = "RoomHistoryOptions";
 
-    /**
-     * Limit the total number of characters in the history to "X" (where the
-     * character count is the characters of the complete XML stanzas, not only
-     * their XML character data).
-     */
-    public int maxchars;
+	/**
+	 * Limit the total number of characters in the history to "X" (where the
+	 * character count is the characters of the complete XML stanzas, not only
+	 * their XML character data).
+	 */
+	public int maxchars;
 
-    /**
-     * Limit the total number of messages in the history to "X".
-     * 
-     */
+	/**
+	 * Limit the total number of messages in the history to "X".
+	 * 
+	 */
 
-    public int maxstanzas;
-    /**
-     * Send only the messages received in the last "X" seconds.
-     * 
-     */
-    public long seconds;
+	public int maxstanzas;
+	/**
+	 * Send only the messages received in the last "X" seconds.
+	 * 
+	 */
+	public long seconds;
 
-    /**
-     * Send only the messages received since the datetime specified (which MUST
-     * conform to the DateTime profile specified in XMPP Date and Time Profiles
-     * [13]).
-     * 
-     */
-    public Date since;
+	/**
+	 * Send only the messages received since the datetime specified (which MUST
+	 * conform to the DateTime profile specified in XMPP Date and Time Profiles
+	 * [13]).
+	 * 
+	 */
+	public Date since;
 
-    public HistoryOptions() {
-	this(-1, -1, -1, null);
-    }
+	public HistoryOptions() {
+		this(-1, -1, -1, null);
+	}
 
-    public HistoryOptions(final int maxchars, final int maxstanzas, final long l, final Date since) {
-	super();
-	this.maxchars = maxchars;
-	this.maxstanzas = maxstanzas;
-	seconds = l;
-	this.since = since;
-    }
+	public HistoryOptions(final int maxchars, final int maxstanzas, final long l, final Date since) {
+		super();
+		this.maxchars = maxchars;
+		this.maxstanzas = maxstanzas;
+		seconds = l;
+		this.since = since;
+	}
 
 }

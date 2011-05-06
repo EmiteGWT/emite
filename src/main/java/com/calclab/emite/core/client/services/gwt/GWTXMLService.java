@@ -31,20 +31,20 @@ import com.google.gwt.xml.client.impl.DOMParseException;
 
 public class GWTXMLService {
 
-    public static String toString(final IPacket packet) {
-	return packet.toString();
-    }
-
-    public static IPacket toXML(final String xml) {
-	try {
-	    final Document parsed = XMLParser.parse(xml);
-	    final Node body = parsed.getChildNodes().item(0);
-	    return new GWTPacket((Element) body);
-	} catch (DOMParseException exception) {
-	    return NoPacket.INSTANCE;
+	public static String toString(final IPacket packet) {
+		return packet.toString();
 	}
-    }
 
-    private GWTXMLService() {
-    }
+	public static IPacket toXML(final String xml) {
+		try {
+			final Document parsed = XMLParser.parse(xml);
+			final Node body = parsed.getChildNodes().item(0);
+			return new GWTPacket((Element) body);
+		} catch (DOMParseException exception) {
+			return NoPacket.INSTANCE;
+		}
+	}
+
+	private GWTXMLService() {
+	}
 }

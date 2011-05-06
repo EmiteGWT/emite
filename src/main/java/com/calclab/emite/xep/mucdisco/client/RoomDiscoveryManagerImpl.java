@@ -33,33 +33,33 @@ import com.google.inject.Inject;
 
 public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 
-    private final DiscoveryManager discoveryManager;
+	private final DiscoveryManager discoveryManager;
 
-    @Inject
-    public RoomDiscoveryManagerImpl(DiscoveryManager discoveryManager) {
-	this.discoveryManager = discoveryManager;
-    }
+	@Inject
+	public RoomDiscoveryManagerImpl(DiscoveryManager discoveryManager) {
+		this.discoveryManager = discoveryManager;
+	}
 
-    @Override
-    public void discoverRooms(XmppURI targetUri, final ExistingRoomsCallback callback) {
-	discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultHandler() {
-	    @Override
-	    public void onDiscoveryItemsResult(DiscoveryItemsResultEvent event) {
-		ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
-		if (event.hasResult()) {
-		    List<Item> items = event.getResults().getItems();
-		    for (Item item : items) {
-			roomItems.add(new ExistingRoom(XmppURI.uri(item.jid), item.name));
-		    }
-		    callback.onExistingRooms(roomItems);
-		}
-	    }
-	});
-    }
+	@Override
+	public void discoverRooms(XmppURI targetUri, final ExistingRoomsCallback callback) {
+		discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultHandler() {
+			@Override
+			public void onDiscoveryItemsResult(DiscoveryItemsResultEvent event) {
+				ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
+				if (event.hasResult()) {
+					List<Item> items = event.getResults().getItems();
+					for (Item item : items) {
+						roomItems.add(new ExistingRoom(XmppURI.uri(item.jid), item.name));
+					}
+					callback.onExistingRooms(roomItems);
+				}
+			}
+		});
+	}
 
-    @Override
-    public void isMucSupported(XmppURI targetUri, FeatureSupportedCallback callback) {
-	discoveryManager.areFeaturesSupported(targetUri, callback, "http://jabber.org/protocol/muc");
-    }
+	@Override
+	public void isMucSupported(XmppURI targetUri, FeatureSupportedCallback callback) {
+		discoveryManager.areFeaturesSupported(targetUri, callback, "http://jabber.org/protocol/muc");
+	}
 
 }

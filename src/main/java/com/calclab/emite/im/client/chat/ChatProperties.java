@@ -33,159 +33,158 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  * The properties are the id used to find a chat in a pool of chats.
  */
 public class ChatProperties {
-    private final HashMap<String, Object> data;
-    private final XmppURI uri;
-    private XmppURI initiatorUri;
-    private String state;
-    private boolean shouldCreateNewChat;
+	private final HashMap<String, Object> data;
+	private final XmppURI uri;
+	private XmppURI initiatorUri;
+	private String state;
+	private boolean shouldCreateNewChat;
 
-    public ChatProperties(final XmppURI uri) {
-	this(uri, null, null);
-    }
-
-    /**
-     * Creates a new {@link ChatProperties} instance taking the data from the
-     * given properties instance. Note that this will not copy the initiator uri
-     * or state.
-     * 
-     * @param uri
-     *            the new uri for the properties.
-     * @param properties
-     *            the properties object to replicate.
-     */
-    public ChatProperties(final XmppURI uri, final ChatProperties properties) {
-	this(uri, null, null, properties);
-
-	for (Entry<String, Object> entry : properties.data.entrySet()) {
-	    this.setData(entry.getKey(), entry.getValue());
+	public ChatProperties(final XmppURI uri) {
+		this(uri, null, null);
 	}
-    }
 
-    public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state) {
-	this.uri = uri;
-	this.initiatorUri = initiatorUri;
-	this.state = state;
-	this.shouldCreateNewChat = true;
-	data = new HashMap<String, Object>();
-    }
+	/**
+	 * Creates a new {@link ChatProperties} instance taking the data from the
+	 * given properties instance. Note that this will not copy the initiator uri
+	 * or state.
+	 * 
+	 * @param uri
+	 *            the new uri for the properties.
+	 * @param properties
+	 *            the properties object to replicate.
+	 */
+	public ChatProperties(final XmppURI uri, final ChatProperties properties) {
+		this(uri, null, null, properties);
 
-    /**
-     * Creates a new {@link ChatProperties} instance taking the data from the
-     * given properties instance. Note that this will not copy the initiator uri
-     * or state.
-     * 
-     * @param uri
-     *            the new uri for the properties.
-     * @param initiatorUri
-     *            the uri of the chat initiator.
-     * @param state
-     *            the chat state.
-     * @param properties
-     *            the properties object to replicate.
-     */
-    public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state,
-	    final ChatProperties properties) {
-	this(uri, initiatorUri, state);
-
-	for (Entry<String, Object> entry : properties.data.entrySet()) {
-	    this.setData(entry.getKey(), entry.getValue());
+		for (Entry<String, Object> entry : properties.data.entrySet()) {
+			this.setData(entry.getKey(), entry.getValue());
+		}
 	}
-    }
 
-    /**
-     * Get the metadata object associated to a given key
-     * 
-     * @param key
-     *            the key
-     * @return the associated object if any, null otherwise
-     * @see setData
-     */
-    public Object getData(final String key) {
-	return data.get(key);
-    }
+	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state) {
+		this.uri = uri;
+		this.initiatorUri = initiatorUri;
+		this.state = state;
+		this.shouldCreateNewChat = true;
+		data = new HashMap<String, Object>();
+	}
 
-    /**
-     * This is the uri of the entity that inititated the chat
-     * 
-     * @return
-     */
-    public XmppURI getInitiatorUri() {
-	return initiatorUri;
-    }
+	/**
+	 * Creates a new {@link ChatProperties} instance taking the data from the
+	 * given properties instance. Note that this will not copy the initiator uri
+	 * or state.
+	 * 
+	 * @param uri
+	 *            the new uri for the properties.
+	 * @param initiatorUri
+	 *            the uri of the chat initiator.
+	 * @param state
+	 *            the chat state.
+	 * @param properties
+	 *            the properties object to replicate.
+	 */
+	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state, final ChatProperties properties) {
+		this(uri, initiatorUri, state);
 
-    /**
-     * The current state of the chat. See ChatStates to see some options.
-     * 
-     * @return
-     * @see ChatStates
-     */
-    public String getState() {
-	return state;
-    }
+		for (Entry<String, Object> entry : properties.data.entrySet()) {
+			this.setData(entry.getKey(), entry.getValue());
+		}
+	}
 
-    /**
-     * Get the chats uri. Is the other side of the conversation in a PairChat,
-     * or the room uri in a RoomChat
-     * 
-     * @return
-     */
-    public XmppURI getUri() {
-	return uri;
-    }
+	/**
+	 * Get the metadata object associated to a given key
+	 * 
+	 * @param key
+	 *            the key
+	 * @return the associated object if any, null otherwise
+	 * @see setData
+	 */
+	public Object getData(final String key) {
+		return data.get(key);
+	}
 
-    /**
-     * Set the metadata object associated to a given key
-     * 
-     * @param key
-     *            the key
-     * @param data
-     *            the object you want to associate
-     * @return the previously metadata object associated to that kay (if any) or
-     *         null otherwise
-     * @see getData
-     */
-    public Object setData(final String key, final Object value) {
-	return data.put(key, value);
-    }
+	/**
+	 * This is the uri of the entity that inititated the chat
+	 * 
+	 * @return
+	 */
+	public XmppURI getInitiatorUri() {
+		return initiatorUri;
+	}
 
-    /**
-     * Change the initiatorUri
-     * 
-     * @param initiatorUri
-     */
-    public void setInitiatorUri(final XmppURI initiatorUri) {
-	this.initiatorUri = initiatorUri;
-    }
+	/**
+	 * The current state of the chat. See ChatStates to see some options.
+	 * 
+	 * @return
+	 * @see ChatStates
+	 */
+	public String getState() {
+		return state;
+	}
 
-    /**
-     * If this attribute is true, when a chat is not found with this properties,
-     * the ChatManager should create a new chat.
-     * 
-     * If this attribute is false, this chat properties never fire a new chat
-     * creation
-     * 
-     * @param shouldCreateNewChat
-     */
-    public void setShouldCreateNewChat(boolean shouldCreateNewChat) {
-	this.shouldCreateNewChat = shouldCreateNewChat;
-    }
+	/**
+	 * Get the chats uri. Is the other side of the conversation in a PairChat,
+	 * or the room uri in a RoomChat
+	 * 
+	 * @return
+	 */
+	public XmppURI getUri() {
+		return uri;
+	}
 
-    /**
-     * Change the state of the chat
-     * 
-     * @param state
-     */
-    public void setState(final String state) {
-	this.state = state;
-    }
+	/**
+	 * Set the metadata object associated to a given key
+	 * 
+	 * @param key
+	 *            the key
+	 * @param data
+	 *            the object you want to associate
+	 * @return the previously metadata object associated to that kay (if any) or
+	 *         null otherwise
+	 * @see getData
+	 */
+	public Object setData(final String key, final Object value) {
+		return data.put(key, value);
+	}
 
-    /**
-     * ChatManager uses this value to know whenever a new chat should be created
-     * when a message with this chat properties arrives
-     * 
-     * @return
-     */
-    public boolean shouldCreateNewChat() {
-	return shouldCreateNewChat;
-    }
+	/**
+	 * Change the initiatorUri
+	 * 
+	 * @param initiatorUri
+	 */
+	public void setInitiatorUri(final XmppURI initiatorUri) {
+		this.initiatorUri = initiatorUri;
+	}
+
+	/**
+	 * If this attribute is true, when a chat is not found with this properties,
+	 * the ChatManager should create a new chat.
+	 * 
+	 * If this attribute is false, this chat properties never fire a new chat
+	 * creation
+	 * 
+	 * @param shouldCreateNewChat
+	 */
+	public void setShouldCreateNewChat(boolean shouldCreateNewChat) {
+		this.shouldCreateNewChat = shouldCreateNewChat;
+	}
+
+	/**
+	 * Change the state of the chat
+	 * 
+	 * @param state
+	 */
+	public void setState(final String state) {
+		this.state = state;
+	}
+
+	/**
+	 * ChatManager uses this value to know whenever a new chat should be created
+	 * when a message with this chat properties arrives
+	 * 
+	 * @return
+	 */
+	public boolean shouldCreateNewChat() {
+		return shouldCreateNewChat;
+	}
 }

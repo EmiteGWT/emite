@@ -23,15 +23,15 @@ package com.calclab.emite.core.client.xmpp.stanzas;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public interface Stanza extends IPacket {
-    public XmppURI getFrom();
+	public XmppURI getFrom();
 
-    public String getFromAsString();
+	public String getFromAsString();
 
-    public XmppURI getTo();
+	public XmppURI getTo();
 
-    public String getToAsString();
+	public String getToAsString();
 
-    public void setFrom(XmppURI from);
+	public void setFrom(XmppURI from);
 
-    public void setTo(XmppURI to);
+	public void setTo(XmppURI to);
 }

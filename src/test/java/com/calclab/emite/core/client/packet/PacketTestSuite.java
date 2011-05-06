@@ -29,155 +29,154 @@ import java.util.List;
  */
 public final class PacketTestSuite {
 
-    public static interface Helper {
-	public void assertEquals(Object expected, Object actual);
+	public static interface Helper {
+		public void assertEquals(Object expected, Object actual);
 
-	public void assertTrue(String message, boolean condition);
+		public void assertTrue(String message, boolean condition);
 
-	public IPacket createPacket(String nodeName);
+		public IPacket createPacket(String nodeName);
 
-	public void log(String message);
-    }
-
-    private static class HelperExtended implements Helper {
-	private final Helper delegate;
-
-	public HelperExtended(final Helper delegate) {
-	    this.delegate = delegate;
+		public void log(String message);
 	}
 
-	@Override
-	public void assertEquals(final Object expected, final Object actual) {
-	    delegate.assertEquals(expected, actual);
+	private static class HelperExtended implements Helper {
+		private final Helper delegate;
+
+		public HelperExtended(final Helper delegate) {
+			this.delegate = delegate;
+		}
+
+		@Override
+		public void assertEquals(final Object expected, final Object actual) {
+			delegate.assertEquals(expected, actual);
+		}
+
+		public void assertFalse(final boolean condition) {
+			assertTrue("", !condition);
+		}
+
+		public void assertNotNull(final Object o) {
+			assertTrue("should be NOT null: " + safeString(o), o != null);
+		}
+
+		public void assertNull(final Object value) {
+			assertTrue("should be null: " + safeString(value), value == null);
+		}
+
+		public void assertSame(final Object expected, final Object actual) {
+			assertTrue("should be same: " + safeString(expected) + " but was: " + safeString(actual), expected == actual);
+		}
+
+		public void assertTrue(final boolean condition) {
+			assertTrue("", condition);
+		}
+
+		@Override
+		public void assertTrue(final String message, final boolean condition) {
+			delegate.assertTrue(message, condition);
+		}
+
+		@Override
+		public IPacket createPacket(final String nodeName) {
+			return delegate.createPacket(nodeName);
+		}
+
+		@Override
+		public void log(final String message) {
+			delegate.log(message);
+		}
+
+		public String safeString(final Object value) {
+			return value == null ? "[null]" : value.toString();
+		}
+
 	}
 
-	public void assertFalse(final boolean condition) {
-	    assertTrue("", !condition);
+	public static void runPacketTests(final Helper utility) {
+		final HelperExtended helper = new HelperExtended(utility);
+		shouldNeverReturnNullWhenGetChildren(helper);
+		shouldReturnNoPacketWhenGetFirstChild(helper);
+		shouldSetAndClearTheAttributes(helper);
+		shouldSetText(helper);
+		shouldRemoveChildIfPresent(helper);
+		shouldRenderAttributes(helper);
+		shouldRenderChilds(helper);
+		shouldRenderTextChildren(helper);
+		shouldScapeText(helper);
 	}
 
-	public void assertNotNull(final Object o) {
-	    assertTrue("should be NOT null: " + safeString(o), o != null);
+	private static void shouldNeverReturnNullWhenGetChildren(final HelperExtended helper) {
+		helper.log("- shouldNeverReturnNullWhenGetChildren");
+		final IPacket packet = helper.createPacket("root");
+		final List<? extends IPacket> children = packet.getChildren();
+		helper.assertNotNull(children);
+		helper.assertEquals(0, children.size());
+		helper.log("- test ends");
 	}
 
-	public void assertNull(final Object value) {
-	    assertTrue("should be null: " + safeString(value), value == null);
+	private static void shouldRemoveChildIfPresent(final HelperExtended helper) {
+		helper.log("- shouldRemoveChildIfPresent");
+		final IPacket root = helper.createPacket("packet");
+		helper.assertFalse(root.removeChild(helper.createPacket("otherPacket")));
+		final IPacket child = root.addChild("child", null);
+		helper.assertEquals(1, root.getChildrenCount());
+		helper.assertTrue(root.removeChild(child));
+		helper.assertEquals(0, root.getChildrenCount());
+		helper.log("- test ends");
 	}
 
-	public void assertSame(final Object expected, final Object actual) {
-	    assertTrue("should be same: " + safeString(expected) + " but was: " + safeString(actual),
-		    expected == actual);
+	private static void shouldRenderAttributes(final HelperExtended helper) {
+		final IPacket packet = helper.createPacket("root").With("attribute", "value");
+		helper.assertEquals("<root attribute=\"value\" />", PacketRenderer.toString(packet));
 	}
 
-	public void assertTrue(final boolean condition) {
-	    assertTrue("", condition);
+	private static void shouldRenderChilds(final HelperExtended helper) {
+		final IPacket packet = helper.createPacket("level0");
+		final IPacket child = packet.addChild("level1", null);
+		child.addChild("level2", null);
+		helper.assertEquals("<level0><level1><level2 /></level1></level0>", PacketRenderer.toString(packet));
 	}
 
-	@Override
-	public void assertTrue(final String message, final boolean condition) {
-	    delegate.assertTrue(message, condition);
+	private static void shouldRenderTextChildren(final HelperExtended helper) {
+		final IPacket root = helper.createPacket("root");
+		root.setText("the text");
+		helper.assertEquals("<root>the text</root>", PacketRenderer.toString(root));
 	}
 
-	@Override
-	public IPacket createPacket(final String nodeName) {
-	    return delegate.createPacket(nodeName);
+	private static void shouldReturnNoPacketWhenGetFirstChild(final HelperExtended helper) {
+		helper.log("- shouldReturnNoPacketWhenGetFirstChild");
+		final IPacket packet = helper.createPacket("root");
+		final IPacket child = packet.getFirstChild("child");
+		helper.assertNotNull(child);
+		helper.assertSame(NoPacket.INSTANCE, child);
+		helper.log("- test ends");
 	}
 
-	@Override
-	public void log(final String message) {
-	    delegate.log(message);
+	private static void shouldScapeText(final HelperExtended helper) {
+		final IPacket packet = helper.createPacket("body");
+		packet.setText("&");
+		helper.assertEquals("<body>&amp;</body>", packet.toString());
 	}
 
-	public String safeString(final Object value) {
-	    return value == null ? "[null]" : value.toString();
+	private static void shouldSetAndClearTheAttributes(final HelperExtended helper) {
+		helper.log("- shouldSetAndClearTheAttributes");
+		final IPacket packet = helper.createPacket("packet");
+		packet.setAttribute("name", "value");
+		helper.assertEquals("value", packet.getAttribute("name"));
+		packet.setAttribute("name", null);
+		helper.assertNull(packet.getAttribute("name"));
+		helper.assertFalse(packet.hasAttribute("name"));
+		helper.log("- test ends");
 	}
 
-    }
-
-    public static void runPacketTests(final Helper utility) {
-	final HelperExtended helper = new HelperExtended(utility);
-	shouldNeverReturnNullWhenGetChildren(helper);
-	shouldReturnNoPacketWhenGetFirstChild(helper);
-	shouldSetAndClearTheAttributes(helper);
-	shouldSetText(helper);
-	shouldRemoveChildIfPresent(helper);
-	shouldRenderAttributes(helper);
-	shouldRenderChilds(helper);
-	shouldRenderTextChildren(helper);
-	shouldScapeText(helper);
-    }
-
-    private static void shouldNeverReturnNullWhenGetChildren(final HelperExtended helper) {
-	helper.log("- shouldNeverReturnNullWhenGetChildren");
-	final IPacket packet = helper.createPacket("root");
-	final List<? extends IPacket> children = packet.getChildren();
-	helper.assertNotNull(children);
-	helper.assertEquals(0, children.size());
-	helper.log("- test ends");
-    }
-
-    private static void shouldRemoveChildIfPresent(final HelperExtended helper) {
-	helper.log("- shouldRemoveChildIfPresent");
-	final IPacket root = helper.createPacket("packet");
-	helper.assertFalse(root.removeChild(helper.createPacket("otherPacket")));
-	final IPacket child = root.addChild("child", null);
-	helper.assertEquals(1, root.getChildrenCount());
-	helper.assertTrue(root.removeChild(child));
-	helper.assertEquals(0, root.getChildrenCount());
-	helper.log("- test ends");
-    }
-
-    private static void shouldRenderAttributes(final HelperExtended helper) {
-	final IPacket packet = helper.createPacket("root").With("attribute", "value");
-	helper.assertEquals("<root attribute=\"value\" />", PacketRenderer.toString(packet));
-    }
-
-    private static void shouldRenderChilds(final HelperExtended helper) {
-	final IPacket packet = helper.createPacket("level0");
-	final IPacket child = packet.addChild("level1", null);
-	child.addChild("level2", null);
-	helper.assertEquals("<level0><level1><level2 /></level1></level0>", PacketRenderer.toString(packet));
-    }
-
-    private static void shouldRenderTextChildren(final HelperExtended helper) {
-	final IPacket root = helper.createPacket("root");
-	root.setText("the text");
-	helper.assertEquals("<root>the text</root>", PacketRenderer.toString(root));
-    }
-
-    private static void shouldReturnNoPacketWhenGetFirstChild(final HelperExtended helper) {
-	helper.log("- shouldReturnNoPacketWhenGetFirstChild");
-	final IPacket packet = helper.createPacket("root");
-	final IPacket child = packet.getFirstChild("child");
-	helper.assertNotNull(child);
-	helper.assertSame(NoPacket.INSTANCE, child);
-	helper.log("- test ends");
-    }
-
-    private static void shouldScapeText(final HelperExtended helper) {
-	final IPacket packet = helper.createPacket("body");
-	packet.setText("&");
-	helper.assertEquals("<body>&amp;</body>", packet.toString());
-    }
-
-    private static void shouldSetAndClearTheAttributes(final HelperExtended helper) {
-	helper.log("- shouldSetAndClearTheAttributes");
-	final IPacket packet = helper.createPacket("packet");
-	packet.setAttribute("name", "value");
-	helper.assertEquals("value", packet.getAttribute("name"));
-	packet.setAttribute("name", null);
-	helper.assertNull(packet.getAttribute("name"));
-	helper.assertFalse(packet.hasAttribute("name"));
-	helper.log("- test ends");
-    }
-
-    private static void shouldSetText(final HelperExtended helper) {
-	helper.log("- shouldSetAndClearTheAttributes");
-	final IPacket packet = helper.createPacket("packet");
-	packet.setText("text1");
-	helper.assertEquals("text1", packet.getText());
-	packet.setText("text2");
-	helper.assertEquals("text2", packet.getText());
-	helper.log("- test ends");
-    }
+	private static void shouldSetText(final HelperExtended helper) {
+		helper.log("- shouldSetAndClearTheAttributes");
+		final IPacket packet = helper.createPacket("packet");
+		packet.setText("text1");
+		helper.assertEquals("text1", packet.getText());
+		packet.setText("text2");
+		helper.assertEquals("text2", packet.getText());
+		helper.log("- test ends");
+	}
 
 }

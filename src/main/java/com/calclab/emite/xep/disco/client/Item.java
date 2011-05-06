@@ -32,17 +32,17 @@ import com.calclab.emite.core.client.packet.IPacket;
  * 
  */
 public class Item {
-    public static Item fromPacket(final IPacket packet) {
-	return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
-    }
+	public static Item fromPacket(final IPacket packet) {
+		return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
+	}
 
-    public final String jid;
-    public final String name;
-    public final String node;
+	public final String jid;
+	public final String name;
+	public final String node;
 
-    public Item(final String jid, final String name, final String node) {
-	this.jid = jid;
-	this.name = name;
-	this.node = node;
-    }
+	public Item(final String jid, final String name, final String node) {
+		this.jid = jid;
+		this.name = name;
+		this.node = node;
+	}
 }

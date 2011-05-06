@@ -11,39 +11,38 @@ import com.calclab.emite.xtesting.handlers.PrivateStorageResponseTestHandler;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class PrivateStorageManagerTest {
-    private XmppSessionTester session;
-    private PrivateStorageManager manager;
+	private XmppSessionTester session;
+	private PrivateStorageManager manager;
 
-    String storeData = "<iq type=\"set\" ><query xmlns=\"jabber:iq:private\">"
-	    + "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus></query></iq>";
-    String data = "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus>";
+	String storeData = "<iq type=\"set\" ><query xmlns=\"jabber:iq:private\">"
+			+ "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus></query></iq>";
+	String data = "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus>";
 
-    String dataToRetrieve = "<exodus xmlns=\"exodus:prefs\"/>";
-    String retriveData = "<iq type=\"get\"><query xmlns=\"jabber:iq:private\"><exodus xmlns=\"exodus:prefs\"/></query></iq>";
-    String retrieveResponse = "<iq type=\"result\" from=\"hamlet@shakespeare.lit/denmark\" to=\"hamlet@shakespeare.lit/denmark\"> <query xmlns=\"jabber:iq:private\"><exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus></query></iq>";
+	String dataToRetrieve = "<exodus xmlns=\"exodus:prefs\"/>";
+	String retriveData = "<iq type=\"get\"><query xmlns=\"jabber:iq:private\"><exodus xmlns=\"exodus:prefs\"/></query></iq>";
+	String retrieveResponse = "<iq type=\"result\" from=\"hamlet@shakespeare.lit/denmark\" to=\"hamlet@shakespeare.lit/denmark\"> <query xmlns=\"jabber:iq:private\"><exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus></query></iq>";
 
-    @Before
-    public void setup() {
-	session = new XmppSessionTester("test@domain");
-	manager = new PrivateStorageManager(session);
-    }
+	@Before
+	public void setup() {
+		session = new XmppSessionTester("test@domain");
+		manager = new PrivateStorageManager(session);
+	}
 
-    @Test
-    public void shouldStore() {
-	final PrivateStorageResponseTestHandler handler = new PrivateStorageResponseTestHandler();
-	manager.store(new SimpleStorageData(TigaseXMLService.toPacket(data)), handler);
-	session.verifyIQSent(storeData);
-	assertTrue(handler.isCalledOnce());
-    }
+	@Test
+	public void shouldStore() {
+		final PrivateStorageResponseTestHandler handler = new PrivateStorageResponseTestHandler();
+		manager.store(new SimpleStorageData(TigaseXMLService.toPacket(data)), handler);
+		session.verifyIQSent(storeData);
+		assertTrue(handler.isCalledOnce());
+	}
 
-    @Test
-    public void shoulGet() {
-	final PrivateStorageResponseTestHandler handler = new PrivateStorageResponseTestHandler();
-	manager.retrieve(new SimpleStorageData("exodus", "exodus:prefs"), handler);
-	session.verifyIQSent(retriveData);
-	session.answer(retrieveResponse);
-	assertTrue(handler.isCalledOnce());
-	assertEquals("Hamlet", handler.getLastEvent().getResponseIQ().getFirstChild("query").getFirstChild("exodus")
-		.getFirstChild("defaultnick").getText());
-    }
+	@Test
+	public void shoulGet() {
+		final PrivateStorageResponseTestHandler handler = new PrivateStorageResponseTestHandler();
+		manager.retrieve(new SimpleStorageData("exodus", "exodus:prefs"), handler);
+		session.verifyIQSent(retriveData);
+		session.answer(retrieveResponse);
+		assertTrue(handler.isCalledOnce());
+		assertEquals("Hamlet", handler.getLastEvent().getResponseIQ().getFirstChild("query").getFirstChild("exodus").getFirstChild("defaultnick").getText());
+	}
 }

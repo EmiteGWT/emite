@@ -34,31 +34,31 @@ import com.calclab.emite.core.client.packet.Packet;
  */
 public class AbstractItem extends DelegatedPacket {
 
-    /**
-     * Each of these elements MUST contain one or more <field/> children.
-     */
-    private List<Field> fields;
+	/**
+	 * Each of these elements MUST contain one or more <field/> children.
+	 */
+	private List<Field> fields;
 
-    public AbstractItem(final IPacket delegate) {
-	super(delegate);
-    }
+	public AbstractItem(final IPacket delegate) {
+		super(delegate);
+	}
 
-    public AbstractItem(final String name) {
-	this(new Packet(name));
-    }
+	public AbstractItem(final String name) {
+		this(new Packet(name));
+	}
 
-    public void addField(final Field field) {
-	parseFields();
-	super.addChild(field);
-	fields.add(field);
-    }
+	public void addField(final Field field) {
+		parseFields();
+		super.addChild(field);
+		fields.add(field);
+	}
 
-    public List<Field> getFields() {
-	parseFields();
-	return fields;
-    }
+	public List<Field> getFields() {
+		parseFields();
+		return fields;
+	}
 
-    private void parseFields() {
-	fields = Field.parseFields(fields, this);
-    }
+	private void parseFields() {
+		fields = Field.parseFields(fields, this);
+	}
 }

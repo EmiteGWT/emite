@@ -27,48 +27,48 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class ResourceBindResultEvent extends GwtEvent<ResourceBindResultHandler> {
 
-    private static final Type<ResourceBindResultHandler> TYPE = new Type<ResourceBindResultHandler>();
+	private static final Type<ResourceBindResultHandler> TYPE = new Type<ResourceBindResultHandler>();
 
-    /**
-     * A helper method to bind handlers of this event to the event bus easily
-     * 
-     * @param eventBus
-     *            the event bus to add the handler to
-     * @param handler
-     *            the handler to be added
-     * @return
-     */
-    public static HandlerRegistration bind(final EmiteEventBus eventBus, final ResourceBindResultHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	/**
+	 * A helper method to bind handlers of this event to the event bus easily
+	 * 
+	 * @param eventBus
+	 *            the event bus to add the handler to
+	 * @param handler
+	 *            the handler to be added
+	 * @return
+	 */
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ResourceBindResultHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    public static Type<ResourceBindResultHandler> getType() {
-	return TYPE;
-    }
+	public static Type<ResourceBindResultHandler> getType() {
+		return TYPE;
+	}
 
-    private final XmppURI xmppUri;
+	private final XmppURI xmppUri;
 
-    public ResourceBindResultEvent(final XmppURI xmppUri) {
-	this.xmppUri = xmppUri;
-    }
+	public ResourceBindResultEvent(final XmppURI xmppUri) {
+		this.xmppUri = xmppUri;
+	}
 
-    @Override
-    public Type<ResourceBindResultHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public Type<ResourceBindResultHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public XmppURI getXmppUri() {
-	return xmppUri;
-    }
+	public XmppURI getXmppUri() {
+		return xmppUri;
+	}
 
-    @Override
-    public String toDebugString() {
-	return super.toDebugString() + xmppUri;
-    }
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + xmppUri;
+	}
 
-    @Override
-    protected void dispatch(final ResourceBindResultHandler handler) {
-	handler.onBinded(this);
-    }
+	@Override
+	protected void dispatch(final ResourceBindResultHandler handler) {
+		handler.onBinded(this);
+	}
 
 }

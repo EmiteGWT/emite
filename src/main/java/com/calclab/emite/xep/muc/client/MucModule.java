@@ -27,12 +27,11 @@ import com.google.inject.name.Names;
 
 public class MucModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(RoomManager.class).to(RoomChatManager.class).in(Singleton.class);
-	bind(MucComponents.class).asEagerSingleton();
-	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class)
-		.in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(RoomManager.class).to(RoomChatManager.class).in(Singleton.class);
+		bind(MucComponents.class).asEagerSingleton();
+		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class).in(Singleton.class);
+	}
 
 }

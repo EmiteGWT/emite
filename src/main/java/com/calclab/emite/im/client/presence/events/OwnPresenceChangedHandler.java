@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface OwnPresenceChangedHandler extends EventHandler {
 
-    void onOwnPresenceChanged(OwnPresenceChangedEvent event);
+	void onOwnPresenceChanged(OwnPresenceChangedEvent event);
 
 }

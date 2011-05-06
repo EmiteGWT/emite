@@ -21,52 +21,52 @@
 package com.calclab.emite.core.client.bosh;
 
 public class StreamSettings {
-    public long rid;
-    public String sid;
-    public String wait;
-    private int inactivity;
-    long lastRequestTime;
-    private int maxPause;
+	public long rid;
+	public String sid;
+	public String wait;
+	private int inactivity;
+	long lastRequestTime;
+	private int maxPause;
 
-    public StreamSettings() {
-	this.rid = (long) (Math.random() * 10000000) + 1000;
-    }
-
-    public int getInactivity() {
-	return inactivity;
-    }
-
-    public String getInactivityString() {
-	return Integer.toString(inactivity);
-    }
-
-    public int getMaxPause() {
-	return maxPause;
-    }
-
-    public String getMaxPauseString() {
-	return Integer.toString(maxPause);
-    }
-
-    public String getNextRid() {
-	rid++;
-	return "" + rid;
-    }
-
-    public void setInactivity(String inactivity) {
-	try {
-	    this.inactivity = Integer.parseInt(inactivity);
-	} catch (NumberFormatException e) {
-	    this.inactivity = 0;
+	public StreamSettings() {
+		this.rid = (long) (Math.random() * 10000000) + 1000;
 	}
-    }
 
-    public void setMaxPause(String maxPause) {
-	try {
-	    this.maxPause = Integer.parseInt(maxPause);
-	} catch (NumberFormatException e) {
-	    this.maxPause = 1000;
+	public int getInactivity() {
+		return inactivity;
 	}
-    }
+
+	public String getInactivityString() {
+		return Integer.toString(inactivity);
+	}
+
+	public int getMaxPause() {
+		return maxPause;
+	}
+
+	public String getMaxPauseString() {
+		return Integer.toString(maxPause);
+	}
+
+	public String getNextRid() {
+		rid++;
+		return "" + rid;
+	}
+
+	public void setInactivity(String inactivity) {
+		try {
+			this.inactivity = Integer.parseInt(inactivity);
+		} catch (NumberFormatException e) {
+			this.inactivity = 0;
+		}
+	}
+
+	public void setMaxPause(String maxPause) {
+		try {
+			this.maxPause = Integer.parseInt(maxPause);
+		} catch (NumberFormatException e) {
+			this.maxPause = 1000;
+		}
+	}
 
 }

@@ -26,14 +26,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public class StanzaReceivedEvent extends StanzaEvent {
 
-    private static final Type<StanzaHandler> TYPE = new Type<StanzaHandler>();
+	private static final Type<StanzaHandler> TYPE = new Type<StanzaHandler>();
 
-    public static HandlerRegistration bind(final EmiteEventBus eventBus, final StanzaHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final StanzaHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    public StanzaReceivedEvent(final IPacket stanza) {
-	super(TYPE, stanza);
-    }
+	public StanzaReceivedEvent(final IPacket stanza) {
+		super(TYPE, stanza);
+	}
 
 }

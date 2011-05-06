@@ -8,33 +8,33 @@ import com.google.gwt.event.shared.HandlerManager;
 
 public class EmiteTestsEventBus extends HandlerManager implements EmiteEventBus {
 
-    private static Factory factory;
+	private static Factory factory;
 
-    public static EmiteEventBus create(String eventBusName) {
-	if (EmiteTestsEventBus.factory == null) {
-	    EmiteTestsEventBus.factory = new Factory() {
-		@Override
-		public EmiteEventBus create(String eventBusName) {
-		    return new EmiteTestsEventBus(eventBusName);
+	public static EmiteEventBus create(String eventBusName) {
+		if (EmiteTestsEventBus.factory == null) {
+			EmiteTestsEventBus.factory = new Factory() {
+				@Override
+				public EmiteEventBus create(String eventBusName) {
+					return new EmiteTestsEventBus(eventBusName);
+				}
+			};
+			EventBusFactory.setFactory(factory);
 		}
-	    };
-	    EventBusFactory.setFactory(factory);
+		return EventBusFactory.create(eventBusName);
 	}
-	return EventBusFactory.create(eventBusName);
-    }
 
-    private final String name;
+	private final String name;
 
-    public EmiteTestsEventBus(String name) {
-	super(null);
-	this.name = name;
-	System.out.println("New event bus: " + name);
-    }
+	public EmiteTestsEventBus(String name) {
+		super(null);
+		this.name = name;
+		System.out.println("New event bus: " + name);
+	}
 
-    @Override
-    public void fireEvent(GwtEvent<?> event) {
-	System.out.println("[" + name + "] " + event.toDebugString());
-	super.fireEvent(event);
-    }
+	@Override
+	public void fireEvent(GwtEvent<?> event) {
+		System.out.println("[" + name + "] " + event.toDebugString());
+		super.fireEvent(event);
+	}
 
 }

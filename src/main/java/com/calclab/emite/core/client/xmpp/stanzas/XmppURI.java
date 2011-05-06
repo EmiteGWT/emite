@@ -29,165 +29,164 @@ package com.calclab.emite.core.client.xmpp.stanzas;
  * 
  */
 public class XmppURI implements HasJID {
-    private static final XmppURIFactory factory = new XmppURIFactory();
+	private static final XmppURIFactory factory = new XmppURIFactory();
 
-    /**
-     * Parse the string and return a JID (a uri without resource)
-     * 
-     * @param jid
-     *            the string to be parsed
-     * @return a XmppURI object if the jid is a valid JID string, null otherwise
-     */
-    public static XmppURI jid(final String jid) {
-	return uri(jid).getJID();
-    }
+	/**
+	 * Parse the string and return a JID (a uri without resource)
+	 * 
+	 * @param jid
+	 *            the string to be parsed
+	 * @return a XmppURI object if the jid is a valid JID string, null otherwise
+	 */
+	public static XmppURI jid(final String jid) {
+		return uri(jid).getJID();
+	}
 
-    /**
-     * Parse a string and return a complete XmppURI object
-     * 
-     * @param xmppUri
-     *            the string to be parsed
-     * @return a XmppURI object if the string is a valid XmppURI string, null
-     *         otherwise
-     * 
-     */
-    public static XmppURI uri(final String xmppUri) {
-	return factory.parse(xmppUri);
-    }
+	/**
+	 * Parse a string and return a complete XmppURI object
+	 * 
+	 * @param xmppUri
+	 *            the string to be parsed
+	 * @return a XmppURI object if the string is a valid XmppURI string, null
+	 *         otherwise
+	 * 
+	 */
+	public static XmppURI uri(final String xmppUri) {
+		return factory.parse(xmppUri);
+	}
 
-    /**
-     * Create a new XmppURI object with the given attributes
-     * 
-     * @param node
-     *            the node of the uri
-     * @param host
-     *            the host of the uri
-     * @param resource
-     *            the resource of the uri
-     * @return a XmppURI object, never null
-     */
+	/**
+	 * Create a new XmppURI object with the given attributes
+	 * 
+	 * @param node
+	 *            the node of the uri
+	 * @param host
+	 *            the host of the uri
+	 * @param resource
+	 *            the resource of the uri
+	 * @return a XmppURI object, never null
+	 */
 
-    public static XmppURI uri(final String node, final String host, final String resource) {
-	final XmppURI xmppURI = new XmppURI(node, host, resource);
-	factory.cache(xmppURI);
-	return xmppURI;
-    }
+	public static XmppURI uri(final String node, final String host, final String resource) {
+		final XmppURI xmppURI = new XmppURI(node, host, resource);
+		factory.cache(xmppURI);
+		return xmppURI;
+	}
 
-    private final String host;
-    private final String node;
-    private final String representation;
-    private final String resource;
+	private final String host;
+	private final String node;
+	private final String representation;
+	private final String resource;
 
-    /**
-     * 
-     * @param jid
-     * @param resource
-     *            <code> resource      = *( unreserved / escaped )
+	/**
+	 * 
+	 * @param jid
+	 * @param resource
+	 *            <code> resource      = *( unreserved / escaped )
                 reserved      = ";" / "/" / "?" / ":" / "@" / "&" / "=" / "+" /
                 "$" / "," / "[" / "]" </code>
-     * 
-     */
-    private XmppURI(final String node, final String host, final String resource) {
-	assert host != null : "Host can't be null";
-	this.node = node != null ? node.toLowerCase() : node;
-	this.host = host.toLowerCase();
-	this.resource = resource != null ? resource : null;
-	representation = (this.node != null ? this.node + "@" : "") + this.host
-		+ (this.resource != null ? "/" + this.resource : "");
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-	if (obj == null) {
-	    return false;
+	 * 
+	 */
+	private XmppURI(final String node, final String host, final String resource) {
+		assert host != null : "Host can't be null";
+		this.node = node != null ? node.toLowerCase() : node;
+		this.host = host.toLowerCase();
+		this.resource = resource != null ? resource : null;
+		representation = (this.node != null ? this.node + "@" : "") + this.host + (this.resource != null ? "/" + this.resource : "");
 	}
-	if (obj == this) {
-	    return true;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		return representation.equals(((XmppURI) obj).representation);
 	}
-	return representation.equals(((XmppURI) obj).representation);
-    }
 
-    public boolean equalsNoResource(final XmppURI other) {
-	if (other == null) {
-	    return false;
+	public boolean equalsNoResource(final XmppURI other) {
+		if (other == null) {
+			return false;
+		}
+		if (this == other) {
+			return true;
+		}
+		if (node == null && other.node != null) {
+			return false;
+		}
+		return host.equals(other.host) && (node == null || node.equals(other.node));
 	}
-	if (this == other) {
-	    return true;
+
+	/**
+	 * @return the uri's host
+	 */
+	public String getHost() {
+		return host;
 	}
-	if (node == null && other.node != null) {
-	    return false;
+
+	/**
+	 * @return a new XmppURI object with the same host as this one
+	 */
+	public XmppURI getHostURI() {
+		return uri(null, host, null);
 	}
-	return host.equals(other.host) && (node == null || node.equals(other.node));
-    }
 
-    /**
-     * @return the uri's host
-     */
-    public String getHost() {
-	return host;
-    }
+	/**
+	 * Returns the JID of this URI (a XmppURI without resource)
+	 * 
+	 * @return the JID of this URI
+	 */
+	@Override
+	public XmppURI getJID() {
+		return uri(node, host, null);
+	}
 
-    /**
-     * @return a new XmppURI object with the same host as this one
-     */
-    public XmppURI getHostURI() {
-	return uri(null, host, null);
-    }
+	/**
+	 * @return uri's node
+	 */
+	public String getNode() {
+		return node;
+	}
 
-    /**
-     * Returns the JID of this URI (a XmppURI without resource)
-     * 
-     * @return the JID of this URI
-     */
-    @Override
-    public XmppURI getJID() {
-	return uri(node, host, null);
-    }
+	/**
+	 * @return uri's resource
+	 */
+	public String getResource() {
+		return resource;
+	}
 
-    /**
-     * @return uri's node
-     */
-    public String getNode() {
-	return node;
-    }
+	/**
+	 * Return the node or the host if node is null
+	 * 
+	 * @return an never null short name representation
+	 */
+	public String getShortName() {
+		return node == null ? host : node;
+	}
 
-    /**
-     * @return uri's resource
-     */
-    public String getResource() {
-	return resource;
-    }
+	@Override
+	public int hashCode() {
+		return representation.hashCode();
+	}
 
-    /**
-     * Return the node or the host if node is null
-     * 
-     * @return an never null short name representation
-     */
-    public String getShortName() {
-	return node == null ? host : node;
-    }
+	/**
+	 * @return true if this uri has node, false otherwise
+	 */
+	public boolean hasNode() {
+		return node != null;
+	}
 
-    @Override
-    public int hashCode() {
-	return representation.hashCode();
-    }
+	/**
+	 * @return true if this uri has resource, false otherwise
+	 */
+	public boolean hasResource() {
+		return resource != null;
+	}
 
-    /**
-     * @return true if this uri has node, false otherwise
-     */
-    public boolean hasNode() {
-	return node != null;
-    }
-
-    /**
-     * @return true if this uri has resource, false otherwise
-     */
-    public boolean hasResource() {
-	return resource != null;
-    }
-
-    @Override
-    public String toString() {
-	return representation;
-    }
+	@Override
+	public String toString() {
+		return representation;
+	}
 }

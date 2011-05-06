@@ -25,10 +25,10 @@ import com.google.inject.Singleton;
 
 public class ChatStateModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(StateManager.class).in(Singleton.class);
-	bind(ChatStateComponents.class).asEagerSingleton();
-    }
+	@Override
+	protected void configure() {
+		bind(StateManager.class).in(Singleton.class);
+		bind(ChatStateComponents.class).asEagerSingleton();
+	}
 
 }

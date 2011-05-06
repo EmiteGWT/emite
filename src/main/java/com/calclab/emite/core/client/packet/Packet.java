@@ -25,118 +25,118 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Packet extends AbstractPacket {
-    private final HashMap<String, String> attributes;
-    private final ArrayList<IPacket> children;
-    private final String name;
-    private Packet parent;
+	private final HashMap<String, String> attributes;
+	private final ArrayList<IPacket> children;
+	private final String name;
+	private Packet parent;
 
-    public Packet(final String name) {
-	this(name, null);
-    }
-
-    public Packet(final String name, final String xmlns) {
-	this.name = name;
-	this.attributes = new HashMap<String, String>();
-	this.children = new ArrayList<IPacket>();
-	if (xmlns != null) {
-	    setAttribute("xmlns", xmlns);
+	public Packet(final String name) {
+		this(name, null);
 	}
-	parent = null;
-    }
 
-    @Override
-    public IPacket addChild(final IPacket child) {
-	children.add(child);
-	return child;
-    }
-
-    @Override
-    public IPacket addChild(final String name) {
-	return addChild(name, null);
-    }
-
-    @Override
-    public IPacket addChild(final String name, final String xmlns) {
-	final Packet child = new Packet(name, xmlns);
-	child.parent = this;
-	add(child);
-	return child;
-    }
-
-    @Override
-    public String getAttribute(final String name) {
-	return attributes.get(name);
-    }
-
-    /**
-     * WARNING: broken encapsulation
-     */
-    @Override
-    public HashMap<String, String> getAttributes() {
-	return attributes;
-    }
-
-    @Override
-    public List<? extends IPacket> getChildren() {
-	return children;
-    }
-
-    @Override
-    public int getChildrenCount() {
-	return children.size();
-    }
-
-    @Override
-    public String getName() {
-	return name;
-    }
-
-    public IPacket getParent() {
-	return parent;
-    }
-
-    /**
-     * Return a child (If it has a child)
-     */
-    @Override
-    public String getText() {
-	for (final IPacket child : children) {
-	    if (child.getName() == null) {
-		return TextUtils.unescape(child.toString());
-	    }
+	public Packet(final String name, final String xmlns) {
+		this.name = name;
+		this.attributes = new HashMap<String, String>();
+		this.children = new ArrayList<IPacket>();
+		if (xmlns != null) {
+			setAttribute("xmlns", xmlns);
+		}
+		parent = null;
 	}
-	return null;
-    }
 
-    @Override
-    public boolean removeChild(final IPacket child) {
-	return children.remove(child);
-    }
-
-    @Override
-    public void setAttribute(final String name, final String value) {
-	attributes.put(name, value);
-    }
-
-    @Override
-    public void setText(final String value) {
-	children.clear();
-	if (value != null) {
-	    children.add(new TextPacket(value));
+	@Override
+	public IPacket addChild(final IPacket child) {
+		children.add(child);
+		return child;
 	}
-    }
 
-    @Override
-    public String toString() {
-	return PacketRenderer.toString(this);
-    }
+	@Override
+	public IPacket addChild(final String name) {
+		return addChild(name, null);
+	}
 
-    public IPacket With(final IPacket child) {
-	addChild(child);
-	return this;
-    }
+	@Override
+	public IPacket addChild(final String name, final String xmlns) {
+		final Packet child = new Packet(name, xmlns);
+		child.parent = this;
+		add(child);
+		return child;
+	}
 
-    protected void add(final Packet node) {
-	children.add(node);
-    }
+	@Override
+	public String getAttribute(final String name) {
+		return attributes.get(name);
+	}
+
+	/**
+	 * WARNING: broken encapsulation
+	 */
+	@Override
+	public HashMap<String, String> getAttributes() {
+		return attributes;
+	}
+
+	@Override
+	public List<? extends IPacket> getChildren() {
+		return children;
+	}
+
+	@Override
+	public int getChildrenCount() {
+		return children.size();
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public IPacket getParent() {
+		return parent;
+	}
+
+	/**
+	 * Return a child (If it has a child)
+	 */
+	@Override
+	public String getText() {
+		for (final IPacket child : children) {
+			if (child.getName() == null) {
+				return TextUtils.unescape(child.toString());
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean removeChild(final IPacket child) {
+		return children.remove(child);
+	}
+
+	@Override
+	public void setAttribute(final String name, final String value) {
+		attributes.put(name, value);
+	}
+
+	@Override
+	public void setText(final String value) {
+		children.clear();
+		if (value != null) {
+			children.add(new TextPacket(value));
+		}
+	}
+
+	@Override
+	public String toString() {
+		return PacketRenderer.toString(this);
+	}
+
+	public IPacket With(final IPacket child) {
+		addChild(child);
+		return this;
+	}
+
+	protected void add(final Packet node) {
+		children.add(node);
+	}
 }

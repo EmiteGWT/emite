@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ResourceBindResultHandler extends EventHandler {
 
-    void onBinded(ResourceBindResultEvent event);
+	void onBinded(ResourceBindResultEvent event);
 
 }

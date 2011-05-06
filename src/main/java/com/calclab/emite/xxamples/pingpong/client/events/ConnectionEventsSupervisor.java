@@ -31,28 +31,28 @@ import com.google.inject.Inject;
 
 public class ConnectionEventsSupervisor {
 
-    @Inject
-    public ConnectionEventsSupervisor(XmppConnection connection, final PingPongDisplay display) {
-	connection.addStanzaReceivedHandler(new StanzaHandler() {
-	    @Override
-	    public void onStanza(StanzaEvent event) {
-		display.print("IN: " + event.getStanza(), Style.stanzaReceived);
-	    }
-	});
+	@Inject
+	public ConnectionEventsSupervisor(XmppConnection connection, final PingPongDisplay display) {
+		connection.addStanzaReceivedHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(StanzaEvent event) {
+				display.print("IN: " + event.getStanza(), Style.stanzaReceived);
+			}
+		});
 
-	connection.addStanzaSentHandler(new StanzaHandler() {
-	    @Override
-	    public void onStanza(StanzaEvent event) {
-		display.print("OUT: " + event.getStanza(), Style.stanzaSent);
-	    }
-	});
+		connection.addStanzaSentHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(StanzaEvent event) {
+				display.print("OUT: " + event.getStanza(), Style.stanzaSent);
+			}
+		});
 
-	connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
-	    @Override
-	    public void onStateChanged(ConnectionStateChangedEvent event) {
-		display.print("Connection state: " + event.getState(), Style.info);
-	    }
-	});
-    }
+		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
+			@Override
+			public void onStateChanged(ConnectionStateChangedEvent event) {
+				display.print("Connection state: " + event.getState(), Style.info);
+			}
+		});
+	}
 
 }

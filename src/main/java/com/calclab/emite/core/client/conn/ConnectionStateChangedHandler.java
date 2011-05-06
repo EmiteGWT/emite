@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface ConnectionStateChangedHandler extends EventHandler {
 
-    void onStateChanged(ConnectionStateChangedEvent event);
+	void onStateChanged(ConnectionStateChangedEvent event);
 
 }

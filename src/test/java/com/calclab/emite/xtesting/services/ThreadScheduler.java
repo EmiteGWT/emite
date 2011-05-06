@@ -25,23 +25,23 @@ import com.calclab.emite.core.client.services.ScheduledAction;
 
 public class ThreadScheduler {
 
-    public long getCurrentTime() {
-	return System.currentTimeMillis();
-    }
+	public long getCurrentTime() {
+		return System.currentTimeMillis();
+	}
 
-    public void schedule(final int msecs, final ScheduledAction action) {
-	new Thread(new Runnable() {
-	    @Override
-	    public void run() {
-		synchronized (this) {
-		    try {
-			Thread.sleep(msecs);
-			action.run();
-		    } catch (final InterruptedException e) {
-			throw new RuntimeException(e.toString());
-		    }
-		}
-	    }
-	}).start();
-    }
+	public void schedule(final int msecs, final ScheduledAction action) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				synchronized (this) {
+					try {
+						Thread.sleep(msecs);
+						action.run();
+					} catch (final InterruptedException e) {
+						throw new RuntimeException(e.toString());
+					}
+				}
+			}
+		}).start();
+	}
 }

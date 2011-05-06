@@ -46,16 +46,15 @@ import com.google.inject.name.Names;
  * @see http://www.xmpp.org/rfcs/rfc3921.html
  */
 public class ImModule extends AbstractGinModule {
-    @Override
-    protected void configure() {
-	bind(ChatManager.class).to(PairChatManager.class).in(Singleton.class);
-	bind(PresenceManager.class).to(PresenceManagerImpl.class).in(Singleton.class);
-	bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class).in(Singleton.class);
-	bind(SubscriptionHandler.class).in(Singleton.class);
-	bind(XmppRoster.class).to(XmppRosterLogic.class).in(Singleton.class);
-	bind(ImComponents.class).asEagerSingleton();
-	bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class)
-		.in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(ChatManager.class).to(PairChatManager.class).in(Singleton.class);
+		bind(PresenceManager.class).to(PresenceManagerImpl.class).in(Singleton.class);
+		bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class).in(Singleton.class);
+		bind(SubscriptionHandler.class).in(Singleton.class);
+		bind(XmppRoster.class).to(XmppRosterLogic.class).in(Singleton.class);
+		bind(ImComponents.class).asEagerSingleton();
+		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class).in(Singleton.class);
+	}
 
 }

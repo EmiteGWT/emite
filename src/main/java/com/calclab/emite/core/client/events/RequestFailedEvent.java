@@ -29,43 +29,43 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 
-    private static final Type<RequestFailedHandler> TYPE = new Type<RequestFailedHandler>();
+	private static final Type<RequestFailedHandler> TYPE = new Type<RequestFailedHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, RequestFailedHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, RequestFailedHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final String requestType;
-    private final String description;
+	private final String requestType;
+	private final String description;
 
-    private final IQ iq;
+	private final IQ iq;
 
-    public RequestFailedEvent(String requestType, String description, IQ iq) {
-	this.requestType = requestType;
-	this.description = description;
-	this.iq = iq;
-    }
+	public RequestFailedEvent(String requestType, String description, IQ iq) {
+		this.requestType = requestType;
+		this.description = description;
+		this.iq = iq;
+	}
 
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<RequestFailedHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<RequestFailedHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public String getDescription() {
-	return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public IQ getIq() {
-	return iq;
-    }
+	public IQ getIq() {
+		return iq;
+	}
 
-    public String getRequestType() {
-	return requestType;
-    }
+	public String getRequestType() {
+		return requestType;
+	}
 
-    @Override
-    protected void dispatch(RequestFailedHandler handler) {
-	handler.onRequestFailed(this);
-    }
+	@Override
+	protected void dispatch(RequestFailedHandler handler) {
+		handler.onRequestFailed(this);
+	}
 
 }

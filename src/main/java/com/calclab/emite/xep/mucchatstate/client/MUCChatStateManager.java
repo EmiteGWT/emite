@@ -38,38 +38,37 @@ import com.google.inject.Inject;
  * 
  */
 public class MUCChatStateManager {
-    @Inject
-    public MUCChatStateManager(final RoomManager chatManager) {
+	@Inject
+	public MUCChatStateManager(final RoomManager chatManager) {
 
-	chatManager.addChatChangedHandler(new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(ChatChangedEvent event) {
-		if (event.isCreated()) {
-		    getRoomOccupantsChatStateManager((Room) event.getChat());
-		} else if (event.isClosed()) {
-		    Chat chat = event.getChat();
-		    GWT.log("Removing chat state to chat: " + chat.getID(), null);
-		    chat.getProperties().setData(RoomChatStateManager.KEY, null);
-		}
-	    }
-	});
-    }
-
-    public RoomChatStateManager getRoomOccupantsChatStateManager(final Room room) {
-
-	RoomChatStateManager stateManager = (RoomChatStateManager) room.getProperties().getData(
-		RoomChatStateManager.KEY);
-	if (stateManager == null) {
-	    stateManager = createChatState(room);
+		chatManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(ChatChangedEvent event) {
+				if (event.isCreated()) {
+					getRoomOccupantsChatStateManager((Room) event.getChat());
+				} else if (event.isClosed()) {
+					Chat chat = event.getChat();
+					GWT.log("Removing chat state to chat: " + chat.getID(), null);
+					chat.getProperties().setData(RoomChatStateManager.KEY, null);
+				}
+			}
+		});
 	}
-	return stateManager;
-    }
 
-    private RoomChatStateManager createChatState(final Room room) {
-	GWT.log("Adding chat state to chat: " + room.getID(), null);
-	final RoomChatStateManager stateManager = new RoomChatStateManager(room);
-	room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
-	return stateManager;
-    }
+	public RoomChatStateManager getRoomOccupantsChatStateManager(final Room room) {
+
+		RoomChatStateManager stateManager = (RoomChatStateManager) room.getProperties().getData(RoomChatStateManager.KEY);
+		if (stateManager == null) {
+			stateManager = createChatState(room);
+		}
+		return stateManager;
+	}
+
+	private RoomChatStateManager createChatState(final Room room) {
+		GWT.log("Adding chat state to chat: " + room.getID(), null);
+		final RoomChatStateManager stateManager = new RoomChatStateManager(room);
+		room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
+		return stateManager;
+	}
 
 }

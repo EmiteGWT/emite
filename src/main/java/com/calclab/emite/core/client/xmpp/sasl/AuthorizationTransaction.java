@@ -24,31 +24,31 @@ import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 public class AuthorizationTransaction {
-    public static enum State {
-	succeed, failed, notStarted, waitingForAuthorization
-    }
+	public static enum State {
+		succeed, failed, notStarted, waitingForAuthorization
+	}
 
-    private State state;
-    private final Credentials credentials;
+	private State state;
+	private final Credentials credentials;
 
-    public AuthorizationTransaction(final Credentials credentials) {
-	this.credentials = credentials;
-    }
+	public AuthorizationTransaction(final Credentials credentials) {
+		this.credentials = credentials;
+	}
 
-    public Credentials getCredentials() {
-	return credentials;
-    }
+	public Credentials getCredentials() {
+		return credentials;
+	}
 
-    public State getState() {
-	return state;
-    }
+	public State getState() {
+		return state;
+	}
 
-    public XmppURI getXmppUri() {
-	return credentials.getXmppUri();
-    }
+	public XmppURI getXmppUri() {
+		return credentials.getXmppUri();
+	}
 
-    public void setState(final State state) {
-	this.state = state;
-    }
+	public void setState(final State state) {
+		this.state = state;
+	}
 
 }

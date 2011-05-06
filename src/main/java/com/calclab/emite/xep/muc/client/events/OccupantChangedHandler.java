@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface OccupantChangedHandler extends EventHandler {
 
-    void onOccupantChanged(OccupantChangedEvent event);
+	void onOccupantChanged(OccupantChangedEvent event);
 
 }

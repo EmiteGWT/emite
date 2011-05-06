@@ -32,37 +32,37 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public class BeforeRoomInvitationSendEvent extends GwtEvent<BeforeRoomInvitationSendHandler> {
 
-    private static final Type<BeforeRoomInvitationSendHandler> TYPE = new Type<BeforeRoomInvitationSendHandler>();
+	private static final Type<BeforeRoomInvitationSendHandler> TYPE = new Type<BeforeRoomInvitationSendHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, BeforeRoomInvitationSendHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, BeforeRoomInvitationSendHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final BasicStanza message;
+	private final BasicStanza message;
 
-    private final IPacket invitePacket;
+	private final IPacket invitePacket;
 
-    public BeforeRoomInvitationSendEvent(BasicStanza message, IPacket invitePacket) {
-	this.message = message;
-	this.invitePacket = invitePacket;
-    }
+	public BeforeRoomInvitationSendEvent(BasicStanza message, IPacket invitePacket) {
+		this.message = message;
+		this.invitePacket = invitePacket;
+	}
 
-    @Override
-    public Type<BeforeRoomInvitationSendHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public Type<BeforeRoomInvitationSendHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public IPacket getInvitePacket() {
-	return invitePacket;
-    }
+	public IPacket getInvitePacket() {
+		return invitePacket;
+	}
 
-    public BasicStanza getMessage() {
-	return message;
-    }
+	public BasicStanza getMessage() {
+		return message;
+	}
 
-    @Override
-    protected void dispatch(BeforeRoomInvitationSendHandler handler) {
-	handler.onBeforeInvitationSend(this);
-    }
+	@Override
+	protected void dispatch(BeforeRoomInvitationSendHandler handler) {
+		handler.onBeforeInvitationSend(this);
+	}
 
 }

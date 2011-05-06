@@ -36,38 +36,37 @@ import com.google.inject.Inject;
 
 public class RoomManagerEventsSupervisor {
 
-    @Inject
-    public RoomManagerEventsSupervisor(RoomManager roomManager, final PingPongDisplay display) {
-	roomManager.addChatChangedHandler(new ChatChangedHandler() {
-	    @Override
-	    public void onChatChanged(ChatChangedEvent event) {
-		if (event.is(ChangeTypes.created)) {
-		    trackRoom((Room) event.getChat(), display);
-		}
-	    }
-	});
-    }
+	@Inject
+	public RoomManagerEventsSupervisor(RoomManager roomManager, final PingPongDisplay display) {
+		roomManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(ChatChangedEvent event) {
+				if (event.is(ChangeTypes.created)) {
+					trackRoom((Room) event.getChat(), display);
+				}
+			}
+		});
+	}
 
-    protected void trackRoom(final Room room, final PingPongDisplay display) {
-	room.addOccupantChangedHandler(new OccupantChangedHandler() {
-	    @Override
-	    public void onOccupantChanged(OccupantChangedEvent event) {
-		display.print("ROOM OCCUPANT " + event.getOccupant().getNick() + " changed: " + event.getChangeType(),
-			Style.event);
-		String occupants = "";
-		for (Occupant occupant : room.getOccupants()) {
-		    occupants += occupant.getOccupantUri().getResource() + " ";
-		}
-		display.print("ROOM OCCUPANTS (" + room.getOccupantsCount() + "): " + occupants, Style.event);
-	    }
-	});
+	protected void trackRoom(final Room room, final PingPongDisplay display) {
+		room.addOccupantChangedHandler(new OccupantChangedHandler() {
+			@Override
+			public void onOccupantChanged(OccupantChangedEvent event) {
+				display.print("ROOM OCCUPANT " + event.getOccupant().getNick() + " changed: " + event.getChangeType(), Style.event);
+				String occupants = "";
+				for (Occupant occupant : room.getOccupants()) {
+					occupants += occupant.getOccupantUri().getResource() + " ";
+				}
+				display.print("ROOM OCCUPANTS (" + room.getOccupantsCount() + "): " + occupants, Style.event);
+			}
+		});
 
-	room.addPresenceReceivedHandler(new PresenceHandler() {
-	    @Override
-	    public void onPresence(PresenceEvent event) {
-		display.print("ROOM PRESENCE : " + event.getPresence(), Style.event);
-	    }
-	});
-    }
+		room.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(PresenceEvent event) {
+				display.print("ROOM PRESENCE : " + event.getPresence(), Style.event);
+			}
+		});
+	}
 
 }

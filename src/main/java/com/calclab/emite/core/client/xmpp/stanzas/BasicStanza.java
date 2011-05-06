@@ -27,58 +27,58 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 
 public class BasicStanza extends DelegatedPacket implements Stanza {
-    protected static final String TYPE = "type";
-    private static final String FROM = "from";
-    private static final String ID = "id";
-    private static final String TO = "to";
+	protected static final String TYPE = "type";
+	private static final String FROM = "from";
+	private static final String ID = "id";
+	private static final String TO = "to";
 
-    public BasicStanza(final IPacket stanza) {
-	super(stanza);
-    }
+	public BasicStanza(final IPacket stanza) {
+		super(stanza);
+	}
 
-    public BasicStanza(final String name, final String xmlns) {
-	super(new Packet(name, xmlns));
-    }
+	public BasicStanza(final String name, final String xmlns) {
+		super(new Packet(name, xmlns));
+	}
 
-    @Override
-    public XmppURI getFrom() {
-	return uri(getAttribute(FROM));
-    }
+	@Override
+	public XmppURI getFrom() {
+		return uri(getAttribute(FROM));
+	}
 
-    @Override
-    public String getFromAsString() {
-	return getAttribute(FROM);
-    }
+	@Override
+	public String getFromAsString() {
+		return getAttribute(FROM);
+	}
 
-    public String getId() {
-	return getAttribute(ID);
-    }
+	public String getId() {
+		return getAttribute(ID);
+	}
 
-    @Override
-    public XmppURI getTo() {
-	return uri(getToAsString());
-    }
+	@Override
+	public XmppURI getTo() {
+		return uri(getToAsString());
+	}
 
-    @Override
-    public String getToAsString() {
-	return getAttribute(TO);
-    }
+	@Override
+	public String getToAsString() {
+		return getAttribute(TO);
+	}
 
-    @Override
-    public void setFrom(final XmppURI from) {
-	setAttribute(FROM, (from != null ? from.toString() : null));
-    }
+	@Override
+	public void setFrom(final XmppURI from) {
+		setAttribute(FROM, (from != null ? from.toString() : null));
+	}
 
-    public void setId(final String id) {
-	setAttribute(ID, id);
-    }
+	public void setId(final String id) {
+		setAttribute(ID, id);
+	}
 
-    @Override
-    public void setTo(final XmppURI to) {
-	setAttribute(TO, (to != null ? to.toString() : null));
-    }
+	@Override
+	public void setTo(final XmppURI to) {
+		setAttribute(TO, (to != null ? to.toString() : null));
+	}
 
-    public void setType(final String type) {
-	setAttribute(TYPE, type);
-    }
+	public void setType(final String type) {
+		setAttribute(TYPE, type);
+	}
 }

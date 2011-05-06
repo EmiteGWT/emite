@@ -26,7 +26,7 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-@GinModules({CoreModule.class, BrowserModule.class})
+@GinModules({ CoreModule.class, BrowserModule.class })
 public interface ExampleXmppSessionGinjector extends Ginjector {
-    XmppSession getXmppSession();
+	XmppSession getXmppSession();
 }

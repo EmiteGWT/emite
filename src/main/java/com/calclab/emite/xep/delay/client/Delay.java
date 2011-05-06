@@ -32,24 +32,24 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  */
 public class Delay {
 
-    private final IPacket packet;
+	private final IPacket packet;
 
-    public Delay(IPacket packet) {
-	this.packet = packet;
-    }
-
-    public XmppURI getFrom() {
-	return XmppURI.uri(packet.getAttribute("from"));
-    }
-
-    public Date getStamp() {
-	Date retValue = null;
-	String stamp = packet.getAttribute("stamp");
-	if ("x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))) {
-	    retValue = XmppDateTime.parseLegacyFormatXMPPDateTime(stamp);
-	} else if ("delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"))) {
-	    retValue = XmppDateTime.parseXMPPDateTime(stamp);
+	public Delay(IPacket packet) {
+		this.packet = packet;
 	}
-	return retValue;
-    }
+
+	public XmppURI getFrom() {
+		return XmppURI.uri(packet.getAttribute("from"));
+	}
+
+	public Date getStamp() {
+		Date retValue = null;
+		String stamp = packet.getAttribute("stamp");
+		if ("x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))) {
+			retValue = XmppDateTime.parseLegacyFormatXMPPDateTime(stamp);
+		} else if ("delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"))) {
+			retValue = XmppDateTime.parseXMPPDateTime(stamp);
+		}
+		return retValue;
+	}
 }

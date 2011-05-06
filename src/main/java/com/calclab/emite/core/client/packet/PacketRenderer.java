@@ -27,41 +27,41 @@ import java.util.List;
  * Helper class to build a nice packet representation
  */
 public class PacketRenderer {
-    public static String toString(final IPacket packet) {
-	final StringBuffer buffer = new StringBuffer();
-	toString(packet, buffer);
-	return buffer.toString();
-    }
-
-    public static void toString(final IPacket root, final StringBuffer buffer) {
-	final String name = root.getName();
-	buffer.append("<").append(name);
-	final HashMap<String, String> attributes = root.getAttributes();
-	for (final String key : attributes.keySet()) {
-	    final String value = attributes.get(key);
-	    if (value != null) {
-		buffer.append(" ").append(key).append("=\"");
-		buffer.append(TextUtils.escape(value)).append("\"");
-	    }
+	public static String toString(final IPacket packet) {
+		final StringBuffer buffer = new StringBuffer();
+		toString(packet, buffer);
+		return buffer.toString();
 	}
 
-	final String rootText = root.getText();
-	if (rootText != null) {
-	    buffer.append(">");
-	    buffer.append(TextUtils.escape(rootText));
-	    buffer.append("</").append(name).append(">");
-	} else {
-	    final List<? extends IPacket> children = root.getChildren();
-	    if (children.size() > 0) {
-		buffer.append(">");
-		for (final IPacket child : children) {
-		    toString(child, buffer);
+	public static void toString(final IPacket root, final StringBuffer buffer) {
+		final String name = root.getName();
+		buffer.append("<").append(name);
+		final HashMap<String, String> attributes = root.getAttributes();
+		for (final String key : attributes.keySet()) {
+			final String value = attributes.get(key);
+			if (value != null) {
+				buffer.append(" ").append(key).append("=\"");
+				buffer.append(TextUtils.escape(value)).append("\"");
+			}
 		}
-		buffer.append("</").append(name).append(">");
-	    } else {
-		buffer.append(" />");
-	    }
+
+		final String rootText = root.getText();
+		if (rootText != null) {
+			buffer.append(">");
+			buffer.append(TextUtils.escape(rootText));
+			buffer.append("</").append(name).append(">");
+		} else {
+			final List<? extends IPacket> children = root.getChildren();
+			if (children.size() > 0) {
+				buffer.append(">");
+				for (final IPacket child : children) {
+					toString(child, buffer);
+				}
+				buffer.append("</").append(name).append(">");
+			} else {
+				buffer.append(" />");
+			}
+		}
 	}
-    }
 
 }

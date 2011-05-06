@@ -37,68 +37,68 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class VCardManagerImpl implements VCardManager {
-    private static final String ID_PREFIX = "vcard";
-    private final XmppSession session;
+	private static final String ID_PREFIX = "vcard";
+	private final XmppSession session;
 
-    @Inject
-    public VCardManagerImpl(final XmppSession session) {
-	this.session = session;
-    }
-
-    @Override
-    public HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler) {
-	return VCardResponseEvent.bind(session.getEventBus(), handler);
-    }
-
-    @Override
-    public void getUserVCard(XmppURI userJid, final VCardResponseHandler handler) {
-	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUserURI());
-	iq.setTo(userJid);
-
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, handler);
-	    }
-	});
-
-    }
-
-    @Override
-    public void requestOwnVCard(final VCardResponseHandler handler) {
-	final IQ iq = new IQ(IQ.Type.get);
-	iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
-	iq.setFrom(session.getCurrentUserURI());
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, handler);
-	    }
-	});
-
-    }
-
-    @Override
-    public void updateOwnVCard(VCard vcard, final VCardResponseHandler handler) {
-	final IQ iq = new IQ(IQ.Type.set);
-	iq.addChild(vcard);
-	session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
-	    @Override
-	    public void onIQ(IQ iq) {
-		handleVCard(iq, handler);
-	    }
-	});
-
-    }
-
-    protected void handleVCard(final IQ result, final VCardResponseHandler handler) {
-	final VCardResponse response = new VCardResponse(result);
-	VCardResponseEvent event = new VCardResponseEvent(response);
-	if (handler != null) {
-	    handler.onVCardResponse(event);
+	@Inject
+	public VCardManagerImpl(final XmppSession session) {
+		this.session = session;
 	}
-	session.getEventBus().fireEvent(event);
-    }
+
+	@Override
+	public HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler) {
+		return VCardResponseEvent.bind(session.getEventBus(), handler);
+	}
+
+	@Override
+	public void getUserVCard(XmppURI userJid, final VCardResponseHandler handler) {
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
+		iq.setFrom(session.getCurrentUserURI());
+		iq.setTo(userJid);
+
+		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+			@Override
+			public void onIQ(IQ iq) {
+				handleVCard(iq, handler);
+			}
+		});
+
+	}
+
+	@Override
+	public void requestOwnVCard(final VCardResponseHandler handler) {
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
+		iq.setFrom(session.getCurrentUserURI());
+		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+			@Override
+			public void onIQ(IQ iq) {
+				handleVCard(iq, handler);
+			}
+		});
+
+	}
+
+	@Override
+	public void updateOwnVCard(VCard vcard, final VCardResponseHandler handler) {
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.addChild(vcard);
+		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+			@Override
+			public void onIQ(IQ iq) {
+				handleVCard(iq, handler);
+			}
+		});
+
+	}
+
+	protected void handleVCard(final IQ result, final VCardResponseHandler handler) {
+		final VCardResponse response = new VCardResponse(result);
+		VCardResponseEvent event = new VCardResponseEvent(response);
+		if (handler != null) {
+			handler.onVCardResponse(event);
+		}
+		session.getEventBus().fireEvent(event);
+	}
 }

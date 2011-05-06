@@ -34,143 +34,142 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
  */
 public class Occupant implements HasJID {
 
-    public static enum Affiliation {
-	admin, member, none, owner
-    }
-
-    public static enum Role {
-	moderator, participant, unknown, visitor
-    }
-
-    private Affiliation affiliation;
-    private Role role;
-    private final XmppURI occupantUri;
-    private Show show;
-    private String statusMessage;
-    private final XmppURI userUri;
-
-    public Occupant(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role,
-	    final Show show, final String statusMessage) {
-	assert occupantUri != null : "Occupant uri can't be null in occupant";
-	this.userUri = userUri;
-	this.occupantUri = occupantUri;
-	setAffiliation(affiliation);
-	setRole(role);
-	setShow(show);
-	setStatusMessage(statusMessage);
-    }
-
-    /**
-     * Gets the affiliation of this occupant
-     * 
-     * @return
-     */
-    public Affiliation getAffiliation() {
-	return affiliation;
-    }
-
-    /**
-     * Get the nick of this occupant
-     * 
-     * @return
-     */
-    public String getNick() {
-	return occupantUri.getResource();
-    }
-
-    /**
-     * Get the occupant uri (the room jid and the nick as resource)
-     * 
-     * @return
-     */
-    public XmppURI getOccupantUri() {
-	return occupantUri;
-    }
-
-    public Role getRole() {
-	return role;
-    }
-
-    public Show getShow() {
-	return show;
-    }
-
-    /**
-     * Get the occupant status message
-     * 
-     * @return
-     */
-    public String getStatusMessage() {
-	return statusMessage;
-    }
-
-    /**
-     * Use getOccupantUri
-     * 
-     * @see getOccupantUri
-     */
-    @Deprecated
-    public XmppURI getURI() {
-	return occupantUri;
-    }
-
-    /**
-     * Gets the user uri associated to this occupant
-     * 
-     * @return
-     */
-    public XmppURI getUserUri() {
-	return userUri;
-    }
-
-    public void setAffiliation(final String affiliation) {
-	try {
-	    this.affiliation = Affiliation.valueOf(affiliation);
-	} catch (final IllegalArgumentException e) {
-	    this.affiliation = Affiliation.none;
-	} catch (final NullPointerException e) {
-	    this.affiliation = Affiliation.none;
+	public static enum Affiliation {
+		admin, member, none, owner
 	}
-    }
 
-    public void setRole(final String role) {
-	try {
-	    this.role = Role.valueOf(role);
-	} catch (final IllegalArgumentException e) {
-	    this.role = Role.unknown;
-	} catch (final NullPointerException e) {
-	    this.role = Role.unknown;
+	public static enum Role {
+		moderator, participant, unknown, visitor
 	}
-    }
 
-    public void setShow(Show show) {
-	this.show = show;
-    }
+	private Affiliation affiliation;
+	private Role role;
+	private final XmppURI occupantUri;
+	private Show show;
+	private String statusMessage;
+	private final XmppURI userUri;
 
-    public void setShow(String show) {
-	try {
-	    this.show = Show.valueOf(show);
-	} catch (final IllegalArgumentException e) {
-	    this.show = Show.unknown;
-	} catch (final NullPointerException e) {
-	    this.show = Show.unknown;
+	public Occupant(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role, final Show show, final String statusMessage) {
+		assert occupantUri != null : "Occupant uri can't be null in occupant";
+		this.userUri = userUri;
+		this.occupantUri = occupantUri;
+		setAffiliation(affiliation);
+		setRole(role);
+		setShow(show);
+		setStatusMessage(statusMessage);
 	}
-    }
 
-    public void setStatusMessage(String statusMessage) {
-	this.statusMessage = statusMessage;
-    }
+	/**
+	 * Gets the affiliation of this occupant
+	 * 
+	 * @return
+	 */
+	public Affiliation getAffiliation() {
+		return affiliation;
+	}
 
-    @Override
-    public String toString() {
-	return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
-    }
+	/**
+	 * Get the nick of this occupant
+	 * 
+	 * @return
+	 */
+	public String getNick() {
+		return occupantUri.getResource();
+	}
 
-    /**
-     * {@inheritDoc}. In this case this method will return the user's jid.
-     */
-    @Override
-    public XmppURI getJID() {
-	return getUserUri().getJID();
-    }
+	/**
+	 * Get the occupant uri (the room jid and the nick as resource)
+	 * 
+	 * @return
+	 */
+	public XmppURI getOccupantUri() {
+		return occupantUri;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public Show getShow() {
+		return show;
+	}
+
+	/**
+	 * Get the occupant status message
+	 * 
+	 * @return
+	 */
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	/**
+	 * Use getOccupantUri
+	 * 
+	 * @see getOccupantUri
+	 */
+	@Deprecated
+	public XmppURI getURI() {
+		return occupantUri;
+	}
+
+	/**
+	 * Gets the user uri associated to this occupant
+	 * 
+	 * @return
+	 */
+	public XmppURI getUserUri() {
+		return userUri;
+	}
+
+	public void setAffiliation(final String affiliation) {
+		try {
+			this.affiliation = Affiliation.valueOf(affiliation);
+		} catch (final IllegalArgumentException e) {
+			this.affiliation = Affiliation.none;
+		} catch (final NullPointerException e) {
+			this.affiliation = Affiliation.none;
+		}
+	}
+
+	public void setRole(final String role) {
+		try {
+			this.role = Role.valueOf(role);
+		} catch (final IllegalArgumentException e) {
+			this.role = Role.unknown;
+		} catch (final NullPointerException e) {
+			this.role = Role.unknown;
+		}
+	}
+
+	public void setShow(Show show) {
+		this.show = show;
+	}
+
+	public void setShow(String show) {
+		try {
+			this.show = Show.valueOf(show);
+		} catch (final IllegalArgumentException e) {
+			this.show = Show.unknown;
+		} catch (final NullPointerException e) {
+			this.show = Show.unknown;
+		}
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
+
+	@Override
+	public String toString() {
+		return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
+	}
+
+	/**
+	 * {@inheritDoc}. In this case this method will return the user's jid.
+	 */
+	@Override
+	public XmppURI getJID() {
+		return getUserUri().getJID();
+	}
 }

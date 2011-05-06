@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface RequestFailedHandler extends EventHandler {
 
-    void onRequestFailed(RequestFailedEvent event);
+	void onRequestFailed(RequestFailedEvent event);
 
 }

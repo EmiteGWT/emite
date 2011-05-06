@@ -33,21 +33,21 @@ import com.google.inject.name.Named;
 @Singleton
 public class PairChatManager extends AbstractChatManager implements ChatManager {
 
-    public PairChatManager(final XmppSession session) {
-	this(session, new PairChatSelectionStrategy());
-    }
-
-    @Inject
-    public PairChatManager(final XmppSession session, @Named("Pair") final ChatSelectionStrategy strategy) {
-	super(session, strategy);
-    }
-
-    @Override
-    protected Chat createChat(final ChatProperties properties) {
-	if (properties.getState() == null) {
-	    properties.setState(session.isReady() ? ChatStates.ready : ChatStates.locked);
+	public PairChatManager(final XmppSession session) {
+		this(session, new PairChatSelectionStrategy());
 	}
-	return new PairChat(session, properties);
-    }
+
+	@Inject
+	public PairChatManager(final XmppSession session, @Named("Pair") final ChatSelectionStrategy strategy) {
+		super(session, strategy);
+	}
+
+	@Override
+	protected Chat createChat(final ChatProperties properties) {
+		if (properties.getState() == null) {
+			properties.setState(session.isReady() ? ChatStates.ready : ChatStates.locked);
+		}
+		return new PairChat(session, properties);
+	}
 
 }

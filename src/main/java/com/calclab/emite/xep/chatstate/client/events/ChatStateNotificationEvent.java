@@ -26,30 +26,30 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public class ChatStateNotificationEvent extends GwtEvent<ChatStateNotificationHandler> {
-    private static final Type<ChatStateNotificationHandler> TYPE = new Type<ChatStateNotificationHandler>();
+	private static final Type<ChatStateNotificationHandler> TYPE = new Type<ChatStateNotificationHandler>();
 
-    public static HandlerRegistration bind(EmiteEventBus eventBus, ChatStateNotificationHandler handler) {
-	return eventBus.addHandler(TYPE, handler);
-    }
+	public static HandlerRegistration bind(EmiteEventBus eventBus, ChatStateNotificationHandler handler) {
+		return eventBus.addHandler(TYPE, handler);
+	}
 
-    private final ChatState chatState;
+	private final ChatState chatState;
 
-    public ChatStateNotificationEvent(ChatState chatState) {
-	this.chatState = chatState;
-    }
+	public ChatStateNotificationEvent(ChatState chatState) {
+		this.chatState = chatState;
+	}
 
-    @Override
-    public com.google.gwt.event.shared.GwtEvent.Type<ChatStateNotificationHandler> getAssociatedType() {
-	return TYPE;
-    }
+	@Override
+	public com.google.gwt.event.shared.GwtEvent.Type<ChatStateNotificationHandler> getAssociatedType() {
+		return TYPE;
+	}
 
-    public ChatState getChatState() {
-	return chatState;
-    }
+	public ChatState getChatState() {
+		return chatState;
+	}
 
-    @Override
-    protected void dispatch(ChatStateNotificationHandler handler) {
-	handler.onChatStateChanged(this);
-    }
+	@Override
+	protected void dispatch(ChatStateNotificationHandler handler) {
+		handler.onChatStateChanged(this);
+	}
 
 }

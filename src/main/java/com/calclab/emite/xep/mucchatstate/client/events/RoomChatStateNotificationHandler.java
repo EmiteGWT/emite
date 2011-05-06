@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface RoomChatStateNotificationHandler extends EventHandler {
 
-    void onRoomChatStateNotification(RoomChatStateNotificationEvent event);
+	void onRoomChatStateNotification(RoomChatStateNotificationEvent event);
 
 }

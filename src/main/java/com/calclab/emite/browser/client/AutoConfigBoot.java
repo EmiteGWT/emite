@@ -28,17 +28,17 @@ import com.google.inject.Provider;
 
 public class AutoConfigBoot {
 
-    @Inject
-    public AutoConfigBoot(final Provider<AutoConfig> provider) {
-	GWT.log("Booting auto config...");
-	Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-	    @Override
-	    public void execute() {
-		GWT.log("Checking auto config");
-		if (!PageAssist.isMetaFalse("emite.autoConfig")) {
-		    provider.get();
-		}
-	    }
-	});
-    }
+	@Inject
+	public AutoConfigBoot(final Provider<AutoConfig> provider) {
+		GWT.log("Booting auto config...");
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
+			public void execute() {
+				GWT.log("Checking auto config");
+				if (!PageAssist.isMetaFalse("emite.autoConfig")) {
+					provider.get();
+				}
+			}
+		});
+	}
 }

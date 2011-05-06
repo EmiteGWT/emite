@@ -44,63 +44,63 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ExampleIMChat implements EntryPoint {
 
-    private VerticalPanel output;
+	private VerticalPanel output;
 
-    private TextBox input;
+	private TextBox input;
 
-    @Override
-    public void onModuleLoad() {
-	createUI();
+	@Override
+	public void onModuleLoad() {
+		createUI();
 
-	log("Example IM Chat");
-	String self = PageAssist.getMeta("emite.user");
-	log("Current user: " + self);
-	final String user = PageAssist.getMeta("emite.chat");
-	log("Chat with user: " + user);
+		log("Example IM Chat");
+		String self = PageAssist.getMeta("emite.user");
+		log("Current user: " + self);
+		final String user = PageAssist.getMeta("emite.chat");
+		log("Chat with user: " + user);
 
-	ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
-	XmppSession session = ginjector.getXmppSession();
+		ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
+		XmppSession session = ginjector.getXmppSession();
 
-	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(StateChangedEvent event) {
-		String state = event.getState();
-		log("Current state: " + state);
-	    }
-	});
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(StateChangedEvent event) {
+				String state = event.getState();
+				log("Current state: " + state);
+			}
+		});
 
-	final ChatManager chatManager = ginjector.getChatManager();
-	input.addChangeHandler(new ChangeHandler() {
-	    @Override
-	    public void onChange(ChangeEvent event) {
-		String msg = input.getText();
-		log("Message sent: " + msg);
+		final ChatManager chatManager = ginjector.getChatManager();
+		input.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent event) {
+				String msg = input.getText();
+				log("Message sent: " + msg);
+				Chat chat = chatManager.open(uri(user));
+				chat.send(new Message(msg));
+				input.setText("");
+			}
+		});
+
 		Chat chat = chatManager.open(uri(user));
-		chat.send(new Message(msg));
-		input.setText("");
-	    }
-	});
+		chat.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				log("Message received: " + event.getMessage().getBody());
+			}
+		});
+	}
 
-	Chat chat = chatManager.open(uri(user));
-	chat.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		log("Message received: " + event.getMessage().getBody());
-	    }
-	});
-    }
+	private void createUI() {
+		DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
+		input = new TextBox();
+		dock.addSouth(input, 50);
+		output = new VerticalPanel();
+		dock.add(output);
+		RootLayoutPanel.get().add(dock);
+	}
 
-    private void createUI() {
-	DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
-	input = new TextBox();
-	dock.addSouth(input, 50);
-	output = new VerticalPanel();
-	dock.add(output);
-	RootLayoutPanel.get().add(dock);
-    }
-
-    private void log(String text) {
-	output.add(new Label(text));
-    }
+	private void log(String text) {
+		output.add(new Label(text));
+	}
 
 }

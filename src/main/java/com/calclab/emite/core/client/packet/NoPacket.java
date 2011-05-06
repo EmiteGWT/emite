@@ -28,142 +28,142 @@ import java.util.List;
  * A substitute of null
  */
 public class NoPacket implements IPacket {
-    public static final NoPacket INSTANCE = new NoPacket();
-    private static final HashMap<String, String> EMPTY_ATTRIBUTTES = new HashMap<String, String>();
-    private static final List<? extends IPacket> EMPTY_CHILDREN = new ArrayList<IPacket>();
+	public static final NoPacket INSTANCE = new NoPacket();
+	private static final HashMap<String, String> EMPTY_ATTRIBUTTES = new HashMap<String, String>();
+	private static final List<? extends IPacket> EMPTY_CHILDREN = new ArrayList<IPacket>();
 
-    private NoPacket() {
+	private NoPacket() {
 
-    }
+	}
 
-    @Override
-    public IPacket addChild(final IPacket child) {
-	return this;
-    }
+	@Override
+	public IPacket addChild(final IPacket child) {
+		return this;
+	}
 
-    @Override
-    public IPacket addChild(final String nodeName) {
-	return this;
-    }
+	@Override
+	public IPacket addChild(final String nodeName) {
+		return this;
+	}
 
-    @Override
-    public IPacket addChild(final String nodeName, final String xmlns) {
-	return this;
-    }
+	@Override
+	public IPacket addChild(final String nodeName, final String xmlns) {
+		return this;
+	}
 
-    @Override
-    public String getAttribute(final String name) {
-	return null;
-    }
+	@Override
+	public String getAttribute(final String name) {
+		return null;
+	}
 
-    @Override
-    public HashMap<String, String> getAttributes() {
-	return EMPTY_ATTRIBUTTES;
-    }
+	@Override
+	public HashMap<String, String> getAttributes() {
+		return EMPTY_ATTRIBUTTES;
+	}
 
-    @Override
-    public List<? extends IPacket> getChildren() {
-	return EMPTY_CHILDREN;
-    }
+	@Override
+	public List<? extends IPacket> getChildren() {
+		return EMPTY_CHILDREN;
+	}
 
-    @Override
-    public List<? extends IPacket> getChildren(final PacketMatcher filter) {
-	return EMPTY_CHILDREN;
-    }
+	@Override
+	public List<? extends IPacket> getChildren(final PacketMatcher filter) {
+		return EMPTY_CHILDREN;
+	}
 
-    public List<? extends IPacket> getChildren(final String name) {
-	return EMPTY_CHILDREN;
-    }
+	public List<? extends IPacket> getChildren(final String name) {
+		return EMPTY_CHILDREN;
+	}
 
-    @Override
-    public int getChildrenCount() {
-	return 0;
-    }
+	@Override
+	public int getChildrenCount() {
+		return 0;
+	}
 
-    @Override
-    public IPacket getFirstChild(final PacketMatcher filter) {
-	return this;
-    }
+	@Override
+	public IPacket getFirstChild(final PacketMatcher filter) {
+		return this;
+	}
 
-    @Override
-    public IPacket getFirstChild(final String childName) {
-	return this;
-    }
+	@Override
+	public IPacket getFirstChild(final String childName) {
+		return this;
+	}
 
-    @Override
-    public IPacket getFirstChildInDeep(final PacketMatcher filter) {
-	return this;
-    }
+	@Override
+	public IPacket getFirstChildInDeep(final PacketMatcher filter) {
+		return this;
+	}
 
-    @Override
-    public IPacket getFirstChildInDeep(final String name) {
-	return this;
-    }
+	@Override
+	public IPacket getFirstChildInDeep(final String name) {
+		return this;
+	}
 
-    @Override
-    public String getName() {
-	return null;
-    }
+	@Override
+	public String getName() {
+		return null;
+	}
 
-    public IPacket getParent() {
-	return this;
-    }
+	public IPacket getParent() {
+		return this;
+	}
 
-    @Override
-    public String getText() {
-	return null;
-    }
+	@Override
+	public String getText() {
+		return null;
+	}
 
-    @Override
-    public boolean hasAttribute(final String name) {
-	return false;
-    }
+	@Override
+	public boolean hasAttribute(final String name) {
+		return false;
+	}
 
-    @Override
-    public boolean hasAttribute(final String name, final String value) {
-	return false;
-    }
+	@Override
+	public boolean hasAttribute(final String name, final String value) {
+		return false;
+	}
 
-    @Override
-    public boolean hasChild(final String name) {
-	return false;
-    }
+	@Override
+	public boolean hasChild(final String name) {
+		return false;
+	}
 
-    @Override
-    public boolean removeChild(final IPacket child) {
-	return false;
-    }
+	@Override
+	public boolean removeChild(final IPacket child) {
+		return false;
+	}
 
-    public void render(final StringBuffer buffer) {
-    }
+	public void render(final StringBuffer buffer) {
+	}
 
-    @Override
-    public void setAttribute(final String name, final String value) {
-    }
+	@Override
+	public void setAttribute(final String name, final String value) {
+	}
 
-    @Override
-    public void setText(final String text) {
-    }
+	@Override
+	public void setText(final String text) {
+	}
 
-    @Override
-    public void setTextToChild(final String nodeName, final String text) {
-    }
+	@Override
+	public void setTextToChild(final String nodeName, final String text) {
+	}
 
-    public IPacket With(final IPacket child) {
-	return this;
-    }
+	public IPacket With(final IPacket child) {
+		return this;
+	}
 
-    public IPacket With(final String name, final long value) {
-	return this;
-    }
+	public IPacket With(final String name, final long value) {
+		return this;
+	}
 
-    @Override
-    public IPacket With(final String name, final String value) {
-	return this;
-    }
+	@Override
+	public IPacket With(final String name, final String value) {
+		return this;
+	}
 
-    public IPacket WithText(final String text) {
-	return this;
-    }
+	public IPacket WithText(final String text) {
+		return this;
+	}
 
 }

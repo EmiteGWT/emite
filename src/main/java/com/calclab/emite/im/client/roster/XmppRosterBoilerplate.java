@@ -32,34 +32,34 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class XmppRosterBoilerplate implements XmppRoster {
 
-    protected final XmppSession session;
-    protected EmiteEventBus eventBus;
-    protected boolean rosterReady;
+	protected final XmppSession session;
+	protected EmiteEventBus eventBus;
+	protected boolean rosterReady;
 
-    public XmppRosterBoilerplate(XmppSession session) {
-	this.session = session;
-	this.eventBus = session.getEventBus();
-	rosterReady = false;
-    }
+	public XmppRosterBoilerplate(XmppSession session) {
+		this.session = session;
+		this.eventBus = session.getEventBus();
+		rosterReady = false;
+	}
 
-    @Override
-    public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
-	return RosterGroupChangedEvent.bind(eventBus, handler);
-    }
+	@Override
+	public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
+		return RosterGroupChangedEvent.bind(eventBus, handler);
+	}
 
-    @Override
-    public HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler) {
-	return RosterItemChangedEvent.bind(eventBus, handler);
-    }
+	@Override
+	public HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler) {
+		return RosterItemChangedEvent.bind(eventBus, handler);
+	}
 
-    @Override
-    public HandlerRegistration addRosterRetrievedHandler(RosterRetrievedHandler handler) {
-	return RosterRetrievedEvent.bind(eventBus, handler);
-    }
+	@Override
+	public HandlerRegistration addRosterRetrievedHandler(RosterRetrievedHandler handler) {
+		return RosterRetrievedEvent.bind(eventBus, handler);
+	}
 
-    @Override
-    public boolean isRosterReady() {
-	return rosterReady;
-    }
+	@Override
+	public boolean isRosterReady() {
+		return rosterReady;
+	}
 
 }

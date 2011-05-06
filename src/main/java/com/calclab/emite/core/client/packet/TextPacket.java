@@ -24,15 +24,15 @@ package com.calclab.emite.core.client.packet;
  * Package private packet for use internal only
  */
 class TextPacket extends Packet {
-    private final String value;
+	private final String value;
 
-    public TextPacket(final String value) {
-	super(null, null);
-	this.value = value;
-    }
+	public TextPacket(final String value) {
+		super(null, null);
+		this.value = value;
+	}
 
-    @Override
-    public String toString() {
-	return value;
-    }
+	@Override
+	public String toString() {
+		return value;
+	}
 }

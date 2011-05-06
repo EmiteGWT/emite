@@ -42,45 +42,45 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ExampleEcho implements EntryPoint {
 
-    private VerticalPanel output;
+	private VerticalPanel output;
 
-    @Override
-    public void onModuleLoad() {
-	output = new VerticalPanel();
-	RootLayoutPanel.get().add(output);
+	@Override
+	public void onModuleLoad() {
+		output = new VerticalPanel();
+		RootLayoutPanel.get().add(output);
 
-	log("Example echo chat");
-	String self = PageAssist.getMeta("emite.user");
-	log("Current user: " + self);
-	final String user = PageAssist.getMeta("emite.chat");
-	log("Chat with user: " + user);
+		log("Example echo chat");
+		String self = PageAssist.getMeta("emite.user");
+		log("Current user: " + self);
+		final String user = PageAssist.getMeta("emite.chat");
+		log("Chat with user: " + user);
 
-	EchoGinjector ginjector = GWT.create(EchoGinjector.class);
+		EchoGinjector ginjector = GWT.create(EchoGinjector.class);
 
-	XmppSession session = ginjector.getXmppSession();
+		XmppSession session = ginjector.getXmppSession();
 
-	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(StateChangedEvent event) {
-		String state = event.getState();
-		log("Current state: " + state);
-	    }
-	});
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(StateChangedEvent event) {
+				String state = event.getState();
+				log("Current state: " + state);
+			}
+		});
 
-	ChatManager chatManager = ginjector.getChatManager();
-	final Chat chat = chatManager.open(uri(user));
-	chat.addMessageReceivedHandler(new MessageHandler() {
-	    @Override
-	    public void onMessage(MessageEvent event) {
-		String body = event.getMessage().getBody();
-		log("Message received: " + body);
-		chat.send(new Message(body + " at: " + System.currentTimeMillis()));
-	    }
-	});
-    }
+		ChatManager chatManager = ginjector.getChatManager();
+		final Chat chat = chatManager.open(uri(user));
+		chat.addMessageReceivedHandler(new MessageHandler() {
+			@Override
+			public void onMessage(MessageEvent event) {
+				String body = event.getMessage().getBody();
+				log("Message received: " + body);
+				chat.send(new Message(body + " at: " + System.currentTimeMillis()));
+			}
+		});
+	}
 
-    private void log(String text) {
-	output.add(new Label(text));
-    }
+	private void log(String text) {
+		output.add(new Label(text));
+	}
 
 }

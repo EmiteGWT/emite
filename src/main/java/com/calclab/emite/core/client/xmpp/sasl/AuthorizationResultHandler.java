@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface AuthorizationResultHandler extends EventHandler {
 
-    void onAuthorization(AuthorizationResultEvent event);
+	void onAuthorization(AuthorizationResultEvent event);
 
 }

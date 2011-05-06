@@ -34,45 +34,45 @@ import com.google.inject.Singleton;
 @Singleton
 public class PingPongCommonPresenter {
 
-    @Inject
-    public PingPongCommonPresenter(final XmppSession session, ConnectionEventsSupervisor connectionEventsSupervisor,
-	    SessionEventsSupervisor sessionEventsSupervisor, final PingPongDisplay display) {
+	@Inject
+	public PingPongCommonPresenter(final XmppSession session, ConnectionEventsSupervisor connectionEventsSupervisor,
+			SessionEventsSupervisor sessionEventsSupervisor, final PingPongDisplay display) {
 
-	display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.important);
+		display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.important);
 
-	// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
-	display.addLoginClickHandler(new ClickHandler() {
-	    @Override
-	    public void onClick(ClickEvent event) {
-		if (session.isState(SessionStates.disconnected)) {
-		    display.print("Logging in...", Style.info);
-		    PageAssist.loginFromMeta(session);
-		} else {
-		    display.print("Current state: " + session.getSessionState(), Style.info);
-		}
+		// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
+		display.addLoginClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (session.isState(SessionStates.disconnected)) {
+					display.print("Logging in...", Style.info);
+					PageAssist.loginFromMeta(session);
+				} else {
+					display.print("Current state: " + session.getSessionState(), Style.info);
+				}
 
-	    }
-	});
+			}
+		});
 
-	display.addLogoutClickHandler(new ClickHandler() {
-	    @Override
-	    public void onClick(ClickEvent event) {
-		if (session.isReady()) {
-		    display.print("Logging out...", Style.info);
-		    session.logout();
-		} else {
-		    display.print("Current state: " + session.getSessionState(), Style.info);
-		}
+		display.addLogoutClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if (session.isReady()) {
+					display.print("Logging out...", Style.info);
+					session.logout();
+				} else {
+					display.print("Current state: " + session.getSessionState(), Style.info);
+				}
 
-	    }
-	});
+			}
+		});
 
-	display.addClearClickHandler(new ClickHandler() {
-	    @Override
-	    public void onClick(ClickEvent event) {
-		display.clearOutput();
-	    }
-	});
+		display.addClearClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				display.clearOutput();
+			}
+		});
 
-    }
+	}
 }

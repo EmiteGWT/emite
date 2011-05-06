@@ -29,22 +29,22 @@ import com.calclab.emite.core.client.packet.IPacket;
  */
 public class Item extends AbstractItem {
 
-    static final String ITEM = "item";
+	static final String ITEM = "item";
 
-    /**
-     * Each of these elements MUST contain one or more <field/> children.
-     */
+	/**
+	 * Each of these elements MUST contain one or more <field/> children.
+	 */
 
-    public Item() {
-	super(ITEM);
-    }
+	public Item() {
+		super(ITEM);
+	}
 
-    public Item(final IPacket packet) {
-	super(packet);
-    }
+	public Item(final IPacket packet) {
+		super(packet);
+	}
 
-    public Item WithField(final Field field) {
-	addField(field);
-	return this;
-    }
+	public Item WithField(final Field field) {
+		addField(field);
+		return this;
+	}
 }

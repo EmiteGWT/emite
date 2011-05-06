@@ -31,30 +31,30 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see ChatManager
  */
 public interface RoomManager extends ChatManager {
-    /**
-     * Accepts a room invitation event
-     * 
-     * @param invitation
-     *            the invitation event to be accepted
-     */
-    public void acceptRoomInvitation(RoomInvitation invitation);
+	/**
+	 * Accepts a room invitation event
+	 * 
+	 * @param invitation
+	 *            the invitation event to be accepted
+	 */
+	public void acceptRoomInvitation(RoomInvitation invitation);
 
-    /**
-     * Add a handler to know when a room invitation has arrived
-     * 
-     * @param handler
-     * @return
-     */
-    public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationHandler handler);
+	/**
+	 * Add a handler to know when a room invitation has arrived
+	 * 
+	 * @param handler
+	 * @return
+	 */
+	public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationHandler handler);
 
-    /**
-     * Obtain the default history options applied to all new rooms
-     * 
-     * @return
-     */
-    public HistoryOptions getDefaultHistoryOptions();
+	/**
+	 * Obtain the default history options applied to all new rooms
+	 * 
+	 * @return
+	 */
+	public HistoryOptions getDefaultHistoryOptions();
 
-    public Room open(final XmppURI uri, HistoryOptions historyOptions);
+	public Room open(final XmppURI uri, HistoryOptions historyOptions);
 
-    public void setDefaultHistoryOptions(HistoryOptions historyOptions);
+	public void setDefaultHistoryOptions(HistoryOptions historyOptions);
 }

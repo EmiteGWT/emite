@@ -28,9 +28,9 @@ import com.google.inject.name.Named;
 
 public class PingRoomPresenter extends PingChatPresenter {
 
-    @Inject
-    public PingRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
-	super(roomManager, roomUri, display);
-    }
+	@Inject
+	public PingRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
+		super(roomManager, roomUri, display);
+	}
 
 }

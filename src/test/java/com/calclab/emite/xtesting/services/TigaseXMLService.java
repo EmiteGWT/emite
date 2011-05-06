@@ -30,31 +30,31 @@ import tigase.xml.SimpleParser;
 import com.calclab.emite.core.client.packet.IPacket;
 
 public class TigaseXMLService {
-    public static final TigaseXMLService instance = new TigaseXMLService();
+	public static final TigaseXMLService instance = new TigaseXMLService();
 
-    public static final IPacket toPacket(String xml) {
-	return instance.toXML(xml);
-    }
-
-    private final SimpleParser parser;
-
-    public TigaseXMLService() {
-	parser = new SimpleParser();
-    }
-
-    public String toString(final IPacket iPacket) {
-	return iPacket != null ? iPacket.toString() : "null";
-    }
-
-    public IPacket toXML(final String xml) {
-	final DomBuilderHandler handler = new DomBuilderHandler();
-	parser.parse(handler, xml.toCharArray(), 0, xml.length());
-	final Queue<Element> parsedElements = handler.getParsedElements();
-
-	final Element body = parsedElements.poll();
-	if (body == null) {
-	    throw new RuntimeException("not valid xml: " + xml);
+	public static final IPacket toPacket(String xml) {
+		return instance.toXML(xml);
 	}
-	return new TigasePacket(body);
-    }
+
+	private final SimpleParser parser;
+
+	public TigaseXMLService() {
+		parser = new SimpleParser();
+	}
+
+	public String toString(final IPacket iPacket) {
+		return iPacket != null ? iPacket.toString() : "null";
+	}
+
+	public IPacket toXML(final String xml) {
+		final DomBuilderHandler handler = new DomBuilderHandler();
+		parser.parse(handler, xml.toCharArray(), 0, xml.length());
+		final Queue<Element> parsedElements = handler.getParsedElements();
+
+		final Element body = parsedElements.poll();
+		if (body == null) {
+			throw new RuntimeException("not valid xml: " + xml);
+		}
+		return new TigasePacket(body);
+	}
 }

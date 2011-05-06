@@ -32,23 +32,23 @@ import com.google.inject.name.Named;
 
 public class PingPongModule extends AbstractGinModule {
 
-    @Provides
-    @Named("other")
-    public XmppURI getOtherUri() {
-	return XmppURI.uri(PageAssist.getMeta("pingpong.other"));
-    }
+	@Provides
+	@Named("other")
+	public XmppURI getOtherUri() {
+		return XmppURI.uri(PageAssist.getMeta("pingpong.other"));
+	}
 
-    @Provides
-    @Named("room")
-    public XmppURI getRoomUri() {
-	return XmppURI.uri(PageAssist.getMeta("pingpong.room"));
-    }
+	@Provides
+	@Named("room")
+	public XmppURI getRoomUri() {
+		return XmppURI.uri(PageAssist.getMeta("pingpong.room"));
+	}
 
-    @Override
-    protected void configure() {
-	install(new CoreModule());
-	install(new ImModule());
-	install(new MucModule());
-	bind(PingPongDisplay.class).to(PingPongWidget.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		install(new CoreModule());
+		install(new ImModule());
+		install(new MucModule());
+		bind(PingPongDisplay.class).to(PingPongWidget.class).in(Singleton.class);
+	}
 }

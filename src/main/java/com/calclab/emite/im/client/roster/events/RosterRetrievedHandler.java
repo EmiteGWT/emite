@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface RosterRetrievedHandler extends EventHandler {
 
-    void onRosterRetrieved(RosterRetrievedEvent event);
+	void onRosterRetrieved(RosterRetrievedEvent event);
 
 }

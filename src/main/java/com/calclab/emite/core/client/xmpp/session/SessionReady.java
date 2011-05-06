@@ -32,29 +32,29 @@ import com.google.inject.Inject;
  */
 public class SessionReady {
 
-    private boolean enabled;
+	private boolean enabled;
 
-    @Inject
-    public SessionReady(final XmppSession session) {
-	GWT.log("Creating SessionReady");
-	enabled = true;
+	@Inject
+	public SessionReady(final XmppSession session) {
+		GWT.log("Creating SessionReady");
+		enabled = true;
 
-	session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-	    @Override
-	    public void onStateChanged(StateChangedEvent event) {
-		if (enabled) {
-		    if (event.is(SessionStates.loggedIn)) {
-			session.send(new Presence());
-			session.setSessionState(SessionStates.ready);
-		    }
-		}
-	    }
-	});
-    }
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(StateChangedEvent event) {
+				if (enabled) {
+					if (event.is(SessionStates.loggedIn)) {
+						session.send(new Presence());
+						session.setSessionState(SessionStates.ready);
+					}
+				}
+			}
+		});
+	}
 
-    public void setEnabled(boolean enabled) {
-	GWT.log("SessionReady - enabled: " + enabled);
-	this.enabled = enabled;
-    }
+	public void setEnabled(boolean enabled) {
+		GWT.log("SessionReady - enabled: " + enabled);
+		this.enabled = enabled;
+	}
 
 }

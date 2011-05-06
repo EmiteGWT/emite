@@ -25,9 +25,9 @@ import com.google.inject.Singleton;
 
 public class AvatarModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(AvatarManager.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(AvatarManager.class).in(Singleton.class);
+	}
 
 }

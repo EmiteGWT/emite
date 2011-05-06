@@ -6,13 +6,13 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 
 public class MessageTestHandler extends TestHandler<MessageEvent> implements MessageHandler {
 
-    public Message getLastMessage() {
-	return hasEvent() ? getLastEvent().getMessage() : null;
-    }
+	public Message getLastMessage() {
+		return hasEvent() ? getLastEvent().getMessage() : null;
+	}
 
-    @Override
-    public void onMessage(final MessageEvent event) {
-	addEvent(event);
-    }
+	@Override
+	public void onMessage(final MessageEvent event) {
+		addEvent(event);
+	}
 
 }

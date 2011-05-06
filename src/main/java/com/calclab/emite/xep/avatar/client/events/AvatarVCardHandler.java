@@ -24,6 +24,6 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface AvatarVCardHandler extends EventHandler {
 
-    void onAvatarVCard(AvatarVCardReceivedEvent event);
+	void onAvatarVCard(AvatarVCardReceivedEvent event);
 
 }

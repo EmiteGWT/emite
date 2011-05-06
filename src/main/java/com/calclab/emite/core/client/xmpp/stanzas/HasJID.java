@@ -29,10 +29,10 @@ import com.calclab.emite.im.client.roster.RosterItem;
  */
 public interface HasJID {
 
-    /**
-     * Gets the Jabber ID (JID) from this object.
-     * 
-     * @return the JID.
-     */
-    public XmppURI getJID();
+	/**
+	 * Gets the Jabber ID (JID) from this object.
+	 * 
+	 * @return the JID.
+	 */
+	public XmppURI getJID();
 }

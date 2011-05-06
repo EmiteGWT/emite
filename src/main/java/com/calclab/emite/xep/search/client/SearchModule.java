@@ -35,9 +35,9 @@ import com.google.inject.Singleton;
  */
 public class SearchModule extends AbstractGinModule {
 
-    @Override
-    protected void configure() {
-	bind(SearchManager.class).to(SearchManagerImpl.class).in(Singleton.class);
-    }
+	@Override
+	protected void configure() {
+		bind(SearchManager.class).to(SearchManagerImpl.class).in(Singleton.class);
+	}
 
 }
