@@ -57,8 +57,8 @@ public class AvatarManager {
 
 		session.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				final List<? extends IPacket> children = presence.getChildren(FILTER_X);
 				for (final IPacket child : children) {
 					if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
@@ -70,11 +70,11 @@ public class AvatarManager {
 
 	}
 
-	public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardHandler handler) {
+	public HandlerRegistration addAvatarVCardReceivedHandler(final AvatarVCardHandler handler) {
 		return AvatarVCardReceivedEvent.bind(session.getEventBus(), handler);
 	}
 
-	public HandlerRegistration addHashPresenceReceviedHandler(PresenceHandler handler) {
+	public HandlerRegistration addHashPresenceReceviedHandler(final PresenceHandler handler) {
 		return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
 	}
 
@@ -93,7 +93,7 @@ public class AvatarManager {
 
 		session.sendIQ("avatar", iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ received) {
+			public void onIQ(final IQ received) {
 				if (IQ.isSuccess(received) && received.hasChild(VCARD) && received.hasAttribute("to", session.getCurrentUserURI().toString())) {
 					final XmppURI from = XmppURI.jid(received.getAttribute("from"));
 					final IPacket photo = received.getFirstChild(VCARD).getFirstChild(PHOTO);
@@ -117,7 +117,7 @@ public class AvatarManager {
 		vcard.addChild(PHOTO, null).addChild(BINVAL, null).setText(photoBinary);
 		session.sendIQ("avatar", iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				if (IQ.isSuccess(iq)) {
 					// TODO: add behaviour
 				} else {

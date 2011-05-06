@@ -42,7 +42,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldFireChatStateChanges() {
-		StateChangedTestHandler handler = new StateChangedTestHandler();
+		final StateChangedTestHandler handler = new StateChangedTestHandler();
 		chat.addChatStateChangedHandler(true, handler);
 		assertEquals(1, handler.getCalledTimes());
 		chat.setChatState(ChatStates.locked);
@@ -52,7 +52,7 @@ public class PairChatTests {
 	@Test
 	public void shouldNotSendOrInterceptOutcomingMessagesIfLocked() {
 		properties.setState(ChatStates.locked);
-		Message message = new Message("body");
+		final Message message = new Message("body");
 		chat.send(message);
 		assertFalse(beforeSendHandler.isCalledOnce());
 		assertFalse(sentHandler.isCalledOnce());
@@ -61,7 +61,7 @@ public class PairChatTests {
 	@Test
 	public void shouldRaiseErrorIfSendUsingLockedChat() {
 		properties.setState(ChatStates.locked);
-		ErrorTestHandler handler = new ErrorTestHandler();
+		final ErrorTestHandler handler = new ErrorTestHandler();
 		chat.addErrorHandler(handler);
 		chat.send(new Message("body"));
 		assertTrue(handler.isCalledOnce());
@@ -70,11 +70,11 @@ public class PairChatTests {
 
 	@Test
 	public void shouldReceiveAndInterceptIncomingMessages() {
-		MessageTestHandler receive = new MessageTestHandler();
+		final MessageTestHandler receive = new MessageTestHandler();
 		chat.addMessageReceivedHandler(receive);
-		MessageTestHandler beforeReceive = new MessageTestHandler();
+		final MessageTestHandler beforeReceive = new MessageTestHandler();
 		chat.addBeforeReceiveMessageHandler(beforeReceive);
-		Message message = new Message("body");
+		final Message message = new Message("body");
 		chat.receive(message);
 		assertTrue(beforeReceive.isCalledOnce());
 		assertSame(message, beforeReceive.getLastMessage());
@@ -85,7 +85,7 @@ public class PairChatTests {
 	@Test
 	public void shouldSendAndInterceptOutcomingMessagesIfReady() {
 		properties.setState(ChatStates.ready);
-		Message message = new Message("body");
+		final Message message = new Message("body");
 		chat.send(message);
 		assertTrue(beforeSendHandler.isCalledOnce());
 		assertTrue(sentHandler.isCalledOnce());

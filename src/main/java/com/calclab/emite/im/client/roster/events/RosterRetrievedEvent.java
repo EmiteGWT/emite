@@ -31,13 +31,13 @@ public class RosterRetrievedEvent extends GwtEvent<RosterRetrievedHandler> {
 
 	private static final Type<RosterRetrievedHandler> TYPE = new Type<RosterRetrievedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RosterRetrievedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RosterRetrievedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final Collection<RosterItem> rosterItems;
 
-	public RosterRetrievedEvent(Collection<RosterItem> rosterItems) {
+	public RosterRetrievedEvent(final Collection<RosterItem> rosterItems) {
 		this.rosterItems = rosterItems;
 	}
 
@@ -51,7 +51,7 @@ public class RosterRetrievedEvent extends GwtEvent<RosterRetrievedHandler> {
 	}
 
 	@Override
-	protected void dispatch(RosterRetrievedHandler handler) {
+	protected void dispatch(final RosterRetrievedHandler handler) {
 		handler.onRosterRetrieved(this);
 	}
 

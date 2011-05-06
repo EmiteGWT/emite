@@ -31,7 +31,7 @@ public class SearchFields {
 		searchFields = new ArrayList<String>();
 	}
 
-	public void add(String name) {
+	public void add(final String name) {
 		searchFields.add(name);
 	}
 
@@ -43,7 +43,7 @@ public class SearchFields {
 		return instructions;
 	}
 
-	public void setInstructions(String instructions) {
+	public void setInstructions(final String instructions) {
 		this.instructions = instructions;
 	}
 }

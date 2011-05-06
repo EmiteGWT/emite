@@ -34,7 +34,7 @@ public class Delay {
 
 	private final IPacket packet;
 
-	public Delay(IPacket packet) {
+	public Delay(final IPacket packet) {
 		this.packet = packet;
 	}
 
@@ -44,7 +44,7 @@ public class Delay {
 
 	public Date getStamp() {
 		Date retValue = null;
-		String stamp = packet.getAttribute("stamp");
+		final String stamp = packet.getAttribute("stamp");
 		if ("x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))) {
 			retValue = XmppDateTime.parseLegacyFormatXMPPDateTime(stamp);
 		} else if ("delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"))) {

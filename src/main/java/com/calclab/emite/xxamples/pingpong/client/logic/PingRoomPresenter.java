@@ -29,7 +29,7 @@ import com.google.inject.name.Named;
 public class PingRoomPresenter extends PingChatPresenter {
 
 	@Inject
-	public PingRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
+	public PingRoomPresenter(final RoomManager roomManager, @Named("room") final XmppURI roomUri, final PingPongDisplay display) {
 		super(roomManager, roomUri, display);
 	}
 

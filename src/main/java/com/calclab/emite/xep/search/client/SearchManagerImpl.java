@@ -178,14 +178,13 @@ public class SearchManagerImpl implements SearchManager {
 
 			session.sendIQ(SEARCH_CATEGORY, iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					callback.onIQResult(iq);
 				}
 			});
 
-		} else {
+		} else
 			throw new RuntimeException(SHOULD_BE_CONNECTED);
-		}
 	}
 
 	private void searchGeneric(final List<IPacket> queryChilds, final IQResultCallback callback) {
@@ -198,12 +197,11 @@ public class SearchManagerImpl implements SearchManager {
 
 			session.sendIQ(SEARCH_CATEGORY, iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					callback.onIQResult(iq);
 				}
 			});
-		} else {
+		} else
 			throw new RuntimeException(SHOULD_BE_CONNECTED);
-		}
 	}
 }

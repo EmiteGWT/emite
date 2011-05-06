@@ -41,21 +41,21 @@ public class DiscoveryItemsResults {
 	private List<Item> items;
 	private final IPacket result;
 
-	public DiscoveryItemsResults(IQ iq) {
+	public DiscoveryItemsResults(final IQ iq) {
 		assert IQ.Type.result == iq.getType();
-		this.result = iq.getFirstChild(ITEMS_RESULT_MATCHER);
+		result = iq.getFirstChild(ITEMS_RESULT_MATCHER);
 
 	}
 
 	public List<Item> getItems() {
-		if (this.items == null) {
-			this.items = processItem(result.getChildren(ITEMS_MATCHER));
+		if (items == null) {
+			items = processItem(result.getChildren(ITEMS_MATCHER));
 		}
-		return this.items;
+		return items;
 	}
 
 	private List<Item> processItem(final List<? extends IPacket> children) {
-		List<Item> items = new ArrayList<Item>();
+		final List<Item> items = new ArrayList<Item>();
 		for (final IPacket child : children) {
 			items.add(Item.fromPacket(child));
 		}

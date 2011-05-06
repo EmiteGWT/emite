@@ -11,7 +11,7 @@ public class VCardResponseTestHandler extends TestHandler<VCardResponseEvent> im
 	}
 
 	@Override
-	public void onVCardResponse(VCardResponseEvent event) {
+	public void onVCardResponse(final VCardResponseEvent event) {
 		addEvent(event);
 	}
 

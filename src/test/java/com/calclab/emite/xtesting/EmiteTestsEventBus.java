@@ -10,11 +10,11 @@ public class EmiteTestsEventBus extends HandlerManager implements EmiteEventBus 
 
 	private static Factory factory;
 
-	public static EmiteEventBus create(String eventBusName) {
+	public static EmiteEventBus create(final String eventBusName) {
 		if (EmiteTestsEventBus.factory == null) {
 			EmiteTestsEventBus.factory = new Factory() {
 				@Override
-				public EmiteEventBus create(String eventBusName) {
+				public EmiteEventBus create(final String eventBusName) {
 					return new EmiteTestsEventBus(eventBusName);
 				}
 			};
@@ -25,14 +25,14 @@ public class EmiteTestsEventBus extends HandlerManager implements EmiteEventBus 
 
 	private final String name;
 
-	public EmiteTestsEventBus(String name) {
+	public EmiteTestsEventBus(final String name) {
 		super(null);
 		this.name = name;
 		System.out.println("New event bus: " + name);
 	}
 
 	@Override
-	public void fireEvent(GwtEvent<?> event) {
+	public void fireEvent(final GwtEvent<?> event) {
 		System.out.println("[" + name + "] " + event.toDebugString());
 		super.fireEvent(event);
 	}

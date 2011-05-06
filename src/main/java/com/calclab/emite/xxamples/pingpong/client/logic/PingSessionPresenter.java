@@ -46,7 +46,7 @@ public class PingSessionPresenter implements StartablePresenter {
 	private int waitTime;
 
 	@Inject
-	public PingSessionPresenter(XmppSession session, @Named("other") final XmppURI other, final PingPongDisplay output) {
+	public PingSessionPresenter(final XmppSession session, @Named("other") final XmppURI other, final PingPongDisplay output) {
 		this.session = session;
 		pings = 0;
 		waitTime = 2000;

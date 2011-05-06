@@ -202,7 +202,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 				sendBody();
 			} else {
 				final long currentRID = getStreamSettings().rid;
-				int waitTime = 300;
+				final int waitTime = 300;
 				services.schedule(waitTime, new ScheduledAction() {
 					@Override
 					public void run() {

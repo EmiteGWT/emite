@@ -32,24 +32,24 @@ import com.google.inject.Inject;
 public class ConnectionEventsSupervisor {
 
 	@Inject
-	public ConnectionEventsSupervisor(XmppConnection connection, final PingPongDisplay display) {
+	public ConnectionEventsSupervisor(final XmppConnection connection, final PingPongDisplay display) {
 		connection.addStanzaReceivedHandler(new StanzaHandler() {
 			@Override
-			public void onStanza(StanzaEvent event) {
+			public void onStanza(final StanzaEvent event) {
 				display.print("IN: " + event.getStanza(), Style.stanzaReceived);
 			}
 		});
 
 		connection.addStanzaSentHandler(new StanzaHandler() {
 			@Override
-			public void onStanza(StanzaEvent event) {
+			public void onStanza(final StanzaEvent event) {
 				display.print("OUT: " + event.getStanza(), Style.stanzaSent);
 			}
 		});
 
 		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 			@Override
-			public void onStateChanged(ConnectionStateChangedEvent event) {
+			public void onStateChanged(final ConnectionStateChangedEvent event) {
 				display.print("Connection state: " + event.getState(), Style.info);
 			}
 		});

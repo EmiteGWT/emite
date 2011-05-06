@@ -38,7 +38,7 @@ public class TigasePacket extends AbstractPacket {
 	private final Element delegate;
 
 	public TigasePacket(final Element element) {
-		this.delegate = element;
+		delegate = element;
 	}
 
 	public TigasePacket(final String name) {
@@ -113,16 +113,18 @@ public class TigasePacket extends AbstractPacket {
 
 	@Override
 	public void setAttribute(final String name, final String value) {
-		if (value == null)
+		if (value == null) {
 			delegate.removeAttribute(name);
-		else
+		} else {
 			delegate.setAttribute(name, value);
+		}
 	}
 
 	@Override
 	public void setText(final String text) {
-		if (text != null)
+		if (text != null) {
 			delegate.setCData(text);
+		}
 	}
 
 	@Override

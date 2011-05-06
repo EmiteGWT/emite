@@ -34,7 +34,7 @@ public class BeforeRoomInvitationSendEvent extends GwtEvent<BeforeRoomInvitation
 
 	private static final Type<BeforeRoomInvitationSendHandler> TYPE = new Type<BeforeRoomInvitationSendHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, BeforeRoomInvitationSendHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final BeforeRoomInvitationSendHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -42,7 +42,7 @@ public class BeforeRoomInvitationSendEvent extends GwtEvent<BeforeRoomInvitation
 
 	private final IPacket invitePacket;
 
-	public BeforeRoomInvitationSendEvent(BasicStanza message, IPacket invitePacket) {
+	public BeforeRoomInvitationSendEvent(final BasicStanza message, final IPacket invitePacket) {
 		this.message = message;
 		this.invitePacket = invitePacket;
 	}
@@ -61,7 +61,7 @@ public class BeforeRoomInvitationSendEvent extends GwtEvent<BeforeRoomInvitation
 	}
 
 	@Override
-	protected void dispatch(BeforeRoomInvitationSendHandler handler) {
+	protected void dispatch(final BeforeRoomInvitationSendHandler handler) {
 		handler.onBeforeInvitationSend(this);
 	}
 

@@ -47,9 +47,8 @@ public class Credentials {
 	String encodingMethod;
 
 	public Credentials(final XmppURI uri, final String encodedPassword, final String encodingMethod) {
-		if (uri == null) {
+		if (uri == null)
 			throw new NullPointerException("uri can't be null in LoginCredentials");
-		}
 
 		if (uri.getResource() == null) {
 			this.uri = XmppURI.uri(uri.getNode(), uri.getHost(), "emite-" + System.currentTimeMillis());

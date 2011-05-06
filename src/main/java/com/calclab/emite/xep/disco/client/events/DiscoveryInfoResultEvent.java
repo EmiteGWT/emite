@@ -30,22 +30,22 @@ public class DiscoveryInfoResultEvent extends GwtEvent<DiscoveryInfoResultHandle
 
 	private static final Type<DiscoveryInfoResultHandler> TYPE = new Type<DiscoveryInfoResultHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, DiscoveryInfoResultHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final DiscoveryInfoResultHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final DiscoveryInfoResults infoResult;
 	private final IPacket errorPacket;
 
-	public DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult) {
+	public DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult) {
 		this(infoResult, null);
 	}
 
-	public DiscoveryInfoResultEvent(IPacket errorPacket) {
+	public DiscoveryInfoResultEvent(final IPacket errorPacket) {
 		this(null, errorPacket);
 	}
 
-	private DiscoveryInfoResultEvent(DiscoveryInfoResults infoResult, IPacket errorPacket) {
+	private DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult, final IPacket errorPacket) {
 		assert infoResult != null && errorPacket != null : "Discovery event only can have or result or error";
 		assert infoResult == null && errorPacket == null : "Discovery event must have or result or error";
 		this.infoResult = infoResult;
@@ -70,7 +70,7 @@ public class DiscoveryInfoResultEvent extends GwtEvent<DiscoveryInfoResultHandle
 	}
 
 	@Override
-	protected void dispatch(DiscoveryInfoResultHandler handler) {
+	protected void dispatch(final DiscoveryInfoResultHandler handler) {
 		handler.onDiscoveryInfoResult(this);
 	}
 

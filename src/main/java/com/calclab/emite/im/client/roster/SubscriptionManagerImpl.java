@@ -53,8 +53,8 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 
 		session.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				if (presence.getType() == Type.subscribe) {
 					final IPacket nick = presence.getFirstChild(FILTER_NICK);
 					session.getEventBus().fireEvent(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()));
@@ -65,9 +65,9 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 		// use bind instead of roster for better testing
 		RosterItemChangedEvent.bind(session.getEventBus(), new RosterItemChangedHandler() {
 			@Override
-			public void onRosterItemChanged(RosterItemChangedEvent event) {
+			public void onRosterItemChanged(final RosterItemChangedEvent event) {
 				if (event.isAdded()) {
-					RosterItem item = event.getRosterItem();
+					final RosterItem item = event.getRosterItem();
 					if (item.getSubscriptionState() == SubscriptionState.none) {
 						// && item.getAsk() == Type.subscribe) {
 						requestSubscribe(item.getJID());
@@ -83,7 +83,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	}
 
 	@Override
-	public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedHandler handler) {
+	public HandlerRegistration addSubscriptionRequestReceivedHandler(final SubscriptionRequestReceivedHandler handler) {
 		return SubscriptionRequestReceivedEvent.bind(session.getEventBus(), handler);
 	}
 

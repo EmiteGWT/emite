@@ -35,14 +35,14 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
 
 	private static final Type<RoomSubjectChangedHandler> TYPE = new Type<RoomSubjectChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RoomSubjectChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RoomSubjectChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final String subject;
 	private final XmppURI occupantUri;
 
-	public RoomSubjectChangedEvent(XmppURI occupantUri, String subject) {
+	public RoomSubjectChangedEvent(final XmppURI occupantUri, final String subject) {
 		this.occupantUri = occupantUri;
 		this.subject = subject;
 	}
@@ -71,7 +71,7 @@ public class RoomSubjectChangedEvent extends GwtEvent<RoomSubjectChangedHandler>
 	}
 
 	@Override
-	protected void dispatch(RoomSubjectChangedHandler handler) {
+	protected void dispatch(final RoomSubjectChangedHandler handler) {
 		handler.onSubjectChanged(this);
 	}
 

@@ -36,18 +36,17 @@ public class DelayHelper {
 	 *            the stanza to get the delay from
 	 * @return the delay object if present, null otherwise
 	 */
-	public static Delay getDelay(Stanza stanza) {
-		IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
+	public static Delay getDelay(final Stanza stanza) {
+		final IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
 
 			@Override
-			public boolean matches(IPacket packet) {
+			public boolean matches(final IPacket packet) {
 				return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns")) || "delay".equals(packet.getName())
 						&& "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
 			}
 		});
-		if (delayPacket != NoPacket.INSTANCE) {
+		if (delayPacket != NoPacket.INSTANCE)
 			return new Delay(delayPacket);
-		}
 		return null;
 	}
 

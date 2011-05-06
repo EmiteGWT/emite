@@ -28,7 +28,7 @@ public class GwtEmiteEventBus extends HandlerManager implements EmiteEventBus {
 
 	private final String eventBusName;
 
-	GwtEmiteEventBus(String eventBusName) {
+	GwtEmiteEventBus(final String eventBusName) {
 		super(null);
 		this.eventBusName = eventBusName;
 		GWT.log("New EventBus: " + eventBusName);

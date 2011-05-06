@@ -33,7 +33,7 @@ public class OwnPresenceChangedEvent extends GwtEvent<OwnPresenceChangedHandler>
 
 	private static final Type<OwnPresenceChangedHandler> TYPE = new Type<OwnPresenceChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, OwnPresenceChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final OwnPresenceChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -41,7 +41,7 @@ public class OwnPresenceChangedEvent extends GwtEvent<OwnPresenceChangedHandler>
 
 	private final Presence oldPresence;
 
-	public OwnPresenceChangedEvent(Presence oldPresence, Presence currentPresence) {
+	public OwnPresenceChangedEvent(final Presence oldPresence, final Presence currentPresence) {
 		this.oldPresence = oldPresence;
 		this.currentPresence = currentPresence;
 	}
@@ -65,7 +65,7 @@ public class OwnPresenceChangedEvent extends GwtEvent<OwnPresenceChangedHandler>
 	}
 
 	@Override
-	protected void dispatch(OwnPresenceChangedHandler handler) {
+	protected void dispatch(final OwnPresenceChangedHandler handler) {
 		handler.onOwnPresenceChanged(this);
 	}
 

@@ -25,22 +25,22 @@ public class DelayManagerImplTest extends GWTTestCase {
 	public void shouldGiveDelay() {
 		final BasicStanza stanza = new BasicStanza("name", "xmlns");
 
-		XmppURI uri = uri("name@domain/resource");
+		final XmppURI uri = uri("name@domain/resource");
 		stanza.setTo(uri);
 		assertEquals("name@domain/resource", stanza.getToAsString());
 		stanza.setTo((XmppURI) null);
-		IPacket delayNode = stanza.addChild("delay");
+		final IPacket delayNode = stanza.addChild("delay");
 		delayNode.setAttribute("xmlns", "urn:xmpp:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "1980-04-15T17:15:02.159+01:00");
-		Delay delay = DelayHelper.getDelay(stanza);
+		final Delay delay = DelayHelper.getDelay(stanza);
 		assertNotNull(delay);
-		Calendar cal = Calendar.getInstance();
+		final Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(1980, Calendar.APRIL, 15, 17, 15, 02);
 		cal.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
 		cal.set(Calendar.MILLISECOND, 159);
-		Date date = cal.getTime();
+		final Date date = cal.getTime();
 		assertEquals(uri, delay.getFrom());
 		assertEquals(date, delay.getStamp());
 	}
@@ -49,21 +49,21 @@ public class DelayManagerImplTest extends GWTTestCase {
 	public void shouldGiveDelayLegacyFormat() {
 		final BasicStanza stanza = new BasicStanza("name", "xmlns");
 
-		XmppURI uri = uri("name@domain/resource");
+		final XmppURI uri = uri("name@domain/resource");
 		stanza.setTo(uri);
 		assertEquals("name@domain/resource", stanza.getToAsString());
 		stanza.setTo((XmppURI) null);
-		IPacket delayNode = stanza.addChild("x");
+		final IPacket delayNode = stanza.addChild("x");
 		delayNode.setAttribute("xmlns", "jabber:x:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "19800415T15:15:02");
-		Delay delay = DelayHelper.getDelay(stanza);
+		final Delay delay = DelayHelper.getDelay(stanza);
 		assertNotNull(delay);
-		Calendar cal = Calendar.getInstance();
+		final Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(1980, Calendar.APRIL, 15, 15, 15, 02);
 		cal.add(Calendar.MILLISECOND, cal.getTimeZone().getOffset(cal.getTimeInMillis()));
-		Date date = cal.getTime(); // We are using the current timezone.
+		final Date date = cal.getTime(); // We are using the current timezone.
 		assertEquals(uri, delay.getFrom());
 		assertEquals(date, delay.getStamp());
 	}

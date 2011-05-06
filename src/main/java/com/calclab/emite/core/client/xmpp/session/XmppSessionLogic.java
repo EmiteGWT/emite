@@ -65,7 +65,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	@Inject
 	public XmppSessionLogic(final XmppConnection connection, final SASLManager saslManager, final ResourceBindingManager bindingManager,
-			final IMSessionManager iMSessionManager, SessionComponentsRegistry registry) {
+			final IMSessionManager iMSessionManager, final SessionComponentsRegistry registry) {
 		super(connection.getEventBus());
 		GWT.log("Creating XmppSession");
 		this.registry = registry;
@@ -196,7 +196,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	@Override
 	public void resume(final XmppURI userURI, final StreamSettings settings) {
-		this.userUri = userURI;
+		userUri = userURI;
 		setSessionState(SessionStates.resume);
 		connection.resume(settings);
 		setSessionState(SessionStates.ready);
@@ -250,7 +250,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	}
 
 	private void setLoggedIn(final XmppURI userURI) {
-		this.userUri = userURI;
+		userUri = userURI;
 		GWT.log("SESSION LOGGED IN");
 		setSessionState(SessionStates.loggedIn);
 	}

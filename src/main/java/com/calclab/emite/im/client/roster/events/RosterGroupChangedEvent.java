@@ -29,13 +29,13 @@ public class RosterGroupChangedEvent extends ChangedEvent<RosterGroupChangedHand
 
 	private static final Type<RosterGroupChangedHandler> TYPE = new Type<RosterGroupChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RosterGroupChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RosterGroupChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final RosterGroup rosterGroup;
 
-	public RosterGroupChangedEvent(String changeType, RosterGroup rosterGroup) {
+	public RosterGroupChangedEvent(final String changeType, final RosterGroup rosterGroup) {
 		super(TYPE, changeType);
 		this.rosterGroup = rosterGroup;
 	}
@@ -45,7 +45,7 @@ public class RosterGroupChangedEvent extends ChangedEvent<RosterGroupChangedHand
 	}
 
 	@Override
-	protected void dispatch(RosterGroupChangedHandler handler) {
+	protected void dispatch(final RosterGroupChangedHandler handler) {
 		handler.onGroupChanged(this);
 	}
 

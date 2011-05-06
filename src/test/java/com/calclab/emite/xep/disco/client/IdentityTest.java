@@ -13,7 +13,7 @@ public class IdentityTest {
 
 	@Before
 	public void beforeTest() {
-		this.xmler = new TigaseXMLService();
+		xmler = new TigaseXMLService();
 	}
 
 	@Test

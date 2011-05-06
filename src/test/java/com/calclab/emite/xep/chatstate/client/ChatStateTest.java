@@ -25,7 +25,7 @@ public class ChatStateTest {
 	@Before
 	public void aaCreate() {
 		pairChat = Mockito.mock(PairChat.class);
-		EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
+		final EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
 		Mockito.when(pairChat.getChatEventBus()).thenReturn(eventBus);
 		chatStateManager = new ChatStateManager(pairChat);
 		stateHandler = new ChatStateNotificationTestHandler();

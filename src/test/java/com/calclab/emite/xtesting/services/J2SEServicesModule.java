@@ -34,7 +34,7 @@ public class J2SEServicesModule implements Services {
 	private final TigaseXMLService xmler;
 
 	public J2SEServicesModule() {
-		this.connector = new HttpConnector();
+		connector = new HttpConnector();
 		scheduler = new ThreadScheduler();
 		xmler = new TigaseXMLService();
 	}

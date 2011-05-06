@@ -52,7 +52,7 @@ public class ServicesTester implements Services {
 	private final ArrayList<Request> requests;
 
 	public ServicesTester() {
-		this.requests = new ArrayList<Request>();
+		requests = new ArrayList<Request>();
 	}
 
 	@Override

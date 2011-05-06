@@ -69,11 +69,11 @@ public class SubscriptionManagerTests {
 	public void shouldSendSubscriptionRequestOnNewRosterItem_addRosterStep1() {
 
 		// only NONE subscription
-		RosterItem item = new RosterItem(uri("name@domain"), SubscriptionState.both, "TheName", null);
+		final RosterItem item = new RosterItem(uri("name@domain"), SubscriptionState.both, "TheName", null);
 		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
 		session.verifyNotSent("<presence />");
 
-		RosterItem item2 = new RosterItem(uri("name@domain"), SubscriptionState.none, "TheName", Type.subscribe);
+		final RosterItem item2 = new RosterItem(uri("name@domain"), SubscriptionState.none, "TheName", Type.subscribe);
 		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item2));
 		session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
 	}

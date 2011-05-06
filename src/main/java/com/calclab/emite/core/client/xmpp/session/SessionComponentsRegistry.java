@@ -43,11 +43,11 @@ public class SessionComponentsRegistry {
 	public SessionComponentsRegistry() {
 		GWT.log("Creating SessionComponentsRegistry");
 
-		this.providers = new HashSet<Provider<?>>();
-		this.componentsCreated = false;
+		providers = new HashSet<Provider<?>>();
+		componentsCreated = false;
 	}
 
-	public void addProvider(Provider<?> provider) {
+	public void addProvider(final Provider<?> provider) {
 		if (componentsCreated) {
 			provider.get();
 		} else {
@@ -62,10 +62,10 @@ public class SessionComponentsRegistry {
 	public void createComponents() {
 		GWT.log("SessionComponentsRegistry - Create components");
 		assert componentsCreated == false : "Session only can be started once!";
-		for (Provider<?> provider : providers) {
+		for (final Provider<?> provider : providers) {
 			provider.get();
 		}
 		providers.clear();
-		this.componentsCreated = true;
+		componentsCreated = true;
 	}
 }

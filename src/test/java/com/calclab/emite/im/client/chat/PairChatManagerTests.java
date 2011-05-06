@@ -21,8 +21,8 @@ public class PairChatManagerTests extends AbstractChatManagerTests {
 
 	@Test
 	public void shouldForwardMessagesToChats() {
-		Chat chat = manager.open(OTHER);
-		MessageTestHandler handler = new MessageTestHandler();
+		final Chat chat = manager.open(OTHER);
+		final MessageTestHandler handler = new MessageTestHandler();
 		chat.addMessageReceivedHandler(handler);
 		session.receives(new Message("body", ME, OTHER));
 		assertEquals(1, handler.getCalledTimes());
@@ -34,7 +34,7 @@ public class PairChatManagerTests extends AbstractChatManagerTests {
 	@Test
 	public void shouldOpenChatWhenLogin() {
 		session.logout();
-		Chat chat = manager.open(OTHER);
+		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.locked, chat.getChatState());
 		session.setLoggedIn(ME);
 		assertEquals(ChatStates.ready, chat.getChatState());
@@ -43,19 +43,19 @@ public class PairChatManagerTests extends AbstractChatManagerTests {
 	@Test
 	public void shouldReturnLockedChatsIfNotLoggedIn() {
 		session.logout();
-		Chat chat = manager.open(OTHER);
+		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.locked, chat.getChatState());
 	}
 
 	@Test
 	public void shouldReturnReadyChatsIfLoggedIn() {
 		session.login(ME, "");
-		Chat chat = manager.open(OTHER);
+		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.ready, chat.getChatState());
 	}
 
 	@Override
-	protected PairChatManager createChatManager(XmppSessionTester session2) {
+	protected PairChatManager createChatManager(final XmppSessionTester session2) {
 		return new PairChatManager(session);
 	}
 

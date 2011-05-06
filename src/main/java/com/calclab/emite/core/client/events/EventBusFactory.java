@@ -42,7 +42,7 @@ public class EventBusFactory {
 	 */
 	private static Factory factory = new Factory() {
 		@Override
-		public EmiteEventBus create(String eventBusName) {
+		public EmiteEventBus create(final String eventBusName) {
 			return new GwtEmiteEventBus(eventBusName);
 		}
 	};
@@ -54,7 +54,7 @@ public class EventBusFactory {
 	 *            the bus name: using for logging
 	 * @return a new event bus
 	 */
-	public static EmiteEventBus create(String eventBusName) {
+	public static EmiteEventBus create(final String eventBusName) {
 		return EventBusFactory.factory.create(eventBusName);
 	}
 
@@ -63,7 +63,7 @@ public class EventBusFactory {
 	 * 
 	 * @param factory
 	 */
-	public static void setFactory(Factory factory) {
+	public static void setFactory(final Factory factory) {
 		EventBusFactory.factory = factory;
 	}
 

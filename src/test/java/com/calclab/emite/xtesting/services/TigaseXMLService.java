@@ -32,7 +32,7 @@ import com.calclab.emite.core.client.packet.IPacket;
 public class TigaseXMLService {
 	public static final TigaseXMLService instance = new TigaseXMLService();
 
-	public static final IPacket toPacket(String xml) {
+	public static final IPacket toPacket(final String xml) {
 		return instance.toXML(xml);
 	}
 
@@ -52,9 +52,8 @@ public class TigaseXMLService {
 		final Queue<Element> parsedElements = handler.getParsedElements();
 
 		final Element body = parsedElements.poll();
-		if (body == null) {
+		if (body == null)
 			throw new RuntimeException("not valid xml: " + xml);
-		}
 		return new TigasePacket(body);
 	}
 }

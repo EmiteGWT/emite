@@ -37,7 +37,7 @@ public class PingPongExamplesEntryPoint implements EntryPoint {
 		final PingPongDisplay display = ginjector.getPingPongDisplay();
 		EventBusFactory.setFactory(new Factory() {
 			@Override
-			public EmiteEventBus create(String eventBusName) {
+			public EmiteEventBus create(final String eventBusName) {
 				return new DisplayEventBus(eventBusName, display);
 			}
 		});

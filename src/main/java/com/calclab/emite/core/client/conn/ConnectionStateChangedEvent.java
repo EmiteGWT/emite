@@ -46,7 +46,7 @@ public class ConnectionStateChangedEvent extends GwtEvent<ConnectionStateChanged
 
 	private static final Type<ConnectionStateChangedHandler> TYPE = new Type<ConnectionStateChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, ConnectionStateChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ConnectionStateChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -65,8 +65,8 @@ public class ConnectionStateChangedEvent extends GwtEvent<ConnectionStateChanged
 
 	public ConnectionStateChangedEvent(final String state, final String text, final int count) {
 		assert state != null : "state can't be null in ConnectionStateEvents";
-		this.value = count;
-		this.description = text;
+		value = count;
+		description = text;
 		this.state = state;
 	}
 

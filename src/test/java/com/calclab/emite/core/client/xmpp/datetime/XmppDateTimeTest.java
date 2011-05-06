@@ -17,7 +17,7 @@ public class XmppDateTimeTest extends GWTTestCase {
 
 	@Test
 	public void testUseGWT21() {
-		Calendar cal = Calendar.getInstance();
+		final Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(1980, Calendar.APRIL, 15, 15, 15, 02);
 		cal.add(Calendar.MILLISECOND, cal.getTimeZone().getOffset(cal.getTimeInMillis()));

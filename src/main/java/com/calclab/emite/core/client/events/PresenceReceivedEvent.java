@@ -27,7 +27,7 @@ public class PresenceReceivedEvent extends PresenceEvent {
 
 	private static final Type<PresenceHandler> TYPE = new Type<PresenceHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, PresenceHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final PresenceHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 

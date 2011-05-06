@@ -43,7 +43,7 @@ public class PongSessionPresenter implements StartablePresenter {
 	private final XmppSession session;
 
 	@Inject
-	public PongSessionPresenter(XmppSession session, @Named("other") final XmppURI other, final PingPongDisplay output) {
+	public PongSessionPresenter(final XmppSession session, @Named("other") final XmppURI other, final PingPongDisplay output) {
 		this.session = session;
 		this.other = other;
 		this.output = output;
@@ -58,8 +58,8 @@ public class PongSessionPresenter implements StartablePresenter {
 
 		session.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				output.print(("RECEIVED: " + message.getBody()), Style.received);
 				pongs++;
 				final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";

@@ -55,45 +55,44 @@ public class DiscoveryInfoResults {
 	 * 
 	 * @param iq
 	 */
-	public DiscoveryInfoResults(IQ iq) {
+	public DiscoveryInfoResults(final IQ iq) {
 		assert IQ.Type.result == iq.getType();
-		this.result = iq.getFirstChild(INFO_RESULT_MATCHER);
+		result = iq.getFirstChild(INFO_RESULT_MATCHER);
 	}
 
-	public boolean areFeaturedSupported(String... featuresName) {
-		for (String feature : featuresName) {
-			if (!features.containsKey(feature)) {
+	public boolean areFeaturedSupported(final String... featuresName) {
+		for (final String feature : featuresName) {
+			if (!features.containsKey(feature))
 				return false;
-			}
 		}
 		return true;
 	}
 
 	public Collection<Feature> getFeatures() {
-		if (this.features == null) {
-			this.features = processFeatures(result.getChildren(FEATURES_MATCHER));
+		if (features == null) {
+			features = processFeatures(result.getChildren(FEATURES_MATCHER));
 		}
-		return this.features.values();
+		return features.values();
 	}
 
 	public Collection<Identity> getIdentities() {
-		if (this.identities == null) {
-			this.identities = processIdentity(result.getChildren(IDENTITIES_MATCHER));
+		if (identities == null) {
+			identities = processIdentity(result.getChildren(IDENTITIES_MATCHER));
 		}
-		return this.identities;
+		return identities;
 	}
 
 	private HashMap<String, Feature> processFeatures(final List<? extends IPacket> children) {
-		HashMap<String, Feature> features = new HashMap<String, Feature>();
+		final HashMap<String, Feature> features = new HashMap<String, Feature>();
 		for (final IPacket child : children) {
-			Feature feature = Feature.fromPacket(child);
+			final Feature feature = Feature.fromPacket(child);
 			features.put(feature.var, feature);
 		}
 		return features;
 	}
 
 	private List<Identity> processIdentity(final List<? extends IPacket> children) {
-		List<Identity> identities = new ArrayList<Identity>();
+		final List<Identity> identities = new ArrayList<Identity>();
 		for (final IPacket child : children) {
 			identities.add(Identity.fromPacket(child));
 		}

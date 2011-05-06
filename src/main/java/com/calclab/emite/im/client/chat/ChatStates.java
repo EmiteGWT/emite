@@ -34,11 +34,11 @@ public class ChatStates {
 	 */
 	public static final String locked = "locked";
 
-	public static final boolean isLocked(String state) {
+	public static final boolean isLocked(final String state) {
 		return locked.equals(state);
 	}
 
-	public static final boolean isReady(String state) {
+	public static final boolean isReady(final String state) {
 		return ready.equals(state);
 	}
 }

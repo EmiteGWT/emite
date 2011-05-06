@@ -80,11 +80,11 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 
 		final ChatProperties properties = new ChatProperties(uri, invitation.getChatProperties());
 
-		this.openChat(properties, true);
+		openChat(properties, true);
 	}
 
 	@Override
-	public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationHandler handler) {
+	public HandlerRegistration addRoomInvitationReceivedHandler(final RoomInvitationHandler handler) {
 		return RoomInvitationEvent.bind(session.getEventBus(), handler);
 	}
 
@@ -125,8 +125,8 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	private void forwardPresenceToRooms() {
 		session.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				final ChatProperties properties = strategy.extractProperties(presence);
 				if (properties != null) {
 					Chat chat = getChat(properties, false);
@@ -149,17 +149,17 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	private void handleRoomInvitations() {
 		session.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				IPacket child;
 				if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
-					Stanza invitationStanza = new BasicStanza(child);
+					final Stanza invitationStanza = new BasicStanza(child);
 
 					// We extract the chat properties from the message
-					ChatProperties chatProperties = strategy.extractProperties(message);
+					final ChatProperties chatProperties = strategy.extractProperties(message);
 
-					RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(), invitationStanza.getFirstChild("reason")
-							.getText(), chatProperties);
+					final RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(), invitationStanza
+							.getFirstChild("reason").getText(), chatProperties);
 					session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
 				}
 			}

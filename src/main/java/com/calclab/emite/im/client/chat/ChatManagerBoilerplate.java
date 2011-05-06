@@ -38,10 +38,10 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
 	protected final HashSet<Chat> chats;
 	protected final EmiteEventBus managerEventBus;
 
-	public ChatManagerBoilerplate(XmppSession session, ChatSelectionStrategy strategy) {
+	public ChatManagerBoilerplate(final XmppSession session, final ChatSelectionStrategy strategy) {
 		this.session = session;
 		this.strategy = strategy;
-		this.managerEventBus = EventBusFactory.create("chatManager");
+		managerEventBus = EventBusFactory.create("chatManager");
 		chats = new HashSet<Chat>();
 	}
 

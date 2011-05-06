@@ -46,10 +46,10 @@ public class PingChatPresenter implements StartablePresenter {
 	private final ChatManager chatManager;
 
 	@Inject
-	public PingChatPresenter(ChatManager chatManager, @Named("other") XmppURI other, PingPongDisplay output) {
+	public PingChatPresenter(final ChatManager chatManager, @Named("other") final XmppURI other, final PingPongDisplay output) {
 		this.chatManager = chatManager;
 		this.other = other;
-		this.display = output;
+		display = output;
 		pings = 0;
 		waitTime = 2000;
 	}
@@ -67,7 +67,7 @@ public class PingChatPresenter implements StartablePresenter {
 
 		chat.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
+			public void onMessage(final MessageEvent event) {
 				display.print(("RECEIVED: " + event.getMessage().getBody()), Style.received);
 			}
 		});
@@ -75,7 +75,7 @@ public class PingChatPresenter implements StartablePresenter {
 		// SEND THE FIRST PING WHEN THE CHAT IS READY
 		chat.addChatStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(ChatStates.ready)) {
 					sendPing(chat);
 				}

@@ -6,7 +6,7 @@ import com.calclab.emite.xep.muc.client.subject.RoomSubjectChangedHandler;
 public class RoomSubjectChangedTestHandler extends TestHandler<RoomSubjectChangedEvent> implements RoomSubjectChangedHandler {
 
 	@Override
-	public void onSubjectChanged(RoomSubjectChangedEvent event) {
+	public void onSubjectChanged(final RoomSubjectChangedEvent event) {
 		addEvent(event);
 	}
 

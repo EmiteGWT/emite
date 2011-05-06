@@ -12,7 +12,7 @@ public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implem
 		this(null);
 	}
 
-	public ChatChangedTestHandler(String type) {
+	public ChatChangedTestHandler(final String type) {
 		this.type = type;
 	}
 
@@ -21,9 +21,10 @@ public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implem
 	}
 
 	@Override
-	public void onChatChanged(ChatChangedEvent event) {
-		if (type == null || type.equals(event.getChangeType()))
+	public void onChatChanged(final ChatChangedEvent event) {
+		if (type == null || type.equals(event.getChangeType())) {
 			addEvent(event);
+		}
 	}
 
 }

@@ -36,10 +36,10 @@ import com.google.inject.Inject;
 public class ChatManagerEventsSupervisor {
 
 	@Inject
-	public ChatManagerEventsSupervisor(ChatManager chatManager, final PingPongDisplay display) {
+	public ChatManagerEventsSupervisor(final ChatManager chatManager, final PingPongDisplay display) {
 		chatManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				display.print("CHAT CHANGED " + event.getChat().getURI() + " - " + event.getChangeType(), Style.event);
 				if (event.is(ChangeTypes.created)) {
 					trackChat(event.getChat(), display);
@@ -51,7 +51,7 @@ public class ChatManagerEventsSupervisor {
 	protected void trackChat(final Chat chat, final PingPongDisplay output) {
 		chat.addChatStateChangedHandler(false, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				output.print("CHAT STATE " + chat.getURI() + " changed: " + event.getState(), Style.event);
 			}
 		});
@@ -59,8 +59,8 @@ public class ChatManagerEventsSupervisor {
 
 		chat.addErrorHandler(new ErrorHandler() {
 			@Override
-			public void onError(ErrorEvent event) {
-				String stanza = event.getStanza() != null ? event.getStanza().toString() : "(no stanza)";
+			public void onError(final ErrorEvent event) {
+				final String stanza = event.getStanza() != null ? event.getStanza().toString() : "(no stanza)";
 				output.print("CHAT ERROR " + chat.getURI() + ": " + event.getErrorType() + "- " + event.getDescription() + ": " + stanza, Style.error);
 			}
 		});

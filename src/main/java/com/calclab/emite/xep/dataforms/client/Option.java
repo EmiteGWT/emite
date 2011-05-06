@@ -35,7 +35,7 @@ public class Option extends DelegatedPacket {
 	private static final String VALUE = "value";
 
 	public Option() {
-		super((new Packet(OPTION)));
+		super(new Packet(OPTION));
 	}
 
 	public Option(final IPacket stanza) {

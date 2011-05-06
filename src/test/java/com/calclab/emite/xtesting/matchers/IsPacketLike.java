@@ -19,7 +19,7 @@ public class IsPacketLike {
 	private final IPacket original;
 
 	public IsPacketLike(final IPacket expected) {
-		this.original = expected;
+		original = expected;
 	}
 
 	public boolean matches(final IPacket actual, final PrintStream out) {
@@ -33,41 +33,35 @@ public class IsPacketLike {
 		for (int index = 0; index < total; index++) {
 			final IPacket actual = children.get(index);
 			final String result = areEquals(expectedChild, actual);
-			if (result == null) {
+			if (result == null)
 				return null;
-			}
 		}
 		return fail("child is not contained in children", expectedChild.toString(), toString(children));
 	}
 
 	private String areEquals(final IPacket expected, final IPacket actual) {
-		if (actual == null) {
+		if (actual == null)
 			return fail("element", expected.toString(), "[null]");
-		}
 		if (expected.getName().equals(actual.getName())) {
 			final HashMap<String, String> atts = expected.getAttributes();
 			for (final String name : atts.keySet()) {
-				if (!expected.hasAttribute(name) || !actual.hasAttribute(name, expected.getAttribute(name))) {
+				if (!expected.hasAttribute(name) || !actual.hasAttribute(name, expected.getAttribute(name)))
 					return fail("attribute " + name, expected.getAttribute(name), actual.getAttribute(name));
-				}
 			}
-		} else {
+		} else
 			return fail("element name", expected.getName(), actual.getName());
-		}
 
 		final String expectedText = expected.getText();
-		if (expectedText != null && !expectedText.equals(actual.getText())) {
+		if (expectedText != null && !expectedText.equals(actual.getText()))
 			return fail("text value", expectedText, actual.getText());
-		}
 
 		final List<? extends IPacket> expChildren = expected.getChildren();
 		final List<? extends IPacket> actChildren = actual.getChildren();
 
 		for (final IPacket expectedChild : expChildren) {
 			final String result = areContained(expectedChild, actChildren);
-			if (result != null) {
+			if (result != null)
 				return result;
-			}
 		}
 		return null;
 	}

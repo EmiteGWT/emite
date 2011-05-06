@@ -42,11 +42,11 @@ class IQManager {
 	public boolean handle(final IPacket received) {
 		final String key = received.getAttribute("id");
 		final IQResponseHandler handler = handlers.remove(key);
-		final boolean isHandled = handler != null;
-		if (isHandled) {
-			handler.onIQ(new IQ(received));
-		}
-		return isHandled;
+		if (handler == null)
+			return false;
+
+		handler.onIQ(new IQ(received));
+		return true;
 	}
 
 	public String register(final String category, final IQResponseHandler handler) {

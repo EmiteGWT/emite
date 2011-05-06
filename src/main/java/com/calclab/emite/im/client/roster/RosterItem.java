@@ -237,9 +237,8 @@ public class RosterItem implements HasJID {
 	 */
 	public boolean isInGroup(final String groupName) {
 		for (final String name : groups) {
-			if (name.equals(groupName)) {
+			if (name.equals(groupName))
 				return true;
-			}
 		}
 		return false;
 	}
@@ -263,7 +262,7 @@ public class RosterItem implements HasJID {
 	 * 
 	 * @param availableResources
 	 */
-	void setAvaialableResources(HashSet<String> availableResources) {
+	void setAvaialableResources(final HashSet<String> availableResources) {
 		this.availableResources.clear();
 		this.availableResources.addAll(availableResources);
 	}
@@ -281,7 +280,7 @@ public class RosterItem implements HasJID {
 	 * @param resource
 	 *            the resource (if any)
 	 */
-	public void setAvailable(final boolean isAvailable, String resource) {
+	public void setAvailable(final boolean isAvailable, final String resource) {
 		if (isAvailable) {
 			availableResources.add(resource);
 		} else {

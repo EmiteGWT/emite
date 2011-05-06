@@ -31,7 +31,7 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 
 	private static final Type<RequestFailedHandler> TYPE = new Type<RequestFailedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RequestFailedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RequestFailedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -40,7 +40,7 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 
 	private final IQ iq;
 
-	public RequestFailedEvent(String requestType, String description, IQ iq) {
+	public RequestFailedEvent(final String requestType, final String description, final IQ iq) {
 		this.requestType = requestType;
 		this.description = description;
 		this.iq = iq;
@@ -64,7 +64,7 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 	}
 
 	@Override
-	protected void dispatch(RequestFailedHandler handler) {
+	protected void dispatch(final RequestFailedHandler handler) {
 		handler.onRequestFailed(this);
 	}
 

@@ -52,7 +52,7 @@ public class XmppDateTime {
 	}
 
 	public static Date parseLegacyFormatXMPPDateTime(final String dateTime) {
-		Date retValue = deprecatedDtf.parse(dateTime);
+		final Date retValue = deprecatedDtf.parse(dateTime);
 		// The server always sends a GMT date, so we compensate the
 		// timezone offset.
 		retValue.setTime(retValue.getTime() - retValue.getTimezoneOffset() * 60 * 1000);
@@ -66,7 +66,7 @@ public class XmppDateTime {
 		}
 		try {
 			return dtf.parse(date);
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			GWT.log("Cannot parse date-time '" + date + "' with normal pattern");
 			return noMillisDtf.parse(date);
 		}

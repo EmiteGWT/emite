@@ -61,7 +61,7 @@ public class ExampleXmppSession implements EntryPoint {
 				 * the recommended way: it's better to inject into constructor
 				 */
 				GWT.log("Create a xmpp session");
-				ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
+				final ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
 				final XmppSession session = ginjector.getXmppSession();
 
 				GWT.log("Add event handlers");
@@ -71,7 +71,7 @@ public class ExampleXmppSession implements EntryPoint {
 				 */
 				session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 					@Override
-					public void onStateChanged(StateChangedEvent event) {
+					public void onStateChanged(final StateChangedEvent event) {
 						if (event.is(SessionStates.loggedIn)) {
 							log("We are now online");
 							sendHelloWorldMessage(session);
@@ -88,8 +88,8 @@ public class ExampleXmppSession implements EntryPoint {
 				 */
 				session.addMessageReceivedHandler(new MessageHandler() {
 					@Override
-					public void onMessage(MessageEvent event) {
-						Message message = event.getMessage();
+					public void onMessage(final MessageEvent event) {
+						final Message message = event.getMessage();
 						log("Messaged received from " + message.getFrom() + ":" + message.getBody());
 					}
 				});
@@ -100,8 +100,8 @@ public class ExampleXmppSession implements EntryPoint {
 				session.addPresenceReceivedHandler(new PresenceHandler() {
 
 					@Override
-					public void onPresence(PresenceEvent event) {
-						Presence presence = event.getPresence();
+					public void onPresence(final PresenceEvent event) {
+						final Presence presence = event.getPresence();
 						log("Presence received from " + presence.getFrom() + ": " + presence.toString());
 					}
 				});

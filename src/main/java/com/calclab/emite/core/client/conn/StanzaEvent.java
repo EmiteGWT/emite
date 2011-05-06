@@ -28,13 +28,13 @@ public class StanzaEvent extends GwtEvent<StanzaHandler> {
 	private final Type<StanzaHandler> type;
 	private final IPacket stanza;
 
-	public StanzaEvent(Type<StanzaHandler> type, IPacket stanza) {
+	public StanzaEvent(final Type<StanzaHandler> type, final IPacket stanza) {
 		this.type = type;
 		this.stanza = stanza;
 	}
 
 	@Override
-	protected void dispatch(StanzaHandler handler) {
+	protected void dispatch(final StanzaHandler handler) {
 		handler.onStanza(this);
 	}
 

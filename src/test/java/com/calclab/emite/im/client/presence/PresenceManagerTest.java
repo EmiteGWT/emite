@@ -25,7 +25,7 @@ public class PresenceManagerTest {
 	@Before
 	public void beforeTest() {
 		session = new XmppSessionTester();
-		SessionReady sessionReady = Mockito.mock(SessionReady.class);
+		final SessionReady sessionReady = Mockito.mock(SessionReady.class);
 		manager = new PresenceManagerImpl(session, sessionReady);
 	}
 

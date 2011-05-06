@@ -6,7 +6,7 @@ import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHand
 public class SubscriptionRequestReceivedTestHandler extends TestHandler<SubscriptionRequestReceivedEvent> implements SubscriptionRequestReceivedHandler {
 
 	@Override
-	public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
+	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
 		addEvent(event);
 	}
 

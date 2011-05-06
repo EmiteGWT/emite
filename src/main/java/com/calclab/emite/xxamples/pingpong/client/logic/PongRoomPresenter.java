@@ -46,7 +46,7 @@ public class PongRoomPresenter implements StartablePresenter {
 	private final RoomManager roomManager;
 
 	@Inject
-	public PongRoomPresenter(RoomManager roomManager, @Named("room") XmppURI roomUri, PingPongDisplay display) {
+	public PongRoomPresenter(final RoomManager roomManager, @Named("room") final XmppURI roomUri, final PingPongDisplay display) {
 		this.roomManager = roomManager;
 		this.roomUri = roomUri;
 		this.display = display;
@@ -66,8 +66,8 @@ public class PongRoomPresenter implements StartablePresenter {
 		final Room room = (Room) roomManager.open(roomUri);
 		room.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				display.print(("RECEIVED: " + message.getBody()), Style.received);
 				pongs++;
 				if (room.isUserMessage(message) && !room.isComingFromMe(message)) {

@@ -34,22 +34,22 @@ public class DiscoveryItemsResultEvent extends GwtEvent<DiscoveryItemsResultHand
 	private final DiscoveryItemsResults itemsResult;
 	private final IPacket errorPacket;
 
-	public DiscoveryItemsResultEvent(DiscoveryItemsResults infoResult) {
+	public DiscoveryItemsResultEvent(final DiscoveryItemsResults infoResult) {
 		this(infoResult, null);
 	}
 
-	private DiscoveryItemsResultEvent(DiscoveryItemsResults itemsResult, IPacket errorPacket) {
-		assert (itemsResult != null && errorPacket == null) || (itemsResult == null && errorPacket != null) : "Discovery event only can have or result or error";
+	private DiscoveryItemsResultEvent(final DiscoveryItemsResults itemsResult, final IPacket errorPacket) {
+		assert itemsResult != null && errorPacket == null || itemsResult == null && errorPacket != null : "Discovery event only can have or result or error";
 		this.itemsResult = itemsResult;
 		this.errorPacket = errorPacket;
 	}
 
-	public DiscoveryItemsResultEvent(IPacket errorPacket) {
+	public DiscoveryItemsResultEvent(final IPacket errorPacket) {
 		this(null, errorPacket);
 	}
 
 	@Override
-	protected void dispatch(DiscoveryItemsResultHandler handler) {
+	protected void dispatch(final DiscoveryItemsResultHandler handler) {
 		handler.onDiscoveryItemsResult(this);
 	}
 

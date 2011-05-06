@@ -24,7 +24,7 @@ public class RetryControl {
 
 	public int maxRetries = 8;
 
-	public int retry(int nbErrors) {
+	public int retry(final int nbErrors) {
 		return 500 + (nbErrors - 1) * nbErrors * 550;
 	}
 

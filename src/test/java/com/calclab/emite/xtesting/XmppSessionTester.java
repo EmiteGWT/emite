@@ -125,9 +125,8 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 			eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
 		} else if (name.equals("iq")) {
 			eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
-		} else {
+		} else
 			throw new RuntimeException("WHAT IS THIS? (" + name + "): " + stanza.toString());
-		}
 
 	}
 
@@ -164,7 +163,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	}
 
 	@Override
-	public void setSessionState(String state) {
+	public void setSessionState(final String state) {
 		super.setSessionState(state);
 	}
 

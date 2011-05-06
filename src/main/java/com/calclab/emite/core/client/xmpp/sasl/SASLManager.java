@@ -68,7 +68,7 @@ public class SASLManager {
 	 * 
 	 * @param handler
 	 */
-	public void addAuthorizationResultHandler(AuthorizationResultHandler handler) {
+	public void addAuthorizationResultHandler(final AuthorizationResultHandler handler) {
 		AuthorizationResultEvent.bind(eventBus, handler);
 	}
 
@@ -88,9 +88,8 @@ public class SASLManager {
 
 		final PasswordDecoder decoder = decoders.getDecoder(credentials.getEncodingMethod());
 
-		if (decoder == null) {
+		if (decoder == null)
 			throw new RuntimeException("No password decoder found to convert from " + credentials.getEncodingMethod() + "to " + Credentials.ENCODING_BASE64);
-		}
 
 		final String decodedPassword = decoder.decode(credentials.getEncodingMethod(), credentials.getEncodedPassword());
 		final String encoded = encodeForPlainMethod(credentials.getXmppUri().getHost(), credentials.getXmppUri().getNode(), decodedPassword);

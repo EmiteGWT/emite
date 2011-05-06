@@ -30,7 +30,7 @@ public class RoomChatStateNotificationEvent extends GwtEvent<RoomChatStateNotifi
 
 	private static final Type<RoomChatStateNotificationHandler> TYPE = new Type<RoomChatStateNotificationHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RoomChatStateNotificationHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RoomChatStateNotificationHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -38,7 +38,7 @@ public class RoomChatStateNotificationEvent extends GwtEvent<RoomChatStateNotifi
 
 	private final ChatState chatState;
 
-	public RoomChatStateNotificationEvent(XmppURI from, ChatState chatState) {
+	public RoomChatStateNotificationEvent(final XmppURI from, final ChatState chatState) {
 		this.from = from;
 		this.chatState = chatState;
 	}
@@ -57,7 +57,7 @@ public class RoomChatStateNotificationEvent extends GwtEvent<RoomChatStateNotifi
 	}
 
 	@Override
-	protected void dispatch(RoomChatStateNotificationHandler handler) {
+	protected void dispatch(final RoomChatStateNotificationHandler handler) {
 		handler.onRoomChatStateNotification(this);
 	}
 

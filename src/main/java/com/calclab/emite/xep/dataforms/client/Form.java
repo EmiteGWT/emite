@@ -62,7 +62,6 @@ public class Form extends BasicStanza {
 
 	private static final String DATA_XMLS = "jabber:x:data";
 	private static final String X = "x";
-	private static final String TYPE = "type";
 	private static final String TITLE = "title";
 	private static final String INSTRUCTIONS = "instructions";
 

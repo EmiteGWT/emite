@@ -40,8 +40,8 @@ public abstract class AbstractChat extends ChatBoilerplate {
 		setPreviousChatState(getChatState());
 		MessageReceivedEvent.bind(chatEventBus, new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				if (message.getType() == Type.error) {
 					chatEventBus.fireEvent(new ErrorEvent(ChatErrors.errorMessage, "We received an error message", message));
 				}
@@ -60,7 +60,7 @@ public abstract class AbstractChat extends ChatBoilerplate {
 	}
 
 	@Override
-	public void receive(Message message) {
+	public void receive(final Message message) {
 		chatEventBus.fireEvent(new BeforeReceiveMessageEvent(message));
 		chatEventBus.fireEvent(new MessageReceivedEvent(message));
 	}

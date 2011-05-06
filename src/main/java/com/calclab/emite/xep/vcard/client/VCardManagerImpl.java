@@ -46,12 +46,12 @@ public class VCardManagerImpl implements VCardManager {
 	}
 
 	@Override
-	public HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler) {
+	public HandlerRegistration addVCardResponseHandler(final VCardResponseHandler handler) {
 		return VCardResponseEvent.bind(session.getEventBus(), handler);
 	}
 
 	@Override
-	public void getUserVCard(XmppURI userJid, final VCardResponseHandler handler) {
+	public void getUserVCard(final XmppURI userJid, final VCardResponseHandler handler) {
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 		iq.setFrom(session.getCurrentUserURI());
@@ -59,7 +59,7 @@ public class VCardManagerImpl implements VCardManager {
 
 		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
 			}
 		});
@@ -73,7 +73,7 @@ public class VCardManagerImpl implements VCardManager {
 		iq.setFrom(session.getCurrentUserURI());
 		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
 			}
 		});
@@ -81,12 +81,12 @@ public class VCardManagerImpl implements VCardManager {
 	}
 
 	@Override
-	public void updateOwnVCard(VCard vcard, final VCardResponseHandler handler) {
+	public void updateOwnVCard(final VCard vcard, final VCardResponseHandler handler) {
 		final IQ iq = new IQ(IQ.Type.set);
 		iq.addChild(vcard);
 		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
 			}
 		});
@@ -95,7 +95,7 @@ public class VCardManagerImpl implements VCardManager {
 
 	protected void handleVCard(final IQ result, final VCardResponseHandler handler) {
 		final VCardResponse response = new VCardResponse(result);
-		VCardResponseEvent event = new VCardResponseEvent(response);
+		final VCardResponseEvent event = new VCardResponseEvent(response);
 		if (handler != null) {
 			handler.onVCardResponse(event);
 		}

@@ -37,10 +37,10 @@ import com.google.inject.Inject;
 public class RoomManagerEventsSupervisor {
 
 	@Inject
-	public RoomManagerEventsSupervisor(RoomManager roomManager, final PingPongDisplay display) {
+	public RoomManagerEventsSupervisor(final RoomManager roomManager, final PingPongDisplay display) {
 		roomManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				if (event.is(ChangeTypes.created)) {
 					trackRoom((Room) event.getChat(), display);
 				}
@@ -51,10 +51,10 @@ public class RoomManagerEventsSupervisor {
 	protected void trackRoom(final Room room, final PingPongDisplay display) {
 		room.addOccupantChangedHandler(new OccupantChangedHandler() {
 			@Override
-			public void onOccupantChanged(OccupantChangedEvent event) {
+			public void onOccupantChanged(final OccupantChangedEvent event) {
 				display.print("ROOM OCCUPANT " + event.getOccupant().getNick() + " changed: " + event.getChangeType(), Style.event);
 				String occupants = "";
-				for (Occupant occupant : room.getOccupants()) {
+				for (final Occupant occupant : room.getOccupants()) {
 					occupants += occupant.getOccupantUri().getResource() + " ";
 				}
 				display.print("ROOM OCCUPANTS (" + room.getOccupantsCount() + "): " + occupants, Style.event);
@@ -63,7 +63,7 @@ public class RoomManagerEventsSupervisor {
 
 		room.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
+			public void onPresence(final PresenceEvent event) {
 				display.print("ROOM PRESENCE : " + event.getPresence(), Style.event);
 			}
 		});

@@ -115,8 +115,8 @@ public class RoomChat extends RoomBoilerplate {
 	 * .core.client.xmpp.stanzas.Message)
 	 */
 	@Override
-	public boolean isUserMessage(Message message) {
-		String resource = message.getFrom().getResource();
+	public boolean isUserMessage(final Message message) {
+		final String resource = message.getFrom().getResource();
 		return resource != null && !"".equals(resource);
 	}
 
@@ -249,7 +249,7 @@ public class RoomChat extends RoomBoilerplate {
 
 	}
 
-	protected Occupant setOccupantPresence(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role, final Show show,
+	protected Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Show show,
 			final String statusMessage) {
 		Occupant occupant = getOccupantByOccupantUri(occupantUri);
 		if (occupant == null) {
@@ -272,8 +272,8 @@ public class RoomChat extends RoomBoilerplate {
 	private void trackRoomPresence() {
 		addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				final XmppURI occupantURI = presence.getFrom();
 				final Type type = presence.getType();
 				if (type == Type.error) {

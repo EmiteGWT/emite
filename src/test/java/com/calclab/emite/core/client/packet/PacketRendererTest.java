@@ -31,7 +31,7 @@ public class PacketRendererTest {
 		testPacket.addChild(testChild);
 		testPacket.addChild(testChildWithText);
 
-		String result = PacketRenderer.toString(testPacket);
+		final String result = PacketRenderer.toString(testPacket);
 
 		// We should probably do something cleverer here really as the xml may
 		// not necessarily always have to come out the same to still be correct

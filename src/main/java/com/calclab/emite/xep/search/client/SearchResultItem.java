@@ -56,7 +56,7 @@ public class SearchResultItem {
 	 * @param first
 	 * 
 	 */
-	public SearchResultItem(final XmppURI jid, String nick, String first, String last, String email) {
+	public SearchResultItem(final XmppURI jid, final String nick, final String first, final String last, final String email) {
 		assert jid != null : "SearchResultItem requires a JID";
 		this.jid = jid;
 		this.first = first;

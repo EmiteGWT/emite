@@ -57,20 +57,20 @@ public class ChatStateManager {
 
 		chat.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
+			public void onMessage(final MessageEvent event) {
 				handleMessageReceived(chat, event.getMessage());
 			}
 		});
 
 		chat.addBeforeSendMessageHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
+			public void onMessage(final MessageEvent event) {
 				beforeSendMessage(event.getMessage());
 			}
 		});
 	}
 
-	public HandlerRegistration addChatStateNotificationHandler(ChatStateNotificationHandler handler) {
+	public HandlerRegistration addChatStateNotificationHandler(final ChatStateNotificationHandler handler) {
 		return ChatStateNotificationEvent.bind(chat.getChatEventBus(), handler);
 	}
 
@@ -94,7 +94,7 @@ public class ChatStateManager {
 		// notification.
 		if (negotiationStatus.equals(NegotiationStatus.accepted)) {
 			if (ownState == null || !ownState.equals(chatState)) {
-				this.ownState = chatState;
+				ownState = chatState;
 				GWT.log("Setting own status to: " + chatState.toString(), null);
 				sendStateMessage(chatState);
 			}

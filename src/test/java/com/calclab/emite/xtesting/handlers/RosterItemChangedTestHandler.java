@@ -12,7 +12,7 @@ public class RosterItemChangedTestHandler extends TestHandler<RosterItemChangedE
 		this(null);
 	}
 
-	public RosterItemChangedTestHandler(String type) {
+	public RosterItemChangedTestHandler(final String type) {
 		this.type = type;
 	}
 
@@ -21,9 +21,10 @@ public class RosterItemChangedTestHandler extends TestHandler<RosterItemChangedE
 	}
 
 	@Override
-	public void onRosterItemChanged(RosterItemChangedEvent event) {
-		if (type == null || type.equals(event.getChangeType()))
+	public void onRosterItemChanged(final RosterItemChangedEvent event) {
+		if (type == null || type.equals(event.getChangeType())) {
 			addEvent(event);
+		}
 	}
 
 }

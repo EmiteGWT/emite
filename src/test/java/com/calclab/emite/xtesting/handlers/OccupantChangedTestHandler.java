@@ -11,14 +11,15 @@ public class OccupantChangedTestHandler extends TestHandler<OccupantChangedEvent
 		this(null);
 	}
 
-	public OccupantChangedTestHandler(String type) {
+	public OccupantChangedTestHandler(final String type) {
 		this.type = type;
 	}
 
 	@Override
-	public void onOccupantChanged(OccupantChangedEvent event) {
-		if (type == null || type.equals(event.getChangeType()))
+	public void onOccupantChanged(final OccupantChangedEvent event) {
+		if (type == null || type.equals(event.getChangeType())) {
 			addEvent(event);
+		}
 	}
 
 }

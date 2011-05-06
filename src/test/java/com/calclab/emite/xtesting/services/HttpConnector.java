@@ -34,7 +34,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
 
 public class HttpConnector {
 
@@ -56,7 +55,7 @@ public class HttpConnector {
 		receiveService = Executors.newFixedThreadPool(1);
 	}
 
-	public synchronized void send(final String httpBase, final String xml, final ConnectorCallback callback) throws ConnectorException {
+	public synchronized void send(final String httpBase, final String xml, final ConnectorCallback callback) {
 
 		sendService.execute(createSendAction(httpBase, xml, callback));
 	}
@@ -92,14 +91,14 @@ public class HttpConnector {
 				final String id = HttpConnectorID.getNext();
 				debug("Connector [{0}] send: {1}", id, xml);
 				final HttpClient client = new DefaultHttpClient();
-				int status = 0;
+				final int status = 0;
 				String responseString = null;
 				final HttpPost post = new HttpPost(httpBase);
 
 				try {
 					post.setEntity(new StringEntity(xml, "utf-8"));
 					System.out.println("SENDING: " + xml);
-					HttpResponse response = client.execute(post);
+					final HttpResponse response = client.execute(post);
 					responseString = EntityUtils.toString(response.getEntity());
 				} catch (final Exception e) {
 					callback.onError(xml, e);

@@ -26,17 +26,17 @@ public class RoomTests {
 	public void beforeTest() {
 		userURI = uri("user@domain/res");
 		roomURI = uri("room@domain/user");
-		this.session = new XmppSessionTester(userURI);
-		this.manager = new RoomChatManager(session);
-		this.room = (Room) manager.open(roomURI);
+		session = new XmppSessionTester(userURI);
+		manager = new RoomChatManager(session);
+		room = (Room) manager.open(roomURI);
 	}
 
 	@Test
 	public void shouldIdentifyUserAndAdminMessages() {
-		Message adminMessage = new Message("admin");
+		final Message adminMessage = new Message("admin");
 		adminMessage.setFrom(roomURI.getJID());
 		assertFalse(room.isUserMessage(adminMessage));
-		Message userMessage = new Message("user");
+		final Message userMessage = new Message("user");
 		userMessage.setFrom(XmppURI.uri("room@domain/someone"));
 		assertTrue(room.isUserMessage(userMessage));
 	}
@@ -45,7 +45,7 @@ public class RoomTests {
 	public void shouldInterceptOutcomingMessages() {
 		// a little hack
 		room.getProperties().setState(ChatStates.ready);
-		MessageTestHandler handler = new MessageTestHandler();
+		final MessageTestHandler handler = new MessageTestHandler();
 		room.addBeforeSendMessageHandler(handler);
 		room.send(new Message("body"));
 		assertTrue(handler.isCalledOnce());

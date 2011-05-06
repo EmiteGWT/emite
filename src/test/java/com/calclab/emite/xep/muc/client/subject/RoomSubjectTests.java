@@ -45,7 +45,7 @@ public class RoomSubjectTests {
 
 	@Test
 	public void shouldHandleRoomSubjectChangeEvents() {
-		RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
+		final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
 		RoomSubject.addRoomSubjectChangedHandler(room, handler);
 		room.receive(new Message(null, roomUri, occupantUri).Subject("The subject"));
 		assertEquals(1, handler.getCalledTimes());

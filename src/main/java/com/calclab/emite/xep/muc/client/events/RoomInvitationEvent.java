@@ -28,18 +28,18 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class RoomInvitationEvent extends GwtEvent<RoomInvitationHandler> {
 	private static final Type<RoomInvitationHandler> TYPE = new Type<RoomInvitationHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RoomInvitationHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RoomInvitationHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final RoomInvitation roomInvitation;
 
-	public RoomInvitationEvent(RoomInvitation roomInvitation) {
+	public RoomInvitationEvent(final RoomInvitation roomInvitation) {
 		this.roomInvitation = roomInvitation;
 	}
 
 	@Override
-	protected void dispatch(RoomInvitationHandler handler) {
+	protected void dispatch(final RoomInvitationHandler handler) {
 		handler.onRoomInvitation(this);
 	}
 

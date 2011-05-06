@@ -62,9 +62,8 @@ public class TextUtils {
 	 * This method escape only some dangerous html chars
 	 */
 	public static String escape(String source) {
-		if (source == null) {
+		if (source == null)
 			return null;
-		}
 		if (source.indexOf("&") != -1) {
 			source = AMP_RE.replace(source, "&amp;");
 		}
@@ -88,9 +87,8 @@ public class TextUtils {
 	 * widget for instance
 	 */
 	public static String unescape(String source) {
-		if (source == null) {
+		if (source == null)
 			return null;
-		}
 		if (source.indexOf("&amp;") != -1) {
 			source = AMP_HTML_RE.replace(source, "&");
 		}

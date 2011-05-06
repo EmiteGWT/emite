@@ -35,15 +35,15 @@ import com.google.inject.Singleton;
 public class PingPongCommonPresenter {
 
 	@Inject
-	public PingPongCommonPresenter(final XmppSession session, ConnectionEventsSupervisor connectionEventsSupervisor,
-			SessionEventsSupervisor sessionEventsSupervisor, final PingPongDisplay display) {
+	public PingPongCommonPresenter(final XmppSession session, final ConnectionEventsSupervisor connectionEventsSupervisor,
+			final SessionEventsSupervisor sessionEventsSupervisor, final PingPongDisplay display) {
 
 		display.printHeader("Welcome to ping pong examples", PingPongDisplay.Style.important);
 
 		// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
 		display.addLoginClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(final ClickEvent event) {
 				if (session.isState(SessionStates.disconnected)) {
 					display.print("Logging in...", Style.info);
 					PageAssist.loginFromMeta(session);
@@ -56,7 +56,7 @@ public class PingPongCommonPresenter {
 
 		display.addLogoutClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(final ClickEvent event) {
 				if (session.isReady()) {
 					display.print("Logging out...", Style.info);
 					session.logout();
@@ -69,7 +69,7 @@ public class PingPongCommonPresenter {
 
 		display.addClearClickHandler(new ClickHandler() {
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(final ClickEvent event) {
 				display.clearOutput();
 			}
 		});

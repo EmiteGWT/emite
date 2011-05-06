@@ -40,7 +40,7 @@ public class GWTXMLService {
 			final Document parsed = XMLParser.parse(xml);
 			final Node body = parsed.getChildNodes().item(0);
 			return new GWTPacket((Element) body);
-		} catch (DOMParseException exception) {
+		} catch (final DOMParseException exception) {
 			return NoPacket.INSTANCE;
 		}
 	}

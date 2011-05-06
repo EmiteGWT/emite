@@ -97,25 +97,20 @@ public class XmppURI implements HasJID {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (obj == this) {
+		if (obj == this)
 			return true;
-		}
 		return representation.equals(((XmppURI) obj).representation);
 	}
 
 	public boolean equalsNoResource(final XmppURI other) {
-		if (other == null) {
+		if (other == null)
 			return false;
-		}
-		if (this == other) {
+		if (this == other)
 			return true;
-		}
-		if (node == null && other.node != null) {
+		if (node == null && other.node != null)
 			return false;
-		}
 		return host.equals(other.host) && (node == null || node.equals(other.node));
 	}
 

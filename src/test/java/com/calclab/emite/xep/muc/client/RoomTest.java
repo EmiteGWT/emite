@@ -32,7 +32,7 @@ public class RoomTest extends AbstractChatTest {
 		userURI = uri("user@domain/res");
 		roomURI = uri("room@domain/nick");
 		session.setLoggedIn(userURI);
-		RoomChatManager manager = new RoomChatManager(session);
+		final RoomChatManager manager = new RoomChatManager(session);
 		final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
 		room = (RoomChat) manager.openChat(properties, true);
 	}
@@ -128,7 +128,7 @@ public class RoomTest extends AbstractChatTest {
 		assertSame(occupant, occupant2);
 	}
 
-	private void receiveInstantRoomCreation(XmppURI userUri, final XmppURI room) {
+	private void receiveInstantRoomCreation(final XmppURI userUri, final XmppURI room) {
 		session.receives("<presence to='user@domain/res' from='" + room + "'>" + "<x xmlns='http://jabber.org/protocol/muc#user'>"
 				+ "<item affiliation='owner' role='moderator' jid='" + userUri + "' /><status code='201'/></x></presence>");
 		session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>" + "<query xmlns='http://jabber.org/protocol/muc#owner'>"

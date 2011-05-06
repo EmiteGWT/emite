@@ -49,7 +49,7 @@ public class Occupant implements HasJID {
 	private String statusMessage;
 	private final XmppURI userUri;
 
-	public Occupant(final XmppURI userUri, XmppURI occupantUri, final String affiliation, final String role, final Show show, final String statusMessage) {
+	public Occupant(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Show show, final String statusMessage) {
 		assert occupantUri != null : "Occupant uri can't be null in occupant";
 		this.userUri = userUri;
 		this.occupantUri = occupantUri;
@@ -142,11 +142,11 @@ public class Occupant implements HasJID {
 		}
 	}
 
-	public void setShow(Show show) {
+	public void setShow(final Show show) {
 		this.show = show;
 	}
 
-	public void setShow(String show) {
+	public void setShow(final String show) {
 		try {
 			this.show = Show.valueOf(show);
 		} catch (final IllegalArgumentException e) {
@@ -156,7 +156,7 @@ public class Occupant implements HasJID {
 		}
 	}
 
-	public void setStatusMessage(String statusMessage) {
+	public void setStatusMessage(final String statusMessage) {
 		this.statusMessage = statusMessage;
 	}
 

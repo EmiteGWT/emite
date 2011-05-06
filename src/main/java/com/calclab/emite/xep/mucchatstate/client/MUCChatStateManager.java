@@ -43,11 +43,11 @@ public class MUCChatStateManager {
 
 		chatManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				if (event.isCreated()) {
 					getRoomOccupantsChatStateManager((Room) event.getChat());
 				} else if (event.isClosed()) {
-					Chat chat = event.getChat();
+					final Chat chat = event.getChat();
 					GWT.log("Removing chat state to chat: " + chat.getID(), null);
 					chat.getProperties().setData(RoomChatStateManager.KEY, null);
 				}

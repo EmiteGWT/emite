@@ -6,7 +6,7 @@ import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
 public class DiscoveryItemsResultTestHandler extends TestHandler<DiscoveryItemsResultEvent> implements DiscoveryItemsResultHandler {
 
 	@Override
-	public void onDiscoveryItemsResult(DiscoveryItemsResultEvent event) {
+	public void onDiscoveryItemsResult(final DiscoveryItemsResultEvent event) {
 		addEvent(event);
 	}
 

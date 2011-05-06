@@ -53,18 +53,18 @@ public class ExampleIMChat implements EntryPoint {
 		createUI();
 
 		log("Example IM Chat");
-		String self = PageAssist.getMeta("emite.user");
+		final String self = PageAssist.getMeta("emite.user");
 		log("Current user: " + self);
 		final String user = PageAssist.getMeta("emite.chat");
 		log("Chat with user: " + user);
 
-		ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
-		XmppSession session = ginjector.getXmppSession();
+		final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
+		final XmppSession session = ginjector.getXmppSession();
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
-				String state = event.getState();
+			public void onStateChanged(final StateChangedEvent event) {
+				final String state = event.getState();
 				log("Current state: " + state);
 			}
 		});
@@ -72,26 +72,26 @@ public class ExampleIMChat implements EntryPoint {
 		final ChatManager chatManager = ginjector.getChatManager();
 		input.addChangeHandler(new ChangeHandler() {
 			@Override
-			public void onChange(ChangeEvent event) {
-				String msg = input.getText();
+			public void onChange(final ChangeEvent event) {
+				final String msg = input.getText();
 				log("Message sent: " + msg);
-				Chat chat = chatManager.open(uri(user));
+				final Chat chat = chatManager.open(uri(user));
 				chat.send(new Message(msg));
 				input.setText("");
 			}
 		});
 
-		Chat chat = chatManager.open(uri(user));
+		final Chat chat = chatManager.open(uri(user));
 		chat.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
+			public void onMessage(final MessageEvent event) {
 				log("Message received: " + event.getMessage().getBody());
 			}
 		});
 	}
 
 	private void createUI() {
-		DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
+		final DockLayoutPanel dock = new DockLayoutPanel(Unit.PX);
 		input = new TextBox();
 		dock.addSouth(input, 50);
 		output = new VerticalPanel();
@@ -99,7 +99,7 @@ public class ExampleIMChat implements EntryPoint {
 		RootLayoutPanel.get().add(dock);
 	}
 
-	private void log(String text) {
+	private void log(final String text) {
 		output.add(new Label(text));
 	}
 

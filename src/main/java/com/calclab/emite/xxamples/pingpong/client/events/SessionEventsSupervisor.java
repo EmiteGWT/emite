@@ -36,13 +36,13 @@ public class SessionEventsSupervisor {
 
 	@Inject
 	public SessionEventsSupervisor(final XmppSession session, final PingPongDisplay display) {
-		this.currentSessionLogin = 0;
-		this.refreshTime = 1000;
+		currentSessionLogin = 0;
+		refreshTime = 1000;
 
 		// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				display.print(("SESSION : " + event.getState()), Style.session);
 				if (event.is(SessionStates.ready)) {
 					currentSessionLogin = System.currentTimeMillis();
@@ -59,10 +59,10 @@ public class SessionEventsSupervisor {
 
 	protected void trackSessionLength(final XmppSession session, final PingPongDisplay display) {
 		if (session.isReady()) {
-			long currentTime = System.currentTimeMillis();
-			int totalSeconds = (int) ((currentTime - currentSessionLogin) / 1000);
-			int minutes = totalSeconds / 60;
-			int seconds = totalSeconds % 60;
+			final long currentTime = System.currentTimeMillis();
+			final int totalSeconds = (int) ((currentTime - currentSessionLogin) / 1000);
+			final int minutes = totalSeconds / 60;
+			final int seconds = totalSeconds % 60;
 			display.getSessionStatus().setText(" Session activity for " + minutes + " minutes and " + seconds + " seconds.");
 			if (refreshTime < 10000) {
 				refreshTime += 500;

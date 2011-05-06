@@ -42,7 +42,7 @@ public class XmppSessionTests {
 		saslManager = mock(SASLManager.class);
 		bindingManager = mock(ResourceBindingManager.class);
 		iMSessionManager = mock(IMSessionManager.class);
-		SessionComponentsRegistry registry = new SessionComponentsRegistry();
+		final SessionComponentsRegistry registry = new SessionComponentsRegistry();
 		session = new XmppSessionLogic(connection, saslManager, bindingManager, iMSessionManager, registry);
 
 	}
@@ -61,9 +61,9 @@ public class XmppSessionTests {
 	public void shouldEventBeforeSendStanzaEvents() {
 		// we need to log in before
 		eventBus.fireEvent(new SessionRequestResultEvent(uri("user@domain")));
-		PacketTestHandler handler = new PacketTestHandler();
+		final PacketTestHandler handler = new PacketTestHandler();
 		session.addBeforeSendStanzaHandler(handler);
-		Packet packet = new Packet("message");
+		final Packet packet = new Packet("message");
 		session.send(packet);
 		assertTrue(handler.isCalledOnce());
 		assertSame(packet, handler.getLastEvent().getPacket());
@@ -71,16 +71,16 @@ public class XmppSessionTests {
 
 	@Test
 	public void shouldEventMessages() {
-		MessageTestHandler handler = new MessageTestHandler();
+		final MessageTestHandler handler = new MessageTestHandler();
 		session.addMessageReceivedHandler(handler);
-		Message message = new Message("message");
+		final Message message = new Message("message");
 		connection.receives(message);
 		assertTrue(handler.isCalledOnce());
 	}
 
 	@Test
 	public void shouldEventPresences() {
-		PresenceTestHandler handler = new PresenceTestHandler();
+		final PresenceTestHandler handler = new PresenceTestHandler();
 		session.addPresenceReceivedHandler(handler);
 		connection.receives(new Packet("presence"));
 		assertTrue(handler.isCalledOnce());

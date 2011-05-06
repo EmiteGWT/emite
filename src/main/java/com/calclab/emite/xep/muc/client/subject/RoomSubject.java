@@ -37,7 +37,7 @@ public class RoomSubject {
 
 	private static ArrayList<Room> rooms;
 
-	public static void addRoomSubjectChangedHandler(Room room, RoomSubjectChangedHandler handler) {
+	public static void addRoomSubjectChangedHandler(final Room room, final RoomSubjectChangedHandler handler) {
 		if (!hasRoom(room)) {
 			trackSubjectChangeMessages(room);
 		}
@@ -52,8 +52,8 @@ public class RoomSubject {
 	 * @return true if the subject request has been sent
 	 */
 	// TODO: check occupants affiliation to see if the user can do that!!
-	public static boolean requestSubjectChange(Room room, final String subjectText) {
-		XmppSession session = room.getSession();
+	public static boolean requestSubjectChange(final Room room, final String subjectText) {
+		final XmppSession session = room.getSession();
 		final BasicStanza message = new BasicStanza("message", null);
 		message.setFrom(session.getCurrentUserURI());
 		message.setTo(room.getURI().getJID());
@@ -64,7 +64,7 @@ public class RoomSubject {
 		return true;
 	}
 
-	private static boolean hasRoom(Room room) {
+	private static boolean hasRoom(final Room room) {
 		if (RoomSubject.rooms == null) {
 			RoomSubject.rooms = new ArrayList<Room>();
 		}
@@ -75,8 +75,8 @@ public class RoomSubject {
 		RoomSubject.rooms.add(room);
 		room.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				if (message.getSubject() != null) {
 					room.getChatEventBus().fireEvent(new RoomSubjectChangedEvent(message.getFrom(), message.getSubject()));
 				}

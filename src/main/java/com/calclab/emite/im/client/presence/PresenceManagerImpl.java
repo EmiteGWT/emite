@@ -48,7 +48,7 @@ public class PresenceManagerImpl implements PresenceManager {
 	private final XmppSession session;
 
 	@Inject
-	public PresenceManagerImpl(final XmppSession session, SessionReady sessionReady) {
+	public PresenceManagerImpl(final XmppSession session, final SessionReady sessionReady) {
 		GWT.log("Creating PresenceManagerImpl");
 		sessionReady.setEnabled(false);
 		this.session = session;
@@ -58,10 +58,10 @@ public class PresenceManagerImpl implements PresenceManager {
 		// client SHOULD request the roster before sending initial presence
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(SessionStates.rosterReady)) {
 					GWT.log("Sending initial presence", null);
-					Presence ownPresence = getOwnPresence();
+					final Presence ownPresence = getOwnPresence();
 					final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session.getCurrentUserURI());
 					session.send(initialPresence);
 					setOwnPresence(initialPresence);
@@ -76,8 +76,8 @@ public class PresenceManagerImpl implements PresenceManager {
 
 		session.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				final Type type = presence.getType();
 				if (type == Type.probe) {
 					session.send(getOwnPresence());
@@ -90,7 +90,7 @@ public class PresenceManagerImpl implements PresenceManager {
 	}
 
 	@Override
-	public HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedHandler handler) {
+	public HandlerRegistration addOwnPresenceChangedHandler(final OwnPresenceChangedHandler handler) {
 		return OwnPresenceChangedEvent.bind(session.getEventBus(), handler);
 	}
 
@@ -131,8 +131,8 @@ public class PresenceManagerImpl implements PresenceManager {
 		setOwnPresence(presence);
 	}
 
-	private void setOwnPresence(Presence presence) {
-		Presence oldPresence = ownPresence;
+	private void setOwnPresence(final Presence presence) {
+		final Presence oldPresence = ownPresence;
 		ownPresence = presence;
 		session.getEventBus().fireEvent(new OwnPresenceChangedEvent(oldPresence, presence));
 	}

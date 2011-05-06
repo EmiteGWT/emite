@@ -44,9 +44,8 @@ public abstract class AbstractPacket implements IPacket {
 	@Override
 	public IPacket getFirstChild(final PacketMatcher filter) {
 		for (final IPacket child : getChildren()) {
-			if (filter.matches(child)) {
+			if (filter.matches(child))
 				return child;
-			}
 		}
 		return NoPacket.INSTANCE;
 	}
@@ -112,13 +111,11 @@ public abstract class AbstractPacket implements IPacket {
 	}
 
 	private IPacket bfs(final LinkedList<IPacket> queue, final PacketMatcher filter) {
-		if (queue.isEmpty()) {
+		if (queue.isEmpty())
 			return NoPacket.INSTANCE;
-		}
 		final IPacket current = queue.poll();
-		if (filter.matches(current)) {
+		if (filter.matches(current))
 			return current;
-		}
 		queue.addAll(current.getChildren());
 		return bfs(queue, filter);
 	}

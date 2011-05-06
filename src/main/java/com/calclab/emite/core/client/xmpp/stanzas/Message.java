@@ -174,8 +174,9 @@ public class Message extends BasicStanza {
 	}
 
 	public void setType(final Type type) {
-		if (type != null)
+		if (type != null) {
 			setType(type.toString());
+		}
 	}
 
 	public Message Subject(final String subject) {

@@ -36,24 +36,24 @@ public abstract class XmppRosterBoilerplate implements XmppRoster {
 	protected EmiteEventBus eventBus;
 	protected boolean rosterReady;
 
-	public XmppRosterBoilerplate(XmppSession session) {
+	public XmppRosterBoilerplate(final XmppSession session) {
 		this.session = session;
-		this.eventBus = session.getEventBus();
+		eventBus = session.getEventBus();
 		rosterReady = false;
 	}
 
 	@Override
-	public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
+	public HandlerRegistration addRosterGroupChangedHandler(final RosterGroupChangedHandler handler) {
 		return RosterGroupChangedEvent.bind(eventBus, handler);
 	}
 
 	@Override
-	public HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler) {
+	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedHandler handler) {
 		return RosterItemChangedEvent.bind(eventBus, handler);
 	}
 
 	@Override
-	public HandlerRegistration addRosterRetrievedHandler(RosterRetrievedHandler handler) {
+	public HandlerRegistration addRosterRetrievedHandler(final RosterRetrievedHandler handler) {
 		return RosterRetrievedEvent.bind(eventBus, handler);
 	}
 

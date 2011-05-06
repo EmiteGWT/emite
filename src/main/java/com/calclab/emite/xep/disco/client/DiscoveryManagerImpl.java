@@ -44,21 +44,21 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 
 	@Inject
 	public DiscoveryManagerImpl(final XmppSession xmppSession) {
-		this.session = xmppSession;
-		this.infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();
-		this.itemsResults = new HashMap<XmppURI, DiscoveryItemsResults>();
+		session = xmppSession;
+		infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();
+		itemsResults = new HashMap<XmppURI, DiscoveryItemsResults>();
 	}
 
 	@Override
-	public HandlerRegistration addDiscoveryInfoResultHandler(DiscoveryInfoResultHandler handler) {
+	public HandlerRegistration addDiscoveryInfoResultHandler(final DiscoveryInfoResultHandler handler) {
 		return DiscoveryInfoResultEvent.bind(session.getEventBus(), handler);
 	}
 
 	@Override
-	public void areFeaturesSupported(XmppURI targetUri, final FeatureSupportedCallback callback, final String... featuresName) {
+	public void areFeaturesSupported(final XmppURI targetUri, final FeatureSupportedCallback callback, final String... featuresName) {
 		sendInfoQuery(targetUri, new DiscoveryInfoResultHandler() {
 			@Override
-			public void onDiscoveryInfoResult(DiscoveryInfoResultEvent event) {
+			public void onDiscoveryInfoResult(final DiscoveryInfoResultEvent event) {
 				if (event.hasResult()) {
 					callback.onFeaturesSupported(event.getResults().areFeaturedSupported(featuresName));
 				} else {
@@ -70,20 +70,20 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 
 	@Override
 	public void sendInfoQuery(final XmppURI targetUri, final DiscoveryInfoResultHandler handler) {
-		DiscoveryInfoResults cached = infoResults.get(targetUri);
+		final DiscoveryInfoResults cached = infoResults.get(targetUri);
 		if (cached != null) {
 			if (handler != null) {
 				handler.onDiscoveryInfoResult(new DiscoveryInfoResultEvent(cached));
 			}
 		} else {
-			IQ iq = new IQ(Type.get, targetUri);
+			final IQ iq = new IQ(Type.get, targetUri);
 			iq.addQuery("http://jabber.org/protocol/disco#info");
 			session.sendIQ("disco", iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					DiscoveryInfoResultEvent event;
 					if (IQ.isSuccess(iq)) {
-						DiscoveryInfoResults infoResult = new DiscoveryInfoResults(iq);
+						final DiscoveryInfoResults infoResult = new DiscoveryInfoResults(iq);
 						infoResults.put(targetUri, infoResult);
 						event = new DiscoveryInfoResultEvent(infoResult);
 					} else {
@@ -100,20 +100,20 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 
 	@Override
 	public void sendItemsQuery(final XmppURI targetUri, final DiscoveryItemsResultHandler handler) {
-		DiscoveryItemsResults cached = itemsResults.get(targetUri);
+		final DiscoveryItemsResults cached = itemsResults.get(targetUri);
 		if (cached != null) {
 			if (handler != null) {
 				handler.onDiscoveryItemsResult(new DiscoveryItemsResultEvent(cached));
 			}
 		} else {
-			IQ iq = new IQ(Type.get, targetUri);
+			final IQ iq = new IQ(Type.get, targetUri);
 			iq.addQuery("http://jabber.org/protocol/disco#items");
 			session.sendIQ("disco", iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					DiscoveryItemsResultEvent event;
 					if (IQ.isSuccess(iq)) {
-						DiscoveryItemsResults itemsResult = new DiscoveryItemsResults(iq);
+						final DiscoveryItemsResults itemsResult = new DiscoveryItemsResults(iq);
 						itemsResults.put(targetUri, itemsResult);
 						event = new DiscoveryItemsResultEvent(itemsResult);
 					} else {

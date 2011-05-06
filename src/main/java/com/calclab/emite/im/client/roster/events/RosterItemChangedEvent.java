@@ -35,13 +35,13 @@ public class RosterItemChangedEvent extends ChangedEvent<RosterItemChangedHandle
 
 	private static final Type<RosterItemChangedHandler> TYPE = new Type<RosterItemChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RosterItemChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RosterItemChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final RosterItem rosterItem;
 
-	public RosterItemChangedEvent(String changeType, RosterItem rosterItem) {
+	public RosterItemChangedEvent(final String changeType, final RosterItem rosterItem) {
 		super(TYPE, changeType);
 		this.rosterItem = rosterItem;
 	}
@@ -51,7 +51,7 @@ public class RosterItemChangedEvent extends ChangedEvent<RosterItemChangedHandle
 	}
 
 	@Override
-	protected void dispatch(RosterItemChangedHandler handler) {
+	protected void dispatch(final RosterItemChangedHandler handler) {
 		handler.onRosterItemChanged(this);
 	}
 

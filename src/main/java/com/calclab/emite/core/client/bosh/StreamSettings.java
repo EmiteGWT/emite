@@ -29,7 +29,7 @@ public class StreamSettings {
 	private int maxPause;
 
 	public StreamSettings() {
-		this.rid = (long) (Math.random() * 10000000) + 1000;
+		rid = (long) (Math.random() * 10000000) + 1000;
 	}
 
 	public int getInactivity() {
@@ -53,18 +53,18 @@ public class StreamSettings {
 		return "" + rid;
 	}
 
-	public void setInactivity(String inactivity) {
+	public void setInactivity(final String inactivity) {
 		try {
 			this.inactivity = Integer.parseInt(inactivity);
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			this.inactivity = 0;
 		}
 	}
 
-	public void setMaxPause(String maxPause) {
+	public void setMaxPause(final String maxPause) {
 		try {
 			this.maxPause = Integer.parseInt(maxPause);
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			this.maxPause = 1000;
 		}
 	}

@@ -29,7 +29,7 @@ public class IQ extends BasicStanza {
 
 	private static final String NAME = "iq";
 
-	public static Type getType(IPacket packet) {
+	public static Type getType(final IPacket packet) {
 		try {
 			return Type.valueOf(packet.getAttribute(TYPE));
 		} catch (final IllegalArgumentException e) {
@@ -49,7 +49,7 @@ public class IQ extends BasicStanza {
 		return iq.hasAttribute(TYPE, "result");
 	}
 
-	public static boolean isType(Type type, final IPacket iq) {
+	public static boolean isType(final Type type, final IPacket iq) {
 		return iq.hasAttribute(TYPE, type.toString());
 	}
 
@@ -96,7 +96,7 @@ public class IQ extends BasicStanza {
 		return this;
 	}
 
-	public boolean isType(Type type) {
+	public boolean isType(final Type type) {
 		return IQ.isType(type, this);
 	}
 
@@ -106,7 +106,7 @@ public class IQ extends BasicStanza {
 	}
 
 	@Override
-	public IQ With(String name, String value) {
+	public IQ With(final String name, final String value) {
 		return (IQ) super.With(name, value);
 	}
 

@@ -41,13 +41,13 @@ public class DiscoveryManagerTest {
 
 	@Test
 	public void shouldSendInfoQuery() {
-		XmppURI uri = XmppURI.uri("node", "localhost.localdomain", "resource");
-		DiscoveryInfoResultTestHandler handler = new DiscoveryInfoResultTestHandler();
+		final XmppURI uri = XmppURI.uri("node", "localhost.localdomain", "resource");
+		final DiscoveryInfoResultTestHandler handler = new DiscoveryInfoResultTestHandler();
 		manager.sendInfoQuery(uri, handler);
 		session.answer(DISCO_RESULT);
 		assertTrue(handler.isCalledOnce());
 		assertTrue(handler.getLastEvent().hasResult());
-		DiscoveryInfoResults result = handler.getLastEvent().getResults();
+		final DiscoveryInfoResults result = handler.getLastEvent().getResults();
 		assertEquals(2, result.getIdentities().size());
 		assertEquals(7, result.getFeatures().size());
 
@@ -55,13 +55,13 @@ public class DiscoveryManagerTest {
 
 	@Test
 	public void shouldSendItemsQuery() {
-		XmppURI uri = XmppURI.uri("node", "localhost.localdomain", "resource");
-		DiscoveryItemsResultTestHandler handler = new DiscoveryItemsResultTestHandler();
+		final XmppURI uri = XmppURI.uri("node", "localhost.localdomain", "resource");
+		final DiscoveryItemsResultTestHandler handler = new DiscoveryItemsResultTestHandler();
 		manager.sendItemsQuery(uri, handler);
 		session.answer(DISCO_ITEMS_RESULT);
 		assertTrue(handler.isCalledOnce());
 		assertTrue(handler.getLastEvent().hasResult());
-		DiscoveryItemsResults result = handler.getLastEvent().getResults();
+		final DiscoveryItemsResults result = handler.getLastEvent().getResults();
 		assertEquals(8, result.getItems().size());
 	}
 }

@@ -56,8 +56,8 @@ public class ChatProperties {
 	public ChatProperties(final XmppURI uri, final ChatProperties properties) {
 		this(uri, null, null, properties);
 
-		for (Entry<String, Object> entry : properties.data.entrySet()) {
-			this.setData(entry.getKey(), entry.getValue());
+		for (final Entry<String, Object> entry : properties.data.entrySet()) {
+			setData(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -65,7 +65,7 @@ public class ChatProperties {
 		this.uri = uri;
 		this.initiatorUri = initiatorUri;
 		this.state = state;
-		this.shouldCreateNewChat = true;
+		shouldCreateNewChat = true;
 		data = new HashMap<String, Object>();
 	}
 
@@ -86,8 +86,8 @@ public class ChatProperties {
 	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state, final ChatProperties properties) {
 		this(uri, initiatorUri, state);
 
-		for (Entry<String, Object> entry : properties.data.entrySet()) {
-			this.setData(entry.getKey(), entry.getValue());
+		for (final Entry<String, Object> entry : properties.data.entrySet()) {
+			setData(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -165,7 +165,7 @@ public class ChatProperties {
 	 * 
 	 * @param shouldCreateNewChat
 	 */
-	public void setShouldCreateNewChat(boolean shouldCreateNewChat) {
+	public void setShouldCreateNewChat(final boolean shouldCreateNewChat) {
 		this.shouldCreateNewChat = shouldCreateNewChat;
 	}
 

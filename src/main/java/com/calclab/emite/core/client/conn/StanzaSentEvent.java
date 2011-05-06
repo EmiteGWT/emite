@@ -28,7 +28,7 @@ public class StanzaSentEvent extends StanzaEvent {
 
 	private static final Type<StanzaHandler> TYPE = new Type<StanzaHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, StanzaHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final StanzaHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 

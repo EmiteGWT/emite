@@ -29,11 +29,11 @@ public class AvatarVCard {
 	private String photo;
 	private String photoType;
 
-	public AvatarVCard(XmppURI from) {
+	public AvatarVCard(final XmppURI from) {
 		this(from, null, null, null);
 	}
 
-	public AvatarVCard(XmppURI from, String photoHash, String photo, String photoType) {
+	public AvatarVCard(final XmppURI from, final String photoHash, final String photo, final String photoType) {
 		this.from = from;
 		this.photoHash = photoHash;
 		this.photo = photo;
@@ -48,7 +48,7 @@ public class AvatarVCard {
 		return photoHash;
 	}
 
-	public void setPhotoHash(String photoHash) {
+	public void setPhotoHash(final String photoHash) {
 		this.photoHash = photoHash;
 	}
 
@@ -56,7 +56,7 @@ public class AvatarVCard {
 		return photo;
 	}
 
-	public void setPhoto(String photo) {
+	public void setPhoto(final String photo) {
 		this.photo = photo;
 	}
 
@@ -64,7 +64,7 @@ public class AvatarVCard {
 		return photoType;
 	}
 
-	public void setPhotoType(String photoType) {
+	public void setPhotoType(final String photoType) {
 		this.photoType = photoType;
 	}
 

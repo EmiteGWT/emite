@@ -44,14 +44,14 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	private final HashMap<XmppURI, Occupant> occupantsByOccupantUri;
 	private final LinkedHashMap<XmppURI, Occupant> occupantsByUserUri;
 
-	public RoomBoilerplate(XmppSession session, ChatProperties properties) {
+	public RoomBoilerplate(final XmppSession session, final ChatProperties properties) {
 		super(session, properties);
 		occupantsByOccupantUri = new LinkedHashMap<XmppURI, Occupant>();
 		occupantsByUserUri = new LinkedHashMap<XmppURI, Occupant>();
 	}
 
 	@Override
-	public HandlerRegistration addBeforeRoomInvitationSendHandler(BeforeRoomInvitationSendHandler handler) {
+	public HandlerRegistration addBeforeRoomInvitationSendHandler(final BeforeRoomInvitationSendHandler handler) {
 		return BeforeRoomInvitationSendEvent.bind(chatEventBus, handler);
 	}
 
@@ -62,22 +62,22 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	 * @return
 	 */
 	@Override
-	public HandlerRegistration addOccupantChangedHandler(OccupantChangedHandler handler) {
+	public HandlerRegistration addOccupantChangedHandler(final OccupantChangedHandler handler) {
 		return OccupantChangedEvent.bind(chatEventBus, handler);
 	}
 
 	@Override
-	public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler) {
+	public HandlerRegistration addPresenceReceivedHandler(final PresenceHandler handler) {
 		return PresenceReceivedEvent.bind(chatEventBus, handler);
 	}
 
 	@Override
-	public HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentHandler handler) {
+	public HandlerRegistration addRoomInvitationSentHandler(final RoomInvitationSentHandler handler) {
 		return RoomInvitationSentEvent.bind(chatEventBus, handler);
 	}
 
 	@Override
-	public Occupant getOccupantByOccupantUri(XmppURI occupantUri) {
+	public Occupant getOccupantByOccupantUri(final XmppURI occupantUri) {
 		return occupantsByOccupantUri.get(occupantUri);
 	}
 
@@ -88,7 +88,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	}
 
 	@Override
-	public Occupant getOccupantByUserUri(XmppURI userUri) {
+	public Occupant getOccupantByUserUri(final XmppURI userUri) {
 		return occupantsByUserUri.get(userUri.getJID());
 	}
 
@@ -107,13 +107,13 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	 */
 	@Override
 	@Deprecated
-	public void setSubject(String newSubject) {
+	public void setSubject(final String newSubject) {
 		RoomSubject.requestSubjectChange(this, newSubject);
 	}
 
-	protected void addOccupant(Occupant occupant) {
+	protected void addOccupant(final Occupant occupant) {
 		occupantsByOccupantUri.put(occupant.getOccupantUri(), occupant);
-		XmppURI userUri = occupant.getUserUri();
+		final XmppURI userUri = occupant.getUserUri();
 		if (userUri != null) {
 			occupantsByUserUri.put(userUri.getJID(), occupant);
 		}
@@ -123,7 +123,7 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	protected void removeOccupant(final XmppURI occupantUri) {
 		final Occupant occupant = occupantsByOccupantUri.remove(occupantUri);
 		if (occupant != null) {
-			XmppURI userUri = occupant.getUserUri();
+			final XmppURI userUri = occupant.getUserUri();
 			if (userUri != null) {
 				occupantsByUserUri.remove(userUri.getJID());
 			}

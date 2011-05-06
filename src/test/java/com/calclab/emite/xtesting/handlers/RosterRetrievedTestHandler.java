@@ -13,7 +13,7 @@ public class RosterRetrievedTestHandler extends TestHandler<RosterRetrievedEvent
 	}
 
 	@Override
-	public void onRosterRetrieved(RosterRetrievedEvent event) {
+	public void onRosterRetrieved(final RosterRetrievedEvent event) {
 		addEvent(event);
 	}
 

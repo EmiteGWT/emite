@@ -122,9 +122,8 @@ public class GWTPacket extends AbstractPacket {
 		final NodeList childs = element.getChildNodes();
 		for (int index = 0; index < childs.getLength(); index++) {
 			item = childs.item(index);
-			if (item.getNodeType() == Node.TEXT_NODE) {
+			if (item.getNodeType() == Node.TEXT_NODE)
 				return item.getNodeValue();
-			}
 		}
 		return null;
 	}
@@ -169,9 +168,8 @@ public class GWTPacket extends AbstractPacket {
 
 	private List<IPacket> wrap(final NodeList nodes) {
 		int length;
-		if (nodes == null || (length = nodes.getLength()) == 0) {
+		if (nodes == null || (length = nodes.getLength()) == 0)
 			return EMPTY_LIST;
-		}
 		final ArrayList<IPacket> selected = new ArrayList<IPacket>();
 		for (int index = 0; index < length; index++) {
 			final Node node = nodes.item(index);

@@ -29,17 +29,17 @@ public class DiscoveryManagerResponse {
 
 	private final List<Item> items;
 
-	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features) {
+	public DiscoveryManagerResponse(final List<Identity> identities, final List<Feature> features) {
 		this(identities, features, null);
 	}
 
-	public DiscoveryManagerResponse(List<Identity> identities, List<Feature> features, List<Item> items) {
+	public DiscoveryManagerResponse(final List<Identity> identities, final List<Feature> features, final List<Item> items) {
 		this.identities = identities;
 		this.features = features;
 		this.items = items;
 	}
 
-	public DiscoveryManagerResponse(List<Item> items) {
+	public DiscoveryManagerResponse(final List<Item> items) {
 		this(null, null, items);
 	}
 

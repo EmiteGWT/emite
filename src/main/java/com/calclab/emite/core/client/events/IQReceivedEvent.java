@@ -26,11 +26,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class IQReceivedEvent extends IQEvent {
 	private static final Type<IQHandler> TYPE = new Type<IQHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, IQHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final IQHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
-	public IQReceivedEvent(IQ iq) {
+	public IQReceivedEvent(final IQ iq) {
 		super(TYPE, iq);
 	}
 

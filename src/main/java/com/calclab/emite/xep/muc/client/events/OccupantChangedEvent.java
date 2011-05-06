@@ -29,13 +29,13 @@ public class OccupantChangedEvent extends ChangedEvent<OccupantChangedHandler> {
 
 	private static final Type<OccupantChangedHandler> TYPE = new Type<OccupantChangedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, OccupantChangedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final OccupantChangedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final Occupant occupant;
 
-	public OccupantChangedEvent(String changeType, Occupant occupant) {
+	public OccupantChangedEvent(final String changeType, final Occupant occupant) {
 		super(TYPE, changeType);
 		this.occupant = occupant;
 	}
@@ -50,7 +50,7 @@ public class OccupantChangedEvent extends ChangedEvent<OccupantChangedHandler> {
 	}
 
 	@Override
-	protected void dispatch(OccupantChangedHandler handler) {
+	protected void dispatch(final OccupantChangedHandler handler) {
 		handler.onOccupantChanged(this);
 	}
 

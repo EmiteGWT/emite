@@ -25,7 +25,7 @@ public abstract class AbstractChatManagerTests {
 	@Test
 	public void shouldCloseChatsWhenDisconnected() {
 		session.setLoggedIn(ME);
-		Chat chat = manager.open(OTHER);
+		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.ready, chat.getChatState());
 		session.setSessionState(SessionStates.disconnected);
 		assertEquals(ChatStates.locked, chat.getChatState());
@@ -34,7 +34,7 @@ public abstract class AbstractChatManagerTests {
 	@Test
 	public void shouldCloseChatsWhenLogout() {
 		session.setLoggedIn(ME);
-		Chat chat = manager.open(OTHER);
+		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.ready, chat.getChatState());
 		session.logout();
 		assertEquals(ChatStates.locked, chat.getChatState());

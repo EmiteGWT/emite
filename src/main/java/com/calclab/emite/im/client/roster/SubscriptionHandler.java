@@ -52,11 +52,11 @@ public class SubscriptionHandler {
 
 	@Inject
 	public SubscriptionHandler(final SubscriptionManager manager) {
-		this.behaviour = Behaviour.none;
+		behaviour = Behaviour.none;
 
 		manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
 			@Override
-			public void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event) {
+			public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
 				if (behaviour == Behaviour.acceptAll) {
 					manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
 				} else if (behaviour == Behaviour.refuseAll) {
@@ -73,7 +73,7 @@ public class SubscriptionHandler {
 	 * @param behaviour
 	 *            the desired new behaviour
 	 */
-	public void setBehaviour(Behaviour behaviour) {
+	public void setBehaviour(final Behaviour behaviour) {
 		this.behaviour = behaviour;
 	}
 

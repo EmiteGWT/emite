@@ -50,14 +50,14 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 		add(header);
 		currentUser = new Label("no user yet.");
 		sessionStatus = new Label("no session status yet.");
-		FlowPanel status = new FlowPanel();
+		final FlowPanel status = new FlowPanel();
 		status.add(currentUser);
 		status.add(sessionStatus);
 		add(status);
 		login = new Button("Login");
 		logout = new Button("Logout");
 		clear = new Button("Clear");
-		CheckBox hideEventsCheck = new CheckBox("Hide events");
+		final CheckBox hideEventsCheck = new CheckBox("Hide events");
 		buttons = new FlowPanel();
 		buttons.add(login);
 		buttons.add(logout);
@@ -69,11 +69,11 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 
 		hideEventsCheck.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			@Override
-			public void onValueChange(ValueChangeEvent<Boolean> event) {
+			public void onValueChange(final ValueChangeEvent<Boolean> event) {
 				hideEvents = event.getValue();
-				int widgetCount = output.getWidgetCount();
+				final int widgetCount = output.getWidgetCount();
 				for (int index = 0; index < widgetCount; index++) {
-					Widget w = output.getWidget(index);
+					final Widget w = output.getWidget(index);
 					if (isEventWidget(w)) {
 						w.setVisible(!hideEvents);
 					}
@@ -84,22 +84,22 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 	}
 
 	@Override
-	public void addAction(String label, ClickHandler handler) {
+	public void addAction(final String label, final ClickHandler handler) {
 		buttons.add(new Button(label, handler));
 	}
 
 	@Override
-	public void addClearClickHandler(ClickHandler handler) {
+	public void addClearClickHandler(final ClickHandler handler) {
 		clear.addClickHandler(handler);
 	}
 
 	@Override
-	public void addLoginClickHandler(ClickHandler handler) {
+	public void addLoginClickHandler(final ClickHandler handler) {
 		login.addClickHandler(handler);
 	}
 
 	@Override
-	public void addLogoutClickHandler(ClickHandler handler) {
+	public void addLogoutClickHandler(final ClickHandler handler) {
 		logout.addClickHandler(handler);
 	}
 
@@ -125,7 +125,7 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 
 	@Override
 	public void print(final String text, final String style) {
-		int widgetCount = output.getWidgetCount();
+		final int widgetCount = output.getWidgetCount();
 		if (widgetCount == maxOutput) {
 			output.remove(widgetCount - 1);
 		}
@@ -138,15 +138,15 @@ public class PingPongWidget extends VerticalPanel implements PingPongDisplay {
 	}
 
 	@Override
-	public void printHeader(String text, String style) {
+	public void printHeader(final String text, final String style) {
 		final Label label = new Label(text);
 		label.addStyleName(style);
 		header.add(label);
 
 	}
 
-	protected boolean isEventWidget(Widget w) {
-		String styleName = w.getStyleName();
+	protected boolean isEventWidget(final Widget w) {
+		final String styleName = w.getStyleName();
 		return styleName.contains(Style.eventBus) || styleName.contains(Style.stanzaReceived) || styleName.contains(Style.stanzaSent);
 	}
 }

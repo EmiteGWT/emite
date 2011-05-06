@@ -10,7 +10,7 @@ public class RosterItemHelper {
 		for (final String group : groups) {
 			item.addToGroup(group);
 		}
-		String resource = item.getJID().getResource();
+		final String resource = item.getJID().getResource();
 		item.setAvailable(isAvailable, resource);
 		return item;
 	}

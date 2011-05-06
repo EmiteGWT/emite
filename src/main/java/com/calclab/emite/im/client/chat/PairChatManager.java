@@ -31,7 +31,7 @@ import com.google.inject.name.Named;
  * @see ChatManager
  */
 @Singleton
-public class PairChatManager extends AbstractChatManager implements ChatManager {
+public class PairChatManager extends AbstractChatManager {
 
 	public PairChatManager(final XmppSession session) {
 		this(session, new PairChatSelectionStrategy());

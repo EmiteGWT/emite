@@ -58,7 +58,7 @@ public class PrivacyListsManager {
 
 		session.sendIQ("privacyLists", iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				// here you can handle the response... i think in this case is
 				// not needed
 			}

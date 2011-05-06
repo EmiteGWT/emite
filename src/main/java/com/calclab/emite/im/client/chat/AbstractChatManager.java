@@ -50,9 +50,8 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 	@Override
 	public Chat getChat(final ChatProperties properties, final boolean createIfNotFound) {
 		for (final Chat chat : chats) {
-			if (strategy.isAssignable(chat.getProperties(), properties)) {
+			if (strategy.isAssignable(chat.getProperties(), properties))
 				return chat;
-			}
 		}
 		if (createIfNotFound) {
 		}
@@ -109,14 +108,14 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 						currentChatUser = currentUser;
 					}
 					if (currentUser.equalsNoResource(currentChatUser)) {
-						for (Chat chat : chats) {
+						for (final Chat chat : chats) {
 							chat.open();
 						}
 					}
 				} else if (event.is(SessionStates.loggingOut) || event.is(SessionStates.disconnected)) {
 					// check both states: loggingOut is preferred, but not
 					// always fired (i.e. error)
-					for (Chat chat : chats) {
+					for (final Chat chat : chats) {
 						chat.close();
 					}
 				}

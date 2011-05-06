@@ -13,7 +13,7 @@ public class ItemTest {
 
 	@Before
 	public void beforeTest() {
-		this.xmler = new TigaseXMLService();
+		xmler = new TigaseXMLService();
 	}
 
 	@Test

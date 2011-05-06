@@ -36,8 +36,8 @@ public class Packet extends AbstractPacket {
 
 	public Packet(final String name, final String xmlns) {
 		this.name = name;
-		this.attributes = new HashMap<String, String>();
-		this.children = new ArrayList<IPacket>();
+		attributes = new HashMap<String, String>();
+		children = new ArrayList<IPacket>();
 		if (xmlns != null) {
 			setAttribute("xmlns", xmlns);
 		}
@@ -101,9 +101,8 @@ public class Packet extends AbstractPacket {
 	@Override
 	public String getText() {
 		for (final IPacket child : children) {
-			if (child.getName() == null) {
+			if (child.getName() == null)
 				return TextUtils.unescape(child.toString());
-			}
 		}
 		return null;
 	}

@@ -27,7 +27,7 @@ public class AvatarManagerTest {
 	public void managerShouldListenPresenceWithPhoto() {
 		final PresenceTestHandler handler = new PresenceTestHandler();
 		avatarManager.addHashPresenceReceviedHandler(handler);
-		final Presence presence = new Presence(XmppURI.uri(("juliet@capulet.com/balcony")));
+		final Presence presence = new Presence(XmppURI.uri("juliet@capulet.com/balcony"));
 		presence.addChild("x", "vcard-temp:x:update").addChild("photo", null).setText("sha1-hash-of-image");
 		session.receives(presence);
 		assertTrue(handler.isCalledOnce());

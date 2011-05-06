@@ -28,16 +28,16 @@ public class RoomManagerTests {
 
 	@Before
 	public void beforeTests() {
-		this.session = new XmppSessionTester(USER);
-		this.manager = new RoomChatManager(session);
+		session = new XmppSessionTester(USER);
+		manager = new RoomChatManager(session);
 	}
 
 	@Test
 	public void shouldAcceptInvitations() {
-		ChatChangedTestHandler handler = new ChatChangedTestHandler();
-		ChatProperties properties = new ChatProperties(USER);
+		final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+		final ChatProperties properties = new ChatProperties(USER);
 		manager.addChatChangedHandler(handler);
-		RoomInvitation invitation = new RoomInvitation(uri("friend@host/resource"), uri("room@room.service"), "theReason", properties);
+		final RoomInvitation invitation = new RoomInvitation(uri("friend@host/resource"), uri("room@room.service"), "theReason", properties);
 		manager.acceptRoomInvitation(invitation);
 		assertEquals(2, handler.getCalledTimes());
 		assertEquals(ChangeTypes.created, handler.getEvent(0).getChangeType());

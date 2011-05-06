@@ -31,7 +31,7 @@ import com.google.inject.Provider;
  */
 public class ChatStateComponents {
 	@Inject
-	public ChatStateComponents(SessionComponentsRegistry registry, Provider<StateManager> provider) {
+	public ChatStateComponents(final SessionComponentsRegistry registry, final Provider<StateManager> provider) {
 		registry.addProvider(provider);
 	}
 }

@@ -36,7 +36,7 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	private static final PacketMatcher ERROR_STANZA_MATCHER = MatcherFactory.byName("error");
 	private static final Type<ErrorHandler> TYPE = new Type<ErrorHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, ErrorHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ErrorHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -45,11 +45,11 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	private final IPacket stanza;
 	private final IPacket errorStanza;
 
-	public ErrorEvent(String errorType, String description, IPacket stanza) {
+	public ErrorEvent(final String errorType, final String description, final IPacket stanza) {
 		this.errorType = errorType;
 		this.description = description;
 		this.stanza = stanza != null ? stanza : NoPacket.INSTANCE;
-		this.errorStanza = this.stanza.getFirstChild(ERROR_STANZA_MATCHER);
+		errorStanza = this.stanza.getFirstChild(ERROR_STANZA_MATCHER);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	}
 
 	@Override
-	protected void dispatch(ErrorHandler handler) {
+	protected void dispatch(final ErrorHandler handler) {
 		handler.onError(this);
 	}
 

@@ -41,10 +41,10 @@ public class PongChatPresenter implements StartablePresenter {
 	private final ChatManager chatManager;
 
 	@Inject
-	public PongChatPresenter(ChatManager chatManager, PingPongDisplay output) {
+	public PongChatPresenter(final ChatManager chatManager, final PingPongDisplay output) {
 		this.chatManager = chatManager;
-		this.display = output;
-		this.pongs = 0;
+		display = output;
+		pongs = 0;
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class PongChatPresenter implements StartablePresenter {
 		new ChatManagerEventsSupervisor(chatManager, display);
 		chatManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				if (event.is(ChangeTypes.created)) {
-					Chat chat = event.getChat();
+					final Chat chat = event.getChat();
 					listenToChat(chat);
 				}
 			}
@@ -67,8 +67,8 @@ public class PongChatPresenter implements StartablePresenter {
 	private void listenToChat(final Chat chat) {
 		chat.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				display.print(("RECEIVED: " + message.getBody()), Style.received);
 				pongs++;
 				final String body = "Pong " + pongs + " [" + System.currentTimeMillis() + "]";

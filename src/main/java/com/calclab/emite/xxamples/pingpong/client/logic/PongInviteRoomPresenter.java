@@ -51,11 +51,11 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 	private final RoomManager roomManager;
 
 	@Inject
-	public PongInviteRoomPresenter(RoomManager roomManager, PingPongDisplay display) {
+	public PongInviteRoomPresenter(final RoomManager roomManager, final PingPongDisplay display) {
 		this.roomManager = roomManager;
 		this.display = display;
-		this.time = 5000;
-		this.pongs = 0;
+		time = 5000;
+		pongs = 0;
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 		// Accept the room invitations we receive
 		roomManager.addRoomInvitationReceivedHandler(new RoomInvitationHandler() {
 			@Override
-			public void onRoomInvitation(RoomInvitationEvent event) {
-				RoomInvitation invitation = event.getRoomInvitation();
+			public void onRoomInvitation(final RoomInvitationEvent event) {
+				final RoomInvitation invitation = event.getRoomInvitation();
 				display.print("Room invitation received: " + invitation.getReason() + " - " + invitation.getInvitor() + " to " + invitation.getRoomURI(),
 						Style.important);
 				display.print("We accept the invitation", Style.important);
@@ -82,7 +82,7 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 		// for a while and then go out
 		roomManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				if (event.isCreated()) {
 					manageNewRoom(roomManager, (Room) event.getChat());
 				}
@@ -107,7 +107,7 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 		display.print("Room created: " + room.getURI(), Style.info);
 		room.addChatStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(ChatStates.ready)) {
 					display.print("We entered the room: " + room.getURI(), Style.info);
 					pongs++;
@@ -119,7 +119,7 @@ public class PongInviteRoomPresenter implements StartablePresenter {
 
 		RoomSubject.addRoomSubjectChangedHandler(room, new RoomSubjectChangedHandler() {
 			@Override
-			public void onSubjectChanged(RoomSubjectChangedEvent event) {
+			public void onSubjectChanged(final RoomSubjectChangedEvent event) {
 				display.print("Subject changed: " + event.getSubject() + "(" + event.getOccupantUri() + ")", Style.important);
 			}
 		});

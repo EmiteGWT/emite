@@ -28,13 +28,13 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class ChatStateNotificationEvent extends GwtEvent<ChatStateNotificationHandler> {
 	private static final Type<ChatStateNotificationHandler> TYPE = new Type<ChatStateNotificationHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, ChatStateNotificationHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ChatStateNotificationHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final ChatState chatState;
 
-	public ChatStateNotificationEvent(ChatState chatState) {
+	public ChatStateNotificationEvent(final ChatState chatState) {
 		this.chatState = chatState;
 	}
 
@@ -48,7 +48,7 @@ public class ChatStateNotificationEvent extends GwtEvent<ChatStateNotificationHa
 	}
 
 	@Override
-	protected void dispatch(ChatStateNotificationHandler handler) {
+	protected void dispatch(final ChatStateNotificationHandler handler) {
 		handler.onChatStateChanged(this);
 	}
 

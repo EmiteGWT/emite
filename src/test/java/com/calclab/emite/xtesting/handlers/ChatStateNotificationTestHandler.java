@@ -10,7 +10,7 @@ public class ChatStateNotificationTestHandler extends TestHandler<ChatStateNotif
 	}
 
 	@Override
-	public void onChatStateChanged(ChatStateNotificationEvent event) {
+	public void onChatStateChanged(final ChatStateNotificationEvent event) {
 		addEvent(event);
 	}
 

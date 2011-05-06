@@ -6,7 +6,7 @@ import com.calclab.emite.xep.storage.client.events.PrivateStorageResponseHandler
 public class PrivateStorageResponseTestHandler extends TestHandler<PrivateStorageResponseEvent> implements PrivateStorageResponseHandler {
 
 	@Override
-	public void onStorageResponse(PrivateStorageResponseEvent event) {
+	public void onStorageResponse(final PrivateStorageResponseEvent event) {
 		addEvent(event);
 	}
 

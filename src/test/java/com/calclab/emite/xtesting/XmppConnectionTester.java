@@ -6,14 +6,13 @@ import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
-import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
-public class XmppConnectionTester extends XmppConnectionBoilerPlate implements XmppConnection {
+public class XmppConnectionTester extends XmppConnectionBoilerPlate {
 
 	private final TigaseXMLService xmler;
 	private final ArrayList<IPacket> sent;
@@ -61,9 +60,8 @@ public class XmppConnectionTester extends XmppConnectionBoilerPlate implements X
 	public boolean hasSent(final IPacket packet) {
 		final IsPacketLike matcher = new IsPacketLike(packet);
 		for (final IPacket stanza : sent) {
-			if (matcher.matches(stanza, System.out)) {
+			if (matcher.matches(stanza, System.out))
 				return true;
-			}
 		}
 		return false;
 	}

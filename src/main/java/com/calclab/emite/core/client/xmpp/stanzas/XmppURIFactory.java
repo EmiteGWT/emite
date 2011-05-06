@@ -26,9 +26,8 @@ public class XmppURIFactory {
 	private final HashMap<String, XmppURI> cache = new HashMap<String, XmppURI>();
 
 	public XmppURI parse(final String xmppUri) {
-		if (xmppUri == null || xmppUri.length() == 0) {
+		if (xmppUri == null || xmppUri.length() == 0)
 			return null;
-		}
 
 		final String uri = XmppUriParser.removePrefix(xmppUri);
 		XmppURI cached = cache.get(uri);

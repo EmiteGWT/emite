@@ -29,13 +29,13 @@ public class AvatarVCardReceivedEvent extends GwtEvent<AvatarVCardHandler> {
 
 	private static final Type<AvatarVCardHandler> TYPE = new Type<AvatarVCardHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, AvatarVCardHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final AvatarVCardHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final AvatarVCard avatarVCard;
 
-	public AvatarVCardReceivedEvent(AvatarVCard avatarVCard) {
+	public AvatarVCardReceivedEvent(final AvatarVCard avatarVCard) {
 		this.avatarVCard = avatarVCard;
 	}
 
@@ -49,7 +49,7 @@ public class AvatarVCardReceivedEvent extends GwtEvent<AvatarVCardHandler> {
 	}
 
 	@Override
-	protected void dispatch(AvatarVCardHandler handler) {
+	protected void dispatch(final AvatarVCardHandler handler) {
 		handler.onAvatarVCard(this);
 	}
 

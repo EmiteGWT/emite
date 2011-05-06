@@ -28,7 +28,7 @@ public class RoomInvitation {
 	private final ChatProperties chatProperties;
 
 	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
-		this.chatProperties = new ChatProperties(roomURI, invitor, null);
+		chatProperties = new ChatProperties(roomURI, invitor, null);
 		this.reason = reason;
 	}
 

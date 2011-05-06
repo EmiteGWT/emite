@@ -43,7 +43,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	}
 
 	@Override
-	public HandlerRegistration addBeforeSendStanzaHandler(PacketHandler handler) {
+	public HandlerRegistration addBeforeSendStanzaHandler(final PacketHandler handler) {
 		return BeforeStanzaSendEvent.bind(eventBus, handler);
 	}
 
@@ -93,7 +93,7 @@ public abstract class XmppSessionBoilerPlate implements XmppSession {
 	@Override
 	public void setSessionState(final String newState) {
 		if (!newState.equals(state)) {
-			this.state = newState;
+			state = newState;
 			eventBus.fireEvent(new SessionStateChangedEvent(newState));
 		}
 	}

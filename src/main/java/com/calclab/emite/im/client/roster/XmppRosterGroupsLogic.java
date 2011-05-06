@@ -35,7 +35,7 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
 	protected final HashMap<String, RosterGroup> groups;
 	private final RosterGroup all;
 
-	public XmppRosterGroupsLogic(XmppSession session) {
+	public XmppRosterGroupsLogic(final XmppSession session) {
 		super(session);
 		groups = new HashMap<String, RosterGroup>();
 		all = new RosterGroup(null);
@@ -61,9 +61,9 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
 		all.clear();
 	}
 
-	protected void fireItemChangedInGroups(RosterItemChangedEvent event) {
-		XmppURI itemJID = event.getRosterItem().getJID();
-		for (RosterGroup group : groups.values()) {
+	protected void fireItemChangedInGroups(final RosterItemChangedEvent event) {
+		final XmppURI itemJID = event.getRosterItem().getJID();
+		for (final RosterGroup group : groups.values()) {
 			if (group.hasItem(itemJID)) {
 				group.getRosterGroupEventBus().fireEvent(event);
 			}

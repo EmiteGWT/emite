@@ -36,19 +36,19 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 	private final DiscoveryManager discoveryManager;
 
 	@Inject
-	public RoomDiscoveryManagerImpl(DiscoveryManager discoveryManager) {
+	public RoomDiscoveryManagerImpl(final DiscoveryManager discoveryManager) {
 		this.discoveryManager = discoveryManager;
 	}
 
 	@Override
-	public void discoverRooms(XmppURI targetUri, final ExistingRoomsCallback callback) {
+	public void discoverRooms(final XmppURI targetUri, final ExistingRoomsCallback callback) {
 		discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultHandler() {
 			@Override
-			public void onDiscoveryItemsResult(DiscoveryItemsResultEvent event) {
-				ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
+			public void onDiscoveryItemsResult(final DiscoveryItemsResultEvent event) {
+				final ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
 				if (event.hasResult()) {
-					List<Item> items = event.getResults().getItems();
-					for (Item item : items) {
+					final List<Item> items = event.getResults().getItems();
+					for (final Item item : items) {
 						roomItems.add(new ExistingRoom(XmppURI.uri(item.jid), item.name));
 					}
 					callback.onExistingRooms(roomItems);
@@ -58,7 +58,7 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 	}
 
 	@Override
-	public void isMucSupported(XmppURI targetUri, FeatureSupportedCallback callback) {
+	public void isMucSupported(final XmppURI targetUri, final FeatureSupportedCallback callback) {
 		discoveryManager.areFeaturesSupported(targetUri, callback, "http://jabber.org/protocol/muc");
 	}
 

@@ -22,7 +22,7 @@ public class PairChatTest extends AbstractChatTest {
 	@Before
 	public void beforeTests() {
 		session.setLoggedIn(USER_URI);
-		PairChatManager manager = new PairChatManager(session);
+		final PairChatManager manager = new PairChatManager(session);
 		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.ready);
 		pairChat = (PairChat) manager.openChat(properties, true);
 		pairChat.setThread("theThread");

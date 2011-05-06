@@ -42,7 +42,7 @@ public abstract class ChatBoilerplate implements Chat {
 
 	private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
 
-	public ChatBoilerplate(XmppSession session, ChatProperties properties) {
+	public ChatBoilerplate(final XmppSession session, final ChatProperties properties) {
 		this.session = session;
 		this.properties = properties;
 		chatEventBus = EventBusFactory.create(properties.getUri().toString());
@@ -59,7 +59,7 @@ public abstract class ChatBoilerplate implements Chat {
 	}
 
 	@Override
-	public HandlerRegistration addChatStateChangedHandler(boolean sendCurrent, final StateChangedHandler handler) {
+	public HandlerRegistration addChatStateChangedHandler(final boolean sendCurrent, final StateChangedHandler handler) {
 		if (sendCurrent) {
 			handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
 		}
@@ -67,7 +67,7 @@ public abstract class ChatBoilerplate implements Chat {
 	}
 
 	@Override
-	public HandlerRegistration addErrorHandler(ErrorHandler handler) {
+	public HandlerRegistration addErrorHandler(final ErrorHandler handler) {
 		return ErrorEvent.bind(chatEventBus, handler);
 	}
 
@@ -136,7 +136,7 @@ public abstract class ChatBoilerplate implements Chat {
 	@Deprecated
 	@SuppressWarnings("unchecked")
 	public <T> T setData(final Class<T> type, final T value) {
-		String key = type != null ? type.toString() : null;
+		final String key = type != null ? type.toString() : null;
 		return (T) properties.setData(key, value);
 	}
 
@@ -144,7 +144,7 @@ public abstract class ChatBoilerplate implements Chat {
 		return (String) properties.getData(PREVIOUS_CHAT_STATE);
 	}
 
-	protected void setPreviousChatState(String chatState) {
+	protected void setPreviousChatState(final String chatState) {
 		properties.setData(PREVIOUS_CHAT_STATE, chatState);
 	}
 

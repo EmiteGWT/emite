@@ -11,7 +11,7 @@ public class AvatarVCardTestHandler extends TestHandler<AvatarVCardReceivedEvent
 	}
 
 	@Override
-	public void onAvatarVCard(AvatarVCardReceivedEvent event) {
+	public void onAvatarVCard(final AvatarVCardReceivedEvent event) {
 		addEvent(event);
 	}
 

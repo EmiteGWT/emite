@@ -27,7 +27,7 @@ public abstract class PacketEvent extends GwtEvent<PacketHandler> {
 	private final Type<PacketHandler> type;
 	private final IPacket packet;
 
-	public PacketEvent(Type<PacketHandler> type, IPacket packet) {
+	public PacketEvent(final Type<PacketHandler> type, final IPacket packet) {
 		this.type = type;
 		this.packet = packet;
 	}
@@ -42,7 +42,7 @@ public abstract class PacketEvent extends GwtEvent<PacketHandler> {
 	}
 
 	@Override
-	protected void dispatch(PacketHandler handler) {
+	protected void dispatch(final PacketHandler handler) {
 		handler.onPacket(this);
 	}
 

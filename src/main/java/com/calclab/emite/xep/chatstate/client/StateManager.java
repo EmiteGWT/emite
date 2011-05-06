@@ -43,11 +43,11 @@ public class StateManager {
 
 		chatManager.addChatChangedHandler(new ChatChangedHandler() {
 			@Override
-			public void onChatChanged(ChatChangedEvent event) {
+			public void onChatChanged(final ChatChangedEvent event) {
 				if (event.isCreated()) {
 					getChatState(event.getChat());
 				} else if (event.isClosed()) {
-					Chat chat = event.getChat();
+					final Chat chat = event.getChat();
 					GWT.log("Removing chat state to chat: " + chat.getID(), null);
 					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
 					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {

@@ -28,7 +28,7 @@ public abstract class IQEvent extends GwtEvent<IQHandler> {
 	private final IQ iq;
 	private final Type<IQHandler> type;
 
-	public IQEvent(Type<IQHandler> type, final IQ iq) {
+	public IQEvent(final Type<IQHandler> type, final IQ iq) {
 		this.type = type;
 		this.iq = iq;
 	}

@@ -39,18 +39,16 @@ public class XmppUriParser {
 	public static String getDomain(final String uri) {
 		final int atIndex = uri.indexOf('@') + 1;
 		final int barIndex = uri.indexOf('/', atIndex);
-		if (atIndex == barIndex) {
+		if (atIndex == barIndex)
 			return null;
-		}
 		return barIndex > 0 ? uri.substring(atIndex, barIndex) : uri.substring(atIndex);
 	}
 
 	public static String getNode(final String uri) {
 		final int begin = uri.startsWith(PREFIX) ? PREFIX_LENGTH : 0;
 		final int atIndex = uri.indexOf('@');
-		if (atIndex >= 0) {
+		if (atIndex >= 0)
 			return uri.substring(begin, atIndex);
-		}
 		return null;
 	}
 
@@ -67,9 +65,8 @@ public class XmppUriParser {
 	}
 
 	public static XmppURI parse(final String xmppUri) {
-		if (xmppUri == null || xmppUri.length() == 0) {
+		if (xmppUri == null || xmppUri.length() == 0)
 			return null;
-		}
 
 		final String uri = removePrefix(xmppUri);
 
@@ -80,24 +77,21 @@ public class XmppUriParser {
 		final int atIndex = uri.indexOf('@') + 1;
 		if (atIndex > 0) {
 			node = uri.substring(0, atIndex - 1);
-			if (node.length() == 0) {
+			if (node.length() == 0)
 				return null;
-			}
 		}
 
 		final int barIndex = uri.indexOf('/', atIndex);
-		if (atIndex == barIndex) {
+		if (atIndex == barIndex)
 			return null;
-		}
 		if (barIndex > 0) {
 			domain = uri.substring(atIndex, barIndex);
 			resource = uri.substring(barIndex + 1);
 		} else {
 			domain = uri.substring(atIndex);
 		}
-		if (domain.length() == 0) {
+		if (domain.length() == 0)
 			return null;
-		}
 
 		return XmppURI.uri(node, domain, resource);
 	}

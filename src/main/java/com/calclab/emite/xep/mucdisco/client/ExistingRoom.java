@@ -29,7 +29,7 @@ public class ExistingRoom implements Comparable<ExistingRoom> {
 	private final String name;
 	private final XmppURI uri;
 
-	public ExistingRoom(XmppURI uri, String name) {
+	public ExistingRoom(final XmppURI uri, final String name) {
 		assert uri != null : "URI can't be null in existing rooms";
 		this.uri = uri;
 		if (name == null) {
@@ -40,7 +40,7 @@ public class ExistingRoom implements Comparable<ExistingRoom> {
 	}
 
 	@Override
-	public int compareTo(ExistingRoom o) {
+	public int compareTo(final ExistingRoom o) {
 		return name.compareTo(o.name);
 	}
 

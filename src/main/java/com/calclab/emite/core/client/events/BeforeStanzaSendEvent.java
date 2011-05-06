@@ -26,11 +26,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 public class BeforeStanzaSendEvent extends PacketEvent {
 	private static final Type<PacketHandler> TYPE = new Type<PacketHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, PacketHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final PacketHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
-	public BeforeStanzaSendEvent(IPacket packet) {
+	public BeforeStanzaSendEvent(final IPacket packet) {
 		super(TYPE, packet);
 	}
 

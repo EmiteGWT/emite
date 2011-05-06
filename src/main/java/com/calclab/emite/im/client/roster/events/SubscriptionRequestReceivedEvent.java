@@ -29,7 +29,7 @@ public class SubscriptionRequestReceivedEvent extends GwtEvent<SubscriptionReque
 
 	private static final Type<SubscriptionRequestReceivedHandler> TYPE = new Type<SubscriptionRequestReceivedHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, SubscriptionRequestReceivedHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final SubscriptionRequestReceivedHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -37,7 +37,7 @@ public class SubscriptionRequestReceivedEvent extends GwtEvent<SubscriptionReque
 
 	private final XmppURI from;
 
-	public SubscriptionRequestReceivedEvent(XmppURI from, String nick) {
+	public SubscriptionRequestReceivedEvent(final XmppURI from, final String nick) {
 		this.from = from;
 		this.nick = nick;
 	}
@@ -56,7 +56,7 @@ public class SubscriptionRequestReceivedEvent extends GwtEvent<SubscriptionReque
 	}
 
 	@Override
-	protected void dispatch(SubscriptionRequestReceivedHandler handler) {
+	protected void dispatch(final SubscriptionRequestReceivedHandler handler) {
 		handler.onSubscriptionRequestReceived(this);
 	}
 

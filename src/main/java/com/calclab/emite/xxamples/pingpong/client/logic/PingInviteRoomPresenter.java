@@ -48,13 +48,14 @@ public class PingInviteRoomPresenter implements StartablePresenter {
 	private final RoomManager roomManager;
 
 	@Inject
-	public PingInviteRoomPresenter(RoomManager roomManager, @Named("other") XmppURI other, @Named("room") XmppURI room, PingPongDisplay display) {
+	public PingInviteRoomPresenter(final RoomManager roomManager, @Named("other") final XmppURI other, @Named("room") final XmppURI room,
+			final PingPongDisplay display) {
 		this.roomManager = roomManager;
-		this.otherUri = other;
-		this.roomUri = room;
+		otherUri = other;
+		roomUri = room;
 		this.display = display;
-		this.time = 5000;
-		this.pings = 0;
+		time = 5000;
+		pings = 0;
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class PingInviteRoomPresenter implements StartablePresenter {
 		// When the room is ready, we invite other
 		room.addChatStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(ChatStates.ready)) {
 					display.print("Room ready. Sending invitation to " + otherUri, Style.important);
 					pings++;
@@ -83,8 +84,8 @@ public class PingInviteRoomPresenter implements StartablePresenter {
 
 		room.addOccupantChangedHandler(new OccupantChangedHandler() {
 			@Override
-			public void onOccupantChanged(OccupantChangedEvent event) {
-				boolean isOtherOccupant = event.getOccupant().getUserUri().equalsNoResource(otherUri);
+			public void onOccupantChanged(final OccupantChangedEvent event) {
+				final boolean isOtherOccupant = event.getOccupant().getUserUri().equalsNoResource(otherUri);
 				if (isOtherOccupant) {
 					if (event.isRemoved()) {
 						display.print("Invited removed... waiting to send invitation", Style.important);

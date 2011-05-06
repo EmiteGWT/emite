@@ -29,13 +29,13 @@ public class VCardResponseEvent extends GwtEvent<VCardResponseHandler> {
 
 	private static final Type<VCardResponseHandler> TYPE = new Type<VCardResponseHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, VCardResponseHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final VCardResponseHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final VCardResponse vCardResponse;
 
-	public VCardResponseEvent(VCardResponse vCardResponse) {
+	public VCardResponseEvent(final VCardResponse vCardResponse) {
 		this.vCardResponse = vCardResponse;
 	}
 
@@ -49,7 +49,7 @@ public class VCardResponseEvent extends GwtEvent<VCardResponseHandler> {
 	}
 
 	@Override
-	protected void dispatch(VCardResponseHandler handler) {
+	protected void dispatch(final VCardResponseHandler handler) {
 		handler.onVCardResponse(this);
 	}
 

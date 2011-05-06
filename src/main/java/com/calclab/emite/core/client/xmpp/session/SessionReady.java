@@ -41,7 +41,7 @@ public class SessionReady {
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (enabled) {
 					if (event.is(SessionStates.loggedIn)) {
 						session.send(new Presence());
@@ -52,7 +52,7 @@ public class SessionReady {
 		});
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(final boolean enabled) {
 		GWT.log("SessionReady - enabled: " + enabled);
 		this.enabled = enabled;
 	}

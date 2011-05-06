@@ -49,14 +49,14 @@ public class SessionReconnect {
 
 		saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
 			@Override
-			public void onAuthorization(AuthorizationResultEvent event) {
+			public void onAuthorization(final AuthorizationResultEvent event) {
 				lastSuccessfulCredentials = event.getCredentials();
 			}
 		});
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(SessionStates.connecting)) {
 					shouldReconnect = false;
 				} else if (event.is(SessionStates.disconnected) && shouldReconnect) {
@@ -83,7 +83,7 @@ public class SessionReconnect {
 
 		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 			@Override
-			public void onStateChanged(ConnectionStateChangedEvent event) {
+			public void onStateChanged(final ConnectionStateChangedEvent event) {
 				if (event.is(ConnectionState.error) || event.is(ConnectionState.waitingForRetry)) {
 					shouldReconnect();
 				}

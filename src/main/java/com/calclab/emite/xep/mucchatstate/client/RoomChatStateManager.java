@@ -118,10 +118,10 @@ public class RoomChatStateManager {
 
 		room.addBeforeSendMessageHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
+			public void onMessage(final MessageEvent event) {
 				// Only Messages are listened not presence events
 				// But sendStateMessage goes through here.
-				Message message = event.getMessage();
+				final Message message = event.getMessage();
 				final boolean alreadyWithState = getStateFromMessage(message) != null;
 				if (!alreadyWithState && ownState != ChatState.active && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
 					if (ownState == ChatState.composing) {
@@ -140,8 +140,8 @@ public class RoomChatStateManager {
 
 		room.addMessageReceivedHandler(new MessageHandler() {
 			@Override
-			public void onMessage(MessageEvent event) {
-				Message message = event.getMessage();
+			public void onMessage(final MessageEvent event) {
+				final Message message = event.getMessage();
 				final ChatState state = getStateFromMessage(message);
 				if (state != null) {
 					final XmppURI from = message.getFrom();
@@ -153,7 +153,7 @@ public class RoomChatStateManager {
 
 	}
 
-	public HandlerRegistration addRoomChatStateNotificationHandler(RoomChatStateNotificationHandler handler) {
+	public HandlerRegistration addRoomChatStateNotificationHandler(final RoomChatStateNotificationHandler handler) {
 		return RoomChatStateNotificationEvent.bind(room.getChatEventBus(), handler);
 	}
 

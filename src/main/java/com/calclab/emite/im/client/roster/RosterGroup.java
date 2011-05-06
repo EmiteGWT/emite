@@ -73,7 +73,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 		rosterGroupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
 	}
 
-	public HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler) {
+	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedHandler handler) {
 		return RosterItemChangedEvent.bind(rosterGroupEventBus, handler);
 	}
 

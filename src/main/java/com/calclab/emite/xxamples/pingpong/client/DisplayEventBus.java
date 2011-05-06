@@ -32,7 +32,7 @@ public class DisplayEventBus extends HandlerManager implements EmiteEventBus {
 	private final PingPongDisplay display;
 	private final String eventBusName;
 
-	public DisplayEventBus(String eventBusName, PingPongDisplay display) {
+	public DisplayEventBus(final String eventBusName, final PingPongDisplay display) {
 		super(null);
 		this.eventBusName = eventBusName;
 		this.display = display;

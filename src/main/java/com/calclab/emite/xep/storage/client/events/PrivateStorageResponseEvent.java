@@ -29,13 +29,13 @@ public class PrivateStorageResponseEvent extends GwtEvent<PrivateStorageResponse
 
 	private static final Type<PrivateStorageResponseHandler> TYPE = new Type<PrivateStorageResponseHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, PrivateStorageResponseHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final PrivateStorageResponseHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
 	private final IQ response;
 
-	public PrivateStorageResponseEvent(IQ response) {
+	public PrivateStorageResponseEvent(final IQ response) {
 		this.response = response;
 	}
 
@@ -45,7 +45,7 @@ public class PrivateStorageResponseEvent extends GwtEvent<PrivateStorageResponse
 	}
 
 	@Override
-	protected void dispatch(PrivateStorageResponseHandler handler) {
+	protected void dispatch(final PrivateStorageResponseHandler handler) {
 		handler.onStorageResponse(this);
 	}
 

@@ -54,7 +54,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster {
+public class XmppRosterLogic extends XmppRosterGroupsLogic {
 
 	private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
@@ -66,7 +66,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
-			public void onStateChanged(StateChangedEvent event) {
+			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(SessionStates.loggedIn)) {
 					reRequestRoster();
 				}
@@ -75,8 +75,8 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 		session.addPresenceReceivedHandler(new PresenceHandler() {
 			@Override
-			public void onPresence(PresenceEvent event) {
-				Presence presence = event.getPresence();
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
 				final RosterItem item = getItemByJID(presence.getFrom());
 				if (item != null) {
 					setPresence(presence, item);
@@ -103,20 +103,20 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 					}
 				}
 				final Show showReceived = presence.getShow();
-				final Show newShow = (showReceived == null ? Show.notSpecified : showReceived);
+				final Show newShow = showReceived == null ? Show.notSpecified : showReceived;
 
 				if (!newShow.equals(item.getShow())) {
 					hasChanged = true;
 					item.setShow(newShow);
 				}
 
-				if ((item.getStatus() == null && presence.getStatus() != null) || (item.getStatus() != null && !item.getStatus().equals(presence.getStatus()))) {
+				if (item.getStatus() == null && presence.getStatus() != null || item.getStatus() != null && !item.getStatus().equals(presence.getStatus())) {
 					hasChanged = true;
 					item.setStatus(presence.getStatus());
 				}
 
 				if (hasChanged) {
-					RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
+					final RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
 					eventBus.fireEvent(event);
 					fireItemChangedInGroups(event);
 				}
@@ -126,8 +126,8 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 		session.addIQReceivedHandler(new IQHandler() {
 			@Override
-			public void onPacket(IQEvent event) {
-				IQ iq = event.getIQ();
+			public void onPacket(final IQEvent event) {
+				final IQ iq = event.getIQ();
 				if (iq.isType(IQ.Type.set)) {
 					final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
 					if (query != NoPacket.INSTANCE) {
@@ -142,14 +142,14 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	}
 
 	@Override
-	public HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler) {
+	public HandlerRegistration addRosterGroupChangedHandler(final RosterGroupChangedHandler handler) {
 		return RosterGroupChangedEvent.bind(eventBus, handler);
 	}
 
 	@Override
-	public String getJidName(XmppURI jid) {
-		RosterItem itemByJID = this.getItemByJID(jid);
-		return ((itemByJID != null) && (itemByJID.getName() != null)) ? itemByJID.getName() : jid.getShortName();
+	public String getJidName(final XmppURI jid) {
+		final RosterItem itemByJID = getItemByJID(jid);
+		return itemByJID != null && itemByJID.getName() != null ? itemByJID.getName() : jid.getShortName();
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	}
 
 	@Override
-	public void requestRemoveItem(XmppURI jid) {
+	public void requestRemoveItem(final XmppURI jid) {
 		final RosterItem item = getItemByJID(jid.getJID());
 		if (item != null) {
 			final IQ iq = new IQ(Type.set);
@@ -169,7 +169,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 			session.sendIQ("roster", iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					if (!IQ.isSuccess(iq)) {
 						eventBus.fireEvent(new RequestFailedEvent("rosterItemRemove", "remove roster item failed", iq));
 					}
@@ -186,7 +186,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 			session.sendIQ("roster", iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					if (!IQ.isSuccess(iq)) {
 						eventBus.fireEvent(new RequestFailedEvent("rosterItemUpdate", "update roster item failed", iq));
 					}
@@ -205,7 +205,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 		session.sendIQ("roster", iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				if (!IQ.isSuccess(iq)) {
 					eventBus.fireEvent(new RequestFailedEvent("rosterItemsUpdate", "update several roster items failed", iq));
 				}
@@ -216,10 +216,10 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 	@Override
 	public void reRequestRoster() {
 		if (session.getCurrentUserURI() != null) {
-			IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
+			final IQ iq = new IQ(IQ.Type.get, null).WithQuery("jabber:iq:roster");
 			session.sendIQ("roster", iq, new IQResponseHandler() {
 				@Override
-				public void onIQ(IQ iq) {
+				public void onIQ(final IQ iq) {
 					if (IQ.isSuccess(iq)) {
 						clearGroupAll();
 						final List<? extends IPacket> children = iq.getFirstChild("query").getChildren();
@@ -250,7 +250,7 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 
 		session.sendIQ("roster", iq, new IQResponseHandler() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQ(final IQ iq) {
 				if (!IQ.isSuccess(iq)) {
 					eventBus.fireEvent(new RequestFailedEvent("rosterItem", "roster item can't be updated", iq));
 				}
@@ -295,8 +295,8 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 		item.setSubscriptionState(newItem.getSubscriptionState());
 		item.setName(newItem.getName());
 
-		List<String> groups = item.getGroups();
-		List<String> newGroups = newItem.getGroups();
+		final List<String> groups = item.getGroups();
+		final List<String> newGroups = newItem.getGroups();
 
 		// Go through and remove any old groups which aren't on the new item
 		for (final String group : groups) {
@@ -326,10 +326,10 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic implements XmppRoster
 		}
 
 		// And remove the item from any groups it may still be in
-		ArrayList<String> groupsToRemove = new ArrayList<String>();
+		final ArrayList<String> groupsToRemove = new ArrayList<String>();
 
-		for (RosterGroup rosterGroup : this.getRosterGroups()) {
-			if ((rosterGroup.getName() != null) && !newGroups.contains(rosterGroup.getName()) && rosterGroup.hasItem(item.getJID())) {
+		for (final RosterGroup rosterGroup : getRosterGroups()) {
+			if (rosterGroup.getName() != null && !newGroups.contains(rosterGroup.getName()) && rosterGroup.hasItem(item.getJID())) {
 				rosterGroup.remove(item.getJID());
 
 				if (rosterGroup.getSize() == 0) {

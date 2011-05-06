@@ -113,13 +113,12 @@ public class PageAssist {
 			}
 		}
 
-		if (host != null && httpBase != null) {
-			GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
-			connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
-			return true;
-		} else {
+		if (host == null || httpBase == null)
 			return false;
-		}
+
+		GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
+		connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
+		return true;
 	}
 
 	/**
@@ -185,11 +184,10 @@ public class PageAssist {
 	 */
 	public static final boolean isMetaTrue(final String id, final boolean defaultValue) {
 		final String metaValue = getMeta(id);
-		if ("true".equals(metaValue)) {
+		if ("true".equals(metaValue))
 			return true;
-		} else if ("false".equals(metaValue)) {
+		else if ("false".equals(metaValue))
 			return false;
-		}
 
 		return defaultValue;
 	}
@@ -215,9 +213,8 @@ public class PageAssist {
 		} else if (userJID != null && "anonymous".equals(userJID.toLowerCase())) {
 			session.login(Credentials.createAnonymous());
 			return true;
-		} else {
+		} else
 			return false;
-		}
 	}
 
 	/**
@@ -231,22 +228,22 @@ public class PageAssist {
 	public static final boolean pauseSession(final XmppSession session) {
 		GWT.log("Pausing connection...", null);
 		final StreamSettings stream = session.pause();
-		if (stream != null) {
-			final String user = session.getCurrentUserURI().toString();
-			final SerializableMap map = new SerializableMap();
-			map.put("rid", "" + stream.rid);
-			map.put("sid", stream.sid);
-			map.put("wait", stream.wait);
-			map.put("inactivity", stream.getInactivityString());
-			map.put("maxPause", stream.getMaxPauseString());
-			map.put("user", user);
-			final String serialized = map.serialize();
-			Cookies.setCookie(PAUSE_COOKIE, serialized);
-			GWT.log(("Pausing session: " + serialized), null);
-			return true;
-		} else {
+		if (stream == null)
 			return false;
-		}
+
+		final String user = session.getCurrentUserURI().toString();
+		final SerializableMap map = new SerializableMap();
+		map.put("rid", "" + stream.rid);
+		map.put("sid", stream.sid);
+		map.put("wait", stream.wait);
+		map.put("inactivity", stream.getInactivityString());
+		map.put("maxPause", stream.getMaxPauseString());
+		map.put("user", user);
+
+		final String serialized = map.serialize();
+		Cookies.setCookie(PAUSE_COOKIE, serialized);
+		GWT.log(("Pausing session: " + serialized), null);
+		return true;
 	}
 
 	/**
@@ -260,22 +257,21 @@ public class PageAssist {
 	 */
 	public static final boolean resumeSession(final XmppSession session) {
 		final String pause = Cookies.getCookie(PAUSE_COOKIE);
-		if (pause != null) {
-			GWT.log(("Resume session: " + pause), null);
-			Cookies.removeCookie(PAUSE_COOKIE);
-			final SerializableMap map = SerializableMap.restore(pause);
-			final StreamSettings stream = new StreamSettings();
-			stream.rid = Integer.parseInt(map.get("rid"));
-			stream.sid = map.get("sid");
-			stream.wait = map.get("wait");
-			stream.setInactivity(map.get("inactivity"));
-			stream.setMaxPause(map.get("maxPause"));
-			final XmppURI user = uri(map.get("user"));
-			session.resume(user, stream);
-			return true;
-		} else {
+		if (pause == null)
 			return false;
-		}
+
+		GWT.log(("Resume session: " + pause), null);
+		Cookies.removeCookie(PAUSE_COOKIE);
+		final SerializableMap map = SerializableMap.restore(pause);
+		final StreamSettings stream = new StreamSettings();
+		stream.rid = Integer.parseInt(map.get("rid"));
+		stream.sid = map.get("sid");
+		stream.wait = map.get("wait");
+		stream.setInactivity(map.get("inactivity"));
+		stream.setMaxPause(map.get("maxPause"));
+		final XmppURI user = uri(map.get("user"));
+		session.resume(user, stream);
+		return true;
 	}
 
 }

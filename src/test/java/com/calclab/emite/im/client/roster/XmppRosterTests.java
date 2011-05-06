@@ -31,7 +31,7 @@ public class XmppRosterTests {
 	@Test
 	public void shouldChangeItemPresenceAndFireEvent() {
 		setRosterItems(session, newItem("other@domain"));
-		RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+		final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
 		roster.addRosterItemChangedHandler(handler);
 		session.receives("<presence from='other@domain'>" + "<show>dnd</show><status>message</status><priority>3</priority></presence>");
 		final RosterItem item = roster.getItemByJID(uri("other@domain"));
@@ -52,11 +52,11 @@ public class XmppRosterTests {
 
 	@Test
 	public void shouldFireChangedItemEventsInGroups() {
-		RosterItem item = newItem("other@domain");
+		final RosterItem item = newItem("other@domain");
 		item.addToGroup("simple");
 		setRosterItems(session, item);
-		RosterGroup group = roster.getRosterGroup("simple");
-		RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
+		final RosterGroup group = roster.getRosterGroup("simple");
+		final RosterItemChangedTestHandler handler = new RosterItemChangedTestHandler();
 		group.addRosterItemChangedHandler(handler);
 		assertNotNull(group);
 		session.receives("<presence from='other@domain'>" + "<show>dnd</show><status>message</status><priority>3</priority></presence>");
@@ -69,8 +69,8 @@ public class XmppRosterTests {
 		assertEquals(2, roster.getItems().size());
 	}
 
-	private RosterItem newItem(String jid) {
-		XmppURI uri = XmppURI.uri(jid);
+	private RosterItem newItem(final String jid) {
+		final XmppURI uri = XmppURI.uri(jid);
 		return new RosterItem(uri, SubscriptionState.both, uri.getNode(), null);
 	}
 

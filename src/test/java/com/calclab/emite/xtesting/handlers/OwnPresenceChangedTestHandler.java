@@ -11,7 +11,7 @@ public class OwnPresenceChangedTestHandler extends TestHandler<OwnPresenceChange
 	}
 
 	@Override
-	public void onOwnPresenceChanged(OwnPresenceChangedEvent event) {
+	public void onOwnPresenceChanged(final OwnPresenceChangedEvent event) {
 		addEvent(event);
 	}
 }

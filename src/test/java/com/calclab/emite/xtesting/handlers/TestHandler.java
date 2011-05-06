@@ -13,12 +13,12 @@ public abstract class TestHandler<T> {
 		return events.size();
 	}
 
-	public T getEvent(int index) {
+	public T getEvent(final int index) {
 		return events.get(index);
 	}
 
 	public T getLastEvent() {
-		int size = getCalledTimes();
+		final int size = getCalledTimes();
 		return size > 0 ? events.get(size - 1) : null;
 	}
 

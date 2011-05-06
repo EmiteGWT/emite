@@ -29,7 +29,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 
 	private static final Type<RoomInvitationSentHandler> TYPE = new Type<RoomInvitationSentHandler>();
 
-	public static HandlerRegistration bind(EmiteEventBus eventBus, RoomInvitationSentHandler handler) {
+	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RoomInvitationSentHandler handler) {
 		return eventBus.addHandler(TYPE, handler);
 	}
 
@@ -37,7 +37,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 
 	private final String reasonText;
 
-	public RoomInvitationSentEvent(XmppURI userJid, String reasonText) {
+	public RoomInvitationSentEvent(final XmppURI userJid, final String reasonText) {
 		this.userJid = userJid;
 		this.reasonText = reasonText;
 	}
@@ -56,7 +56,7 @@ public class RoomInvitationSentEvent extends GwtEvent<RoomInvitationSentHandler>
 	}
 
 	@Override
-	protected void dispatch(RoomInvitationSentHandler handler) {
+	protected void dispatch(final RoomInvitationSentHandler handler) {
 		handler.onRoomInvitationSent(this);
 	}
 

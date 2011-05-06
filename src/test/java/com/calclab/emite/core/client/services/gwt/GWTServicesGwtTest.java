@@ -18,7 +18,7 @@ public class GWTServicesGwtTest extends GWTTestCase {
 	public void testToXML() {
 		final String textXml = "<test attr=\"&quot;&lt;&amp;&gt;&#39;\"><child /><childWithText>&quot;&lt;&amp;&gt;&#39;</childWithText></test>";
 
-		IPacket result = GWTXMLService.toXML(textXml);
+		final IPacket result = GWTXMLService.toXML(textXml);
 
 		assertEquals("Root has wrong number of attributes", 1, result.getAttributes().size());
 		assertEquals("Attribute not correct", "\"<&>'", result.getAttribute("attr"));
