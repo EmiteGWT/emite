@@ -99,7 +99,7 @@ public class HttpConnector {
 		final HttpPost post = new HttpPost(httpBase);
 
 		try {
-		    post.setEntity(new StringEntity(xml, "text/xml", "utf-8"));
+		    post.setEntity(new StringEntity(xml, "utf-8"));
 		    System.out.println("SENDING: " + xml);
 		    HttpResponse response = client.execute(post);
 		    responseString = EntityUtils.toString(response.getEntity());
