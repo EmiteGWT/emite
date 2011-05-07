@@ -4,19 +4,19 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calclab</groupId>
-	<artifactId>emite</artifactId>
+	<artifactId>emite-example-echo</artifactId>
 	<version>0.7-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>Emite</name>
-	<description>A pure Google Web Toolkit XMPP library</description>
+	<packaging>war</packaging>
+	<name>Emite Example - XMPP Echo</name>
+	<description>XMPP Echo example for Emite</description>
 	<url>http://emitegwt.info</url>
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 3</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-        </license>
-    </licenses>
-    
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<!-- Convenience property to set the GWT version -->
 		<gwtVersion>2.2.0</gwtVersion>
@@ -24,16 +24,17 @@
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<gwt.compiler.optimizationLevel>9</gwt.compiler.optimizationLevel>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>tigase</id>
-			<name>Tigase Repository</name>
-			<url>http://maven.tigase.org</url>
-		</repository>
-	</repositories>
 	<dependencies>
+		<dependency>
+			<groupId>com.calclab</groupId>
+			<artifactId>emite</artifactId>
+			<version>0.7-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -52,43 +53,11 @@
 			<version>1.5.0</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-dev</artifactId>
-			<version>${gwtVersion}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>1.8.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>tigase</groupId>
-			<artifactId>tigase-xmltools</artifactId>
-			<version>3.3.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.1.1</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<!-- Generate compiled stuff in the folder used for developing mode -->
-		<!-- <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory> -->
+		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
 		<plugins>
 			<!-- GWT Maven Plugin -->
@@ -105,6 +74,27 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<hostedWebapp>${webappDirectory}</hostedWebapp>
+				</configuration>
+			</plugin>
+
+			<!-- Copy static web files before executing gwt:run -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<webappDirectory>${webappDirectory}</webappDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
