@@ -37,7 +37,7 @@ public interface RoomManager extends ChatManager {
 	 * @param invitation
 	 *            the invitation event to be accepted
 	 */
-	public void acceptRoomInvitation(RoomInvitation invitation);
+	public Room acceptRoomInvitation(RoomInvitation invitation);
 
 	/**
 	 * Add a handler to know when a room invitation has arrived
