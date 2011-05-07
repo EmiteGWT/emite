@@ -152,11 +152,6 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	}
 
 	@Override
-	public boolean isLoggedIn() {
-		return userUri != null;
-	}
-
-	@Override
 	public boolean isReady() {
 		return userUri != null;
 	}

@@ -37,14 +37,6 @@ public class IQ extends BasicStanza {
 		}
 	}
 
-	/**
-	 * Use isType
-	 */
-	@Deprecated
-	public static boolean isSet(final IPacket iq) {
-		return iq.hasAttribute(TYPE, "set");
-	}
-
 	public static boolean isSuccess(final IPacket iq) {
 		return iq.hasAttribute(TYPE, "result");
 	}

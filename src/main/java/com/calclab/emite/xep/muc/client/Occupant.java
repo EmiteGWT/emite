@@ -104,16 +104,6 @@ public class Occupant implements HasJID {
 	}
 
 	/**
-	 * Use getOccupantUri
-	 * 
-	 * @see getOccupantUri
-	 */
-	@Deprecated
-	public XmppURI getURI() {
-		return occupantUri;
-	}
-
-	/**
 	 * Gets the user uri associated to this occupant
 	 * 
 	 * @return

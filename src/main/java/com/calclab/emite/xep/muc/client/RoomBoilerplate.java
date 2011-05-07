@@ -82,12 +82,6 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	}
 
 	@Override
-	@Deprecated
-	public Occupant getOccupantByURI(final XmppURI uri) {
-		return getOccupantByOccupantUri(uri);
-	}
-
-	@Override
 	public Occupant getOccupantByUserUri(final XmppURI userUri) {
 		return occupantsByUserUri.get(userUri.getJID());
 	}
@@ -100,15 +94,6 @@ abstract class RoomBoilerplate extends AbstractChat implements Room {
 	@Override
 	public int getOccupantsCount() {
 		return occupantsByOccupantUri.size();
-	}
-
-	/**
-	 * Use RoomSubject.requestSubjectChange
-	 */
-	@Override
-	@Deprecated
-	public void setSubject(final String newSubject) {
-		RoomSubject.requestSubjectChange(this, newSubject);
 	}
 
 	protected void addOccupant(final Occupant occupant) {

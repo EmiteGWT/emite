@@ -82,12 +82,6 @@ public interface Room extends Chat {
 	public abstract Occupant getOccupantByOccupantUri(XmppURI occupantUri);
 
 	/**
-	 * Use getOccupantByOccupantUri
-	 */
-	@Deprecated
-	public abstract Occupant getOccupantByURI(XmppURI uri);
-
-	/**
 	 * Find an occupant with the given user jid
 	 * 
 	 * @param userUri
@@ -147,14 +141,5 @@ public interface Room extends Chat {
 	 * @param show
 	 */
 	public void setStatus(final String statusMessage, final Show show);
-
-	/**
-	 * Use RoomSubject.requestSubjectChange
-	 * 
-	 * @param newSubject
-	 * @see RoomSubject
-	 */
-	@Deprecated
-	public void setSubject(String newSubject);
 
 }

@@ -90,14 +90,4 @@ public abstract class AbstractChat extends ChatBoilerplate {
 		}
 	}
 
-	/**
-	 * Use setChatState
-	 * 
-	 * @param state
-	 */
-	@Deprecated
-	protected void setState(final State state) {
-		setChatState(state.toString());
-	}
-
 }

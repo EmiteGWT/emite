@@ -96,22 +96,6 @@ public class Message extends BasicStanza {
 		setBody(body);
 	}
 
-	/**
-	 * Inconsistent param order. Use other constructor
-	 */
-	@Deprecated
-	public Message(final XmppURI fromUri, final XmppURI toURI, final String body) {
-		this(body, toURI, fromUri, Type.chat);
-	}
-
-	/**
-	 * Inconsistent param order. Use other constructor
-	 */
-	@Deprecated
-	public Message(final XmppURI fromUri, final XmppURI toURI, final String message, final Type type) {
-		this(message, toURI, fromUri, type);
-	}
-
 	Message() {
 		this((String) null, null, null, null);
 	}

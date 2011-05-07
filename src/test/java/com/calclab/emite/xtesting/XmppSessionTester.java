@@ -80,11 +80,6 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	}
 
 	@Override
-	public boolean isLoggedIn() {
-		return isReady();
-	}
-
-	@Override
 	public boolean isReady() {
 		return currentUser != null;
 	}

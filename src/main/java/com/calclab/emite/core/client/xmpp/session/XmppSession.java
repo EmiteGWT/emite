@@ -101,14 +101,6 @@ public interface XmppSession {
 	public String getSessionState();
 
 	/**
-	 * Answer if is logged in or not. Use isReady instead
-	 * 
-	 * @return true if a user is logged in
-	 */
-	@Deprecated
-	public boolean isLoggedIn();
-
-	/**
 	 * Check if the session is ready to send stanzas
 	 */
 	public boolean isReady();

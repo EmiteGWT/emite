@@ -51,6 +51,6 @@ public abstract class AbstractChatTest {
 
 	@Test
 	public void shouldSetNullData() {
-		getChat().setData(null, null);
+		getChat().getProperties().setData(null, null);
 	}
 }

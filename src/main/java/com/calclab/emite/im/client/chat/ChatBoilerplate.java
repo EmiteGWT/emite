@@ -92,12 +92,6 @@ public abstract class ChatBoilerplate implements Chat {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T getData(final Class<T> type) {
-		return (T) properties.getData(type.toString());
-	}
-
-	@Override
 	public ChatProperties getProperties() {
 		return properties;
 	}
@@ -105,20 +99,6 @@ public abstract class ChatBoilerplate implements Chat {
 	@Override
 	public XmppSession getSession() {
 		return session;
-	}
-
-	/**
-	 * Use getChatState
-	 */
-	@Override
-	@Deprecated
-	public State getState() {
-		final String state = properties.getState();
-		try {
-			return State.valueOf(state);
-		} catch (final Exception e) {
-			return State.unknown;
-		}
 	}
 
 	// FIXME: rename to getUri
@@ -130,14 +110,6 @@ public abstract class ChatBoilerplate implements Chat {
 	@Override
 	public boolean isInitiatedByMe() {
 		return session.getCurrentUserURI() != null && session.getCurrentUserURI().equals(properties.getInitiatorUri());
-	}
-
-	@Override
-	@Deprecated
-	@SuppressWarnings("unchecked")
-	public <T> T setData(final Class<T> type, final T value) {
-		final String key = type != null ? type.toString() : null;
-		return (T) properties.setData(key, value);
 	}
 
 	protected String getPreviousChatState() {

@@ -37,21 +37,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see PairChat, Room
  */
 public interface Chat {
-	/**
-	 * Possible conversation states. Enum can't be extended so, this won't be
-	 * used anymore
-	 * 
-	 * Use ChatStates
-	 */
-	@Deprecated
-	public static enum State {
-		ready, locked,
-		/**
-		 * Because the new extensible chat state system (using strings instead
-		 * of enums) this is used when a unknown (not in this enum) state is set
-		 */
-		unknown
-	}
 
 	/**
 	 * Add a handler to know when a message is received. It allows the listener
@@ -132,12 +117,6 @@ public interface Chat {
 	 */
 	public String getChatState();
 
-	/**
-	 * USE getProperties.getData
-	 */
-	@Deprecated
-	public <T> T getData(Class<T> type);
-
 	public String getID();
 
 	/**
@@ -153,14 +132,6 @@ public interface Chat {
 	 * @return
 	 */
 	public XmppSession getSession();
-
-	/**
-	 * Use getChatState
-	 * 
-	 * @return
-	 */
-	@Deprecated
-	public State getState();
 
 	/**
 	 * Returns this conversation URI. If this conversation is a normal chat, the
@@ -209,18 +180,4 @@ public interface Chat {
 	 */
 	public void send(Message message);
 
-	/**
-	 * Associate a object to this conversation.
-	 * 
-	 * @param <T>
-	 *            the class of the object
-	 * @param type
-	 *            the class object itself
-	 * @param data
-	 *            the object you want to associate
-	 * @return the object associated
-	 * @see getData
-	 */
-	@Deprecated
-	public <T> T setData(Class<T> type, T data);
 }
