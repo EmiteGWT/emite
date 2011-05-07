@@ -21,6 +21,8 @@
 package com.calclab.emite.xep.dataforms.client;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -64,9 +66,9 @@ public class FieldTest {
 	public void testRequired() {
 		final Field field = new Field(FieldType.FIXED);
 		field.setRequired(true);
-		assertEquals(true, field.isRequired());
+		assertTrue(field.isRequired());
 		field.setRequired(false);
-		assertEquals(false, field.isRequired());
+		assertFalse(field.isRequired());
 	}
 
 	private Field parse(final String stanza) {

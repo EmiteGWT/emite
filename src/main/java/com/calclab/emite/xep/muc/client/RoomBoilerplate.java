@@ -37,7 +37,6 @@ import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentHandler;
-import com.calclab.emite.xep.muc.client.subject.RoomSubject;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 abstract class RoomBoilerplate extends AbstractChat implements Room {

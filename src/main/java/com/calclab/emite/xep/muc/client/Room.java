@@ -30,7 +30,6 @@ import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSendHandler;
 import com.calclab.emite.xep.muc.client.events.OccupantChangedHandler;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationSentHandler;
-import com.calclab.emite.xep.muc.client.subject.RoomSubject;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**

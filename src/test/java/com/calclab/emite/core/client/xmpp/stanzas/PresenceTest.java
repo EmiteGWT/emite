@@ -22,7 +22,6 @@ package com.calclab.emite.core.client.xmpp.stanzas;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
@@ -35,21 +34,21 @@ public class PresenceTest {
 	@Test
 	public void shouldGetPriority() {
 		Presence presence = new Presence();
-		assertSame(0, presence.getPriority());
+		assertEquals(0, presence.getPriority());
 		presence = new Presence(new Packet("presence").With(new Packet("priority").WithText("5")));
-		assertSame(5, presence.getPriority());
+		assertEquals(5, presence.getPriority());
 		presence = new Presence(new Packet("presence").With(new Packet("priority").WithText("not valid")));
-		assertSame(0, presence.getPriority());
+		assertEquals(0, presence.getPriority());
 	}
 
 	@Test
 	public void shouldGetShow() {
 		Presence presence = new Presence();
-		assertSame(Show.notSpecified, presence.getShow());
+		assertEquals(Show.notSpecified, presence.getShow());
 		presence = new Presence(new Packet("presence").With(new Packet("show").WithText(Show.chat.toString())));
-		assertSame(Show.chat, presence.getShow());
+		assertEquals(Show.chat, presence.getShow());
 		presence = new Presence(new Packet("presence").With(new Packet("show").WithText("not valid show")));
-		assertSame(Show.unknown, presence.getShow());
+		assertEquals(Show.unknown, presence.getShow());
 	}
 
 	@Test
@@ -92,9 +91,9 @@ public class PresenceTest {
 		for (final Show value : Show.values()) {
 			presence.setShow(value);
 			if (value == Show.unknown) {
-				assertSame(Show.notSpecified, presence.getShow());
+				assertEquals(Show.notSpecified, presence.getShow());
 			} else {
-				assertSame(value, presence.getShow());
+				assertEquals(value, presence.getShow());
 			}
 		}
 	}
@@ -124,7 +123,7 @@ public class PresenceTest {
 		final Presence presence = new Presence();
 		for (final Type type : Type.values()) {
 			presence.setType(type.toString());
-			assertSame(type, presence.getType());
+			assertEquals(type, presence.getType());
 		}
 	}
 }

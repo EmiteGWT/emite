@@ -22,6 +22,7 @@ package com.calclab.emite.im.client.roster;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -112,7 +113,7 @@ public class RosterTests {
 		session.receives("<presence from='friend@domain' />");
 		final RosterItem item = roster.getItemByJID(uri("friend@domain"));
 		assertEquals(item, handler.getLastRosterItem());
-		assertEquals(true, item.isAvailable());
+		assertTrue(item.isAvailable());
 	}
 
 	@Test
@@ -136,7 +137,7 @@ public class RosterTests {
 		session.receives("<presence type='unavailable' from='friend@domain' />");
 		final RosterItem item = roster.getItemByJID(uri("friend@domain"));
 		assertEquals(item, handler.getLastRosterItem());
-		assertEquals(false, item.isAvailable());
+		assertFalse(item.isAvailable());
 
 	}
 
