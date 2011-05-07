@@ -138,6 +138,8 @@ public interface Room extends Chat {
 	// affiliation, final String role,
 	// final Show show, final String statusMessage);
 
+	public void sendPrivateMessage(final Message message, final String nick);
+
 	/**
 	 * Update my status to other occupants.
 	 * 
