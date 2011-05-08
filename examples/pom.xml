@@ -4,11 +4,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calclab</groupId>
-	<artifactId>emite-example-session</artifactId>
+	<artifactId>emite-examples</artifactId>
 	<version>0.7-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Emite Example - XMPP Session</name>
-	<description>XMPP Session example for Emite</description>
+	<name>Emite Examples</name>
+	<description>Example projects for Emite</description>
 	<url>http://emitegwt.info</url>
 	<licenses>
 		<license>
@@ -70,7 +70,6 @@
 						<goals>
 							<goal>resources</goal>
 							<goal>compile</goal>
-							<goal>test</goal>
 						</goals>
 					</execution>
 				</executions>
