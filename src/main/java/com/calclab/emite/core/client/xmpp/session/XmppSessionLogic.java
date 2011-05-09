@@ -91,7 +91,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 		    } else {
 			iqManager.handle(stanza);
 		    }
-		} else if (credentials != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
+		} else if (credentials != null && ("stream:features".equals(name)||"features".equals(name)) && stanza.hasChild("mechanisms")) {
 		    setSessionState(SessionStates.connecting);
 		    saslManager.sendAuthorizationRequest(credentials);
 		    credentials = null;
