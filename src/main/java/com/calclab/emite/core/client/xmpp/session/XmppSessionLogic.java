@@ -257,4 +257,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	GWT.log("SESSION LOGGED IN");
 	setSessionState(SessionStates.loggedIn);
     }
+    
+    public XmppConnection getConnection()
+    {
+       return connection;
+    }
 }
