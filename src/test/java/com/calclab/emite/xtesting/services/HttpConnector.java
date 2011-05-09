@@ -103,6 +103,7 @@ public class HttpConnector {
 		    System.out.println("SENDING: " + xml);
 		    HttpResponse response = client.execute(post);
 		    responseString = EntityUtils.toString(response.getEntity());
+		    status = response.getStatusLine().getStatusCode();
 		} catch (final Exception e) {
 		    callback.onError(xml, e);
 		    e.printStackTrace();
