@@ -20,13 +20,14 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationEvent;
 import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationHandler;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -34,6 +35,9 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
 public class ChatStateManager {
+	
+	private static final Logger logger = Logger.getLogger(ChatStateManager.class.getName());
+	
 	public static enum ChatState {
 		active, composing, pause, inactive, gone
 	}
@@ -43,7 +47,6 @@ public class ChatStateManager {
 	}
 
 	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
-
 	public static final String KEY = "ChatStateManager";
 
 	private ChatState ownState;
@@ -95,7 +98,7 @@ public class ChatStateManager {
 		if (negotiationStatus.equals(NegotiationStatus.accepted)) {
 			if (ownState == null || !ownState.equals(chatState)) {
 				ownState = chatState;
-				GWT.log("Setting own status to: " + chatState.toString(), null);
+				logger.info("Setting own status to: " + chatState.toString());
 				sendStateMessage(chatState);
 			}
 		}
@@ -115,7 +118,7 @@ public class ChatStateManager {
 				} else {
 					negotiationStatus = NegotiationStatus.accepted;
 				}
-				GWT.log("Receiver other chat status: " + typeSt, null);
+				logger.info("Receiver other chat status: " + typeSt);
 				chat.getChatEventBus().fireEvent(new ChatStateNotificationEvent(chatState));
 			}
 		}

@@ -22,6 +22,8 @@ package com.calclab.emite.example.session.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -45,6 +47,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class ExampleXmppSession implements EntryPoint {
 
+	private static final Logger logger = Logger.getLogger(ExampleXmppSession.class.getName());
+	
 	private VerticalPanel panel;
 
 	@Override
@@ -60,11 +64,11 @@ public class ExampleXmppSession implements EntryPoint {
 				 * We get the Session object using the ginjector. This is NOT
 				 * the recommended way: it's better to inject into constructor
 				 */
-				GWT.log("Create a xmpp session");
+				logger.info("Create a xmpp session");
 				final ExampleXmppSessionGinjector ginjector = GWT.create(ExampleXmppSessionGinjector.class);
 				final XmppSession session = ginjector.getXmppSession();
 
-				GWT.log("Add event handlers");
+				logger.info("Add event handlers");
 				/*
 				 * We track session state changes. We can only send messages
 				 * when the state == loggedIn.

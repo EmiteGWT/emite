@@ -21,8 +21,8 @@
 package com.calclab.emite.core.client.xmpp.datetime;
 
 import java.util.Date;
+import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.i18n.client.TimeZone;
@@ -35,6 +35,9 @@ import com.google.gwt.i18n.client.TimeZone;
  * http://xmpp.org/extensions/xep-0082.html
  */
 public class XmppDateTime {
+	
+	private static final Logger logger = Logger.getLogger(XmppDateTime.class.getName());
+	
 	/*
 	 * CCYY-MM-DDThh:mm:ss[.sss]TZD
 	 */
@@ -53,8 +56,7 @@ public class XmppDateTime {
 
 	public static Date parseLegacyFormatXMPPDateTime(final String dateTime) {
 		final Date retValue = deprecatedDtf.parse(dateTime);
-		// The server always sends a GMT date, so we compensate the
-		// timezone offset.
+		// The server always sends a GMT date, so we compensate the timezone offset.
 		retValue.setTime(retValue.getTime() - retValue.getTimezoneOffset() * 60 * 1000);
 		return retValue;
 	}
@@ -67,7 +69,7 @@ public class XmppDateTime {
 		try {
 			return dtf.parse(date);
 		} catch (final IllegalArgumentException e) {
-			GWT.log("Cannot parse date-time '" + date + "' with normal pattern");
+			logger.warning("Cannot parse date-time '" + date + "' with normal pattern");
 			return noMillisDtf.parse(date);
 		}
 	}

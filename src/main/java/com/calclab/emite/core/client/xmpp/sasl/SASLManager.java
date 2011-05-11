@@ -27,7 +27,6 @@ import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -43,7 +42,6 @@ public class SASLManager {
 
 	@Inject
 	public SASLManager(final XmppConnection connection, final DecoderRegistry decoders) {
-		GWT.log("Creating SASLManager");
 		this.connection = connection;
 		eventBus = connection.getEventBus();
 		this.decoders = decoders;

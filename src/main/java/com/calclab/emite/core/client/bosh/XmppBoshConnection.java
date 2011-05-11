@@ -21,6 +21,7 @@
 package com.calclab.emite.core.client.bosh;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
@@ -33,7 +34,6 @@ import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -44,6 +44,9 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class XmppBoshConnection extends XmppConnectionBoilerPlate {
+	
+	private static final Logger logger = Logger.getLogger(XmppBoshConnection.class.getName());
+	
 	private int activeConnections;
 	private final Services services;
 	private final ConnectorCallback listener;
@@ -53,7 +56,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	@Inject
 	public XmppBoshConnection(final EmiteEventBus eventBus, final Services services) {
 		super(eventBus);
-		GWT.log("Creating XmppBoshConnection");
 		this.services = services;
 
 		listener = new ConnectorCallback() {
@@ -62,7 +64,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 			public void onError(final String request, final Throwable throwable) {
 				if (isActive()) {
 					final int e = incrementErrors();
-					GWT.log("Connection error n°" + e, throwable);
+					logger.severe("Connection error #" + e + ": " + throwable.getMessage());
 					if (e > retryControl.maxRetries) {
 						fireError("Connection error: " + throwable.toString());
 						disconnect();
@@ -72,7 +74,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 						services.schedule(scedTime, new ScheduledAction() {
 							@Override
 							public void run() {
-								GWT.log("Error retry: " + e);
+								logger.info("Error retry: " + e);
 								send(request);
 							}
 						});
@@ -126,7 +128,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 
 	@Override
 	public void disconnect() {
-		GWT.log("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
+		logger.finer("BoshConnection - Disconnected called - Clearing current body and send a priority 'terminate' stanza.");
 		// Clearing all queued stanzas
 		setCurrentBody(null);
 		// Create a new terminate stanza and force the send
@@ -318,7 +320,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 			setCurrentBody(null);
 			send(request);
 		} else {
-			GWT.log("Send body simply queued", null);
+			logger.finer("Send body simply queued");
 		}
 	}
 

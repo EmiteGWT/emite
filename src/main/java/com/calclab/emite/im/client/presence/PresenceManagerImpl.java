@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.presence;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
@@ -33,7 +35,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -43,13 +44,15 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class PresenceManagerImpl implements PresenceManager {
+	
+	private static final Logger logger = Logger.getLogger(PresenceManagerImpl.class.getName());
+	
 	private Presence ownPresence;
 	static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
 	private final XmppSession session;
 
 	@Inject
 	public PresenceManagerImpl(final XmppSession session, final SessionReady sessionReady) {
-		GWT.log("Creating PresenceManagerImpl");
 		sessionReady.setEnabled(false);
 		this.session = session;
 		setOwnPresence(INITIAL_PRESENCE);
@@ -60,7 +63,7 @@ public class PresenceManagerImpl implements PresenceManager {
 			@Override
 			public void onStateChanged(final StateChangedEvent event) {
 				if (event.is(SessionStates.rosterReady)) {
-					GWT.log("Sending initial presence", null);
+					logger.fine("Sending initial presence");
 					final Presence ownPresence = getOwnPresence();
 					final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session.getCurrentUserURI());
 					session.send(initialPresence);

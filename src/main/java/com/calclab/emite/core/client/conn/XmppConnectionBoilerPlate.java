@@ -20,12 +20,13 @@
 
 package com.calclab.emite.core.client.conn;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
@@ -35,6 +36,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
  */
 public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 
+	private static final Logger logger = Logger.getLogger(XmppConnectionBoilerPlate.class.getName());
+	
 	protected final EmiteEventBus eventBus;
 	private int errors;
 	private boolean active;
@@ -95,7 +98,7 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 
 	@Override
 	public void setSettings(final ConnectionSettings settings) {
-		GWT.log("Setting connection settings.");
+		logger.finer("Setting connection settings.");
 		connectionSettings = settings;
 	}
 

@@ -26,7 +26,6 @@ import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -42,8 +41,6 @@ public class IMSessionManager {
 
 	@Inject
 	public IMSessionManager(final XmppConnection connection) {
-		GWT.log("Creating IMSessionManager");
-
 		this.connection = connection;
 
 		connection.addStanzaReceivedHandler(new StanzaHandler() {
@@ -55,7 +52,6 @@ public class IMSessionManager {
 				}
 			}
 		});
-
 	}
 
 	/**

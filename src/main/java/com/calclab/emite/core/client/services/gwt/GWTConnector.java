@@ -22,10 +22,10 @@ package com.calclab.emite.core.client.services.gwt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.http.client.Request;
@@ -37,6 +37,8 @@ import com.google.gwt.user.client.Window;
 
 public class GWTConnector {
 
+	private static final Logger logger = Logger.getLogger(GWTConnector.class.getName());
+	
 	static List<Request> activeRequests = new ArrayList<Request>();
 
 	static {
@@ -46,11 +48,11 @@ public class GWTConnector {
 			@Override
 			public void onClose(final CloseEvent<Window> event) {
 				int i = activeRequests.size() - 2;
-				GWT.log("Cancelling " + (i + 1) + " pending requests.");
+				logger.finer("Cancelling " + (i + 1) + " pending requests.");
 				for (; i >= 0; i--) {
 					activeRequests.get(i).cancel();
 				}
-				GWT.log("Cancelled all requests.");
+				logger.finer("Cancelled all requests.");
 			}
 		});
 	}
@@ -67,7 +69,7 @@ public class GWTConnector {
 			final Request req = builder.sendRequest(request, new RequestCallback() {
 				@Override
 				public void onError(final Request req, final Throwable throwable) {
-					GWT.log(("GWT CONNECTOR ERROR: " + throwable), null);
+					logger.severe("GWT CONNECTOR ERROR: " + throwable.getMessage());
 					activeRequests.remove(req);
 					listener.onError(request, throwable);
 				}
@@ -82,7 +84,7 @@ public class GWTConnector {
 		} catch (final RequestException e) {
 			throw new ConnectorException(e.getMessage());
 		} catch (final Exception e) {
-			GWT.log(("Some GWT connector exception: " + e), null);
+			logger.severe("Some GWT connector exception: " + e.getMessage());
 			throw new ConnectorException(e.getMessage());
 		}
 	}

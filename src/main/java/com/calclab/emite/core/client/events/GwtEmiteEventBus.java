@@ -20,23 +20,26 @@
 
 package com.calclab.emite.core.client.events;
 
-import com.google.gwt.core.client.GWT;
+import java.util.logging.Logger;
+
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 
 public class GwtEmiteEventBus extends HandlerManager implements EmiteEventBus {
 
+	private static final Logger logger = Logger.getLogger(GwtEmiteEventBus.class.getName());
+	
 	private final String eventBusName;
 
 	GwtEmiteEventBus(final String eventBusName) {
 		super(null);
 		this.eventBusName = eventBusName;
-		GWT.log("New EventBus: " + eventBusName);
+		logger.info("New EventBus: " + eventBusName);
 	}
 
 	@Override
 	public void fireEvent(final GwtEvent<?> event) {
-		GWT.log("[" + eventBusName + "] " + event.toDebugString());
+		logger.finer("[" + eventBusName + "] " + event.toDebugString());
 		super.fireEvent(event);
 	}
 

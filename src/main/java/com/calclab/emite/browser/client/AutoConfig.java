@@ -20,9 +20,10 @@
 
 package com.calclab.emite.browser.client;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
@@ -43,6 +44,8 @@ import com.google.inject.Inject;
  * 
  */
 public class AutoConfig {
+	
+	private static final Logger logger = Logger.getLogger(AutoConfig.class.getName());
 
 	private static final String LOGIN = "login";
 	private static final String RESUME = "resume";
@@ -55,7 +58,6 @@ public class AutoConfig {
 
 	@Inject
 	public AutoConfig(final XmppConnection connection, final XmppSession session) {
-		GWT.log("Creating AutoConfig");
 		this.connection = connection;
 		this.session = session;
 		initialize();
@@ -65,26 +67,26 @@ public class AutoConfig {
 		PageAssist.configureFromMeta(connection);
 		final String sessionBehaviour = PageAssist.getMeta(PARAM_SESSION);
 		if (sessionBehaviour != null) {
-			GWT.log("PageController - initializing...", null);
+			logger.finer("PageController - initializing...");
 			prepareOnCloseAction(sessionBehaviour);
 			prepareOnOpenAction(sessionBehaviour);
-			GWT.log("PageController - done.", null);
+			logger.finer("PageController - done.");
 		}
 	}
 
 	private void prepareOnCloseAction(final String sessionBehaviour) {
-		GWT.log("PageController - configuring close action...", null);
+		logger.finer("PageController - configuring close action...");
 		Window.addCloseHandler(new CloseHandler<Window>() {
 			@Override
 			public void onClose(final CloseEvent<Window> arg0) {
 				if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
-					GWT.log("PAUSING SESSION...");
+					logger.info("PAUSING SESSION...");
 					PageAssist.pauseSession(session);
 				} else if (LOGIN.equals(sessionBehaviour)) {
-					GWT.log("LOGGIN OUT SESSION...");
+					logger.info("LOGGIN OUT SESSION...");
 					PageAssist.closeSession(session);
 				} else if (LOGOUT.equals(sessionBehaviour)) {
-					GWT.log("LOGGIN OUT SESSION...");
+					logger.info("LOGGIN OUT SESSION...");
 					PageAssist.closeSession(session);
 				}
 			}
@@ -92,7 +94,7 @@ public class AutoConfig {
 	}
 
 	private void prepareOnOpenAction(final String sessionBehaviour) {
-		GWT.log("SESSION BEHAVIOUR: " + sessionBehaviour);
+		logger.info("SESSION BEHAVIOUR: " + sessionBehaviour);
 		if (sessionBehaviour.equals(LOGIN)) {
 			PageAssist.loginFromMeta(session);
 		} else if (sessionBehaviour.equals(RESUME)) {

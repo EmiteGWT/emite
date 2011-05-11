@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
@@ -46,6 +47,8 @@ import com.google.gwt.user.client.Timer;
  */
 public class RoomChatStateManager {
 
+	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getCanonicalName());
+	
 	/*
 	 * REUSING ChatStateManager.ChatState
 	 * http://xmpp.org/extensions/xep-0085.html#bizrules-groupchat # A client
@@ -128,7 +131,7 @@ public class RoomChatStateManager {
 						pauseTimer.cancel();
 					}
 
-					GWT.log("Setting own status to: " + ownState + " because we send a body or a subject", null);
+					logger.finer("Setting own status to: " + ownState + " because we send a body or a subject");
 					ownState = ChatState.active;
 					message.addChild(ChatState.active.toString(), XMLNS);
 				}
@@ -174,7 +177,7 @@ public class RoomChatStateManager {
 		// notification.
 		if (ownState == null || !ownState.equals(chatState)) {
 			ownState = chatState;
-			GWT.log("Setting own status to: " + chatState.toString(), null);
+			logger.finer("Setting own status to: " + chatState.toString());
 			final Message message = new Message(null, room.getURI());
 			message.addChild(chatState.toString(), XMLNS);
 			room.send(message);

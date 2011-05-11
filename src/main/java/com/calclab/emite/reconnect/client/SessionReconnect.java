@@ -20,6 +20,8 @@
 
 package com.calclab.emite.reconnect.client;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
@@ -32,11 +34,13 @@ import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 
 public class SessionReconnect {
+	
+	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());
+	
 	private boolean shouldReconnect;
 	private Credentials lastSuccessfulCredentials;
 	protected int reconnectionAttempts;
@@ -45,7 +49,7 @@ public class SessionReconnect {
 	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
 		shouldReconnect = false;
 		reconnectionAttempts = 0;
-		GWT.log("RECONNECT BEHAVIOUR");
+		logger.info("RECONNECT BEHAVIOUR");
 
 		saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
 			@Override
@@ -65,17 +69,17 @@ public class SessionReconnect {
 						new Timer() {
 							@Override
 							public void run() {
-								GWT.log("Reconnecting...");
+								logger.info("Reconnecting...");
 								if (shouldReconnect) {
 									shouldReconnect = false;
 									session.login(lastSuccessfulCredentials);
 								}
 							}
 						}.schedule((int) (1000 * seconds));
-						GWT.log("Reconnecting in " + seconds + " seconds.");
+						logger.info("Reconnecting in " + seconds + " seconds.");
 					}
 				} else if (event.is(SessionStates.ready)) {
-					GWT.log("CLEAR RECONNECTION ATTEMPS");
+					logger.finer("CLEAR RECONNECTION ATTEMPS");
 					reconnectionAttempts = 0;
 				}
 			}

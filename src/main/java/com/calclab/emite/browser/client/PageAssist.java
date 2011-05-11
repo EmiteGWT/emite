@@ -22,13 +22,14 @@ package com.calclab.emite.browser.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
@@ -39,6 +40,9 @@ import com.google.gwt.user.client.DOM;
  * An utility class to perform actions based on meta tags
  */
 public class PageAssist {
+	
+	private static final Logger logger = Logger.getLogger(PageAssist.class.getName());
+	
 	/**
 	 * Meta key to store the host param in bosh configuration
 	 */
@@ -97,7 +101,7 @@ public class PageAssist {
 	 *         PARAM_HOST are present), false otherwise
 	 */
 	public static final boolean configureFromMeta(final XmppConnection connection) {
-		GWT.log("Configuring connection...", null);
+		logger.info("Configuring connection...");
 		final String httpBase = getMeta(PARAM_HTTPBASE);
 		final String host = getMeta(PARAM_HOST);
 		final String routeHost = getMeta(PARAM_ROUTE_HOST);
@@ -116,7 +120,7 @@ public class PageAssist {
 		if (host == null || httpBase == null)
 			return false;
 
-		GWT.log(("CONNECTION PARAMS: " + httpBase + ", " + host), null);
+		logger.config("CONNECTION PARAMS: " + httpBase + ", " + host);
 		connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
 		return true;
 	}
@@ -201,7 +205,7 @@ public class PageAssist {
 	 * @return true if meta parameters value are presents, false otherwise
 	 */
 	public static final boolean loginFromMeta(final XmppSession session) {
-		GWT.log("Loging in from meta data...");
+		logger.info("Loging in from meta data...");
 		final String userJID = getMeta(PARAM_JID);
 		final String password = getMeta(PARAM_PASSWORD);
 		String encodingMethod = getMeta(PARAM_PASSWORD_ENCODING);
@@ -226,7 +230,7 @@ public class PageAssist {
 	 *         otherwise
 	 */
 	public static final boolean pauseSession(final XmppSession session) {
-		GWT.log("Pausing connection...", null);
+		logger.info("Pausing connection...");
 		final StreamSettings stream = session.pause();
 		if (stream == null)
 			return false;
@@ -242,7 +246,7 @@ public class PageAssist {
 
 		final String serialized = map.serialize();
 		Cookies.setCookie(PAUSE_COOKIE, serialized);
-		GWT.log(("Pausing session: " + serialized), null);
+		logger.finer("Pausing session: " + serialized);
 		return true;
 	}
 
@@ -260,7 +264,7 @@ public class PageAssist {
 		if (pause == null)
 			return false;
 
-		GWT.log(("Resume session: " + pause), null);
+		logger.finer("Resume session: " + pause);
 		Cookies.removeCookie(PAUSE_COOKIE);
 		final SerializableMap map = SerializableMap.restore(pause);
 		final StreamSettings stream = new StreamSettings();

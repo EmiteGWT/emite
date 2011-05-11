@@ -20,10 +20,11 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.core.client.events.StateChangedEvent;
 import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 
 /**
@@ -32,11 +33,12 @@ import com.google.inject.Inject;
  */
 public class SessionReady {
 
+	private static final Logger logger = Logger.getLogger(SessionReady.class.getName());
+	
 	private boolean enabled;
 
 	@Inject
 	public SessionReady(final XmppSession session) {
-		GWT.log("Creating SessionReady");
 		enabled = true;
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
@@ -53,7 +55,7 @@ public class SessionReady {
 	}
 
 	public void setEnabled(final boolean enabled) {
-		GWT.log("SessionReady - enabled: " + enabled);
+		logger.finer("SessionReady - enabled: " + enabled);
 		this.enabled = enabled;
 	}
 

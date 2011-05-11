@@ -48,7 +48,6 @@ import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedEvent;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -61,8 +60,6 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic {
 	@Inject
 	public XmppRosterLogic(final XmppSession session) {
 		super(session);
-
-		GWT.log("Creating XmppRosterLogic");
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override

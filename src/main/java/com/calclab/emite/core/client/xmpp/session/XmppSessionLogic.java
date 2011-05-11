@@ -21,6 +21,7 @@
 package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
@@ -44,7 +45,6 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -56,6 +56,9 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class XmppSessionLogic extends XmppSessionBoilerPlate {
+	
+	private static final Logger logger = Logger.getLogger(XmppSessionLogic.class.getName());
+	
 	private XmppURI userUri;
 	private final XmppConnection connection;
 	private final IQManager iqManager;
@@ -67,7 +70,6 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	public XmppSessionLogic(final XmppConnection connection, final SASLManager saslManager, final ResourceBindingManager bindingManager,
 			final IMSessionManager iMSessionManager, final SessionComponentsRegistry registry) {
 		super(connection.getEventBus());
-		GWT.log("Creating XmppSession");
 		this.registry = registry;
 		this.connection = connection;
 		iqManager = new IQManager();
@@ -101,7 +103,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 			@Override
 			public void onStateChanged(final ConnectionStateChangedEvent event) {
 				if (event.is(ConnectionState.error)) {
-					GWT.log("Connection error: " + event.getDescription());
+					logger.severe("Connection error: " + event.getDescription());
 					setSessionState(SessionStates.error);
 				} else if (event.is(ConnectionState.disconnected)) {
 					setSessionState(SessionStates.disconnected);
@@ -158,9 +160,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	@Override
 	public void login(final Credentials credentials) {
-		GWT.log("XmppSessionLogic - login");
+		logger.info("XmppSessionLogic - login");
 		if (!registry.areComponentsCreated()) {
-			GWT.log("First login - Creating session components");
+			logger.fine("First login - Creating session components");
 			registry.createComponents();
 		}
 		if (getSessionState() == SessionStates.disconnected) {
@@ -201,7 +203,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	public void send(final IPacket packet) {
 		// Added a condition to check the connection is not retrying...
 		if (connection.hasErrors() || userUri == null) {
-			GWT.log("session queuing stanza" + packet, null);
+			logger.finer("session queuing stanza" + packet);
 			queuedStanzas.add(packet);
 		} else {
 			packet.setAttribute("from", userUri.toString());
@@ -237,7 +239,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	}
 
 	private void sendQueuedStanzas() {
-		GWT.log("Sending queued stanzas....", null);
+		logger.finer("Sending queued stanzas....");
 		for (final IPacket packet : queuedStanzas) {
 			send(packet);
 		}
@@ -246,7 +248,7 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	private void setLoggedIn(final XmppURI userURI) {
 		userUri = userURI;
-		GWT.log("SESSION LOGGED IN");
+		logger.info("SESSION LOGGED IN");
 		setSessionState(SessionStates.loggedIn);
 	}
 }

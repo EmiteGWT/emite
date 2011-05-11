@@ -20,11 +20,12 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import java.util.logging.Logger;
+
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 
 /**
@@ -37,6 +38,8 @@ import com.google.inject.Inject;
  * 
  */
 public class StateManager {
+	
+	private static final Logger logger = Logger.getLogger(StateManager.class.getName());
 
 	@Inject
 	public StateManager(final ChatManager chatManager) {
@@ -48,7 +51,7 @@ public class StateManager {
 					getChatState(event.getChat());
 				} else if (event.isClosed()) {
 					final Chat chat = event.getChat();
-					GWT.log("Removing chat state to chat: " + chat.getID(), null);
+					logger.finer("Removing chat state to chat: " + chat.getID());
 					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
 					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
 						// We are closing, then we send the gone state
@@ -70,7 +73,7 @@ public class StateManager {
 	}
 
 	private ChatStateManager createChatState(final Chat chat) {
-		GWT.log("Adding chat state to chat: " + chat.getID(), null);
+		logger.finer("Adding chat state to chat: " + chat.getID());
 		final ChatStateManager chatStateManager = new ChatStateManager(chat);
 		chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
 		return chatStateManager;

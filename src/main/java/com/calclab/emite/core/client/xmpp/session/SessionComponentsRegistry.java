@@ -21,8 +21,8 @@
 package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.HashSet;
+import java.util.logging.Logger;
 
-import com.google.gwt.core.client.GWT;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -36,13 +36,13 @@ import com.google.inject.Singleton;
 @Singleton
 public class SessionComponentsRegistry {
 
+	private static final Logger logger = Logger.getLogger(SessionComponentsRegistry.class.getName());
+	
 	private final HashSet<Provider<?>> providers;
 	private boolean componentsCreated;
 
 	@Inject
 	public SessionComponentsRegistry() {
-		GWT.log("Creating SessionComponentsRegistry");
-
 		providers = new HashSet<Provider<?>>();
 		componentsCreated = false;
 	}
@@ -60,7 +60,7 @@ public class SessionComponentsRegistry {
 	}
 
 	public void createComponents() {
-		GWT.log("SessionComponentsRegistry - Create components");
+		logger.finer("SessionComponentsRegistry - Create components");
 		assert componentsCreated == false : "Session only can be started once!";
 		for (final Provider<?> provider : providers) {
 			provider.get();
