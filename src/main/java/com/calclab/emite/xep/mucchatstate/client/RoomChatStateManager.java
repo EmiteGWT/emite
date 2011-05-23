@@ -37,7 +37,6 @@ import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xep.muc.client.Room;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationEvent;
 import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationHandler;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 
