@@ -7,7 +7,7 @@
 	<groupId>com.bosch</groupId>
 	<artifactId>bosch-emite-patched</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.0</version>
+	<version>0.7.1-SNAPSHOT</version>
 	<name>Emite XMPP Library</name>
 
 	<properties>
