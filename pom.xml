@@ -4,8 +4,8 @@
 
 	<!-- POM file generated with GWT webAppCreator -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.calclab</groupId>
-	<artifactId>emite</artifactId>
+	<groupId>com.bosch</groupId>
+	<artifactId>bosch-emite-patched</artifactId>
 	<packaging>jar</packaging>
 	<version>0.7</version>
 	<name>Emite XMPP Library</name>
