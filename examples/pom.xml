@@ -19,7 +19,7 @@
 
 	<properties>
 		<!-- Convenience property to set the GWT version -->
-		<gwtVersion>2.2.0</gwtVersion>
+		<gwt.version>2.3.0</gwt.version>
 		<!-- GWT 2.2+ needs java 1.6 -->
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
@@ -38,13 +38,13 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>${gwtVersion}</version>
+			<version>${gwt.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${gwtVersion}</version>
+			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -64,7 +64,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwtVersion}</version>
+				<version>${gwt.version}</version>
 				<executions>
 					<execution>
 						<goals>
