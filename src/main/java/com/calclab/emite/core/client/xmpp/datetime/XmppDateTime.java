@@ -54,6 +54,7 @@ public class XmppDateTime {
 		return dtf.format(dateTime);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static Date parseLegacyFormatXMPPDateTime(final String dateTime) {
 		final Date retValue = deprecatedDtf.parse(dateTime);
 		// The server always sends a GMT date, so we compensate the timezone offset.

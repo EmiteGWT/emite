@@ -10,13 +10,13 @@
 	<name>Emite</name>
 	<description>A pure Google Web Toolkit XMPP library</description>
 	<url>http://emitegwt.info</url>
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License, Version 3</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-        </license>
-    </licenses>
-    
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License, Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<!-- Convenience property to set the GWT version -->
 		<gwt.version>2.3.0</gwt.version>
@@ -24,7 +24,7 @@
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<!-- TODO: Fix tests! -->
 		<maven.test.skip>true</maven.test.skip>
 	</properties>
@@ -92,12 +92,11 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}</version>
+				<version>${gwt.version}-1</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>resources</goal>
-							<goal>compile</goal>
 							<goal>test</goal>
 						</goals>
 					</execution>

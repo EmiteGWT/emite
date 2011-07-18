@@ -46,7 +46,7 @@ import com.google.gwt.user.client.Timer;
  */
 public class RoomChatStateManager {
 
-	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getName());
 	
 	/*
 	 * REUSING ChatStateManager.ChatState
