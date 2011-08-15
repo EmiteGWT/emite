@@ -1,0 +1,9 @@
+/target
+
+# Eclipse
+/.classpath
+/.project
+/.settings
+
+# OSX
+.DS_Store

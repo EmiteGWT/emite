@@ -1,3 +1,23 @@
+/*
+ * ((e)) emite: A pure Google Web Toolkit XMPP library
+ * Copyright (c) 2008-2011 The Emite development team
+ * 
+ * This file is part of Emite.
+ *
+ * Emite is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * Emite is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.calclab.emite.im.client;
 
 import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
@@ -19,15 +39,15 @@ import com.google.inject.Singleton;
 @Singleton
 public class ImComponents {
 
-    @Inject
-    public ImComponents(SessionComponentsRegistry registry, Provider<ChatManager> chatManager,
-	    Provider<PresenceManager> presenceManager, Provider<SubscriptionManager> subscriptionManager,
-	    Provider<SubscriptionHandler> subcriptionHandler, Provider<XmppRoster> xmppRoster) {
+	@Inject
+	public ImComponents(final SessionComponentsRegistry registry, final Provider<ChatManager> chatManager, final Provider<PresenceManager> presenceManager,
+			final Provider<SubscriptionManager> subscriptionManager, final Provider<SubscriptionHandler> subcriptionHandler,
+			final Provider<XmppRoster> xmppRoster) {
 
-	registry.addProvider(chatManager);
-	registry.addProvider(presenceManager);
-	registry.addProvider(subscriptionManager);
-	registry.addProvider(subcriptionHandler);
-	registry.addProvider(xmppRoster);
-    }
+		registry.addProvider(chatManager);
+		registry.addProvider(presenceManager);
+		registry.addProvider(subscriptionManager);
+		registry.addProvider(subcriptionHandler);
+		registry.addProvider(xmppRoster);
+	}
 }
