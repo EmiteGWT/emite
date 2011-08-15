@@ -75,29 +75,29 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 		iqManager = new IQManager();
 		queuedStanzas = new ArrayList<IPacket>();
 
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket stanza = event.getStanza();
-				final String name = stanza.getName();
-				if (name.equals("message")) {
-					eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
-				} else if (name.equals("presence")) {
-					eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
-				} else if (name.equals("iq")) {
-					final String type = stanza.getAttribute("type");
-					if ("get".equals(type) || "set".equals(type)) {
-						eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
-					} else {
-						iqManager.handle(stanza);
-					}
-				} else if (credentials != null && "stream:features".equals(name) && stanza.hasChild("mechanisms")) {
-					setSessionState(SessionStates.connecting);
-					saslManager.sendAuthorizationRequest(credentials);
-					credentials = null;
-				}
-			}
-		});
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
+	    @Override
+	    public void onStanza(final StanzaEvent event) {
+		final IPacket stanza = event.getStanza();
+		final String name = stanza.getName();
+		if (name.equals("message")) {
+		    eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
+		} else if (name.equals("presence")) {
+		    eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
+		} else if (name.equals("iq")) {
+		    final String type = stanza.getAttribute("type");
+		    if ("get".equals(type) || "set".equals(type)) {
+			eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
+		    } else {
+			iqManager.handle(stanza);
+		    }
+		} else if (credentials != null && ("stream:features".equals(name)||"features".equals(name)) && stanza.hasChild("mechanisms")) {
+		    setSessionState(SessionStates.connecting);
+		    saslManager.sendAuthorizationRequest(credentials);
+		    credentials = null;
+		}
+	    }
+	});
 
 		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 			@Override
