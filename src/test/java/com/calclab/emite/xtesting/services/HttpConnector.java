@@ -104,15 +104,16 @@ public class HttpConnector {
 					e.printStackTrace();
 				}
 
-				try {
-					post.setEntity(new StringEntity(xml, "text/xml"));
-					System.out.println("SENDING: " + xml);
-					HttpResponse response = client.execute(post);
-					responseString = EntityUtils.toString(response.getEntity());
-				} catch (final Exception e) {
-					callback.onError(xml, e);
-					e.printStackTrace();
-				}
+		try {
+		    post.setEntity(new StringEntity(xml, "text/xml"));
+		    System.out.println("SENDING: " + xml);
+		    HttpResponse response = client.execute(post);
+		    responseString = EntityUtils.toString(response.getEntity());
+		    status = response.getStatusLine().getStatusCode();
+		} catch (final Exception e) {
+		    callback.onError(xml, e);
+		    e.printStackTrace();
+		}
 
 				receiveService.execute(createResponseAction(xml, callback, id, status, responseString));
 			}
