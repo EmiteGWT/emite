@@ -253,4 +253,9 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 		logger.info("SESSION LOGGED IN");
 		setSessionState(SessionStates.loggedIn);
 	}
+    
+    public XmppConnection getConnection()
+    {
+       return connection;
+    }
 }
