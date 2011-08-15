@@ -42,6 +42,7 @@ import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultHandler;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
@@ -49,8 +50,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * Default XmppSession logic implementation. You should use XmppSession
- * interface instead.
+ * Default XmppSession logic implementation. You should use XmppSession interface instead.
  * 
  * @see XmppSession
  */
@@ -214,9 +214,11 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	@Override
 	public void sendIQ(final String category, final IQ iq, final IQResponseHandler handler) {
-		final String id = iqManager.register(category, handler);
-		iq.setAttribute("id", id);
-		send(iq);
+		if( !iq.getType().equals( Type.result ) ) {
+			final String id = iqManager.register(category, handler);
+			iq.setAttribute("id", id);
+			send(iq);
+		}
 	}
 
 	@Override
