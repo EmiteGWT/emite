@@ -1,24 +1,23 @@
 /*
+ * ((e)) emite: A pure Google Web Toolkit XMPP library
+ * Copyright (c) 2008-2011 The Emite development team
+ * 
+ * This file is part of Emite.
  *
- * ((e)) emite: A pure gwt (Google Web Toolkit) xmpp (jabber) library
- *
- * (c) 2008-2009 The emite development team (see CREDITS for details)
- * This file is part of emite.
- *
- * This program is free software: you can redistribute it and/or modify
+ * Emite is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * Emite is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
@@ -35,58 +34,57 @@ import com.calclab.emite.xtesting.services.TigaseXMLService;
  * 
  */
 public class ServicesTester implements Services {
-    public static class Request {
-	public final String httpBase;
-	public final String request;
-	public final ConnectorCallback listener;
+	public static class Request {
+		public final String httpBase;
+		public final String request;
+		public final ConnectorCallback listener;
 
-	public Request(final String httpBase, final String request, final ConnectorCallback listener) {
-	    this.httpBase = httpBase;
-	    this.request = request;
-	    this.listener = listener;
+		public Request(final String httpBase, final String request, final ConnectorCallback listener) {
+			this.httpBase = httpBase;
+			this.request = request;
+			this.listener = listener;
+		}
+
 	}
 
-    }
+	public static final TigaseXMLService xmler = TigaseXMLService.instance;
+	private final ArrayList<Request> requests;
 
-    public static final TigaseXMLService xmler = TigaseXMLService.instance;
-    private final ArrayList<Request> requests;
+	public ServicesTester() {
+		requests = new ArrayList<Request>();
+	}
 
-    public ServicesTester() {
-	this.requests = new ArrayList<Request>();
-    }
+	@Override
+	public long getCurrentTime() {
+		return 0;
+	}
 
-    @Override
-    public long getCurrentTime() {
-	return 0;
-    }
+	public IPacket getSentPacket(final int index) {
+		final String request = requests.get(index).request;
+		return xmler.toXML(request);
+	}
 
-    public IPacket getSentPacket(final int index) {
-	final String request = requests.get(index).request;
-	return xmler.toXML(request);
-    }
+	public int requestSentCount() {
+		return requests.size();
+	}
 
-    public int requestSentCount() {
-	return requests.size();
-    }
+	@Override
+	public void schedule(final int msecs, final ScheduledAction action) {
+	}
 
-    @Override
-    public void schedule(final int msecs, final ScheduledAction action) {
-    }
+	@Override
+	public void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+		requests.add(new Request(httpBase, request, listener));
+	}
 
-    @Override
-    public void send(final String httpBase, final String request, final ConnectorCallback listener)
-	    throws ConnectorException {
-	requests.add(new Request(httpBase, request, listener));
-    }
+	@Override
+	public String toString(final IPacket packet) {
+		return xmler.toString(packet);
+	}
 
-    @Override
-    public String toString(final IPacket packet) {
-	return xmler.toString(packet);
-    }
-
-    @Override
-    public IPacket toXML(final String xml) {
-	return xmler.toXML(xml);
-    }
+	@Override
+	public IPacket toXML(final String xml) {
+		return xmler.toXML(xml);
+	}
 
 }

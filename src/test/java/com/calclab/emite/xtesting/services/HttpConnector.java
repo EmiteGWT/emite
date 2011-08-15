@@ -1,24 +1,23 @@
 /*
+ * ((e)) emite: A pure Google Web Toolkit XMPP library
+ * Copyright (c) 2008-2011 The Emite development team
+ * 
+ * This file is part of Emite.
  *
- * ((e)) emite: A pure gwt (Google Web Toolkit) xmpp (jabber) library
- *
- * (c) 2008-2009 The emite development team (see CREDITS for details)
- * This file is part of emite.
- *
- * This program is free software: you can redistribute it and/or modify
+ * Emite is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * Emite is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.calclab.emite.xtesting.services;
 
 import java.text.MessageFormat;
@@ -34,82 +33,79 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
 
 public class HttpConnector {
 
-    private static class HttpConnectorID {
-	private static int id = 0;
+	private static class HttpConnectorID {
+		private static int id = 0;
 
-	public static String getNext() {
-	    id++;
-	    return String.valueOf(id);
+		public static String getNext() {
+			id++;
+			return String.valueOf(id);
+		}
+
 	}
 
-    }
+	private final ExecutorService sendService;
+	private final ExecutorService receiveService;
 
-    private final ExecutorService sendService;
-    private final ExecutorService receiveService;
+	public HttpConnector() {
+		sendService = Executors.newCachedThreadPool();
+		receiveService = Executors.newFixedThreadPool(1);
+	}
 
-    public HttpConnector() {
-	sendService = Executors.newCachedThreadPool();
-	receiveService = Executors.newFixedThreadPool(1);
-    }
+	public synchronized void send(final String httpBase, final String xml, final ConnectorCallback callback) {
 
-    public synchronized void send(final String httpBase, final String xml, final ConnectorCallback callback)
-	    throws ConnectorException {
+		sendService.execute(createSendAction(httpBase, xml, callback));
+	}
 
-	sendService.execute(createSendAction(httpBase, xml, callback));
-    }
+	protected void debug(final String pattern, final Object... arguments) {
+		// FIXME
+		MessageFormat.format(pattern, arguments);
+	}
 
-    protected void debug(final String pattern, final Object... arguments) {
-	// FIXME
-	MessageFormat.format(pattern, arguments);
-    }
+	private Runnable createResponseAction(final String xml, final ConnectorCallback callback, final String id, final int status, final String response) {
+		final Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				if (status == HttpStatus.SC_OK) {
+					System.out.println("RECEIVED: " + response);
+					debug("Connector [{0}] receive: {1}", id, response);
+					callback.onResponseReceived(status, response, xml);
+				} else {
+					debug("Connector [{0}] bad status: {1}", id, status);
+					callback.onError(xml, new Exception("bad http status " + status));
+				}
 
-    private Runnable createResponseAction(final String xml, final ConnectorCallback callback, final String id,
-	    final int status, final String response) {
-	final Runnable runnable = new Runnable() {
-	    @Override
-	    public void run() {
-		if (status == HttpStatus.SC_OK) {
-		    System.out.println("RECEIVED: " + response);
-		    debug("Connector [{0}] receive: {1}", id, response);
-		    callback.onResponseReceived(status, response, xml);
-		} else {
-		    debug("Connector [{0}] bad status: {1}", id, status);
-		    callback.onError(xml, new Exception("bad http status " + status));
-		}
+			}
 
-	    }
+		};
+		return runnable;
+	}
 
-	};
-	return runnable;
-    }
+	private Runnable createSendAction(final String httpBase, final String xml, final ConnectorCallback callback) {
+		return new Runnable() {
+			@Override
+			public void run() {
+				final String id = HttpConnectorID.getNext();
+				debug("Connector [{0}] send: {1}", id, xml);
+				final HttpClient client = new DefaultHttpClient();
+				final int status = 0;
+				String responseString = null;
+				final HttpPost post = new HttpPost(httpBase);
 
-    private Runnable createSendAction(final String httpBase, final String xml, final ConnectorCallback callback) {
-	return new Runnable() {
-	    @Override
-	    public void run() {
-		final String id = HttpConnectorID.getNext();
-		debug("Connector [{0}] send: {1}", id, xml);
-		final HttpClient client = new DefaultHttpClient();
-		int status = 0;
-		String responseString = null;
-		final HttpPost post = new HttpPost(httpBase);
+				try {
+					post.setEntity(new StringEntity(xml, "utf-8"));
+					System.out.println("SENDING: " + xml);
+					final HttpResponse response = client.execute(post);
+					responseString = EntityUtils.toString(response.getEntity());
+				} catch (final Exception e) {
+					callback.onError(xml, e);
+					e.printStackTrace();
+				}
 
-		try {
-		    post.setEntity(new StringEntity(xml, "text/xml", "utf-8"));
-		    System.out.println("SENDING: " + xml);
-		    HttpResponse response = client.execute(post);
-		    responseString = EntityUtils.toString(response.getEntity());
-		} catch (final Exception e) {
-		    callback.onError(xml, e);
-		    e.printStackTrace();
-		}
-
-		receiveService.execute(createResponseAction(xml, callback, id, status, responseString));
-	    }
-	};
-    }
+				receiveService.execute(createResponseAction(xml, callback, id, status, responseString));
+			}
+		};
+	}
 }
