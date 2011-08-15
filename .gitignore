@@ -1,10 +1,5 @@
 /target
 /war
 
-# Eclipse
-/.classpath
-/.project
-/.settings
-
 # OSX
 .DS_Store
