@@ -12,8 +12,8 @@
 
   <properties>
     <!-- Convenience property to set the GWT version -->
-  	<gwtVersion>2.2.0</gwtVersion>
-  	<!-- GWT 2.2 needs java 1.6 -->
+  	<gwtVersion>2.3.0</gwtVersion>
+  	<!-- GWT 2.3 needs java 1.6 -->
   	<maven.compiler.source>1.6</maven.compiler.source>
   	<maven.compiler.target>1.6</maven.compiler.target>
   	<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
