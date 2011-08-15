@@ -1,3 +1,23 @@
+/*
+ * ((e)) emite: A pure Google Web Toolkit XMPP library
+ * Copyright (c) 2008-2011 The Emite development team
+ * 
+ * This file is part of Emite.
+ *
+ * Emite is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * Emite is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.calclab.emite.xep.vcard.client;
 
 import static com.calclab.emite.core.client.packet.MatcherFactory.byName;
@@ -6,36 +26,36 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 
 public class VCardResponse {
-    private final IPacket result;
-    private VCard vcard;
+	private final IPacket result;
+	private VCard vcard;
 
-    public VCardResponse(final IPacket result) {
-	this.result = result;
-    }
-
-    public IQ.Type getType() {
-	return IQ.getType(result);
-    }
-
-    public VCard getVCard() {
-	if (vcard == null && isSuccess()) {
-	    final IPacket vcardChild = result.getFirstChild(byName(VCard.VCARD));
-	    if (vcardChild.getChildrenCount() > 0) {
-		vcard = new VCard(vcardChild);
-	    }
+	public VCardResponse(final IPacket result) {
+		this.result = result;
 	}
-	return vcard;
-    }
 
-    public boolean hasVCard() {
-	return isSuccess() && getVCard() != null;
-    }
+	public IQ.Type getType() {
+		return IQ.getType(result);
+	}
 
-    public boolean isError() {
-	return IQ.isType(IQ.Type.error, result);
-    }
+	public VCard getVCard() {
+		if (vcard == null && isSuccess()) {
+			final IPacket vcardChild = result.getFirstChild(byName(VCard.VCARD));
+			if (vcardChild.getChildrenCount() > 0) {
+				vcard = new VCard(vcardChild);
+			}
+		}
+		return vcard;
+	}
 
-    public boolean isSuccess() {
-	return IQ.isSuccess(result);
-    }
+	public boolean hasVCard() {
+		return isSuccess() && getVCard() != null;
+	}
+
+	public boolean isError() {
+		return IQ.isType(IQ.Type.error, result);
+	}
+
+	public boolean isSuccess() {
+		return IQ.isSuccess(result);
+	}
 }
