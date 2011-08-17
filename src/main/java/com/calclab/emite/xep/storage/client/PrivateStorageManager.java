@@ -49,7 +49,7 @@ public class PrivateStorageManager {
 		session.sendIQ(ID, iq, new IQResponseHandler() {
 			@Override
 			public void onIQ(final IQ iq) {
-				if (!IQ.isSuccess(iq)) {
+				if (IQ.isSuccess(iq)) {
 					handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
 				}
 			}
