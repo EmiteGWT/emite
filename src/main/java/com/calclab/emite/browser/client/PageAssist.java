@@ -40,9 +40,9 @@ import com.google.gwt.user.client.DOM;
  * An utility class to perform actions based on meta tags
  */
 public class PageAssist {
-	
+
 	private static final Logger logger = Logger.getLogger(PageAssist.class.getName());
-	
+
 	/**
 	 * Meta key to store the host param in bosh configuration
 	 */
@@ -84,6 +84,16 @@ public class PageAssist {
 	 */
 	static final String PARAM_SECURE = "emite.secure";
 
+	/**
+	 * Meta key to store the "wait" BOSH parameter
+	 */
+	static final String PARAM_BOSH_WAIT = "emite.bosh.wait";
+
+	/**
+	 * Meta key to store the "hold" BOSH parameter
+	 */
+	static final String PARAM_BOSH_HOLD = "emite.bosh.hold";
+
 	private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
 	public static void closeSession(final XmppSession session) {
@@ -105,24 +115,18 @@ public class PageAssist {
 		final String httpBase = getMeta(PARAM_HTTPBASE);
 		final String host = getMeta(PARAM_HOST);
 		final String routeHost = getMeta(PARAM_ROUTE_HOST);
-		final String routePortString = getMeta(PARAM_ROUTE_PORT);
+		final Integer routePort = getMetaInteger(PARAM_ROUTE_PORT);
 		final boolean secure = isMetaTrue(PARAM_SECURE);
+		final Integer wait = getMetaInteger(PARAM_BOSH_WAIT);
+		final Integer hold = getMetaInteger(PARAM_BOSH_HOLD);
 
-		Integer routePort = null;
-		if (routePortString != null) {
-			try {
-				routePort = Integer.decode(routePortString);
-			} catch (final NumberFormatException e) {
-
-			}
-		}
-
-		if (host == null || httpBase == null)
+		if (host != null && httpBase != null) {
+			logger.info("CONNECTION PARAMS: " + httpBase + ", " + host);
+			connection.setSettings(new ConnectionSettings(httpBase, host, wait, hold, routeHost, routePort, secure));
+			return true;
+		} else {
 			return false;
-
-		logger.config("CONNECTION PARAMS: " + httpBase + ", " + host);
-		connection.setSettings(new ConnectionSettings(httpBase, host, routeHost, routePort, secure));
-		return true;
+		}
 	}
 
 	/**
@@ -172,6 +176,29 @@ public class PageAssist {
 	 */
 	public static final boolean isMetaTrue(final String id) {
 		return !"false".equals(getMeta(id));
+	}
+
+	/**
+	 * Return an int value for the meta
+	 * 
+	 * @param id
+	 *            the 'id' value of the desired meta tag
+	 * @return the int value of the meta tag, null if it is invalid or doesn't
+	 *         exist
+	 * @see PageAssist#getMeta(String)
+	 */
+	public static Integer getMetaInteger(final String id) {
+		final String metaValue = getMeta(id);
+
+		if (metaValue != null) {
+			try {
+				return new Integer(metaValue);
+			} catch (final NumberFormatException eNF) {
+				logger.warning("Invalid meta value for " + id + " : " + metaValue);
+			}
+		}
+
+		return null;
 	}
 
 	/**
