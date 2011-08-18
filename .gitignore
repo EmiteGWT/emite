@@ -1,5 +1,6 @@
 /target
 /war
+/src/main/webapp
 
 # OSX
 .DS_Store
