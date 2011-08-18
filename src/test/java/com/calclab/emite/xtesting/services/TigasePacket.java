@@ -31,6 +31,8 @@ import com.calclab.emite.core.client.packet.AbstractPacket;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.PacketRenderer;
 import com.calclab.emite.core.client.packet.TextUtils;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.NodeList;
 
 public class TigasePacket extends AbstractPacket {
 

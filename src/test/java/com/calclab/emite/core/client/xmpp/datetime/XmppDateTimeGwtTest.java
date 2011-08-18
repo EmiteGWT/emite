@@ -20,42 +20,37 @@
 
 package com.calclab.emite.core.client.xmpp.datetime;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Test;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class XmppDateTimeTest extends GWTTestCase {
+public class XmppDateTimeGwtTest extends GWTTestCase {
 
 	@Override
 	public String getModuleName() {
 		return "com.calclab.emite.core.EmiteCore";
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testUseGWT21() {
-		final Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(1980, Calendar.APRIL, 15, 15, 15, 02);
-		cal.add(Calendar.MILLISECOND, cal.getTimeZone().getOffset(cal.getTimeInMillis()));
-		Date date = cal.getTime();
+		Date date = new Date(80, 3, 15, 15, 15, 2);
+		date.setTime(date.getTime() - (date.getTimezoneOffset() * 60000));
+		
 		assertEquals(date, XmppDateTime.parseLegacyFormatXMPPDateTime("19800415T15:15:02"));
 		assertEquals("19800415T15:15:02", XmppDateTime.formatLegacyFormatXMPPDateTime(date));
-		cal.setTimeZone(TimeZone.getTimeZone("GMT"));
-		cal.set(Calendar.MILLISECOND, 0); // Curious... need to do it otherwise
-		// the next test fails...
-		date = cal.getTime();
+
+		date = new Date(80, 3, 15, 17, 15, 2);
+		date.setTime(date.getTime() - (date.getTimezoneOffset() * 60000));
 		assertEquals(date, XmppDateTime.parseXMPPDateTime("1980-04-15T17:15:02Z"));
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
-		cal.set(Calendar.MILLISECOND, 159);
-		date = cal.getTime();
+		
+		date = new Date(80, 3, 15, 16, 15, 2);
+		date.setTime(date.getTime() - (date.getTimezoneOffset() * 60000) + 159);
+		
 		assertEquals(date, XmppDateTime.parseXMPPDateTime("1980-04-15T17:15:02.159+01:00"));
-		// Cannot test it in another way, unfortunately the TimeZone of my
-		// country comes in the way
-		// forcing to use +2:00 as a time zone offset.
+		
 		assertEquals(date, XmppDateTime.parseXMPPDateTime(XmppDateTime.formatXMPPDateTime(date)));
 	}
 }

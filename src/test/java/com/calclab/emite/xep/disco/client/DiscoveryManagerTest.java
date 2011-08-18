@@ -36,13 +36,13 @@ public class DiscoveryManagerTest {
 	private DiscoveryManager manager;
 	private XmppSessionTester session;
 
-	private static final String DISCO_RESULT = "<iq type='result'" + "	    from='plays.shakespeare.lit'" + "		    to='romeo@montague.net/orchard'"
-			+ "		    id='info1'>" + "		  <query xmlns='http://jabber.org/protocol/disco#info'>" + "		    <identity" + "		        category='conference'"
-			+ "		        type='text'" + "		        name='Play-Specific Chatrooms'/>" + "		    <identity" + "		        category='directory'"
-			+ "		        type='chatroom'" + "		        name='Play-Specific Chatrooms'/>" + "		    <feature var='http://jabber.org/protocol/disco#info'/>"
-			+ "		    <feature var='http://jabber.org/protocol/disco#items'/>" + "		    <feature var='http://jabber.org/protocol/muc'/>"
-			+ "		    <feature var='jabber:iq:register'/>" + "		    <feature var='jabber:iq:search'/>" + "		    <feature var='jabber:iq:time'/>"
-			+ "		    <feature var='jabber:iq:version'/>" + "		  </query>" + "		</iq>";
+	private static final String DISCO_RESULT = "<iq type='result' from='plays.shakespeare.lit' to='romeo@montague.net/orchard'"
+			+ " id='info1'><query xmlns='http://jabber.org/protocol/disco#info'><identity category='conference'"
+			+ "	type='text' name='Play-Specific Chatrooms'/><identity category='directory'"
+			+ "	type='chatroom' name='Play-Specific Chatrooms'/><feature var='http://jabber.org/protocol/disco#info'/>"
+			+ "<feature var='http://jabber.org/protocol/disco#items'/><feature var='http://jabber.org/protocol/muc'/>"
+			+ "<feature var='jabber:iq:register'/><feature var='jabber:iq:search'/><feature var='jabber:iq:time'/>"
+			+ "<feature var='jabber:iq:version'/></query></iq>";
 
 	private static final String DISCO_ITEMS_RESULT = "<iq type='result'" + "    from='shakespeare.lit'" + "    to='romeo@montague.net/orchard'"
 			+ "    id='items1'>" + "  <query xmlns='http://jabber.org/protocol/disco#items'>" + "    <item jid='people.shakespeare.lit'"

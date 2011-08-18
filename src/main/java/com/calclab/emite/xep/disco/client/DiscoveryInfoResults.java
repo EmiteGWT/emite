@@ -56,7 +56,7 @@ public class DiscoveryInfoResults {
 	 * @param iq
 	 */
 	public DiscoveryInfoResults(final IQ iq) {
-		assert IQ.Type.result == iq.getType();
+		assert IQ.Type.result.equals(iq.getType());
 		result = iq.getFirstChild(INFO_RESULT_MATCHER);
 	}
 

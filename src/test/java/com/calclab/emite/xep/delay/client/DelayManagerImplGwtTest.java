@@ -22,18 +22,17 @@ package com.calclab.emite.xep.delay.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class DelayTest extends GWTTestCase {
+public class DelayManagerImplGwtTest extends GWTTestCase {
 
 	@Override
 	public String getModuleName() {
@@ -41,40 +40,64 @@ public class DelayTest extends GWTTestCase {
 	}
 
 	@Test
-	public void shouldCalculateDelay() {
+	public void testShouldGiveDelay() {
+		final BasicStanza stanza = new BasicStanza("name", "xmlns");
 
 		final XmppURI uri = uri("name@domain/resource");
-		final IPacket delayNode = new Packet("delay", "urn:xmpp:delay");
+		stanza.setTo(uri);
+		assertEquals("name@domain/resource", stanza.getToAsString());
+		stanza.setTo((XmppURI) null);
+		final IPacket delayNode = stanza.addChild("delay");
+		delayNode.setAttribute("xmlns", "urn:xmpp:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "1980-04-15T17:15:02.159+01:00");
-		final Delay delay = new Delay(delayNode);
+		final Delay delay = DelayHelper.getDelay(stanza);
 		assertNotNull(delay);
-		final Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(1980, Calendar.APRIL, 15, 17, 15, 02);
-		cal.setTimeZone(TimeZone.getTimeZone("GMT+01:00"));
-		cal.set(Calendar.MILLISECOND, 159);
-		final Date date = cal.getTime();
+		
+		final Date date = new Date(324663302159L);
+		assertEquals(uri, delay.getFrom());
+		assertEquals(date, delay.getStamp());
+	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testShouldGiveDelayLegacyFormat() {
+		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+
+		final XmppURI uri = uri("name@domain/resource");
+		stanza.setTo(uri);
+		assertEquals("name@domain/resource", stanza.getToAsString());
+		stanza.setTo((XmppURI) null);
+		final IPacket delayNode = stanza.addChild("x");
+		delayNode.setAttribute("xmlns", "jabber:x:delay");
+		delayNode.setAttribute("from", "name@domain/resource");
+		delayNode.setAttribute("stamp", "19800415T15:15:02");
+		final Delay delay = DelayHelper.getDelay(stanza);
+		assertNotNull(delay);
+
+		final Date date = new Date(80, 3, 15, 15, 15, 2);
+		date.setTime(date.getTime() - (date.getTimezoneOffset() * 60000));
+		
 		assertEquals(uri, delay.getFrom());
 		assertEquals(date, delay.getStamp());
 	}
 
 	@Test
-	public void shouldCalculateDelayLegacyFormat() {
-
-		final XmppURI uri = uri("name@domain/resource");
-		final IPacket delayNode = new Packet("x", "jabber:x:delay");
-		delayNode.setAttribute("xmlns", "jabber:x:delay");
-		delayNode.setAttribute("from", "name@domain/resource");
-		delayNode.setAttribute("stamp", "19800415T17:15:02");
-		final Delay delay = new Delay(delayNode);
-		assertNotNull(delay);
-		final Calendar cal = Calendar.getInstance();
-		cal.clear();
-		cal.set(1980, Calendar.APRIL, 15, 17, 15, 02);
-		final Date date = cal.getTime();
-		assertEquals(uri, delay.getFrom());
-		assertEquals(date, delay.getStamp());
+	public void testShouldSetTextToChild() {
+		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+		stanza.setTextToChild("child", "value");
+		assertEquals("value", stanza.getFirstChild("child").getText());
+		stanza.setTextToChild("child", null);
+		assertSame(NoPacket.INSTANCE, stanza.getFirstChild("child"));
 	}
 
+	@Test
+	public void testShouldSetTo() {
+		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+
+		stanza.setTo(uri("name@domain/resource"));
+		assertEquals("name@domain/resource", stanza.getToAsString());
+		stanza.setTo((XmppURI) null);
+		assertNull(stanza.getToAsString());
+	}
 }

@@ -89,7 +89,7 @@ public class PairChatTest extends AbstractChatTest {
 
 	@Test
 	public void shouldSendNoThreadWhenNotSpecified() {
-		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, null);
+		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.locked);
 		final AbstractChat noThreadChat = new PairChat(session, properties);
 		noThreadChat.setChatState("ready");
 		noThreadChat.send(new Message("the message"));

@@ -230,7 +230,7 @@ public class RosterTests {
 				+ "</item></query></iq>");
 		session.receives("<iq type='set'><query xmlns='jabber:iq:roster'>" + "<item jid='friend@domain' name='Friend2'><group>HH1</group><group>HH2</group>"
 				+ "</item></query></iq>");
-		assertTrue(handler.isCalledOnce());
+		assertEquals("RosterItemChangedHandler should be called twice", 2, handler.getCalledTimes());
 		assertEquals(1, roster.getItems().size());
 		assertEquals(3, roster.getGroupNames().size());
 		assertTrue(roster.getGroupNames().contains("HH1"));

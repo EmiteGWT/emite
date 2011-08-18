@@ -36,6 +36,7 @@ public class PrivateStorageManagerTest {
 
 	String storeData = "<iq type=\"set\" ><query xmlns=\"jabber:iq:private\">"
 			+ "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus></query></iq>";
+	String storeResponse = "<iq type=\"result\" ></iq>";
 	String data = "<exodus xmlns=\"exodus:prefs\"><defaultnick>Hamlet</defaultnick></exodus>";
 
 	String dataToRetrieve = "<exodus xmlns=\"exodus:prefs\"/>";
@@ -53,7 +54,8 @@ public class PrivateStorageManagerTest {
 		final PrivateStorageResponseTestHandler handler = new PrivateStorageResponseTestHandler();
 		manager.store(new SimpleStorageData(TigaseXMLService.toPacket(data)), handler);
 		session.verifyIQSent(storeData);
-		assertTrue(handler.isCalledOnce());
+		session.answer(storeResponse);
+		assertTrue("handler called " + handler.getCalledTimes() + " times", handler.isCalledOnce());
 	}
 
 	@Test

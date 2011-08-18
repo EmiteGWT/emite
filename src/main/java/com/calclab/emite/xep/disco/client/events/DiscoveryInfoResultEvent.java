@@ -46,8 +46,8 @@ public class DiscoveryInfoResultEvent extends GwtEvent<DiscoveryInfoResultHandle
 	}
 
 	private DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult, final IPacket errorPacket) {
-		assert infoResult != null && errorPacket != null : "Discovery event only can have or result or error";
-		assert infoResult == null && errorPacket == null : "Discovery event must have or result or error";
+		assert !(infoResult != null && errorPacket != null) : "Discovery event can have either or result or error, not both";
+		assert !(infoResult == null && errorPacket == null) : "Discovery event must have or result or error";
 		this.infoResult = infoResult;
 		this.errorPacket = errorPacket;
 	}

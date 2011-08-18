@@ -43,7 +43,7 @@ public abstract class TestHandler<T> {
 	}
 
 	public boolean hasEvent() {
-		return isCalledOnce();
+		return isCalled();
 	}
 
 	public boolean isCalledOnce() {

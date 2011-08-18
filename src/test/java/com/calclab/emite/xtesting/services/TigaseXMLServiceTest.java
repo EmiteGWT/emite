@@ -21,6 +21,7 @@
 package com.calclab.emite.xtesting.services;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class TigaseXMLServiceTest {
 		final List<? extends IPacket> stanzas = body.getChildren();
 		assertEquals(1, stanzas.size());
 		final IPacket features = stanzas.get(0);
-		assertEquals("stream:features", features.getName());
+		assertTrue(features.getName().equals("stream:features") || features.getName().equals("features"));
 		final IPacket mechanisms = features.getChildren().get(0);
 		assertEquals("mechanisms", mechanisms.getName());
 		final IPacket mec1 = mechanisms.getChildren().get(0);
