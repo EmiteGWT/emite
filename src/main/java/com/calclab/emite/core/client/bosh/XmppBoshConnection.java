@@ -84,7 +84,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 
 			@Override
 			public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
-				clearErrors();
+				// clearErrors();
 				activeConnections--;
 				if (isActive()) {
 					// TODO: check if is the same code in other than FF and make

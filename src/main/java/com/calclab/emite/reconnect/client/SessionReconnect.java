@@ -78,7 +78,7 @@ public class SessionReconnect {
 						}.schedule((int) (1000 * seconds));
 						logger.info("Reconnecting in " + seconds + " seconds.");
 					}
-				} else if (event.is(SessionStates.ready)) {
+				} else if (event.is(SessionStates.loggedIn)) {
 					logger.finer("CLEAR RECONNECTION ATTEMPS");
 					reconnectionAttempts = 0;
 				}
@@ -88,7 +88,7 @@ public class SessionReconnect {
 		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
 			@Override
 			public void onStateChanged(final ConnectionStateChangedEvent event) {
-				if (event.is(ConnectionState.error) || event.is(ConnectionState.waitingForRetry)) {
+				if (event.is(ConnectionState.error)) {
 					shouldReconnect();
 				}
 			}
