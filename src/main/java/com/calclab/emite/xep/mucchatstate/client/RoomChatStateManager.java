@@ -26,27 +26,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
-import com.calclab.emite.xep.muc.client.Room;
-import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationEvent;
-import com.calclab.emite.xep.mucchatstate.client.events.RoomChatStateNotificationHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.calclab.emite.xep.muc.client.RoomChat;
 import com.google.gwt.user.client.Timer;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * XEP-0085: Chat State Notifications
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
-public class RoomChatStateManager {
+public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, MessageReceivedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getName());
+	
+	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
+	public static final String KEY = "RoomChatStateManager";
 	
 	/*
 	 * REUSING ChatStateManager.ChatState
@@ -63,22 +65,23 @@ public class RoomChatStateManager {
 		}
 	}
 
-	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
-	public static final String KEY = "RoomChatStateManager";
-
-	private ChatState ownState;
+	private final EventBus eventBus;
+	private final RoomChat room;
+	
 	private final Map<XmppURI, ChatState> othersState;
-	private final Room room;
+	private ChatState ownState;
+	
 	private final int inactiveDelay = 120 * 1000; // 2 minutes
 	private final int pauseDelay = 10 * 1000; // 10 secondes
 
-	PacketMatcher bodySubjectThreadMatchter = new PacketMatcher() {
+	private PacketMatcher bodySubjectThreadMatchter = new PacketMatcher() {
 		@Override
 		public boolean matches(final IPacket packet) {
 			final String nn = packet.getName();
 			return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
 		}
 	};
+	
 	/**
 	 * From http://xmpp.org/extensions/xep-0085.html#bizrules-syntax
 	 * <ul>
@@ -114,49 +117,48 @@ public class RoomChatStateManager {
 		}
 	};
 
-	public RoomChatStateManager(final Room room) {
+	public RoomChatStateManager(final EventBus eventBus, final RoomChat room) {
+		this.eventBus = eventBus;
 		this.room = room;
 		othersState = new HashMap<XmppURI, ChatState>();
 
-		room.addBeforeSendMessageHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				// Only Messages are listened not presence events
-				// But sendStateMessage goes through here.
-				final Message message = event.getMessage();
-				final boolean alreadyWithState = getStateFromMessage(message) != null;
-				if (!alreadyWithState && ownState != ChatState.active && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
-					if (ownState == ChatState.composing) {
-						pauseTimer.cancel();
-					}
-
-					logger.finer("Setting own status to: " + ownState + " because we send a body or a subject");
-					ownState = ChatState.active;
-					message.addChild(ChatState.active.toString(), XMLNS);
-				}
-				if (ownState != ChatState.inactive) {
-					inactiveTimer.schedule(inactiveDelay);
-				}
+		room.addBeforeMessageSentHandler(this);
+		room.addMessageReceivedHandler(this);
+	}
+	
+	@Override
+	public void onBeforeMessageSent(final BeforeMessageSentEvent event) {
+		// Only Messages are listened not presence events
+		// But sendStateMessage goes through here.
+		final Message message = event.getMessage();
+		final boolean alreadyWithState = getStateFromMessage(message) != null;
+		if (!alreadyWithState && ownState != ChatState.active && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
+			if (ownState == ChatState.composing) {
+				pauseTimer.cancel();
 			}
-		});
 
-		room.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				final Message message = event.getMessage();
-				final ChatState state = getStateFromMessage(message);
-				if (state != null) {
-					final XmppURI from = message.getFrom();
-					othersState.put(from, state);
-					room.getChatEventBus().fireEvent(new RoomChatStateNotificationEvent(message.getFrom(), state));
-				}
-			}
-		});
-
+			logger.finer("Setting own status to: " + ownState + " because we send a body or a subject");
+			ownState = ChatState.active;
+			message.addChild(ChatState.active.toString(), XMLNS);
+		}
+		if (ownState != ChatState.inactive) {
+			inactiveTimer.schedule(inactiveDelay);
+		}
+	}
+	
+	@Override
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		final Message message = event.getMessage();
+		final ChatState state = getStateFromMessage(message);
+		if (state != null) {
+			final XmppURI from = message.getFrom();
+			othersState.put(from, state);
+			eventBus.fireEventFromSource(new RoomChatStateNotificationEvent(message.getFrom(), state), this);
+		}
 	}
 
-	public HandlerRegistration addRoomChatStateNotificationHandler(final RoomChatStateNotificationHandler handler) {
-		return RoomChatStateNotificationEvent.bind(room.getChatEventBus(), handler);
+	public HandlerRegistration addRoomChatStateNotificationHandler(final RoomChatStateNotificationEvent.Handler handler) {
+		return eventBus.addHandlerToSource(RoomChatStateNotificationEvent.TYPE, this, handler);
 	}
 
 	public ChatState getOtherState(final XmppURI occupantUri) {

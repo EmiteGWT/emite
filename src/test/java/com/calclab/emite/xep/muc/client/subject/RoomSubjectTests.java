@@ -28,8 +28,8 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatStates;
-import com.calclab.emite.xep.muc.client.Room;
-import com.calclab.emite.xep.muc.client.RoomChatManager;
+import com.calclab.emite.xep.muc.client.RoomChat;
+import com.calclab.emite.xep.muc.client.RoomChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RoomSubjectChangedTestHandler;
 
@@ -39,7 +39,7 @@ import com.calclab.emite.xtesting.handlers.RoomSubjectChangedTestHandler;
  */
 public class RoomSubjectTests {
 
-	private Room room;
+	private RoomChat room;
 	private XmppURI roomUri;
 	private XmppSessionTester session;
 	private XmppURI userUri;
@@ -51,8 +51,8 @@ public class RoomSubjectTests {
 		roomUri = XmppURI.uri("room@conference.domain");
 		occupantUri = XmppURI.uri("room@conference.domain/user");
 		session = new XmppSessionTester(userUri);
-		final RoomChatManager manager = new RoomChatManager(session);
-		room = (Room) manager.open(roomUri);
+		final RoomChatManagerImpl manager = new RoomChatManagerImpl(session);
+		room = (RoomChat) manager.open(roomUri);
 		room.getProperties().setState(ChatStates.ready);
 	}
 

@@ -24,9 +24,9 @@ import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;

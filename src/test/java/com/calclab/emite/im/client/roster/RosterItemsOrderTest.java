@@ -32,14 +32,18 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.xtesting.RosterItemHelper;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class RosterItemsOrderTest {
 
+	private EventBus eventBus;
 	private RosterGroup group;
 
 	@Before
 	public void setup() {
-		group = new RosterGroup("myGroup");
+		eventBus = new SimpleEventBus();
+		group = new RosterGroup(eventBus, "myGroup");
 		group.add(RosterItemHelper.createItem("test3@test", "test3", false, "myGroup"));
 		group.add(RosterItemHelper.createItem("test2@test", "test2", true, "myGroup"));
 		group.add(RosterItemHelper.createItem("test1@test", "test1", false, "myGroup"));
@@ -55,7 +59,7 @@ public class RosterItemsOrderTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldOrderAvailabiltyAndGroupAndName() {
-		final RosterGroup myGroup = new RosterGroup("myGroup");
+		final RosterGroup myGroup = new RosterGroup(eventBus, "myGroup");
 		myGroup.add(RosterItemHelper.createItem("test2@test", "test2", true, "myGroup"));
 		myGroup.add(RosterItemHelper.createItem("test1@test", "test1", false, "other"));
 		myGroup.add(RosterItemHelper.createItem("test3@test", "test3", true));
@@ -106,7 +110,7 @@ public class RosterItemsOrderTest {
 
 	@Test
 	public void shouldOrderByGroupedFirst() {
-		final RosterGroup myGroup = new RosterGroup("myGroup");
+		final RosterGroup myGroup = new RosterGroup(eventBus, "myGroup");
 		myGroup.add(RosterItemHelper.createItem("test2@test", "test2", false));
 		myGroup.add(RosterItemHelper.createItem("test1@test", "test1", false, "other"));
 		myGroup.add(RosterItemHelper.createItem("test3@test", "test3", false, "myGroup"));

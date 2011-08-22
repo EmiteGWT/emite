@@ -27,29 +27,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
-import com.calclab.emite.xtesting.EmiteTestsEventBus;
-import com.calclab.emite.xtesting.handlers.ChatStateNotificationTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ChatStateTest {
 	private static final XmppURI MYSELF = uri("self@domain/res");
 	private static final XmppURI OTHER = uri("other@domain/otherRes");
-	private ChatStateNotificationTestHandler stateHandler;
+	private ChatStateChangedTestHandler stateHandler;
 	private PairChat pairChat;
 	private ChatStateManager chatStateManager;
 
 	@Before
 	public void aaCreate() {
 		pairChat = Mockito.mock(PairChat.class);
-		final EmiteEventBus eventBus = new EmiteTestsEventBus("chatEventBus");
-		Mockito.when(pairChat.getChatEventBus()).thenReturn(eventBus);
-		chatStateManager = new ChatStateManager(pairChat);
-		stateHandler = new ChatStateNotificationTestHandler();
-		chatStateManager.addChatStateNotificationHandler(stateHandler);
+		chatStateManager = new ChatStateManager(new SimpleEventBus(), pairChat);
+		stateHandler = new ChatStateChangedTestHandler();
+		chatStateManager.addChatStateChangedHandler(stateHandler);
 	}
 
 	@Test

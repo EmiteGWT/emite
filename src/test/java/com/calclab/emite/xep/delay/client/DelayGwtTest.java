@@ -22,9 +22,7 @@ package com.calclab.emite.xep.delay.client;
 
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import org.junit.Test;
 
@@ -54,6 +52,7 @@ public class DelayGwtTest extends GWTTestCase {
 		assertEquals(date, delay.getStamp());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testShouldCalculateDelayLegacyFormat() {
 

@@ -21,38 +21,39 @@
 package com.calclab.emite.example.pingpong.client.events;
 
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
-import com.calclab.emite.core.client.conn.StanzaEvent;
-import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay.Style;
 import com.google.inject.Inject;
 
-public class ConnectionEventsSupervisor {
+public class ConnectionEventsSupervisor implements StanzaReceivedEvent.Handler, StanzaSentEvent.Handler, ConnectionStateChangedEvent.Handler {
 
+	private final PingPongDisplay display;
+	
 	@Inject
 	public ConnectionEventsSupervisor(final XmppConnection connection, final PingPongDisplay display) {
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				display.print("IN: " + event.getStanza(), Style.stanzaReceived);
-			}
-		});
-
-		connection.addStanzaSentHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				display.print("OUT: " + event.getStanza(), Style.stanzaSent);
-			}
-		});
-
-		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
-			@Override
-			public void onStateChanged(final ConnectionStateChangedEvent event) {
-				display.print("Connection state: " + event.getState(), Style.info);
-			}
-		});
+		this.display = display;
+		
+		connection.addStanzaReceivedHandler(this);
+		connection.addStanzaSentHandler(this);
+		connection.addConnectionStateChangedHandler(this);
+	}
+	
+	@Override
+	public void onStanzaReceived(final StanzaReceivedEvent event) {
+		display.print("IN: " + event.getStanza(), Style.stanzaReceived);
+	}
+	
+	@Override
+	public void onStanzaSent(final StanzaSentEvent event) {
+		display.print("OUT: " + event.getStanza(), Style.stanzaSent);
+	}
+	
+	@Override
+	public void onConnectionStateChanged(final ConnectionStateChangedEvent event) {
+		display.print("Connection state: " + event.getState(), Style.info);
 	}
 
 }

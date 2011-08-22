@@ -20,26 +20,24 @@
 
 package com.calclab.emite.core.client.conn;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class ConnectionResponseEvent extends GwtEvent<ConnectionResponseHandler> {
+public class ConnectionResponseEvent extends Event<ConnectionResponseEvent.Handler> {
 
-	private static final Type<ConnectionResponseHandler> TYPE = new Type<ConnectionResponseHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ConnectionResponseHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+	public interface Handler {
+		void onConnectionResponse(ConnectionResponseEvent event);
 	}
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final String response;
 
-	public ConnectionResponseEvent(final String response) {
+	protected ConnectionResponseEvent(final String response) {
 		this.response = response;
 	}
 
 	@Override
-	public Type<ConnectionResponseHandler> getAssociatedType() {
+	public Type<Handler> getAssociatedType() {
 		return TYPE;
 	}
 
@@ -53,8 +51,8 @@ public class ConnectionResponseEvent extends GwtEvent<ConnectionResponseHandler>
 	}
 
 	@Override
-	protected void dispatch(final ConnectionResponseHandler handler) {
-		handler.onResponse(this);
+	protected void dispatch(final Handler handler) {
+		handler.onConnectionResponse(this);
 	}
 
 }

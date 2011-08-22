@@ -22,17 +22,16 @@ package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
-import com.calclab.emite.core.client.conn.StanzaReceivedEvent;
-import com.calclab.emite.core.client.conn.StanzaSentEvent;
-import com.calclab.emite.core.client.conn.XmppConnectionBoilerPlate;
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class XmppConnectionTester extends XmppConnectionBoilerPlate {
+public class XmppConnectionTester extends XmppConnectionBoilerplate {
 
 	private final TigaseXMLService xmler;
 	private final ArrayList<IPacket> sent;
@@ -43,7 +42,7 @@ public class XmppConnectionTester extends XmppConnectionBoilerPlate {
 	private ConnectionSettings settings;
 
 	public XmppConnectionTester() {
-		super(EmiteTestsEventBus.create("et"));
+		super(new SimpleEventBus());
 		xmler = new TigaseXMLService();
 		sent = new ArrayList<IPacket>();
 		received = new ArrayList<IPacket>();
@@ -57,11 +56,6 @@ public class XmppConnectionTester extends XmppConnectionBoilerPlate {
 	@Override
 	public void disconnect() {
 		isConnected = false;
-	}
-
-	@Override
-	public EmiteEventBus getEventBus() {
-		return eventBus;
 	}
 
 	public int getSentSize() {
@@ -127,7 +121,7 @@ public class XmppConnectionTester extends XmppConnectionBoilerPlate {
 	@Override
 	public void send(final IPacket packet) {
 		sent.add(packet);
-		eventBus.fireEvent(new StanzaSentEvent(packet));
+		fireStanzaSent(packet);
 	}
 
 	public void send(final String stanza) {

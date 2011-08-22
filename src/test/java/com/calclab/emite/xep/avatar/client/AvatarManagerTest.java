@@ -31,7 +31,8 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.AvatarVCardTestHandler;
-import com.calclab.emite.xtesting.handlers.PresenceTestHandler;
+import com.calclab.emite.xtesting.handlers.HashPresenceReceivedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class AvatarManagerTest {
 	private AvatarManager avatarManager;
@@ -40,12 +41,12 @@ public class AvatarManagerTest {
 	@Before
 	public void aaaCreateManager() {
 		session = new XmppSessionTester();
-		avatarManager = new AvatarManager(session);
+		avatarManager = new AvatarManager(new SimpleEventBus(), session);
 	}
 
 	@Test
 	public void managerShouldListenPresenceWithPhoto() {
-		final PresenceTestHandler handler = new PresenceTestHandler();
+		final HashPresenceReceivedTestHandler handler = new HashPresenceReceivedTestHandler();
 		avatarManager.addHashPresenceReceviedHandler(handler);
 		final Presence presence = new Presence(XmppURI.uri("juliet@capulet.com/balcony"));
 		presence.addChild("x", "vcard-temp:x:update").addChild("photo", null).setText("sha1-hash-of-image");

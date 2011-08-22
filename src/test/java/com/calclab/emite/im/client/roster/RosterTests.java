@@ -40,6 +40,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.RosterRetrievedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class RosterTests {
 
@@ -72,7 +73,7 @@ public class RosterTests {
 	@Before
 	public void beforeTests() {
 		session = new XmppSessionTester();
-		roster = new XmppRosterLogic(session);
+		roster = new XmppRosterImpl(new SimpleEventBus(), session);
 	}
 
 	@Test

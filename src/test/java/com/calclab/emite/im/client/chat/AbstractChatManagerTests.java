@@ -25,8 +25,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 
 public abstract class AbstractChatManagerTests {
@@ -34,7 +35,7 @@ public abstract class AbstractChatManagerTests {
 	protected static final XmppURI OTHER = XmppURI.uri("other@localhost");
 
 	protected XmppSessionTester session;
-	protected PairChatManager manager;
+	protected PairChatManagerImpl manager;
 
 	@Before
 	public void beforeTests() {
@@ -47,7 +48,7 @@ public abstract class AbstractChatManagerTests {
 		session.setLoggedIn(ME);
 		final Chat chat = manager.open(OTHER);
 		assertEquals(ChatStates.ready, chat.getChatState());
-		session.setSessionState(SessionStates.disconnected);
+		session.setSessionState(SessionState.disconnected);
 		assertEquals(ChatStates.locked, chat.getChatState());
 	}
 
@@ -61,5 +62,5 @@ public abstract class AbstractChatManagerTests {
 
 	}
 
-	protected abstract PairChatManager createChatManager(XmppSessionTester session2);
+	protected abstract PairChatManagerImpl createChatManager(XmppSessionTester session2);
 }

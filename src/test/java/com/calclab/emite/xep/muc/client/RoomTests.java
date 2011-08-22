@@ -32,13 +32,13 @@ import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatStates;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 
 public class RoomTests {
 
 	private XmppSessionTester session;
-	private RoomChatManager manager;
-	private Room room;
+	private RoomChatManagerImpl manager;
+	private RoomChat room;
 	private XmppURI userURI;
 	private XmppURI roomURI;
 
@@ -47,8 +47,8 @@ public class RoomTests {
 		userURI = uri("user@domain/res");
 		roomURI = uri("room@domain/user");
 		session = new XmppSessionTester(userURI);
-		manager = new RoomChatManager(session);
-		room = (Room) manager.open(roomURI);
+		manager = new RoomChatManagerImpl(session);
+		room = (RoomChat) manager.open(roomURI);
 	}
 
 	@Test
@@ -65,8 +65,8 @@ public class RoomTests {
 	public void shouldInterceptOutcomingMessages() {
 		// a little hack
 		room.getProperties().setState(ChatStates.ready);
-		final MessageTestHandler handler = new MessageTestHandler();
-		room.addBeforeSendMessageHandler(handler);
+		final BeforeMessageSentTestHandler handler = new BeforeMessageSentTestHandler();
+		room.addBeforeMessageSentHandler(handler);
 		room.send(new Message("body"));
 		assertTrue(handler.isCalledOnce());
 		assertEquals("body", handler.getLastMessage().getBody());

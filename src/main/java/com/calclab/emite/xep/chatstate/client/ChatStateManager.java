@@ -22,21 +22,23 @@ package com.calclab.emite.xep.chatstate.client;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
+import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationEvent;
-import com.calclab.emite.xep.chatstate.client.events.ChatStateNotificationHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * XEP-0085: Chat State Notifications
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
-public class ChatStateManager {
+public class ChatStateManager implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(ChatStateManager.class.getName());
+	
+	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
+	public static final String KEY = "ChatStateManager";
 	
 	public static enum ChatState {
 		active, composing, pause, inactive, gone
@@ -46,35 +48,70 @@ public class ChatStateManager {
 		notStarted, started, rejected, accepted
 	}
 
-	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
-	public static final String KEY = "ChatStateManager";
-
+	private final EventBus eventBus;
+	private final Chat chat;
+	
+	private NegotiationStatus negotiationStatus = NegotiationStatus.notStarted;
 	private ChatState ownState;
 	private ChatState otherState;
-	private final Chat chat;
-	private NegotiationStatus negotiationStatus;
-
-	public ChatStateManager(final Chat chat) {
+	
+	public ChatStateManager(final EventBus eventBus, final Chat chat) {
+		this.eventBus = eventBus;
 		this.chat = chat;
-		negotiationStatus = NegotiationStatus.notStarted;
 
-		chat.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				handleMessageReceived(chat, event.getMessage());
-			}
-		});
+		chat.addMessageReceivedHandler(this);
+		chat.addBeforeMessageSentHandler(this);
+	}
+	
+	@Override
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		final Message message = event.getMessage();
 
-		chat.addBeforeSendMessageHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				beforeSendMessage(event.getMessage());
+		for (ChatState chatState : ChatState.values()) {
+			final String typeSt = chatState.toString();
+			if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
+				otherState = chatState;
+				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
+					sendStateMessage(ChatState.active);
+				}
+				if (chatState.equals(ChatState.gone)) {
+					negotiationStatus = NegotiationStatus.notStarted;
+				} else {
+					negotiationStatus = NegotiationStatus.accepted;
+				}
+				logger.info("Receiver other chat status: " + typeSt);
+				eventBus.fireEventFromSource(new ChatStateChangedEvent(chatState), this);
 			}
-		});
+		}
+	}
+	
+	@Override
+	public void onBeforeMessageSent(final BeforeMessageSentEvent event) {
+		final Message message = event.getMessage();
+		
+		switch (negotiationStatus) {
+		case notStarted:
+			negotiationStatus = NegotiationStatus.started;
+		case accepted:
+			boolean alreadyWithState = false;
+			for (int i = 0; i < ChatState.values().length; i++) {
+				if (message.hasChild(ChatState.values()[i].toString())) {
+					alreadyWithState = true;
+				}
+			}
+			if (!alreadyWithState) {
+				message.addChild(ChatState.active.toString(), XMLNS);
+			}
+			break;
+		case rejected:
+		case started:
+			// do nothing
+			break;
+		}
 	}
 
-	public HandlerRegistration addChatStateNotificationHandler(final ChatStateNotificationHandler handler) {
-		return ChatStateNotificationEvent.bind(chat.getChatEventBus(), handler);
+	public HandlerRegistration addChatStateChangedHandler(ChatStateChangedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ChatStateChangedEvent.TYPE, this, handler);
 	}
 
 	public NegotiationStatus getNegotiationStatus() {
@@ -104,51 +141,10 @@ public class ChatStateManager {
 		}
 	}
 
-	protected void handleMessageReceived(final Chat chat, final Message message) {
-		for (int i = 0; i < ChatState.values().length; i++) {
-			final ChatState chatState = ChatState.values()[i];
-			final String typeSt = chatState.toString();
-			if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
-				otherState = chatState;
-				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
-					sendStateMessage(ChatState.active);
-				}
-				if (chatState.equals(ChatState.gone)) {
-					negotiationStatus = NegotiationStatus.notStarted;
-				} else {
-					negotiationStatus = NegotiationStatus.accepted;
-				}
-				logger.info("Receiver other chat status: " + typeSt);
-				chat.getChatEventBus().fireEvent(new ChatStateNotificationEvent(chatState));
-			}
-		}
-	}
-
-	void beforeSendMessage(final Message message) {
-		switch (negotiationStatus) {
-		case notStarted:
-			negotiationStatus = NegotiationStatus.started;
-		case accepted:
-			boolean alreadyWithState = false;
-			for (int i = 0; i < ChatState.values().length; i++) {
-				if (message.hasChild(ChatState.values()[i].toString())) {
-					alreadyWithState = true;
-				}
-			}
-			if (!alreadyWithState) {
-				message.addChild(ChatState.active.toString(), XMLNS);
-			}
-			break;
-		case rejected:
-		case started:
-			// do nothing
-			break;
-		}
-	}
-
 	private void sendStateMessage(final ChatState chatState) {
 		final Message message = new Message(null, chat.getURI());
 		message.addChild(chatState.toString(), XMLNS);
 		chat.send(message);
 	}
+
 }

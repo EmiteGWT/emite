@@ -28,29 +28,28 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.xtesting.XmppConnectionTester;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ResourceBindingManagerTest {
+	
 	private ResourceBindingManager manager;
 	private XmppConnectionTester connection;
-	private EmiteEventBus eventBus;
 	private ResourceBindResultEvent currentEvent;
 
 	@Before
 	public void beforeTests() {
 		connection = new XmppConnectionTester();
-		eventBus = connection.getEventBus();
-		manager = new ResourceBindingManager(connection);
+		manager = new ResourceBindingManager(new SimpleEventBus(), connection);
 	}
 
 	@Test
 	public void shouldEventIfBindedSucceed() {
 		currentEvent = null;
-		eventBus.addHandler(ResourceBindResultEvent.getType(), new ResourceBindResultHandler() {
+		manager.addResourceBindResultHandler(new ResourceBindResultEvent.Handler() {
 			@Override
-			public void onBinded(final ResourceBindResultEvent event) {
+			public void onResourceBindResult(ResourceBindResultEvent event) {
 				currentEvent = event;
 			}
 		});

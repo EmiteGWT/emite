@@ -33,6 +33,7 @@ import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppConnectionTester;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class SASLManagerTest {
 	private SASLManager manager;
@@ -42,11 +43,12 @@ public class SASLManagerTest {
 	@Before
 	public void beforeTests() {
 		connection = new XmppConnectionTester();
-		manager = new SASLManager(connection, new DecoderRegistry());
+		manager = new SASLManager(new SimpleEventBus(), connection, new DecoderRegistry());
 		authEvent = null;
-		AuthorizationResultEvent.bind(connection.getEventBus(), new AuthorizationResultHandler() {
+		
+		manager.addAuthorizationResultHandler(new AuthorizationResultEvent.Handler() {
 			@Override
-			public void onAuthorization(final AuthorizationResultEvent event) {
+			public void onAuthorizationResult(final AuthorizationResultEvent event) {
 				authEvent = event;
 			}
 		});
@@ -57,7 +59,7 @@ public class SASLManagerTest {
 		manager.sendAuthorizationRequest(credentials(uri("me@domain"), "password"));
 		connection.receives("<success xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"/>");
 		assertNotNull(authEvent);
-		assertTrue(authEvent.isSucceed());
+		assertTrue(authEvent.isSuccess());
 	}
 
 	@Test
@@ -65,7 +67,7 @@ public class SASLManagerTest {
 		manager.sendAuthorizationRequest(credentials(uri("node@domain"), "password"));
 		connection.receives("<failure xmlns=\"urn:ietf:params:xml:ns:xmpp-sasl\"><not-authorized/></failure>");
 		assertNotNull(authEvent);
-		assertFalse(authEvent.isSucceed());
+		assertFalse(authEvent.isSuccess());
 	}
 
 	@Test

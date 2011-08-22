@@ -28,7 +28,8 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
+import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 
 public abstract class AbstractChatTest {
 	protected final XmppSessionTester session;
@@ -38,13 +39,13 @@ public abstract class AbstractChatTest {
 		session = new XmppSessionTester();
 	}
 
-	public abstract AbstractChat getChat();
+	public abstract ChatBoilerplate getChat();
 
 	@Test
 	public void shouldInterceptIncomingMessages() {
-		final AbstractChat chat = getChat();
-		final MessageTestHandler interceptor = new MessageTestHandler();
-		chat.addBeforeReceiveMessageHandler(interceptor);
+		final ChatBoilerplate chat = getChat();
+		final BeforeMessageReceivedTestHandler interceptor = new BeforeMessageReceivedTestHandler();
+		chat.addBeforeMessageReceivedHandler(interceptor);
 		final Message message = new Message("body", USER_URI, chat.getURI());
 		session.receives(message);
 		assertEquals(message, interceptor.getLastMessage());
@@ -52,10 +53,10 @@ public abstract class AbstractChatTest {
 
 	@Test
 	public void shouldInterceptOutcomingMessages() {
-		final AbstractChat chat = getChat();
+		final ChatBoilerplate chat = getChat();
 		chat.setChatState(ChatStates.ready);
-		final MessageTestHandler interceptor = new MessageTestHandler();
-		chat.addBeforeSendMessageHandler(interceptor);
+		final BeforeMessageSentTestHandler interceptor = new BeforeMessageSentTestHandler();
+		chat.addBeforeMessageSentHandler(interceptor);
 		final Message message = new Message("body");
 		chat.send(message);
 		assertEquals(message, interceptor.getLastMessage());
@@ -63,7 +64,7 @@ public abstract class AbstractChatTest {
 
 	@Test
 	public void shouldNotSendMessagesWhenStatusIsNotReady() {
-		final AbstractChat chat = getChat();
+		final ChatBoilerplate chat = getChat();
 		chat.setChatState("locked");
 		chat.send(new Message("a message"));
 		session.verifyNotSent("<message />");

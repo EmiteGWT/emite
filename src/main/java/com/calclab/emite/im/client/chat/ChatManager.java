@@ -23,8 +23,6 @@ package com.calclab.emite.im.client.chat;
 import java.util.Collection;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 
 /**
  * Create and manage chat conversations.
@@ -32,23 +30,36 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * There are one implementation for one-to-one conversations (PairChatManager)
  * and many-to-many conversations (RoomManagerImpl)
  */
-public interface ChatManager {
+public interface ChatManager<C extends Chat> {
 
 	/**
-	 * Add a handler to track chat changes. The following changes can ocurr from
-	 * a default chat manager: created, opened, closed
+	 * Same as openChat(new ChatProperties(uri))
 	 * 
-	 * @param handler
+	 * Here for compatilibility reasons
+	 * 
+	 * @param uri
+	 * @return
 	 */
-	public HandlerRegistration addChatChangedHandler(ChatChangedHandler handler);
+	//TODO: deprecate
+	public C open(XmppURI uri);
 
+	/**
+	 * The same as getChat, but it fire ChatChanged(opened) event if the chat is
+	 * found or created
+	 * 
+	 * @param properties
+	 * @param createIfNotFound
+	 * @return
+	 */
+	public C openChat(ChatProperties properties, boolean createIfNotFound);
+	
 	/**
 	 * Close the given conversation. If a conversation is closed, a new
 	 * onChatCreated event will be throw when opened
 	 * 
 	 * @param chat
 	 */
-	public void close(Chat chat);
+	public void close(C chat);
 
 	/**
 	 * Obtain a chat from the chat manager. It can create new chats if
@@ -62,7 +73,7 @@ public interface ChatManager {
 	 * @return the chat with that properties. If createIfNotFound is false, the
 	 *         return CAN be null
 	 */
-	public Chat getChat(ChatProperties properties, boolean createIfNotFound);
+	public C getChat(ChatProperties properties, boolean createIfNotFound);
 
 	/**
 	 * Same as getChat(new ChatProperties(uri), false);
@@ -72,30 +83,9 @@ public interface ChatManager {
 	 * @param uri
 	 * @return
 	 */
-	public Chat getChat(XmppURI uri);
+	public C getChat(XmppURI uri);
 
-	public Collection<? extends Chat> getChats();
-
-	/**
-	 * Same as openChat(new ChatProperties(uri))
-	 * 
-	 * Here for compatilibility reasons
-	 * 
-	 * @param uri
-	 * @return
-	 */
-	// FIXME: deprecate
-	public Chat open(XmppURI uri);
-
-	/**
-	 * The same as getChat, but it fire ChatChanged(opened) event if the chat is
-	 * found or created
-	 * 
-	 * @param properties
-	 * @param createIfNotFound
-	 * @return
-	 */
-	public Chat openChat(ChatProperties properties, boolean createIfNotFound);
+	public Collection<C> getChats();
 
 	/**
 	 * Changes a the chat selection strategy of the current chat manager

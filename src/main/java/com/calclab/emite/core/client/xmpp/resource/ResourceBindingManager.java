@@ -20,35 +20,42 @@
 
 package com.calclab.emite.core.client.xmpp.resource;
 
-import com.calclab.emite.core.client.conn.StanzaEvent;
-import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class ResourceBindingManager {
+public class ResourceBindingManager implements StanzaReceivedEvent.Handler {
 
+	private final EventBus eventBus;
 	private final XmppConnection connection;
 
 	@Inject
-	public ResourceBindingManager(final XmppConnection connection) {
+	public ResourceBindingManager(@Named("emite") EventBus eventBus, final XmppConnection connection) {
+		this.eventBus = eventBus;
 		this.connection = connection;
 
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket received = event.getStanza();
-				if ("bind-resource".equals(received.getAttribute("id"))) {
-					final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
-					connection.getEventBus().fireEvent(new ResourceBindResultEvent(XmppURI.uri(jid)));
-				}
-			}
-		});
-
+		connection.addStanzaReceivedHandler(this);
+	}
+	
+	public HandlerRegistration addResourceBindResultHandler(final ResourceBindResultEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ResourceBindResultEvent.TYPE, this, handler);
+	}
+	
+	@Override
+	public void onStanzaReceived(final StanzaReceivedEvent event) {
+		final IPacket received = event.getStanza();
+		if ("bind-resource".equals(received.getAttribute("id"))) {
+			final String jid = received.getFirstChild("bind").getFirstChild("jid").getText();
+			eventBus.fireEventFromSource(new ResourceBindResultEvent(XmppURI.uri(jid)), this);
+		}
 	}
 
 	public void bindResource(final String resource) {

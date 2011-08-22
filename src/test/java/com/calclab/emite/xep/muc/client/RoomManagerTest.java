@@ -38,8 +38,9 @@ import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
-import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * Room manager tests using the old event system (legacy)
@@ -47,11 +48,11 @@ import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
  * @author dani
  * 
  */
-public class RoomManagerTest extends AbstractChatManagerTest {
+public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 
 	@Test
 	public void shouldAcceptInvitations() {
-		final RoomManager rooms = (RoomManager) manager;
+		final RoomChatManager rooms = (RoomChatManager) manager;
 		final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
 		rooms.addChatChangedHandler(chatCreatedHandler);
 
@@ -66,7 +67,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 
 	@Test
 	public void shouldAcceptRoomPresenceWithAvatar() {
-		final Room room = (Room) manager.open(uri("room1@domain/nick"));
+		final RoomChat room = (RoomChat) manager.open(uri("room1@domain/nick"));
 		session.receives("<presence to='user@domain/resource' from='room1@domain/otherUser2'>" + "<priority>0</priority>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'>" + "<item jid='otheruserjid@domain/otherresoruce' affiliation='none' "
 				+ "role='participant'/></x>" + "<x xmlns='vcard-temp:x:update'><photo>af70fe6519d6a27a910c427c3bc551dcd36073e7</photo></x>" + "</presence>");
@@ -89,7 +90,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 	@Test
 	public void shouldFireChatMessages() {
 		final Chat chat = manager.open(uri("room@rooms.domain/user"));
-		final MessageTestHandler handler = new MessageTestHandler();
+		final MessageReceivedTestHandler handler = new MessageReceivedTestHandler();
 		chat.addMessageReceivedHandler(handler);
 		session.receives("<message from='room@rooms.domain/other' to='user@domain/resource' " + "type='groupchat'><body>the message body</body></message>");
 		assertEquals(1, handler.getCalledTimes());
@@ -97,14 +98,14 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 
 	@Test
 	public void shouldGiveSameRoomsWithSameURIS() {
-		final Room room1 = (Room) manager.open(uri("room@domain/nick"));
-		final Room room2 = (Room) manager.open(uri("room@domain/nick"));
+		final RoomChat room1 = (RoomChat) manager.open(uri("room@domain/nick"));
+		final RoomChat room2 = (RoomChat) manager.open(uri("room@domain/nick"));
 		assertSame(room1, room2);
 	}
 
 	@Test
 	public void shouldIgnoreLetterCaseInURIS() {
-		final Room room = (Room) manager.open(uri("ROOM@domain/nick"));
+		final RoomChat room = (RoomChat) manager.open(uri("ROOM@domain/nick"));
 		final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
 		room.addOccupantChangedHandler(handler);
 		session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='ROom@domain/otherUser'>"
@@ -118,7 +119,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 	 */
 	@Test
 	public void shouldPreserveInvitationProperties() {
-		final RoomManager rooms = (RoomManager) manager;
+		final RoomChatManager rooms = (RoomChatManager) manager;
 		final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
 		rooms.addChatChangedHandler(chatCreatedHandler);
 
@@ -136,7 +137,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 
 	@Test
 	public void shouldUpdateRoomPresence() {
-		final Room room = (Room) manager.open(uri("room1@domain/nick"));
+		final RoomChat room = (RoomChat) manager.open(uri("room1@domain/nick"));
 
 		session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='room1@domain/otherUser'>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'>" + "<item role='moderator' affiliation='owner' jid='otherUser@domain' /></x></presence>");
@@ -161,8 +162,7 @@ public class RoomManagerTest extends AbstractChatManagerTest {
 	}
 
 	@Override
-	protected ChatManager createChatManager() {
-		final RoomManager roomManager = new RoomChatManager(session);
-		return roomManager;
+	protected RoomChatManager createChatManager() {
+		return new RoomChatManagerImpl(new SimpleEventBus(), session, new RoomChatSelectionStrategy());
 	}
 }

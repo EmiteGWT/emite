@@ -21,7 +21,7 @@
 package com.calclab.emite.im.client;
 
 import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
-import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.im.client.presence.PresenceManager;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
@@ -40,7 +40,7 @@ import com.google.inject.Singleton;
 public class ImComponents {
 
 	@Inject
-	public ImComponents(final SessionComponentsRegistry registry, final Provider<ChatManager> chatManager, final Provider<PresenceManager> presenceManager,
+	public ImComponents(final SessionComponentsRegistry registry, final Provider<PairChatManagerImpl> chatManager, final Provider<PresenceManager> presenceManager,
 			final Provider<SubscriptionManager> subscriptionManager, final Provider<SubscriptionHandler> subcriptionHandler,
 			final Provider<XmppRoster> xmppRoster) {
 

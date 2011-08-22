@@ -22,60 +22,62 @@ package com.calclab.emite.xep.avatar.client;
 
 import java.util.List;
 
-import com.calclab.emite.core.client.events.PresenceEvent;
-import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
+import com.calclab.emite.core.client.xmpp.session.IQCallback;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.avatar.client.events.AvatarVCardHandler;
-import com.calclab.emite.xep.avatar.client.events.AvatarVCardReceivedEvent;
-import com.calclab.emite.xep.avatar.client.events.HashPresenceReceivedEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * XEP-0153: vCard-Based Avatars (Version 1.0)
  */
-public class AvatarManager {
+@Singleton
+public class AvatarManager implements PresenceReceivedEvent.Handler {
 	private static final PacketMatcher FILTER_X = MatcherFactory.byName("x");
 	private static final String VCARD = "vCard";
 	private static final String XMLNS = "vcard-temp";
 	private static final String PHOTO = "PHOTO";
 	private static final String TYPE = "TYPE";
 	private static final String BINVAL = "BINVAL";
+	
+	private final EventBus eventBus;
 	private final XmppSession session;
 
 	@Inject
-	public AvatarManager(final XmppSession session) {
+	public AvatarManager(@Named("emite") final EventBus eventBus, final XmppSession session) {
+		this.eventBus = eventBus;
 		this.session = session;
 
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				final List<? extends IPacket> children = presence.getChildren(FILTER_X);
-				for (final IPacket child : children) {
-					if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
-						session.getEventBus().fireEvent(new HashPresenceReceivedEvent(presence));
-					}
-				}
+		session.addPresenceReceivedHandler(this);
+	}
+	
+	@Override
+	public void onPresenceReceived(final PresenceReceivedEvent event) {
+		final Presence presence = event.getPresence();
+		final List<? extends IPacket> children = presence.getChildren(FILTER_X);
+		for (final IPacket child : children) {
+			if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
+				eventBus.fireEventFromSource(new HashPresenceReceivedEvent(presence), this);
 			}
-		});
-
+		}
 	}
 
-	public HandlerRegistration addAvatarVCardReceivedHandler(final AvatarVCardHandler handler) {
-		return AvatarVCardReceivedEvent.bind(session.getEventBus(), handler);
+	public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(AvatarVCardReceivedEvent.TYPE, this, handler);
 	}
 
-	public HandlerRegistration addHashPresenceReceviedHandler(final PresenceHandler handler) {
-		return HashPresenceReceivedEvent.bind(session.getEventBus(), handler);
+	public HandlerRegistration addHashPresenceReceviedHandler(final HashPresenceReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(HashPresenceReceivedEvent.TYPE, this, handler);
 	}
 
 	/**
@@ -91,7 +93,7 @@ public class AvatarManager {
 		final IQ iq = new IQ(Type.get, otherJID);
 		iq.addChild(VCARD, XMLNS);
 
-		session.sendIQ("avatar", iq, new IQResponseHandler() {
+		session.sendIQ("avatar", iq, new IQCallback() {
 			@Override
 			public void onIQ(final IQ received) {
 				if (IQ.isSuccess(received) && received.hasChild(VCARD) && received.hasAttribute("to", session.getCurrentUserURI().toString())) {
@@ -100,7 +102,8 @@ public class AvatarManager {
 					final String photoType = photo.getFirstChild(TYPE).getText();
 					final String photoBinval = photo.getFirstChild(BINVAL).getText();
 					final AvatarVCard avatar = new AvatarVCard(from, null, photoType, photoBinval);
-					session.getEventBus().fireEvent(new AvatarVCardReceivedEvent(avatar));
+					
+					eventBus.fireEventFromSource(new AvatarVCardReceivedEvent(avatar), this);
 				}
 			}
 		});
@@ -115,7 +118,7 @@ public class AvatarManager {
 		vcard.setAttribute("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
 		vcard.setAttribute("version", "2.0");
 		vcard.addChild(PHOTO, null).addChild(BINVAL, null).setText(photoBinary);
-		session.sendIQ("avatar", iq, new IQResponseHandler() {
+		session.sendIQ("avatar", iq, new IQCallback() {
 			@Override
 			public void onIQ(final IQ iq) {
 				if (IQ.isSuccess(iq)) {

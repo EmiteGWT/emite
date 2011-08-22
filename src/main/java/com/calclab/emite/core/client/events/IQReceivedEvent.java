@@ -21,17 +21,39 @@
 package com.calclab.emite.core.client.events;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class IQReceivedEvent extends IQEvent {
-	private static final Type<IQHandler> TYPE = new Type<IQHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final IQHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class IQReceivedEvent extends Event<IQReceivedEvent.Handler> {
+	
+	public interface Handler {
+		void onIQReceived(IQReceivedEvent event);
 	}
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
+
+	private final IQ iq;
 
 	public IQReceivedEvent(final IQ iq) {
-		super(TYPE, iq);
+		this.iq = iq;
+	}
+
+	public IQ getIQ() {
+		return iq;
+	}
+
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(Handler handler) {
+		handler.onIQReceived(this);
+	}
+	
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + iq;
 	}
 
 }

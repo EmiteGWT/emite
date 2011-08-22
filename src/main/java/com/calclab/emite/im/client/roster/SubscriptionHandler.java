@@ -20,8 +20,6 @@
 
 package com.calclab.emite.im.client.roster;
 
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -37,7 +35,7 @@ import com.google.inject.Singleton;
  * The default behaviour is none: do nothing
  */
 @Singleton
-public class SubscriptionHandler {
+public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Handler {
 
 	public static enum Behaviour {
 		/** do nothing **/
@@ -48,23 +46,24 @@ public class SubscriptionHandler {
 		refuseAll
 	}
 
-	private Behaviour behaviour;
+	private final SubscriptionManager manager;
+	
+	private Behaviour behaviour = Behaviour.none;
 
 	@Inject
 	public SubscriptionHandler(final SubscriptionManager manager) {
-		behaviour = Behaviour.none;
+		this.manager = manager;
 
-		manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
-			@Override
-			public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
-				if (behaviour == Behaviour.acceptAll) {
-					manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
-				} else if (behaviour == Behaviour.refuseAll) {
-					manager.refuseSubscriptionRequest(event.getFrom());
-				}
-			}
-		});
-
+		manager.addSubscriptionRequestReceivedHandler(this);
+	}
+	
+	@Override
+	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
+		if (behaviour == Behaviour.acceptAll) {
+			manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
+		} else if (behaviour == Behaviour.refuseAll) {
+			manager.refuseSubscriptionRequest(event.getFrom());
+		}
 	}
 
 	/**

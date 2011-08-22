@@ -21,8 +21,7 @@
 package com.calclab.emite.im.client.presence;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Handles the user's presence state. Provides event to know when it changes.
@@ -38,7 +37,7 @@ public interface PresenceManager {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedHandler handler);
+	HandlerRegistration addOwnPresenceChangedHandler(OwnPresenceChangedEvent.Handler handler);
 
 	/**
 	 * Change the current user presence

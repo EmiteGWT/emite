@@ -20,10 +20,9 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultEvent;
-import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultHandler;
+import com.calclab.emite.xep.disco.client.DiscoveryInfoResultEvent;
 
-public class DiscoveryInfoResultTestHandler extends TestHandler<DiscoveryInfoResultEvent> implements DiscoveryInfoResultHandler {
+public class DiscoveryInfoResultTestHandler extends TestHandler<DiscoveryInfoResultEvent> implements DiscoveryInfoResultEvent.Handler {
 
 	@Override
 	public void onDiscoveryInfoResult(final DiscoveryInfoResultEvent event) {

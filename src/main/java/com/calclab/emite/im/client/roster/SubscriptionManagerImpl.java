@@ -20,8 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
-import com.calclab.emite.core.client.events.PresenceEvent;
-import com.calclab.emite.core.client.events.PresenceHandler;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
@@ -29,62 +28,60 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * @see SubscriptionManager
  */
 @Singleton
-public class SubscriptionManagerImpl implements SubscriptionManager {
+public class SubscriptionManagerImpl implements SubscriptionManager, PresenceReceivedEvent.Handler, RosterItemChangedEvent.Handler {
 	protected static final PacketMatcher FILTER_NICK = MatcherFactory.byNameAndXMLNS("nick", "http://jabber.org/protocol/nick");
+	
+	private final EventBus eventBus;
 	private final XmppSession session;
 	private final XmppRoster roster;
 
 	@Inject
-	public SubscriptionManagerImpl(final XmppSession session, final XmppRoster roster) {
+	public SubscriptionManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final XmppRoster roster) {
+		this.eventBus = eventBus;
 		this.session = session;
 		this.roster = roster;
 
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				if (presence.getType() == Type.subscribe) {
-					final IPacket nick = presence.getFirstChild(FILTER_NICK);
-					session.getEventBus().fireEvent(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()));
-				}
+		session.addPresenceReceivedHandler(this);
+		roster.addRosterItemChangedHandler(this);
+	}
+	
+	@Override
+	public void onPresenceReceived(final PresenceReceivedEvent event) {
+		final Presence presence = event.getPresence();
+		if (presence.getType() == Type.subscribe) {
+			final IPacket nick = presence.getFirstChild(FILTER_NICK);
+			eventBus.fireEventFromSource(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()), this);
+		}
+	}
+	
+	@Override
+	public void onRosterItemChanged(final RosterItemChangedEvent event) {
+		if (event.isAdded()) {
+			final RosterItem item = event.getRosterItem();
+			if (item.getSubscriptionState() == SubscriptionState.none) {
+				// && item.getAsk() == Type.subscribe) {
+				requestSubscribe(item.getJID());
+				item.setSubscriptionState(SubscriptionState.nonePendingIn);
+			} else if (item.getSubscriptionState() == SubscriptionState.from) {
+				approveSubscriptionRequest(item.getJID(), item.getName());
+				item.setSubscriptionState(SubscriptionState.fromPendingOut);
 			}
-		});
-
-		// use bind instead of roster for better testing
-		RosterItemChangedEvent.bind(session.getEventBus(), new RosterItemChangedHandler() {
-			@Override
-			public void onRosterItemChanged(final RosterItemChangedEvent event) {
-				if (event.isAdded()) {
-					final RosterItem item = event.getRosterItem();
-					if (item.getSubscriptionState() == SubscriptionState.none) {
-						// && item.getAsk() == Type.subscribe) {
-						requestSubscribe(item.getJID());
-						item.setSubscriptionState(SubscriptionState.nonePendingIn);
-					} else if (item.getSubscriptionState() == SubscriptionState.from) {
-						approveSubscriptionRequest(item.getJID(), item.getName());
-						item.setSubscriptionState(SubscriptionState.fromPendingOut);
-					}
-				}
-			}
-		});
-
+		}
 	}
 
 	@Override
-	public HandlerRegistration addSubscriptionRequestReceivedHandler(final SubscriptionRequestReceivedHandler handler) {
-		return SubscriptionRequestReceivedEvent.bind(session.getEventBus(), handler);
+	public HandlerRegistration addSubscriptionRequestReceivedHandler(final SubscriptionRequestReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(SubscriptionRequestReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override

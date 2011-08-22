@@ -20,15 +20,15 @@
 
 package com.calclab.emite.xep.vcard.client;
 
-import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
+import com.calclab.emite.core.client.xmpp.session.IQCallback;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.vcard.client.events.VCardResponseEvent;
-import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Implements VCardManager
@@ -38,26 +38,29 @@ import com.google.inject.Singleton;
 @Singleton
 public class VCardManagerImpl implements VCardManager {
 	private static final String ID_PREFIX = "vcard";
+	
+	private final EventBus eventBus;
 	private final XmppSession session;
 
 	@Inject
-	public VCardManagerImpl(final XmppSession session) {
+	public VCardManagerImpl(@Named("emite") EventBus eventBus, XmppSession session) {
+		this.eventBus = eventBus;
 		this.session = session;
 	}
 
 	@Override
-	public HandlerRegistration addVCardResponseHandler(final VCardResponseHandler handler) {
-		return VCardResponseEvent.bind(session.getEventBus(), handler);
+	public HandlerRegistration addVCardResponseHandler(final VCardResponseEvent.Handler handler) {
+		return eventBus.addHandlerToSource(VCardResponseEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public void getUserVCard(final XmppURI userJid, final VCardResponseHandler handler) {
+	public void getUserVCard(final XmppURI userJid, final VCardResponseEvent.Handler handler) {
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 		iq.setFrom(session.getCurrentUserURI());
 		iq.setTo(userJid);
 
-		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+		session.sendIQ(ID_PREFIX, iq, new IQCallback() {
 			@Override
 			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
@@ -67,11 +70,11 @@ public class VCardManagerImpl implements VCardManager {
 	}
 
 	@Override
-	public void requestOwnVCard(final VCardResponseHandler handler) {
+	public void requestOwnVCard(final VCardResponseEvent.Handler handler) {
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.addChild(VCard.VCARD, VCard.DATA_XMLS);
 		iq.setFrom(session.getCurrentUserURI());
-		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+		session.sendIQ(ID_PREFIX, iq, new IQCallback() {
 			@Override
 			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
@@ -81,10 +84,10 @@ public class VCardManagerImpl implements VCardManager {
 	}
 
 	@Override
-	public void updateOwnVCard(final VCard vcard, final VCardResponseHandler handler) {
+	public void updateOwnVCard(final VCard vcard, final VCardResponseEvent.Handler handler) {
 		final IQ iq = new IQ(IQ.Type.set);
 		iq.addChild(vcard);
-		session.sendIQ(ID_PREFIX, iq, new IQResponseHandler() {
+		session.sendIQ(ID_PREFIX, iq, new IQCallback() {
 			@Override
 			public void onIQ(final IQ iq) {
 				handleVCard(iq, handler);
@@ -93,12 +96,12 @@ public class VCardManagerImpl implements VCardManager {
 
 	}
 
-	protected void handleVCard(final IQ result, final VCardResponseHandler handler) {
+	protected void handleVCard(final IQ result, final VCardResponseEvent.Handler handler) {
 		final VCardResponse response = new VCardResponse(result);
 		final VCardResponseEvent event = new VCardResponseEvent(response);
 		if (handler != null) {
 			handler.onVCardResponse(event);
 		}
-		session.getEventBus().fireEvent(event);
+		eventBus.fireEventFromSource(event, this);
 	}
 }

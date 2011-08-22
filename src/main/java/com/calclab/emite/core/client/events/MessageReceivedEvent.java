@@ -21,21 +21,39 @@
 package com.calclab.emite.core.client.events;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class MessageReceivedEvent extends MessageEvent {
-	private static final Type<MessageHandler> TYPE = new Type<MessageHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final MessageHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class MessageReceivedEvent extends Event<MessageReceivedEvent.Handler> {
+	
+	public interface Handler {
+		void onMessageReceived(MessageReceivedEvent event);
 	}
 
-	public static Type<MessageHandler> getType() {
+	public static final Type<Handler> TYPE = new Type<Handler>();
+	
+	private final Message message;
+
+	public MessageReceivedEvent(final Message message) {
+		this.message = message;
+	}
+	
+	public Message getMessage() {
+		return message;
+	}
+	
+	@Override
+	public Type<Handler> getAssociatedType() {
 		return TYPE;
 	}
 
-	public MessageReceivedEvent(final Message message) {
-		super(TYPE, message);
+	@Override
+	protected void dispatch(final Handler handler) {
+		handler.onMessageReceived(this);
+	}
+
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + message;
 	}
 
 }

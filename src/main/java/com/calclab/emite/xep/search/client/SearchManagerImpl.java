@@ -30,9 +30,8 @@ import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
-import com.calclab.emite.core.client.xmpp.session.ResultListener;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.IQCallback;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
@@ -171,12 +170,12 @@ public class SearchManagerImpl implements SearchManager {
 
 	// FIXME: change listener for handler
 	private void requestGenericSearchFields(final IQResultCallback callback) {
-		if (SessionStates.ready.equals(session.getSessionState())) {
+		if (SessionState.ready.equals(session.getSessionState())) {
 			final XmppURI from = session.getCurrentUserURI();
 			final IQ iq = new IQ(Type.get, host).From(from).With(XML_LANG, "en");
 			iq.addQuery(IQ_SEARCH);
 
-			session.sendIQ(SEARCH_CATEGORY, iq, new IQResponseHandler() {
+			session.sendIQ(SEARCH_CATEGORY, iq, new IQCallback() {
 				@Override
 				public void onIQ(final IQ iq) {
 					callback.onIQResult(iq);
@@ -188,14 +187,14 @@ public class SearchManagerImpl implements SearchManager {
 	}
 
 	private void searchGeneric(final List<IPacket> queryChilds, final IQResultCallback callback) {
-		if (SessionStates.ready.equals(session.getSessionState())) {
+		if (SessionState.ready.equals(session.getSessionState())) {
 			final IQ iq = new IQ(IQ.Type.set, host).From(session.getCurrentUserURI()).With(XML_LANG, "en");
 			final IPacket queryPacket = iq.addQuery(IQ_SEARCH);
 			for (final IPacket child : queryChilds) {
 				queryPacket.addChild(child);
 			}
 
-			session.sendIQ(SEARCH_CATEGORY, iq, new IQResponseHandler() {
+			session.sendIQ(SEARCH_CATEGORY, iq, new IQCallback() {
 				@Override
 				public void onIQ(final IQ iq) {
 					callback.onIQResult(iq);

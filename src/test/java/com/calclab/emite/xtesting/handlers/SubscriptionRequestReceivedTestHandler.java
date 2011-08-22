@@ -20,10 +20,9 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
+import com.calclab.emite.im.client.roster.SubscriptionRequestReceivedEvent;
 
-public class SubscriptionRequestReceivedTestHandler extends TestHandler<SubscriptionRequestReceivedEvent> implements SubscriptionRequestReceivedHandler {
+public class SubscriptionRequestReceivedTestHandler extends TestHandler<SubscriptionRequestReceivedEvent> implements SubscriptionRequestReceivedEvent.Handler {
 
 	@Override
 	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {

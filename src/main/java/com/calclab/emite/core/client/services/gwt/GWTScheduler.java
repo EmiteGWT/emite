@@ -32,6 +32,7 @@ public class GWTScheduler {
 	}
 
 	public static void schedule(final int msecs, final ScheduledAction action) {
+		
 		new Timer() {
 			@Override
 			public void run() {

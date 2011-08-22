@@ -21,10 +21,9 @@
 package com.calclab.emite.xtesting.handlers;
 
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
+import com.calclab.emite.im.client.chat.ChatChangedEvent;
 
-public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implements ChatChangedHandler {
+public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implements ChatChangedEvent.Handler {
 
 	private final String type;
 

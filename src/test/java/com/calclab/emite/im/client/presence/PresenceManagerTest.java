@@ -30,12 +30,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.xmpp.session.SessionReady;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.OwnPresenceChangedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class PresenceManagerTest {
 
@@ -46,7 +47,7 @@ public class PresenceManagerTest {
 	public void beforeTest() {
 		session = new XmppSessionTester();
 		final SessionReady sessionReady = Mockito.mock(SessionReady.class);
-		manager = new PresenceManagerImpl(session, sessionReady);
+		manager = new PresenceManagerImpl(new SimpleEventBus(), session, sessionReady);
 	}
 
 	@Test
@@ -94,7 +95,7 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldSendInitialPresenceAfterRosterReady() {
 		session.setLoggedIn("myself@domain");
-		session.setSessionState(SessionStates.rosterReady);
+		session.setSessionState(SessionState.rosterReady);
 		session.verifySent("<presence from='myself@domain'></presence>");
 	}
 

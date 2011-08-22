@@ -20,17 +20,15 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.IQHandler;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.PacketHandler;
-import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.BeforeStanzaSentEvent;
+import com.calclab.emite.core.client.events.IQReceivedEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * The most important object in Xmpp emite module. You can login, send and
@@ -44,7 +42,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addBeforeSendStanzaHandler(PacketHandler handler);
+	public HandlerRegistration addBeforeStanzaSentHandler(BeforeStanzaSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a IQ has been received
@@ -52,7 +50,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addIQReceivedHandler(IQHandler handler);
+	public HandlerRegistration addIQReceivedHandler(IQReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a Message has been received
@@ -60,7 +58,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
+	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a Presence has been received
@@ -68,7 +66,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addPresenceReceivedHandler(PresenceHandler handler);
+	public HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to track session state changes. If sendCurrent is true, the
@@ -82,7 +80,7 @@ public interface XmppSession {
 	 * 
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addSessionStateChangedHandler(boolean sendCurrent, StateChangedHandler handler);
+	public HandlerRegistration addSessionStateChangedHandler(boolean sendCurrent, SessionStateChangedEvent.Handler handler);
 
 	/**
 	 * Returns the current user xmpp uri
@@ -91,14 +89,21 @@ public interface XmppSession {
 	 */
 	public XmppURI getCurrentUserURI();
 
-	public EmiteEventBus getEventBus();
-
 	/**
 	 * Returns the current state
 	 * 
 	 * @return The current state as enum
 	 */
-	public String getSessionState();
+	public SessionState getSessionState();
+
+	/**
+	 * Set the current session's state
+	 * 
+	 * @param state
+	 *            the current session state
+	 * @see SessionState
+	 */
+	public void setSessionState(SessionState state);
 
 	/**
 	 * Check if the session is ready to send stanzas
@@ -112,7 +117,7 @@ public interface XmppSession {
 	 *            the expected state of the session
 	 * @return true if the expected state is the actual state
 	 */
-	public boolean isState(String expectedState);
+	public boolean isState(SessionState expectedState);
 
 	/**
 	 * <p>
@@ -134,7 +139,7 @@ public interface XmppSession {
 	 * </p>
 	 * 
 	 * @param uri
-	 *            the user's uri to loggin
+	 *            the user's uri to login
 	 * @param password
 	 *            the user's password (plain)
 	 * 
@@ -206,14 +211,6 @@ public interface XmppSession {
 	 *            be null
 	 * 
 	 */
-	public void sendIQ(final String category, final IQ iq, final IQResponseHandler iqHandler);
+	public void sendIQ(final String category, final IQ iq, final IQCallback iqHandler);
 
-	/**
-	 * Set the current session's state
-	 * 
-	 * @param state
-	 *            the current session state
-	 * @see SessionStates
-	 */
-	public void setSessionState(String state);
 }

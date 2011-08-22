@@ -33,11 +33,12 @@ import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class XmppRosterTests {
 
 	private XmppSessionTester session;
-	private XmppRosterLogic roster;
+	private XmppRosterImpl roster;
 	private XmppURI me;
 
 	@Before
@@ -45,7 +46,7 @@ public class XmppRosterTests {
 		me = XmppURI.uri("me@domain");
 		session = new XmppSessionTester();
 		session.setLoggedIn(me);
-		roster = new XmppRosterLogic(session);
+		roster = new XmppRosterImpl(new SimpleEventBus(), session);
 	}
 
 	@Test

@@ -20,74 +20,48 @@
 
 package com.calclab.emite.core.client.conn;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class ConnectionStateChangedEvent extends GwtEvent<ConnectionStateChangedHandler> {
-	public static class ConnectionState {
-		/**
-		 * The connection is now connected
-		 */
-		public static final String connected = "connected";
-		/**
-		 * The connection is now desconnected
-		 */
-		public static final String disconnected = "disconnected";
-		/**
-		 * The connection received an error
-		 */
-		public static final String error = "error";
-		/**
-		 * The connection will try to re-connect in the given milliseconds
-		 */
-		public static String waitingForRetry = "waitingForRetry";
+public class ConnectionStateChangedEvent extends Event<ConnectionStateChangedEvent.Handler> {
+	
+	public interface Handler {
+		void onConnectionStateChanged(ConnectionStateChangedEvent event);
 	}
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private static final Type<ConnectionStateChangedHandler> TYPE = new Type<ConnectionStateChangedHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ConnectionStateChangedHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
-	}
-
-	private final String state;
+	private final ConnectionState state;
 	private final String description;
-
 	private final int value;
 
-	public ConnectionStateChangedEvent(final String state) {
+	protected ConnectionStateChangedEvent(final ConnectionState state) {
 		this(state, null, 0);
 	}
 
-	public ConnectionStateChangedEvent(final String state, final String text) {
-		this(state, text, 0);
+	protected ConnectionStateChangedEvent(final ConnectionState state, final String description) {
+		this(state, description, 0);
 	}
 
-	public ConnectionStateChangedEvent(final String state, final String text, final int count) {
+	protected ConnectionStateChangedEvent(final ConnectionState state, final String description, final int count) {
 		assert state != null : "state can't be null in ConnectionStateEvents";
-		value = count;
-		description = text;
 		this.state = state;
+		this.description = description;
+		value = count;
 	}
 
-	@Override
-	public Type<ConnectionStateChangedHandler> getAssociatedType() {
-		return TYPE;
+	public ConnectionState getState() {
+		return state;
 	}
-
+	
 	public String getDescription() {
 		return description;
-	}
-
-	public String getState() {
-		return state;
 	}
 
 	public int getValue() {
 		return value;
 	}
 
-	public boolean is(final String state) {
+	public boolean is(final ConnectionState state) {
 		return this.state.equals(state);
 	}
 
@@ -96,10 +70,15 @@ public class ConnectionStateChangedEvent extends GwtEvent<ConnectionStateChanged
 		final String desc = description != null ? "(" + description + ")" : "";
 		return super.toDebugString() + " " + state + desc + " value: " + value;
 	}
+	
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
 
 	@Override
-	protected void dispatch(final ConnectionStateChangedHandler handler) {
-		handler.onStateChanged(this);
+	protected void dispatch(final Handler handler) {
+		handler.onConnectionStateChanged(this);
 	}
 
 }

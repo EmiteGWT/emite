@@ -21,9 +21,7 @@
 package com.calclab.emite.xep.disco.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultHandler;
-import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * The DiscoveryManager service (implements XEP-0030)
@@ -39,7 +37,7 @@ public interface DiscoveryManager {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addDiscoveryInfoResultHandler(DiscoveryInfoResultHandler handler);
+	HandlerRegistration addDiscoveryInfoResultHandler(DiscoveryInfoResultEvent.Handler handler);
 
 	/**
 	 * A method to know if a given features are supported on a given entity. The
@@ -52,7 +50,7 @@ public interface DiscoveryManager {
 	 * @param featureNames
 	 *            the desired feature names
 	 */
-	void areFeaturesSupported(XmppURI targetUri, FeatureSupportedCallback callback, String... featureName);
+	void areFeaturesSupported(XmppURI targetUri, FeatureSupportedHandler callback, String... featureName);
 
 	/**
 	 * Sends a info query to the specified target uri. The handler (if any) will
@@ -65,7 +63,7 @@ public interface DiscoveryManager {
 	 *            the handler (can be null)
 	 * @see http://xmpp.org/extensions/xep-0030.html#info
 	 */
-	void sendInfoQuery(XmppURI targetUri, DiscoveryInfoResultHandler handler);
+	void sendInfoQuery(XmppURI targetUri, DiscoveryInfoResultEvent.Handler handler);
 
 	/**
 	 * Send a items query to the specified target uri. The handler (if any) wil
@@ -78,6 +76,6 @@ public interface DiscoveryManager {
 	 *            the handler (can be null)
 	 * @see http://xmpp.org/extensions/xep-0030.html#items
 	 */
-	void sendItemsQuery(XmppURI targetUri, DiscoveryItemsResultHandler handler);
+	void sendItemsQuery(XmppURI targetUri, DiscoveryItemsResultEvent.Handler handler);
 
 }

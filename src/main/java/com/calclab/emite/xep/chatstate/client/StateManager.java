@@ -22,11 +22,12 @@ package com.calclab.emite.xep.chatstate.client;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatChangedEvent;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
 
 /**
  * XEP-0085: Chat State Notifications
@@ -37,34 +38,36 @@ import com.google.inject.Inject;
  * be a problem).
  * 
  */
-public class StateManager {
+public class StateManager implements PairChatChangedEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(StateManager.class.getName());
 
+	private final EventBus eventBus;
+	
 	@Inject
-	public StateManager(final ChatManager chatManager) {
-
-		chatManager.addChatChangedHandler(new ChatChangedHandler() {
-			@Override
-			public void onChatChanged(final ChatChangedEvent event) {
-				if (event.isCreated()) {
-					getChatState(event.getChat());
-				} else if (event.isClosed()) {
-					final Chat chat = event.getChat();
-					logger.finer("Removing chat state to chat: " + chat.getID());
-					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
-					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
-						// We are closing, then we send the gone state
-						chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
-					}
-					chat.getProperties().setData(ChatStateManager.KEY, null);
-				}
+	public StateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
+		this.eventBus = eventBus;
+		
+		chatManager.addPairChatChangedHandler(this);
+	}
+	
+	@Override
+	public void onPairChatChanged(final PairChatChangedEvent event) {
+		if (event.isCreated()) {
+			getChatState(event.getChat());
+		} else if (event.isClosed()) {
+			final PairChat chat = event.getChat();
+			logger.finer("Removing chat state to chat: " + chat.getID());
+			final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
+			if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
+				// We are closing, then we send the gone state
+				chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
 			}
-		});
-
+			chat.getProperties().setData(ChatStateManager.KEY, null);
+		}
 	}
 
-	public ChatStateManager getChatState(final Chat chat) {
+	public ChatStateManager getChatState(final PairChat chat) {
 		ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
 		if (chatStateManager == null) {
 			chatStateManager = createChatState(chat);
@@ -72,9 +75,9 @@ public class StateManager {
 		return chatStateManager;
 	}
 
-	private ChatStateManager createChatState(final Chat chat) {
+	private ChatStateManager createChatState(final PairChat chat) {
 		logger.finer("Adding chat state to chat: " + chat.getID());
-		final ChatStateManager chatStateManager = new ChatStateManager(chat);
+		final ChatStateManager chatStateManager = new ChatStateManager(eventBus, chat);
 		chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
 		return chatStateManager;
 	}

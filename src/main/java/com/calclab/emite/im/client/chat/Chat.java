@@ -20,14 +20,15 @@
 
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.ErrorHandler;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
+import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
+import com.calclab.emite.core.client.events.ErrorEvent;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.MessageSentEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Defines a xmpp chat.
@@ -46,7 +47,7 @@ public interface Chat {
 	 * @param handler
 	 *            the message handler
 	 */
-	public HandlerRegistration addBeforeReceiveMessageHandler(MessageHandler handler);
+	public HandlerRegistration addBeforeMessageReceivedHandler(BeforeMessageReceivedEvent.Handler handler);
 
 	/**
 	 * A a handler to know when a message is going to be sent. It allows the
@@ -56,7 +57,7 @@ public interface Chat {
 	 * @param handler
 	 *            the message handeler
 	 */
-	public HandlerRegistration addBeforeSendMessageHandler(MessageHandler handler);
+	public HandlerRegistration addBeforeMessageSentHandler(BeforeMessageSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know whenever a chat state property changed. Normally,
@@ -69,7 +70,7 @@ public interface Chat {
 	 *         handler
 	 * @see ChatStates
 	 */
-	public HandlerRegistration addChatStateChangedHandler(boolean sendCurrentState, StateChangedHandler handler);
+	public HandlerRegistration addChatStateChangedHandler(boolean sendCurrentState, ChatStateChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when an error has occur in this chat
@@ -77,7 +78,7 @@ public interface Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addErrorHandler(ErrorHandler handler);
+	public HandlerRegistration addErrorHandler(ErrorEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a message is received in this chat
@@ -85,7 +86,7 @@ public interface Chat {
 	 * @param handler
 	 * @return a handler registration object to detach the handler
 	 */
-	public HandlerRegistration addMessageReceivedHandler(MessageHandler handler);
+	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when this chat has sent a message
@@ -95,20 +96,12 @@ public interface Chat {
 	 * @return a handler registration object to detach the handler
 	 * 
 	 */
-	public HandlerRegistration addMessageSentHandler(MessageHandler handler);
+	public HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
 
 	/**
-	 * Close a chat. This methos is normally called by the chat manager
+	 * Close a chat. This method is normally called by the chat manager
 	 */
 	public void close();
-
-	/**
-	 * Get the event bus of this chat. Used to fire event to listeners of the
-	 * chat
-	 * 
-	 * @return
-	 */
-	public EmiteEventBus getChatEventBus();
 
 	/**
 	 * Get the current chat's state

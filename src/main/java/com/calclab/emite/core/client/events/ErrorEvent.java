@@ -24,22 +24,22 @@ import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
 /**
  * An error has occurred. If is an error from an incoming stanza, the getStanza
  * and getErrorStanza methods returns something different from NoPacket.INSTANCE
  */
-public class ErrorEvent extends GwtEvent<ErrorHandler> {
-
-	private static final PacketMatcher ERROR_STANZA_MATCHER = MatcherFactory.byName("error");
-	private static final Type<ErrorHandler> TYPE = new Type<ErrorHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ErrorHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class ErrorEvent extends Event<ErrorEvent.Handler> {
+	
+	public interface Handler {
+		void onError(ErrorEvent event);
 	}
 
+	public static final Type<Handler> TYPE = new Type<Handler>();
+
+	private static final PacketMatcher ERROR_STANZA_MATCHER = MatcherFactory.byName("error");
+	
 	private final String errorType;
 	private final String description;
 	private final IPacket stanza;
@@ -50,11 +50,6 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 		this.description = description;
 		this.stanza = stanza != null ? stanza : NoPacket.INSTANCE;
 		errorStanza = this.stanza.getFirstChild(ERROR_STANZA_MATCHER);
-	}
-
-	@Override
-	public Type<ErrorHandler> getAssociatedType() {
-		return TYPE;
 	}
 
 	public String getDescription() {
@@ -83,9 +78,14 @@ public class ErrorEvent extends GwtEvent<ErrorHandler> {
 	public IPacket getStanza() {
 		return stanza;
 	}
+	
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
 
 	@Override
-	protected void dispatch(final ErrorHandler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onError(this);
 	}
 

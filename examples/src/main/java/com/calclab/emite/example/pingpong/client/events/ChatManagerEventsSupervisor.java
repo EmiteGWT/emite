@@ -20,50 +20,49 @@
 
 package com.calclab.emite.example.pingpong.client.events;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.ErrorEvent;
-import com.calclab.emite.core.client.events.ErrorHandler;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
+import com.calclab.emite.im.client.chat.ChatStateChangedEvent;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatChangedEvent;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay.Style;
 import com.google.inject.Inject;
 
-public class ChatManagerEventsSupervisor {
+public class ChatManagerEventsSupervisor implements PairChatChangedEvent.Handler {
 
+	private final PingPongDisplay display;
+	
 	@Inject
-	public ChatManagerEventsSupervisor(final ChatManager chatManager, final PingPongDisplay display) {
-		chatManager.addChatChangedHandler(new ChatChangedHandler() {
-			@Override
-			public void onChatChanged(final ChatChangedEvent event) {
-				display.print("CHAT CHANGED " + event.getChat().getURI() + " - " + event.getChangeType(), Style.event);
-				if (event.is(ChangeTypes.created)) {
-					trackChat(event.getChat(), display);
+	public ChatManagerEventsSupervisor(final PairChatManager chatManager, final PingPongDisplay display) {
+		this.display = display;
+		
+		chatManager.addPairChatChangedHandler(this);
+	}
+	
+	@Override
+	public void onPairChatChanged(final PairChatChangedEvent event) {
+		final PairChat chat = event.getChat();
+		display.print("CHAT CHANGED " + chat.getURI() + " - " + event.getChangeType(), Style.event);
+		
+		if (event.is(ChangeType.created)) {
+			chat.addChatStateChangedHandler(false, new ChatStateChangedEvent.Handler() {
+				@Override
+				public void onChatStateChanged(final ChatStateChangedEvent event) {
+					display.print("CHAT STATE " + chat.getURI() + " changed: " + event.getState(), Style.event);
 				}
-			}
-		});
+			});
+			
+			display.print("CHAT STATE " + chat.getURI() + " - " + chat.getChatState(), Style.event);
+			chat.addErrorHandler(new ErrorEvent.Handler() {
+				@Override
+				public void onError(final ErrorEvent event) {
+					final String stanza = event.getStanza() != null ? event.getStanza().toString() : "(no stanza)";
+					display.print("CHAT ERROR " + chat.getURI() + ": " + event.getErrorType() + "- " + event.getDescription() + ": " + stanza, Style.error);
+				}
+			});
+		}
 	}
-
-	protected void trackChat(final Chat chat, final PingPongDisplay output) {
-		chat.addChatStateChangedHandler(false, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				output.print("CHAT STATE " + chat.getURI() + " changed: " + event.getState(), Style.event);
-			}
-		});
-		output.print("CHAT STATE " + chat.getURI() + " - " + chat.getChatState(), Style.event);
-
-		chat.addErrorHandler(new ErrorHandler() {
-			@Override
-			public void onError(final ErrorEvent event) {
-				final String stanza = event.getStanza() != null ? event.getStanza().toString() : "(no stanza)";
-				output.print("CHAT ERROR " + chat.getURI() + ": " + event.getErrorType() + "- " + event.getDescription() + ": " + stanza, Style.error);
-			}
-		});
-	}
-
+	
 }

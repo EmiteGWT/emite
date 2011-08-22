@@ -21,23 +21,21 @@
 package com.calclab.emite.core.client.events;
 
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
 /**
  * A request (IQ request) has failed
  */
-public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
-
-	private static final Type<RequestFailedHandler> TYPE = new Type<RequestFailedHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final RequestFailedHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class RequestFailedEvent extends Event<RequestFailedEvent.Handler> {
+	
+	public interface Handler {
+		void onRequestFailed(RequestFailedEvent event);
 	}
+
+	private static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final String requestType;
 	private final String description;
-
 	private final IQ iq;
 
 	public RequestFailedEvent(final String requestType, final String description, final IQ iq) {
@@ -45,12 +43,7 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 		this.description = description;
 		this.iq = iq;
 	}
-
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<RequestFailedHandler> getAssociatedType() {
-		return TYPE;
-	}
-
+	
 	public String getDescription() {
 		return description;
 	}
@@ -64,7 +57,12 @@ public class RequestFailedEvent extends GwtEvent<RequestFailedHandler> {
 	}
 
 	@Override
-	protected void dispatch(final RequestFailedHandler handler) {
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(final Handler handler) {
 		handler.onRequestFailed(this);
 	}
 

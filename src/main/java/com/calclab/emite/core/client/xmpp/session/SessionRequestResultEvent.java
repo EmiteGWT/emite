@@ -20,51 +20,44 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class SessionRequestResultEvent extends GwtEvent<SessionRequestResultHandler> {
-
-	private static final Type<SessionRequestResultHandler> TYPE = new Type<SessionRequestResultHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final SessionRequestResultHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class SessionRequestResultEvent extends Event<SessionRequestResultEvent.Handler> {
+	
+	public interface Handler {
+		void onSessionRequestResult(SessionRequestResultEvent event);
 	}
 
-	public static Type<SessionRequestResultHandler> getType() {
-		return TYPE;
-	}
-
-	private final boolean succeed;
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final XmppURI uri;
+	private final boolean success;
 
-	public SessionRequestResultEvent(final XmppURI uri) {
-		this(true, uri);
+	protected SessionRequestResultEvent(final XmppURI uri) {
+		this(uri, true);
 	}
 
-	private SessionRequestResultEvent(final boolean succeed, final XmppURI uri) {
-		this.succeed = succeed;
+	private SessionRequestResultEvent(final XmppURI uri, final boolean success) {
 		this.uri = uri;
-	}
-
-	@Override
-	public Type<SessionRequestResultHandler> getAssociatedType() {
-		return TYPE;
+		this.success = success;
 	}
 
 	public XmppURI getXmppUri() {
 		return uri;
 	}
 
-	public boolean isSucceed() {
-		return succeed;
+	public boolean isSuccess() {
+		return success;
+	}
+	
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(final SessionRequestResultHandler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onSessionRequestResult(this);
 	}
 

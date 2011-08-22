@@ -21,7 +21,7 @@
 package com.calclab.emite.xep.mucdisco.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
+import com.calclab.emite.xep.disco.client.FeatureSupportedHandler;
 
 /**
  * Implements some discovery use cases from
@@ -50,9 +50,9 @@ public interface RoomDiscoveryManager {
 	 * @param callback
 	 *            a callback to know if the feature is supported
 	 * 
-	 * @see FeatureSupportedCallback
+	 * @see FeatureSupportedHandler
 	 * @see http://xmpp.org/extensions/xep-0045.html#disco-component
 	 */
-	void isMucSupported(XmppURI targetUri, FeatureSupportedCallback callback);
+	void isMucSupported(XmppURI targetUri, FeatureSupportedHandler callback);
 
 }

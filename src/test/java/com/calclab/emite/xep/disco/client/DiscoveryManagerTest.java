@@ -30,6 +30,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.DiscoveryInfoResultTestHandler;
 import com.calclab.emite.xtesting.handlers.DiscoveryItemsResultTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class DiscoveryManagerTest {
 
@@ -56,7 +57,7 @@ public class DiscoveryManagerTest {
 	@Before
 	public void beforeTests() {
 		session = new XmppSessionTester();
-		manager = new DiscoveryManagerImpl(session);
+		manager = new DiscoveryManagerImpl(new SimpleEventBus(), session);
 	}
 
 	@Test

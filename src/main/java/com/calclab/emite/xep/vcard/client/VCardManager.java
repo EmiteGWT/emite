@@ -21,8 +21,7 @@
 package com.calclab.emite.xep.vcard.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * The manager to VCards. Implements http://xmpp.org/extensions/xep-0054.html
@@ -36,7 +35,7 @@ public interface VCardManager {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addVCardResponseHandler(VCardResponseHandler handler);
+	HandlerRegistration addVCardResponseHandler(VCardResponseEvent.Handler handler);
 
 	/**
 	 * Gets the VCard of the given user JID
@@ -44,14 +43,14 @@ public interface VCardManager {
 	 * @param userJid
 	 * @param listener
 	 */
-	void getUserVCard(XmppURI userJid, VCardResponseHandler handler);
+	void getUserVCard(XmppURI userJid, VCardResponseEvent.Handler handler);
 
 	/**
 	 * Gets the current logged in user's vcard
 	 * 
 	 * @param handler
 	 */
-	void requestOwnVCard(VCardResponseHandler handler);
+	void requestOwnVCard(VCardResponseEvent.Handler handler);
 
 	/**
 	 * Updates the current logged in user's vcard
@@ -59,5 +58,5 @@ public interface VCardManager {
 	 * @param vcard
 	 * @param handler
 	 */
-	void updateOwnVCard(VCard vcard, VCardResponseHandler handler);
+	void updateOwnVCard(VCard vcard, VCardResponseEvent.Handler handler);
 }

@@ -22,8 +22,6 @@ package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.google.inject.Inject;
 
@@ -31,27 +29,29 @@ import com.google.inject.Inject;
  * A simple component that sets the session ready after logged in. This
  * component is removed if InstantMessagingModule used.
  */
-public class SessionReady {
+public class SessionReady implements SessionStateChangedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(SessionReady.class.getName());
 	
-	private boolean enabled;
+	private final XmppSession session;
+	
+	private boolean enabled = true;
 
 	@Inject
 	public SessionReady(final XmppSession session) {
-		enabled = true;
+		this.session = session;
 
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				if (enabled) {
-					if (event.is(SessionStates.loggedIn)) {
-						session.send(new Presence());
-						session.setSessionState(SessionStates.ready);
-					}
-				}
+		session.addSessionStateChangedHandler(true, this);
+	}
+	
+	@Override
+	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+		if (enabled) {
+			if (event.is(SessionState.loggedIn)) {
+				session.send(new Presence());
+				session.setSessionState(SessionState.ready);
 			}
-		});
+		}
 	}
 
 	public void setEnabled(final boolean enabled) {

@@ -24,10 +24,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
-import com.calclab.emite.im.client.roster.events.RosterRetrievedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public interface XmppRoster {
 	/**
@@ -36,7 +33,7 @@ public interface XmppRoster {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedHandler handler);
+	HandlerRegistration addRosterGroupChangedHandler(RosterGroupChangedEvent.Handler handler);
 
 	/**
 	 * Adds a handler to know when a roster item has changed
@@ -44,7 +41,7 @@ public interface XmppRoster {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addRosterItemChangedHandler(RosterItemChangedHandler handler);
+	HandlerRegistration addRosterItemChangedHandler(RosterItemChangedEvent.Handler handler);
 
 	/**
 	 * Adds a handler to know when the roster is retrieved
@@ -52,7 +49,7 @@ public interface XmppRoster {
 	 * @param handler
 	 * @return
 	 */
-	HandlerRegistration addRosterRetrievedHandler(RosterRetrievedHandler handler);
+	HandlerRegistration addRosterRetrievedHandler(RosterRetrievedEvent.Handler handler);
 
 	/**
 	 * Return the group names of this roster (null is one of the group names:

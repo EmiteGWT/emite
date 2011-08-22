@@ -20,28 +20,26 @@
 
 package com.calclab.emite.core.client.xmpp.sasl;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandler> {
-	private static final Type<AuthorizationResultHandler> TYPE = new Type<AuthorizationResultHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final AuthorizationResultHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Handler> {
+	
+	public interface Handler {
+		void onAuthorizationResult(AuthorizationResultEvent event);
 	}
-
-	private final boolean succeed;
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final Credentials credentials;
+	private final boolean success;
 
 	/**
 	 * Build a failed authorization event
 	 */
-	public AuthorizationResultEvent() {
-		this(false, null);
+	protected AuthorizationResultEvent() {
+		this(null, false);
 	}
 
 	/**
@@ -50,20 +48,15 @@ public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandle
 	 * @param uri
 	 *            the uri of the authorized user
 	 */
-	public AuthorizationResultEvent(final Credentials credentials) {
-		this(true, credentials);
+	protected AuthorizationResultEvent(final Credentials credentials) {
+		this(credentials, true);
 	}
 
-	private AuthorizationResultEvent(final boolean succeed, final Credentials credentials) {
-		this.succeed = succeed;
+	private AuthorizationResultEvent(final Credentials credentials, final boolean success) {
 		this.credentials = credentials;
+		this.success = success;
 	}
-
-	@Override
-	public Type<AuthorizationResultHandler> getAssociatedType() {
-		return TYPE;
-	}
-
+	
 	public Credentials getCredentials() {
 		return credentials;
 	}
@@ -72,19 +65,24 @@ public class AuthorizationResultEvent extends GwtEvent<AuthorizationResultHandle
 		return credentials.getXmppUri();
 	}
 
-	public boolean isSucceed() {
-		return succeed;
+	public boolean isSuccess() {
+		return success;
+	}
+
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
 	}
 
 	@Override
 	public String toDebugString() {
-		final String value = succeed ? " Succeed - " + credentials.getXmppUri() : " Failed!";
+		final String value = success ? " Success - " + credentials.getXmppUri() : " Failed!";
 		return super.toDebugString() + value;
 	}
 
 	@Override
-	protected void dispatch(final AuthorizationResultHandler handler) {
-		handler.onAuthorization(this);
+	protected void dispatch(final Handler handler) {
+		handler.onAuthorizationResult(this);
 	}
 
 }

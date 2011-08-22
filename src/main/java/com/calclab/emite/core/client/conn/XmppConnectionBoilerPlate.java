@@ -22,60 +22,52 @@ package com.calclab.emite.core.client.conn;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * A base XmppConnection implementation with all the boiler plate code.
  * 
  * @see XmppConnection
  */
-public abstract class XmppConnectionBoilerPlate implements XmppConnection {
+public abstract class XmppConnectionBoilerplate implements XmppConnection {
 
-	private static final Logger logger = Logger.getLogger(XmppConnectionBoilerPlate.class.getName());
+	private static final Logger logger = Logger.getLogger(XmppConnectionBoilerplate.class.getName());
 	
-	protected final EmiteEventBus eventBus;
+	protected final EventBus eventBus;
 	private int errors;
 	private boolean active;
 	private StreamSettings stream;
 	private Packet currentBody;
 	private ConnectionSettings connectionSettings;
 
-	public XmppConnectionBoilerPlate(final EmiteEventBus eventBus) {
+	public XmppConnectionBoilerplate(EventBus eventBus) {
 		this.eventBus = eventBus;
 	}
 
 	@Override
-	public HandlerRegistration addConnectionResponseHandler(final ConnectionResponseHandler handler) {
-		return ConnectionResponseEvent.bind(eventBus, handler);
+	public HandlerRegistration addConnectionResponseHandler(final ConnectionResponseEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ConnectionResponseEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addConnectionStateChangedHandler(final ConnectionStateChangedHandler handler) {
-		return ConnectionStateChangedEvent.bind(eventBus, handler);
+	public HandlerRegistration addConnectionStateChangedHandler(final ConnectionStateChangedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ConnectionStateChangedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addStanzaReceivedHandler(final StanzaHandler handler) {
-		return StanzaReceivedEvent.bind(eventBus, handler);
+	public HandlerRegistration addStanzaReceivedHandler(final StanzaReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(StanzaReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addStanzaSentHandler(final StanzaHandler handler) {
-		return StanzaSentEvent.bind(eventBus, handler);
-	}
-
-	public void clearErrors() {
-		errors = 0;
-	}
-
-	@Override
-	public EmiteEventBus getEventBus() {
-		return eventBus;
+	public HandlerRegistration addStanzaSentHandler(final StanzaSentEvent.Handler handler) {
+		return eventBus.addHandlerToSource(StanzaSentEvent.TYPE, this, handler);
 	}
 
 	/**
@@ -85,7 +77,11 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	public StreamSettings getStreamSettings() {
 		return stream;
 	}
-
+	
+	public void clearErrors() {
+		errors = 0;
+	}
+	
 	@Override
 	public boolean hasErrors() {
 		return errors != 0;
@@ -103,30 +99,34 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 	}
 
 	protected void fireConnected() {
-		eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.connected));
+		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.connected), this);
 	}
 
 	protected void fireDisconnected(final String message) {
-		eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.disconnected, message));
+		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.disconnected, message), this);
 	}
 
 	protected void fireError(final String error) {
-		eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.error, error));
+		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.error, error), this);
 	}
 
 	protected void fireResponse(final String response) {
-		eventBus.fireEvent(new ConnectionResponseEvent(response));
+		eventBus.fireEventFromSource(new ConnectionResponseEvent(response), this);
 	}
 
 	protected void fireRetry(final int attempt, final int scedTime) {
-		eventBus.fireEvent(new ConnectionStateChangedEvent(ConnectionState.waitingForRetry, "The connection will try to re-connect in " + scedTime
-				+ " milliseconds.", scedTime));
+		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.waitingForRetry, "The connection will try to re-connect in " + scedTime
+				+ " milliseconds.", scedTime), this);
 	}
 
 	protected void fireStanzaReceived(final IPacket stanza) {
-		eventBus.fireEvent(new StanzaReceivedEvent(stanza));
+		eventBus.fireEventFromSource(new StanzaReceivedEvent(stanza), this);
 	}
-
+	
+	protected void fireStanzaSent(final IPacket stanza) {
+		eventBus.fireEventFromSource(new StanzaSentEvent(stanza), this);
+	}
+	
 	protected ConnectionSettings getConnectionSettings() {
 		return connectionSettings;
 	}

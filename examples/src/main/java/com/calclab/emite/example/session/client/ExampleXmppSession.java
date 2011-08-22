@@ -24,13 +24,6 @@ import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.PresenceEvent;
-import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;

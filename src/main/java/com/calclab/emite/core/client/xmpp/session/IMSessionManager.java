@@ -20,14 +20,16 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.conn.StanzaEvent;
-import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Handle the IM session request. Used by XmppSession (not need to be used by
@@ -36,22 +38,29 @@ import com.google.inject.Singleton;
  * @see http://www.xmpp.org/extensions/xep-0206.html#preconditions-sasl
  */
 @Singleton
-public class IMSessionManager {
+public class IMSessionManager implements StanzaReceivedEvent.Handler {
+	
+	private final EventBus eventBus;
 	private final XmppConnection connection;
 
 	@Inject
-	public IMSessionManager(final XmppConnection connection) {
+	public IMSessionManager(@Named("emite") final EventBus eventBus, final XmppConnection connection) {
+		this.eventBus = eventBus;
 		this.connection = connection;
 
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket stanza = event.getStanza();
-				if ("im-session-request".equals(stanza.getAttribute("id"))) {
-					connection.getEventBus().fireEvent(new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
-				}
-			}
-		});
+		connection.addStanzaReceivedHandler(this);
+	}
+	
+	public HandlerRegistration addSessionRequestResultHandler(final SessionRequestResultEvent.Handler handler) {
+		return eventBus.addHandlerToSource(SessionRequestResultEvent.TYPE, this, handler);
+	}
+	
+	@Override
+	public void onStanzaReceived(final StanzaReceivedEvent event) {
+		final IPacket stanza = event.getStanza();
+		if ("im-session-request".equals(stanza.getAttribute("id"))) {
+			eventBus.fireEventFromSource(new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))), this);
+		}
 	}
 
 	/**

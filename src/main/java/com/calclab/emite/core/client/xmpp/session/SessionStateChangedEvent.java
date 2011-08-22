@@ -20,20 +20,44 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class SessionStateChangedEvent extends StateChangedEvent {
-	private static final Type<StateChangedHandler> TYPE = new Type<StateChangedHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final StateChangedHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class SessionStateChangedEvent extends Event<SessionStateChangedEvent.Handler> {
+	
+	public interface Handler {
+		void onSessionStateChanged(SessionStateChangedEvent event);
+	}
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
+	
+	private final SessionState state;
+	
+	protected SessionStateChangedEvent(final SessionState state) {
+		assert state != null : "State in SessionStateChanged can't be null";
+		this.state = state;
+	}
+	
+	public SessionState getState() {
+		return state;
+	}
+	
+	public boolean is(final SessionState state) {
+		return this.state.equals(state);
+	}
+	
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
 	}
 
-	public SessionStateChangedEvent(final String state) {
-		super(TYPE, state);
+	@Override
+	protected void dispatch(final Handler handler) {
+		handler.onSessionStateChanged(this);
 	}
-
+	
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + state;
+	}
+	
 }

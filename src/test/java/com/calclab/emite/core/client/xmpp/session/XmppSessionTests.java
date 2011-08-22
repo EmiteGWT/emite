@@ -33,7 +33,6 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindResultEvent;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
@@ -42,29 +41,31 @@ import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppConnectionTester;
-import com.calclab.emite.xtesting.handlers.MessageTestHandler;
-import com.calclab.emite.xtesting.handlers.PacketTestHandler;
-import com.calclab.emite.xtesting.handlers.PresenceTestHandler;
-import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.BeforeStanzaSentTestHandler;
+import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
+import com.calclab.emite.xtesting.handlers.PresenceReceivedTestHandler;
+import com.calclab.emite.xtesting.handlers.SessionStateChangedTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.testing.CountingEventBus;
 
 public class XmppSessionTests {
-	private XmppSessionLogic session;
+	private XmppSessionImpl session;
 	private SASLManager saslManager;
 	private ResourceBindingManager bindingManager;
 	private IMSessionManager iMSessionManager;
 	private XmppConnectionTester connection;
-	private EmiteEventBus eventBus;
+	private EventBus eventBus;
 
 	@Before
 	public void beforeTest() {
 		connection = new XmppConnectionTester();
-		eventBus = connection.getEventBus();
+		eventBus = new SimpleEventBus();
 		saslManager = mock(SASLManager.class);
 		bindingManager = mock(ResourceBindingManager.class);
 		iMSessionManager = mock(IMSessionManager.class);
 		final SessionComponentsRegistry registry = new SessionComponentsRegistry();
-		session = new XmppSessionLogic(connection, saslManager, bindingManager, iMSessionManager, registry);
-
+		session = new XmppSessionImpl(eventBus, connection, saslManager, bindingManager, iMSessionManager, registry);
 	}
 
 	@Test
@@ -81,17 +82,17 @@ public class XmppSessionTests {
 	public void shouldEventBeforeSendStanzaEvents() {
 		// we need to log in before
 		eventBus.fireEvent(new SessionRequestResultEvent(uri("user@domain")));
-		final PacketTestHandler handler = new PacketTestHandler();
-		session.addBeforeSendStanzaHandler(handler);
+		final BeforeStanzaSentTestHandler handler = new BeforeStanzaSentTestHandler();
+		session.addBeforeStanzaSentHandler(handler);
 		final Packet packet = new Packet("message");
 		session.send(packet);
 		assertTrue(handler.isCalledOnce());
-		assertSame(packet, handler.getLastEvent().getPacket());
+		assertSame(packet, handler.getLastEvent().getStanza());
 	}
 
 	@Test
 	public void shouldEventMessages() {
-		final MessageTestHandler handler = new MessageTestHandler();
+		final MessageReceivedTestHandler handler = new MessageReceivedTestHandler();
 		session.addMessageReceivedHandler(handler);
 		final Message message = new Message("message");
 		connection.receives(message);
@@ -100,7 +101,7 @@ public class XmppSessionTests {
 
 	@Test
 	public void shouldEventPresences() {
-		final PresenceTestHandler handler = new PresenceTestHandler();
+		final PresenceReceivedTestHandler handler = new PresenceReceivedTestHandler();
 		session.addPresenceReceivedHandler(handler);
 		connection.receives(new Packet("presence"));
 		assertTrue(handler.isCalledOnce());
@@ -108,10 +109,10 @@ public class XmppSessionTests {
 
 	@Test
 	public void shouldEventStateChanges() {
-		final StateChangedTestHandler handler = new StateChangedTestHandler();
+		final SessionStateChangedTestHandler handler = new SessionStateChangedTestHandler();
 		session.addSessionStateChangedHandler(false, handler);
-		session.setSessionState(SessionStates.ready);
-		assertSame(SessionStates.ready, handler.getLastState());
+		session.setSessionState(SessionState.ready);
+		assertSame(SessionState.ready, handler.getLastSessionState());
 	}
 
 	@Test
@@ -125,17 +126,17 @@ public class XmppSessionTests {
 	public void shouldHandleSucceedAuthorizationResult() {
 		eventBus.fireEvent(new AuthorizationResultEvent(new Credentials(uri("node@domain"), "pass", Credentials.ENCODING_NONE)));
 
-		assertEquals(SessionStates.authorized, session.getSessionState());
+		assertEquals(SessionState.authorized, session.getSessionState());
 		assertTrue(connection.isStreamRestarted());
 		verify(bindingManager).bindResource(anyString());
 	}
 
 	@Test
 	public void shouldLoginWhenSessionCreated() {
-		final StateChangedTestHandler handler = new StateChangedTestHandler();
+		final SessionStateChangedTestHandler handler = new SessionStateChangedTestHandler();
 		session.addSessionStateChangedHandler(false, handler);
 		eventBus.fireEvent(new SessionRequestResultEvent(uri("me@domain")));
-		assertSame(SessionStates.loggedIn, handler.getLastState());
+		assertSame(SessionState.loggedIn, handler.getLastSessionState());
 	}
 
 	@Test
@@ -144,7 +145,7 @@ public class XmppSessionTests {
 		session.send(new Message("the Message", uri("other@domain")));
 		assertEquals(0, connection.getSentSize());
 		eventBus.fireEvent(new SessionRequestResultEvent(uri("name@domain/resource")));
-		session.setSessionState(SessionStates.ready);
+		session.setSessionState(SessionState.ready);
 		assertEquals(1, connection.getSentSize());
 	}
 

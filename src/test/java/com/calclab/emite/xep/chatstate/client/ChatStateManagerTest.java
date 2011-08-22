@@ -27,32 +27,36 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.PairChatManager;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
+import com.calclab.emite.im.client.chat.pair.PairChatSelectionStrategy;
 import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.ChatStateNotificationTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ChatStateManagerTest {
 	private static final XmppURI MYSELF = uri("self@domain/res");
 	private static final XmppURI OTHER = uri("other@domain/other");
 
-	private PairChatManager chatManager;
-	private ChatStateNotificationTestHandler stateHandler;
-	private Chat chat;
+	private PairChatManagerImpl chatManager;
+	private ChatStateChangedTestHandler stateHandler;
+	private PairChat chat;
 	private ChatStateManager chatStateManager;
 	private XmppSessionTester session;
 
 	@Before
 	public void beforeTests() {
+		final EventBus eventBus = new SimpleEventBus();
 		session = new XmppSessionTester();
-		chatManager = new PairChatManager(session);
+		chatManager = new PairChatManagerImpl(eventBus, session, new PairChatSelectionStrategy());
 		session.setLoggedIn(MYSELF);
-		final StateManager stateManager = new StateManager(chatManager);
+		final StateManager stateManager = new StateManager(eventBus, chatManager);
 		chat = chatManager.open(OTHER);
 		chatStateManager = stateManager.getChatState(chat);
-		stateHandler = new ChatStateNotificationTestHandler();
-		chatStateManager.addChatStateNotificationHandler(stateHandler);
+		stateHandler = new ChatStateChangedTestHandler();
+		chatStateManager.addChatStateChangedHandler(stateHandler);
 	}
 
 	@Test

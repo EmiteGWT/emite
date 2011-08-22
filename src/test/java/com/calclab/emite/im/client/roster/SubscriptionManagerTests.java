@@ -30,27 +30,27 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.SubscriptionRequestReceivedTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class SubscriptionManagerTests {
 
 	private XmppSessionTester session;
-	private SubscriptionManager manager;
+	private SubscriptionManagerImpl manager;
 	private XmppRoster roster;
-	private EmiteEventBus eventBus;
+	private EventBus eventBus;
 
 	@Before
 	public void beforeTests() {
 		session = new XmppSessionTester();
-		eventBus = session.getEventBus();
+		eventBus = new SimpleEventBus();
 		roster = mock(XmppRoster.class);
-		manager = new SubscriptionManagerImpl(session, roster);
+		manager = new SubscriptionManagerImpl(eventBus, session, roster);
 		session.login(uri("user@local"), "anything");
 	}
 
@@ -87,14 +87,13 @@ public class SubscriptionManagerTests {
 
 	@Test
 	public void shouldSendSubscriptionRequestOnNewRosterItem_addRosterStep1() {
-
 		// only NONE subscription
 		final RosterItem item = new RosterItem(uri("name@domain"), SubscriptionState.both, "TheName", null);
-		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeType.added, item));
 		session.verifyNotSent("<presence />");
 
 		final RosterItem item2 = new RosterItem(uri("name@domain"), SubscriptionState.none, "TheName", Type.subscribe);
-		eventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item2));
+		eventBus.fireEvent(new RosterItemChangedEvent(ChangeType.added, item2));
 		session.verifySent("<presence from='user@local' to='name@domain' type='subscribe'/>");
 	}
 

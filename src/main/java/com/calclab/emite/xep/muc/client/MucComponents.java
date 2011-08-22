@@ -33,7 +33,7 @@ import com.google.inject.Provider;
 public class MucComponents {
 
 	@Inject
-	public MucComponents(final SessionComponentsRegistry registry, final Provider<RoomManager> provider) {
+	public MucComponents(final SessionComponentsRegistry registry, final Provider<RoomChatManager> provider) {
 		registry.addProvider(provider);
 	}
 }

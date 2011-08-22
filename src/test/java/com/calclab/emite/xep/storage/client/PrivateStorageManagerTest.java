@@ -46,7 +46,7 @@ public class PrivateStorageManagerTest {
 	@Before
 	public void setup() {
 		session = new XmppSessionTester("test@domain");
-		manager = new PrivateStorageManager(session);
+		manager = new PrivateStorageManagerImpl(session);
 	}
 
 	@Test

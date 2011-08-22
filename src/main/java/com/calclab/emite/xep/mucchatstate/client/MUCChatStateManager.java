@@ -23,11 +23,12 @@ package com.calclab.emite.xep.mucchatstate.client;
 import java.util.logging.Logger;
 
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
-import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
-import com.calclab.emite.xep.muc.client.Room;
-import com.calclab.emite.xep.muc.client.RoomManager;
+import com.calclab.emite.xep.muc.client.RoomChat;
+import com.calclab.emite.xep.muc.client.RoomChatChangedEvent;
+import com.calclab.emite.xep.muc.client.RoomChatManager;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
 
 /**
  * XEP-0085: Chat State Notifications
@@ -38,40 +39,37 @@ import com.google.inject.Inject;
  * forearmed.
  * 
  */
-public class MUCChatStateManager {
+public class MUCChatStateManager implements RoomChatChangedEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(MUCChatStateManager.class.getName());
 	
+	private final EventBus eventBus;
+	
 	@Inject
-	public MUCChatStateManager(final RoomManager chatManager) {
-
-		chatManager.addChatChangedHandler(new ChatChangedHandler() {
-			@Override
-			public void onChatChanged(final ChatChangedEvent event) {
-				if (event.isCreated()) {
-					getRoomOccupantsChatStateManager((Room) event.getChat());
-				} else if (event.isClosed()) {
-					final Chat chat = event.getChat();
-					logger.finer("Removing chat state to chat: " + chat.getID());
-					chat.getProperties().setData(RoomChatStateManager.KEY, null);
-				}
-			}
-		});
+	public MUCChatStateManager(@Named("emite") final EventBus eventBus, final RoomChatManager chatManager) {
+		this.eventBus = eventBus;
+		chatManager.addRoomChatChangedHandler(this);
+	}
+	
+	@Override
+	public void onRoomChatChanged(final RoomChatChangedEvent event) {
+		if (event.isCreated()) {
+			getRoomOccupantsChatStateManager((RoomChat) event.getChat());
+		} else if (event.isClosed()) {
+			final Chat chat = event.getChat();
+			logger.finer("Removing chat state to chat: " + chat.getID());
+			chat.getProperties().setData(RoomChatStateManager.KEY, null);
+		}
 	}
 
-	public RoomChatStateManager getRoomOccupantsChatStateManager(final Room room) {
-
+	public RoomChatStateManager getRoomOccupantsChatStateManager(final RoomChat room) {
 		RoomChatStateManager stateManager = (RoomChatStateManager) room.getProperties().getData(RoomChatStateManager.KEY);
 		if (stateManager == null) {
-			stateManager = createChatState(room);
+			logger.finer("Adding chat state to chat: " + room.getID());
+			stateManager = new RoomChatStateManager(eventBus, room);
+			room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
+			return stateManager;
 		}
-		return stateManager;
-	}
-
-	private RoomChatStateManager createChatState(final Room room) {
-		logger.finer("Adding chat state to chat: " + room.getID());
-		final RoomChatStateManager stateManager = new RoomChatStateManager(room);
-		room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
 		return stateManager;
 	}
 

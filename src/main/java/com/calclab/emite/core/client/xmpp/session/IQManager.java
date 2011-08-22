@@ -32,16 +32,16 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
  */
 class IQManager {
 	private int id;
-	private final HashMap<String, IQResponseHandler> handlers;
+	private final HashMap<String, IQCallback> handlers;
 
 	public IQManager() {
 		id = 0;
-		handlers = new HashMap<String, IQResponseHandler>();
+		handlers = new HashMap<String, IQCallback>();
 	}
 
 	public boolean handle(final IPacket received) {
 		final String key = received.getAttribute("id");
-		final IQResponseHandler handler = handlers.remove(key);
+		final IQCallback handler = handlers.remove(key);
 		if (handler == null)
 			return false;
 
@@ -49,7 +49,7 @@ class IQManager {
 		return true;
 	}
 
-	public String register(final String category, final IQResponseHandler handler) {
+	public String register(final String category, final IQCallback handler) {
 		id++;
 		final String key = category + "_" + id;
 		handlers.put(key, handler);

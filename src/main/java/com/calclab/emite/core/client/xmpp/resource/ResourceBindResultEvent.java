@@ -20,45 +20,30 @@
 
 package com.calclab.emite.core.client.xmpp.resource;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class ResourceBindResultEvent extends GwtEvent<ResourceBindResultHandler> {
-
-	private static final Type<ResourceBindResultHandler> TYPE = new Type<ResourceBindResultHandler>();
-
-	/**
-	 * A helper method to bind handlers of this event to the event bus easily
-	 * 
-	 * @param eventBus
-	 *            the event bus to add the handler to
-	 * @param handler
-	 *            the handler to be added
-	 * @return
-	 */
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final ResourceBindResultHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class ResourceBindResultEvent extends Event<ResourceBindResultEvent.Handler> {
+	
+	public interface Handler {
+		void onResourceBindResult(ResourceBindResultEvent event);
 	}
 
-	public static Type<ResourceBindResultHandler> getType() {
-		return TYPE;
-	}
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final XmppURI xmppUri;
 
-	public ResourceBindResultEvent(final XmppURI xmppUri) {
+	protected ResourceBindResultEvent(final XmppURI xmppUri) {
 		this.xmppUri = xmppUri;
+	}
+	
+	public XmppURI getXmppUri() {
+		return xmppUri;
 	}
 
 	@Override
-	public Type<ResourceBindResultHandler> getAssociatedType() {
+	public Type<Handler> getAssociatedType() {
 		return TYPE;
-	}
-
-	public XmppURI getXmppUri() {
-		return xmppUri;
 	}
 
 	@Override
@@ -67,8 +52,8 @@ public class ResourceBindResultEvent extends GwtEvent<ResourceBindResultHandler>
 	}
 
 	@Override
-	protected void dispatch(final ResourceBindResultHandler handler) {
-		handler.onBinded(this);
+	protected void dispatch(final Handler handler) {
+		handler.onResourceBindResult(this);
 	}
 
 }

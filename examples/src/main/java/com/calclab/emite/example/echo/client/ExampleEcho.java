@@ -23,14 +23,12 @@ package com.calclab.emite.example.echo.client;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Label;
@@ -40,8 +38,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * A simple echo client
  */
-public class ExampleEcho implements EntryPoint {
+public class ExampleEcho implements EntryPoint, SessionStateChangedEvent.Handler, MessageReceivedEvent.Handler {
 
+	private static final EchoGinjector ginjector = GWT.create(EchoGinjector.class);
+
+	private final XmppSession session = ginjector.getXmppSession();
+	private final PairChatManager chatManager = ginjector.getPairChatManager();
+	
+	private PairChat chat;
 	private VerticalPanel output;
 
 	@Override
@@ -55,28 +59,22 @@ public class ExampleEcho implements EntryPoint {
 		final String user = PageAssist.getMeta("emite.chat");
 		log("Chat with user: " + user);
 
-		final EchoGinjector ginjector = GWT.create(EchoGinjector.class);
+		session.addSessionStateChangedHandler(true, this);
 
-		final XmppSession session = ginjector.getXmppSession();
-
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				final String state = event.getState();
-				log("Current state: " + state);
-			}
-		});
-
-		final ChatManager chatManager = ginjector.getChatManager();
-		final Chat chat = chatManager.open(uri(user));
-		chat.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				final String body = event.getMessage().getBody();
-				log("Message received: " + body);
-				chat.send(new Message(body + " at: " + System.currentTimeMillis()));
-			}
-		});
+		chat = chatManager.open(uri(user));
+		chat.addMessageReceivedHandler(this);
+	}
+	
+	@Override
+	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+		log("Current state: " + event.getState().toString());
+	}
+	
+	@Override
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		final String body = event.getMessage().getBody();
+		log("Message received: " + body);
+		chat.send(new Message(body + " at: " + System.currentTimeMillis()));
 	}
 
 	private void log(final String text) {

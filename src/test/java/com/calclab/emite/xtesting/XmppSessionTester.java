@@ -27,15 +27,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerplate;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
-import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerPlate;
+import com.calclab.emite.core.client.xmpp.session.IQCallback;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
@@ -44,14 +44,15 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class XmppSessionTester extends XmppSessionBoilerPlate {
+public class XmppSessionTester extends XmppSessionBoilerplate {
 
 	private XmppURI currentUser;
 	private final TigaseXMLService xmler;
 	private final ArrayList<IPacket> sent;
 	private IPacket lastIQSent;
-	private IQResponseHandler lastIQResponseHandler;
+	private IQCallback lastIQResponseHandler;
 
 	public XmppSessionTester() {
 		this((XmppURI) null);
@@ -74,7 +75,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	 *            optional user to login
 	 */
 	public XmppSessionTester(final XmppURI user) {
-		super(EmiteTestsEventBus.create("et"));
+		super(new SimpleEventBus());
 		xmler = new TigaseXMLService();
 		sent = new ArrayList<IPacket>();
 		if (user != null) {
@@ -112,9 +113,9 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	@Override
 	public void logout() {
 		if (currentUser != null) {
-			setSessionState(SessionStates.loggingOut);
+			setSessionState(SessionState.loggingOut);
 			currentUser = null;
-			setSessionState(SessionStates.disconnected);
+			setSessionState(SessionState.disconnected);
 		}
 	}
 
@@ -155,7 +156,7 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 	}
 
 	@Override
-	public void sendIQ(final String category, final IQ iq, final IQResponseHandler iqHandler) {
+	public void sendIQ(final String category, final IQ iq, final IQCallback iqHandler) {
 		lastIQSent = iq;
 		lastIQResponseHandler = iqHandler;
 	}
@@ -170,19 +171,14 @@ public class XmppSessionTester extends XmppSessionBoilerPlate {
 
 	public void setLoggedIn(final XmppURI userURI) {
 		currentUser = userURI;
-		setSessionState(SessionStates.loggedIn);
+		setSessionState(SessionState.loggedIn);
 	}
 
 	public void setReady() {
-		setSessionState(SessionStates.ready);
+		setSessionState(SessionState.ready);
 	}
 
-	@Override
-	public void setSessionState(final String state) {
-		super.setSessionState(state);
-	}
-
-	public IQResponseHandler verifyIQSent(final IPacket iq) {
+	public IQCallback verifyIQSent(final IPacket iq) {
 		assertNotNull(lastIQSent);
 		EmiteAsserts.assertPacketLike(iq, lastIQSent);
 		return lastIQResponseHandler;

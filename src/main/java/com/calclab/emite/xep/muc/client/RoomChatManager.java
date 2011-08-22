@@ -20,164 +20,48 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import java.util.HashMap;
-
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.PresenceEvent;
-import com.calclab.emite.core.client.events.PresenceHandler;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.AbstractChatManager;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
-import com.calclab.emite.im.client.chat.ChatStates;
-import com.calclab.emite.xep.muc.client.events.RoomInvitationEvent;
-import com.calclab.emite.xep.muc.client.events.RoomInvitationHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import com.calclab.emite.im.client.chat.ChatManager;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * The default implementation of RoomManager. See RoomManager for javadoc.
+ * RoomManager: room related methods
  * 
- * @see RoomManager
+ * @see ChatManager
  */
-public class RoomChatManager extends AbstractChatManager implements RoomManager {
-
-	private static final PacketMatcher FILTER_X = MatcherFactory.byNameAndXMLNS("x", "http://jabber.org/protocol/muc#user");
-	private static final PacketMatcher FILTER_INVITE = MatcherFactory.byName("invite");
-	private static final String HISTORY_OPTIONS_PROP = "history.options";
-	private final HashMap<XmppURI, Room> roomsByJID;
-	private HistoryOptions defaultHistoryOptions;
-
-	public RoomChatManager(final XmppSession session) {
-		this(session, new RoomChatSelectionStrategy());
-	}
-
-	@Inject
-	public RoomChatManager(final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy) {
-		super(session, strategy);
-		roomsByJID = new HashMap<XmppURI, Room>();
-
-		forwardPresenceToRooms();
-		handleRoomInvitations();
-	}
-
-	@Override
-	public Room acceptRoomInvitation(final RoomInvitation invitation) {
-		final XmppURI roomURI = invitation.getRoomURI();
-		final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUserURI().getNode());
-
-		final ChatProperties properties = new ChatProperties(uri, invitation.getChatProperties());
-
-		return (Room) openChat(properties, true);
-	}
-
-	@Override
-	public HandlerRegistration addRoomInvitationReceivedHandler(final RoomInvitationHandler handler) {
-		return RoomInvitationEvent.bind(session.getEventBus(), handler);
-	}
-
-	@Override
-	public void close(final Chat whatToClose) {
-		final Room room = roomsByJID.remove(whatToClose.getURI().getJID());
-		if (room != null) {
-			room.close();
-			super.close(room);
-		}
-	}
-
-	@Override
-	public Room getChat(final XmppURI uri) {
-		return roomsByJID.get(uri.getJID());
-	}
-
-	@Override
-	public HistoryOptions getDefaultHistoryOptions() {
-		return defaultHistoryOptions;
-	}
-
-	@Override
-	public Room open(final XmppURI uri, final HistoryOptions historyOptions) {
-		final ChatProperties properties = new ChatProperties(uri);
-		properties.setData(HISTORY_OPTIONS_PROP, historyOptions);
-		return (Room) openChat(properties, true);
-	}
-
-	@Override
-	public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
-		this.defaultHistoryOptions = defaultHistoryOptions;
-	}
+public interface RoomChatManager extends ChatManager<RoomChat> {
+	/**
+	 * Accepts a room invitation event
+	 * 
+	 * @param invitation
+	 *            the invitation event to be accepted
+	 */
+	public RoomChat acceptRoomInvitation(RoomInvitation invitation);
+	
+	/**
+	 * Add a handler to track chat changes. The following changes can occur from
+	 * a default chat manager: created, opened, closed
+	 * 
+	 * @param handler
+	 */
+	public HandlerRegistration addRoomChatChangedHandler(RoomChatChangedEvent.Handler handler);
 
 	/**
-	 * Forward the presence messages to the room event bus.
+	 * Add a handler to know when a room invitation has arrived
+	 * 
+	 * @param handler
+	 * @return
 	 */
-	private void forwardPresenceToRooms() {
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				final ChatProperties properties = strategy.extractProperties(presence);
-				if (properties != null) {
-					Chat chat = getChat(properties, false);
-					if (chat == null && properties.shouldCreateNewChat()) {
-						// we need to create a chat for this incoming presence
-						properties.setInitiatorUri(properties.getUri());
-						chat = addNewChat(properties);
-					}
-					if (chat != null) {
-						chat.getChatEventBus().fireEvent(event);
-					}
-				}
-			}
-		});
-	}
+	public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationReceivedEvent.Handler handler);
 
 	/**
-	 * Check if the incomming message is a room invitation to the user
+	 * Obtain the default history options applied to all new rooms
+	 * 
+	 * @return
 	 */
-	private void handleRoomInvitations() {
-		session.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				final Message message = event.getMessage();
-				IPacket child;
-				if ((child = message.getFirstChild(FILTER_X).getFirstChild(FILTER_INVITE)) != NoPacket.INSTANCE) {
-					final Stanza invitationStanza = new BasicStanza(child);
+	public HistoryOptions getDefaultHistoryOptions();
 
-					// We extract the chat properties from the message
-					final ChatProperties chatProperties = strategy.extractProperties(message);
+	public RoomChat open(final XmppURI uri, HistoryOptions historyOptions);
 
-					final RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(), invitationStanza
-							.getFirstChild("reason").getText(), chatProperties);
-					session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
-				}
-			}
-		});
-	}
-
-	@Override
-	protected void addChat(final Chat chat) {
-		final XmppURI jid = chat.getURI().getJID();
-		roomsByJID.put(jid, (Room) chat);
-		super.addChat(chat);
-	}
-
-	@Override
-	protected Chat createChat(final ChatProperties properties) {
-		if (properties.getState() == null) {
-			properties.setState(ChatStates.locked);
-		}
-		return new RoomChat(session, properties);
-	}
+	public void setDefaultHistoryOptions(HistoryOptions historyOptions);
 }

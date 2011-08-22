@@ -24,11 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.xep.disco.client.DiscoveryItemsResultEvent;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
-import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
+import com.calclab.emite.xep.disco.client.FeatureSupportedHandler;
 import com.calclab.emite.xep.disco.client.Item;
-import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultEvent;
-import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
 import com.google.inject.Inject;
 
 public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
@@ -42,7 +41,7 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 
 	@Override
 	public void discoverRooms(final XmppURI targetUri, final ExistingRoomsCallback callback) {
-		discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultHandler() {
+		discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultEvent.Handler() {
 			@Override
 			public void onDiscoveryItemsResult(final DiscoveryItemsResultEvent event) {
 				final ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
@@ -58,7 +57,7 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 	}
 
 	@Override
-	public void isMucSupported(final XmppURI targetUri, final FeatureSupportedCallback callback) {
+	public void isMucSupported(final XmppURI targetUri, final FeatureSupportedHandler callback) {
 		discoveryManager.areFeaturesSupported(targetUri, callback, "http://jabber.org/protocol/muc");
 	}
 

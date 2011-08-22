@@ -24,7 +24,7 @@ import com.calclab.emite.browser.client.BrowserModule;
 import com.calclab.emite.core.client.CoreModule;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.im.client.ImModule;
-import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
@@ -32,5 +32,5 @@ import com.google.gwt.inject.client.Ginjector;
 interface EchoGinjector extends Ginjector {
 	XmppSession getXmppSession();
 
-	ChatManager getChatManager();
+	PairChatManager getPairChatManager();
 }

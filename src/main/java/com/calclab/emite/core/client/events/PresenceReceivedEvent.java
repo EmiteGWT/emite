@@ -21,18 +21,39 @@
 package com.calclab.emite.core.client.events;
 
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.Event;
 
-public class PresenceReceivedEvent extends PresenceEvent {
-
-	private static final Type<PresenceHandler> TYPE = new Type<PresenceHandler>();
-
-	public static HandlerRegistration bind(final EmiteEventBus eventBus, final PresenceHandler handler) {
-		return eventBus.addHandler(TYPE, handler);
+public class PresenceReceivedEvent extends Event<PresenceReceivedEvent.Handler> {
+	
+	public interface Handler {
+		void onPresenceReceived(PresenceReceivedEvent event);
 	}
+	
+	public static final Type<Handler> TYPE = new Type<Handler>();
 
+	private final Presence presence;
+	
 	public PresenceReceivedEvent(final Presence presence) {
-		super(TYPE, presence);
+		assert presence != null : "Presence can't be null in PresenceEvent";
+		this.presence = presence;
+	}
+	
+	public Presence getPresence() {
+		return presence;
 	}
 
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + presence;
+	}
+
+	@Override
+	protected void dispatch(final Handler handler) {
+		handler.onPresenceReceived(this);
+	}
 }

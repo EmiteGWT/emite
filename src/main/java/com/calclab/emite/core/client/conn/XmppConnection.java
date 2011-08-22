@@ -20,10 +20,11 @@
 
 package com.calclab.emite.core.client.conn;
 
-import com.calclab.emite.core.client.bosh.StreamSettings;
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * A connection to a xmpp server
@@ -36,7 +37,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addConnectionResponseHandler(ConnectionResponseHandler handler);
+	public HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when the state of the connection has changed
@@ -44,7 +45,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addConnectionStateChangedHandler(ConnectionStateChangedHandler handler);
+	public HandlerRegistration addConnectionStateChangedHandler(ConnectionStateChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has arrived from the server
@@ -52,7 +53,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addStanzaReceivedHandler(StanzaHandler handler);
+	public HandlerRegistration addStanzaReceivedHandler(StanzaReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has been sent to the server
@@ -60,7 +61,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addStanzaSentHandler(StanzaHandler handler);
+	public HandlerRegistration addStanzaSentHandler(StanzaSentEvent.Handler handler);
 
 	/**
 	 * Connect to the server
@@ -73,13 +74,6 @@ public interface XmppConnection {
 	 * Disconnect to the server
 	 */
 	public abstract void disconnect();
-
-	/**
-	 * Get the default Emite event bus
-	 * 
-	 * @return
-	 */
-	public EmiteEventBus getEventBus();
 
 	/**
 	 * Obtain the stream settings. This is the actual object used in the

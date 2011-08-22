@@ -29,9 +29,9 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.VCardResponseTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class VCardManagerTests {
 	String VALID_VCARD = "<iq id='v1'\n" + "    to='stpeter@jabber.org/roundabout'\n" + "    type='result'>\n" + "  <vCard xmlns='vcard-temp'>\n"
@@ -77,7 +77,7 @@ public class VCardManagerTests {
 	@Before
 	public void setup() {
 		session = new XmppSessionTester("test@domain");
-		manager = new VCardManagerImpl(session);
+		manager = new VCardManagerImpl(new SimpleEventBus(), session);
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class VCardManagerTests {
 
 	@Test
 	public void shouldSendRetrievalRequest() {
-		manager.requestOwnVCard((VCardResponseHandler) null);
+		manager.requestOwnVCard(null);
 		final IQ iq = new IQ(IQ.Type.get).With("from", "test@domain");
 		iq.addChild("vCard", "vcard-temp");
 		session.verifyIQSent(iq);

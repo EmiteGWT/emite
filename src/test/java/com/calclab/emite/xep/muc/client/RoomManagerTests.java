@@ -26,13 +26,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * RoomChatManager tests using the new event system
@@ -44,12 +45,12 @@ public class RoomManagerTests {
 
 	private static final XmppURI USER = XmppURI.uri("user@domain/res");
 	private XmppSessionTester session;
-	private RoomChatManager manager;
+	private RoomChatManagerImpl manager;
 
 	@Before
 	public void beforeTests() {
 		session = new XmppSessionTester(USER);
-		manager = new RoomChatManager(session);
+		manager = new RoomChatManagerImpl(new SimpleEventBus(), session, new RoomChatSelectionStrategy());
 	}
 
 	@Test
@@ -60,8 +61,8 @@ public class RoomManagerTests {
 		final RoomInvitation invitation = new RoomInvitation(uri("friend@host/resource"), uri("room@room.service"), "theReason", properties);
 		manager.acceptRoomInvitation(invitation);
 		assertEquals(2, handler.getCalledTimes());
-		assertEquals(ChangeTypes.created, handler.getEvent(0).getChangeType());
-		assertEquals(ChangeTypes.opened, handler.getEvent(1).getChangeType());
+		assertEquals(ChangeType.created, handler.getEvent(0).getChangeType());
+		assertEquals(ChangeType.opened, handler.getEvent(1).getChangeType());
 	}
 
 	@Test

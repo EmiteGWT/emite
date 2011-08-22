@@ -20,75 +20,123 @@
 
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
+import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.ErrorEvent;
-import com.calclab.emite.core.client.events.ErrorHandler;
-import com.calclab.emite.core.client.events.EventBusFactory;
-import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.MessageSentEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.events.BeforeReceiveMessageEvent;
-import com.calclab.emite.im.client.chat.events.BeforeSendMessageEvent;
-import com.calclab.emite.im.client.chat.events.ChatStateChangedEvent;
-import com.calclab.emite.im.client.chat.events.MessageSentEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
-public abstract class ChatBoilerplate implements Chat {
-	protected final XmppSession session;
-	protected final ChatProperties properties;
-	protected final EmiteEventBus chatEventBus;
+public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Handler {
 
 	private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
 
-	public ChatBoilerplate(final XmppSession session, final ChatProperties properties) {
+	protected final EventBus eventBus;
+	protected final XmppSession session;
+	protected final ChatProperties properties;
+
+	public ChatBoilerplate(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
+		assert properties.getState() != null : "State can't be null in chats";
+
+		this.eventBus = eventBus;
 		this.session = session;
 		this.properties = properties;
-		chatEventBus = EventBusFactory.create(properties.getUri().toString());
-	}
 
-	@Override
-	public HandlerRegistration addBeforeReceiveMessageHandler(final MessageHandler handler) {
-		return BeforeReceiveMessageEvent.bind(chatEventBus, handler);
-	}
+		setPreviousChatState(getChatState());
 
-	@Override
-	public HandlerRegistration addBeforeSendMessageHandler(final MessageHandler handler) {
-		return BeforeSendMessageEvent.bind(chatEventBus, handler);
+		session.addMessageReceivedHandler(ChatBoilerplate.this);
 	}
-
+	
 	@Override
-	public HandlerRegistration addChatStateChangedHandler(final boolean sendCurrent, final StateChangedHandler handler) {
-		if (sendCurrent) {
-			handler.onStateChanged(new ChatStateChangedEvent(getChatState()));
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		final Message message = event.getMessage();
+		if (message.getType() == Type.error) {
+			eventBus.fireEventFromSource(new ErrorEvent(ChatErrors.errorMessage, "We received an error message", message), this);
 		}
-		return ChatStateChangedEvent.bind(chatEventBus, handler);
 	}
 
 	@Override
-	public HandlerRegistration addErrorHandler(final ErrorHandler handler) {
-		return ErrorEvent.bind(chatEventBus, handler);
+	public HandlerRegistration addBeforeMessageReceivedHandler(final BeforeMessageReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(BeforeMessageReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addMessageReceivedHandler(final MessageHandler handler) {
-		return MessageReceivedEvent.bind(chatEventBus, handler);
+	public HandlerRegistration addBeforeMessageSentHandler(final BeforeMessageSentEvent.Handler handler) {
+		return eventBus.addHandlerToSource(BeforeMessageSentEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addMessageSentHandler(final MessageHandler handler) {
-		return MessageSentEvent.bind(chatEventBus, handler);
+	public HandlerRegistration addChatStateChangedHandler(final boolean sendCurrent, final ChatStateChangedEvent.Handler handler) {
+		if (sendCurrent) {
+			handler.onChatStateChanged(new ChatStateChangedEvent(getChatState()));
+		}
+		return eventBus.addHandlerToSource(ChatStateChangedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public EmiteEventBus getChatEventBus() {
-		return chatEventBus;
+	public HandlerRegistration addErrorHandler(final ErrorEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ErrorEvent.TYPE, this, handler);
 	}
 
+	@Override
+	public HandlerRegistration addMessageReceivedHandler(final MessageReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(MessageReceivedEvent.TYPE, this, handler);
+	}
+
+	@Override
+	public HandlerRegistration addMessageSentHandler(final MessageSentEvent.Handler handler) {
+		return eventBus.addHandlerToSource(MessageSentEvent.TYPE, this, handler);
+	}
+
+	@Override
+	public void close() {
+		setChatState(ChatStates.locked);
+	}
+
+	@Override
+	public boolean isReady() {
+		return ChatStates.ready.equals(getChatState());
+	}
+
+	@Override
+	public void receive(final Message message) {
+		eventBus.fireEventFromSource(new BeforeMessageReceivedEvent(message), this);
+		eventBus.fireEventFromSource(new MessageReceivedEvent(message), this);
+	}
+
+	@Override
+	public void send(final Message message) {
+		if (ChatStates.ready.equals(getChatState())) {
+			message.setFrom(session.getCurrentUserURI());
+			eventBus.fireEventFromSource(new BeforeMessageSentEvent(message), this);
+			session.send(message);
+			eventBus.fireEventFromSource(new MessageSentEvent(message), this);
+		} else {
+			eventBus.fireEventFromSource(new ErrorEvent(ChatErrors.sendNotReady, "The chat is not ready. You can't send messages", null), this);
+		}
+	}
+	
 	@Override
 	public String getChatState() {
 		return properties.getState();
+	}
+	
+	/**
+	 * Set the current chat state
+	 * 
+	 * @param chatState
+	 */
+	protected void setChatState(final String chatState) {
+		assert chatState != null : "Chat state can't be null";
+		if (!chatState.equals(properties.getState())) {
+			properties.setState(chatState.toString());
+			eventBus.fireEventFromSource(new ChatStateChangedEvent(chatState), this);
+		}
 	}
 
 	@Override

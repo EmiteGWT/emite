@@ -21,8 +21,7 @@
 package com.calclab.emite.im.client.roster;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Manager presence subscriptions between users. Also, it take cares of
@@ -39,7 +38,7 @@ public interface SubscriptionManager {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedHandler handler);
+	public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedEvent.Handler handler);
 
 	/**
 	 * Approves previously subscription request stanza

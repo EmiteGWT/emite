@@ -22,24 +22,23 @@ package com.calclab.emite.reconnect.client;
 
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.conn.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent;
-import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultHandler;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
+import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 
-public class SessionReconnect {
+public class SessionReconnect implements ConnectionStateChangedEvent.Handler, SessionStateChangedEvent.Handler, AuthorizationResultEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());
+	
+	private final XmppSession session;
 	
 	private boolean shouldReconnect;
 	private Credentials lastSuccessfulCredentials;
@@ -47,57 +46,55 @@ public class SessionReconnect {
 
 	@Inject
 	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
+		this.session = session;
+		
 		shouldReconnect = false;
 		reconnectionAttempts = 0;
 		logger.info("RECONNECT BEHAVIOUR");
 
-		saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
-			@Override
-			public void onAuthorization(final AuthorizationResultEvent event) {
-				lastSuccessfulCredentials = event.getCredentials();
-			}
-		});
-
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				if (event.is(SessionStates.connecting)) {
-					shouldReconnect = false;
-				} else if (event.is(SessionStates.disconnected) && shouldReconnect) {
-					if (lastSuccessfulCredentials != null) {
-						final double seconds = Math.pow(2, reconnectionAttempts - 1);
-						new Timer() {
-							@Override
-							public void run() {
-								logger.info("Reconnecting...");
-								if (shouldReconnect) {
-									shouldReconnect = false;
-									session.login(lastSuccessfulCredentials);
-								}
-							}
-						}.schedule((int) (1000 * seconds));
-						logger.info("Reconnecting in " + seconds + " seconds.");
+		saslManager.addAuthorizationResultHandler(this);
+		session.addSessionStateChangedHandler(true, this);
+		connection.addConnectionStateChangedHandler(this);
+	}
+	
+	@Override
+	public void onConnectionStateChanged(final ConnectionStateChangedEvent event) {
+		if (event.is(ConnectionState.error) || event.is(ConnectionState.waitingForRetry)) {
+			shouldReconnect = true;
+			reconnectionAttempts++;
+		}
+	}
+	
+	@Override
+	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+		if (event.is(SessionState.connecting)) {
+			shouldReconnect = false;
+		} else if (event.is(SessionState.disconnected) && shouldReconnect) {
+			if (lastSuccessfulCredentials != null) {
+				final double seconds = Math.pow(2, reconnectionAttempts - 1);
+				new Timer() {
+					@Override
+					public void run() {
+						logger.info("Reconnecting...");
+						if (shouldReconnect) {
+							shouldReconnect = false;
+							session.login(lastSuccessfulCredentials);
+						}
 					}
-				} else if (event.is(SessionStates.ready)) {
-					logger.finer("CLEAR RECONNECTION ATTEMPS");
-					reconnectionAttempts = 0;
-				}
+				}.schedule((int) (1000 * seconds));
+				logger.info("Reconnecting in " + seconds + " seconds.");
 			}
-		});
-
-		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
-			@Override
-			public void onStateChanged(final ConnectionStateChangedEvent event) {
-				if (event.is(ConnectionState.error) || event.is(ConnectionState.waitingForRetry)) {
-					shouldReconnect();
-				}
-			}
-		});
-
+		} else if (event.is(SessionState.ready)) {
+			logger.finer("CLEAR RECONNECTION ATTEMPS");
+			reconnectionAttempts = 0;
+		}
+	}
+	
+	@Override
+	public void onAuthorizationResult(final AuthorizationResultEvent event) {
+		if (event.isSuccess()) {
+			lastSuccessfulCredentials = event.getCredentials();
+		}
 	}
 
-	private void shouldReconnect() {
-		shouldReconnect = true;
-		reconnectionAttempts++;
-	}
 }

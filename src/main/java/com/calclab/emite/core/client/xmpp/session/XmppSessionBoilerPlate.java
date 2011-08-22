@@ -20,81 +20,73 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
-import com.calclab.emite.core.client.events.BeforeStanzaSendEvent;
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.IQHandler;
+import com.calclab.emite.core.client.events.BeforeStanzaSentEvent;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.events.PacketHandler;
-import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
-public abstract class XmppSessionBoilerPlate implements XmppSession {
-	protected final EmiteEventBus eventBus;
-	private String state;
+public abstract class XmppSessionBoilerplate implements XmppSession {
+	
+	protected final EventBus eventBus;
+	private SessionState state;
 
-	public XmppSessionBoilerPlate(final EmiteEventBus eventBus) {
+	public XmppSessionBoilerplate(final EventBus eventBus) {
 		this.eventBus = eventBus;
-		state = SessionStates.disconnected;
+		state = SessionState.disconnected;
 	}
 
 	@Override
-	public HandlerRegistration addBeforeSendStanzaHandler(final PacketHandler handler) {
-		return BeforeStanzaSendEvent.bind(eventBus, handler);
+	public HandlerRegistration addBeforeStanzaSentHandler(final BeforeStanzaSentEvent.Handler handler) {
+		return eventBus.addHandlerToSource(BeforeStanzaSentEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addIQReceivedHandler(final IQHandler handler) {
-		return IQReceivedEvent.bind(eventBus, handler);
+	public HandlerRegistration addIQReceivedHandler(final IQReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(IQReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addMessageReceivedHandler(final MessageHandler handler) {
-		return MessageReceivedEvent.bind(eventBus, handler);
+	public HandlerRegistration addMessageReceivedHandler(final MessageReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(MessageReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addPresenceReceivedHandler(final PresenceHandler handler) {
-		return PresenceReceivedEvent.bind(eventBus, handler);
+	public HandlerRegistration addPresenceReceivedHandler(final PresenceReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(PresenceReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public HandlerRegistration addSessionStateChangedHandler(final boolean sendCurrent, final StateChangedHandler handler) {
+	public HandlerRegistration addSessionStateChangedHandler(final boolean sendCurrent, final SessionStateChangedEvent.Handler handler) {
 		if (sendCurrent) {
-			handler.onStateChanged(new SessionStateChangedEvent(getSessionState()));
+			handler.onSessionStateChanged(new SessionStateChangedEvent(getSessionState()));
 		}
-		return SessionStateChangedEvent.bind(eventBus, handler);
+		
+		return eventBus.addHandlerToSource(SessionStateChangedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public EmiteEventBus getEventBus() {
-		return eventBus;
-	}
-
-	@Override
-	public String getSessionState() {
+	public SessionState getSessionState() {
 		return state;
 	}
 
 	@Override
-	public boolean isState(final String expectedState) {
+	public boolean isState(final SessionState expectedState) {
 		return state.equals(expectedState);
 	}
 
 	@Override
-	public void login(final XmppURI uri, final String password) {
-		login(new Credentials(uri, password, Credentials.ENCODING_NONE));
-	}
-
-	@Override
-	public void setSessionState(final String newState) {
+	public void setSessionState(final SessionState newState) {
 		if (!newState.equals(state)) {
 			state = newState;
-			eventBus.fireEvent(new SessionStateChangedEvent(newState));
+			eventBus.fireEventFromSource(new SessionStateChangedEvent(newState), this);
 		}
+	}
+	
+	@Override
+	public void login(final XmppURI uri, final String password) {
+		login(new Credentials(uri, password, Credentials.ENCODING_NONE));
 	}
 }

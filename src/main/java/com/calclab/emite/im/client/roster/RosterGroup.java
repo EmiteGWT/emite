@@ -27,13 +27,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.EventBusFactory;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedEvent;
-import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * Represents a group in a roster. All the roster itself is a group (with name
@@ -42,9 +39,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see Roster
  */
 public class RosterGroup implements Iterable<RosterItem> {
+	
+	private final EventBus eventBus;
+	
 	private final String name;
 	private final HashMap<XmppURI, RosterItem> itemsByJID;
-	private final EmiteEventBus rosterGroupEventBus;
 
 	/**
 	 * Creates a new roster group. If name is null, its supposed to be the
@@ -55,12 +54,16 @@ public class RosterGroup implements Iterable<RosterItem> {
 	 * @param roster
 	 *            the roster object
 	 */
-	public RosterGroup(final String groupName) {
+	public RosterGroup(final EventBus eventBus, final String groupName) {
+		this.eventBus = eventBus;
 		name = groupName;
 		itemsByJID = new HashMap<XmppURI, RosterItem>();
-		rosterGroupEventBus = EventBusFactory.create("group-" + groupName);
 	}
 
+	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(RosterItemChangedEvent.TYPE, this, handler);
+	}
+	
 	/**
 	 * Add a RosterItem to this group. A ItemAdded event is fired.
 	 * 
@@ -70,11 +73,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 	 */
 	public void add(final RosterItem item) {
 		itemsByJID.put(item.getJID(), item);
-		rosterGroupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.added, item));
-	}
-
-	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedHandler handler) {
-		return RosterItemChangedEvent.bind(rosterGroupEventBus, handler);
+		eventBus.fireEventFromSource(new RosterItemChangedEvent(ChangeType.added, item), this);
 	}
 
 	/**
@@ -125,10 +124,6 @@ public class RosterGroup implements Iterable<RosterItem> {
 		return name;
 	}
 
-	public EmiteEventBus getRosterGroupEventBus() {
-		return rosterGroupEventBus;
-	}
-
 	public int getSize() {
 		return itemsByJID.size();
 	}
@@ -149,7 +144,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 	public RosterItem remove(final XmppURI jid) {
 		final RosterItem removed = itemsByJID.remove(jid);
 		if (removed != null) {
-			rosterGroupEventBus.fireEvent(new RosterItemChangedEvent(ChangeTypes.removed, removed));
+			eventBus.fireEventFromSource(new RosterItemChangedEvent(ChangeType.removed, removed), this);
 		}
 		return removed;
 	}

@@ -30,10 +30,10 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 
-public abstract class AbstractChatManagerTest {
+public abstract class AbstractChatManagerTest<C extends Chat> {
 	protected static final XmppURI MYSELF = uri("self@domain");
 	protected static final XmppURI OTHER = uri("other@domain");
-	protected ChatManager manager;
+	protected ChatManager<C> manager;
 	protected XmppSessionTester session;
 
 	@Before
@@ -45,13 +45,13 @@ public abstract class AbstractChatManagerTest {
 
 	@Test
 	public void shouldBeInitiatedByMeIfIOpenAChat() {
-		final Chat chat = manager.open(uri("other@domain/resource"));
+		final C chat = manager.open(uri("other@domain/resource"));
 		assertTrue(chat.isInitiatedByMe());
 	}
 
 	@Test
 	public void shouldEventWhenAChatIsClosed() {
-		final Chat chat = manager.open(uri("other@domain/resource"));
+		final C chat = manager.open(uri("other@domain/resource"));
 		final ChatChangedTestHandler handler = new ChatChangedTestHandler("closed");
 		manager.addChatChangedHandler(handler);
 		manager.close(chat);
@@ -66,5 +66,5 @@ public abstract class AbstractChatManagerTest {
 		assertTrue(handler.isCalledOnce());
 	}
 
-	protected abstract ChatManager createChatManager();
+	protected abstract ChatManager<C> createChatManager();
 }

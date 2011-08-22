@@ -33,32 +33,36 @@ import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.AbstractChat;
+import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.xep.muc.client.subject.RoomSubject;
-import com.calclab.emite.xtesting.handlers.MessageTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.RoomSubjectChangedTestHandler;
-import com.calclab.emite.xtesting.handlers.StateChangedTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class RoomTest extends AbstractChatTest {
-	private RoomChat room;
+	
+	private EventBus eventBus;
+	private RoomChatImpl room;
 	private XmppURI userURI;
 	private XmppURI roomURI;
 
 	@Before
 	public void beforeTests() {
+		eventBus = new SimpleEventBus();
 		userURI = uri("user@domain/res");
 		roomURI = uri("room@domain/nick");
 		session.setLoggedIn(userURI);
-		final RoomChatManager manager = new RoomChatManager(session);
+		final RoomChatManagerImpl manager = new RoomChatManagerImpl(eventBus, session, new RoomChatSelectionStrategy());
 		final ChatProperties properties = new ChatProperties(roomURI, userURI, null);
-		room = (RoomChat) manager.openChat(properties, true);
+		room = (RoomChatImpl) manager.openChat(properties, true);
 	}
 
 	@Override
-	public AbstractChat getChat() {
+	public ChatBoilerplate getChat() {
 		return room;
 	}
 
@@ -83,20 +87,20 @@ public class RoomTest extends AbstractChatTest {
 
 	@Test
 	public void shouldFireListenersWhenMessage() {
-		final MessageTestHandler handler = new MessageTestHandler();
+		final MessageReceivedTestHandler handler = new MessageReceivedTestHandler();
 		room.addMessageReceivedHandler(handler);
 		final Message message = new Message("message", uri("room@domain"), uri("someone@domain/res"));
-		room.getChatEventBus().fireEvent(new MessageReceivedEvent(message));
+		eventBus.fireEvent(new MessageReceivedEvent(message));
 		assertEquals(message, handler.getLastMessage());
 	}
 
 	@Test
 	public void shouldFireListenersWhenSubjectChange() {
 		final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
-		RoomSubject.addRoomSubjectChangedHandler(room, handler);
+		room.addRoomSubjectChangedHandler(room, handler);
 
 		final XmppURI occupantURI = uri("someone@domain/res");
-		room.getChatEventBus().fireEvent(new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
+		eventBus.fireEvent(new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
 		assertEquals(1, handler.getCalledTimes());
 
 		assertEquals(occupantURI, handler.getLastEvent().getOccupantUri());
@@ -130,7 +134,7 @@ public class RoomTest extends AbstractChatTest {
 
 	@Test
 	public void shouldUnlockWhenInstantRoomIsCreated() {
-		final StateChangedTestHandler handler = new StateChangedTestHandler();
+		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
 		room.addChatStateChangedHandler(false, handler);
 		assertEquals("locked", room.getChatState());
 		receiveInstantRoomCreation(userURI, roomURI);

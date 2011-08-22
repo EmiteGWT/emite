@@ -20,45 +20,47 @@
 
 package com.calclab.emite.core.client.xmpp.sasl;
 
-import com.calclab.emite.core.client.conn.StanzaEvent;
-import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.events.EmiteEventBus;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class SASLManager {
+public class SASLManager implements StanzaReceivedEvent.Handler {
 	private static final String SEP = new String(new char[] { 0 });
 	private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
 
+	private final EventBus eventBus;
 	private final XmppConnection connection;
 	private final DecoderRegistry decoders;
-	private final EmiteEventBus eventBus;
+	
 	private Credentials currentCredentials;
 
 	@Inject
-	public SASLManager(final XmppConnection connection, final DecoderRegistry decoders) {
+	public SASLManager(@Named("emite") final EventBus eventBus, final XmppConnection connection, final DecoderRegistry decoders) {
+		this.eventBus = eventBus;
 		this.connection = connection;
-		eventBus = connection.getEventBus();
 		this.decoders = decoders;
 
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket stanza = event.getStanza();
-				final String name = stanza.getName();
-				if ("failure".equals(name)) { // & XMLNS
-					eventBus.fireEvent(new AuthorizationResultEvent());
-				} else if ("success".equals(name)) {
-					eventBus.fireEvent(new AuthorizationResultEvent(currentCredentials));
-				}
-				currentCredentials = null;
-			}
-		});
+		connection.addStanzaReceivedHandler(this);
+	}
+	
+	@Override
+	public void onStanzaReceived(final StanzaReceivedEvent event) {
+		final IPacket stanza = event.getStanza();
+		final String name = stanza.getName();
+		if ("failure".equals(name)) { // & XMLNS
+			eventBus.fireEventFromSource(new AuthorizationResultEvent(), this);
+		} else if ("success".equals(name)) {
+			eventBus.fireEventFromSource(new AuthorizationResultEvent(currentCredentials), this);
+		}
+		currentCredentials = null;
 	}
 
 	/**
@@ -66,8 +68,8 @@ public class SASLManager {
 	 * 
 	 * @param handler
 	 */
-	public void addAuthorizationResultHandler(final AuthorizationResultHandler handler) {
-		AuthorizationResultEvent.bind(eventBus, handler);
+	public HandlerRegistration addAuthorizationResultHandler(final AuthorizationResultEvent.Handler handler) {
+		return eventBus.addHandlerToSource(AuthorizationResultEvent.TYPE, this, handler);
 	}
 
 	public void sendAuthorizationRequest(final Credentials credentials) {

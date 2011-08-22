@@ -23,14 +23,12 @@ package com.calclab.emite.example.chat.client;
 import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
+import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,10 +40,14 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ExampleIMChat implements EntryPoint {
+public class ExampleIMChat implements EntryPoint, SessionStateChangedEvent.Handler, MessageReceivedEvent.Handler {
 
+	private static final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
+	
+	private final XmppSession session = ginjector.getXmppSession();
+	private final PairChatManager chatManager = ginjector.getPairChatManager();
+	
 	private VerticalPanel output;
-
 	private TextBox input;
 
 	@Override
@@ -58,36 +60,31 @@ public class ExampleIMChat implements EntryPoint {
 		final String user = PageAssist.getMeta("emite.chat");
 		log("Chat with user: " + user);
 
-		final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
-		final XmppSession session = ginjector.getXmppSession();
+		session.addSessionStateChangedHandler(true, this);
 
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				final String state = event.getState();
-				log("Current state: " + state);
-			}
-		});
-
-		final ChatManager chatManager = ginjector.getChatManager();
 		input.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(final ChangeEvent event) {
 				final String msg = input.getText();
 				log("Message sent: " + msg);
-				final Chat chat = chatManager.open(uri(user));
+				final PairChat chat = chatManager.open(uri(user));
 				chat.send(new Message(msg));
 				input.setText("");
 			}
 		});
 
-		final Chat chat = chatManager.open(uri(user));
-		chat.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				log("Message received: " + event.getMessage().getBody());
-			}
-		});
+		final PairChat chat = chatManager.open(uri(user));
+		chat.addMessageReceivedHandler(this);
+	}
+	
+	@Override
+	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+		log("Current state: " + event.getState().toString());
+	}
+	
+	@Override
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		log("Message received: " + event.getMessage().getBody());
 	}
 
 	private void createUI() {
