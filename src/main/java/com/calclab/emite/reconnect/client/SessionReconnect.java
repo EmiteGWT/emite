@@ -33,7 +33,9 @@ import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class SessionReconnect implements ConnectionStateChangedEvent.Handler, SessionStateChangedEvent.Handler, AuthorizationResultEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());

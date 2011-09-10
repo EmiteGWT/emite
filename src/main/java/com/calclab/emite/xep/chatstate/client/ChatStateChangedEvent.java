@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.google.web.bindery.event.shared.Event;
 
 public class ChatStateChangedEvent extends Event<ChatStateChangedEvent.Handler> {

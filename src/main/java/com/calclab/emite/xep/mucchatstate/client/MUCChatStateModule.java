@@ -18,29 +18,15 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.browser.client;
+package com.calclab.emite.xep.mucchatstate.client;
 
-import java.util.logging.Logger;
+import com.google.gwt.inject.client.AbstractGinModule;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+public class MUCChatStateModule extends AbstractGinModule {
 
-public class AutoConfigBoot {
-
-	private static final Logger logger = Logger.getLogger(AutoConfigBoot.class.getName());
-	
-	@Inject
-	public AutoConfigBoot(final Provider<AutoConfig> provider) {
-		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				logger.fine("Checking auto config");
-				if (!PageAssist.isMetaFalse("emite.autoConfig")) {
-					provider.get();
-				}
-			}
-		});
+	@Override
+	protected void configure() {
+		bind(MUCChatStateManager.class).asEagerSingleton();
 	}
+
 }

@@ -33,7 +33,7 @@ import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xep.muc.client.RoomChat;
 import com.google.gwt.user.client.Timer;
 import com.google.web.bindery.event.shared.EventBus;

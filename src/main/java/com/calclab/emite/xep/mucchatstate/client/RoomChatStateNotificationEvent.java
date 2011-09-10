@@ -21,7 +21,7 @@
 package com.calclab.emite.xep.mucchatstate.client;
 
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.google.web.bindery.event.shared.Event;
 
 public class RoomChatStateNotificationEvent extends Event<RoomChatStateNotificationEvent.Handler> {

@@ -74,4 +74,7 @@ public class XmppDateTime {
 			return noMillisDtf.parse(date);
 		}
 	}
+	
+	private XmppDateTime() {
+	}
 }

@@ -21,7 +21,6 @@
 package com.calclab.emite.xep.disco.client;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Singleton;
 
 /**
  * Implements XEP-0030: Service Discovery
@@ -38,6 +37,6 @@ public class DiscoveryModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(DiscoveryManager.class).to(DiscoveryManagerImpl.class).in(Singleton.class);
+		bind(DiscoveryManager.class).to(DiscoveryManagerImpl.class);
 	}
 }

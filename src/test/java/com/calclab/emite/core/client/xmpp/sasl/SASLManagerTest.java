@@ -43,7 +43,7 @@ public class SASLManagerTest {
 	@Before
 	public void beforeTests() {
 		connection = new XmppConnectionTester();
-		manager = new SASLManager(new SimpleEventBus(), connection, new DecoderRegistry());
+		manager = new SASLManagerImpl(new SimpleEventBus(), connection);
 		authEvent = null;
 		
 		manager.addAuthorizationResultHandler(new AuthorizationResultEvent.Handler() {
@@ -92,7 +92,7 @@ public class SASLManagerTest {
 	}
 
 	private Credentials credentials(final XmppURI uri, final String password) {
-		final Credentials credentials = new Credentials(uri, password, Credentials.ENCODING_NONE);
+		final Credentials credentials = new Credentials(uri, password);
 		return credentials;
 	}
 }

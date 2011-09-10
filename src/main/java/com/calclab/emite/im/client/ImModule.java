@@ -32,7 +32,6 @@ import com.calclab.emite.im.client.roster.SubscriptionManagerImpl;
 import com.calclab.emite.im.client.roster.XmppRoster;
 import com.calclab.emite.im.client.roster.XmppRosterImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
 /**
@@ -48,13 +47,12 @@ import com.google.inject.name.Names;
 public class ImModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
-		bind(PairChatManager.class).to(PairChatManagerImpl.class).in(Singleton.class);
-		bind(PresenceManager.class).to(PresenceManagerImpl.class).in(Singleton.class);
-		bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class).in(Singleton.class);
-		bind(SubscriptionHandler.class).in(Singleton.class);
-		bind(XmppRoster.class).to(XmppRosterImpl.class).in(Singleton.class);
-		bind(ImComponents.class).asEagerSingleton();
-		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class).in(Singleton.class);
+		bind(PairChatManager.class).to(PairChatManagerImpl.class).asEagerSingleton();
+		bind(PresenceManager.class).to(PresenceManagerImpl.class).asEagerSingleton();
+		bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class).asEagerSingleton();
+		bind(SubscriptionHandler.class);
+		bind(XmppRoster.class).to(XmppRosterImpl.class).asEagerSingleton();
+		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class);
 	}
 
 }

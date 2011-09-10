@@ -18,17 +18,23 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.mucchatstate.client;
+package com.calclab.emite.core.client.browser;
 
-import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Singleton;
+import static org.junit.Assert.assertEquals;
 
-public class MucChatStateModule extends AbstractGinModule {
+import org.junit.Test;
 
-	@Override
-	protected void configure() {
-		bind(MUCChatStateManager.class).in(Singleton.class);
-		bind(MucChatStateComponents.class).asEagerSingleton();
+import com.calclab.emite.core.client.browser.AutoConfigBoot.SerializableMap;
+
+public class SerializableMapTest {
+
+	@Test
+	public void shouldSerialize() {
+		final SerializableMap original = new SerializableMap();
+		original.put("name1", "value1");
+		original.put("name2", "value2");
+		final String serialized = original.serialize();
+		final SerializableMap copy = SerializableMap.restore(serialized);
+		assertEquals(original, copy);
 	}
-
 }

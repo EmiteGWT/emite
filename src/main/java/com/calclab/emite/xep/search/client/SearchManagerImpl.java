@@ -40,7 +40,9 @@ import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class SearchManagerImpl implements SearchManager {
 	private static interface IQResultCallback {
 

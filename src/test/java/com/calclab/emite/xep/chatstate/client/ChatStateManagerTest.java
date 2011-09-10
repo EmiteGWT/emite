@@ -30,7 +30,7 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.im.client.chat.pair.PairChatSelectionStrategy;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
 import com.google.web.bindery.event.shared.EventBus;
@@ -43,7 +43,7 @@ public class ChatStateManagerTest {
 	private PairChatManagerImpl chatManager;
 	private ChatStateChangedTestHandler stateHandler;
 	private PairChat chat;
-	private ChatStateManager chatStateManager;
+	private ChatStateHook chatStateManager;
 	private XmppSessionTester session;
 
 	@Before
@@ -52,7 +52,7 @@ public class ChatStateManagerTest {
 		session = new XmppSessionTester();
 		chatManager = new PairChatManagerImpl(eventBus, session, new PairChatSelectionStrategy());
 		session.setLoggedIn(MYSELF);
-		final StateManager stateManager = new StateManager(eventBus, chatManager);
+		final ChatStateManager stateManager = new ChatStateManager(eventBus, chatManager);
 		chat = chatManager.open(OTHER);
 		chatStateManager = stateManager.getChatState(chat);
 		stateHandler = new ChatStateChangedTestHandler();
@@ -117,8 +117,8 @@ public class ChatStateManagerTest {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'>"
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
 		final Message message = new Message("test message", OTHER, MYSELF);
-		message.addChild(ChatStateManager.ChatState.active.toString(), ChatStateManager.XMLNS);
-		chatStateManager.setOwnState(ChatStateManager.ChatState.composing);
+		message.addChild(ChatStateHook.ChatState.active.toString(), ChatStateHook.XMLNS);
+		chatStateManager.setOwnState(ChatStateHook.ChatState.composing);
 		session.verifySent(message.toString() + "<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>");
 	}
@@ -143,8 +143,8 @@ public class ChatStateManagerTest {
 	public void shouldStopAfterGone() {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'><active /></message>");
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'><gone /></message>");
-		chatStateManager.setOwnState(ChatStateManager.ChatState.composing);
-		chatStateManager.setOwnState(ChatStateManager.ChatState.pause);
+		chatStateManager.setOwnState(ChatStateHook.ChatState.composing);
+		chatStateManager.setOwnState(ChatStateHook.ChatState.pause);
 		session.verifySent("<message><active /></message>");
 		session.verifyNotSent("<message><composing /></message>");
 		session.verifyNotSent("<message><pause /></message>");

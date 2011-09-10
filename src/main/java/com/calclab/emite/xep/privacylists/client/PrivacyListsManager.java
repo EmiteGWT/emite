@@ -26,10 +26,12 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Will (i hope!) implement http://www.xmpp.org/extensions/xep-0016.html
  */
+@Singleton
 public class PrivacyListsManager {
 	private final XmppSession session;
 

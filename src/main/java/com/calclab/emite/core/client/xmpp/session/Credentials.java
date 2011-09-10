@@ -23,14 +23,6 @@ package com.calclab.emite.core.client.xmpp.session;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 
 public class Credentials {
-	/**
-	 * The password is not encoded at all
-	 */
-	public static final String ENCODING_NONE = "none";
-	/**
-	 * The password is encoding using a Base64 algorithm
-	 */
-	public static final String ENCODING_BASE64 = "plain";
 
 	/**
 	 * The URI required to perform an anonymous login
@@ -38,15 +30,13 @@ public class Credentials {
 	public static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", "", null);
 
 	public static Credentials createAnonymous() {
-		return new Credentials(ANONYMOUS, null, ENCODING_NONE);
+		return new Credentials(ANONYMOUS, null);
 	}
 
-	XmppURI uri;
-	String encodedPassword;
+	private final XmppURI uri;
+	private final String password;
 
-	String encodingMethod;
-
-	public Credentials(final XmppURI uri, final String encodedPassword, final String encodingMethod) {
+	public Credentials(final XmppURI uri, final String password) {
 		if (uri == null)
 			throw new NullPointerException("uri can't be null in LoginCredentials");
 
@@ -55,20 +45,15 @@ public class Credentials {
 		} else {
 			this.uri = uri;
 		}
-		this.encodedPassword = encodedPassword;
-		this.encodingMethod = encodingMethod;
+		this.password = password;
 	}
 
-	public String getEncodedPassword() {
-		return encodedPassword;
-	}
-
-	public String getEncodingMethod() {
-		return encodingMethod;
-	}
-
-	public XmppURI getXmppUri() {
+	public final XmppURI getXmppUri() {
 		return uri;
+	}
+
+	public final String getPassword() {
+		return password;
 	}
 
 	public boolean isAnoymous() {

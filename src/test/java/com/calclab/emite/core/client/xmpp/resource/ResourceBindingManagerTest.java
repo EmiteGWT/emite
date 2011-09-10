@@ -41,7 +41,7 @@ public class ResourceBindingManagerTest {
 	@Before
 	public void beforeTests() {
 		connection = new XmppConnectionTester();
-		manager = new ResourceBindingManager(new SimpleEventBus(), connection);
+		manager = new ResourceBindingManagerImpl(new SimpleEventBus(), connection);
 	}
 
 	@Test

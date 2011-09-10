@@ -63,7 +63,6 @@ public class XmppSessionImpl extends XmppSessionBoilerplate implements Connectio
 	private final ResourceBindingManager bindingManager;
 	private final IMSessionManager imSessionManager;
 	private final IQManager iqManager;
-	private final SessionComponentsRegistry registry;
 	
 	private final ArrayList<IPacket> queuedStanzas;
 	private Credentials credentials;
@@ -71,14 +70,13 @@ public class XmppSessionImpl extends XmppSessionBoilerplate implements Connectio
 	
 	@Inject
 	public XmppSessionImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection, final SASLManager saslManager, final ResourceBindingManager bindingManager,
-			final IMSessionManager imSessionManager, final SessionComponentsRegistry registry) {
+			final IMSessionManager imSessionManager) {
 		super(eventBus);
 		
 		this.connection = connection;
 		this.saslManager = saslManager;
 		this.bindingManager = bindingManager;
 		this.imSessionManager = imSessionManager;
-		this.registry = registry;
 		
 		iqManager = new IQManager();
 		queuedStanzas = new ArrayList<IPacket>();
@@ -162,10 +160,6 @@ public class XmppSessionImpl extends XmppSessionBoilerplate implements Connectio
 	@Override
 	public void login(final Credentials credentials) {
 		logger.info("XmppSessionLogic - login");
-		if (!registry.areComponentsCreated()) {
-			logger.fine("First login - Creating session components");
-			registry.createComponents();
-		}
 		if (getSessionState() == SessionState.disconnected) {
 			setSessionState(SessionState.connecting);
 			connection.connect();

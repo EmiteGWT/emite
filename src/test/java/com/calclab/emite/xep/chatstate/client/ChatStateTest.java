@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChat;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
@@ -39,12 +39,12 @@ public class ChatStateTest {
 	private static final XmppURI OTHER = uri("other@domain/otherRes");
 	private ChatStateChangedTestHandler stateHandler;
 	private PairChat pairChat;
-	private ChatStateManager chatStateManager;
+	private ChatStateHook chatStateManager;
 
 	@Before
 	public void aaCreate() {
 		pairChat = Mockito.mock(PairChat.class);
-		chatStateManager = new ChatStateManager(new SimpleEventBus(), pairChat);
+		chatStateManager = new ChatStateHook(new SimpleEventBus(), pairChat);
 		stateHandler = new ChatStateChangedTestHandler();
 		chatStateManager.addChatStateChangedHandler(stateHandler);
 	}
@@ -52,7 +52,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireGone() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("gone", ChatStateManager.XMLNS);
+		message.addChild("gone", ChatStateHook.XMLNS);
 		chatStateManager.handleMessageReceived(pairChat, message);
 		assertEquals(ChatState.gone, stateHandler.getLastChatState());
 	}
@@ -60,7 +60,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossing() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("composing", ChatStateManager.XMLNS);
+		message.addChild("composing", ChatStateHook.XMLNS);
 		chatStateManager.handleMessageReceived(pairChat, message);
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}
@@ -68,7 +68,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossingAsGmailDo() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("cha:composing", ChatStateManager.XMLNS);
+		message.addChild("cha:composing", ChatStateHook.XMLNS);
 		chatStateManager.handleMessageReceived(pairChat, message);
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}
@@ -76,7 +76,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossingToWithoutResource() {
 		final Message message = new Message(null, OTHER.getJID(), MYSELF);
-		message.addChild("cha:composing", ChatStateManager.XMLNS);
+		message.addChild("cha:composing", ChatStateHook.XMLNS);
 		chatStateManager.handleMessageReceived(pairChat, message);
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}

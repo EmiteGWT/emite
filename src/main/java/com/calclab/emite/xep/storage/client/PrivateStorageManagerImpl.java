@@ -25,10 +25,12 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 /**
  * Implements http://xmpp.org/extensions/xep-0049.html
  */
+@Singleton
 public class PrivateStorageManagerImpl implements PrivateStorageManager {
 	private static final String XMLNS = "jabber:iq:private";
 	private static final String ID = "priv";

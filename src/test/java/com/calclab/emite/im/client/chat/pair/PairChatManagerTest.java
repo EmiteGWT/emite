@@ -30,7 +30,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
@@ -41,7 +41,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 	@Test
 	public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {
 		final Message message = new Message(null, MYSELF, OTHER);
-		message.addChild("gone", ChatStateManager.XMLNS);
+		message.addChild("gone", ChatStateHook.XMLNS);
 
 		final ChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives(message);

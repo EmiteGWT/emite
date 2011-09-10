@@ -30,9 +30,11 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
+@Singleton
 public class DiscoveryManagerImpl implements DiscoveryManager {
 	
 	public static final PacketMatcher ERROR_MATCHER = MatcherFactory.byName("error");

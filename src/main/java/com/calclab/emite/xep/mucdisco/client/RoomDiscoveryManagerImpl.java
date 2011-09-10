@@ -29,7 +29,9 @@ import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.disco.client.FeatureSupportedHandler;
 import com.calclab.emite.xep.disco.client.Item;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 
 	private final DiscoveryManager discoveryManager;

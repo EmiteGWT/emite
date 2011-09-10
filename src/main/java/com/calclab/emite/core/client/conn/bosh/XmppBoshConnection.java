@@ -237,23 +237,15 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 		body.setAttribute("content", "text/xml; charset=utf-8");
 		body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
 		body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
-		body.setAttribute("ver", userSettings.version);
+		body.setAttribute("ver", "1.6");
 		body.setAttribute("xmpp:version", "1.0");
 		body.setAttribute("xml:lang", "en");
 		body.setAttribute("ack", "1");
 		body.setAttribute("secure", Boolean.toString(userSettings.secure));
 		body.setAttribute("rid", getStreamSettings().getNextRid());
 		body.setAttribute("to", userSettings.hostName);
-		if (userSettings.routeHost != null && userSettings.routePort != null) {
-			String routeHost = userSettings.routeHost;
-			if (routeHost == null) {
-				routeHost = userSettings.hostName;
-			}
-			Integer routePort = userSettings.routePort;
-			if (routePort == null) {
-				routePort = 5222;
-			}
-			body.setAttribute("route", "xmpp:" + routeHost + ":" + routePort);
+		if (userSettings.routeHost != null) {
+			body.setAttribute("route", "xmpp:" + userSettings.routeHost + ":" + userSettings.routePort);
 		}
 		body.With("hold", userSettings.hold);
 		body.With("wait", userSettings.wait);
@@ -315,7 +307,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 
 	private void sendBody(final boolean force) {
 		// TODO: better semantics
-		if (force || !shouldCollectResponses && isActive() && activeConnections < getConnectionSettings().maxRequests && !hasErrors()) {
+		if (force || !shouldCollectResponses && isActive() && activeConnections < ConnectionSettings.MAX_REQUESTS && !hasErrors()) {
 			final String request = services.toString(getCurrentBody());
 			setCurrentBody(null);
 			send(request);

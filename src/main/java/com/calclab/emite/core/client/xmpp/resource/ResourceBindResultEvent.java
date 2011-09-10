@@ -33,7 +33,7 @@ public class ResourceBindResultEvent extends Event<ResourceBindResultEvent.Handl
 
 	private final XmppURI xmppUri;
 
-	protected ResourceBindResultEvent(final XmppURI xmppUri) {
+	public ResourceBindResultEvent(final XmppURI xmppUri) {
 		this.xmppUri = xmppUri;
 	}
 	

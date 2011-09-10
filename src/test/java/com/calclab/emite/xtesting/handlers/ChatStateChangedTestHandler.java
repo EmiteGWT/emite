@@ -21,7 +21,7 @@
 package com.calclab.emite.xtesting.handlers;
 
 import com.calclab.emite.xep.chatstate.client.ChatStateChangedEvent;
-import com.calclab.emite.xep.chatstate.client.ChatStateManager.ChatState;
+import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 
 public class ChatStateChangedTestHandler extends TestHandler<ChatStateChangedEvent> implements ChatStateChangedEvent.Handler {
 	

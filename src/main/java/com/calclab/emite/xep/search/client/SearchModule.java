@@ -21,7 +21,6 @@
 package com.calclab.emite.xep.search.client;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Singleton;
 
 /**
  * Implements XEP-0055: Jabber Search
@@ -37,7 +36,7 @@ public class SearchModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(SearchManager.class).to(SearchManagerImpl.class).in(Singleton.class);
+		bind(SearchManager.class).to(SearchManagerImpl.class);
 	}
 
 }

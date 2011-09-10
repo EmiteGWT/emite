@@ -21,7 +21,6 @@
 package com.calclab.emite.xep.privacylists.client;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.Singleton;
 
 /**
  * Future implementation of: http://www.xmpp.org/extensions/xep-0016.html
@@ -34,7 +33,7 @@ public class PrivacyListsModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(PrivacyListsManager.class).in(Singleton.class);
+		bind(PrivacyListsManager.class);
 	}
 
 }

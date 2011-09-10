@@ -30,12 +30,16 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public abstract class AbstractChatTest {
+	protected final EventBus eventBus;
 	protected final XmppSessionTester session;
 	protected static final XmppURI USER_URI = uri("self@domain/res");
 
 	public AbstractChatTest() {
+		eventBus = new SimpleEventBus();
 		session = new XmppSessionTester();
 	}
 

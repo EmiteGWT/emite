@@ -40,6 +40,7 @@ import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.chat.ChatStates;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -49,6 +50,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * 
  * @see RoomChatManager
  */
+@Singleton
 public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implements RoomChatManager, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
 
 	private static final PacketMatcher FILTER_X = MatcherFactory.byNameAndXMLNS("x", "http://jabber.org/protocol/muc#user");

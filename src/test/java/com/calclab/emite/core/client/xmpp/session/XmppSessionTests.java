@@ -47,7 +47,6 @@ import com.calclab.emite.xtesting.handlers.PresenceReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.SessionStateChangedTestHandler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.google.web.bindery.event.shared.testing.CountingEventBus;
 
 public class XmppSessionTests {
 	private XmppSessionImpl session;
@@ -64,8 +63,7 @@ public class XmppSessionTests {
 		saslManager = mock(SASLManager.class);
 		bindingManager = mock(ResourceBindingManager.class);
 		iMSessionManager = mock(IMSessionManager.class);
-		final SessionComponentsRegistry registry = new SessionComponentsRegistry();
-		session = new XmppSessionImpl(eventBus, connection, saslManager, bindingManager, iMSessionManager, registry);
+		session = new XmppSessionImpl(eventBus, connection, saslManager, bindingManager, iMSessionManager);
 	}
 
 	@Test
@@ -124,7 +122,7 @@ public class XmppSessionTests {
 
 	@Test
 	public void shouldHandleSucceedAuthorizationResult() {
-		eventBus.fireEvent(new AuthorizationResultEvent(new Credentials(uri("node@domain"), "pass", Credentials.ENCODING_NONE)));
+		eventBus.fireEvent(new AuthorizationResultEvent(new Credentials(uri("node@domain"), "pass")));
 
 		assertEquals(SessionState.authorized, session.getSessionState());
 		assertTrue(connection.isStreamRestarted());

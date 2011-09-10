@@ -26,12 +26,14 @@ import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
+import com.google.inject.Singleton;
 
 /**
  * A simple chat provider strategy. It ignores the metadata and the resource of
  * the user. This is the default strategy for a ChatManager
  * 
  */
+@Singleton
 public class PairChatSelectionStrategy implements ChatSelectionStrategy {
 
 	private final PacketMatcher mucMatcher = MatcherFactory.byNameAndXMLNS("x", "http://jabber.org/protocol/muc#user");

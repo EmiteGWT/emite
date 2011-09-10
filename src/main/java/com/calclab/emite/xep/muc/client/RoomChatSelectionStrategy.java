@@ -24,7 +24,9 @@ import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
+import com.google.inject.Singleton;
 
+@Singleton
 public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
 
 	@Override

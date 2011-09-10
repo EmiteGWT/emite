@@ -38,7 +38,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	/**
 	 * Build a failed authorization event
 	 */
-	protected AuthorizationResultEvent() {
+	public AuthorizationResultEvent() {
 		this(null, false);
 	}
 
@@ -48,7 +48,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	 * @param uri
 	 *            the uri of the authorized user
 	 */
-	protected AuthorizationResultEvent(final Credentials credentials) {
+	public AuthorizationResultEvent(final Credentials credentials) {
 		this(credentials, true);
 	}
 

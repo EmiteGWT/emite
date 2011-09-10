@@ -87,6 +87,6 @@ public abstract class XmppSessionBoilerplate implements XmppSession {
 	
 	@Override
 	public void login(final XmppURI uri, final String password) {
-		login(new Credentials(uri, password, Credentials.ENCODING_NONE));
+		login(new Credentials(uri, password));
 	}
 }

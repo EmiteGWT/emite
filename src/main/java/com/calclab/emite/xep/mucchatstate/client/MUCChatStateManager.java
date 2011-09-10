@@ -27,6 +27,7 @@ import com.calclab.emite.xep.muc.client.RoomChat;
 import com.calclab.emite.xep.muc.client.RoomChatChangedEvent;
 import com.calclab.emite.xep.muc.client.RoomChatManager;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -39,6 +40,7 @@ import com.google.web.bindery.event.shared.EventBus;
  * forearmed.
  * 
  */
+@Singleton
 public class MUCChatStateManager implements RoomChatChangedEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(MUCChatStateManager.class.getName());

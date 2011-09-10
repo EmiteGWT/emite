@@ -37,6 +37,7 @@ import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * Pair chat tests using the old listener interface
@@ -48,7 +49,7 @@ public class PairChatTest extends AbstractChatTest {
 	@Before
 	public void beforeTests() {
 		session.setLoggedIn(USER_URI);
-		final PairChatManagerImpl manager = new PairChatManagerImpl(session);
+		final PairChatManagerImpl manager = new PairChatManagerImpl(eventBus, session, new PairChatSelectionStrategy());
 		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.ready);
 		pairChat = (PairChat) manager.openChat(properties, true);
 		pairChat.setThread("theThread");
@@ -62,7 +63,7 @@ public class PairChatTest extends AbstractChatTest {
 	@Test
 	public void shouldBeReadyIfSessionLogedIn() {
 		final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, ChatStates.ready);
-		final PairChat aChat = new PairChat(session, properties);
+		final PairChat aChat = new PairChat(eventBus,session, properties);
 		assertEquals("ready", aChat.getChatState());
 	}
 
@@ -96,7 +97,7 @@ public class PairChatTest extends AbstractChatTest {
 	@Test
 	public void shouldSendNoThreadWhenNotSpecified() {
 		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.locked);
-		final ChatBoilerplate noThreadChat = new PairChat(session, properties);
+		final ChatBoilerplate noThreadChat = new PairChat(eventBus, session, properties);
 		noThreadChat.setChatState("ready");
 		noThreadChat.send(new Message("the message"));
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' " + "type='chat'><body>the message</body></message>");

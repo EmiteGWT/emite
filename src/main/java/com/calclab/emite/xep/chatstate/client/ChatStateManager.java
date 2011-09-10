@@ -22,129 +22,66 @@ package com.calclab.emite.xep.chatstate.client;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
-import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.pair.PairChatChangedEvent;
+import com.calclab.emite.im.client.chat.pair.PairChatManager;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
  * XEP-0085: Chat State Notifications
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
+ * 
+ * This implementation is limited to chat conversations. Chat state in MUC rooms
+ * are not supported to avoid multicast of occupant states (in a BOSH medium can
+ * be a problem).
+ * 
  */
-public class ChatStateManager implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
+@Singleton
+public class ChatStateManager implements PairChatChangedEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(ChatStateManager.class.getName());
-	
-	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
-	public static final String KEY = "ChatStateManager";
-	
-	public static enum ChatState {
-		active, composing, pause, inactive, gone
-	}
-
-	public static enum NegotiationStatus {
-		notStarted, started, rejected, accepted
-	}
 
 	private final EventBus eventBus;
-	private final Chat chat;
 	
-	private NegotiationStatus negotiationStatus = NegotiationStatus.notStarted;
-	private ChatState ownState;
-	private ChatState otherState;
-	
-	public ChatStateManager(final EventBus eventBus, final Chat chat) {
+	@Inject
+	public ChatStateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
 		this.eventBus = eventBus;
-		this.chat = chat;
-
-		chat.addMessageReceivedHandler(this);
-		chat.addBeforeMessageSentHandler(this);
-	}
-	
-	@Override
-	public void onMessageReceived(final MessageReceivedEvent event) {
-		final Message message = event.getMessage();
-
-		for (ChatState chatState : ChatState.values()) {
-			final String typeSt = chatState.toString();
-			if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
-				otherState = chatState;
-				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
-					sendStateMessage(ChatState.active);
-				}
-				if (chatState.equals(ChatState.gone)) {
-					negotiationStatus = NegotiationStatus.notStarted;
-				} else {
-					negotiationStatus = NegotiationStatus.accepted;
-				}
-				logger.info("Receiver other chat status: " + typeSt);
-				eventBus.fireEventFromSource(new ChatStateChangedEvent(chatState), this);
-			}
-		}
-	}
-	
-	@Override
-	public void onBeforeMessageSent(final BeforeMessageSentEvent event) {
-		final Message message = event.getMessage();
 		
-		switch (negotiationStatus) {
-		case notStarted:
-			negotiationStatus = NegotiationStatus.started;
-		case accepted:
-			boolean alreadyWithState = false;
-			for (int i = 0; i < ChatState.values().length; i++) {
-				if (message.hasChild(ChatState.values()[i].toString())) {
-					alreadyWithState = true;
-				}
+		chatManager.addPairChatChangedHandler(this);
+	}
+	
+	@Override
+	public void onPairChatChanged(final PairChatChangedEvent event) {
+		if (event.isCreated()) {
+			getChatState(event.getChat());
+		} else if (event.isClosed()) {
+			final PairChat chat = event.getChat();
+			logger.finer("Removing chat state to chat: " + chat.getID());
+			final ChatStateHook chatStateHook = (ChatStateHook) chat.getProperties().getData(ChatStateHook.KEY);
+			if (chatStateHook != null && chatStateHook.getOtherState() != ChatStateHook.ChatState.gone) {
+				// We are closing, then we send the gone state
+				chatStateHook.setOwnState(ChatStateHook.ChatState.gone);
 			}
-			if (!alreadyWithState) {
-				message.addChild(ChatState.active.toString(), XMLNS);
-			}
-			break;
-		case rejected:
-		case started:
-			// do nothing
-			break;
+			chat.getProperties().setData(ChatStateHook.KEY, null);
 		}
 	}
 
-	public HandlerRegistration addChatStateChangedHandler(ChatStateChangedEvent.Handler handler) {
-		return eventBus.addHandlerToSource(ChatStateChangedEvent.TYPE, this, handler);
-	}
-
-	public NegotiationStatus getNegotiationStatus() {
-		return negotiationStatus;
-	}
-
-	public ChatState getOtherState() {
-		return otherState;
-	}
-
-	public ChatState getOwnState() {
-		return ownState;
-	}
-
-	public void setOwnState(final ChatState chatState) {
-		// From XEP: a client MUST NOT send a second instance of any given
-		// standalone notification (i.e., a standalone notification MUST be
-		// followed by a different state, not repetition of the same state).
-		// However, every content message SHOULD contain an <active/>
-		// notification.
-		if (negotiationStatus.equals(NegotiationStatus.accepted)) {
-			if (ownState == null || !ownState.equals(chatState)) {
-				ownState = chatState;
-				logger.info("Setting own status to: " + chatState.toString());
-				sendStateMessage(chatState);
-			}
+	public ChatStateHook getChatState(final PairChat chat) {
+		ChatStateHook chatStateManager = (ChatStateHook) chat.getProperties().getData(ChatStateHook.KEY);
+		if (chatStateManager == null) {
+			chatStateManager = createChatState(chat);
 		}
+		return chatStateManager;
 	}
 
-	private void sendStateMessage(final ChatState chatState) {
-		final Message message = new Message(null, chat.getURI());
-		message.addChild(chatState.toString(), XMLNS);
-		chat.send(message);
+	private ChatStateHook createChatState(final PairChat chat) {
+		logger.finer("Adding chat state to chat: " + chat.getID());
+		final ChatStateHook chatStateManager = new ChatStateHook(eventBus, chat);
+		chat.getProperties().setData(ChatStateHook.KEY, chatStateManager);
+		return chatStateManager;
 	}
 
 }

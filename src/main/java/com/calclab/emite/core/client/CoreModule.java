@@ -20,21 +20,22 @@
 
 package com.calclab.emite.core.client;
 
+import com.calclab.emite.core.client.browser.AutoConfigBoot;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.bosh.XmppBoshConnection;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.gwt.GWTServices;
 import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManager;
+import com.calclab.emite.core.client.xmpp.resource.ResourceBindingManagerImpl;
 import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
+import com.calclab.emite.core.client.xmpp.sasl.SASLManagerImpl;
 import com.calclab.emite.core.client.xmpp.session.IMSessionManager;
-import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.session.XmppSessionImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * The Emite core module implements the Extensible Messaging and Presence
@@ -58,14 +59,14 @@ public class CoreModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
 		bind(EventBus.class).annotatedWith(Names.named("emite")).to(LoggingEventBus.class).in(Singleton.class);
+		bind(AutoConfigBoot.class).asEagerSingleton();
 		
-		bind(Services.class).to(GWTServices.class).in(Singleton.class);
-		bind(XmppConnection.class).to(XmppBoshConnection.class).in(Singleton.class);
-		bind(XmppSession.class).to(XmppSessionImpl.class).in(Singleton.class);
-		bind(IMSessionManager.class).in(Singleton.class);
-		bind(SASLManager.class).in(Singleton.class);
-		bind(ResourceBindingManager.class).in(Singleton.class);
-		bind(SessionComponentsRegistry.class).in(Singleton.class);
+		bind(Services.class).to(GWTServices.class);
+		bind(XmppConnection.class).to(XmppBoshConnection.class);
+		bind(XmppSession.class).to(XmppSessionImpl.class);
+		bind(IMSessionManager.class);
+		bind(SASLManager.class).to(SASLManagerImpl.class);
+		bind(ResourceBindingManager.class).to(ResourceBindingManagerImpl.class);
 	}
 
 }

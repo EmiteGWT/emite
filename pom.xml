@@ -19,11 +19,12 @@
 
 	<properties>
 		<!-- Convenience property to set the GWT version -->
-		<gwt.version>2.3.0</gwt.version>
+		<gwt.version>2.4.0</gwt.version>
 		<!-- GWT 2.2+ needs java 1.6 -->
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
 	<repositories>
@@ -91,17 +92,34 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			
+
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}-1</version>
+				<version>2.3.0-1</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-user</artifactId>
+						<version>${gwt.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-dev</artifactId>
+						<version>${gwt.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.gwt</groupId>
+						<artifactId>gwt-servlet</artifactId>
+						<version>${gwt.version}</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<includes>**/*GwtTest.java</includes>
 					<mode>htmlunit</mode>
 					<htmlunit>IE6,IE7,FF3</htmlunit>
-   				</configuration>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -111,7 +129,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Surefire Plugin -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -122,7 +140,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<!-- Tell the jar plugin to also create a jar of all the test classes -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -138,7 +156,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Also create the source jar files -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
