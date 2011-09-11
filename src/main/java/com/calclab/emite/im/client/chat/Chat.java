@@ -25,7 +25,6 @@ import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageSentEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.Message;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -48,6 +47,14 @@ public interface Chat {
 	 *            the message handler
 	 */
 	public HandlerRegistration addBeforeMessageReceivedHandler(BeforeMessageReceivedEvent.Handler handler);
+	
+	/**
+	 * Add a handler to know when a message is received in this chat
+	 * 
+	 * @param handler
+	 * @return a handler registration object to detach the handler
+	 */
+	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
 	 * A a handler to know when a message is going to be sent. It allows the
@@ -58,6 +65,16 @@ public interface Chat {
 	 *            the message handeler
 	 */
 	public HandlerRegistration addBeforeMessageSentHandler(BeforeMessageSentEvent.Handler handler);
+
+	/**
+	 * Add a handler to know when this chat has sent a message
+	 * 
+	 * @param handler
+	 *            the message handler
+	 * @return a handler registration object to detach the handler
+	 * 
+	 */
+	public HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know whenever a chat state property changed. Normally,
@@ -81,28 +98,10 @@ public interface Chat {
 	public HandlerRegistration addErrorHandler(ErrorEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a message is received in this chat
-	 * 
-	 * @param handler
-	 * @return a handler registration object to detach the handler
-	 */
-	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
-
-	/**
-	 * Add a handler to know when this chat has sent a message
-	 * 
-	 * @param handler
-	 *            the message handler
-	 * @return a handler registration object to detach the handler
-	 * 
-	 */
-	public HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
-
-	/**
-	 * Close a chat. This method is normally called by the chat manager
+	 * Close a chat. This methos is normally called by the chat manager
 	 */
 	public void close();
-
+	
 	/**
 	 * Get the current chat's state
 	 * 
@@ -118,13 +117,6 @@ public interface Chat {
 	 * @return the chat properties
 	 */
 	public ChatProperties getProperties();
-
-	/**
-	 * Get the xmpp session associated to this chat
-	 * 
-	 * @return
-	 */
-	public XmppSession getSession();
 
 	/**
 	 * Returns this conversation URI. If this conversation is a normal chat, the
@@ -154,14 +146,6 @@ public interface Chat {
 	 * Open a chat. This method is normally called by the chat manager
 	 */
 	public void open();
-
-	/**
-	 * Makes this chat receives the given message
-	 * 
-	 * @param message
-	 *            the message to be received by this chat
-	 */
-	public void receive(Message message);
 
 	/**
 	 * Send a message to the uri of this chat

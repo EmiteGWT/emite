@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
+import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
@@ -36,12 +37,12 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 	
 	protected final EventBus eventBus;
 	protected final XmppSession session;
-	protected ChatSelectionStrategy strategy;
+	protected final ChatSelectionStrategy strategy;
 	
 	protected final HashSet<C> chats;
 	private XmppURI currentChatUser;
 
-	public ChatManagerBoilerplate(final EventBus eventBus, final XmppSession session, final ChatSelectionStrategy strategy) {
+	protected ChatManagerBoilerplate(final EventBus eventBus, final XmppSession session, final ChatSelectionStrategy strategy) {
 		this.eventBus = eventBus;
 		this.session = session;
 		this.strategy = strategy;
@@ -66,7 +67,8 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 				chat = addNewChat(properties);
 			}
 			if (chat != null) {
-				chat.receive(message);
+				eventBus.fireEventFromSource(new BeforeMessageReceivedEvent(message), chat);
+				eventBus.fireEventFromSource(new MessageReceivedEvent(message), chat);
 			}
 		}
 	}
@@ -99,8 +101,6 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 		for (final C chat : chats) {
 			if (strategy.isAssignable(chat.getProperties(), properties))
 				return chat;
-		}
-		if (createIfNotFound) {
 		}
 		return null;
 	}
@@ -167,10 +167,4 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 	 */
 	protected abstract C createChat(ChatProperties properties);
 
-	@Override
-	public void setChatSelectionStrategy(final ChatSelectionStrategy strategy) {
-		assert strategy != null : "The ChatSelectionStrategy can't be null!";
-		this.strategy = strategy;
-	}
-	
 }

@@ -87,16 +87,14 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
 		final ChatProperties properties = strategy.extractProperties(presence);
-		if (properties != null) {
-			RoomChat chat = getChat(properties, false);
-			if (chat == null && properties.shouldCreateNewChat()) {
-				// we need to create a chat for this incoming presence
-				properties.setInitiatorUri(properties.getUri());
-				chat = addNewChat(properties);
-			}
-			if (chat != null) {
-				eventBus.fireEventFromSource(event, this);
-			}
+		RoomChat chat = getChat(properties, false);
+		if (chat == null && properties.shouldCreateNewChat()) {
+			// we need to create a chat for this incoming presence
+			properties.setInitiatorUri(properties.getUri());
+			chat = addNewChat(properties);
+		}
+		if (chat != null) {
+			eventBus.fireEventFromSource(new PresenceReceivedEvent(presence), chat);
 		}
 	}
 

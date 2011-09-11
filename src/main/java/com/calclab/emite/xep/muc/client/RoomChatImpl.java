@@ -115,6 +115,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
+		super.onMessageReceived(event);
 		final Message message = event.getMessage();
 		if (message.getSubject() != null) {
 			eventBus.fireEventFromSource(new RoomSubjectChangedEvent(message.getFrom(), message.getSubject()), this);
@@ -262,7 +263,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		// presence.setPriority(0);
 		session.send(presence);
 	}
-
+	
 	@Override
 	public String toString() {
 		return "ROOM: " + getURI();

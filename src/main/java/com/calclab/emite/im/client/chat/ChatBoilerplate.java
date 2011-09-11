@@ -40,7 +40,7 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	protected final XmppSession session;
 	protected final ChatProperties properties;
 
-	public ChatBoilerplate(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
+	protected ChatBoilerplate(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
 		assert properties.getState() != null : "State can't be null in chats";
 
 		this.eventBus = eventBus;
@@ -49,7 +49,7 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 
 		setPreviousChatState(getChatState());
 
-		session.addMessageReceivedHandler(ChatBoilerplate.this);
+		addMessageReceivedHandler(this);
 	}
 	
 	@Override
@@ -104,12 +104,6 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	}
 
 	@Override
-	public void receive(final Message message) {
-		eventBus.fireEventFromSource(new BeforeMessageReceivedEvent(message), this);
-		eventBus.fireEventFromSource(new MessageReceivedEvent(message), this);
-	}
-
-	@Override
 	public void send(final Message message) {
 		if (ChatStates.ready.equals(getChatState())) {
 			message.setFrom(session.getCurrentUserURI());
@@ -142,11 +136,6 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	@Override
 	public ChatProperties getProperties() {
 		return properties;
-	}
-
-	@Override
-	public XmppSession getSession() {
-		return session;
 	}
 
 	// FIXME: rename to getUri

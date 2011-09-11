@@ -31,7 +31,6 @@ import com.google.inject.Singleton;
 /**
  * A simple chat provider strategy. It ignores the metadata and the resource of
  * the user. This is the default strategy for a ChatManager
- * 
  */
 @Singleton
 public class PairChatSelectionStrategy implements ChatSelectionStrategy {

@@ -87,12 +87,4 @@ public interface ChatManager<C extends Chat> {
 
 	public Collection<C> getChats();
 
-	/**
-	 * Changes a the chat selection strategy of the current chat manager
-	 * 
-	 * @param strategy
-	 *            the new strategy. can't be null
-	 */
-	void setChatSelectionStrategy(ChatSelectionStrategy strategy);
-
 }
