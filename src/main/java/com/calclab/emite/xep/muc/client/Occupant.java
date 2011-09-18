@@ -20,9 +20,9 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.HasJID;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.HasJID;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 
 /**
  * A room occupant: each occupant in a room is identified as

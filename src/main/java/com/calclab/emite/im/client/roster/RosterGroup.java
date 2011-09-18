@@ -28,7 +28,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 

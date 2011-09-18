@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.browser;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -28,9 +28,9 @@ import java.util.logging.Logger;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
-import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.Credentials;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
@@ -256,8 +256,8 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		final String routeHost = PageAssist.getMetaString(PARAM_ROUTE_HOST, hostName);
 		final int routePort = PageAssist.getMetaInteger(PARAM_ROUTE_PORT, 5222);
 		final boolean secure = PageAssist.getMetaBoolean(PARAM_SECURE, true);
-		final int wait = PageAssist.getMetaInteger(PARAM_BOSH_WAIT, 60);
-		final int hold = PageAssist.getMetaInteger(PARAM_BOSH_HOLD, 1);
+		final int wait = PageAssist.getMetaInteger(PARAM_BOSH_WAIT, ConnectionSettings.DEFAULT_WAIT);
+		final int hold = PageAssist.getMetaInteger(PARAM_BOSH_HOLD, ConnectionSettings.DEFAULT_HOLD);
 
 		if (hostName != null) {
 			logger.info("CONNECTION PARAMS: " + httpBase + ", " + hostName);

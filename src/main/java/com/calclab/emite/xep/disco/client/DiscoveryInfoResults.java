@@ -28,7 +28,7 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.IQ;
 
 /**
  * A discovery info result object.

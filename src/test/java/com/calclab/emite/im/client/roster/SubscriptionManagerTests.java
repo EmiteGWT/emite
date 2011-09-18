@@ -20,7 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -31,8 +31,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.SubscriptionRequestReceivedTestHandler;
 import com.google.web.bindery.event.shared.EventBus;

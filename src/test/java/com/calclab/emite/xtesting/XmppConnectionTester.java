@@ -26,6 +26,7 @@ import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
@@ -121,7 +122,7 @@ public class XmppConnectionTester extends XmppConnectionBoilerplate {
 	@Override
 	public void send(final IPacket packet) {
 		sent.add(packet);
-		fireStanzaSent(packet);
+		eventBus.fireEventFromSource(new StanzaSentEvent(packet), this);
 	}
 
 	public void send(final String stanza) {

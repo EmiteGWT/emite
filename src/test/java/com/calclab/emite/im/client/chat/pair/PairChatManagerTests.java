@@ -20,16 +20,16 @@
 
 package com.calclab.emite.im.client.chat.pair;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTests;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
@@ -60,23 +60,23 @@ public class PairChatManagerTests extends AbstractChatManagerTests {
 	public void shouldOpenChatWhenLogin() {
 		session.logout();
 		final Chat chat = manager.open(OTHER);
-		assertEquals(ChatStates.locked, chat.getChatState());
+		assertEquals(ChatStatus.locked, chat.getStatus());
 		session.setLoggedIn(ME);
-		assertEquals(ChatStates.ready, chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
 	}
 
 	@Test
 	public void shouldReturnLockedChatsIfNotLoggedIn() {
 		session.logout();
 		final Chat chat = manager.open(OTHER);
-		assertEquals(ChatStates.locked, chat.getChatState());
+		assertEquals(ChatStatus.locked, chat.getStatus());
 	}
 
 	@Test
 	public void shouldReturnReadyChatsIfLoggedIn() {
 		session.login(ME, "");
 		final Chat chat = manager.open(OTHER);
-		assertEquals(ChatStates.ready, chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
 	}
 
 	@Override

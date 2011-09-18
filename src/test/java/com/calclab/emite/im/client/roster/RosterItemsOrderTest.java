@@ -30,7 +30,7 @@ import java.util.Comparator;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.xtesting.RosterItemHelper;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;

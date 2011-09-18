@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;

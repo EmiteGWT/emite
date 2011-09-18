@@ -25,8 +25,9 @@ import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageSentEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
@@ -77,17 +78,17 @@ public interface Chat {
 	public HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
 
 	/**
-	 * Add a handler to know whenever a chat state property changed. Normally,
-	 * the states are one of the ChatStates class.
+	 * Add a handler to know whenever a chat status property changed. Normally,
+	 * the status is one of the ChatStatus class.
 	 * 
 	 * @param handler
-	 * @param sendCurrentStateAsEvent
+	 * @param sendCurrentStatus
 	 * 
 	 * @return a registration handler in order to allow remove the event's
 	 *         handler
-	 * @see ChatStates
+	 * @see ChatStatus
 	 */
-	public HandlerRegistration addChatStateChangedHandler(boolean sendCurrentState, ChatStateChangedEvent.Handler handler);
+	public HandlerRegistration addChatStatusChangedHandler(boolean sendCurrentStatus, ChatStatusChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when an error has occur in this chat
@@ -103,11 +104,11 @@ public interface Chat {
 	public void close();
 	
 	/**
-	 * Get the current chat's state
+	 * Get the current chat's status
 	 * 
 	 * @return
 	 */
-	public String getChatState();
+	public ChatStatus getStatus();
 
 	public String getID();
 
@@ -153,7 +154,7 @@ public interface Chat {
 	 * @param message
 	 *            the message
 	 * @throws RuntimeException
-	 *             if chat state != ready
+	 *             if chat status != ready
 	 */
 	public void send(Message message);
 

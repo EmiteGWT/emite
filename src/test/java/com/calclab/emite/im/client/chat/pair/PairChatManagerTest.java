@@ -20,19 +20,20 @@
 
 package com.calclab.emite.im.client.chat.pair;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook;
 import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
-import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
@@ -61,7 +62,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 	@Test
 	public void oneToOneChatsAreAlwaysReadyWhenCreated() {
 		final PairChat chat = manager.open(uri("other@domain/resource"));
-		assertEquals("ready", chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
 	}
 
 	@Test
@@ -92,19 +93,19 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 	@Test
 	public void shouldBlockChatWhenClosingIt() {
 		final PairChat chat = manager.open(uri("other@domain/resource"));
-		assertEquals("ready", chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
 		manager.close(chat);
-		assertEquals("locked", chat.getChatState());
+		assertEquals(ChatStatus.locked, chat.getStatus());
 	}
 
 	@Test
 	public void shouldCloseChatWhenLoggedOut() {
 		final PairChat chat = manager.open(uri("name@domain/resouce"));
-		assertEquals("ready", chat.getChatState());
-		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
-		chat.addChatStateChangedHandler(false, handler);
+		assertEquals(ChatStatus.ready, chat.getStatus());
+		final ChatStatusChangedTestHandler handler = new ChatStatusChangedTestHandler();
+		chat.addChatStatusChangedHandler(false, handler);
 		session.logout();
-		assertEquals("locked", handler.getLastChatState());
+		assertEquals(ChatStatus.locked, handler.getLastChatStatus());
 	}
 
 	@Test
@@ -155,7 +156,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	private ChatChangedTestHandler addChatCreatedHandler() {
 		final ChatChangedTestHandler handler = new ChatChangedTestHandler("created");
-		manager.addChatChangedHandler(handler);
+		manager.addPairChatChangedHandler(handler);
 		return handler;
 	}
 

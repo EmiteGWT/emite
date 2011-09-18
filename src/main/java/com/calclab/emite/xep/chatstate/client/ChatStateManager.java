@@ -23,8 +23,8 @@ package com.calclab.emite.xep.chatstate.client;
 import java.util.logging.Logger;
 
 import com.calclab.emite.im.client.chat.pair.PairChat;
-import com.calclab.emite.im.client.chat.pair.PairChatChangedEvent;
 import com.calclab.emite.im.client.chat.pair.PairChatManager;
+import com.calclab.emite.im.client.events.PairChatChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;

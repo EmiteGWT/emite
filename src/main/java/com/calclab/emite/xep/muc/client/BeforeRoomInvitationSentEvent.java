@@ -21,7 +21,7 @@
 package com.calclab.emite.xep.muc.client;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
 import com.google.web.bindery.event.shared.Event;
 
 /**

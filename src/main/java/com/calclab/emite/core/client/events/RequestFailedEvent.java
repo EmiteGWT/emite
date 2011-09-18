@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.events;
 
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.google.web.bindery.event.shared.Event;
 
 /**

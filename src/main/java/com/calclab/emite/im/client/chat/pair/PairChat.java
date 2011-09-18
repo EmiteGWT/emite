@@ -20,13 +20,13 @@
 
 package com.calclab.emite.im.client.chat.pair;
 
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message.Type;
 import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
@@ -68,7 +68,7 @@ public class PairChat extends ChatBoilerplate {
 	@Override
 	public void open() {
 		if (session.isReady()) {
-			setChatState(ChatStates.ready);
+			setStatus(ChatStatus.ready);
 		}
 	}
 

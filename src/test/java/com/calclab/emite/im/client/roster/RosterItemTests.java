@@ -20,7 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 

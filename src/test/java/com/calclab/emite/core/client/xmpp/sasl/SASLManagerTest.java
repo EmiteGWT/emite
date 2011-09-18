@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.xmpp.sasl;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -28,10 +28,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.events.AuthorizationResultEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.Credentials;
+import com.calclab.emite.core.client.session.sasl.SASLManager;
+import com.calclab.emite.core.client.session.sasl.SASLManagerImpl;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 

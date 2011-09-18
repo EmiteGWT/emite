@@ -21,10 +21,10 @@
 package com.calclab.emite.xep.privacylists.client;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

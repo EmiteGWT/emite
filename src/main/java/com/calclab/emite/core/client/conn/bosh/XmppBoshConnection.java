@@ -24,8 +24,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
+import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.events.ConnectionResponseEvent;
+import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
+import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.services.ConnectorCallback;
@@ -47,8 +52,8 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	
 	private static final Logger logger = Logger.getLogger(XmppBoshConnection.class.getName());
 	
-	private int activeConnections;
 	private final Services services;
+	private int activeConnections;
 	private final ConnectorCallback listener;
 	private boolean shouldCollectResponses;
 	private final RetryControl retryControl = new RetryControl();
@@ -56,6 +61,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	@Inject
 	public XmppBoshConnection(@Named("emite") final EventBus eventBus, final Services services) {
 		super(eventBus);
+		
 		this.services = services;
 
 		listener = new ConnectorCallback() {
@@ -66,11 +72,12 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 					final int e = incrementErrors();
 					logger.severe("Connection error #" + e + ": " + throwable.getMessage());
 					if (e > retryControl.maxRetries) {
-						fireError("Connection error: " + throwable.toString());
+						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.error, "Connection error: " + throwable.toString()), this);
 						disconnect();
 					} else {
 						final int scedTime = retryControl.retry(e);
-						fireRetry(e, scedTime);
+						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.waitingForRetry, "The connection will try to re-connect in " + scedTime
+								+ " milliseconds.", scedTime), this);
 						services.schedule(scedTime, new ScheduledAction() {
 							@Override
 							public void run() {
@@ -90,7 +97,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 					// TODO: check if is the same code in other than FF and make
 					// tests
 					if (statusCode == 404) {
-						fireError("404 Connection Error (session removed ?!) : " + content);
+						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.error, "404 Connection Error (session removed ?!) : " + content), this);
 						disconnect();
 					} else if (statusCode != 200 && statusCode != 0) {
 						// setActive(false);
@@ -100,7 +107,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 						final IPacket response = services.toXML(content);
 						if (response != null && "body".equals(response.getName())) {
 							clearErrors();
-							fireResponse(content);
+							eventBus.fireEventFromSource(new ConnectionResponseEvent(content), this);
 							handleResponse(response);
 						} else {
 							onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
@@ -122,7 +129,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 			setStream(new StreamSettings());
 			activeConnections = 0;
 			createInitialBody(getConnectionSettings());
-			sendBody();
+			sendBody(false);
 		}
 	}
 
@@ -137,7 +144,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 		sendBody(true);
 		setActive(false);
 		getStreamSettings().sid = null;
-		fireDisconnected("logged out");
+		eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.disconnected, "logged out"), this);
 	}
 
 	@Override
@@ -177,8 +184,8 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	public void send(final IPacket packet) {
 		createBodyIfNeeded();
 		getCurrentBody().addChild(packet);
-		sendBody();
-		fireStanzaSent(packet);
+		sendBody(false);
+		eventBus.fireEventFromSource(new StanzaSentEvent(packet), this);
 	}
 
 	@Override
@@ -201,7 +208,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	private void continueConnection(final String ack) {
 		if (isConnected() && activeConnections == 0) {
 			if (getCurrentBody() != null) {
-				sendBody();
+				sendBody(false);
 			} else {
 				final long currentRID = getStreamSettings().rid;
 				final int waitTime = 300;
@@ -212,7 +219,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 							createBodyIfNeeded();
 							// Whitespace keep-alive
 							// getCurrentBody().setText(" ");
-							sendBody();
+							sendBody(false);
 						}
 					}
 				});
@@ -256,16 +263,16 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 		if (isTerminate(response.getAttribute("type"))) {
 			getStreamSettings().sid = null;
 			setActive(false);
-			fireDisconnected("disconnected by server");
+			eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.disconnected, "disconnected by server"), this);
 		} else {
 			if (getStreamSettings().sid == null) {
 				initStream(response);
-				fireConnected();
+				eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.connected), this);
 			}
 			shouldCollectResponses = true;
 			final List<? extends IPacket> stanzas = response.getChildren();
 			for (final IPacket stanza : stanzas) {
-				fireStanzaReceived(stanza);
+				eventBus.fireEventFromSource(new StanzaReceivedEvent(stanza), this);
 			}
 			shouldCollectResponses = false;
 			continueConnection(response.getAttribute("ack"));
@@ -294,21 +301,17 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 		try {
 			activeConnections++;
 			services.send(getConnectionSettings().httpBase, request, listener);
-			getStreamSettings().lastRequestTime = services.getCurrentTime();
+			getStreamSettings().lastRequestTime = System.currentTimeMillis();
 		} catch (final ConnectorException e) {
 			activeConnections--;
 			e.printStackTrace();
 		}
 	}
 
-	private void sendBody() {
-		sendBody(false);
-	}
-
 	private void sendBody(final boolean force) {
 		// TODO: better semantics
 		if (force || !shouldCollectResponses && isActive() && activeConnections < ConnectionSettings.MAX_REQUESTS && !hasErrors()) {
-			final String request = services.toString(getCurrentBody());
+			final String request = getCurrentBody().toString();
 			setCurrentBody(null);
 			send(request);
 		} else {

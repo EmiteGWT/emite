@@ -25,29 +25,30 @@ import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageSentEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.core.client.xmpp.stanzas.Message.Type;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message.Type;
+import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Handler {
 
-	private static final String PREVIOUS_CHAT_STATE = "chatstate.previous";
+	private static final String PREVIOUS_CHAT_STATUS = "chatstatus.previous";
 
 	protected final EventBus eventBus;
 	protected final XmppSession session;
 	protected final ChatProperties properties;
 
 	protected ChatBoilerplate(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
-		assert properties.getState() != null : "State can't be null in chats";
+		assert properties.getStatus() != null : "Status can't be null in chats";
 
 		this.eventBus = eventBus;
 		this.session = session;
 		this.properties = properties;
 
-		setPreviousChatState(getChatState());
+		setPreviousChatStatus(getStatus());
 
 		addMessageReceivedHandler(this);
 	}
@@ -71,11 +72,11 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	}
 
 	@Override
-	public HandlerRegistration addChatStateChangedHandler(final boolean sendCurrent, final ChatStateChangedEvent.Handler handler) {
+	public HandlerRegistration addChatStatusChangedHandler(final boolean sendCurrent, final ChatStatusChangedEvent.Handler handler) {
 		if (sendCurrent) {
-			handler.onChatStateChanged(new ChatStateChangedEvent(getChatState()));
+			handler.onChatStatusChanged(new ChatStatusChangedEvent(getStatus()));
 		}
-		return eventBus.addHandlerToSource(ChatStateChangedEvent.TYPE, this, handler);
+		return eventBus.addHandlerToSource(ChatStatusChangedEvent.TYPE, this, handler);
 	}
 
 	@Override
@@ -95,17 +96,17 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 
 	@Override
 	public void close() {
-		setChatState(ChatStates.locked);
+		setStatus(ChatStatus.locked);
 	}
 
 	@Override
 	public boolean isReady() {
-		return ChatStates.ready.equals(getChatState());
+		return ChatStatus.ready.equals(getStatus());
 	}
 
 	@Override
 	public void send(final Message message) {
-		if (ChatStates.ready.equals(getChatState())) {
+		if (ChatStatus.ready.equals(getStatus())) {
 			message.setFrom(session.getCurrentUserURI());
 			eventBus.fireEventFromSource(new BeforeMessageSentEvent(message), this);
 			session.send(message);
@@ -116,20 +117,20 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	}
 	
 	@Override
-	public String getChatState() {
-		return properties.getState();
+	public ChatStatus getStatus() {
+		return properties.getStatus();
 	}
 	
 	/**
-	 * Set the current chat state
+	 * Set the current chat status
 	 * 
-	 * @param chatState
+	 * @param chatStatus
 	 */
-	protected void setChatState(final String chatState) {
-		assert chatState != null : "Chat state can't be null";
-		if (!chatState.equals(properties.getState())) {
-			properties.setState(chatState.toString());
-			eventBus.fireEventFromSource(new ChatStateChangedEvent(chatState), this);
+	protected void setStatus(final ChatStatus chatStatus) {
+		assert chatStatus != null : "Chat status can't be null";
+		if (!chatStatus.equals(properties.getStatus())) {
+			properties.setStatus(chatStatus);
+			eventBus.fireEventFromSource(new ChatStatusChangedEvent(chatStatus), this);
 		}
 	}
 
@@ -149,12 +150,12 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 		return session.getCurrentUserURI() != null && session.getCurrentUserURI().equals(properties.getInitiatorUri());
 	}
 
-	protected String getPreviousChatState() {
-		return (String) properties.getData(PREVIOUS_CHAT_STATE);
+	protected ChatStatus getPreviousChatStatus() {
+		return (ChatStatus) properties.getData(PREVIOUS_CHAT_STATUS);
 	}
 
-	protected void setPreviousChatState(final String chatState) {
-		properties.setData(PREVIOUS_CHAT_STATE, chatState);
+	protected void setPreviousChatStatus(final ChatStatus chatStatus) {
+		properties.setData(PREVIOUS_CHAT_STATUS, chatStatus);
 	}
 
 }

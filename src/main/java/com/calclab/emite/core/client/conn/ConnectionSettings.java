@@ -22,6 +22,8 @@ package com.calclab.emite.core.client.conn;
 
 public class ConnectionSettings {
 	public static int MAX_REQUESTS = 2;
+	public static int DEFAULT_WAIT = 60;
+	public static int DEFAULT_HOLD = 1;
 
     public final String httpBase;
     public final String hostName;
@@ -30,6 +32,10 @@ public class ConnectionSettings {
     public final boolean secure;
     public final int wait;
     public final int hold;
+    
+    public ConnectionSettings(final String hostName) {
+    	this("/http-bind", hostName, hostName, 5222, true, DEFAULT_WAIT, DEFAULT_HOLD);
+    }
     
 	public ConnectionSettings(final String httpBase, final String hostName, final String routeHost, final int routePort, final boolean secure, final int wait, final int hold) {
 		this.httpBase = httpBase;

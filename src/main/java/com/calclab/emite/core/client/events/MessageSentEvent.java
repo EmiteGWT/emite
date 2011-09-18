@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.events;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message;
 import com.google.web.bindery.event.shared.Event;
 
 public class MessageSentEvent extends Event<MessageSentEvent.Handler> {

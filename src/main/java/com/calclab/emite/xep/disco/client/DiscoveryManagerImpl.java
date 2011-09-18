@@ -24,11 +24,11 @@ import java.util.HashMap;
 
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;

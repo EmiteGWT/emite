@@ -26,7 +26,7 @@ import java.util.List;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
 
 /**
  * 

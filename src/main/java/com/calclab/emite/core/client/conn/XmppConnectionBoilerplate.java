@@ -23,9 +23,10 @@ package com.calclab.emite.core.client.conn;
 import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.ConnectionResponseEvent;
+import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
 import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.Packet;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -56,8 +57,8 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	}
 
 	@Override
-	public HandlerRegistration addConnectionStateChangedHandler(final ConnectionStateChangedEvent.Handler handler) {
-		return eventBus.addHandlerToSource(ConnectionStateChangedEvent.TYPE, this, handler);
+	public HandlerRegistration addConnectionStatusChangedHandler(final ConnectionStatusChangedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(ConnectionStatusChangedEvent.TYPE, this, handler);
 	}
 
 	@Override
@@ -98,35 +99,6 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 		connectionSettings = settings;
 	}
 
-	protected void fireConnected() {
-		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.connected), this);
-	}
-
-	protected void fireDisconnected(final String message) {
-		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.disconnected, message), this);
-	}
-
-	protected void fireError(final String error) {
-		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.error, error), this);
-	}
-
-	protected void fireResponse(final String response) {
-		eventBus.fireEventFromSource(new ConnectionResponseEvent(response), this);
-	}
-
-	protected void fireRetry(final int attempt, final int scedTime) {
-		eventBus.fireEventFromSource(new ConnectionStateChangedEvent(ConnectionState.waitingForRetry, "The connection will try to re-connect in " + scedTime
-				+ " milliseconds.", scedTime), this);
-	}
-
-	protected void fireStanzaReceived(final IPacket stanza) {
-		eventBus.fireEventFromSource(new StanzaReceivedEvent(stanza), this);
-	}
-	
-	protected void fireStanzaSent(final IPacket stanza) {
-		eventBus.fireEventFromSource(new StanzaSentEvent(stanza), this);
-	}
-	
 	protected ConnectionSettings getConnectionSettings() {
 		return connectionSettings;
 	}

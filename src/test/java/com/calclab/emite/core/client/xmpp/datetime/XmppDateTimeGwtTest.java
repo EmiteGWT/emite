@@ -24,6 +24,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.calclab.emite.core.client.util.XmppDateTime;
 import com.google.gwt.junit.client.GWTTestCase;
 
 public class XmppDateTimeGwtTest extends GWTTestCase {

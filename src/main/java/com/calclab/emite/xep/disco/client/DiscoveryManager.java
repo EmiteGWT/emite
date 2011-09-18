@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**

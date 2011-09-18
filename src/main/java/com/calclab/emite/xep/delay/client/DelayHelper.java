@@ -23,7 +23,7 @@ package com.calclab.emite.xep.delay.client;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.stanzas.Stanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 
 /**
  * Some utility methods related to delays and stanzas

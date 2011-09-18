@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.services.TigaseXMLService;

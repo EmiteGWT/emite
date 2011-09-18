@@ -21,11 +21,12 @@
 package com.calclab.emite.im.client.chat.pair;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.im.client.chat.ChatManagerBoilerplate;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
+import com.calclab.emite.im.client.events.PairChatChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -52,8 +53,8 @@ public class PairChatManagerImpl extends ChatManagerBoilerplate<PairChat> implem
 
 	@Override
 	protected PairChat createChat(final ChatProperties properties) {
-		if (properties.getState() == null) {
-			properties.setState(session.isReady() ? ChatStates.ready : ChatStates.locked);
+		if (properties.getStatus() == null) {
+			properties.setStatus(session.isReady() ? ChatStatus.ready : ChatStatus.locked);
 		}
 		return new PairChat(eventBus, session, properties);
 	}

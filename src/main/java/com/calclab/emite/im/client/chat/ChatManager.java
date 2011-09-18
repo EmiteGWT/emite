@@ -22,7 +22,7 @@ package com.calclab.emite.im.client.chat;
 
 import java.util.Collection;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 
 /**
  * Create and manage chat conversations.

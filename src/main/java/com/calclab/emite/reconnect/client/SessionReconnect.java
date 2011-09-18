@@ -22,21 +22,21 @@ package com.calclab.emite.reconnect.client;
 
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.conn.ConnectionState;
-import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
+import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.calclab.emite.core.client.conn.XmppConnection;
-import com.calclab.emite.core.client.xmpp.sasl.AuthorizationResultEvent;
-import com.calclab.emite.core.client.xmpp.sasl.SASLManager;
-import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
+import com.calclab.emite.core.client.events.AuthorizationResultEvent;
+import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.client.session.Credentials;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class SessionReconnect implements ConnectionStateChangedEvent.Handler, SessionStateChangedEvent.Handler, AuthorizationResultEvent.Handler {
+public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, SessionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler {
 	
 	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());
 	
@@ -55,23 +55,23 @@ public class SessionReconnect implements ConnectionStateChangedEvent.Handler, Se
 		logger.info("RECONNECT BEHAVIOUR");
 
 		saslManager.addAuthorizationResultHandler(this);
-		session.addSessionStateChangedHandler(true, this);
-		connection.addConnectionStateChangedHandler(this);
+		session.addSessionStatusChangedHandler(true, this);
+		connection.addConnectionStatusChangedHandler(this);
 	}
 	
 	@Override
-	public void onConnectionStateChanged(final ConnectionStateChangedEvent event) {
-		if (event.is(ConnectionState.error) || event.is(ConnectionState.waitingForRetry)) {
+	public void onConnectionStatusChanged(final ConnectionStatusChangedEvent event) {
+		if (event.is(ConnectionStatus.error) || event.is(ConnectionStatus.waitingForRetry)) {
 			shouldReconnect = true;
 			reconnectionAttempts++;
 		}
 	}
 	
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
-		if (event.is(SessionState.connecting)) {
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		if (event.is(SessionStatus.connecting)) {
 			shouldReconnect = false;
-		} else if (event.is(SessionState.disconnected) && shouldReconnect) {
+		} else if (event.is(SessionStatus.disconnected) && shouldReconnect) {
 			if (lastSuccessfulCredentials != null) {
 				final double seconds = Math.pow(2, reconnectionAttempts - 1);
 				new Timer() {
@@ -86,7 +86,7 @@ public class SessionReconnect implements ConnectionStateChangedEvent.Handler, Se
 				}.schedule((int) (1000 * seconds));
 				logger.info("Reconnecting in " + seconds + " seconds.");
 			}
-		} else if (event.is(SessionState.ready)) {
+		} else if (event.is(SessionStatus.ready)) {
 			logger.finer("CLEAR RECONNECTION ATTEMPS");
 			reconnectionAttempts = 0;
 		}

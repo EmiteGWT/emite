@@ -32,21 +32,21 @@ import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.session.XmppSessionBoilerplate;
-import com.calclab.emite.core.client.xmpp.session.Credentials;
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.Credentials;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.session.XmppSessionImpl;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class XmppSessionTester extends XmppSessionBoilerplate {
+public class XmppSessionTester extends XmppSessionImpl {
 
 	private XmppURI currentUser;
 	private final TigaseXMLService xmler;
@@ -113,9 +113,9 @@ public class XmppSessionTester extends XmppSessionBoilerplate {
 	@Override
 	public void logout() {
 		if (currentUser != null) {
-			setSessionState(SessionState.loggingOut);
+			setStatus(SessionStatus.loggingOut);
 			currentUser = null;
-			setSessionState(SessionState.disconnected);
+			setStatus(SessionStatus.disconnected);
 		}
 	}
 
@@ -171,11 +171,11 @@ public class XmppSessionTester extends XmppSessionBoilerplate {
 
 	public void setLoggedIn(final XmppURI userURI) {
 		currentUser = userURI;
-		setSessionState(SessionState.loggedIn);
+		setStatus(SessionStatus.loggedIn);
 	}
 
 	public void setReady() {
-		setSessionState(SessionState.ready);
+		setStatus(SessionStatus.ready);
 	}
 
 	public IQCallback verifyIQSent(final IPacket iq) {

@@ -38,11 +38,6 @@ public class J2SEServicesModule implements Services {
 		xmler = new TigaseXMLService();
 	}
 
-	@Override
-	public long getCurrentTime() {
-		return scheduler.getCurrentTime();
-	}
-
 	/*
 	 * public void onInstall(final Container container) {
 	 * container.removeProvider(Services.class);
@@ -58,11 +53,6 @@ public class J2SEServicesModule implements Services {
 	@Override
 	public void send(final String httpBase, final String xml, final ConnectorCallback listener) throws ConnectorException {
 		connector.send(httpBase, xml, listener);
-	}
-
-	@Override
-	public String toString(final IPacket packet) {
-		return xmler.toString(packet);
 	}
 
 	@Override

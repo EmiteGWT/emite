@@ -23,9 +23,9 @@ package com.calclab.emite.xep.muc.client;
 import java.util.Collection;
 
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.im.client.chat.Chat;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 

@@ -20,10 +20,10 @@
 
 package com.calclab.emite.xep.storage.client;
 
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

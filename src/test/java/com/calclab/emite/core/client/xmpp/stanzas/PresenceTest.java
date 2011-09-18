@@ -26,8 +26,9 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.Packet;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Type;
 
 public class PresenceTest {
 

@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.google.inject.Singleton;

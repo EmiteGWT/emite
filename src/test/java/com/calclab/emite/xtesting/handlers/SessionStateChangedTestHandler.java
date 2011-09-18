@@ -20,16 +20,16 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.client.session.SessionStatus;
 
-public class SessionStateChangedTestHandler extends TestHandler<SessionStateChangedEvent> implements SessionStateChangedEvent.Handler {
-	public SessionState getLastSessionState() {
-		return hasEvent() ? getLastEvent().getState() : null;
+public class SessionStateChangedTestHandler extends TestHandler<SessionStatusChangedEvent> implements SessionStatusChangedEvent.Handler {
+	public SessionStatus getLastSessionStatus() {
+		return hasEvent() ? getLastEvent().getStatus() : null;
 	}
 
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		addEvent(event);
 	}
 

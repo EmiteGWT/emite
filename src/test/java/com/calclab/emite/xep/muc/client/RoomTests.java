@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,9 +28,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 
@@ -64,7 +64,7 @@ public class RoomTests {
 	@Test
 	public void shouldInterceptOutcomingMessages() {
 		// a little hack
-		room.getProperties().setState(ChatStates.ready);
+		room.getProperties().setState(ChatStatus.ready);
 		final BeforeMessageSentTestHandler handler = new BeforeMessageSentTestHandler();
 		room.addBeforeMessageSentHandler(handler);
 		room.send(new Message("body"));

@@ -23,7 +23,7 @@ package com.calclab.emite.im.client.chat.pair;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.google.inject.Singleton;

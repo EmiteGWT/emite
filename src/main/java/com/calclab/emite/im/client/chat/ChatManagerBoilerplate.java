@@ -26,14 +26,14 @@ import java.util.HashSet;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.EventBus;
 
-public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatManager<C>, SessionStateChangedEvent.Handler, MessageReceivedEvent.Handler {
+public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatManager<C>, SessionStatusChangedEvent.Handler, MessageReceivedEvent.Handler {
 	
 	protected final EventBus eventBus;
 	protected final XmppSession session;
@@ -51,8 +51,8 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 		
 		session.addMessageReceivedHandler(this);
 		
-		// Control chat state when the user logout and login again
-		session.addSessionStateChangedHandler(true, this);
+		// Control chat status when the user logout and login again
+		session.addSessionStatusChangedHandler(true, this);
 	}
 	
 	@Override
@@ -74,8 +74,8 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 	}
 	
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
-		if (event.is(SessionState.loggedIn)) {
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		if (event.is(SessionStatus.loggedIn)) {
 			final XmppURI currentUser = session.getCurrentUserURI();
 			if (currentChatUser == null) {
 				currentChatUser = currentUser;
@@ -85,8 +85,8 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 					chat.open();
 				}
 			}
-		} else if (event.is(SessionState.loggingOut) || event.is(SessionState.disconnected)) {
-			// check both states: loggingOut is preferred, but not
+		} else if (event.is(SessionStatus.loggingOut) || event.is(SessionStatus.disconnected)) {
+			// check both status: loggingOut is preferred, but not
 			// always fired (i.e. error)
 			for (final C chat : chats) {
 				chat.close();

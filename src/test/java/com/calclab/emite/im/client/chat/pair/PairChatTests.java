@@ -28,11 +28,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
@@ -59,7 +59,7 @@ public class PairChatTests {
 	@Before
 	public void beforeTests() {
 		session = new XmppSessionTester();
-		properties = new ChatProperties(CHAT, ME, ChatStates.ready);
+		properties = new ChatProperties(CHAT, ME, ChatStatus.ready);
 		chat = new PairChat(session, properties);
 		beforeSendHandler = new BeforeMessageSentTestHandler();
 		chat.addBeforeMessageSentHandler(beforeSendHandler);
@@ -70,15 +70,15 @@ public class PairChatTests {
 	@Test
 	public void shouldFireChatStateChanges() {
 		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
-		chat.addChatStateChangedHandler(true, handler);
+		chat.addChatStatusChangedHandler(true, handler);
 		assertEquals(1, handler.getCalledTimes());
-		chat.setChatState(ChatStates.locked);
+		chat.setStatus(ChatStatus.locked);
 		assertEquals(2, handler.getCalledTimes());
 	}
 
 	@Test
 	public void shouldNotSendOrInterceptOutcomingMessagesIfLocked() {
-		properties.setState(ChatStates.locked);
+		properties.setState(ChatStatus.locked);
 		final Message message = new Message("body");
 		chat.send(message);
 		assertFalse(beforeSendHandler.isCalledOnce());
@@ -87,7 +87,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldRaiseErrorIfSendUsingLockedChat() {
-		properties.setState(ChatStates.locked);
+		properties.setState(ChatStatus.locked);
 		final ErrorTestHandler handler = new ErrorTestHandler();
 		chat.addErrorHandler(handler);
 		chat.send(new Message("body"));
@@ -111,7 +111,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldSendAndInterceptOutcomingMessagesIfReady() {
-		properties.setState(ChatStates.ready);
+		properties.setState(ChatStatus.ready);
 		final Message message = new Message("body");
 		chat.send(message);
 		assertTrue(beforeSendHandler.isCalledOnce());

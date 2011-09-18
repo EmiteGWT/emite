@@ -23,8 +23,8 @@ package com.calclab.emite.xep.delay.client;
 import java.util.Date;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.util.XmppDateTime;
 
 /**
  * Represents the delay of message delivery. It can be applied to any stanza. It

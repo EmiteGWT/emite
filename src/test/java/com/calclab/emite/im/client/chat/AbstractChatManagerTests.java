@@ -25,8 +25,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 
@@ -47,18 +47,18 @@ public abstract class AbstractChatManagerTests {
 	public void shouldCloseChatsWhenDisconnected() {
 		session.setLoggedIn(ME);
 		final Chat chat = manager.open(OTHER);
-		assertEquals(ChatStates.ready, chat.getChatState());
-		session.setSessionState(SessionState.disconnected);
-		assertEquals(ChatStates.locked, chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
+		session.setStatus(SessionStatus.disconnected);
+		assertEquals(ChatStatus.locked, chat.getStatus());
 	}
 
 	@Test
 	public void shouldCloseChatsWhenLogout() {
 		session.setLoggedIn(ME);
 		final Chat chat = manager.open(OTHER);
-		assertEquals(ChatStates.ready, chat.getChatState());
+		assertEquals(ChatStatus.ready, chat.getStatus());
 		session.logout();
-		assertEquals(ChatStates.locked, chat.getChatState());
+		assertEquals(ChatStatus.locked, chat.getStatus());
 
 	}
 

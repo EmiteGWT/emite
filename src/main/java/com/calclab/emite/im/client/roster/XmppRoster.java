@@ -23,7 +23,10 @@ package com.calclab.emite.im.client.roster;
 import java.util.Collection;
 import java.util.Set;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.im.client.events.RosterGroupChangedEvent;
+import com.calclab.emite.im.client.events.RosterItemChangedEvent;
+import com.calclab.emite.im.client.events.RosterRetrievedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public interface XmppRoster {

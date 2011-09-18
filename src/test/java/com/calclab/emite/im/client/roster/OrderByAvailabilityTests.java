@@ -29,7 +29,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.xtesting.RosterItemHelper;
 
 public class OrderByAvailabilityTests {

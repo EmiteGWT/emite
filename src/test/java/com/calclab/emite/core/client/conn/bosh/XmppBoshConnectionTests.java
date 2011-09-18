@@ -38,12 +38,12 @@ public class XmppBoshConnectionTests {
 
 	public XmppBoshConnectionTests() {
 		services = new ServicesTester();
-		connection = new XmppBoshConnection(new SimpleEventBus(), services);
+		connection = new XmppBoshConnection(new SimpleEventBus(), new ServicesTester());
 	}
 
 	@Test
 	public void shouldSendInitialBody() {
-		connection.setSettings(new ConnectionSettings("httpBase", "localhost"));
+		connection.setSettings(new ConnectionSettings("localhost"));
 		connection.connect();
 		assertEquals(1, services.requestSentCount());
 		final IsPacketLike matcher = IsPacketLike.build("<body to='localhost' " + "content='text/xml; charset=utf-8' xmlns:xmpp='urn:xmpp:xbosh' "

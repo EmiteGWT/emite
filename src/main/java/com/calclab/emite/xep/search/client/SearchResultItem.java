@@ -21,7 +21,7 @@
 package com.calclab.emite.xep.search.client;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 
 /**
  * Item search result

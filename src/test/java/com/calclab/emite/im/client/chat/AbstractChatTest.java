@@ -20,20 +20,20 @@
 
 package com.calclab.emite.im.client.chat;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public abstract class AbstractChatTest {
+public abstract class AbstractChatTest<C extends ChatBoilerplate> {
 	protected final EventBus eventBus;
 	protected final XmppSessionTester session;
 	protected static final XmppURI USER_URI = uri("self@domain/res");
@@ -43,11 +43,11 @@ public abstract class AbstractChatTest {
 		session = new XmppSessionTester();
 	}
 
-	public abstract ChatBoilerplate getChat();
+	public abstract C getChat();
 
 	@Test
 	public void shouldInterceptIncomingMessages() {
-		final ChatBoilerplate chat = getChat();
+		final C chat = getChat();
 		final BeforeMessageReceivedTestHandler interceptor = new BeforeMessageReceivedTestHandler();
 		chat.addBeforeMessageReceivedHandler(interceptor);
 		final Message message = new Message("body", USER_URI, chat.getURI());
@@ -57,8 +57,8 @@ public abstract class AbstractChatTest {
 
 	@Test
 	public void shouldInterceptOutcomingMessages() {
-		final ChatBoilerplate chat = getChat();
-		chat.setChatState(ChatStates.ready);
+		final C chat = getChat();
+		chat.setStatus(ChatStatus.ready);
 		final BeforeMessageSentTestHandler interceptor = new BeforeMessageSentTestHandler();
 		chat.addBeforeMessageSentHandler(interceptor);
 		final Message message = new Message("body");
@@ -68,8 +68,8 @@ public abstract class AbstractChatTest {
 
 	@Test
 	public void shouldNotSendMessagesWhenStatusIsNotReady() {
-		final ChatBoilerplate chat = getChat();
-		chat.setChatState("locked");
+		final C chat = getChat();
+		chat.setStatus(ChatStatus.locked);
 		chat.send(new Message("a message"));
 		session.verifyNotSent("<message />");
 	}

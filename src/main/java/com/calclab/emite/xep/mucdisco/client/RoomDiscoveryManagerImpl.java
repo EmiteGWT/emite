@@ -23,7 +23,7 @@ package com.calclab.emite.xep.mucdisco.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.DiscoveryItemsResultEvent;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.disco.client.FeatureSupportedHandler;

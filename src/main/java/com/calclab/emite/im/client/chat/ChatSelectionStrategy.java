@@ -20,7 +20,7 @@
 
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
 
 /**
  * An interchangeable strategy to retrieve or create new chats. You can replace

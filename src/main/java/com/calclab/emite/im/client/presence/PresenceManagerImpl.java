@@ -22,13 +22,14 @@ package com.calclab.emite.im.client.presence;
 
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.xmpp.session.SessionReady;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.client.session.SessionReady;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.im.client.events.OwnPresenceChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -39,7 +40,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see PresenceManager
  */
 @Singleton
-public class PresenceManagerImpl implements PresenceManager, SessionStateChangedEvent.Handler, PresenceReceivedEvent.Handler {
+public class PresenceManagerImpl implements PresenceManager, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler {
 
 	static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
 
@@ -54,24 +55,24 @@ public class PresenceManagerImpl implements PresenceManager, SessionStateChanged
 		this.session = session;
 		ownPresence = INITIAL_PRESENCE;
 		
-		sessionReady.setEnabled(false);
+		sessionReady.disable();
 
 		// Upon connecting to the server and becoming an active resource, a
 		// client SHOULD request the roster before sending initial presence
-		session.addSessionStateChangedHandler(false, this);
+		session.addSessionStatusChangedHandler(false, this);
 		session.addPresenceReceivedHandler(this);
 	}
 
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
-		if (event.is(SessionState.rosterReady)) {
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		if (event.is(SessionStatus.rosterReady)) {
 			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session.getCurrentUserURI());
 			session.send(initialPresence);
 			setOwnPresence(initialPresence);
-			session.setSessionState(SessionState.ready);
-		} else if (event.is(SessionState.loggingOut)) {
+			session.setStatus(SessionStatus.ready);
+		} else if (event.is(SessionStatus.loggingOut)) {
 			sendUnavailablePresence(session.getCurrentUserURI());
-		} else if (event.is(SessionState.disconnected)) {
+		} else if (event.is(SessionStatus.disconnected)) {
 			setOwnPresence(INITIAL_PRESENCE);
 		}
 	}

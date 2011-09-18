@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.xmpp.resource;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -28,7 +28,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.session.resource.ResourceBindResultEvent;
+import com.calclab.emite.core.client.session.resource.ResourceBindingManager;
+import com.calclab.emite.core.client.session.resource.ResourceBindingManagerImpl;
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 

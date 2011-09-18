@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xtesting;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.RosterItem;
 
 public class RosterItemHelper {

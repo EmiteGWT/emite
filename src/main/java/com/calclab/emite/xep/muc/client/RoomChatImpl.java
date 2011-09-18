@@ -32,20 +32,20 @@ import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.datetime.XmppDateTime;
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.BasicStanza;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.util.XmppDateTime;
 import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -76,7 +76,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		occupantsByOccupantUri = new LinkedHashMap<XmppURI, Occupant>();
 		occupantsByUserUri = new LinkedHashMap<XmppURI, Occupant>();
 		
-		setChatState(ChatStates.locked);
+		setStatus(ChatStatus.locked);
 
 		// Perform some room actions when presence received: handle room occupants, create instant rooms...
 		addPresenceReceivedHandler(this);
@@ -107,7 +107,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 				if (isNewRoom(child)) {
 					requestCreateInstantRoom();
 				} else {
-					setChatState(ChatStates.ready);
+					setStatus(ChatStatus.ready);
 				}
 			}
 		}
@@ -189,9 +189,9 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 
 	@Override
 	public void close() {
-		if (ChatStates.ready.equals(properties.getState())) {
+		if (ChatStatus.ready.equals(properties.getStatus())) {
 			session.send(new Presence(Type.unavailable, null, getURI()));
-			properties.setState(ChatStates.locked);
+			properties.setStatus(ChatStatus.locked);
 		}
 	}
 
@@ -221,7 +221,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 
 	@Override
 	public void reEnter(final HistoryOptions historyOptions) {
-		if (ChatStates.locked.equals(getChatState())) {
+		if (ChatStatus.locked.equals(getStatus())) {
 			session.send(createEnterPresence(historyOptions));
 		}
 	}
@@ -310,7 +310,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 			@Override
 			public void onIQ(final IQ iq) {
 				if (IQ.isSuccess(iq)) {
-					setChatState(ChatStates.ready);
+					setStatus(ChatStatus.ready);
 				}
 			}
 		});

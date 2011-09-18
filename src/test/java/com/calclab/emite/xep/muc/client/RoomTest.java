@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -30,20 +30,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.ChatBoilerplate;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.calclab.emite.im.client.chat.ChatStatus;
+import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.RoomSubjectChangedTestHandler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class RoomTest extends AbstractChatTest {
+public class RoomTest extends AbstractChatTest<RoomChatImpl> {
 	
 	private EventBus eventBus;
 	private RoomChatImpl room;
@@ -62,7 +62,7 @@ public class RoomTest extends AbstractChatTest {
 	}
 
 	@Override
-	public ChatBoilerplate getChat() {
+	public RoomChatImpl getChat() {
 		return room;
 	}
 
@@ -81,7 +81,7 @@ public class RoomTest extends AbstractChatTest {
 	public void shouldExitAndLockTheRoomWhenLoggedOut() {
 		receiveInstantRoomCreation(userURI, roomURI);
 		session.logout();
-		assertEquals("locked", room.getChatState());
+		assertEquals(ChatStatus.locked, room.getStatus());
 		session.verifySent("<presence to='room@domain/nick' type='unavailable'/>");
 	}
 
@@ -97,7 +97,7 @@ public class RoomTest extends AbstractChatTest {
 	@Test
 	public void shouldFireListenersWhenSubjectChange() {
 		final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
-		room.addRoomSubjectChangedHandler(room, handler);
+		room.addRoomSubjectChangedHandler(handler);
 
 		final XmppURI occupantURI = uri("someone@domain/res");
 		eventBus.fireEvent(new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
@@ -134,9 +134,9 @@ public class RoomTest extends AbstractChatTest {
 
 	@Test
 	public void shouldUnlockWhenInstantRoomIsCreated() {
-		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
-		room.addChatStateChangedHandler(false, handler);
-		assertEquals("locked", room.getChatState());
+		final ChatStatusChangedTestHandler handler = new ChatStatusChangedTestHandler();
+		room.addChatStatusChangedHandler(false, handler);
+		assertEquals(ChatStatus.locked, room.getStatus());
 		receiveInstantRoomCreation(userURI, roomURI);
 		assertTrue(handler.isCalledOnce());
 	}

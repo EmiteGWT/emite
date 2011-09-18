@@ -21,7 +21,7 @@
 package com.calclab.emite.xtesting.handlers;
 
 import com.calclab.emite.core.client.events.MessageSentEvent;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.Message;
 
 public class MessageSentTestHandler extends TestHandler<MessageSentEvent> implements MessageSentEvent.Handler {
 

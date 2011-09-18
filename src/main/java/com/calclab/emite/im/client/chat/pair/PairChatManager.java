@@ -1,6 +1,7 @@
 package com.calclab.emite.im.client.chat.pair;
 
 import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.im.client.events.PairChatChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public interface PairChatManager extends ChatManager<PairChat> {

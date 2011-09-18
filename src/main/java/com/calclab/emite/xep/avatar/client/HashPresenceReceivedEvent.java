@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.avatar.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.web.bindery.event.shared.Event;
 
 public class HashPresenceReceivedEvent extends Event<HashPresenceReceivedEvent.Handler> {

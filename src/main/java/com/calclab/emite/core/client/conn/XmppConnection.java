@@ -21,6 +21,8 @@
 package com.calclab.emite.core.client.conn;
 
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
+import com.calclab.emite.core.client.events.ConnectionResponseEvent;
+import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
 import com.calclab.emite.core.client.events.StanzaReceivedEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -40,12 +42,12 @@ public interface XmppConnection {
 	public HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when the state of the connection has changed
+	 * Add a handler to know when the status of the connection has changed
 	 * 
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addConnectionStateChangedHandler(ConnectionStateChangedEvent.Handler handler);
+	public HandlerRegistration addConnectionStatusChangedHandler(ConnectionStatusChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has arrived from the server

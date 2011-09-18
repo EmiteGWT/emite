@@ -23,11 +23,11 @@ package com.calclab.emite.im.client.chat;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 
 /**
  * The properties of a chat. One property is required (the uri), some other are
- * fixed but optional (like the initiatorUri, or the state) and some are
+ * fixed but optional (like the initiatorUri, or the status) and some are
  * optional and not fixed (you can add or retrieve any property by key)
  * 
  * The properties are the id used to find a chat in a pool of chats.
@@ -36,7 +36,7 @@ public class ChatProperties {
 	private final HashMap<String, Object> data;
 	private final XmppURI uri;
 	private XmppURI initiatorUri;
-	private String state;
+	private ChatStatus status;
 	private boolean shouldCreateNewChat;
 
 	public ChatProperties(final XmppURI uri) {
@@ -46,7 +46,7 @@ public class ChatProperties {
 	/**
 	 * Creates a new {@link ChatProperties} instance taking the data from the
 	 * given properties instance. Note that this will not copy the initiator uri
-	 * or state.
+	 * or status.
 	 * 
 	 * @param uri
 	 *            the new uri for the properties.
@@ -61,10 +61,10 @@ public class ChatProperties {
 		}
 	}
 
-	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state) {
+	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final ChatStatus status) {
 		this.uri = uri;
 		this.initiatorUri = initiatorUri;
-		this.state = state;
+		this.status = status;
 		shouldCreateNewChat = true;
 		data = new HashMap<String, Object>();
 	}
@@ -72,19 +72,19 @@ public class ChatProperties {
 	/**
 	 * Creates a new {@link ChatProperties} instance taking the data from the
 	 * given properties instance. Note that this will not copy the initiator uri
-	 * or state.
+	 * or status.
 	 * 
 	 * @param uri
 	 *            the new uri for the properties.
 	 * @param initiatorUri
 	 *            the uri of the chat initiator.
-	 * @param state
-	 *            the chat state.
+	 * @param status
+	 *            the chat status.
 	 * @param properties
 	 *            the properties object to replicate.
 	 */
-	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final String state, final ChatProperties properties) {
-		this(uri, initiatorUri, state);
+	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final ChatStatus status, final ChatProperties properties) {
+		this(uri, initiatorUri, status);
 
 		for (final Entry<String, Object> entry : properties.data.entrySet()) {
 			setData(entry.getKey(), entry.getValue());
@@ -113,13 +113,13 @@ public class ChatProperties {
 	}
 
 	/**
-	 * The current state of the chat. See ChatStates to see some options.
+	 * The current status of the chat. See ChatStatus to see some options.
 	 * 
 	 * @return
-	 * @see ChatStates
+	 * @see ChatStatus
 	 */
-	public String getState() {
-		return state;
+	public ChatStatus getStatus() {
+		return status;
 	}
 
 	/**
@@ -170,12 +170,12 @@ public class ChatProperties {
 	}
 
 	/**
-	 * Change the state of the chat
+	 * Change the status of the chat
 	 * 
-	 * @param state
+	 * @param status
 	 */
-	public void setState(final String state) {
-		this.state = state;
+	public void setStatus(final ChatStatus status) {
+		this.status = status;
 	}
 
 	/**

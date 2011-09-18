@@ -20,12 +20,12 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
 
 public class RoomOccupantTest {
 

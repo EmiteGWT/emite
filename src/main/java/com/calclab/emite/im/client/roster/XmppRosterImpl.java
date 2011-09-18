@@ -29,20 +29,23 @@ import java.util.Set;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.RequestFailedEvent;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.xmpp.session.IQCallback;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ.Type;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.session.IQCallback;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.session.XmppSession;
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
+import com.calclab.emite.im.client.events.RosterGroupChangedEvent;
+import com.calclab.emite.im.client.events.RosterItemChangedEvent;
+import com.calclab.emite.im.client.events.RosterRetrievedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -50,7 +53,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class XmppRosterImpl implements XmppRoster, SessionStateChangedEvent.Handler, PresenceReceivedEvent.Handler, IQReceivedEvent.Handler {
+public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler, IQReceivedEvent.Handler {
 
 	private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
@@ -69,14 +72,14 @@ public class XmppRosterImpl implements XmppRoster, SessionStateChangedEvent.Hand
 		groups = new HashMap<String, RosterGroup>();
 		all = new RosterGroup(eventBus, null);
 		
-		session.addSessionStateChangedHandler(true, this);
+		session.addSessionStatusChangedHandler(true, this);
 		session.addPresenceReceivedHandler(this);
 		session.addIQReceivedHandler(this);
 	}
 	
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
-		if (event.is(SessionState.loggedIn)) {
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		if (event.is(SessionStatus.loggedIn)) {
 			reRequestRoster();
 		}
 	}
@@ -305,7 +308,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStateChangedEvent.Hand
 
 						if (!rosterReady) {
 							rosterReady = true;
-							session.setSessionState(SessionState.rosterReady);
+							session.setStatus(SessionStatus.rosterReady);
 						}
 						eventBus.fireEventFromSource(new RosterRetrievedEvent(getItems()), this);
 					} else {

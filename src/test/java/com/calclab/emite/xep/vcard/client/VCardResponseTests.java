@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.xmpp.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class VCardResponseTests {

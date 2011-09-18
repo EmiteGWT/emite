@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.avatar.client;
 
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 
 public class AvatarVCard {
 

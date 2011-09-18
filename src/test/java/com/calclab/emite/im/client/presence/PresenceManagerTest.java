@@ -20,20 +20,19 @@
 
 package com.calclab.emite.im.client.presence;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import com.calclab.emite.core.client.xmpp.session.SessionReady;
-import com.calclab.emite.core.client.xmpp.session.SessionState;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Show;
-import com.calclab.emite.core.client.xmpp.stanzas.Presence.Type;
+import com.calclab.emite.core.client.session.SessionReady;
+import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.Presence.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.OwnPresenceChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -46,7 +45,7 @@ public class PresenceManagerTest {
 	@Before
 	public void beforeTest() {
 		session = new XmppSessionTester();
-		final SessionReady sessionReady = Mockito.mock(SessionReady.class);
+		final SessionReady sessionReady = new SessionReady(session);
 		manager = new PresenceManagerImpl(new SimpleEventBus(), session, sessionReady);
 	}
 
@@ -95,7 +94,7 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldSendInitialPresenceAfterRosterReady() {
 		session.setLoggedIn("myself@domain");
-		session.setSessionState(SessionState.rosterReady);
+		session.setSessionState(SessionStatus.rosterReady);
 		session.verifySent("<presence from='myself@domain'></presence>");
 	}
 

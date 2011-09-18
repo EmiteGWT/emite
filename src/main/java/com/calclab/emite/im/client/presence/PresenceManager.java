@@ -20,7 +20,8 @@
 
 package com.calclab.emite.im.client.presence;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.im.client.events.OwnPresenceChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**

@@ -20,29 +20,29 @@
 
 package com.calclab.emite.im.client.chat.pair;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
+import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatStates;
+import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
-import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * Pair chat tests using the old listener interface
  */
-public class PairChatTest extends AbstractChatTest {
+public class PairChatTest extends AbstractChatTest<PairChat> {
 	private static final XmppURI CHAT_URI = uri("other@domain/other");
 	private PairChat pairChat;
 
@@ -50,39 +50,39 @@ public class PairChatTest extends AbstractChatTest {
 	public void beforeTests() {
 		session.setLoggedIn(USER_URI);
 		final PairChatManagerImpl manager = new PairChatManagerImpl(eventBus, session, new PairChatSelectionStrategy());
-		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.ready);
+		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStatus.ready);
 		pairChat = (PairChat) manager.openChat(properties, true);
 		pairChat.setThread("theThread");
 	}
 
 	@Override
-	public ChatBoilerplate getChat() {
+	public PairChat getChat() {
 		return pairChat;
 	}
 
 	@Test
 	public void shouldBeReadyIfSessionLogedIn() {
-		final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, ChatStates.ready);
+		final ChatProperties properties = new ChatProperties(uri("someone@domain"), USER_URI, ChatStatus.ready);
 		final PairChat aChat = new PairChat(eventBus,session, properties);
-		assertEquals("ready", aChat.getChatState());
+		assertEquals(ChatStatus.ready, aChat.getStatus());
 	}
 
 	@Test
 	public void shouldLockIfLogoutAndUnlockWhenLogginWithSameUser() {
-		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
-		pairChat.addChatStateChangedHandler(true, handler);
-		assertEquals("ready", handler.getLastChatState());
+		final ChatStatusChangedTestHandler handler = new ChatStatusChangedTestHandler();
+		pairChat.addChatStatusChangedHandler(true, handler);
+		assertEquals(ChatStatus.ready, handler.getLastChatStatus());
 		session.logout();
-		assertEquals("locked", handler.getLastChatState());
+		assertEquals(ChatStatus.locked, handler.getLastChatStatus());
 		session.login(USER_URI, "");
-		assertEquals("ready", handler.getLastChatState());
+		assertEquals(ChatStatus.ready, handler.getLastChatStatus());
 	}
 
 	@Test
 	public void shouldLockIfReLoginWithDifferentJID() {
 		session.logout();
 		session.login(uri("differentUser@domain"), "");
-		assertEquals("locked", pairChat.getChatState());
+		assertEquals(ChatStatus.locked, pairChat.getStatus());
 
 	}
 
@@ -96,9 +96,9 @@ public class PairChatTest extends AbstractChatTest {
 
 	@Test
 	public void shouldSendNoThreadWhenNotSpecified() {
-		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStates.locked);
+		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStatus.locked);
 		final ChatBoilerplate noThreadChat = new PairChat(eventBus, session, properties);
-		noThreadChat.setChatState("ready");
+		noThreadChat.setStatus(ChatStatus.ready);
 		noThreadChat.send(new Message("the message"));
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' " + "type='chat'><body>the message</body></message>");
 	}
@@ -121,7 +121,7 @@ public class PairChatTest extends AbstractChatTest {
 	public void shouldUnlockIfReloginWithSameJID() {
 		session.logout();
 		session.login(XmppURI.uri(USER_URI.getNode(), USER_URI.getHost(), "different_resource"), "");
-		assertEquals("ready", pairChat.getChatState());
+		assertEquals(ChatStatus.ready, pairChat.getStatus());
 	}
 
 	@Test

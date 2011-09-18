@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.xmpp.stanzas;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -28,6 +28,8 @@ import static org.junit.Assert.assertSame;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.packet.NoPacket;
+import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 
 public class BasicStanzaTest {
 

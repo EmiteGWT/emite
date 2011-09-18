@@ -20,6 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
+import com.calclab.emite.im.client.events.SubscriptionRequestReceivedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
