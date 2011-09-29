@@ -33,9 +33,12 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class RoomTests {
 
+	private EventBus eventBus;
 	private XmppSessionTester session;
 	private RoomChatManagerImpl manager;
 	private RoomChat room;
@@ -46,9 +49,10 @@ public class RoomTests {
 	public void beforeTest() {
 		userURI = uri("user@domain/res");
 		roomURI = uri("room@domain/user");
+		eventBus = new SimpleEventBus();
 		session = new XmppSessionTester(userURI);
-		manager = new RoomChatManagerImpl(session);
-		room = (RoomChat) manager.open(roomURI);
+		manager = new RoomChatManagerImpl(eventBus, session, new RoomChatSelectionStrategy());
+		room = manager.open(roomURI);
 	}
 
 	@Test
@@ -64,7 +68,7 @@ public class RoomTests {
 	@Test
 	public void shouldInterceptOutcomingMessages() {
 		// a little hack
-		room.getProperties().setState(ChatStatus.ready);
+		room.getProperties().setStatus(ChatStatus.ready);
 		final BeforeMessageSentTestHandler handler = new BeforeMessageSentTestHandler();
 		room.addBeforeMessageSentHandler(handler);
 		room.send(new Message("body"));

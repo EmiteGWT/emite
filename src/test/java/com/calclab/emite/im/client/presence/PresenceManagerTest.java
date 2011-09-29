@@ -94,7 +94,7 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldSendInitialPresenceAfterRosterReady() {
 		session.setLoggedIn("myself@domain");
-		session.setSessionState(SessionStatus.rosterReady);
+		session.setStatus(SessionStatus.rosterReady);
 		session.verifySent("<presence from='myself@domain'></presence>");
 	}
 

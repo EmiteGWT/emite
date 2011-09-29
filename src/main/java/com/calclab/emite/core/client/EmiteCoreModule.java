@@ -25,12 +25,9 @@ import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.bosh.XmppBoshConnection;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.services.ServicesImplGWT;
-import com.calclab.emite.core.client.session.IMSessionManager;
 import com.calclab.emite.core.client.session.SessionReady;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.session.XmppSessionImpl;
-import com.calclab.emite.core.client.session.resource.ResourceBindingManager;
-import com.calclab.emite.core.client.session.resource.ResourceBindingManagerImpl;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.session.sasl.SASLManagerImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -64,9 +61,7 @@ public class EmiteCoreModule extends AbstractGinModule {
 		
 		bind(XmppConnection.class).to(XmppBoshConnection.class);
 		bind(XmppSession.class).to(XmppSessionImpl.class);
-		bind(IMSessionManager.class);
 		bind(SASLManager.class).to(SASLManagerImpl.class);
-		bind(ResourceBindingManager.class).to(ResourceBindingManagerImpl.class);
 		bind(SessionReady.class).asEagerSingleton();
 		
 		bind(Services.class).to(ServicesImplGWT.class);

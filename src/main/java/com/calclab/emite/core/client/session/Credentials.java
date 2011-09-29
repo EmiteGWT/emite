@@ -27,7 +27,7 @@ public class Credentials {
 	/**
 	 * The URI required to perform an anonymous login
 	 */
-	public static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", "", null);
+	private static final XmppURI ANONYMOUS = XmppURI.uri("anonymous", "", null);
 
 	public static Credentials createAnonymous() {
 		return new Credentials(ANONYMOUS, null);

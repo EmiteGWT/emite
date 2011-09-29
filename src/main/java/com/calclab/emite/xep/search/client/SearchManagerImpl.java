@@ -147,7 +147,7 @@ public class SearchManagerImpl implements SearchManager {
 		this.host = host;
 	}
 
-	protected List<SearchResultItem> processResults(final XmppURI from, final IPacket query) {
+	protected static List<SearchResultItem> processResults(final XmppURI from, final IPacket query) {
 		final List<SearchResultItem> result = new ArrayList<SearchResultItem>();
 		for (final IPacket child : query.getChildren()) {
 			if (child.getName().equals("item")) {
@@ -158,7 +158,7 @@ public class SearchManagerImpl implements SearchManager {
 		return result;
 	}
 
-	private SearchFields processFieldsResults(final XmppURI from, final IPacket query) {
+	private static SearchFields processFieldsResults(final XmppURI from, final IPacket query) {
 		final SearchFields fields = new SearchFields();
 		for (final IPacket child : query.getChildren()) {
 			if (!child.getName().equals("instructions")) {

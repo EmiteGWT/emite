@@ -88,6 +88,12 @@ public class PairChat extends ChatBoilerplate {
 	public String toString() {
 		return id;
 	}
+	
+	@Override
+	protected void setStatus(ChatStatus chatStatus) {
+		// TODO added for testing
+		super.setStatus(chatStatus);
+	}
 
 	private String generateChatID() {
 		return "chat: " + getURI().toString() + "-" + getThread();

@@ -135,18 +135,22 @@ public class NoPacket implements IPacket {
 	}
 
 	public void render(final StringBuffer buffer) {
+		// empty
 	}
 
 	@Override
 	public void setAttribute(final String name, final String value) {
+		// empty
 	}
 
 	@Override
 	public void setText(final String text) {
+		// empty
 	}
 
 	@Override
 	public void setTextToChild(final String nodeName, final String text) {
+		// empty
 	}
 
 	public IPacket With(final IPacket child) {

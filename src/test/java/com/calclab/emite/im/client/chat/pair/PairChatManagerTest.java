@@ -27,24 +27,25 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook;
-import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
+import com.calclab.emite.xtesting.handlers.PairChatChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
+public class PairChatManagerTest extends AbstractChatManagerTest<PairChatManager, PairChat> {
 
 	@Test
 	public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {
 		final Message message = new Message(null, MYSELF, OTHER);
 		message.addChild("gone", ChatStateHook.XMLNS);
 
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives(message);
 		assertTrue(handler.isNotCalled());
 		manager.open(OTHER);
@@ -53,7 +54,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	@Test
 	public void managerShouldCreateOneChatForSameResource() {
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives(new Message("message 1", MYSELF, uri("source@domain/resource1")));
 		session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 		assertEquals(1, handler.getCalledTimes());
@@ -67,7 +68,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	@Test
 	public void roomInvitationsShouldDontFireOnChatCreated() {
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives("<message to='" + MYSELF + "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 				+ "'><reason>Join to our conversation</reason></invite>" + "</x><x jid='someroom@domain' xmlns='jabber:x:conference' /></message>");
 		assertTrue(handler.isNotCalled());
@@ -75,7 +76,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	@Test
 	public void roomInvitationsShouldDontFireOnChatCreatedButMustAfterOpenChat() {
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives("<message to='" + MYSELF + "' from='someroom@domain'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='" + OTHER
 				+ "'><reason>Join to our conversation</reason></invite>" + "</x><x jid='someroom@domain' xmlns='jabber:x:conference' /></message>");
 		assertTrue(handler.isNotCalled());
@@ -138,7 +139,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	@Test
 	public void shouldReuseChatIfNotResouceSpecified() {
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives(new Message("message 1", MYSELF, uri("source@domain")));
 		session.receives(new Message("message 2", MYSELF, uri("source@domain/resource1")));
 		assertTrue(handler.isCalledOnce());
@@ -146,7 +147,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 
 	@Test
 	public void shouldReuseChatWhenAnsweringWithDifferentResources() {
-		final ChatChangedTestHandler handler = addChatCreatedHandler();
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		final PairChat chat = manager.open(uri("someone@domain"));
 		assertTrue(handler.isCalledOnce());
 		assertEquals(chat, handler.getLastChat());
@@ -154,15 +155,31 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChat> {
 		assertTrue(handler.isCalledOnce());
 	}
 
-	private ChatChangedTestHandler addChatCreatedHandler() {
-		final ChatChangedTestHandler handler = new ChatChangedTestHandler("created");
+	private PairChatChangedTestHandler addChatCreatedHandler() {
+		final PairChatChangedTestHandler handler = new PairChatChangedTestHandler(ChangeType.created);
 		manager.addPairChatChangedHandler(handler);
 		return handler;
 	}
+	
+	@Test
+	public void shouldEventWhenAChatIsClosed() {
+		final PairChat chat = manager.open(uri("other@domain/resource"));
+		final PairChatChangedTestHandler handler = new PairChatChangedTestHandler(ChangeType.closed);
+		manager.addPairChatChangedHandler(handler);
+		manager.close(chat);
+		assertTrue(handler.isCalledOnce());
+	}
+
+	@Test
+	public void shouldEventWhenChatCreated() {
+		final PairChatChangedTestHandler handler = addChatCreatedHandler();
+		manager.open(OTHER);
+		assertTrue(handler.isCalledOnce());
+	}
 
 	@Override
-	protected PairChatManagerImpl createChatManager() {
-		final PairChatManagerImpl chatManagerDefault = new PairChatManagerImpl(new SimpleEventBus(), session, new PairChatSelectionStrategy());
+	protected PairChatManager createChatManager() {
+		final PairChatManager chatManagerDefault = new PairChatManagerImpl(new SimpleEventBus(), session, new PairChatSelectionStrategy());
 		return chatManagerDefault;
 	}
 }

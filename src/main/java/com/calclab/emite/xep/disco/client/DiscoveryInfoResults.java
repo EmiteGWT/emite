@@ -82,7 +82,7 @@ public class DiscoveryInfoResults {
 		return identities;
 	}
 
-	private HashMap<String, Feature> processFeatures(final List<? extends IPacket> children) {
+	private static HashMap<String, Feature> processFeatures(final List<? extends IPacket> children) {
 		final HashMap<String, Feature> features = new HashMap<String, Feature>();
 		for (final IPacket child : children) {
 			final Feature feature = Feature.fromPacket(child);
@@ -91,7 +91,7 @@ public class DiscoveryInfoResults {
 		return features;
 	}
 
-	private List<Identity> processIdentity(final List<? extends IPacket> children) {
+	private static List<Identity> processIdentity(final List<? extends IPacket> children) {
 		final List<Identity> identities = new ArrayList<Identity>();
 		for (final IPacket child : children) {
 			identities.add(Identity.fromPacket(child));

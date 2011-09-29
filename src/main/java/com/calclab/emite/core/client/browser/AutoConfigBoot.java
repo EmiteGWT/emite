@@ -259,13 +259,12 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		final int wait = PageAssist.getMetaInteger(PARAM_BOSH_WAIT, ConnectionSettings.DEFAULT_WAIT);
 		final int hold = PageAssist.getMetaInteger(PARAM_BOSH_HOLD, ConnectionSettings.DEFAULT_HOLD);
 
-		if (hostName != null) {
-			logger.info("CONNECTION PARAMS: " + httpBase + ", " + hostName);
-			connection.setSettings(new ConnectionSettings(httpBase, hostName, routeHost, routePort, secure, wait, hold));
-			return true;
-		} else {
+		if (hostName == null)
 			return false;
-		}
+		
+		logger.info("CONNECTION PARAMS: " + httpBase + ", " + hostName);
+		connection.setSettings(new ConnectionSettings(httpBase, hostName, routeHost, routePort, secure, wait, hold));
+		return true;
 	}
 	
 	/**

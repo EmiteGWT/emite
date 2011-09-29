@@ -56,7 +56,7 @@ public class MUCChatStateManager implements RoomChatChangedEvent.Handler {
 	@Override
 	public void onRoomChatChanged(final RoomChatChangedEvent event) {
 		if (event.isCreated()) {
-			getRoomOccupantsChatStateManager((RoomChat) event.getChat());
+			getRoomOccupantsChatStateManager(event.getChat());
 		} else if (event.isClosed()) {
 			final Chat chat = event.getChat();
 			logger.finer("Removing chat state to chat: " + chat.getID());

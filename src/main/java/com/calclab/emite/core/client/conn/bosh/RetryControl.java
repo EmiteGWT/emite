@@ -22,9 +22,9 @@ package com.calclab.emite.core.client.conn.bosh;
 
 public class RetryControl {
 
-	public int maxRetries = 8;
+	public static int maxRetries = 8;
 
-	public int retry(final int nbErrors) {
+	public static int retry(final int nbErrors) {
 		return 500 + (nbErrors - 1) * nbErrors * 550;
 	}
 

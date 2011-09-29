@@ -163,7 +163,7 @@ public class GWTPacket extends AbstractPacket {
 		return PacketRenderer.toString(this);
 	}
 
-	private List<IPacket> wrap(final NodeList nodes) {
+	private static List<IPacket> wrap(final NodeList nodes) {
 		int length;
 		if (nodes == null || (length = nodes.getLength()) == 0)
 			return EMPTY_LIST;

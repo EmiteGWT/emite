@@ -29,7 +29,6 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
@@ -37,7 +36,6 @@ import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
-import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * Pair chat tests using the old listener interface
@@ -51,7 +49,7 @@ public class PairChatTest extends AbstractChatTest<PairChat> {
 		session.setLoggedIn(USER_URI);
 		final PairChatManagerImpl manager = new PairChatManagerImpl(eventBus, session, new PairChatSelectionStrategy());
 		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStatus.ready);
-		pairChat = (PairChat) manager.openChat(properties, true);
+		pairChat = manager.openChat(properties, true);
 		pairChat.setThread("theThread");
 	}
 
@@ -97,7 +95,7 @@ public class PairChatTest extends AbstractChatTest<PairChat> {
 	@Test
 	public void shouldSendNoThreadWhenNotSpecified() {
 		final ChatProperties properties = new ChatProperties(CHAT_URI, USER_URI, ChatStatus.locked);
-		final ChatBoilerplate noThreadChat = new PairChat(eventBus, session, properties);
+		final PairChat noThreadChat = new PairChat(eventBus, session, properties);
 		noThreadChat.setStatus(ChatStatus.ready);
 		noThreadChat.send(new Message("the message"));
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' " + "type='chat'><body>the message</body></message>");

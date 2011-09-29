@@ -52,11 +52,11 @@ public class PrivacyListsManager {
 	 * @param order
 	 *            i din't read the spec... is that necessary?
 	 */
-	public void blockUserBasedOnJID(final String listName, final XmppURI uri, final Integer order) {
+	public void blockUserBasedOnJID(final String listName, final XmppURI uri, final int order) {
 		final IQ iq = new IQ(IQ.Type.set);
 		final IPacket list = iq.addQuery("jabber:iq:privacy").addChild("list", null);
 		list.With("name", listName);
-		list.addChild("item", null).With("type", "jid").With("value", uri.getJID().toString()).With("action", "deny").With("order", order.toString());
+		list.addChild("item", null).With("type", "jid").With("value", uri.getJID().toString()).With("action", "deny").With("order", String.valueOf(order));
 
 		session.sendIQ("privacyLists", iq, new IQCallback() {
 			@Override

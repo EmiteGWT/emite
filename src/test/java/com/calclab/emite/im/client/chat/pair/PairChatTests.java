@@ -35,12 +35,12 @@ import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
-import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.ErrorTestHandler;
-import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageSentTestHandler;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
  * Pair chat tests using the new Event system
@@ -50,6 +50,7 @@ public class PairChatTests {
 	private static final XmppURI ME = XmppURI.uri("me@localhost");
 	private static final XmppURI CHAT = XmppURI.uri("other@localhost");
 
+	private EventBus eventBus;
 	private XmppSessionTester session;
 	private ChatProperties properties;
 	private PairChat chat;
@@ -58,9 +59,10 @@ public class PairChatTests {
 
 	@Before
 	public void beforeTests() {
+		eventBus = new SimpleEventBus();
 		session = new XmppSessionTester();
 		properties = new ChatProperties(CHAT, ME, ChatStatus.ready);
-		chat = new PairChat(session, properties);
+		chat = new PairChat(eventBus, session, properties);
 		beforeSendHandler = new BeforeMessageSentTestHandler();
 		chat.addBeforeMessageSentHandler(beforeSendHandler);
 		sentHandler = new MessageSentTestHandler();
@@ -69,7 +71,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldFireChatStateChanges() {
-		final ChatStateChangedTestHandler handler = new ChatStateChangedTestHandler();
+		final ChatStatusChangedTestHandler handler = new ChatStatusChangedTestHandler();
 		chat.addChatStatusChangedHandler(true, handler);
 		assertEquals(1, handler.getCalledTimes());
 		chat.setStatus(ChatStatus.locked);
@@ -78,7 +80,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldNotSendOrInterceptOutcomingMessagesIfLocked() {
-		properties.setState(ChatStatus.locked);
+		properties.setStatus(ChatStatus.locked);
 		final Message message = new Message("body");
 		chat.send(message);
 		assertFalse(beforeSendHandler.isCalledOnce());
@@ -87,7 +89,7 @@ public class PairChatTests {
 
 	@Test
 	public void shouldRaiseErrorIfSendUsingLockedChat() {
-		properties.setState(ChatStatus.locked);
+		properties.setStatus(ChatStatus.locked);
 		final ErrorTestHandler handler = new ErrorTestHandler();
 		chat.addErrorHandler(handler);
 		chat.send(new Message("body"));
@@ -96,22 +98,8 @@ public class PairChatTests {
 	}
 
 	@Test
-	public void shouldReceiveAndInterceptIncomingMessages() {
-		final MessageReceivedTestHandler receive = new MessageReceivedTestHandler();
-		chat.addMessageReceivedHandler(receive);
-		final BeforeMessageReceivedTestHandler beforeReceive = new BeforeMessageReceivedTestHandler();
-		chat.addBeforeMessageReceivedHandler(beforeReceive);
-		final Message message = new Message("body");
-		chat.receive(message);
-		assertTrue(beforeReceive.isCalledOnce());
-		assertSame(message, beforeReceive.getLastMessage());
-		assertTrue(receive.isCalledOnce());
-		assertSame(message, receive.getLastMessage());
-	}
-
-	@Test
 	public void shouldSendAndInterceptOutcomingMessagesIfReady() {
-		properties.setState(ChatStatus.ready);
+		properties.setStatus(ChatStatus.ready);
 		final Message message = new Message("body");
 		chat.send(message);
 		assertTrue(beforeSendHandler.isCalledOnce());

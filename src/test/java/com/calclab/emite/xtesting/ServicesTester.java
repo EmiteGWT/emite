@@ -65,6 +65,7 @@ public class ServicesTester implements Services {
 
 	@Override
 	public void schedule(final int msecs, final ScheduledAction action) {
+		//empty
 	}
 
 	@Override

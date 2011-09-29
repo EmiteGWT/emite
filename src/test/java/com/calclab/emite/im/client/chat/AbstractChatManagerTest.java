@@ -28,13 +28,12 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 
-public abstract class AbstractChatManagerTest<C extends Chat> {
+public abstract class AbstractChatManagerTest<M extends ChatManager<C>, C extends Chat> {
 	protected static final XmppURI MYSELF = uri("self@domain");
 	protected static final XmppURI OTHER = uri("other@domain");
-	protected ChatManager<C> manager;
 	protected XmppSessionTester session;
+	protected M manager;
 
 	@Before
 	public void beforeTests() {
@@ -49,22 +48,5 @@ public abstract class AbstractChatManagerTest<C extends Chat> {
 		assertTrue(chat.isInitiatedByMe());
 	}
 
-	@Test
-	public void shouldEventWhenAChatIsClosed() {
-		final C chat = manager.open(uri("other@domain/resource"));
-		final ChatChangedTestHandler handler = new ChatChangedTestHandler("closed");
-		manager.addChatChangedHandler(handler);
-		manager.close(chat);
-		assertTrue(handler.isCalledOnce());
-	}
-
-	@Test
-	public void shouldEventWhenChatCreated() {
-		final ChatChangedTestHandler handler = new ChatChangedTestHandler("created");
-		manager.addChatChangedHandler(handler);
-		manager.open(OTHER);
-		assertTrue(handler.isCalledOnce());
-	}
-
-	protected abstract ChatManager<C> createChatManager();
+	protected abstract M createChatManager();
 }

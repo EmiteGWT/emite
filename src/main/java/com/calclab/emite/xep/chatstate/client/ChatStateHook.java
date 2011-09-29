@@ -92,6 +92,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 		switch (negotiationStatus) {
 		case notStarted:
 			negotiationStatus = NegotiationStatus.started;
+			//$FALL-THROUGH$
 		case accepted:
 			boolean alreadyWithState = false;
 			for (int i = 0; i < ChatState.values().length; i++) {

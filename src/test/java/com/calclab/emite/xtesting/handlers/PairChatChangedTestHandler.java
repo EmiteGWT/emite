@@ -20,18 +20,19 @@
 
 package com.calclab.emite.xtesting.handlers;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatChangedEvent;
+import com.calclab.emite.im.client.events.PairChatChangedEvent;
 
-public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implements ChatChangedEvent.Handler {
+public class PairChatChangedTestHandler extends TestHandler<PairChatChangedEvent> implements PairChatChangedEvent.Handler {
 
-	private final String type;
+	private final ChangeType type;
 
-	public ChatChangedTestHandler() {
+	public PairChatChangedTestHandler() {
 		this(null);
 	}
 
-	public ChatChangedTestHandler(final String type) {
+	public PairChatChangedTestHandler(final ChangeType type) {
 		this.type = type;
 	}
 
@@ -40,7 +41,7 @@ public class ChatChangedTestHandler extends TestHandler<ChatChangedEvent> implem
 	}
 
 	@Override
-	public void onChatChanged(final ChatChangedEvent event) {
+	public void onPairChatChanged(final PairChatChangedEvent event) {
 		if (type == null || type.equals(event.getChangeType())) {
 			addEvent(event);
 		}

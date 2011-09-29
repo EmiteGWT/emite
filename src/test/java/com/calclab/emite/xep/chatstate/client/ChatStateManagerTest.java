@@ -43,7 +43,7 @@ public class ChatStateManagerTest {
 	private PairChatManagerImpl chatManager;
 	private ChatStateChangedTestHandler stateHandler;
 	private PairChat chat;
-	private ChatStateHook chatStateManager;
+	private ChatStateHook chatStateHook;
 	private XmppSessionTester session;
 
 	@Before
@@ -54,9 +54,9 @@ public class ChatStateManagerTest {
 		session.setLoggedIn(MYSELF);
 		final ChatStateManager stateManager = new ChatStateManager(eventBus, chatManager);
 		chat = chatManager.open(OTHER);
-		chatStateManager = stateManager.getChatState(chat);
+		chatStateHook = stateManager.getChatState(chat);
 		stateHandler = new ChatStateChangedTestHandler();
-		chatStateManager.addChatStateChangedHandler(stateHandler);
+		chatStateHook.addChatStateChangedHandler(stateHandler);
 	}
 
 	@Test
@@ -69,9 +69,9 @@ public class ChatStateManagerTest {
 	public void shouldNotRepiteState() {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'>"
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
-		chatStateManager.setOwnState(ChatState.composing);
-		chatStateManager.setOwnState(ChatState.composing);
-		chatStateManager.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.composing);
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>");
 		session.verifyNotSent("<message><composing/><active/></message>");
@@ -79,7 +79,7 @@ public class ChatStateManagerTest {
 
 	@Test
 	public void shouldNotSendStateIfNegotiationNotAccepted() {
-		chatStateManager.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.composing);
 		session.verifySentNothing();
 	}
 
@@ -95,7 +95,7 @@ public class ChatStateManagerTest {
 	public void shouldSendStateIfNegotiationAccepted() {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'>"
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
-		chatStateManager.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.composing);
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>");
 	}
@@ -104,8 +104,8 @@ public class ChatStateManagerTest {
 	public void shouldSendTwoStateIfDiferent() {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'>"
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
-		chatStateManager.setOwnState(ChatState.composing);
-		chatStateManager.setOwnState(ChatState.pause);
+		chatStateHook.setOwnState(ChatState.composing);
+		chatStateHook.setOwnState(ChatState.pause);
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>"
 				+ "<message from='self@domain/res' to='other@domain/other' type='chat'>" + "<pause xmlns='http://jabber.org/protocol/chatstates'/></message>");
@@ -118,7 +118,7 @@ public class ChatStateManagerTest {
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
 		final Message message = new Message("test message", OTHER, MYSELF);
 		message.addChild(ChatStateHook.ChatState.active.toString(), ChatStateHook.XMLNS);
-		chatStateManager.setOwnState(ChatStateHook.ChatState.composing);
+		chatStateHook.setOwnState(ChatStateHook.ChatState.composing);
 		session.verifySent(message.toString() + "<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>");
 	}
@@ -143,8 +143,8 @@ public class ChatStateManagerTest {
 	public void shouldStopAfterGone() {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'><active /></message>");
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'><gone /></message>");
-		chatStateManager.setOwnState(ChatStateHook.ChatState.composing);
-		chatStateManager.setOwnState(ChatStateHook.ChatState.pause);
+		chatStateHook.setOwnState(ChatStateHook.ChatState.composing);
+		chatStateHook.setOwnState(ChatStateHook.ChatState.pause);
 		session.verifySent("<message><active /></message>");
 		session.verifyNotSent("<message><composing /></message>");
 		session.verifyNotSent("<message><pause /></message>");

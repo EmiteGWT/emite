@@ -34,14 +34,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
-import com.calclab.emite.core.client.events.SessionRequestResultEvent;
 import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.session.Credentials;
-import com.calclab.emite.core.client.session.IMSessionManager;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSessionImpl;
-import com.calclab.emite.core.client.session.resource.ResourceBindResultEvent;
-import com.calclab.emite.core.client.session.resource.ResourceBindingManager;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.XmppURI;
@@ -56,8 +52,6 @@ import com.google.web.bindery.event.shared.SimpleEventBus;
 public class XmppSessionTests {
 	private XmppSessionImpl session;
 	private SASLManager saslManager;
-	private ResourceBindingManager bindingManager;
-	private IMSessionManager iMSessionManager;
 	private XmppConnectionTester connection;
 	private EventBus eventBus;
 
@@ -66,9 +60,7 @@ public class XmppSessionTests {
 		connection = new XmppConnectionTester();
 		eventBus = new SimpleEventBus();
 		saslManager = mock(SASLManager.class);
-		bindingManager = mock(ResourceBindingManager.class);
-		iMSessionManager = mock(IMSessionManager.class);
-		session = new XmppSessionImpl(eventBus, connection, saslManager, bindingManager, iMSessionManager);
+		session = new XmppSessionImpl(eventBus, connection, saslManager);
 	}
 
 	@Test
@@ -161,6 +153,7 @@ public class XmppSessionTests {
 
 	@Test
 	public void shouldStopAndDisconnectWhenLoggedOut() {
+		//TODO
 	}
 
 }

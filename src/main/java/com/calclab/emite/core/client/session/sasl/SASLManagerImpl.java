@@ -69,10 +69,12 @@ public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler
 	 * 
 	 * @param handler
 	 */
+	@Override
 	public HandlerRegistration addAuthorizationResultHandler(final AuthorizationResultEvent.Handler handler) {
 		return eventBus.addHandlerToSource(AuthorizationResultEvent.TYPE, this, handler);
 	}
 
+	@Override
 	public void sendAuthorizationRequest(final Credentials credentials) {
 		currentCredentials = credentials;
 		final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization() : createPlainAuthorization(credentials);
@@ -81,12 +83,12 @@ public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler
 	
 	// TODO: Add DIGEST-MD5 auth
 
-	private IPacket createAnonymousAuthorization() {
+	private static IPacket createAnonymousAuthorization() {
 		final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "ANONYMOUS");
 		return auth;
 	}
 
-	private IPacket createPlainAuthorization(final Credentials credentials) {
+	private static IPacket createPlainAuthorization(final Credentials credentials) {
 		final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "PLAIN");
 
 		final String encoded = encodeForPlainMethod(credentials.getXmppUri().getHost(), credentials.getXmppUri().getNode(), credentials.getPassword());
@@ -94,7 +96,7 @@ public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler
 		return auth;
 	}
 
-	private String encodeForPlainMethod(final String domain, final String userName, final String password) {
+	private static String encodeForPlainMethod(final String domain, final String userName, final String password) {
 		final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 		return Base64Utils.toBase64(auth.getBytes());
 	}

@@ -54,7 +54,7 @@ public class DiscoveryItemsResults {
 		return items;
 	}
 
-	private List<Item> processItem(final List<? extends IPacket> children) {
+	private static List<Item> processItem(final List<? extends IPacket> children) {
 		final List<Item> items = new ArrayList<Item>();
 		for (final IPacket child : children) {
 			items.add(Item.fromPacket(child));

@@ -42,6 +42,7 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 		this.session = session;
 	}
 
+	@Override
 	public void retrieve(final SimpleStorageData data, final PrivateStorageResponseEvent.Handler handler) {
 		final IQ iq = new IQ(Type.get);
 		iq.addQuery(XMLNS).addChild(data);
@@ -56,6 +57,7 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 		});
 	}
 
+	@Override
 	public void store(final SimpleStorageData data, final PrivateStorageResponseEvent.Handler handler) {
 		final IQ iq = new IQ(Type.set);
 		iq.addQuery(XMLNS).addChild(data);

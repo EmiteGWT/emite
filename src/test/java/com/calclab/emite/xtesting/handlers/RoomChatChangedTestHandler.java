@@ -18,42 +18,33 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.session.resource;
+package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.google.web.bindery.event.shared.Event;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
+import com.calclab.emite.xep.muc.client.RoomChat;
+import com.calclab.emite.xep.muc.client.RoomChatChangedEvent;
 
-public class ResourceBindResultEvent extends Event<ResourceBindResultEvent.Handler> {
-	
-	public interface Handler {
-		void onResourceBindResult(ResourceBindResultEvent event);
+public class RoomChatChangedTestHandler extends TestHandler<RoomChatChangedEvent> implements RoomChatChangedEvent.Handler {
+
+	private final ChangeType type;
+
+	public RoomChatChangedTestHandler() {
+		this(null);
 	}
 
-	public static final Type<Handler> TYPE = new Type<Handler>();
-
-	private final XmppURI xmppUri;
-
-	public ResourceBindResultEvent(final XmppURI xmppUri) {
-		this.xmppUri = xmppUri;
-	}
-	
-	public XmppURI getXmppUri() {
-		return xmppUri;
+	public RoomChatChangedTestHandler(final ChangeType type) {
+		this.type = type;
 	}
 
-	@Override
-	public Type<Handler> getAssociatedType() {
-		return TYPE;
+	public RoomChat getLastChat() {
+		return hasEvent() ? getLastEvent().getChat() : null;
 	}
 
 	@Override
-	public String toDebugString() {
-		return super.toDebugString() + xmppUri;
-	}
-
-	@Override
-	protected void dispatch(final Handler handler) {
-		handler.onResourceBindResult(this);
+	public void onRoomChatChanged(final RoomChatChangedEvent event) {
+		if (type == null || type.equals(event.getChangeType())) {
+			addEvent(event);
+		}
 	}
 
 }

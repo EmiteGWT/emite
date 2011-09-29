@@ -42,7 +42,7 @@ public class ChatStatusChangedEvent extends Event<ChatStatusChangedEvent.Handler
 		return status;
 	}
 	
-	public boolean is(final String status) {
+	public boolean is(final ChatStatus status) {
 		return this.status.equals(status);
 	}
 	

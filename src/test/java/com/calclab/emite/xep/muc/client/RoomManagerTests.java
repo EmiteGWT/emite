@@ -29,10 +29,9 @@ import org.junit.Test;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.RoomChatChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
@@ -45,7 +44,7 @@ public class RoomManagerTests {
 
 	private static final XmppURI USER = XmppURI.uri("user@domain/res");
 	private XmppSessionTester session;
-	private RoomChatManagerImpl manager;
+	private RoomChatManager manager;
 
 	@Before
 	public void beforeTests() {
@@ -55,7 +54,7 @@ public class RoomManagerTests {
 
 	@Test
 	public void shouldAcceptInvitations() {
-		final ChatChangedTestHandler handler = new ChatChangedTestHandler();
+		final RoomChatChangedTestHandler handler = new RoomChatChangedTestHandler();
 		final ChatProperties properties = new ChatProperties(USER);
 		manager.addRoomChatChangedHandler(handler);
 		final RoomInvitation invitation = new RoomInvitation(uri("friend@host/resource"), uri("room@room.service"), "theReason", properties);
@@ -71,6 +70,6 @@ public class RoomManagerTests {
 		session.receives("<presence from='newroomtest1@rooms.localhost/nick' to='user@localhost/resource' >" + "<priority>5</priority>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'>" + "<item affiliation='owner' role='moderator' jid='vjrj@localhost/Psi' />"
 				+ "<status code='201' />" + "</x>" + "</presence>");
-		session.verifyIQSent(new IQ(Type.set));
+		session.verifyIQSent(new IQ(IQ.Type.set));
 	}
 }

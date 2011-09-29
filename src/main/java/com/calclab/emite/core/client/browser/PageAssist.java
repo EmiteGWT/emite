@@ -71,7 +71,7 @@ public class PageAssist {
 	 *         exist
 	 * @see PageAssist#getMeta(String)
 	 */
-	public static Integer getMetaInteger(final String id, final int defaultValue) {
+	public static int getMetaInteger(final String id, final int defaultValue) {
 		final String metaValue = getMetaString(id, null);
 
 		if (metaValue == null)

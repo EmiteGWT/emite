@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
@@ -36,6 +37,7 @@ import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSessionImpl;
+import com.calclab.emite.core.client.session.sasl.SASLManagerImpl;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
@@ -44,10 +46,14 @@ import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class XmppSessionTester extends XmppSessionImpl {
 
+	private EventBus eventBus = new SimpleEventBus();
+	private XmppConnection connection = new XmppConnectionTester();
+	
 	private XmppURI currentUser;
 	private final TigaseXMLService xmler;
 	private final ArrayList<IPacket> sent;
@@ -75,7 +81,7 @@ public class XmppSessionTester extends XmppSessionImpl {
 	 *            optional user to login
 	 */
 	public XmppSessionTester(final XmppURI user) {
-		super(new SimpleEventBus());
+		super(eventBus, connection, new SASLManagerImpl(eventBus, connection));
 		xmler = new TigaseXMLService();
 		sent = new ArrayList<IPacket>();
 		if (user != null) {

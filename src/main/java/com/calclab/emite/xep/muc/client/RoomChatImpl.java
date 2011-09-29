@@ -297,7 +297,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		return presence;
 	}
 
-	protected boolean isNewRoom(final IPacket xtension) {
+	protected static boolean isNewRoom(final IPacket xtension) {
 		final String code = xtension.getFirstChild("status").getAttribute("code");
 		return code != null && code.equals("201");
 	}
@@ -333,6 +333,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	}
 	
 	// TODO: check occupants affiliation to see if the user can do that!!
+	@Override
 	public void requestSubjectChange(final String subjectText) {
 		final BasicStanza message = new BasicStanza("message", null);
 		message.setFrom(session.getCurrentUserURI());

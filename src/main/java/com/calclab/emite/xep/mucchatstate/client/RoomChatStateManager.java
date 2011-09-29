@@ -188,7 +188,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 		}
 	}
 
-	private ChatState getStateFromMessage(final Message message) {
+	private static ChatState getStateFromMessage(final Message message) {
 		final IPacket stateNode = message.getFirstChild(new PacketMatcher() {
 			@Override
 			public boolean matches(final IPacket packet) {

@@ -28,18 +28,17 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;
 import com.calclab.emite.xep.muc.client.Occupant.Role;
-import com.calclab.emite.xtesting.handlers.ChatChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.OccupantChangedTestHandler;
+import com.calclab.emite.xtesting.handlers.RoomChatChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 /**
@@ -48,26 +47,25 @@ import com.google.web.bindery.event.shared.SimpleEventBus;
  * @author dani
  * 
  */
-public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
+public class RoomManagerTest extends AbstractChatManagerTest<RoomChatManager, RoomChat> {
 
 	@Test
 	public void shouldAcceptInvitations() {
-		final RoomChatManager rooms = (RoomChatManager) manager;
-		final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
-		rooms.addRoomChatChangedHandler(chatCreatedHandler);
+		final RoomChatChangedTestHandler chatCreatedHandler = new RoomChatChangedTestHandler(ChangeType.created);
+		manager.addRoomChatChangedHandler(chatCreatedHandler);
 
 		final String reason = "theReason";
 		final XmppURI invitor = uri("friend@host/resource");
 		final XmppURI roomURI = uri("room@room.service");
-		rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason));
+		manager.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason));
 		assertTrue(chatCreatedHandler.isCalledOnce());
-		final Chat room = chatCreatedHandler.getLastChat();
+		final RoomChat room = chatCreatedHandler.getLastChat();
 		assertEquals("room@room.service/self", room.getURI().toString());
 	}
 
 	@Test
 	public void shouldAcceptRoomPresenceWithAvatar() {
-		final RoomChat room = (RoomChat) manager.open(uri("room1@domain/nick"));
+		final RoomChat room = manager.open(uri("room1@domain/nick"));
 		session.receives("<presence to='user@domain/resource' from='room1@domain/otherUser2'>" + "<priority>0</priority>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'>" + "<item jid='otheruserjid@domain/otherresoruce' affiliation='none' "
 				+ "role='participant'/></x>" + "<x xmlns='vcard-temp:x:update'><photo>af70fe6519d6a27a910c427c3bc551dcd36073e7</photo></x>" + "</presence>");
@@ -89,7 +87,7 @@ public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 
 	@Test
 	public void shouldFireChatMessages() {
-		final Chat chat = manager.open(uri("room@rooms.domain/user"));
+		final RoomChat chat = manager.open(uri("room@rooms.domain/user"));
 		final MessageReceivedTestHandler handler = new MessageReceivedTestHandler();
 		chat.addMessageReceivedHandler(handler);
 		session.receives("<message from='room@rooms.domain/other' to='user@domain/resource' " + "type='groupchat'><body>the message body</body></message>");
@@ -98,14 +96,14 @@ public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 
 	@Test
 	public void shouldGiveSameRoomsWithSameURIS() {
-		final RoomChat room1 = (RoomChat) manager.open(uri("room@domain/nick"));
-		final RoomChat room2 = (RoomChat) manager.open(uri("room@domain/nick"));
+		final RoomChat room1 = manager.open(uri("room@domain/nick"));
+		final RoomChat room2 = manager.open(uri("room@domain/nick"));
 		assertSame(room1, room2);
 	}
 
 	@Test
 	public void shouldIgnoreLetterCaseInURIS() {
-		final RoomChat room = (RoomChat) manager.open(uri("ROOM@domain/nick"));
+		final RoomChat room = manager.open(uri("ROOM@domain/nick"));
 		final OccupantChangedTestHandler handler = new OccupantChangedTestHandler();
 		room.addOccupantChangedHandler(handler);
 		session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='ROom@domain/otherUser'>"
@@ -119,9 +117,8 @@ public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 	 */
 	@Test
 	public void shouldPreserveInvitationProperties() {
-		final RoomChatManager rooms = (RoomChatManager) manager;
-		final ChatChangedTestHandler chatCreatedHandler = new ChatChangedTestHandler("created");
-		rooms.addRoomChatChangedHandler(chatCreatedHandler);
+		final RoomChatChangedTestHandler chatCreatedHandler = new RoomChatChangedTestHandler(ChangeType.created);
+		manager.addRoomChatChangedHandler(chatCreatedHandler);
 
 		final String reason = "theReason";
 		final XmppURI invitor = uri("friend@host/resource");
@@ -130,14 +127,14 @@ public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 		final String testDataKey = "TEST_KEY";
 		final String testDataValue = "TEST_VALUE";
 		properties.setData(testDataKey, testDataValue);
-		rooms.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason, properties));
-		final Chat room = chatCreatedHandler.getLastChat();
+		manager.acceptRoomInvitation(new RoomInvitation(invitor, roomURI, reason, properties));
+		final RoomChat room = chatCreatedHandler.getLastChat();
 		assertEquals("Chat property not preserved", testDataValue, room.getProperties().getData(testDataKey));
 	}
 
 	@Test
 	public void shouldUpdateRoomPresence() {
-		final RoomChat room = (RoomChat) manager.open(uri("room1@domain/nick"));
+		final RoomChat room = manager.open(uri("room1@domain/nick"));
 
 		session.receives("<presence to='user@domain/resource' xmlns='jabber:client' from='room1@domain/otherUser'>"
 				+ "<x xmlns='http://jabber.org/protocol/muc#user'>" + "<item role='moderator' affiliation='owner' jid='otherUser@domain' /></x></presence>");
@@ -159,6 +156,23 @@ public class RoomManagerTest extends AbstractChatManagerTest<RoomChat> {
 				+ "<status>custom message</status><x xmlns='http://jabber.org/protocol/muc#user'>" + "<item role='none' affiliation='member' /></x></presence>");
 		assertEquals(0, room.getOccupantsCount());
 
+	}
+	
+	@Test
+	public void shouldEventWhenAChatIsClosed() {
+		final RoomChat chat = manager.open(uri("other@domain/resource"));
+		final RoomChatChangedTestHandler handler = new RoomChatChangedTestHandler(ChangeType.closed);
+		manager.addRoomChatChangedHandler(handler);
+		manager.close(chat);
+		assertTrue(handler.isCalledOnce());
+	}
+
+	@Test
+	public void shouldEventWhenChatCreated() {
+		final RoomChatChangedTestHandler handler = new RoomChatChangedTestHandler(ChangeType.created);
+		manager.addRoomChatChangedHandler(handler);
+		manager.open(OTHER);
+		assertTrue(handler.isCalledOnce());
 	}
 
 	@Override

@@ -56,7 +56,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	private int activeConnections;
 	private final ConnectorCallback listener;
 	private boolean shouldCollectResponses;
-	private final RetryControl retryControl = new RetryControl();
 
 	@Inject
 	public XmppBoshConnection(@Named("emite") final EventBus eventBus, final Services services) {
@@ -71,11 +70,11 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 				if (isActive()) {
 					final int e = incrementErrors();
 					logger.severe("Connection error #" + e + ": " + throwable.getMessage());
-					if (e > retryControl.maxRetries) {
+					if (e > RetryControl.maxRetries) {
 						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.error, "Connection error: " + throwable.toString()), this);
 						disconnect();
 					} else {
-						final int scedTime = retryControl.retry(e);
+						final int scedTime = RetryControl.retry(e);
 						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.waitingForRetry, "The connection will try to re-connect in " + scedTime
 								+ " milliseconds.", scedTime), this);
 						services.schedule(scedTime, new ScheduledAction() {
@@ -260,7 +259,9 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	}
 
 	private void handleResponse(final IPacket response) {
-		if (isTerminate(response.getAttribute("type"))) {
+		final String type = response.getAttribute("type");
+		// Openfire bug: terminal instead of terminate
+		if ("terminate".equals(type) || "terminal".equals(type)) {
 			getStreamSettings().sid = null;
 			setActive(false);
 			eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.disconnected, "disconnected by server"), this);
@@ -285,11 +286,6 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 		stream.wait = response.getAttribute("wait");
 		stream.setInactivity(response.getAttribute("inactivity"));
 		stream.setMaxPause(response.getAttribute("maxpause"));
-	}
-
-	private boolean isTerminate(final String type) {
-		// Openfire bug: terminal instead of terminate
-		return "terminate".equals(type) || "terminal".equals(type);
 	}
 
 	/**
