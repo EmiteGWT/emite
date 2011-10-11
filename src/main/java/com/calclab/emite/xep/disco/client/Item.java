@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Each <item/> element MUST possess 'jid' attribute and MAY possess:
@@ -32,7 +32,8 @@ import com.calclab.emite.core.client.packet.IPacket;
  * 
  */
 public class Item {
-	public static Item fromPacket(final IPacket packet) {
+	
+	public static Item fromPacket(final XMLPacket packet) {
 		return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
 	}
 

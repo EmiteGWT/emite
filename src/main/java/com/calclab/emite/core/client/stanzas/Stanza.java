@@ -20,18 +20,54 @@
 
 package com.calclab.emite.core.client.stanzas;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 
-public interface Stanza extends IPacket {
-	public XmppURI getFrom();
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 
-	public String getFromAsString();
+public abstract class Stanza implements HasXML {
+	
+	protected final XMLPacket xml;
 
-	public XmppURI getTo();
+	protected Stanza(final XMLPacket xml) {
+		this.xml = xml;
+	}
+	
+	protected Stanza(final String name) {
+		this(XMLUtils.createPacket(name));
+	}
 
-	public String getToAsString();
+	protected Stanza(final String name, final String namespace) {
+		this(XMLUtils.createPacket(name, namespace));
+	}
+	
+	public String getId() {
+		return xml.getAttribute("id");
+	}
+	
+	public void setId(final String id) {
+		xml.setAttribute("id", id);
+	}
 
-	public void setFrom(XmppURI from);
+	public XmppURI getFrom() {
+		return uri(xml.getAttribute("from"));
+	}
 
-	public void setTo(XmppURI to);
+	public void setFrom(final XmppURI from) {
+		xml.setAttribute("from", (from != null ? from.toString() : null));
+	}
+
+	public XmppURI getTo() {
+		return uri(xml.getAttribute("to"));
+	}
+
+	public void setTo(final XmppURI to) {
+		xml.setAttribute("to", (to != null ? to.toString() : null));
+	}
+	
+	public final XMLPacket getXML() {
+		return xml;
+	}
+
 }

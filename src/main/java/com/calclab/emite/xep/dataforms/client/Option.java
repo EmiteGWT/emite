@@ -20,41 +20,43 @@
 
 package com.calclab.emite.xep.dataforms.client;
 
-import com.calclab.emite.core.client.packet.DelegatedPacket;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * A XEP-0004 field option
- * 
  */
-public class Option extends DelegatedPacket {
+public class Option implements HasXML {
 
-	public static final String OPTION = "option";
-	private static final String LABEL = "label";
-	private static final String VALUE = "value";
+	private final XMLPacket xml;
 
 	public Option() {
-		super(new Packet(OPTION));
+		this(XMLUtils.createPacket("option"));
 	}
 
-	public Option(final IPacket stanza) {
-		super(stanza);
+	protected Option(final XMLPacket xml) {
+		this.xml = xml;
 	}
 
 	public String getLabel() {
-		return super.getAttribute(LABEL);
-	}
-
-	public String getValue() {
-		return super.getFirstChild(VALUE).getText();
+		return xml.getAttribute("label");
 	}
 
 	public void setLabel(final String label) {
-		super.setAttribute(LABEL, label);
+		xml.setAttribute("label", label);
+	}
+
+	public String getValue() {
+		return xml.getChildText("value");
 	}
 
 	public void setValue(final String value) {
-		setTextToChild(VALUE, value);
+		xml.setChildText("value", value);
+	}
+	
+	@Override
+	public XMLPacket getXML() {
+		return xml;
 	}
 }

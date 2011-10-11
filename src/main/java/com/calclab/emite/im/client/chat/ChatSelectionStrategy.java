@@ -20,7 +20,7 @@
 
 package com.calclab.emite.im.client.chat;
 
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 
 /**
  * An interchangeable strategy to retrieve or create new chats. You can replace
@@ -45,7 +45,7 @@ public interface ChatSelectionStrategy {
 	 *         null is return, the ChatManager assume this message has no
 	 *         receiver
 	 */
-	ChatProperties extractProperties(BasicStanza stanza);
+	ChatProperties extractProperties(Stanza stanza);
 
 	/**
 	 * This is the used to locate a chat in a pool of chats.

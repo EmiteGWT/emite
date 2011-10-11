@@ -34,5 +34,5 @@ public interface HasJID {
 	 * 
 	 * @return the JID.
 	 */
-	public XmppURI getJID();
+	XmppURI getJID();
 }

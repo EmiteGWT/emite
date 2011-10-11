@@ -49,7 +49,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	 *            the uri of the authorized user
 	 */
 	public AuthorizationResultEvent(final Credentials credentials) {
-		this(credentials, true);
+		this(credentials, credentials != null);
 	}
 
 	private AuthorizationResultEvent(final Credentials credentials, final boolean success) {

@@ -41,7 +41,7 @@ public interface ChatManager<C extends Chat> {
 	 * @return
 	 */
 	//TODO: deprecate
-	public C open(XmppURI uri);
+	C open(XmppURI uri);
 
 	/**
 	 * The same as getChat, but it fire ChatChanged(opened) event if the chat is
@@ -51,7 +51,7 @@ public interface ChatManager<C extends Chat> {
 	 * @param createIfNotFound
 	 * @return
 	 */
-	public C openChat(ChatProperties properties, boolean createIfNotFound);
+	C openChat(ChatProperties properties, boolean createIfNotFound);
 	
 	/**
 	 * Close the given conversation. If a conversation is closed, a new
@@ -59,7 +59,7 @@ public interface ChatManager<C extends Chat> {
 	 * 
 	 * @param chat
 	 */
-	public void close(C chat);
+	void close(C chat);
 
 	/**
 	 * Obtain a chat from the chat manager. It can create new chats if
@@ -73,7 +73,7 @@ public interface ChatManager<C extends Chat> {
 	 * @return the chat with that properties. If createIfNotFound is false, the
 	 *         return CAN be null
 	 */
-	public C getChat(ChatProperties properties, boolean createIfNotFound);
+	C getChat(ChatProperties properties, boolean createIfNotFound);
 
 	/**
 	 * Same as getChat(new ChatProperties(uri), false);
@@ -83,8 +83,8 @@ public interface ChatManager<C extends Chat> {
 	 * @param uri
 	 * @return
 	 */
-	public C getChat(XmppURI uri);
+	C getChat(XmppURI uri);
 
-	public Collection<C> getChats();
+	Collection<C> getChats();
 
 }

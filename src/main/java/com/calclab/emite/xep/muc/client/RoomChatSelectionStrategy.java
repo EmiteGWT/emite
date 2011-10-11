@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
@@ -30,12 +30,10 @@ import com.google.inject.Singleton;
 public class RoomChatSelectionStrategy implements ChatSelectionStrategy {
 
 	@Override
-	public ChatProperties extractProperties(final BasicStanza stanza) {
-		final XmppURI from = stanza.getFrom();
+	public ChatProperties extractProperties(final Stanza message) {
+		final XmppURI from = message.getFrom();
 		final ChatProperties properties = new ChatProperties(from != null ? from.getJID() : null);
-		final String stanzaType = stanza.getAttribute("type");
-		final boolean isGroupChatMessage = stanzaType != null && stanzaType.equals("groupchat");
-		properties.setShouldCreateNewChat(isGroupChatMessage);
+		properties.setShouldCreateNewChat("groupchat".equals(message.getXML().getAttribute("type")));
 		return properties;
 	}
 

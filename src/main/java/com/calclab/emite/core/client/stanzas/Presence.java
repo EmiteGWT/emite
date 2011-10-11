@@ -20,12 +20,12 @@
 
 package com.calclab.emite.core.client.stanzas;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * A Presence stanza
  */
-public class Presence extends BasicStanza {
+public class Presence extends Stanza {
 
 	/**
 	 * 
@@ -68,21 +68,21 @@ public class Presence extends BasicStanza {
 		unknown
 	}
 
-	public enum Type {
-		/**
-		 * 2.2.1. Types of Presence
-		 * 
-		 * <p>
-		 * The 'type' attribute of a presence stanza is OPTIONAL. A presence
-		 * stanza that does not possess a 'type' attribute is used to signal to
-		 * the server that the sender is online and available for communication.
-		 * If included, the 'type' attribute specifies a lack of availability, a
-		 * request to manage a subscription to another entity's presence, a
-		 * request for another entity's current presence, or an error related to
-		 * a previously-sent presence stanza. If included, the 'type' attribute
-		 * MUST have one of the following values:
-		 * </p>
-		 */
+	/**
+	 * 2.2.1. Types of Presence
+	 * 
+	 * <p>
+	 * The 'type' attribute of a presence stanza is OPTIONAL. A presence
+	 * stanza that does not possess a 'type' attribute is used to signal to
+	 * the server that the sender is online and available for communication.
+	 * If included, the 'type' attribute specifies a lack of availability, a
+	 * request to manage a subscription to another entity's presence, a
+	 * request for another entity's current presence, or an error related to
+	 * a previously-sent presence stanza. If included, the 'type' attribute
+	 * MUST have one of the following values:
+	 * </p>
+	 */
+	public static enum Type {
 		/**
 		 * error -- An error has occurred regarding processing or delivery of a
 		 * previously-sent presence stanza.
@@ -97,7 +97,6 @@ public class Presence extends BasicStanza {
 		 * subscribe -- The sender wishes to subscribe to the recipient's
 		 * presence.
 		 */
-
 		subscribe,
 		/**
 		 * subscribed -- The sender has allowed the recipient to receive their
@@ -121,46 +120,23 @@ public class Presence extends BasicStanza {
 		unsubscribed
 	}
 
-	/**
-	 * Create a new presence with the given status message and the given Show
-	 * 
-	 * @param statusMessage
-	 *            the given status message if not null
-	 * @param show
-	 *            the show or Show.notSpecified if null
-	 * @return
-	 */
-	public static Presence build(final String statusMessage, final Show show) {
-		final Presence presence = new Presence();
-
-		if (show != null && show != Show.notSpecified) {
-			presence.setShow(show);
-		}
-		if (statusMessage != null) {
-			presence.setStatus(statusMessage);
-		}
-		return presence;
-	}
-
-	public Presence() {
-		this(null, null, null);
-	}
-
-	public Presence(final IPacket stanza) {
+	public Presence(final XMLPacket stanza) {
 		super(stanza);
 	}
 
-	public Presence(final Type type, final XmppURI from, final XmppURI to) {
-		super("presence", null);
-		if (type != null) {
-			setType(type.toString());
-		}
+	public Presence() {
+		super("presence");
+	}
+	
+	public Presence(Type type) {
+		this();
+		setType(type);
+	}
+	
+	public Presence(Type type, XmppURI from, XmppURI to) {
+		this(type);
 		setFrom(from);
 		setTo(to);
-	}
-
-	public Presence(final XmppURI from) {
-		this(null, from, null);
 	}
 
 	/**
@@ -170,7 +146,7 @@ public class Presence extends BasicStanza {
 	 */
 	public int getPriority() {
 		int value = 0;
-		final String priority = getFirstChild("priority").getText();
+		final String priority = xml.getChildText("priority");
 		if (priority != null) {
 			try {
 				value = Integer.parseInt(priority);
@@ -187,7 +163,7 @@ public class Presence extends BasicStanza {
 	 * @return The show, never null
 	 */
 	public Show getShow() {
-		final String value = getFirstChild("show").getText();
+		final String value = xml.getChildText("show");
 		try {
 			return value != null ? Show.valueOf(value) : Show.notSpecified;
 		} catch (final IllegalArgumentException e) {
@@ -201,7 +177,7 @@ public class Presence extends BasicStanza {
 	 * @return The status, null if not specified
 	 */
 	public String getStatus() {
-		return getFirstChild("status").getText();
+		return xml.getChildText("status");
 	}
 
 	/**
@@ -211,7 +187,7 @@ public class Presence extends BasicStanza {
 	 * @see http://www.xmpp.org/rfcs/rfc3921.html#presence
 	 */
 	public Type getType() {
-		final String type = getAttribute(BasicStanza.TYPE);
+		final String type = xml.getAttribute("type");
 		try {
 			return type != null ? Type.valueOf(type) : null;
 		} catch (final IllegalArgumentException e) {
@@ -220,23 +196,19 @@ public class Presence extends BasicStanza {
 	}
 
 	public void setPriority(final int value) {
-		setTextToChild("priority", Integer.toString(value >= 0 ? value : 0));
+		xml.setChildText("priority", String.valueOf(value >= 0 ? value : 0));
 	}
 
 	public void setShow(final Show value) {
-		setTextToChild("show", value != null && value != Show.notSpecified && value != Show.unknown ? value.toString() : null);
+		xml.setChildText("show", value != null && value != Show.notSpecified && value != Show.unknown ? value.toString() : null);
 	}
 
 	public void setStatus(final String statusMessage) {
-		setTextToChild("status", statusMessage);
+		xml.setChildText("status", statusMessage);
 	}
 
 	public void setType(final Type type) {
-		setType(type.toString());
+		xml.setAttribute("type", type != null ? type.toString() : null);
 	}
 
-	public Presence With(final Show value) {
-		setShow(value);
-		return this;
-	}
 }

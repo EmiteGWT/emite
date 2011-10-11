@@ -18,19 +18,42 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.storage.client;
+package com.calclab.emite.core.client.events;
 
-import com.calclab.emite.core.client.packet.DelegatedPacket;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.web.bindery.event.shared.Event;
 
-public class SimpleStorageData extends DelegatedPacket {
+public class PacketReceivedEvent extends Event<PacketReceivedEvent.Handler> {
 
-	public SimpleStorageData(final IPacket delegate) {
-		super(delegate);
+	public interface Handler {
+		void onPacketReceived(PacketReceivedEvent event);
 	}
 
-	public SimpleStorageData(final String name, final String xmlns) {
-		super(new Packet(name, xmlns));
+	public static final Type<Handler> TYPE = new Type<Handler>();
+	
+	private final XMLPacket packet;
+
+	public PacketReceivedEvent(final XMLPacket packet) {
+		this.packet = packet;
 	}
+
+	public XMLPacket getPacket() {
+		return packet;
+	}
+
+	@Override
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
+	}
+
+	@Override
+	protected void dispatch(Handler handler) {
+		handler.onPacketReceived(this);
+	}
+	
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + packet.toString();
+	}
+
 }

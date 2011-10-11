@@ -43,7 +43,7 @@ public interface SearchManager {
 	 * @param host
 	 *            the jid of the search service
 	 */
-	public void setHost(XmppURI host);
+	void setHost(XmppURI host);
 
 	/**
 	 * Request available search fields using simple search

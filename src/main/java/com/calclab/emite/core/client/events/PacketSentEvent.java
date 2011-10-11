@@ -18,21 +18,42 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.events;
 
-/**
- * Package private packet for use internal only
- */
-class TextPacket extends Packet {
-	private final String value;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.web.bindery.event.shared.Event;
 
-	public TextPacket(final String value) {
-		super(null, null);
-		this.value = value;
+public class PacketSentEvent extends Event<PacketSentEvent.Handler> {
+
+	public interface Handler {
+		void onStanzaSent(PacketSentEvent event);
+	}
+
+	public static final Type<Handler> TYPE = new Type<Handler>();
+	
+	private final XMLPacket packet;
+
+	public PacketSentEvent(final XMLPacket packet) {
+		this.packet = packet;
+	}
+
+	public XMLPacket getPacket() {
+		return packet;
 	}
 
 	@Override
-	public String toString() {
-		return value;
+	public Type<Handler> getAssociatedType() {
+		return TYPE;
 	}
+
+	@Override
+	protected void dispatch(Handler handler) {
+		handler.onStanzaSent(this);
+	}
+	
+	@Override
+	public String toDebugString() {
+		return super.toDebugString() + packet;
+	}
+
 }

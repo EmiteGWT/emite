@@ -25,9 +25,9 @@ import java.util.logging.Logger;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.ConnectionResponseEvent;
 import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -44,7 +44,7 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	private int errors;
 	private boolean active;
 	private StreamSettings stream;
-	private Packet currentBody;
+	private XMLPacket currentBody;
 	private ConnectionSettings connectionSettings;
 
 	public XmppConnectionBoilerplate(EventBus eventBus) {
@@ -62,8 +62,8 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	}
 
 	@Override
-	public HandlerRegistration addStanzaReceivedHandler(final StanzaReceivedEvent.Handler handler) {
-		return eventBus.addHandlerToSource(StanzaReceivedEvent.TYPE, this, handler);
+	public HandlerRegistration addStanzaReceivedHandler(final PacketReceivedEvent.Handler handler) {
+		return eventBus.addHandlerToSource(PacketReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	/**
 	 * @return the currentBody
 	 */
-	protected Packet getCurrentBody() {
+	protected XMLPacket getCurrentBody() {
 		return currentBody;
 	}
 
@@ -132,7 +132,7 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	 * @param currentBody
 	 *            the currentBody to set
 	 */
-	protected void setCurrentBody(final Packet currentBody) {
+	protected void setCurrentBody(final XMLPacket currentBody) {
 		this.currentBody = currentBody;
 	}
 

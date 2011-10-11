@@ -20,10 +20,7 @@
 
 package com.calclab.emite.im.client.chat.pair;
 
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.google.inject.Singleton;
@@ -35,15 +32,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class PairChatSelectionStrategy implements ChatSelectionStrategy {
 
-	private final PacketMatcher mucMatcher = MatcherFactory.byNameAndXMLNS("x", "http://jabber.org/protocol/muc#user");
-
 	@Override
-	public ChatProperties extractProperties(final BasicStanza stanza) {
+	public ChatProperties extractProperties(final Stanza stanza) {
 		final ChatProperties properties = new ChatProperties(stanza.getFrom());
-		final boolean messageHasBody = stanza.getFirstChild("body") != NoPacket.INSTANCE;
-
-		boolean shouldCreate = messageHasBody && !"groupchat".equals(stanza.getAttribute("type"));
-		shouldCreate = shouldCreate && stanza.getFirstChildInDeep(mucMatcher) == NoPacket.INSTANCE;
+		boolean shouldCreate = stanza.getXML().hasChild("body") && !"groupchat".equals(stanza.getXML().getAttribute("type"));
+		shouldCreate = shouldCreate && stanza.getXML().hasChild("x", "http://jabber.org/protocol/muc#user");
 		properties.setShouldCreateNewChat(shouldCreate);
 		return properties;
 	}

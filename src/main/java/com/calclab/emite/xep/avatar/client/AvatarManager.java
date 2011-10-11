@@ -20,18 +20,13 @@
 
 package com.calclab.emite.xep.avatar.client;
 
-import java.util.List;
-
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -43,7 +38,6 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  */
 @Singleton
 public class AvatarManager implements PresenceReceivedEvent.Handler {
-	private static final PacketMatcher FILTER_X = MatcherFactory.byName("x");
 	private static final String VCARD = "vCard";
 	private static final String XMLNS = "vcard-temp";
 	private static final String PHOTO = "PHOTO";
@@ -64,11 +58,8 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
-		final List<? extends IPacket> children = presence.getChildren(FILTER_X);
-		for (final IPacket child : children) {
-			if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
-				eventBus.fireEventFromSource(new HashPresenceReceivedEvent(presence), this);
-			}
+		if (presence.getXML().hasChild("x", "vcard-temp:x:update")) {
+			eventBus.fireEventFromSource(new HashPresenceReceivedEvent(presence), this);
 		}
 	}
 
@@ -90,42 +81,46 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 	 * @param otherJID
 	 */
 	public void requestVCard(final XmppURI otherJID) {
-		final IQ iq = new IQ(Type.get, otherJID);
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.setTo(otherJID);
 		iq.addChild(VCARD, XMLNS);
 
 		session.sendIQ("avatar", iq, new IQCallback() {
 			@Override
-			public void onIQ(final IQ received) {
-				if (IQ.isSuccess(received) && received.hasChild(VCARD) && received.hasAttribute("to", session.getCurrentUserURI().toString())) {
-					final XmppURI from = XmppURI.jid(received.getAttribute("from"));
-					final IPacket photo = received.getFirstChild(VCARD).getFirstChild(PHOTO);
-					final String photoType = photo.getFirstChild(TYPE).getText();
-					final String photoBinval = photo.getFirstChild(BINVAL).getText();
-					final AvatarVCard avatar = new AvatarVCard(from, null, photoType, photoBinval);
+			public void onIQSuccess(final IQ received) {
+				if (received.getXML().hasChild(VCARD, "vcard-temp") && session.getCurrentUserURI().equals(received.getTo())) {
+					final XMLPacket photo = received.getChild(VCARD, "vcard-temp").getFirstChild(PHOTO);
+					final String photoType = photo.getChildText(TYPE);
+					final String photoBinval = photo.getChildText(BINVAL);
+					final AvatarVCard avatar = new AvatarVCard(received.getFrom(), null, photoType, photoBinval);
 					
 					eventBus.fireEventFromSource(new AvatarVCardReceivedEvent(avatar), this);
 				}
+			}
+			
+			@Override
+			public void onIQFailure(IQ iq) {
 			}
 		});
 
 	}
 
 	public void setVCardAvatar(final String photoBinary) {
-		final IQ iq = new IQ(Type.set, null);
-		final IPacket vcard = iq.addChild(VCARD, XMLNS);
-		vcard.With("xdbns", XMLNS).With("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
+		final IQ iq = new IQ(IQ.Type.set);
+		final XMLPacket vcard = iq.addChild(VCARD, XMLNS);
 		vcard.setAttribute("xdbns", XMLNS);
 		vcard.setAttribute("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
 		vcard.setAttribute("version", "2.0");
 		vcard.addChild(PHOTO, null).addChild(BINVAL, null).setText(photoBinary);
 		session.sendIQ("avatar", iq, new IQCallback() {
 			@Override
-			public void onIQ(final IQ iq) {
-				if (IQ.isSuccess(iq)) {
-					// TODO: add behaviour
-				} else {
-					// TODO: add behaviour (fire ErrorEvent)
-				}
+			public void onIQSuccess(final IQ iq) {
+				// TODO: add behaviour
+			}
+			
+			@Override
+			public void onIQFailure(IQ iq) {
+				// TODO: add behaviour (fire ErrorEvent)
 			}
 		});
 	}

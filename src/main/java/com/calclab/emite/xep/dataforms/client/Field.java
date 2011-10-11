@@ -23,50 +23,26 @@ package com.calclab.emite.xep.dataforms.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.calclab.emite.core.client.packet.DelegatedPacket;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
- * 
  * XEP-0004 Field element : A data form of type "form", "submit", or "result"
  * SHOULD contain at least one <field/> element; a data form of type "cancel"
  * SHOULD NOT contain any <field/> elements.
- * 
  */
 
-public class Field extends DelegatedPacket {
+public class Field implements HasXML {
 
-	public static final String FIELD = "field";
-	private static final String LABEL = "label";
-	private static final String DESC = "desc";
-	private static final String VALUE = "value";
-	private static final String TYPE = "type";
-	private static final String VAR = "var";
-	private static final String REQUIRED = "required";
-
-	public static List<Field> parseFields(final List<Field> fields, final IPacket packet) {
-		if (fields == null) {
-			final List<Field> fieldsTmp = new ArrayList<Field>();
-			for (final IPacket fieldPacket : packet.getChildren(MatcherFactory.byName(Field.FIELD))) {
-				fieldsTmp.add(new Field(fieldPacket));
-			}
-			return fieldsTmp;
-		}
-		return fields;
-	}
-
-	private List<Option> options;
-	private List<String> values;
+	private final XMLPacket xml;
 
 	public Field() {
-		this(new Packet(FIELD));
+		this(XMLUtils.createPacket("field"));
 	}
 
-	public Field(final IPacket stanza) {
-		super(stanza);
+	public Field(final XMLPacket xml) {
+		this.xml = xml;
 	}
 
 	public Field(final String type) {
@@ -75,9 +51,7 @@ public class Field extends DelegatedPacket {
 	}
 
 	public void addOption(final Option option) {
-		parseOptions();
-		options.add(option);
-		addChild(option);
+		xml.addChild(option);
 	}
 
 	/**
@@ -85,48 +59,47 @@ public class Field extends DelegatedPacket {
 	 * more than one <value/> and this field is only for the other types
 	 */
 	public void addValue(final String value) {
-		parseValues();
-		values.add(value);
-		addChild(VALUE).setText(value);
+		xml.setChildText("value", value);
 	}
 
 	public String getDesc() {
-		return getFirstChild(DESC).getText();
+		return xml.getChildText("desc");
 	}
 
 	public String getLabel() {
-		return getAttribute(LABEL);
+		return xml.getAttribute("label");
 	}
 
 	public List<Option> getOptions() {
-		parseOptions();
+		final List<Option> options = new ArrayList<Option>();
+		for (final XMLPacket optionPacket : xml.getChildren("option")) {
+			options.add(new Option(optionPacket));
+		}
 		return options;
 	}
 
 	public String getType() {
-		return getAttribute(TYPE);
+		return xml.getAttribute("type");
 	}
 
 	public List<String> getValues() {
-		parseValues();
+		final List<String> values = new ArrayList<String>();
+		for (final XMLPacket valuePacket : xml.getChildren("value")) {
+			values.add(valuePacket.getText());
+		}
 		return values;
 	}
 
 	public String getVar() {
-		return super.getAttribute(VAR);
+		return xml.getAttribute("var");
 	}
 
 	public boolean isRequired() {
-		return super.getFirstChild(REQUIRED) != NoPacket.INSTANCE;
-	}
-
-	public Field Required(final boolean required) {
-		setRequired(required);
-		return this;
+		return xml.getFirstChild("required") != null;
 	}
 
 	public void setDesc(final String desc) {
-		super.setTextToChild(DESC, desc);
+		xml.setChildText("desc", desc);
 	}
 
 	/**
@@ -135,11 +108,11 @@ public class Field extends DelegatedPacket {
 	 */
 
 	public void setLabel(final String label) {
-		super.setAttribute(LABEL, label);
+		xml.setAttribute("label", label);
 	}
 
 	public void setRequired(final boolean required) {
-		super.setTextToChild(REQUIRED, required ? "" : null);
+		xml.setChildText("required", required ? "" : null);
 	}
 
 	/**
@@ -147,39 +120,16 @@ public class Field extends DelegatedPacket {
 	 * the field data (if no 'type' is specified, the default is "text-single")
 	 */
 	public void setType(final String type) {
-		super.setAttribute(TYPE, type);
+		xml.setAttribute("type", type);
 	}
 
 	public void setVar(final String var) {
-		super.setAttribute(VAR, var);
+		xml.setAttribute("var", var);
 	}
-
-	public Field Value(final String value) {
-		addValue(value);
-		return this;
-	}
-
-	public Field Var(final String var) {
-		setVar(var);
-		return this;
-	}
-
-	private void parseOptions() {
-		if (options == null) {
-			options = new ArrayList<Option>();
-			for (final IPacket optionPacket : super.getChildren(MatcherFactory.byName(Option.OPTION))) {
-				options.add(new Option(optionPacket));
-			}
-		}
-	}
-
-	private void parseValues() {
-		if (values == null) {
-			values = new ArrayList<String>();
-			for (final IPacket valuePacket : super.getChildren(MatcherFactory.byName(VALUE))) {
-				values.add(valuePacket.getText());
-			}
-		}
+	
+	@Override
+	public XMLPacket getXML() {
+		return xml;
 	}
 
 }

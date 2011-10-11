@@ -28,7 +28,6 @@ import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.core.client.stanzas.Presence.Type;
 import com.calclab.emite.im.client.events.OwnPresenceChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -42,7 +41,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 @Singleton
 public class PresenceManagerImpl implements PresenceManager, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler {
 
-	static final Presence INITIAL_PRESENCE = new Presence(Type.unavailable, null, null);
+	static final Presence INITIAL_PRESENCE = new Presence(Presence.Type.unavailable);
 
 	private final EventBus eventBus;
 	private final XmppSession session;
@@ -66,7 +65,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		if (event.is(SessionStatus.rosterReady)) {
-			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(session.getCurrentUserURI());
+			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(null, session.getCurrentUserURI(), null);
 			session.send(initialPresence);
 			setOwnPresence(initialPresence);
 			session.setStatus(SessionStatus.ready);
@@ -80,10 +79,10 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
-		final Type type = presence.getType();
-		if (type == Type.probe) {
+		final Presence.Type type = presence.getType();
+		if (Presence.Type.probe.equals(type)) {
 			session.send(ownPresence);
-		} else if (type == Type.error) {
+		} else if (Presence.Type.error.equals(type)) {
 			eventBus.fireEventFromSource(new ErrorEvent("presenceError", "we received an error presence", presence), this);
 		}
 	}
@@ -125,7 +124,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	 * @param userURI
 	 */
 	private void sendUnavailablePresence(final XmppURI userURI) {
-		final Presence presence = new Presence(Type.unavailable, userURI, null);
+		final Presence presence = new Presence(Presence.Type.unavailable);
 		session.send(presence);
 		setOwnPresence(presence);
 	}

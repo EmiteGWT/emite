@@ -22,9 +22,9 @@ package com.calclab.emite.xep.delay.client;
 
 import java.util.Date;
 
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.util.XmppDateTime;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Represents the delay of message delivery. It can be applied to any stanza. It
@@ -32,9 +32,9 @@ import com.calclab.emite.core.client.util.XmppDateTime;
  */
 public class Delay {
 
-	private final IPacket packet;
+	private final XMLPacket packet;
 
-	public Delay(final IPacket packet) {
+	protected Delay(final XMLPacket packet) {
 		this.packet = packet;
 	}
 
@@ -45,9 +45,9 @@ public class Delay {
 	public Date getStamp() {
 		Date retValue = null;
 		final String stamp = packet.getAttribute("stamp");
-		if ("x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))) {
+		if ("x".equals(packet.getTagName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns"))) {
 			retValue = XmppDateTime.parseLegacyFormatXMPPDateTime(stamp);
-		} else if ("delay".equals(packet.getName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"))) {
+		} else if ("delay".equals(packet.getTagName()) && "urn:xmpp:delay".equals(packet.getAttribute("xmlns"))) {
 			retValue = XmppDateTime.parseXMPPDateTime(stamp);
 		}
 		return retValue;

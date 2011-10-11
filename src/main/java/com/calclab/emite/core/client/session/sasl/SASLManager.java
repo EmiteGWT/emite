@@ -6,7 +6,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public interface SASLManager {
 
-	public HandlerRegistration addAuthorizationResultHandler(AuthorizationResultEvent.Handler handler);
-	public void sendAuthorizationRequest(Credentials credentials);
+	HandlerRegistration addAuthorizationResultHandler(AuthorizationResultEvent.Handler handler);
+	void sendAuthorizationRequest(Credentials credentials);
 	
 }

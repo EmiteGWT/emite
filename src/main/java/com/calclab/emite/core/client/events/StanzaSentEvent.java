@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.events;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.google.web.bindery.event.shared.Event;
 
 public class StanzaSentEvent extends Event<StanzaSentEvent.Handler> {
@@ -31,13 +31,13 @@ public class StanzaSentEvent extends Event<StanzaSentEvent.Handler> {
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 	
-	private final IPacket stanza;
+	private final Stanza stanza;
 
-	public StanzaSentEvent(final IPacket stanza) {
+	public StanzaSentEvent(final Stanza stanza) {
 		this.stanza = stanza;
 	}
 
-	public IPacket getStanza() {
+	public Stanza getStanza() {
 		return stanza;
 	}
 

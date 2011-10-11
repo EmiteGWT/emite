@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Each <identity/> element MUST possess 'category' and 'type' attributes
@@ -30,7 +30,7 @@ import com.calclab.emite.core.client.packet.IPacket;
  * 
  */
 public class Identity {
-	public static Identity fromPacket(final IPacket packet) {
+	public static Identity fromPacket(final XMLPacket packet) {
 		return new Identity(packet.getAttribute("category"), packet.getAttribute("type"), packet.getAttribute("name"));
 	}
 

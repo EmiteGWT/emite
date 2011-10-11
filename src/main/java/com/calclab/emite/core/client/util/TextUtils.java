@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.util;
 
 import com.google.gwt.regexp.shared.RegExp;
 

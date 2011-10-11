@@ -20,11 +20,11 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 public class Feature {
 
-	public static Feature fromPacket(final IPacket packet) {
+	public static Feature fromPacket(final XMLPacket packet) {
 		return new Feature(packet.getAttribute("var"));
 	}
 

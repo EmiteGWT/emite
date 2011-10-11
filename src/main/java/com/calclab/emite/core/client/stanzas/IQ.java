@@ -20,91 +20,61 @@
 
 package com.calclab.emite.core.client.stanzas;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
-public class IQ extends BasicStanza {
+public class IQ extends Stanza {
+
 	public static enum Type {
 		error, get, result, set
 	}
 
-	private static final String NAME = "iq";
-
-	public static Type getType(final IPacket packet) {
+	public static Type getType(final XMLPacket packet) {
 		try {
-			return Type.valueOf(packet.getAttribute(TYPE));
+			return Type.valueOf(packet.getAttribute("type"));
 		} catch (final IllegalArgumentException e) {
 			return null;
 		}
 	}
 
-	public static boolean isSuccess(final IPacket iq) {
-		return iq.hasAttribute(TYPE, "result");
+	public static boolean isSuccess(final XMLPacket iq) {
+		return "result".equals(iq.getAttribute("type"));
 	}
 
-	public static boolean isType(final Type type, final IPacket iq) {
-		return iq.hasAttribute(TYPE, type.toString());
+	public static boolean isType(final Type type, final XMLPacket iq) {
+		return type.toString().equals(iq.getAttribute("type"));
 	}
 
-	public IQ(final IPacket stanza) {
+	public IQ(final XMLPacket stanza) {
 		super(stanza);
 	}
 
 	public IQ(final Type type) {
-		super(NAME, null);
-		if (type != null) {
-			setType(type.toString());
-		}
-	}
-
-	/**
-	 * Create a new IQ
-	 * 
-	 * @param type
-	 *            type of the IQ
-	 * @param to
-	 *            iq recipient
-	 */
-	public IQ(final Type type, final XmppURI to) {
-		this(type);
-		super.setTo(to);
-	}
-
-	public IPacket addQuery(final String xmlns) {
-		final IPacket query = addChild("query", xmlns);
-		return query;
-	}
-
-	public IQ From(final XmppURI fromURI) {
-		setFrom(fromURI);
-		return this;
-	}
-
-	public Type getType() {
-		return getType(this);
-	}
-
-	public IPacket Includes(final String name, final String xmlns) {
-		addChild(name, xmlns);
-		return this;
+		super("iq");
+		setType(type);
 	}
 
 	public boolean isType(final Type type) {
-		return IQ.isType(type, this);
+		return type.equals(getType());
+	}
+	
+	public Type getType() {
+		final String type = xml.getAttribute("type");
+		try {
+			return type != null ? Type.valueOf(type) : null;
+		} catch (final IllegalArgumentException e) {
+			return null;
+		}
 	}
 
-	public IQ To(final XmppURI toURI) {
-		setTo(toURI);
-		return this;
+	public void setType(final Type type) {
+		xml.setAttribute("type", type != null ? type.toString() : null);
 	}
 
-	@Override
-	public IQ With(final String name, final String value) {
-		return (IQ) super.With(name, value);
+	public XMLPacket addChild(final String name, final String xmlns) {
+		return xml.addChild(name, xmlns);
 	}
-
-	public IQ WithQuery(final String xmlns) {
-		addQuery(xmlns);
-		return this;
+	
+	public XMLPacket getChild(final String name, final String xmlns) {
+		return xml.getFirstChild(name, xmlns);
 	}
-
 }

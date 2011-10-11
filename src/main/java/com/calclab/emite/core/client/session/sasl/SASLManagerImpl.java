@@ -22,11 +22,11 @@ package com.calclab.emite.core.client.session.sasl;
 
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.util.Base64Utils;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -34,7 +34,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler {
+public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler {
 	
 	private static final String SEP = new String(new char[] { 0 });
 	private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
@@ -53,9 +53,9 @@ public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler
 	}
 	
 	@Override
-	public void onStanzaReceived(final StanzaReceivedEvent event) {
-		final IPacket stanza = event.getStanza();
-		final String name = stanza.getName();
+	public void onPacketReceived(final PacketReceivedEvent event) {
+		final XMLPacket stanza = event.getPacket();
+		final String name = stanza.getTagName();
 		if ("failure".equals(name)) { // & XMLNS
 			eventBus.fireEventFromSource(new AuthorizationResultEvent(), this);
 		} else if ("success".equals(name)) {
@@ -77,26 +77,26 @@ public class SASLManagerImpl implements SASLManager, StanzaReceivedEvent.Handler
 	@Override
 	public void sendAuthorizationRequest(final Credentials credentials) {
 		currentCredentials = credentials;
-		final IPacket response = credentials.isAnoymous() ? createAnonymousAuthorization() : createPlainAuthorization(credentials);
+		final XMLPacket response = credentials.isAnoymous() ? createAnonymousAuthorization() : createPlainAuthorization(credentials);
 		connection.send(response);
 	}
 	
 	// TODO: Add DIGEST-MD5 auth
 
-	private static IPacket createAnonymousAuthorization() {
-		final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "ANONYMOUS");
+	private static XMLPacket createAnonymousAuthorization() {
+		final XMLPacket auth = XMLUtils.createPacket("auth", XMLNS);
+		auth.setAttribute("mechanism", "ANONYMOUS");
 		return auth;
 	}
 
-	private static IPacket createPlainAuthorization(final Credentials credentials) {
-		final IPacket auth = new Packet("auth", XMLNS).With("mechanism", "PLAIN");
-
-		final String encoded = encodeForPlainMethod(credentials.getXmppUri().getHost(), credentials.getXmppUri().getNode(), credentials.getPassword());
-		auth.setText(encoded);
+	private static XMLPacket createPlainAuthorization(final Credentials credentials) {
+		final XMLPacket auth = XMLUtils.createPacket("auth", XMLNS);
+		auth.setAttribute("mechanism", "PLAIN");
+		auth.setText(encodePlain(credentials.getXmppUri().getHost(), credentials.getXmppUri().getNode(), credentials.getPassword()));
 		return auth;
 	}
 
-	private static String encodeForPlainMethod(final String domain, final String userName, final String password) {
+	private static String encodePlain(final String domain, final String userName, final String password) {
 		final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 		return Base64Utils.toBase64(auth.getBytes());
 	}

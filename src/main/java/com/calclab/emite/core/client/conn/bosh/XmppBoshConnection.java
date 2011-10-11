@@ -20,7 +20,6 @@
 
 package com.calclab.emite.core.client.conn.bosh;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
@@ -29,14 +28,15 @@ import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.ConnectionResponseEvent;
 import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
-import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.events.PacketSentEvent;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -103,8 +103,8 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 						// fireError("Bad status: " + statusCode);
 						onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
 					} else {
-						final IPacket response = services.toXML(content);
-						if (response != null && "body".equals(response.getName())) {
+						final XMLPacket response = XMLUtils.fromXML(content);
+						if (response != null && "body".equals(response.getTagName())) {
 							clearErrors();
 							eventBus.fireEventFromSource(new ConnectionResponseEvent(content), this);
 							handleResponse(response);
@@ -180,11 +180,11 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	}
 
 	@Override
-	public void send(final IPacket packet) {
+	public void send(final HasXML packet) {
 		createBodyIfNeeded();
 		getCurrentBody().addChild(packet);
 		sendBody(false);
-		eventBus.fireEventFromSource(new StanzaSentEvent(packet), this);
+		eventBus.fireEventFromSource(new PacketSentEvent(packet.getXML()), this);
 	}
 
 	@Override
@@ -228,37 +228,35 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 
 	private void createBodyIfNeeded() {
 		if (getCurrentBody() == null) {
-			final Packet body = new Packet("body");
-			body.With("xmlns", "http://jabber.org/protocol/httpbind");
-			body.With("rid", getStreamSettings().getNextRid());
+			final XMLPacket body = XMLUtils.createPacket("body", "http://jabber.org/protocol/httpbind");
+			body.setAttribute("rid", getStreamSettings().getNextRid());
 			if (getStreamSettings() != null) {
-				body.With("sid", getStreamSettings().sid);
+				body.setAttribute("sid", getStreamSettings().sid);
 			}
 			setCurrentBody(body);
 		}
 	}
 
 	private void createInitialBody(final ConnectionSettings userSettings) {
-		final Packet body = new Packet("body");
+		final XMLPacket body = XMLUtils.createPacket("body", "http://jabber.org/protocol/httpbind");
 		body.setAttribute("content", "text/xml; charset=utf-8");
-		body.setAttribute("xmlns", "http://jabber.org/protocol/httpbind");
-		body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
-		body.setAttribute("ver", "1.6");
-		body.setAttribute("xmpp:version", "1.0");
 		body.setAttribute("xml:lang", "en");
+		body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");
+		body.setAttribute("xmpp:version", "1.0");
+		body.setAttribute("ver", "1.6");
 		body.setAttribute("ack", "1");
-		body.setAttribute("secure", Boolean.toString(userSettings.secure));
+		body.setAttribute("secure", String.valueOf(userSettings.secure));
 		body.setAttribute("rid", getStreamSettings().getNextRid());
 		body.setAttribute("to", userSettings.hostName);
 		if (userSettings.routeHost != null) {
 			body.setAttribute("route", "xmpp:" + userSettings.routeHost + ":" + userSettings.routePort);
 		}
-		body.With("hold", userSettings.hold);
-		body.With("wait", userSettings.wait);
+		body.setAttribute("hold", String.valueOf(userSettings.hold));
+		body.setAttribute("wait", String.valueOf(userSettings.wait));
 		setCurrentBody(body);
 	}
 
-	private void handleResponse(final IPacket response) {
+	private void handleResponse(final XMLPacket response) {
 		final String type = response.getAttribute("type");
 		// Openfire bug: terminal instead of terminate
 		if ("terminate".equals(type) || "terminal".equals(type)) {
@@ -271,16 +269,15 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 				eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.connected), this);
 			}
 			shouldCollectResponses = true;
-			final List<? extends IPacket> stanzas = response.getChildren();
-			for (final IPacket stanza : stanzas) {
-				eventBus.fireEventFromSource(new StanzaReceivedEvent(stanza), this);
+			for (final XMLPacket packet : response.getChildren()) {
+				eventBus.fireEventFromSource(new PacketReceivedEvent(packet), this);
 			}
 			shouldCollectResponses = false;
 			continueConnection(response.getAttribute("ack"));
 		}
 	}
 
-	private void initStream(final IPacket response) {
+	private void initStream(final XMLPacket response) {
 		final StreamSettings stream = getStreamSettings();
 		stream.sid = response.getAttribute("sid");
 		stream.wait = response.getAttribute("wait");

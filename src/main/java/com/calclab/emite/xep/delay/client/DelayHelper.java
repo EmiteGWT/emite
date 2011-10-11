@@ -20,10 +20,9 @@
 
 package com.calclab.emite.xep.delay.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.stanzas.Stanza;
+import com.calclab.emite.core.client.xml.XMLMatcher;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Some utility methods related to delays and stanzas
@@ -37,17 +36,18 @@ public class DelayHelper {
 	 * @return the delay object if present, null otherwise
 	 */
 	public static Delay getDelay(final Stanza stanza) {
-		final IPacket delayPacket = stanza.getFirstChild(new PacketMatcher() {
-
+		final XMLPacket delayPacket = stanza.getXML().getFirstChild(new XMLMatcher() {
 			@Override
-			public boolean matches(final IPacket packet) {
-				return "x".equals(packet.getName()) && "jabber:x:delay".equals(packet.getAttribute("xmlns")) || "delay".equals(packet.getName())
-						&& "urn:xmpp:delay".equals(packet.getAttribute("xmlns"));
+			public boolean matches(final XMLPacket packet) {
+				return "x".equals(packet.getTagName()) && "jabber:x:delay".equals(packet.getNamespace()) || "delay".equals(packet.getTagName())
+						&& "urn:xmpp:delay".equals(packet.getNamespace());
 			}
 		});
-		if (delayPacket != NoPacket.INSTANCE)
-			return new Delay(delayPacket);
-		return null;
+		
+		if (delayPacket == null)
+			return null;
+		
+		return new Delay(delayPacket);
 	}
 
 }

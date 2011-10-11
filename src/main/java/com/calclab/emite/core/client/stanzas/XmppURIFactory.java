@@ -22,27 +22,31 @@ package com.calclab.emite.core.client.stanzas;
 
 import java.util.HashMap;
 
-public class XmppURIFactory {
-	private final HashMap<String, XmppURI> cache = new HashMap<String, XmppURI>();
+public final class XmppURIFactory {
 
-	public XmppURI parse(final String xmppUri) {
+	private static final HashMap<String, XmppURI> cache = new HashMap<String, XmppURI>();
+
+	protected static final XmppURI parse(final String xmppUri) {
 		if (xmppUri == null || xmppUri.length() == 0)
 			return null;
 
-		final String uri = XmppUriParser.removePrefix(xmppUri);
+		final String uri = XmppURIParser.removePrefix(xmppUri);
 		XmppURI cached = cache.get(uri);
 		if (cached == null) {
-			cached = XmppUriParser.parse(uri);
+			cached = XmppURIParser.parse(uri);
 			cache.put(uri, cached);
 		}
 		return cached;
 	}
 
-	XmppURI cache(final XmppURI xmppURI) {
+	protected static final XmppURI cache(final XmppURI xmppURI) {
 		if (xmppURI != null) {
 			cache.put(xmppURI.toString(), xmppURI);
 		}
 		return xmppURI;
+	}
+	
+	private XmppURIFactory() {
 	}
 
 }

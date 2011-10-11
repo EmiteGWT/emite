@@ -21,13 +21,11 @@
 package com.calclab.emite.im.client.roster;
 
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.events.SubscriptionRequestReceivedEvent;
 import com.google.inject.Inject;
@@ -41,7 +39,6 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  */
 @Singleton
 public class SubscriptionManagerImpl implements SubscriptionManager, PresenceReceivedEvent.Handler, RosterItemChangedEvent.Handler {
-	protected static final PacketMatcher FILTER_NICK = MatcherFactory.byNameAndXMLNS("nick", "http://jabber.org/protocol/nick");
 	
 	private final EventBus eventBus;
 	private final XmppSession session;
@@ -61,7 +58,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
 		if (presence.getType() == Type.subscribe) {
-			final IPacket nick = presence.getFirstChild(FILTER_NICK);
+			final XMLPacket nick = presence.getXML().getFirstChild("nick", "http://jabber.org/protocol/nick");
 			eventBus.fireEventFromSource(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()), this);
 		}
 	}

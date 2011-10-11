@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.dataforms.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * 
@@ -29,22 +29,15 @@ import com.calclab.emite.core.client.packet.IPacket;
  */
 public class Item extends AbstractItem {
 
-	static final String ITEM = "item";
-
 	/**
 	 * Each of these elements MUST contain one or more <field/> children.
 	 */
-
 	public Item() {
-		super(ITEM);
+		super("item");
 	}
 
-	public Item(final IPacket packet) {
+	public Item(final XMLPacket packet) {
 		super(packet);
 	}
 
-	public Item WithField(final Field field) {
-		addField(field);
-		return this;
-	}
 }

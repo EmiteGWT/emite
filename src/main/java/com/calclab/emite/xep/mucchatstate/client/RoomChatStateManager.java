@@ -28,11 +28,10 @@ import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLMatcher;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xep.muc.client.RoomChat;
 import com.google.gwt.user.client.Timer;
@@ -47,7 +46,6 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 
 	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getName());
 	
-	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
 	public static final String KEY = "RoomChatStateManager";
 	
 	/*
@@ -74,10 +72,10 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 	private final int inactiveDelay = 120 * 1000; // 2 minutes
 	private final int pauseDelay = 10 * 1000; // 10 secondes
 
-	private PacketMatcher bodySubjectThreadMatchter = new PacketMatcher() {
+	private static final XMLMatcher bodySubjectThreadMatchter = new XMLMatcher() {
 		@Override
-		public boolean matches(final IPacket packet) {
-			final String nn = packet.getName();
+		public boolean matches(final XMLPacket packet) {
+			final String nn = packet.getTagName();
 			return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
 		}
 	};
@@ -132,14 +130,14 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 		// But sendStateMessage goes through here.
 		final Message message = event.getMessage();
 		final boolean alreadyWithState = getStateFromMessage(message) != null;
-		if (!alreadyWithState && ownState != ChatState.active && NoPacket.INSTANCE != message.getFirstChild(bodySubjectThreadMatchter)) {
+		if (!alreadyWithState && ownState != ChatState.active && message.getXML().getFirstChild(bodySubjectThreadMatchter) != null) {
 			if (ownState == ChatState.composing) {
 				pauseTimer.cancel();
 			}
 
 			logger.finer("Setting own status to: " + ownState + " because we send a body or a subject");
 			ownState = ChatState.active;
-			message.addChild(ChatState.active.toString(), XMLNS);
+			message.getXML().addChild(ChatState.active.toString(), "http://jabber.org/protocol/chatstates");
 		}
 		if (ownState != ChatState.inactive) {
 			inactiveTimer.schedule(inactiveDelay);
@@ -179,8 +177,9 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 		if (ownState == null || !ownState.equals(chatState)) {
 			ownState = chatState;
 			logger.finer("Setting own status to: " + chatState.toString());
-			final Message message = new Message(null, room.getURI());
-			message.addChild(chatState.toString(), XMLNS);
+			final Message message = new Message();
+			message.setTo(room.getURI());
+			message.getXML().addChild(chatState.toString(), "http://jabber.org/protocol/chatstates");
 			room.send(message);
 		}
 		if (ownState == ChatState.composing) {
@@ -189,10 +188,10 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 	}
 
 	private static ChatState getStateFromMessage(final Message message) {
-		final IPacket stateNode = message.getFirstChild(new PacketMatcher() {
+		final XMLPacket stateNode = message.getXML().getFirstChild(new XMLMatcher() {
 			@Override
-			public boolean matches(final IPacket packet) {
-				final boolean vn = stateString.contains(packet.getName());
+			public boolean matches(final XMLPacket packet) {
+				final boolean vn = stateString.contains(packet.getTagName());
 				return vn;
 				/*
 				 * Namespaces don't work String ns =
@@ -202,7 +201,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 				 */
 			}
 		});
-		return stateNode == NoPacket.INSTANCE ? null : ChatState.valueOf(stateNode.getName());
+		return stateNode != null ? ChatState.valueOf(stateNode.getTagName()) : null;
 	}
 
 }

@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
 
 public class DiscoveryInfoResultEvent extends Event<DiscoveryInfoResultEvent.Handler> {
@@ -32,17 +32,17 @@ public class DiscoveryInfoResultEvent extends Event<DiscoveryInfoResultEvent.Han
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final DiscoveryInfoResults infoResult;
-	private final IPacket errorPacket;
+	private final XMLPacket errorPacket;
 
 	protected DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult) {
 		this(infoResult, null);
 	}
 
-	protected DiscoveryInfoResultEvent(final IPacket errorPacket) {
+	protected DiscoveryInfoResultEvent(final XMLPacket errorPacket) {
 		this(null, errorPacket);
 	}
 
-	private DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult, final IPacket errorPacket) {
+	private DiscoveryInfoResultEvent(final DiscoveryInfoResults infoResult, final XMLPacket errorPacket) {
 		assert !(infoResult != null && errorPacket != null) : "Discovery event can have either or result or error, not both";
 		assert !(infoResult == null && errorPacket == null) : "Discovery event must have or result or error";
 		this.infoResult = infoResult;
@@ -54,7 +54,7 @@ public class DiscoveryInfoResultEvent extends Event<DiscoveryInfoResultEvent.Han
 		return TYPE;
 	}
 
-	public IPacket getErrorPacket() {
+	public XMLPacket getErrorPacket() {
 		return errorPacket;
 	}
 

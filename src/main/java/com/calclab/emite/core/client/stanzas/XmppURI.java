@@ -29,7 +29,6 @@ package com.calclab.emite.core.client.stanzas;
  * 
  */
 public class XmppURI implements HasJID {
-	private static final XmppURIFactory factory = new XmppURIFactory();
 
 	/**
 	 * Parse the string and return a JID (a uri without resource)
@@ -52,7 +51,7 @@ public class XmppURI implements HasJID {
 	 * 
 	 */
 	public static XmppURI uri(final String xmppUri) {
-		return factory.parse(xmppUri);
+		return XmppURIFactory.parse(xmppUri);
 	}
 
 	/**
@@ -69,7 +68,7 @@ public class XmppURI implements HasJID {
 
 	public static XmppURI uri(final String node, final String host, final String resource) {
 		final XmppURI xmppURI = new XmppURI(node, host, resource);
-		factory.cache(xmppURI);
+		XmppURIFactory.cache(xmppURI);
 		return xmppURI;
 	}
 
@@ -95,23 +94,14 @@ public class XmppURI implements HasJID {
 		representation = (this.node != null ? this.node + "@" : "") + this.host + (this.resource != null ? "/" + this.resource : "");
 	}
 
+	/**
+	 * Returns the JID of this URI (a XmppURI without resource)
+	 * 
+	 * @return the JID of this URI
+	 */
 	@Override
-	public boolean equals(final Object obj) {
-		if (obj == null)
-			return false;
-		if (obj == this)
-			return true;
-		return representation.equals(((XmppURI) obj).representation);
-	}
-
-	public boolean equalsNoResource(final XmppURI other) {
-		if (other == null)
-			return false;
-		if (this == other)
-			return true;
-		if (node == null && other.node != null)
-			return false;
-		return host.equals(other.host) && (node == null || node.equals(other.node));
+	public XmppURI getJID() {
+		return uri(node, host, null);
 	}
 
 	/**
@@ -129,13 +119,10 @@ public class XmppURI implements HasJID {
 	}
 
 	/**
-	 * Returns the JID of this URI (a XmppURI without resource)
-	 * 
-	 * @return the JID of this URI
+	 * @return true if this uri has node, false otherwise
 	 */
-	@Override
-	public XmppURI getJID() {
-		return uri(node, host, null);
+	public boolean hasNode() {
+		return node != null;
 	}
 
 	/**
@@ -143,6 +130,13 @@ public class XmppURI implements HasJID {
 	 */
 	public String getNode() {
 		return node;
+	}
+
+	/**
+	 * @return true if this uri has resource, false otherwise
+	 */
+	public boolean hasResource() {
+		return resource != null;
 	}
 
 	/**
@@ -165,19 +159,24 @@ public class XmppURI implements HasJID {
 	public int hashCode() {
 		return representation.hashCode();
 	}
-
-	/**
-	 * @return true if this uri has node, false otherwise
-	 */
-	public boolean hasNode() {
-		return node != null;
+	
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		return representation.equals(((XmppURI) obj).representation);
 	}
 
-	/**
-	 * @return true if this uri has resource, false otherwise
-	 */
-	public boolean hasResource() {
-		return resource != null;
+	public boolean equalsNoResource(final XmppURI other) {
+		if (other == null)
+			return false;
+		if (this == other)
+			return true;
+		if (node == null && other.node != null)
+			return false;
+		return host.equals(other.host) && (node == null || node.equals(other.node));
 	}
 
 	@Override

@@ -23,10 +23,8 @@ package com.calclab.emite.xep.disco.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Discovery items result object.
@@ -36,27 +34,26 @@ import com.calclab.emite.core.client.stanzas.IQ;
  * @see http://xmpp.org/extensions/xep-0030.html#items
  */
 public class DiscoveryItemsResults {
-	public static final PacketMatcher ITEMS_RESULT_MATCHER = MatcherFactory.byNameAndXMLNS("query", "http://jabber.org/protocol/disco#items");
-	public static final PacketMatcher ITEMS_MATCHER = MatcherFactory.byName("item");
+	
 	private List<Item> items;
-	private final IPacket result;
+	private final XMLPacket result;
 
 	public DiscoveryItemsResults(final IQ iq) {
 		assert IQ.Type.result == iq.getType();
-		result = iq.getFirstChild(ITEMS_RESULT_MATCHER);
+		result = iq.getChild("query", "http://jabber.org/protocol/disco#items");
 
 	}
 
 	public List<Item> getItems() {
 		if (items == null) {
-			items = processItem(result.getChildren(ITEMS_MATCHER));
+			items = processItem(result.getChildren("item"));
 		}
 		return items;
 	}
 
-	private static List<Item> processItem(final List<? extends IPacket> children) {
+	private static List<Item> processItem(final List<XMLPacket> children) {
 		final List<Item> items = new ArrayList<Item>();
-		for (final IPacket child : children) {
+		for (final XMLPacket child : children) {
 			items.add(Item.fromPacket(child));
 		}
 		return items;

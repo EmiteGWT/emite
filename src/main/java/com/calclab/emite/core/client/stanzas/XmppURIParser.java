@@ -22,11 +22,10 @@ package com.calclab.emite.core.client.stanzas;
 
 /**
  * A XmppURI parser and validator
- * 
  */
-public class XmppUriParser {
+public class XmppURIParser {
+	
 	private static final String PREFIX = "xmpp:";
-	private static final int PREFIX_LENGTH = PREFIX.length();
 
 	public static final String REGEXP_NODE = "^[a-z0-9\\.\\-_\\+]+$";
 
@@ -45,7 +44,7 @@ public class XmppUriParser {
 	}
 
 	public static String getNode(final String uri) {
-		final int begin = uri.startsWith(PREFIX) ? PREFIX_LENGTH : 0;
+		final int begin = uri.startsWith(PREFIX) ? PREFIX.length() : 0;
 		final int atIndex = uri.indexOf('@');
 		if (atIndex >= 0)
 			return uri.substring(begin, atIndex);
@@ -97,7 +96,7 @@ public class XmppUriParser {
 	}
 
 	public static String removePrefix(final String xmppUri) {
-		return xmppUri.startsWith(PREFIX) ? xmppUri.substring(PREFIX_LENGTH) : xmppUri;
+		return xmppUri.startsWith(PREFIX) ? xmppUri.substring(PREFIX.length()) : xmppUri;
 	}
 
 	public static String getResource(final String uri) {

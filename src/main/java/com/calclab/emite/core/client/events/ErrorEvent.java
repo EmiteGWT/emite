@@ -20,10 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.packet.PacketMatcher;
+import com.calclab.emite.core.client.stanzas.Stanza;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
 
 /**
@@ -38,18 +36,16 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private static final PacketMatcher ERROR_STANZA_MATCHER = MatcherFactory.byName("error");
-	
 	private final String errorType;
 	private final String description;
-	private final IPacket stanza;
-	private final IPacket errorStanza;
+	private final Stanza stanza;
+	private final XMLPacket error;
 
-	public ErrorEvent(final String errorType, final String description, final IPacket stanza) {
+	public ErrorEvent(final String errorType, final String description, final Stanza stanza) {
 		this.errorType = errorType;
 		this.description = description;
-		this.stanza = stanza != null ? stanza : NoPacket.INSTANCE;
-		errorStanza = this.stanza.getFirstChild(ERROR_STANZA_MATCHER);
+		this.stanza = stanza;
+		this.error = stanza != null ? stanza.getXML().getFirstChild("error") : null;
 	}
 
 	public String getDescription() {
@@ -62,8 +58,8 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 	 * @return the error stanza of NoPacket.INSTANCE if none
 	 * @see http://xmpp.org/rfcs/rfc3920.html#rfc.section.4.7
 	 */
-	public IPacket getErrorStanza() {
-		return errorStanza;
+	public XMLPacket getError() {
+		return error;
 	}
 
 	public String getErrorType() {
@@ -75,7 +71,7 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 	 * 
 	 * @return never null: NoPacket.INSTANCE if the is a client side error
 	 */
-	public IPacket getStanza() {
+	public Stanza getStanza() {
 		return stanza;
 	}
 	

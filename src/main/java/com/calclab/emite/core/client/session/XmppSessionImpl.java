@@ -36,14 +36,15 @@ import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
+import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -57,7 +58,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see XmppSession
  */
 @Singleton
-public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler, StanzaReceivedEvent.Handler {
+public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler, PacketReceivedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(XmppSessionImpl.class.getName());
 
@@ -67,7 +68,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	
 	private int iqId;
 	private final Map<String, IQCallback> iqHandlers;
-	private final List<IPacket> queuedStanzas;
+	private final List<Stanza> queuedStanzas;
 	private SessionStatus status;
 	private Credentials credentials;
 	private XmppURI userUri;
@@ -79,7 +80,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		this.saslManager = saslManager;
 		
 		iqHandlers = new HashMap<String, IQCallback>();
-		queuedStanzas = new ArrayList<IPacket>();
+		queuedStanzas = new ArrayList<Stanza>();
 		status = SessionStatus.disconnected;
 
 		connection.addConnectionStatusChangedHandler(this);
@@ -98,9 +99,9 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	}
 	
 	@Override
-	public void onStanzaReceived(final StanzaReceivedEvent event) {
-		final IPacket stanza = event.getStanza();
-		final String name = stanza.getName();
+	public void onPacketReceived(final PacketReceivedEvent event) {
+		final XMLPacket stanza = event.getPacket();
+		final String name = stanza.getTagName();
 		if (name.equals("message")) {
 			eventBus.fireEventFromSource(new MessageReceivedEvent(new Message(stanza)), this);
 		} else if (name.equals("presence")) {
@@ -111,8 +112,13 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 				eventBus.fireEventFromSource(new IQReceivedEvent(new IQ(stanza)), this);
 			} else {
 				final IQCallback handler = iqHandlers.remove(stanza.getAttribute("id"));
-				if (handler != null)
-					handler.onIQ(new IQ(stanza));
+				if (handler == null)
+					return;
+				
+				if (IQ.isSuccess(stanza))
+					handler.onIQSuccess(new IQ(stanza));
+				else
+					handler.onIQFailure(new IQ(stanza));
 			}
 		} else if (credentials != null && ("stream:features".equals(name) || "features".equals(name)) && stanza.hasChild("mechanisms")) {
 			setStatus(SessionStatus.connecting);
@@ -206,16 +212,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	}
 	
 	@Override
-	public void login(final XmppURI uri, final String password) {
-		login(new Credentials(uri, password));
-	}
-
-	@Override
 	public void logout() {
 		if (getStatus() != SessionStatus.disconnected && userUri != null) {
-			// TODO : To be reviewed, preventing unvailable presences to be sent
+			// TODO : To be reviewed, preventing unavailable presences to be sent
 			// so that only the 'terminate' is sent
-			// Unvailabel are handled automatically by the server
+			// Unavailable are handled automatically by the server
 			setStatus(SessionStatus.loggingOut);
 			userUri = null;
 			connection.disconnect();
@@ -237,36 +238,42 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	}
 
 	@Override
-	public void send(final IPacket packet) {
+	public void send(final Stanza packet) {
+		send(packet, false);
+	}
+	
+	private void send(final Stanza packet, boolean force) {
 		// Added a condition to check the connection is not retrying...
-		if (connection.hasErrors() || userUri == null) {
+		if (connection.hasErrors() || (userUri == null && !force)) {
 			logger.finer("session queuing stanza" + packet);
 			queuedStanzas.add(packet);
 		} else {
-			packet.setAttribute("from", userUri.toString());
+			if (userUri != null) {
+				packet.setFrom(userUri);
+			}
 			eventBus.fireEventFromSource(new BeforeStanzaSentEvent(packet), this);
 			connection.send(packet);
+			eventBus.fireEventFromSource(new StanzaSentEvent(packet), this);
 		}
 	}
 
 	@Override
 	public void sendIQ(final String category, final IQ iq, final IQCallback handler) {
-		if (!iq.getType().equals(Type.result)) {
+		sendIQ(category, iq, handler, false);
+	}
+	
+	private void sendIQ(final String category, final IQ iq, final IQCallback handler, boolean force) {
+		if (!iq.getType().equals(IQ.Type.result)) {
 			final String key = category + "_" + iqId++;
 			iqHandlers.put(key, handler);
-			iq.setAttribute("id", key);
-			send(iq);
+			iq.setId(key);
+			send(iq, force);
 		}
 	}
 
-	@Override
-	public String toString() {
-		return "Session " + userUri + " in " + getStatus().toString() + " " + queuedStanzas.size() + " queued stanzas con=" + connection.toString();
-	}
-
 	private void sendQueuedStanzas() {
-		logger.finer("Sending queued stanzas....");
-		for (final IPacket packet : queuedStanzas) {
+		logger.finer("Sending queued stanzas...");
+		for (final Stanza packet : queuedStanzas) {
 			send(packet);
 		}
 		queuedStanzas.clear();
@@ -280,37 +287,44 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	
 	private void bindResource(final String resource) {
 		final IQ iq = new IQ(IQ.Type.set);
-		iq.setId("bind-resource");
-		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
+		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").setChildText("resource", resource);
 
-		// FIXME? Can't use sendIQ
-		iqHandlers.put("bind-resource", new IQCallback() {
+		sendIQ("bind-resource", iq, new IQCallback() {
 			@Override
-			public void onIQ(IQ iq) {
+			public void onIQSuccess(IQ iq) {
 				setStatus(SessionStatus.binded);
-				
-				requestSession(XmppURI.uri(iq.getFirstChild("bind").getFirstChild("jid").getText()));
+				requestSession(XmppURI.uri(iq.getChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").getChildText("jid")));
 			}
-		});
-		
-		connection.send(iq);
+			
+			@Override
+			public void onIQFailure(IQ iq) {
+				connection.disconnect();
+			}
+		}, true);
 	}
 	
 	private void requestSession(final XmppURI uri) {
-		final IQ iq = new IQ(IQ.Type.set, uri.getHostURI()).From(uri);
-		iq.setId("session-request");
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.setFrom(uri);
+		iq.setTo(uri.getHostURI());
 		iq.addChild("session", "urn:ietf:params:xml:ns:xmpp-session");
 
-		// FIXME? Can't use sendIQ
-		iqHandlers.put("session-request", new IQCallback() {
+		sendIQ("session-request", iq, new IQCallback() {
 			@Override
-			public void onIQ(IQ iq) {
-				// TODO: disconnect() on failure
-				setLoggedIn(XmppURI.uri(iq.getAttribute("to")));
+			public void onIQSuccess(IQ iq) {
+				setLoggedIn(iq.getTo());
 			}
-		});
-		
-		connection.send(iq);
+			
+			@Override
+			public void onIQFailure(IQ iq) {
+				connection.disconnect();
+			}
+		}, true);
+	}
+
+	@Override
+	public String toString() {
+		return "Session " + userUri + " in " + getStatus().toString() + " " + queuedStanzas.size() + " queued stanzas con=" + connection.toString();
 	}
 	
 }

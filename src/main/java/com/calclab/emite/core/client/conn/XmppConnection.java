@@ -23,9 +23,9 @@ package com.calclab.emite.core.client.conn;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.ConnectionResponseEvent;
 import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.HasXML;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
@@ -39,7 +39,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
+	HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when the status of the connection has changed
@@ -47,7 +47,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addConnectionStatusChangedHandler(ConnectionStatusChangedEvent.Handler handler);
+	HandlerRegistration addConnectionStatusChangedHandler(ConnectionStatusChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has arrived from the server
@@ -55,7 +55,7 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addStanzaReceivedHandler(StanzaReceivedEvent.Handler handler);
+	HandlerRegistration addStanzaReceivedHandler(PacketReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has been sent to the server
@@ -63,19 +63,19 @@ public interface XmppConnection {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addStanzaSentHandler(StanzaSentEvent.Handler handler);
+	HandlerRegistration addStanzaSentHandler(StanzaSentEvent.Handler handler);
 
 	/**
 	 * Connect to the server
 	 * 
 	 * @see setSettings
 	 */
-	public abstract void connect();
+	void connect();
 
 	/**
 	 * Disconnect to the server
 	 */
-	public abstract void disconnect();
+	void disconnect();
 
 	/**
 	 * Obtain the stream settings. This is the actual object used in the
@@ -83,21 +83,21 @@ public interface XmppConnection {
 	 * 
 	 * @return the current stream settings
 	 */
-	public StreamSettings getStreamSettings();
+	StreamSettings getStreamSettings();
 
 	/**
 	 * A way to know if the connection has errors
 	 * 
 	 * @return true if the connection has errors
 	 */
-	public boolean hasErrors();
+	boolean hasErrors();
 
 	/**
 	 * A way know if the connection is connected
 	 * 
 	 * @return true if is connected
 	 */
-	public abstract boolean isConnected();
+	boolean isConnected();
 
 	/**
 	 * Pause the connection and return a stream settings object that can be
@@ -106,12 +106,12 @@ public interface XmppConnection {
 	 * @return StreamSettings object if the connection if a stream is present
 	 *         (the connection is active), null otherwise
 	 */
-	public abstract StreamSettings pause();
+	StreamSettings pause();
 
 	/**
 	 * A way to restart the stream. Usually you don't need this method
 	 */
-	public abstract void restartStream();
+	void restartStream();
 
 	/**
 	 * The opposite to the pause method. Usually used to pause the session
@@ -121,14 +121,14 @@ public interface XmppConnection {
 	 *            the paused stream settings
 	 * @return true if the connection is resumed
 	 */
-	public abstract boolean resume(StreamSettings settings);
+	boolean resume(StreamSettings settings);
 
 	/**
 	 * Send a packet into the connection channel
 	 * 
 	 * @param packet
 	 */
-	public abstract void send(final IPacket packet);
+	void send(final HasXML packet);
 
 	/**
 	 * Set the connection settings. This method MUST be called before connect.
@@ -138,5 +138,5 @@ public interface XmppConnection {
 	 * @param settings
 	 *            The connection settings
 	 */
-	public abstract void setSettings(ConnectionSettings settings);
+	void setSettings(ConnectionSettings settings);
 }

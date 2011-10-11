@@ -21,7 +21,7 @@
 package com.calclab.emite.xep.search.client;
 
 public interface ResultListener<T> {
-	public void onFailure(String message);
+	void onFailure(String message);
 
-	public void onSuccess(T response);
+	void onSuccess(T response);
 }

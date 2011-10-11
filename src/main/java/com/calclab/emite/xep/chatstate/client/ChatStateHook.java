@@ -37,7 +37,6 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 	
 	private static final Logger logger = Logger.getLogger(ChatStateHook.class.getName());
 	
-	public static final String XMLNS = "http://jabber.org/protocol/chatstates";
 	public static final String KEY = "ChatStateHook";
 	
 	public static enum ChatState {
@@ -69,7 +68,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 
 		for (final ChatState chatState : ChatState.values()) {
 			final String typeSt = chatState.toString();
-			if (message.hasChild(typeSt) || message.hasChild("cha:" + typeSt)) {
+			if (message.getXML().hasChild(typeSt) || message.getXML().hasChild("cha:" + typeSt)) {
 				otherState = chatState;
 				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
 					sendStateMessage(ChatState.active);
@@ -95,13 +94,13 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 			//$FALL-THROUGH$
 		case accepted:
 			boolean alreadyWithState = false;
-			for (int i = 0; i < ChatState.values().length; i++) {
-				if (message.hasChild(ChatState.values()[i].toString())) {
+			for (ChatState state : ChatState.values()) {
+				if (message.getXML().hasChild(state.toString())) {
 					alreadyWithState = true;
 				}
 			}
 			if (!alreadyWithState) {
-				message.addChild(ChatState.active.toString(), XMLNS);
+				message.getXML().addChild(ChatState.active.toString(), "http://jabber.org/protocol/chatstates");
 			}
 			break;
 		case rejected:
@@ -143,8 +142,9 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 	}
 
 	private void sendStateMessage(final ChatState chatState) {
-		final Message message = new Message(null, chat.getURI());
-		message.addChild(chatState.toString(), XMLNS);
+		final Message message = new Message();
+		message.setTo(chat.getURI());
+		message.getXML().addChild(chatState.toString(), "http://jabber.org/protocol/chatstates");
 		chat.send(message);
 	}
 

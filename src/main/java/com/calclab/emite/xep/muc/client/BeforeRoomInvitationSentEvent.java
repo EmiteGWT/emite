@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
 
 /**
@@ -36,19 +36,19 @@ public class BeforeRoomInvitationSentEvent extends Event<BeforeRoomInvitationSen
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final BasicStanza message;
-	private final IPacket invitePacket;
+	private final Stanza message;
+	private final XMLPacket invitePacket;
 
-	protected BeforeRoomInvitationSentEvent(final BasicStanza message, final IPacket invitePacket) {
+	protected BeforeRoomInvitationSentEvent(final Stanza message, final XMLPacket invitePacket) {
 		this.message = message;
 		this.invitePacket = invitePacket;
 	}
 
-	public BasicStanza getMessage() {
+	public Stanza getMessage() {
 		return message;
 	}
 	
-	public IPacket getInvitePacket() {
+	public XMLPacket getInvitePacket() {
 		return invitePacket;
 	}
 

@@ -20,23 +20,12 @@
 
 package com.calclab.emite.core.client.stanzas;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
-public class Message extends BasicStanza {
+public class Message extends Stanza {
+
 	public static enum Type {
 		chat, error, groupchat, headlines, normal
-	}
-
-	private static final String PACKET_NAME = "message";
-
-	/**
-	 * Return true if the given packet is a message
-	 * 
-	 * @param packet
-	 * @return
-	 */
-	public static boolean is(final IPacket packet) {
-		return PACKET_NAME.equals(packet.getName());
 	}
 
 	/**
@@ -44,77 +33,41 @@ public class Message extends BasicStanza {
 	 * 
 	 * @param iPacket
 	 */
-	public Message(final IPacket iPacket) {
-		super(iPacket);
+	public Message(final XMLPacket xml) {
+		super(xml);
 	}
-
-	/**
-	 * Create a message with a body
-	 * 
-	 * @param body
-	 *            the body of the message
-	 */
-	public Message(final String body) {
-		this(body, null, null, null);
-	}
-
-	/**
-	 * Easy to use constructor to create a chat message with body and recipient
-	 * 
-	 * @param body
-	 *            the message body
-	 * @param to
-	 *            the message recipient
-	 */
-	public Message(final String body, final XmppURI toURI) {
-		this(body, toURI, null, Type.chat);
-	}
-
-	/**
-	 * Create a chat (type) message
-	 * 
-	 * @param body
-	 * @param toURI
-	 * @param fromUri
-	 */
-	public Message(final String body, final XmppURI toURI, final XmppURI fromUri) {
-		this(body, toURI, fromUri, Type.chat);
-	}
-
-	/**
-	 * Create a message
-	 * 
-	 * @param body
-	 * @param toURI
-	 * @param fromUri
-	 */
-	public Message(final String body, final XmppURI toURI, final XmppURI fromUri, final Type type) {
-		super(PACKET_NAME, null);
-		setType(type);
-		setFrom(fromUri);
-		setTo(toURI);
-		setBody(body);
-	}
-
+	
 	public Message() {
-		this((String) null, null, null, null);
+		super("message");
 	}
-
-	public Message Body(final String body) {
+	
+	public Message(String body) {
+		this();
 		setBody(body);
-		return this;
+	}
+	
+	public String getBody() {
+		return xml.getChildText("body");
 	}
 
-	public String getBody() {
-		return getFirstChild("body").getText();
+	public void setBody(final String msg) {
+		xml.setChildText("body", msg);
 	}
 
 	public String getSubject() {
-		return getFirstChild("subject").getText();
+		return xml.getChildText("subject");
+	}
+	
+	public void setSubject(final String subject) {
+		xml.setChildText("subject", subject);
 	}
 
 	public String getThread() {
-		return getFirstChild("thread").getText();
+		return xml.getChildText("thread");
+	}
+	
+	public void setThread(final String thread) {
+		xml.setChildText("thread", thread);
 	}
 
 	/**
@@ -129,7 +82,7 @@ public class Message extends BasicStanza {
 	 * @return
 	 */
 	public Type getType() {
-		final String type = getAttribute(TYPE);
+		final String type = xml.getAttribute("type");
 		try {
 			return type != null ? Type.valueOf(type) : Type.normal;
 		} catch (final IllegalArgumentException e) {
@@ -137,44 +90,8 @@ public class Message extends BasicStanza {
 		}
 	}
 
-	/**
-	 * Return true if Message has a body
-	 * 
-	 * @return
-	 */
-	public boolean hasBody() {
-		return hasChild("body");
-	}
-
-	public void setBody(final String msg) {
-		if (msg != null) {
-			final IPacket body = addChild("body", null);
-			body.setText(msg);
-		}
-	}
-
-	public void setThread(final String thread) {
-		super.setTextToChild("thread", thread);
-	}
-
 	public void setType(final Type type) {
-		if (type != null) {
-			setType(type.toString());
-		}
+		xml.setAttribute("type", type != null ? type.toString() : null);
 	}
 
-	public Message Subject(final String subject) {
-		setTextToChild("subject", subject);
-		return this;
-	}
-
-	public Message Thread(final String thread) {
-		setThread(thread);
-		return this;
-	}
-
-	public Message Type(final Type type) {
-		setType(type);
-		return this;
-	}
 }

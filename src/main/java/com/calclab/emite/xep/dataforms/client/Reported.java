@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.dataforms.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * 
@@ -34,13 +34,11 @@ import com.calclab.emite.core.client.packet.IPacket;
  */
 public class Reported extends AbstractItem {
 
-	static final String REPORTED = "reported";
-
 	public Reported() {
-		super(REPORTED);
+		super("reported");
 	}
 
-	public Reported(final IPacket packet) {
+	public Reported(final XMLPacket packet) {
 		super(packet);
 	}
 

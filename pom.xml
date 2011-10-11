@@ -90,6 +90,9 @@
 				<version>2.3.2</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<excludes>
+                        <exclude>**/VCard*.java</exclude> <!-- TODO: VCard is a mess right now. To be done later -->
+                    </excludes>
 				</configuration>
 			</plugin>
 

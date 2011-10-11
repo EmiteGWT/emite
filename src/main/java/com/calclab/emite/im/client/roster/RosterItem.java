@@ -26,14 +26,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.stanzas.HasJID;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * Represents a item (contact) in the Roster. Usually you don't create this
@@ -43,8 +41,6 @@ import com.calclab.emite.core.client.stanzas.Presence.Type;
  */
 public class RosterItem implements HasJID {
 
-	private static final PacketMatcher GROUP_FILTER = MatcherFactory.byName("group");
-
 	/**
 	 * Create a new RosterItem based on given a <item> stanza
 	 * 
@@ -52,15 +48,12 @@ public class RosterItem implements HasJID {
 	 *            the stanza
 	 * @return a new roster item instance
 	 */
-	static RosterItem parse(final IPacket packet) {
+	static RosterItem parse(final XMLPacket packet) {
 		final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet.getAttribute("subscription")),
 				packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
-		final List<? extends IPacket> groups = packet.getChildren(GROUP_FILTER);
-
-		String groupName;
-		for (final IPacket group : groups) {
-			groupName = group.getText();
-			item.addToGroup(groupName);
+		
+		for (final XMLPacket group : packet.getChildren("group")) {
+			item.addToGroup(group.getText());
 		}
 		return item;
 	}
@@ -125,9 +118,10 @@ public class RosterItem implements HasJID {
 	 *            the parent stanza to append the child to
 	 * @return the child stanza created
 	 */
-	public IPacket addStanzaTo(final IPacket parent) {
-		final IPacket packet = parent.addChild("item", null);
-		packet.With("jid", jid.toString()).With("name", name);
+	public XMLPacket addStanzaTo(final XMLPacket parent) {
+		final XMLPacket packet = parent.addChild("item");
+		packet.setAttribute("jid", jid.toString());
+		packet.setAttribute("name", name);
 		for (final String group : groups) {
 			packet.addChild("group", null).setText(group);
 		}

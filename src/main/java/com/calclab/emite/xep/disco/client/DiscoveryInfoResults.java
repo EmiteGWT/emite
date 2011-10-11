@@ -25,10 +25,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
  * A discovery info result object.
@@ -40,14 +38,11 @@ import com.calclab.emite.core.client.stanzas.IQ;
  * @see http://xmpp.org/extensions/xep-0030.html#info
  */
 public class DiscoveryInfoResults {
-	public static final PacketMatcher FEATURES_MATCHER = MatcherFactory.byName("feature");
-	public static final PacketMatcher IDENTITIES_MATCHER = MatcherFactory.byName("identity");
-	public static final PacketMatcher INFO_RESULT_MATCHER = MatcherFactory.byNameAndXMLNS("query", "http://jabber.org/protocol/disco#info");
 
 	private HashMap<String, Feature> features;
 	private List<Identity> identities;
 
-	private final IPacket result;
+	private final XMLPacket result;
 
 	/**
 	 * Create a DiscoveryInfoResult from an IQ response. The response MUST be of
@@ -57,7 +52,7 @@ public class DiscoveryInfoResults {
 	 */
 	public DiscoveryInfoResults(final IQ iq) {
 		assert IQ.Type.result.equals(iq.getType());
-		result = iq.getFirstChild(INFO_RESULT_MATCHER);
+		result = iq.getChild("query", "http://jabber.org/protocol/disco#info");
 	}
 
 	public boolean areFeaturedSupported(final String... featuresName) {
@@ -70,30 +65,30 @@ public class DiscoveryInfoResults {
 
 	public Collection<Feature> getFeatures() {
 		if (features == null) {
-			features = processFeatures(result.getChildren(FEATURES_MATCHER));
+			features = processFeatures(result.getChildren("feature"));
 		}
 		return features.values();
 	}
 
 	public Collection<Identity> getIdentities() {
 		if (identities == null) {
-			identities = processIdentity(result.getChildren(IDENTITIES_MATCHER));
+			identities = processIdentity(result.getChildren("identity"));
 		}
 		return identities;
 	}
 
-	private static HashMap<String, Feature> processFeatures(final List<? extends IPacket> children) {
+	private static HashMap<String, Feature> processFeatures(final List<XMLPacket> children) {
 		final HashMap<String, Feature> features = new HashMap<String, Feature>();
-		for (final IPacket child : children) {
+		for (final XMLPacket child : children) {
 			final Feature feature = Feature.fromPacket(child);
 			features.put(feature.var, feature);
 		}
 		return features;
 	}
 
-	private static List<Identity> processIdentity(final List<? extends IPacket> children) {
+	private static List<Identity> processIdentity(final List<XMLPacket> children) {
 		final List<Identity> identities = new ArrayList<Identity>();
-		for (final IPacket child : children) {
+		for (final XMLPacket child : children) {
 			identities.add(Identity.fromPacket(child));
 		}
 		return identities;

@@ -23,19 +23,18 @@ package com.calclab.emite.xep.dataforms.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * 
  * XEP-0004 Form
  * 
  */
-public class Form extends BasicStanza {
+public class Form implements HasXML {
 
-	public enum Type {
+	public static enum Type {
 		/**
 		 * The form-processing entity is asking the form-submitting entity to
 		 * complete a form.
@@ -60,67 +59,59 @@ public class Form extends BasicStanza {
 		result
 	}
 
-	private static final String DATA_XMLS = "jabber:x:data";
-	private static final String X = "x";
-	private static final String TITLE = "title";
-	private static final String INSTRUCTIONS = "instructions";
+	private final XMLPacket xml;
 
-	List<String> instructions;
-	private IPacket x;
-	List<Field> fields;
-	List<Item> items;
-	Reported reported;
-
-	public Form(final IPacket stanza) {
-		super(stanza);
+	public Form(final XMLPacket xml) {
+		this.xml = xml;
 	}
 
 	public Form(final Type type) {
-		super(X, DATA_XMLS);
+		this(XMLUtils.createPacket("x", "jabber:x:data"));
 		setType(type);
 	}
 
-	public void addField(final Field field) {
-		parseFields();
-		fields.add(field);
-		super.addChild(field);
+	public String getTitle() {
+		return xml.getChildText("title");
 	}
 
-	public void addInstruction(final String instruction) {
-		parseInstructions();
-		instructions.add(instruction);
-		super.addChild(INSTRUCTIONS).setText(instruction);
-	}
-
-	public void addItem(final Item item) {
-		parseItems();
-		items.add(item);
-		super.addChild(item);
-	}
-
-	public void addToReported(final Field field) {
-		parseReported();
-		IPacket reportedPacket = getReportedPacket();
-		if (reportedPacket == NoPacket.INSTANCE) {
-			reportedPacket = super.addChild(Reported.REPORTED);
-		}
-		reportedPacket.addChild(field);
-		reported.addChild(field);
-	}
-
-	public List<Field> getFields() {
-		parseFields();
-		return fields;
+	public void setTitle(final String title) {
+		xml.setChildText("title", title);
 	}
 
 	public List<String> getInstructions() {
-		parseInstructions();
+		final List<String> instructions = new ArrayList<String>();
+		for (final XMLPacket instruction : xml.getChildren("instructions")) {
+			instructions.add(instruction.getText());
+		}
 		return instructions;
 	}
 
+	public void addInstruction(final String instruction) {
+		xml.addChild("instructions").setText(instruction);
+	}
+
+	public List<Field> getFields() {
+		final List<Field> fields = new ArrayList<Field>();
+		for (final XMLPacket fieldPacket : xml.getChildren("field")) {
+			fields.add(new Field(fieldPacket));
+		}
+		return fields;
+	}
+
+	public void addField(final Field field) {
+		xml.addChild(field);
+	}
+
 	public List<Item> getItems() {
-		parseItems();
+		final List<Item> items = new ArrayList<Item>();
+		for (final XMLPacket itemPacket : xml.getChildren("item")) {
+			items.add(new Item(itemPacket));
+		}
 		return items;
+	}
+
+	public void addItem(final Item item) {
+		xml.addChild(item);
 	}
 
 	/**
@@ -133,67 +124,27 @@ public class Form extends BasicStanza {
 	 * any) that matches the request.
 	 */
 	public Reported getReported() {
-		parseReported();
-		return reported;
+		return new Reported(xml.getFirstChild("reported"));
 	}
 
-	public String getTitle() {
-		return x().getFirstChild(TITLE).getText();
+	public void addReported(final Field field) {
+		XMLPacket reportedPacket = xml.getFirstChild("reported");
+		if (reportedPacket == null) {
+			reportedPacket = xml.addChild("reported");
+		}
+		reportedPacket.addChild(field);
 	}
 
 	public Type getType() {
-		return Type.valueOf(x().getAttribute(TYPE));
-	}
-
-	public void setTitle(final String title) {
-		setTextToChild(TITLE, title);
+		return Type.valueOf(xml.getAttribute("type"));
 	}
 
 	public void setType(final Type type) {
-		super.setAttribute(TYPE, type.toString());
+		xml.setAttribute("type", type.toString());
 	}
 
-	public Form WithField(final Field field) {
-		addField(field);
-		return this;
+	public XMLPacket getXML() {
+		return xml;
 	}
 
-	public IPacket x() {
-		if (x == null) {
-			x = super.getFirstChildInDeep(MatcherFactory.byNameAndXMLNS(X, DATA_XMLS));
-		}
-		return x;
-	}
-
-	private IPacket getReportedPacket() {
-		return x().getFirstChild(MatcherFactory.byName(Reported.REPORTED));
-	}
-
-	private void parseFields() {
-		fields = Field.parseFields(fields, x());
-	}
-
-	private void parseInstructions() {
-		if (instructions == null) {
-			instructions = new ArrayList<String>();
-			for (final IPacket instruction : x().getChildren(MatcherFactory.byName(INSTRUCTIONS))) {
-				instructions.add(instruction.getText());
-			}
-		}
-	}
-
-	private void parseItems() {
-		if (items == null) {
-			items = new ArrayList<Item>();
-			for (final IPacket itemPacket : x().getChildren(MatcherFactory.byName(Item.ITEM))) {
-				items.add(new Item(itemPacket));
-			}
-		}
-	}
-
-	private void parseReported() {
-		if (reported == null) {
-			reported = new Reported(getReportedPacket());
-		}
-	}
 }

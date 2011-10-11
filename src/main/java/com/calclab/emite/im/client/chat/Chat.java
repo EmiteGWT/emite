@@ -47,7 +47,7 @@ public interface Chat {
 	 * @param handler
 	 *            the message handler
 	 */
-	public HandlerRegistration addBeforeMessageReceivedHandler(BeforeMessageReceivedEvent.Handler handler);
+	HandlerRegistration addBeforeMessageReceivedHandler(BeforeMessageReceivedEvent.Handler handler);
 	
 	/**
 	 * Add a handler to know when a message is received in this chat
@@ -55,7 +55,7 @@ public interface Chat {
 	 * @param handler
 	 * @return a handler registration object to detach the handler
 	 */
-	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
+	HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
 	 * A a handler to know when a message is going to be sent. It allows the
@@ -65,7 +65,7 @@ public interface Chat {
 	 * @param handler
 	 *            the message handeler
 	 */
-	public HandlerRegistration addBeforeMessageSentHandler(BeforeMessageSentEvent.Handler handler);
+	HandlerRegistration addBeforeMessageSentHandler(BeforeMessageSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when this chat has sent a message
@@ -75,7 +75,7 @@ public interface Chat {
 	 * @return a handler registration object to detach the handler
 	 * 
 	 */
-	public HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
+	HandlerRegistration addMessageSentHandler(MessageSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know whenever a chat status property changed. Normally,
@@ -88,7 +88,7 @@ public interface Chat {
 	 *         handler
 	 * @see ChatStatus
 	 */
-	public HandlerRegistration addChatStatusChangedHandler(boolean sendCurrentStatus, ChatStatusChangedEvent.Handler handler);
+	HandlerRegistration addChatStatusChangedHandler(boolean sendCurrentStatus, ChatStatusChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when an error has occur in this chat
@@ -96,28 +96,28 @@ public interface Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addErrorHandler(ErrorEvent.Handler handler);
+	HandlerRegistration addErrorHandler(ErrorEvent.Handler handler);
 
 	/**
 	 * Close a chat. This methos is normally called by the chat manager
 	 */
-	public void close();
+	void close();
 	
 	/**
 	 * Get the current chat's status
 	 * 
 	 * @return
 	 */
-	public ChatStatus getStatus();
+	ChatStatus getStatus();
 
-	public String getID();
+	String getID();
 
 	/**
 	 * Get the chat properties of the chat
 	 * 
 	 * @return the chat properties
 	 */
-	public ChatProperties getProperties();
+	ChatProperties getProperties();
 
 	/**
 	 * Returns this conversation URI. If this conversation is a normal chat, the
@@ -127,26 +127,26 @@ public interface Chat {
 	 * 
 	 * @return the conversation's URI
 	 */
-	public XmppURI getURI();
+	XmppURI getURI();
 
 	/**
 	 * Allows to know if a chat is initiated by the current user
 	 * 
 	 * @return Return true if you started the conversation. False otherwise
 	 */
-	public boolean isInitiatedByMe();
+	boolean isInitiatedByMe();
 
 	/**
 	 * Return true if the chat is ready to be used
 	 * 
 	 * @return
 	 */
-	public boolean isReady();
+	boolean isReady();
 
 	/**
 	 * Open a chat. This method is normally called by the chat manager
 	 */
-	public void open();
+	void open();
 
 	/**
 	 * Send a message to the uri of this chat
@@ -156,6 +156,6 @@ public interface Chat {
 	 * @throws RuntimeException
 	 *             if chat status != ready
 	 */
-	public void send(Message message);
+	void send(Message message);
 
 }

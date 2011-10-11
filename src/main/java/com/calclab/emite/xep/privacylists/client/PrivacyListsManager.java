@@ -20,11 +20,10 @@
 
 package com.calclab.emite.xep.privacylists.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -54,17 +53,15 @@ public class PrivacyListsManager {
 	 */
 	public void blockUserBasedOnJID(final String listName, final XmppURI uri, final int order) {
 		final IQ iq = new IQ(IQ.Type.set);
-		final IPacket list = iq.addQuery("jabber:iq:privacy").addChild("list", null);
-		list.With("name", listName);
-		list.addChild("item", null).With("type", "jid").With("value", uri.getJID().toString()).With("action", "deny").With("order", String.valueOf(order));
+		final XMLPacket list = iq.addChild("query", "jabber:iq:privacy").addChild("list", null);
+		list.setAttribute("name", listName);
+		final XMLPacket item = list.addChild("item", null);
+		item.setAttribute("type", "jid");
+		item.setAttribute("value", uri.getJID().toString());
+		item.setAttribute("action", "deny");
+		item.setAttribute("order", String.valueOf(order));
 
-		session.sendIQ("privacyLists", iq, new IQCallback() {
-			@Override
-			public void onIQ(final IQ iq) {
-				// here you can handle the response... i think in this case is
-				// not needed
-			}
-		});
-
+		session.sendIQ("privacyLists", iq, null);
+		// here you can handle the response... i think in this case is not needed
 	}
 }

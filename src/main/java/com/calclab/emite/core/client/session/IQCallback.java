@@ -23,5 +23,6 @@ package com.calclab.emite.core.client.session;
 import com.calclab.emite.core.client.stanzas.IQ;
 
 public interface IQCallback {
-	void onIQ(IQ iq);
+	void onIQSuccess(IQ iq);
+	void onIQFailure(IQ iq);
 }

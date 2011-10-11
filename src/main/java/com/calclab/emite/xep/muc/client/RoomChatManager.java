@@ -36,7 +36,7 @@ public interface RoomChatManager extends ChatManager<RoomChat> {
 	 * @param invitation
 	 *            the invitation event to be accepted
 	 */
-	public RoomChat acceptRoomInvitation(RoomInvitation invitation);
+	RoomChat acceptRoomInvitation(RoomInvitation invitation);
 	
 	/**
 	 * Add a handler to track chat changes. The following changes can occur from
@@ -44,7 +44,7 @@ public interface RoomChatManager extends ChatManager<RoomChat> {
 	 * 
 	 * @param handler
 	 */
-	public HandlerRegistration addRoomChatChangedHandler(RoomChatChangedEvent.Handler handler);
+	HandlerRegistration addRoomChatChangedHandler(RoomChatChangedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a room invitation has arrived
@@ -52,16 +52,16 @@ public interface RoomChatManager extends ChatManager<RoomChat> {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationReceivedEvent.Handler handler);
+	HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationReceivedEvent.Handler handler);
 
 	/**
 	 * Obtain the default history options applied to all new rooms
 	 * 
 	 * @return
 	 */
-	public HistoryOptions getDefaultHistoryOptions();
+	HistoryOptions getDefaultHistoryOptions();
 
-	public RoomChat open(final XmppURI uri, HistoryOptions historyOptions);
+	RoomChat open(final XmppURI uri, HistoryOptions historyOptions);
 
-	public void setDefaultHistoryOptions(HistoryOptions historyOptions);
+	void setDefaultHistoryOptions(HistoryOptions historyOptions);
 }

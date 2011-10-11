@@ -23,7 +23,7 @@ package com.calclab.emite.xep.storage.client;
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.HasXML;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -32,8 +32,6 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class PrivateStorageManagerImpl implements PrivateStorageManager {
-	private static final String XMLNS = "jabber:iq:private";
-	private static final String ID = "priv";
 
 	private final XmppSession session;
 
@@ -43,31 +41,35 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 	}
 
 	@Override
-	public void retrieve(final SimpleStorageData data, final PrivateStorageResponseEvent.Handler handler) {
-		final IQ iq = new IQ(Type.get);
-		iq.addQuery(XMLNS).addChild(data);
+	public void retrieve(final HasXML data, final PrivateStorageResponseEvent.Handler handler) {
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.addChild("query", "jabber:iq:private").addChild(data);
 
-		session.sendIQ(ID, iq, new IQCallback() {
+		session.sendIQ("priv", iq, new IQCallback() {
 			@Override
-			public void onIQ(final IQ iq) {
-				if (IQ.isSuccess(iq)) {
-					handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
-				}
+			public void onIQSuccess(final IQ iq) {
+				handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
+			}
+			
+			@Override
+			public void onIQFailure(IQ iq) {
 			}
 		});
 	}
 
 	@Override
-	public void store(final SimpleStorageData data, final PrivateStorageResponseEvent.Handler handler) {
-		final IQ iq = new IQ(Type.set);
-		iq.addQuery(XMLNS).addChild(data);
+	public void store(final HasXML data, final PrivateStorageResponseEvent.Handler handler) {
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.addChild("query", "jabber:iq:private").addChild(data);
 
-		session.sendIQ(ID, iq, new IQCallback() {
+		session.sendIQ("priv", iq, new IQCallback() {
 			@Override
-			public void onIQ(final IQ iq) {
-				if (IQ.isSuccess(iq)) {
-					handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
-				}
+			public void onIQSuccess(final IQ iq) {
+				handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
+			}
+			
+			@Override
+			public void onIQFailure(IQ iq) {
 			}
 		});
 	}

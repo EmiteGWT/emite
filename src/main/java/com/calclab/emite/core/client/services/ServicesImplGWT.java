@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.packet.GWTPacket;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -35,11 +32,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ClosingEvent;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.XMLParser;
-import com.google.gwt.xml.client.impl.DOMParseException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -106,17 +98,6 @@ public class ServicesImplGWT implements Services, Window.ClosingHandler {
 		} catch (final Exception e) {
 			logger.severe("Some GWT connector exception: " + e.getMessage());
 			throw new ConnectorException(e.getMessage());
-		}
-	}
-
-	@Override
-	public IPacket toXML(final String xml) {
-		try {
-			final Document parsed = XMLParser.parse(xml);
-			final Node body = parsed.getChildNodes().item(0);
-			return new GWTPacket((Element) body);
-		} catch (final DOMParseException exception) {
-			return NoPacket.INSTANCE;
 		}
 	}
 

@@ -26,8 +26,8 @@ import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -43,7 +43,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addBeforeStanzaSentHandler(BeforeStanzaSentEvent.Handler handler);
+	HandlerRegistration addBeforeStanzaSentHandler(BeforeStanzaSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a IQ has been received
@@ -51,7 +51,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addIQReceivedHandler(IQReceivedEvent.Handler handler);
+	HandlerRegistration addIQReceivedHandler(IQReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a Message has been received
@@ -59,7 +59,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
+	HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a Presence has been received
@@ -67,7 +67,7 @@ public interface XmppSession {
 	 * @param handler
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
+	HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to track session status changes. If sendCurrent is true, the
@@ -81,21 +81,21 @@ public interface XmppSession {
 	 * 
 	 * @return a way to remove the handler
 	 */
-	public HandlerRegistration addSessionStatusChangedHandler(boolean sendCurrent, SessionStatusChangedEvent.Handler handler);
+	HandlerRegistration addSessionStatusChangedHandler(boolean sendCurrent, SessionStatusChangedEvent.Handler handler);
 
 	/**
 	 * Returns the current user xmpp uri
 	 * 
 	 * @return the current user xmpp uri
 	 */
-	public XmppURI getCurrentUserURI();
+	XmppURI getCurrentUserURI();
 
 	/**
 	 * Returns the current status
 	 * 
 	 * @return The current status as enum
 	 */
-	public SessionStatus getStatus();
+	SessionStatus getStatus();
 
 	/**
 	 * Set the current session's status
@@ -104,12 +104,12 @@ public interface XmppSession {
 	 *            the current session status
 	 * @see SessionStatus
 	 */
-	public void setStatus(SessionStatus status);
+	void setStatus(SessionStatus status);
 
 	/**
 	 * Check if the session is ready to send stanzas
 	 */
-	public boolean isReady();
+	boolean isReady();
 
 	/**
 	 * Check whenever or not the session is in the given status
@@ -118,7 +118,7 @@ public interface XmppSession {
 	 *            the expected status of the session
 	 * @return true if the expected status is the actual status
 	 */
-	public boolean isStatus(SessionStatus expectedStatus);
+	boolean isStatus(SessionStatus expectedStatus);
 
 	/**
 	 * <p>
@@ -131,28 +131,13 @@ public interface XmppSession {
 	 * 
 	 * @param credentials
 	 */
-	public void login(Credentials credentials);
-
-	/**
-	 * <p>
-	 * Start a login process with the current xmpp uri and password. It uses the
-	 * login(credentials) method with not encoded password.
-	 * </p>
-	 * 
-	 * @param uri
-	 *            the user's uri to login
-	 * @param password
-	 *            the user's password (plain)
-	 * 
-	 * @see login
-	 */
-	public void login(final XmppURI uri, final String password);
+	void login(Credentials credentials);
 
 	/**
 	 * Start a logout process in the current session. Use obnLoggedOut to know
 	 * when you are really logged out.
 	 */
-	public void logout();
+	void logout();
 
 	/**
 	 * Call this method to pause the session. You can use the given object
@@ -163,7 +148,7 @@ public interface XmppSession {
 	 * @return The StreamSettings object if the session was ready, null
 	 *         otherwise
 	 */
-	public StreamSettings pause();
+	StreamSettings pause();
 
 	/**
 	 * Call this method to resume a session.
@@ -175,7 +160,7 @@ public interface XmppSession {
 	 * @param settings
 	 *            the stream settings given by the pause method
 	 */
-	public void resume(XmppURI userURI, StreamSettings settings);
+	void resume(XmppURI userURI, StreamSettings settings);
 
 	/**
 	 * Send a stanza to the server. This method overrides the "from" uri
@@ -188,7 +173,7 @@ public interface XmppSession {
 	 * @param stanza
 	 *            the stanza to be sent
 	 */
-	public void send(final IPacket stanza);
+	void send(final Stanza stanza);
 
 	/**
 	 * A helper method that allows to send a IQ stanza and attach a listener to
@@ -212,6 +197,6 @@ public interface XmppSession {
 	 *            be null
 	 * 
 	 */
-	public void sendIQ(final String category, final IQ iq, final IQCallback iqHandler);
+	void sendIQ(final String category, final IQ iq, final IQCallback iqHandler);
 
 }

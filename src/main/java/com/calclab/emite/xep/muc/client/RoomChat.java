@@ -41,7 +41,7 @@ public interface RoomChat extends Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addOccupantChangedHandler(OccupantChangedEvent.Handler handler);
+	HandlerRegistration addOccupantChangedHandler(OccupantChangedEvent.Handler handler);
 
 	/**
 	 * Adds a handler to know when a presence arrives to this room
@@ -49,7 +49,7 @@ public interface RoomChat extends Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
+	HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
 
 	/**
 	 * Adds a handler to know when a invitation to this room is going to be
@@ -58,7 +58,7 @@ public interface RoomChat extends Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addBeforeRoomInvitationSentHandler(BeforeRoomInvitationSentEvent.Handler handler);
+	HandlerRegistration addBeforeRoomInvitationSentHandler(BeforeRoomInvitationSentEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a room invitation has been sent
@@ -66,9 +66,9 @@ public interface RoomChat extends Chat {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentEvent.Handler handler);
+	HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentEvent.Handler handler);
 
-	public HandlerRegistration addRoomSubjectChangedHandler(RoomSubjectChangedEvent.Handler handler);
+	HandlerRegistration addRoomSubjectChangedHandler(RoomSubjectChangedEvent.Handler handler);
 	
 	/**
 	 * Find an occupant with the given occupant uri
@@ -77,7 +77,7 @@ public interface RoomChat extends Chat {
 	 *            occupant uri is the room jid with nick name as resource
 	 * @return the occupant if found, null if not
 	 */
-	public abstract Occupant getOccupantByOccupantUri(XmppURI occupantUri);
+	Occupant getOccupantByOccupantUri(XmppURI occupantUri);
 
 	/**
 	 * Find an occupant with the given user jid
@@ -86,7 +86,7 @@ public interface RoomChat extends Chat {
 	 *            the user's uri (resource is ignored)
 	 * @return the occupant if found, null if not
 	 */
-	public abstract Occupant getOccupantByUserUri(XmppURI userUri);
+	Occupant getOccupantByUserUri(XmppURI userUri);
 
 	/**
 	 * Return the occupants of this room. THIS IS THE ACTUAL BACKEND
@@ -94,14 +94,14 @@ public interface RoomChat extends Chat {
 	 * 
 	 * @return
 	 */
-	public Collection<Occupant> getOccupants();
+	Collection<Occupant> getOccupants();
 
 	/**
 	 * Return the current number of occupants of this room
 	 * 
 	 * @return
 	 */
-	public abstract int getOccupantsCount();
+	int getOccupantsCount();
 
 	/**
 	 * To check if is an echo message
@@ -109,11 +109,11 @@ public interface RoomChat extends Chat {
 	 * @param message
 	 * @return true if this message is a room echo
 	 */
-	public abstract boolean isComingFromMe(final Message message);
+	boolean isComingFromMe(final Message message);
 
-	public abstract boolean isUserMessage(Message message);
+	boolean isUserMessage(Message message);
 
-	public void reEnter(final HistoryOptions historyOptions);
+	void reEnter(final HistoryOptions historyOptions);
 
 	/**
 	 * 
@@ -124,13 +124,13 @@ public interface RoomChat extends Chat {
 	 * @param reasonText
 	 *            reason for the invitation
 	 */
-	public void sendInvitationTo(final XmppURI userJid, final String reasonText);
+	void sendInvitationTo(final XmppURI userJid, final String reasonText);
 
 	// public Occupant setOccupantPresence(final XmppURI uri, final String
 	// affiliation, final String role,
 	// final Show show, final String statusMessage);
 
-	public void sendPrivateMessage(final Message message, final String nick);
+	void sendPrivateMessage(final Message message, final String nick);
 
 	/**
 	 * Update my status to other occupants.
@@ -138,7 +138,7 @@ public interface RoomChat extends Chat {
 	 * @param statusMessage
 	 * @param show
 	 */
-	public void setStatus(final String statusMessage, final Show show);
+	void setStatus(final String statusMessage, final Show show);
 	
 	/**
 	 * Request a subject change on the given room
@@ -146,6 +146,6 @@ public interface RoomChat extends Chat {
 	 * @param room
 	 * @param subjectText
 	 */
-	public void requestSubjectChange(final String subjectText);
+	void requestSubjectChange(final String subjectText);
 
 }

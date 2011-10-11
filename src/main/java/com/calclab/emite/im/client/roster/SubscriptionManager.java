@@ -39,7 +39,7 @@ public interface SubscriptionManager {
 	 * @param handler
 	 * @return
 	 */
-	public HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedEvent.Handler handler);
+	HandlerRegistration addSubscriptionRequestReceivedHandler(SubscriptionRequestReceivedEvent.Handler handler);
 
 	/**
 	 * Approves previously subscription request stanza
@@ -49,7 +49,7 @@ public interface SubscriptionManager {
 	 * @param nick
 	 *            the desired roster nick
 	 */
-	public void approveSubscriptionRequest(XmppURI jid, String nick);
+	void approveSubscriptionRequest(XmppURI jid, String nick);
 
 	/**
 	 * Cancels a previously-granted subscription
@@ -57,7 +57,7 @@ public interface SubscriptionManager {
 	 * @param jid
 	 *            the entity's jid (resource ignored)
 	 */
-	public void cancelSubscription(XmppURI jid);
+	void cancelSubscription(XmppURI jid);
 
 	/**
 	 * Refuse a previously subscription request stanza
@@ -65,7 +65,7 @@ public interface SubscriptionManager {
 	 * @param jid
 	 *            the other entity's JID
 	 */
-	public void refuseSubscriptionRequest(XmppURI jid);
+	void refuseSubscriptionRequest(XmppURI jid);
 
 	/**
 	 * Send a request to subscribe to another entity's presence
@@ -73,7 +73,7 @@ public interface SubscriptionManager {
 	 * @param jid
 	 *            the another entity's jid (resource ignored)
 	 */
-	public void requestSubscribe(XmppURI jid);
+	void requestSubscribe(XmppURI jid);
 
 	/**
 	 * Unsubscribes from the presence of another entity
@@ -81,5 +81,5 @@ public interface SubscriptionManager {
 	 * @param jid
 	 *            the another entity's jid (resource ignored)
 	 */
-	public void unsubscribe(XmppURI jid);
+	void unsubscribe(XmppURI jid);
 }

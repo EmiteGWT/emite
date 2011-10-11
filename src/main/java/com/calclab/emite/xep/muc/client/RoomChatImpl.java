@@ -21,27 +21,22 @@
 package com.calclab.emite.xep.muc.client;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.Map;
 
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.core.client.stanzas.Presence.Show;
-import com.calclab.emite.core.client.stanzas.Presence.Type;
 import com.calclab.emite.core.client.util.XmppDateTime;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
@@ -56,10 +51,8 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  */
 public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
 	
-	private static final PacketMatcher ROOM_CREATED = MatcherFactory.byNameAndXMLNS("x", "http://jabber.org/protocol/muc#user");
-
-	private final HashMap<XmppURI, Occupant> occupantsByOccupantUri;
-	private final LinkedHashMap<XmppURI, Occupant> occupantsByUserUri;
+	private final Map<XmppURI, Occupant> occupantsByOccupantUri;
+	private final Map<XmppURI, Occupant> occupantsByUserUri;
 	
 	/**
 	 * Create a new room with the given properties. Room are created by
@@ -88,18 +81,17 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
 		final XmppURI occupantURI = presence.getFrom();
-		final Type type = presence.getType();
-		if (type == Type.error) {
+		final Presence.Type type = presence.getType();
+		if (type == Presence.Type.error) {
 			eventBus.fireEventFromSource(new ErrorEvent(ChatErrors.errorPresence, "We received a presence error", presence), this);
-		} else if (type == Type.unavailable) {
+		} else if (type == Presence.Type.unavailable) {
 			removeOccupant(occupantURI);
 			if (occupantURI.equalsNoResource(session.getCurrentUserURI())) {
 				close();
 			}
 		} else {
-			final List<? extends IPacket> children = presence.getChildren(ROOM_CREATED);
-			for (final IPacket child : children) {
-				final IPacket item = child.getFirstChild("item");
+			for (final XMLPacket child : presence.getXML().getChildren("x", "http://jabber.org/protocol/muc#user")) {
+				final XMLPacket item = child.getFirstChild("item");
 				final String affiliation = item.getAttribute("affiliation");
 				final String role = item.getAttribute("role");
 				final XmppURI userUri = XmppURI.uri(item.getAttribute("jid"));
@@ -190,7 +182,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	@Override
 	public void close() {
 		if (ChatStatus.ready.equals(properties.getStatus())) {
-			session.send(new Presence(Type.unavailable, null, getURI()));
+			session.send(new Presence(Presence.Type.unavailable, null, getURI()));
 			properties.setStatus(ChatStatus.locked);
 		}
 	}
@@ -242,22 +234,22 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 
 	@Override
 	public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
-		final BasicStanza message = new BasicStanza("message", null);
+		final Stanza message = new Message();
 		message.setFrom(session.getCurrentUserURI());
 		message.setTo(getURI().getJID());
-		final IPacket x = message.addChild("x", "http://jabber.org/protocol/muc#user");
-		final IPacket invite = x.addChild("invite", null);
+		final XMLPacket invite = message.getXML().addChild("x", "http://jabber.org/protocol/muc#user").addChild("invite");
 		invite.setAttribute("to", userJid.toString());
-		final IPacket reason = invite.addChild("reason", null);
-		reason.setText(reasonText);
+		invite.setChildText("reason", reasonText);
 		eventBus.fireEventFromSource(new BeforeRoomInvitationSentEvent(message, invite), this);
 		session.send(message);
 		eventBus.fireEventFromSource(new RoomInvitationSentEvent(userJid, reasonText), this);
 	}
 
 	@Override
-	public void setStatus(final String statusMessage, final Show show) {
-		final Presence presence = Presence.build(statusMessage, show);
+	public void setStatus(final String statusMessage, final Presence.Show show) {
+		final Presence presence = new Presence();
+		presence.setStatus(statusMessage);
+		presence.setShow(show);
 		presence.setTo(getURI());
 		// presence.addChild("x", "http://jabber.org/protocol/muc");
 		// presence.setPriority(0);
@@ -277,10 +269,10 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	 */
 	protected Presence createEnterPresence(final HistoryOptions historyOptions) {
 		final Presence presence = new Presence(null, null, getURI());
-		final IPacket x = presence.addChild("x", "http://jabber.org/protocol/muc");
+		final XMLPacket x = presence.getXML().addChild("x", "http://jabber.org/protocol/muc");
 		presence.setPriority(0);
 		if (historyOptions != null) {
-			final IPacket h = x.addChild("history");
+			final XMLPacket h = x.addChild("history");
 			if (historyOptions.maxchars >= 0) {
 				h.setAttribute("maxchars", Integer.toString(historyOptions.maxchars));
 			}
@@ -297,26 +289,29 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		return presence;
 	}
 
-	protected static boolean isNewRoom(final IPacket xtension) {
+	protected static boolean isNewRoom(final XMLPacket xtension) {
 		final String code = xtension.getFirstChild("status").getAttribute("code");
 		return code != null && code.equals("201");
 	}
 
 	protected void requestCreateInstantRoom() {
-		final IQ iq = new IQ(IQ.Type.set, getURI().getJID());
-		iq.addQuery("http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").With("type", "submit");
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.setTo(getURI().getJID());
+		iq.addChild("query", "http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").setAttribute("type", "submit");
 
 		session.sendIQ("rooms", iq, new IQCallback() {
 			@Override
-			public void onIQ(final IQ iq) {
-				if (IQ.isSuccess(iq)) {
-					setStatus(ChatStatus.ready);
-				}
+			public void onIQSuccess(final IQ iq) {
+				setStatus(ChatStatus.ready);
+			}
+			
+			@Override
+			public void onIQFailure(IQ iq) {
 			}
 		});
 	}
 
-	protected Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Show show,
+	protected Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Presence.Show show,
 			final String statusMessage) {
 		Occupant occupant = getOccupantByOccupantUri(occupantUri);
 		if (occupant == null) {
@@ -335,11 +330,11 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	// TODO: check occupants affiliation to see if the user can do that!!
 	@Override
 	public void requestSubjectChange(final String subjectText) {
-		final BasicStanza message = new BasicStanza("message", null);
+		final Message message = new Message();
 		message.setFrom(session.getCurrentUserURI());
 		message.setTo(getURI().getJID());
-		message.setType(Message.Type.groupchat.toString());
-		final IPacket subject = message.addChild("subject", null);
+		message.setType(Message.Type.groupchat);
+		final XMLPacket subject = message.getXML().addChild("subject", null);
 		subject.setText(subjectText);
 		session.send(message);
 	}
