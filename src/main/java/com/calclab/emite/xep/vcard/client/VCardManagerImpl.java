@@ -38,12 +38,12 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 @Singleton
 public class VCardManagerImpl implements VCardManager {
 	private static final String ID_PREFIX = "vcard";
-	
+
 	private final EventBus eventBus;
 	private final XmppSession session;
 
 	@Inject
-	public VCardManagerImpl(@Named("emite") EventBus eventBus, XmppSession session) {
+	public VCardManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = eventBus;
 		this.session = session;
 	}

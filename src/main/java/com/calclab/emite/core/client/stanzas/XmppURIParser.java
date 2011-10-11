@@ -24,7 +24,7 @@ package com.calclab.emite.core.client.stanzas;
  * A XmppURI parser and validator
  */
 public class XmppURIParser {
-	
+
 	private static final String PREFIX = "xmpp:";
 
 	public static final String REGEXP_NODE = "^[a-z0-9\\.\\-_\\+]+$";

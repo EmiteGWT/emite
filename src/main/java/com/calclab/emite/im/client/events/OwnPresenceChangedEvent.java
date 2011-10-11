@@ -25,10 +25,9 @@ import com.google.web.bindery.event.shared.Event;
 
 /**
  * The current user presence has changed.
- * 
  */
 public class OwnPresenceChangedEvent extends Event<OwnPresenceChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onOwnPresenceChanged(OwnPresenceChangedEvent event);
 	}
@@ -50,7 +49,7 @@ public class OwnPresenceChangedEvent extends Event<OwnPresenceChangedEvent.Handl
 	public Presence getOldPresence() {
 		return oldPresence;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

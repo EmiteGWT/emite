@@ -24,28 +24,28 @@ import com.calclab.emite.core.client.session.SessionStatus;
 import com.google.web.bindery.event.shared.Event;
 
 public class SessionStatusChangedEvent extends Event<SessionStatusChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onSessionStatusChanged(SessionStatusChangedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final SessionStatus status;
-	
+
 	public SessionStatusChangedEvent(final SessionStatus status) {
 		assert status != null : "Status in SessionStatusChangedEvent can't be null";
 		this.status = status;
 	}
-	
+
 	public SessionStatus getStatus() {
 		return status;
 	}
-	
+
 	public boolean is(final SessionStatus status) {
 		return this.status.equals(status);
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;
@@ -55,10 +55,10 @@ public class SessionStatusChangedEvent extends Event<SessionStatusChangedEvent.H
 	protected void dispatch(final Handler handler) {
 		handler.onSessionStatusChanged(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + " " + status;
 	}
-	
+
 }

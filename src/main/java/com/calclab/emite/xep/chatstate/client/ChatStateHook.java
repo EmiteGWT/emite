@@ -34,11 +34,11 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
 public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
-	
+
 	private static final Logger logger = Logger.getLogger(ChatStateHook.class.getName());
-	
+
 	public static final String KEY = "ChatStateHook";
-	
+
 	public static enum ChatState {
 		active, composing, pause, inactive, gone
 	}
@@ -49,11 +49,11 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 
 	private final EventBus eventBus;
 	private final PairChat chat;
-	
+
 	private NegotiationStatus negotiationStatus = NegotiationStatus.notStarted;
 	private ChatState ownState;
 	private ChatState otherState;
-	
+
 	public ChatStateHook(final EventBus eventBus, final PairChat chat) {
 		this.eventBus = eventBus;
 		this.chat = chat;
@@ -61,7 +61,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 		chat.addMessageReceivedHandler(this);
 		chat.addBeforeMessageSentHandler(this);
 	}
-	
+
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		final Message message = event.getMessage();
@@ -83,18 +83,18 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 			}
 		}
 	}
-	
+
 	@Override
 	public void onBeforeMessageSent(final BeforeMessageSentEvent event) {
 		final Message message = event.getMessage();
-		
+
 		switch (negotiationStatus) {
 		case notStarted:
 			negotiationStatus = NegotiationStatus.started;
 			//$FALL-THROUGH$
 		case accepted:
 			boolean alreadyWithState = false;
-			for (ChatState state : ChatState.values()) {
+			for (final ChatState state : ChatState.values()) {
 				if (message.getXML().hasChild(state.toString())) {
 					alreadyWithState = true;
 				}
@@ -110,7 +110,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 		}
 	}
 
-	public HandlerRegistration addChatStateChangedHandler(ChatStateChangedEvent.Handler handler) {
+	public HandlerRegistration addChatStateChangedHandler(final ChatStateChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(ChatStateChangedEvent.TYPE, this, handler);
 	}
 

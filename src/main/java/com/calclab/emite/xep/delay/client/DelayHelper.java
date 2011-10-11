@@ -39,14 +39,13 @@ public class DelayHelper {
 		final XMLPacket delayPacket = stanza.getXML().getFirstChild(new XMLMatcher() {
 			@Override
 			public boolean matches(final XMLPacket packet) {
-				return "x".equals(packet.getTagName()) && "jabber:x:delay".equals(packet.getNamespace()) || "delay".equals(packet.getTagName())
-						&& "urn:xmpp:delay".equals(packet.getNamespace());
+				return "x".equals(packet.getTagName()) && "jabber:x:delay".equals(packet.getNamespace()) || "delay".equals(packet.getTagName()) && "urn:xmpp:delay".equals(packet.getNamespace());
 			}
 		});
-		
+
 		if (delayPacket == null)
 			return null;
-		
+
 		return new Delay(delayPacket);
 	}
 

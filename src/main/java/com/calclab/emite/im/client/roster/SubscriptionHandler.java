@@ -48,7 +48,7 @@ public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Han
 	}
 
 	private final SubscriptionManager manager;
-	
+
 	private Behaviour behaviour = Behaviour.none;
 
 	@Inject
@@ -57,7 +57,7 @@ public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Han
 
 		manager.addSubscriptionRequestReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
 		if (behaviour == Behaviour.acceptAll) {

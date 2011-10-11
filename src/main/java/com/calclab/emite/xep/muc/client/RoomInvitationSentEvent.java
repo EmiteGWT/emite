@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
 public class RoomInvitationSentEvent extends Event<RoomInvitationSentEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRoomInvitationSent(RoomInvitationSentEvent event);
 	}
@@ -42,11 +42,11 @@ public class RoomInvitationSentEvent extends Event<RoomInvitationSentEvent.Handl
 	public XmppURI getUserJid() {
 		return userJid;
 	}
-	
+
 	public String getReasonText() {
 		return reasonText;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

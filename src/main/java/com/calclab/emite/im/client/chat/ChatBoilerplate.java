@@ -27,8 +27,8 @@ import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageSentEvent;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Message.Type;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -52,7 +52,7 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 
 		addMessageReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		final Message message = event.getMessage();
@@ -115,12 +115,12 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 			eventBus.fireEventFromSource(new ErrorEvent(ChatErrors.sendNotReady, "The chat is not ready. You can't send messages", null), this);
 		}
 	}
-	
+
 	@Override
 	public ChatStatus getStatus() {
 		return properties.getStatus();
 	}
-	
+
 	/**
 	 * Set the current chat status
 	 * 

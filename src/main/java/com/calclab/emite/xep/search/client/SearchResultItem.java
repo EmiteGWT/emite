@@ -29,7 +29,7 @@ import com.calclab.emite.core.client.xml.XMLPacket;
  * See: http://xmpp.org/extensions/xep-0055.html#schema
  */
 public class SearchResultItem {
-	
+
 	public static SearchResultItem parse(final XMLPacket xml) {
 		final XmppURI jid = XmppURI.jid(xml.getAttribute("jid"));
 		assert jid != null;

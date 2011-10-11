@@ -43,7 +43,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 	private static final String PHOTO = "PHOTO";
 	private static final String TYPE = "TYPE";
 	private static final String BINVAL = "BINVAL";
-	
+
 	private final EventBus eventBus;
 	private final XmppSession session;
 
@@ -54,7 +54,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 
 		session.addPresenceReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
@@ -63,7 +63,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 		}
 	}
 
-	public HandlerRegistration addAvatarVCardReceivedHandler(AvatarVCardReceivedEvent.Handler handler) {
+	public HandlerRegistration addAvatarVCardReceivedHandler(final AvatarVCardReceivedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(AvatarVCardReceivedEvent.TYPE, this, handler);
 	}
 
@@ -93,13 +93,13 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 					final String photoType = photo.getChildText(TYPE);
 					final String photoBinval = photo.getChildText(BINVAL);
 					final AvatarVCard avatar = new AvatarVCard(received.getFrom(), null, photoType, photoBinval);
-					
+
 					eventBus.fireEventFromSource(new AvatarVCardReceivedEvent(avatar), this);
 				}
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 			}
 		});
 
@@ -117,9 +117,9 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 			public void onIQSuccess(final IQ iq) {
 				// TODO: add behaviour
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				// TODO: add behaviour (fire ErrorEvent)
 			}
 		});

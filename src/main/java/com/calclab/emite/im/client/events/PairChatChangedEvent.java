@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.events.ChangedEvent;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 
 public class PairChatChangedEvent extends ChangedEvent<PairChatChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onPairChatChanged(PairChatChangedEvent event);
 	}

@@ -40,9 +40,9 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see Roster
  */
 public class RosterGroup implements Iterable<RosterItem> {
-	
+
 	private final EventBus eventBus;
-	
+
 	private final String name;
 	private final HashMap<XmppURI, RosterItem> itemsByJID;
 
@@ -64,7 +64,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RosterItemChangedEvent.TYPE, this, handler);
 	}
-	
+
 	/**
 	 * Add a RosterItem to this group. A ItemAdded event is fired.
 	 * 

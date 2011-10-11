@@ -53,7 +53,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 		this.eventBus = eventBus;
 		this.session = session;
 		ownPresence = INITIAL_PRESENCE;
-		
+
 		sessionReady.disable();
 
 		// Upon connecting to the server and becoming an active resource, a

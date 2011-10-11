@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
 public class SubscriptionRequestReceivedEvent extends Event<SubscriptionRequestReceivedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onSubscriptionRequestReceived(SubscriptionRequestReceivedEvent event);
 	}
@@ -46,7 +46,7 @@ public class SubscriptionRequestReceivedEvent extends Event<SubscriptionRequestR
 	public String getNick() {
 		return nick;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

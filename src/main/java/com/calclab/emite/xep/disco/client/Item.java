@@ -28,11 +28,9 @@ import com.calclab.emite.core.client.xml.XMLPacket;
  * <li>a 'name' attribute specifying a natural-language name for the entity;</li>
  * <li>a 'node' attribute specifying a hierarchical structure.</li>
  * </ul>
- * 
- * 
  */
 public class Item {
-	
+
 	public static Item fromPacket(final XMLPacket packet) {
 		return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
 	}

@@ -24,20 +24,20 @@ import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.web.bindery.event.shared.Event;
 
 public class HashPresenceReceivedEvent extends Event<HashPresenceReceivedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onHashPresenceReceived(HashPresenceReceivedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final Presence presence;
-	
+
 	protected HashPresenceReceivedEvent(final Presence presence) {
 		assert presence != null : "Presence can't be null in HashPresenceEvent";
 		this.presence = presence;
 	}
-	
+
 	public Presence getPresence() {
 		return presence;
 	}

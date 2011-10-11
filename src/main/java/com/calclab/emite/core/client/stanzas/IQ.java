@@ -56,7 +56,7 @@ public class IQ extends Stanza {
 	public boolean isType(final Type type) {
 		return type.equals(getType());
 	}
-	
+
 	public Type getType() {
 		final String type = xml.getAttribute("type");
 		try {
@@ -73,7 +73,7 @@ public class IQ extends Stanza {
 	public XMLPacket addChild(final String name, final String xmlns) {
 		return xml.addChild(name, xmlns);
 	}
-	
+
 	public XMLPacket getChild(final String name, final String xmlns) {
 		return xml.getFirstChild(name, xmlns);
 	}

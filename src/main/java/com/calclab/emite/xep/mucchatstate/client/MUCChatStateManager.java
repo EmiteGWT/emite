@@ -42,17 +42,17 @@ import com.google.web.bindery.event.shared.EventBus;
  */
 @Singleton
 public class MUCChatStateManager implements RoomChatChangedEvent.Handler {
-	
+
 	private static final Logger logger = Logger.getLogger(MUCChatStateManager.class.getName());
-	
+
 	private final EventBus eventBus;
-	
+
 	@Inject
 	public MUCChatStateManager(@Named("emite") final EventBus eventBus, final RoomChatManager chatManager) {
 		this.eventBus = eventBus;
 		chatManager.addRoomChatChangedHandler(this);
 	}
-	
+
 	@Override
 	public void onRoomChatChanged(final RoomChatChangedEvent event) {
 		if (event.isCreated()) {

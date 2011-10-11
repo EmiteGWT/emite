@@ -22,9 +22,9 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.HashMap;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
@@ -49,7 +49,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implements RoomChatManager, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
 
 	private static final String HISTORY_OPTIONS_PROP = "history.options";
-	
+
 	private final HashMap<XmppURI, RoomChat> roomsByJID;
 	private HistoryOptions defaultHistoryOptions;
 
@@ -60,22 +60,22 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 
 		// Forward the presence messages to the room event bus
 		session.addPresenceReceivedHandler(this);
-		
+
 		// Check if the incomming message is a room invitation to the user
 		// TODO: ChatManagerBoilerplate already has a onMessageReceived
 		//session.addMessageReceivedHandler(this);
 	}
-	
+
 	@Override
-	public HandlerRegistration addRoomChatChangedHandler(RoomChatChangedEvent.Handler handler) {
+	public HandlerRegistration addRoomChatChangedHandler(final RoomChatChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RoomChatChangedEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
-	protected void fireChanged(ChangeType type, RoomChat chat) {
+	protected void fireChanged(final ChangeType type, final RoomChat chat) {
 		eventBus.fireEventFromSource(new RoomChatChangedEvent(type, chat), this);
 	}
-	
+
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
@@ -95,7 +95,7 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		super.onMessageReceived(event);
 		final Message message = event.getMessage();
-		XMLPacket child = message.getXML().getFirstChild("x", "http://jabber.org/protocol/muc#user").getFirstChild("invite");
+		final XMLPacket child = message.getXML().getFirstChild("x", "http://jabber.org/protocol/muc#user").getFirstChild("invite");
 		if (child != null) {
 			// We extract the chat properties from the message
 			final ChatProperties chatProperties = strategy.extractProperties(message);
@@ -104,7 +104,7 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 			eventBus.fireEventFromSource(new RoomInvitationReceivedEvent(invitation), this);
 		}
 	}
-	
+
 	@Override
 	public RoomChat acceptRoomInvitation(final RoomInvitation invitation) {
 		final XmppURI roomURI = invitation.getRoomURI();

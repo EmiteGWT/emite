@@ -23,8 +23,8 @@ package com.calclab.emite.im.client.chat;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.session.SessionStatus;
@@ -34,11 +34,11 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.EventBus;
 
 public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatManager<C>, SessionStatusChangedEvent.Handler, MessageReceivedEvent.Handler {
-	
+
 	protected final EventBus eventBus;
 	protected final XmppSession session;
 	protected final ChatSelectionStrategy strategy;
-	
+
 	protected final HashSet<C> chats;
 	private XmppURI currentChatUser;
 
@@ -46,15 +46,15 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 		this.eventBus = eventBus;
 		this.session = session;
 		this.strategy = strategy;
-		
+
 		chats = new HashSet<C>();
-		
+
 		session.addMessageReceivedHandler(this);
-		
+
 		// Control chat status when the user logout and login again
 		session.addSessionStatusChangedHandler(true, this);
 	}
-	
+
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		final Message message = event.getMessage();
@@ -72,7 +72,7 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 			}
 		}
 	}
-	
+
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		if (event.is(SessionStatus.loggedIn)) {
@@ -93,9 +93,9 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 			}
 		}
 	}
-	
+
 	protected abstract void fireChanged(ChangeType type, C chat);
-	
+
 	@Override
 	public C getChat(final ChatProperties properties, final boolean createIfNotFound) {
 		for (final C chat : chats) {
@@ -133,7 +133,6 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 		fireChanged(ChangeType.opened, chat);
 		return chat;
 	}
-	
 
 	@Override
 	public void close(final C chat) {

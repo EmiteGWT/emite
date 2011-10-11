@@ -24,23 +24,23 @@ import com.calclab.emite.core.client.stanzas.Stanza;
 import com.google.web.bindery.event.shared.Event;
 
 public class BeforeStanzaSentEvent extends Event<BeforeStanzaSentEvent.Handler> {
-	
+
 	public interface Handler {
 		void onBeforeStanzaSent(BeforeStanzaSentEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final Stanza packet;
 
 	public BeforeStanzaSentEvent(final Stanza packet) {
 		this.packet = packet;
 	}
-	
+
 	public Stanza getStanza() {
 		return packet;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

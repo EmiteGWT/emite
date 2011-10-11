@@ -25,7 +25,7 @@ import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.google.web.bindery.event.shared.Event;
 
 public class RoomChatStateNotificationEvent extends Event<RoomChatStateNotificationEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRoomChatStateNotification(RoomChatStateNotificationEvent event);
 	}
@@ -35,7 +35,7 @@ public class RoomChatStateNotificationEvent extends Event<RoomChatStateNotificat
 	private final XmppURI from;
 	private final ChatState chatState;
 
-	protected RoomChatStateNotificationEvent(XmppURI from, ChatState chatState) {
+	protected RoomChatStateNotificationEvent(final XmppURI from, final ChatState chatState) {
 		this.from = from;
 		this.chatState = chatState;
 	}
@@ -43,18 +43,18 @@ public class RoomChatStateNotificationEvent extends Event<RoomChatStateNotificat
 	public XmppURI getFrom() {
 		return from;
 	}
-	
+
 	public ChatState getChatState() {
 		return chatState;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onRoomChatStateNotification(this);
 	}
 

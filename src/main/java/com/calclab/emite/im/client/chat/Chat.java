@@ -48,7 +48,7 @@ public interface Chat {
 	 *            the message handler
 	 */
 	HandlerRegistration addBeforeMessageReceivedHandler(BeforeMessageReceivedEvent.Handler handler);
-	
+
 	/**
 	 * Add a handler to know when a message is received in this chat
 	 * 
@@ -102,7 +102,7 @@ public interface Chat {
 	 * Close a chat. This methos is normally called by the chat manager
 	 */
 	void close();
-	
+
 	/**
 	 * Get the current chat's status
 	 * 

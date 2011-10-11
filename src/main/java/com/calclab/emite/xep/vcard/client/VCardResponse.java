@@ -20,9 +20,6 @@
 
 package com.calclab.emite.xep.vcard.client;
 
-import static com.calclab.emite.core.client.packet.MatcherFactory.byName;
-
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.stanzas.IQ;
 
 public class VCardResponse {

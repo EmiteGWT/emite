@@ -24,23 +24,23 @@ import com.calclab.emite.core.client.stanzas.Message;
 import com.google.web.bindery.event.shared.Event;
 
 public class MessageSentEvent extends Event<MessageSentEvent.Handler> {
-	
+
 	public interface Handler {
 		void onMessageSent(MessageSentEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final Message message;
 
 	public MessageSentEvent(final Message message) {
 		this.message = message;
 	}
-	
+
 	public Message getMessage() {
 		return message;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

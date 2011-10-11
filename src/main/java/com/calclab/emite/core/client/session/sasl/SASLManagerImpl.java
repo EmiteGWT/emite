@@ -35,13 +35,13 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
 public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler {
-	
+
 	private static final String SEP = new String(new char[] { 0 });
 	private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
 
 	private final EventBus eventBus;
 	private final XmppConnection connection;
-	
+
 	private Credentials currentCredentials;
 
 	@Inject
@@ -51,7 +51,7 @@ public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler
 
 		connection.addStanzaReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onPacketReceived(final PacketReceivedEvent event) {
 		final XMLPacket stanza = event.getPacket();
@@ -80,7 +80,7 @@ public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler
 		final XMLPacket response = credentials.isAnoymous() ? createAnonymousAuthorization() : createPlainAuthorization(credentials);
 		connection.send(response);
 	}
-	
+
 	// TODO: Add DIGEST-MD5 auth
 
 	private static XMLPacket createAnonymousAuthorization() {

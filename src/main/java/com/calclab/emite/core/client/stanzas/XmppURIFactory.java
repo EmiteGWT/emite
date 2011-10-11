@@ -45,7 +45,7 @@ public final class XmppURIFactory {
 		}
 		return xmppURI;
 	}
-	
+
 	private XmppURIFactory() {
 	}
 

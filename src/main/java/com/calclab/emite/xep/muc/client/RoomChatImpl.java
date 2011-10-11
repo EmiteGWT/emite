@@ -24,16 +24,16 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
-import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.util.XmppDateTime;
 import com.calclab.emite.core.client.xml.XMLPacket;
@@ -50,10 +50,10 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see RoomChatManager
  */
 public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
-	
+
 	private final Map<XmppURI, Occupant> occupantsByOccupantUri;
 	private final Map<XmppURI, Occupant> occupantsByUserUri;
-	
+
 	/**
 	 * Create a new room with the given properties. Room are created by
 	 * RoomManagers
@@ -65,18 +65,18 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	 */
 	protected RoomChatImpl(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
 		super(eventBus, session, properties);
-		
+
 		occupantsByOccupantUri = new LinkedHashMap<XmppURI, Occupant>();
 		occupantsByUserUri = new LinkedHashMap<XmppURI, Occupant>();
-		
+
 		setStatus(ChatStatus.locked);
 
 		// Perform some room actions when presence received: handle room occupants, create instant rooms...
 		addPresenceReceivedHandler(this);
-		
+
 		addMessageReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
@@ -104,7 +104,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 			}
 		}
 	}
-	
+
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		super.onMessageReceived(event);
@@ -113,7 +113,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 			eventBus.fireEventFromSource(new RoomSubjectChangedEvent(message.getFrom(), message.getSubject()), this);
 		}
 	}
-	
+
 	@Override
 	public HandlerRegistration addOccupantChangedHandler(final OccupantChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(OccupantChangedEvent.TYPE, this, handler);
@@ -123,7 +123,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	public HandlerRegistration addPresenceReceivedHandler(final PresenceReceivedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(PresenceReceivedEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
 	public HandlerRegistration addBeforeRoomInvitationSentHandler(final BeforeRoomInvitationSentEvent.Handler handler) {
 		return eventBus.addHandlerToSource(BeforeRoomInvitationSentEvent.TYPE, this, handler);
@@ -133,12 +133,12 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 	public HandlerRegistration addRoomInvitationSentHandler(final RoomInvitationSentEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RoomInvitationSentEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
 	public HandlerRegistration addRoomSubjectChangedHandler(final RoomSubjectChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RoomSubjectChangedEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
 	public Occupant getOccupantByOccupantUri(final XmppURI occupantUri) {
 		return occupantsByOccupantUri.get(occupantUri);
@@ -255,7 +255,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		// presence.setPriority(0);
 		session.send(presence);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ROOM: " + getURI();
@@ -304,15 +304,14 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 			public void onIQSuccess(final IQ iq) {
 				setStatus(ChatStatus.ready);
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 			}
 		});
 	}
 
-	protected Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Presence.Show show,
-			final String statusMessage) {
+	protected Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Presence.Show show, final String statusMessage) {
 		Occupant occupant = getOccupantByOccupantUri(occupantUri);
 		if (occupant == null) {
 			occupant = new Occupant(userUri, occupantUri, affiliation, role, show, statusMessage);
@@ -326,7 +325,7 @@ public class RoomChatImpl extends ChatBoilerplate implements RoomChat, PresenceR
 		}
 		return occupant;
 	}
-	
+
 	// TODO: check occupants affiliation to see if the user can do that!!
 	@Override
 	public void requestSubjectChange(final String subjectText) {

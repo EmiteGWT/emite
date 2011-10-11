@@ -25,11 +25,11 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
 public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Handler> {
-	
+
 	public interface Handler {
 		void onAuthorizationResult(AuthorizationResultEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final Credentials credentials;
@@ -49,14 +49,14 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	 *            the uri of the authorized user
 	 */
 	public AuthorizationResultEvent(final Credentials credentials) {
-		this(credentials, credentials != null);
+		this(credentials, true);
 	}
 
 	private AuthorizationResultEvent(final Credentials credentials, final boolean success) {
 		this.credentials = credentials;
 		this.success = success;
 	}
-	
+
 	public Credentials getCredentials() {
 		return credentials;
 	}

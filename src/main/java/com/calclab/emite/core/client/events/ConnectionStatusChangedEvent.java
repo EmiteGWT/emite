@@ -24,11 +24,11 @@ import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.google.web.bindery.event.shared.Event;
 
 public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onConnectionStatusChanged(ConnectionStatusChangedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final ConnectionStatus status;
@@ -53,7 +53,7 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 	public ConnectionStatus getStatus() {
 		return status;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
@@ -71,7 +71,7 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 		final String desc = description != null ? "(" + description + ")" : "";
 		return super.toDebugString() + " " + status + desc + " value: " + value;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

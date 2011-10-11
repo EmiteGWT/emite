@@ -28,9 +28,9 @@ import java.util.List;
 
 import com.calclab.emite.core.client.stanzas.HasJID;
 import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
@@ -49,9 +49,8 @@ public class RosterItem implements HasJID {
 	 * @return a new roster item instance
 	 */
 	static RosterItem parse(final XMLPacket packet) {
-		final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet.getAttribute("subscription")),
-				packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
-		
+		final RosterItem item = new RosterItem(uri(packet.getAttribute("jid")), parseSubscriptionState(packet.getAttribute("subscription")), packet.getAttribute("name"), parseAsk(packet.getAttribute("ask")));
+
 		for (final XMLPacket group : packet.getChildren("group")) {
 			item.addToGroup(group.getText());
 		}

@@ -37,7 +37,7 @@ public interface RoomChatManager extends ChatManager<RoomChat> {
 	 *            the invitation event to be accepted
 	 */
 	RoomChat acceptRoomInvitation(RoomInvitation invitation);
-	
+
 	/**
 	 * Add a handler to track chat changes. The following changes can occur from
 	 * a default chat manager: created, opened, closed

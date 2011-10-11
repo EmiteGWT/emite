@@ -28,7 +28,7 @@ import com.google.web.bindery.event.shared.Event;
  * 
  */
 public class DiscoveryItemsResultEvent extends Event<DiscoveryItemsResultEvent.Handler> {
-	
+
 	public interface Handler {
 		void onDiscoveryItemsResult(DiscoveryItemsResultEvent event);
 	}
@@ -40,7 +40,7 @@ public class DiscoveryItemsResultEvent extends Event<DiscoveryItemsResultEvent.H
 	protected DiscoveryItemsResultEvent(final DiscoveryItemsResults infoResult) {
 		this(infoResult, null);
 	}
-	
+
 	protected DiscoveryItemsResultEvent(final XMLPacket errorPacket) {
 		this(null, errorPacket);
 	}
@@ -50,7 +50,7 @@ public class DiscoveryItemsResultEvent extends Event<DiscoveryItemsResultEvent.H
 		this.itemsResult = itemsResult;
 		this.errorPacket = errorPacket;
 	}
-	
+
 	public XMLPacket getErrorPacket() {
 		return errorPacket;
 	}

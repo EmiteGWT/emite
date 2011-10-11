@@ -36,16 +36,16 @@ public class Message extends Stanza {
 	public Message(final XMLPacket xml) {
 		super(xml);
 	}
-	
+
 	public Message() {
 		super("message");
 	}
-	
-	public Message(String body) {
+
+	public Message(final String body) {
 		this();
 		setBody(body);
 	}
-	
+
 	public String getBody() {
 		return xml.getChildText("body");
 	}
@@ -57,7 +57,7 @@ public class Message extends Stanza {
 	public String getSubject() {
 		return xml.getChildText("subject");
 	}
-	
+
 	public void setSubject(final String subject) {
 		xml.setChildText("subject", subject);
 	}
@@ -65,7 +65,7 @@ public class Message extends Stanza {
 	public String getThread() {
 		return xml.getChildText("thread");
 	}
-	
+
 	public void setThread(final String thread) {
 		xml.setChildText("thread", thread);
 	}

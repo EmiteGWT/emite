@@ -54,16 +54,14 @@ public enum SessionStatus {
 	/**
 	 * We are disconnected. You can NOT send stanzas.
 	 */
-	disconnected,
-	error,
-	notAuthorized,
+	disconnected, error, notAuthorized,
 
 	/**
 	 * The session is ready to use. All the queued stanzas are sent just before
 	 * this status.
 	 */
 	ready,
-	
+
 	/**
 	 * We are logging out. Last oportunity to send stanzas (i.e: last presence).
 	 * session.getCurrentUser() returns the current user;

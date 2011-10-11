@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
 
 public class DiscoveryInfoResultEvent extends Event<DiscoveryInfoResultEvent.Handler> {
-	
+
 	public interface Handler {
 		void onDiscoveryInfoResult(DiscoveryInfoResultEvent event);
 	}

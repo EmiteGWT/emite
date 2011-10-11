@@ -58,12 +58,12 @@ public class EmiteCoreModule extends AbstractGinModule {
 	protected void configure() {
 		bind(EventBus.class).annotatedWith(Names.named("emite")).to(LoggingEventBus.class).in(Singleton.class);
 		bind(AutoConfigBoot.class).asEagerSingleton();
-		
+
 		bind(XmppConnection.class).to(XmppBoshConnection.class);
 		bind(XmppSession.class).to(XmppSessionImpl.class);
 		bind(SASLManager.class).to(SASLManagerImpl.class);
 		bind(SessionReady.class).asEagerSingleton();
-		
+
 		bind(Services.class).to(ServicesImplGWT.class);
 	}
 

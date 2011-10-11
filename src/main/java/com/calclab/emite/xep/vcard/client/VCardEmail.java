@@ -20,8 +20,6 @@
 
 package com.calclab.emite.xep.vcard.client;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
 
 public class VCardEmail extends VCardData {
 

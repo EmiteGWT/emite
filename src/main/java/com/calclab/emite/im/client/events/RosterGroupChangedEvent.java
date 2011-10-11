@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.events.ChangedEvent;
 import com.calclab.emite.im.client.roster.RosterGroup;
 
 public class RosterGroupChangedEvent extends ChangedEvent<RosterGroupChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRosterGroupChanged(RosterGroupChangedEvent event);
 	}

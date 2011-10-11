@@ -29,7 +29,7 @@ import com.google.web.bindery.event.shared.Event;
  * 
  */
 public class BeforeRoomInvitationSentEvent extends Event<BeforeRoomInvitationSentEvent.Handler> {
-	
+
 	public interface Handler {
 		void onBeforeRoomInvitationSent(BeforeRoomInvitationSentEvent event);
 	}
@@ -47,7 +47,7 @@ public class BeforeRoomInvitationSentEvent extends Event<BeforeRoomInvitationSen
 	public Stanza getMessage() {
 		return message;
 	}
-	
+
 	public XMLPacket getInvitePacket() {
 		return invitePacket;
 	}

@@ -23,8 +23,8 @@ package com.calclab.emite.im.client.roster;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.events.SubscriptionRequestReceivedEvent;
@@ -39,7 +39,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  */
 @Singleton
 public class SubscriptionManagerImpl implements SubscriptionManager, PresenceReceivedEvent.Handler, RosterItemChangedEvent.Handler {
-	
+
 	private final EventBus eventBus;
 	private final XmppSession session;
 	private final XmppRoster roster;
@@ -53,7 +53,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 		session.addPresenceReceivedHandler(this);
 		roster.addRosterItemChangedHandler(this);
 	}
-	
+
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
@@ -62,7 +62,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 			eventBus.fireEventFromSource(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()), this);
 		}
 	}
-	
+
 	@Override
 	public void onRosterItemChanged(final RosterItemChangedEvent event) {
 		if (event.isAdded()) {

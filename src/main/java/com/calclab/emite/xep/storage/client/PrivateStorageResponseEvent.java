@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.stanzas.IQ;
 import com.google.web.bindery.event.shared.Event;
 
 public class PrivateStorageResponseEvent extends Event<PrivateStorageResponseEvent.Handler> {
-	
+
 	public interface Handler {
 		void onStorageResponse(PrivateStorageResponseEvent event);
 	}
@@ -33,10 +33,10 @@ public class PrivateStorageResponseEvent extends Event<PrivateStorageResponseEve
 
 	private final IQ response;
 
-	protected PrivateStorageResponseEvent(IQ response) {
+	protected PrivateStorageResponseEvent(final IQ response) {
 		this.response = response;
 	}
-	
+
 	public IQ getResponseIQ() {
 		return response;
 	}
@@ -47,7 +47,7 @@ public class PrivateStorageResponseEvent extends Event<PrivateStorageResponseEve
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onStorageResponse(this);
 	}
 

@@ -27,7 +27,7 @@ import com.google.web.bindery.event.shared.Event;
  * A request (IQ request) has failed
  */
 public class RequestFailedEvent extends Event<RequestFailedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRequestFailed(RequestFailedEvent event);
 	}
@@ -43,7 +43,7 @@ public class RequestFailedEvent extends Event<RequestFailedEvent.Handler> {
 		this.description = description;
 		this.iq = iq;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}

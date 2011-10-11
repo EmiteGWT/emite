@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.ConnectionStatus;
-import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.events.ConnectionResponseEvent;
 import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
-import com.calclab.emite.core.client.events.PacketSentEvent;
 import com.calclab.emite.core.client.events.PacketReceivedEvent;
+import com.calclab.emite.core.client.events.PacketSentEvent;
 import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
@@ -49,9 +49,9 @@ import com.google.web.bindery.event.shared.EventBus;
  */
 @Singleton
 public class XmppBoshConnection extends XmppConnectionBoilerplate {
-	
+
 	private static final Logger logger = Logger.getLogger(XmppBoshConnection.class.getName());
-	
+
 	private final Services services;
 	private int activeConnections;
 	private final ConnectorCallback listener;
@@ -60,7 +60,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	@Inject
 	public XmppBoshConnection(@Named("emite") final EventBus eventBus, final Services services) {
 		super(eventBus);
-		
+
 		this.services = services;
 
 		listener = new ConnectorCallback() {
@@ -75,8 +75,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 						disconnect();
 					} else {
 						final int scedTime = RetryControl.retry(e);
-						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.waitingForRetry, "The connection will try to re-connect in " + scedTime
-								+ " milliseconds.", scedTime), this);
+						eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.waitingForRetry, "The connection will try to re-connect in " + scedTime + " milliseconds.", scedTime), this);
 						services.schedule(scedTime, new ScheduledAction() {
 							@Override
 							public void run() {

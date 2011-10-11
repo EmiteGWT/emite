@@ -37,20 +37,20 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class ServicesImplGWT implements Services, Window.ClosingHandler {
-	
+
 	private static final Logger logger = Logger.getLogger(ServicesImplGWT.class.getName());
-	
+
 	protected final List<Request> requests;
-	
+
 	@Inject
 	protected ServicesImplGWT() {
 		requests = new ArrayList<Request>();
 		// On close it cancels all the pending requests except the "terminate" request
 		Window.addWindowClosingHandler(this);
 	}
-	
+
 	@Override
-	public void onWindowClosing(ClosingEvent event) {
+	public void onWindowClosing(final ClosingEvent event) {
 		int i = requests.size() - 2;
 		logger.finer("Cancelling " + (i + 1) + " pending requests.");
 		for (; i >= 0; i--) {

@@ -24,7 +24,7 @@ import com.calclab.emite.im.client.chat.ChatStatus;
 import com.google.web.bindery.event.shared.Event;
 
 public class ChatStatusChangedEvent extends Event<ChatStatusChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onChatStatusChanged(ChatStatusChangedEvent event);
 	}
@@ -32,20 +32,20 @@ public class ChatStatusChangedEvent extends Event<ChatStatusChangedEvent.Handler
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final ChatStatus status;
-	
+
 	public ChatStatusChangedEvent(final ChatStatus status) {
 		assert status != null : "Status in SessionStatusChanged can't be null";
 		this.status = status;
 	}
-	
+
 	public ChatStatus getStatus() {
 		return status;
 	}
-	
+
 	public boolean is(final ChatStatus status) {
 		return this.status.equals(status);
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;
@@ -55,7 +55,7 @@ public class ChatStatusChangedEvent extends Event<ChatStatusChangedEvent.Handler
 	protected void dispatch(final Handler handler) {
 		handler.onChatStatusChanged(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + status;

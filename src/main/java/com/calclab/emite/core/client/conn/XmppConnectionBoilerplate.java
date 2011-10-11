@@ -39,7 +39,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 public abstract class XmppConnectionBoilerplate implements XmppConnection {
 
 	private static final Logger logger = Logger.getLogger(XmppConnectionBoilerplate.class.getName());
-	
+
 	protected final EventBus eventBus;
 	private int errors;
 	private boolean active;
@@ -47,7 +47,7 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	private XMLPacket currentBody;
 	private ConnectionSettings connectionSettings;
 
-	public XmppConnectionBoilerplate(EventBus eventBus) {
+	public XmppConnectionBoilerplate(final EventBus eventBus) {
 		this.eventBus = eventBus;
 	}
 
@@ -78,11 +78,11 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	public StreamSettings getStreamSettings() {
 		return stream;
 	}
-	
+
 	public void clearErrors() {
 		errors = 0;
 	}
-	
+
 	@Override
 	public boolean hasErrors() {
 		return errors != 0;
@@ -118,7 +118,7 @@ public abstract class XmppConnectionBoilerplate implements XmppConnection {
 	}
 
 	/**
-	 * Set the conntection active
+	 * Set the connection active
 	 * 
 	 * @param active
 	 *            true if active

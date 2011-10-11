@@ -39,7 +39,7 @@ public abstract class ChangedEvent<H> extends Event<H> {
 	}
 
 	private final ChangeType changeType;
-	
+
 	protected ChangedEvent(final ChangeType changeType) {
 		assert changeType != null : "Change type can't be null in ChangedEvent";
 		this.changeType = changeType;

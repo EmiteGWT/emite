@@ -23,7 +23,7 @@ package com.calclab.emite.xep.vcard.client;
 import com.google.web.bindery.event.shared.Event;
 
 public class VCardResponseEvent extends Event<VCardResponseEvent.Handler> {
-	
+
 	public interface Handler {
 		void onVCardResponse(VCardResponseEvent event);
 	}
@@ -32,14 +32,14 @@ public class VCardResponseEvent extends Event<VCardResponseEvent.Handler> {
 
 	private final VCardResponse vCardResponse;
 
-	protected VCardResponseEvent(VCardResponse vCardResponse) {
+	protected VCardResponseEvent(final VCardResponse vCardResponse) {
 		this.vCardResponse = vCardResponse;
 	}
 
 	public VCardResponse getVCardResponse() {
 		return vCardResponse;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

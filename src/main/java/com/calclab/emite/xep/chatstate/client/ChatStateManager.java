@@ -41,18 +41,18 @@ import com.google.web.bindery.event.shared.EventBus;
  */
 @Singleton
 public class ChatStateManager implements PairChatChangedEvent.Handler {
-	
+
 	private static final Logger logger = Logger.getLogger(ChatStateManager.class.getName());
 
 	private final EventBus eventBus;
-	
+
 	@Inject
 	public ChatStateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
 		this.eventBus = eventBus;
-		
+
 		chatManager.addPairChatChangedHandler(this);
 	}
-	
+
 	@Override
 	public void onPairChatChanged(final PairChatChangedEvent event) {
 		if (event.isCreated()) {

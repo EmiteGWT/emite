@@ -30,7 +30,7 @@ public class PacketReceivedEvent extends Event<PacketReceivedEvent.Handler> {
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final XMLPacket packet;
 
 	public PacketReceivedEvent(final XMLPacket packet) {
@@ -47,10 +47,10 @@ public class PacketReceivedEvent extends Event<PacketReceivedEvent.Handler> {
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onPacketReceived(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + packet.toString();

@@ -27,15 +27,15 @@ public class AvatarVCardReceivedEvent extends Event<AvatarVCardReceivedEvent.Han
 	public interface Handler {
 		void onAvatarVCard(AvatarVCardReceivedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final AvatarVCard avatarVCard;
 
-	public AvatarVCardReceivedEvent(AvatarVCard avatarVCard) {
+	public AvatarVCardReceivedEvent(final AvatarVCard avatarVCard) {
 		this.avatarVCard = avatarVCard;
 	}
-	
+
 	public AvatarVCard getAvatarVCard() {
 		return avatarVCard;
 	}
@@ -46,7 +46,7 @@ public class AvatarVCardReceivedEvent extends Event<AvatarVCardReceivedEvent.Han
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onAvatarVCard(this);
 	}
 

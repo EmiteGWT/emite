@@ -24,11 +24,11 @@ import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.google.web.bindery.event.shared.Event;
 
 public class ChatStateChangedEvent extends Event<ChatStateChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onChatStateChanged(ChatStateChangedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final ChatState chatState;
@@ -36,7 +36,7 @@ public class ChatStateChangedEvent extends Event<ChatStateChangedEvent.Handler> 
 	protected ChatStateChangedEvent(final ChatState chatState) {
 		this.chatState = chatState;
 	}
-	
+
 	public ChatState getChatState() {
 		return chatState;
 	}

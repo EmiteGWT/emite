@@ -23,7 +23,7 @@ package com.calclab.emite.xep.muc.client;
 import com.calclab.emite.core.client.events.ChangedEvent;
 
 public class RoomChatChangedEvent extends ChangedEvent<RoomChatChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRoomChatChanged(RoomChatChangedEvent event);
 	}

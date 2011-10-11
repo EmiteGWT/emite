@@ -26,17 +26,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.calclab.emite.core.client.conn.XmppConnection;
+import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
 import com.calclab.emite.core.client.events.BeforeStanzaSentEvent;
 import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
 import com.calclab.emite.core.client.events.IQReceivedEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
-import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.stanzas.IQ;
@@ -65,20 +65,20 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	private final EventBus eventBus;
 	private final XmppConnection connection;
 	private final SASLManager saslManager;
-	
+
 	private int iqId;
 	private final Map<String, IQCallback> iqHandlers;
 	private final List<Stanza> queuedStanzas;
 	private SessionStatus status;
 	private Credentials credentials;
 	private XmppURI userUri;
-	
+
 	@Inject
 	public XmppSessionImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection, final SASLManager saslManager) {
 		this.eventBus = eventBus;
 		this.connection = connection;
 		this.saslManager = saslManager;
-		
+
 		iqHandlers = new HashMap<String, IQCallback>();
 		queuedStanzas = new ArrayList<Stanza>();
 		status = SessionStatus.disconnected;
@@ -87,7 +87,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		connection.addStanzaReceivedHandler(this);
 		saslManager.addAuthorizationResultHandler(this);
 	}
-	
+
 	@Override
 	public void onConnectionStatusChanged(final ConnectionStatusChangedEvent event) {
 		if (event.is(ConnectionStatus.error)) {
@@ -97,7 +97,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			setStatus(SessionStatus.disconnected);
 		}
 	}
-	
+
 	@Override
 	public void onPacketReceived(final PacketReceivedEvent event) {
 		final XMLPacket stanza = event.getPacket();
@@ -114,11 +114,12 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 				final IQCallback handler = iqHandlers.remove(stanza.getAttribute("id"));
 				if (handler == null)
 					return;
-				
-				if (IQ.isSuccess(stanza))
+
+				if (IQ.isSuccess(stanza)) {
 					handler.onIQSuccess(new IQ(stanza));
-				else
+				} else {
 					handler.onIQFailure(new IQ(stanza));
+				}
 			}
 		} else if (credentials != null && ("stream:features".equals(name) || "features".equals(name)) && stanza.hasChild("mechanisms")) {
 			setStatus(SessionStatus.connecting);
@@ -126,7 +127,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			credentials = null;
 		}
 	}
-	
+
 	@Override
 	public void onAuthorizationResult(final AuthorizationResultEvent event) {
 		if (event.isSuccess()) {
@@ -138,7 +139,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			connection.disconnect();
 		}
 	}
-	
+
 	@Override
 	public HandlerRegistration addBeforeStanzaSentHandler(final BeforeStanzaSentEvent.Handler handler) {
 		return eventBus.addHandlerToSource(BeforeStanzaSentEvent.TYPE, this, handler);
@@ -158,16 +159,16 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public HandlerRegistration addPresenceReceivedHandler(final PresenceReceivedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(PresenceReceivedEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
 	public HandlerRegistration addSessionStatusChangedHandler(final boolean sendCurrent, final SessionStatusChangedEvent.Handler handler) {
 		if (sendCurrent) {
 			handler.onSessionStatusChanged(new SessionStatusChangedEvent(getStatus()));
 		}
-		
+
 		return eventBus.addHandlerToSource(SessionStatusChangedEvent.TYPE, this, handler);
 	}
-	
+
 	@Override
 	public SessionStatus getStatus() {
 		return status;
@@ -210,7 +211,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			this.credentials = credentials;
 		}
 	}
-	
+
 	@Override
 	public void logout() {
 		if (getStatus() != SessionStatus.disconnected && userUri != null) {
@@ -241,10 +242,10 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public void send(final Stanza packet) {
 		send(packet, false);
 	}
-	
-	private void send(final Stanza packet, boolean force) {
+
+	private void send(final Stanza packet, final boolean force) {
 		// Added a condition to check the connection is not retrying...
-		if (connection.hasErrors() || (userUri == null && !force)) {
+		if (connection.hasErrors() || userUri == null && !force) {
 			logger.finer("session queuing stanza" + packet);
 			queuedStanzas.add(packet);
 		} else {
@@ -261,8 +262,8 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public void sendIQ(final String category, final IQ iq, final IQCallback handler) {
 		sendIQ(category, iq, handler, false);
 	}
-	
-	private void sendIQ(final String category, final IQ iq, final IQCallback handler, boolean force) {
+
+	private void sendIQ(final String category, final IQ iq, final IQCallback handler, final boolean force) {
 		if (!iq.getType().equals(IQ.Type.result)) {
 			final String key = category + "_" + iqId++;
 			iqHandlers.put(key, handler);
@@ -284,25 +285,25 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		logger.info("SESSION LOGGED IN");
 		setStatus(SessionStatus.loggedIn);
 	}
-	
+
 	private void bindResource(final String resource) {
 		final IQ iq = new IQ(IQ.Type.set);
 		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").setChildText("resource", resource);
 
 		sendIQ("bind-resource", iq, new IQCallback() {
 			@Override
-			public void onIQSuccess(IQ iq) {
+			public void onIQSuccess(final IQ iq) {
 				setStatus(SessionStatus.binded);
 				requestSession(XmppURI.uri(iq.getChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").getChildText("jid")));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				connection.disconnect();
 			}
 		}, true);
 	}
-	
+
 	private void requestSession(final XmppURI uri) {
 		final IQ iq = new IQ(IQ.Type.set);
 		iq.setFrom(uri);
@@ -311,12 +312,12 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 		sendIQ("session-request", iq, new IQCallback() {
 			@Override
-			public void onIQSuccess(IQ iq) {
+			public void onIQSuccess(final IQ iq) {
 				setLoggedIn(iq.getTo());
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				connection.disconnect();
 			}
 		}, true);
@@ -326,5 +327,5 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public String toString() {
 		return "Session " + userUri + " in " + getStatus().toString() + " " + queuedStanzas.size() + " queued stanzas con=" + connection.toString();
 	}
-	
+
 }

@@ -37,11 +37,11 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, SessionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler {
-	
+
 	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());
-	
+
 	private final XmppSession session;
-	
+
 	private boolean shouldReconnect;
 	private Credentials lastSuccessfulCredentials;
 	protected int reconnectionAttempts;
@@ -49,7 +49,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 	@Inject
 	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
 		this.session = session;
-		
+
 		shouldReconnect = false;
 		reconnectionAttempts = 0;
 		logger.info("RECONNECT BEHAVIOUR");
@@ -58,7 +58,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 		session.addSessionStatusChangedHandler(true, this);
 		connection.addConnectionStatusChangedHandler(this);
 	}
-	
+
 	@Override
 	public void onConnectionStatusChanged(final ConnectionStatusChangedEvent event) {
 		if (event.is(ConnectionStatus.error) || event.is(ConnectionStatus.waitingForRetry)) {
@@ -66,7 +66,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 			reconnectionAttempts++;
 		}
 	}
-	
+
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		if (event.is(SessionStatus.connecting)) {
@@ -91,7 +91,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 			reconnectionAttempts = 0;
 		}
 	}
-	
+
 	@Override
 	public void onAuthorizationResult(final AuthorizationResultEvent event) {
 		if (event.isSuccess()) {

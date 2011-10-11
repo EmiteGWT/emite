@@ -30,7 +30,7 @@ public class StanzaSentEvent extends Event<StanzaSentEvent.Handler> {
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final Stanza stanza;
 
 	public StanzaSentEvent(final Stanza stanza) {
@@ -47,10 +47,10 @@ public class StanzaSentEvent extends Event<StanzaSentEvent.Handler> {
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onStanzaSent(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + stanza;

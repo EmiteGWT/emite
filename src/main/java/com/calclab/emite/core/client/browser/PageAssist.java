@@ -49,16 +49,14 @@ public class PageAssist {
 		final NodeList<Element> elements = Document.get().getElementsByTagName("meta");
 		for (int i = 0; i < elements.getLength(); i++) {
 			final Element candidate = elements.getItem(i);
-			if (id.equals(candidate.getAttribute("name"))) {
+			if (id.equals(candidate.getAttribute("name")))
 				return candidate.getPropertyString("content");
-			}
 		}
-		
+
 		final Element domElement = DOM.getElementById(id);
-		if (domElement != null) {
-			return domElement.getPropertyString("content"); 
-		}
-		
+		if (domElement != null)
+			return domElement.getPropertyString("content");
+
 		return defaultValue;
 	}
 
@@ -76,7 +74,7 @@ public class PageAssist {
 
 		if (metaValue == null)
 			return defaultValue;
-		
+
 		try {
 			return Integer.parseInt(metaValue);
 		} catch (final NumberFormatException e) {
@@ -99,10 +97,10 @@ public class PageAssist {
 	 */
 	public static final boolean getMetaBoolean(final String id, final boolean defaultValue) {
 		final String metaValue = getMetaString(id, null);
-		
+
 		if (metaValue == null)
 			return defaultValue;
-		
+
 		return Boolean.parseBoolean(metaValue);
 	}
 

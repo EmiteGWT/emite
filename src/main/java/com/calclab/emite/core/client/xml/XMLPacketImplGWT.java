@@ -1,3 +1,23 @@
+/*
+ * ((e)) emite: A pure Google Web Toolkit XMPP library
+ * Copyright (c) 2008-2011 The Emite development team
+ * 
+ * This file is part of Emite.
+ *
+ * Emite is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * Emite is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.calclab.emite.core.client.xml;
 
 import java.util.ArrayList;
@@ -14,90 +34,90 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 
 public final class XMLPacketImplGWT implements XMLPacket {
-	
+
 	private final Document document;
 	private final Element element;
-	
-	protected XMLPacketImplGWT(String name) {
-		this.document = XMLParser.createDocument();
-		this.element = document.createElement(name);
+
+	protected XMLPacketImplGWT(final String name) {
+		document = XMLParser.createDocument();
+		element = document.createElement(name);
 	}
-	
-	protected XMLPacketImplGWT(String name, String namespace) {
-		this.document = XMLParser.createDocument();
-		this.element = document.createElement(name);
+
+	protected XMLPacketImplGWT(final String name, final String namespace) {
+		document = XMLParser.createDocument();
+		element = document.createElement(name);
 		element.setAttribute("xmlns", namespace);
 	}
-	
-	protected XMLPacketImplGWT(Element element) {
-		this.document = element.getOwnerDocument();
+
+	protected XMLPacketImplGWT(final Element element) {
+		document = element.getOwnerDocument();
 		this.element = element;
 	}
-	
+
 	@Override
 	public String getTagName() {
 		return element.getTagName();
 	}
-	
+
 	@Override
 	public String getNamespace() {
 		return element.getNamespaceURI();
 	}
-	
+
 	@Override
 	public XMLPacket getParent() {
 		final Node parent = element.getParentNode();
 		if (parent == null || !(parent instanceof Element))
 			return null;
-		
+
 		return new XMLPacketImplGWT((Element) parent);
 	}
-	
+
 	@Override
 	public Map<String, String> getAttributes() {
 		final Map<String, String> result = new HashMap<String, String>();
 		final NamedNodeMap attribs = element.getAttributes();
 		for (int i = 0; i < attribs.getLength(); i++) {
-			Attr attrib = (Attr) attribs.item(i);
+			final Attr attrib = (Attr) attribs.item(i);
 			result.put(attrib.getName(), attrib.getValue());
 		}
 		return result;
 	}
-	
+
 	@Override
-	public String getAttribute(String name) {
+	public String getAttribute(final String name) {
 		if (!element.hasAttribute(name))
 			return null;
-		
+
 		return element.getAttribute(name);
 	}
-	
+
 	@Override
-	public void setAttribute(String name, String value) {
+	public void setAttribute(final String name, final String value) {
 		if (value != null) {
 			element.setAttribute(name, value);
 		} else {
 			element.removeAttribute(name);
 		}
 	}
-	
+
 	@Override
-	public boolean hasChild(String name) {
+	public boolean hasChild(final String name) {
 		return hasChild(name, "*");
 	}
-	
+
 	@Override
-	public boolean hasChild(String name, String namespace) {
+	public boolean hasChild(final String name, final String namespace) {
 		return getFirstChild(name, namespace) != null;
 	}
-	
+
 	@Override
-	public XMLPacket addChild(String name) {
+	public XMLPacket addChild(final String name) {
 		return addChild(name, null);
 	}
-	
+
 	@Override
-	public XMLPacket addChild(String name, String namespace) {
+	public XMLPacket addChild(final String name, final String namespace) {
 		final Element newElement = document.createElement(name);
 		if (namespace != null) {
 			newElement.setAttribute("xmlns", namespace);
@@ -105,102 +125,109 @@ public final class XMLPacketImplGWT implements XMLPacket {
 		element.appendChild(newElement);
 		return new XMLPacketImplGWT(newElement);
 	}
-	
+
 	@Override
-	public XMLPacket addChild(HasXML child) {
-		final Element newElement = (Element) document.importNode(((XMLPacketImplGWT)child.getXML()).element, true);
+	public XMLPacket addChild(final HasXML child) {
+		final Element newElement = (Element) document.importNode(((XMLPacketImplGWT) child.getXML()).element, true);
 		element.appendChild(newElement);
 		return new XMLPacketImplGWT(newElement);
 	}
-	
+
 	@Override
-	public XMLPacket getFirstChild(String name) {
+	public XMLPacket getFirstChild(final String name) {
 		return getFirstChild(name, "*");
 	}
-	
+
 	@Override
-	public XMLPacket getFirstChild(String name, String namespace) {
+	public XMLPacket getFirstChild(final String name, final String namespace) {
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			final Node node = nodes.item(i);
-			if (node.getNodeType() != Node.ELEMENT_NODE)
+			if (node.getNodeType() != Node.ELEMENT_NODE) {
 				continue;
-			
+			}
+
 			final Element element = (Element) node;
-			if (!"*".equals(name) && !name.equals(element.getTagName()))
+			if (!"*".equals(name) && !name.equals(element.getTagName())) {
 				continue;
-			
-			if (!"*".equals(namespace) && !namespace.equals(element.getNamespaceURI()))
+			}
+
+			if (!"*".equals(namespace) && !namespace.equals(element.getNamespaceURI())) {
 				continue;
-			
+			}
+
 			return new XMLPacketImplGWT(element);
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
-	public XMLPacket getFirstChild(XMLMatcher matcher) {
+	public XMLPacket getFirstChild(final XMLMatcher matcher) {
 		for (final XMLPacket packet : getChildren()) {
 			if (matcher.matches(packet))
 				return packet;
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public List<XMLPacket> getChildren() {
 		return getChildren("*", "*");
 	}
-	
+
 	@Override
-	public List<XMLPacket> getChildren(String name) {
+	public List<XMLPacket> getChildren(final String name) {
 		return getChildren(name, "*");
 	}
-	
+
 	@Override
-	public List<XMLPacket> getChildren(String name, String namespace) {
+	public List<XMLPacket> getChildren(final String name, final String namespace) {
 		final List<XMLPacket> result = new ArrayList<XMLPacket>();
-		
+
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			final Node node = nodes.item(i);
-			if (node.getNodeType() != Node.ELEMENT_NODE)
+			if (node.getNodeType() != Node.ELEMENT_NODE) {
 				continue;
-			
+			}
+
 			final Element element = (Element) node;
-			if (!"*".equals(name) && !name.equals(element.getTagName()))
+			if (!"*".equals(name) && !name.equals(element.getTagName())) {
 				continue;
-			
-			if (!"*".equals(namespace) && !namespace.equals(element.getNamespaceURI()))
+			}
+
+			if (!"*".equals(namespace) && !namespace.equals(element.getNamespaceURI())) {
 				continue;
-			
+			}
+
 			result.add(new XMLPacketImplGWT(element));
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
-	public List<XMLPacket> getChildren(XMLMatcher matcher) {
+	public List<XMLPacket> getChildren(final XMLMatcher matcher) {
 		final List<XMLPacket> result = new ArrayList<XMLPacket>();
-		
+
 		for (final XMLPacket packet : getChildren()) {
-			if (matcher.matches(packet))
+			if (matcher.matches(packet)) {
 				result.add(packet);
+			}
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
-	public void removeChild(HasXML child) {
+	public void removeChild(final HasXML child) {
 		if (child instanceof XMLPacketImplGWT) {
 			element.removeChild(((XMLPacketImplGWT) child.getXML()).element);
 		}
 	}
-	
+
 	@Override
 	public String getText() {
 		final NodeList nodes = element.getChildNodes();
@@ -209,26 +236,26 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			if (child.getNodeType() == Node.TEXT_NODE)
 				return child.getNodeValue();
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
-	public String getChildText(String name) {
+	public String getChildText(final String name) {
 		return getChildText(name, "*");
 	}
-	
+
 	@Override
-	public String getChildText(String name, String namespace) {
+	public String getChildText(final String name, final String namespace) {
 		final XMLPacket child = getFirstChild(name, namespace);
 		if (child == null)
 			return null;
-		
+
 		return child.getText();
 	}
-	
+
 	@Override
-	public void setText(String text) {
+	public void setText(final String text) {
 		// TODO: remove ALL children?
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
@@ -241,33 +268,33 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			element.appendChild(document.createTextNode(text));
 		}
 	}
-	
+
 	@Override
-	public void setChildText(String name, String text) {
+	public void setChildText(final String name, final String text) {
 		setChildText(name, null, text);
 	}
-	
+
 	@Override
-	public void setChildText(String name, String namespace, String text) {
+	public void setChildText(final String name, final String namespace, final String text) {
 		XMLPacket child = getFirstChild(name, namespace != null ? namespace : "*");
 		if (child == null) {
 			child = addChild(name, namespace);
 		}
-		
+
 		child.setText(text);
 	}
-	
+
 	@Override
 	public XMLPacket getXML() {
 		return this;
 	}
-	
+
 	// TODO: does this work on all browsers?
 	@Override
 	public String toString() {
 		return element.toString();
 	}
-	
+
 	/*@Override
 	public String toString() {
 		final StringBuilder buffer = new StringBuilder();
@@ -305,5 +332,5 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			}
 		}
 	}*/
-	
+
 }

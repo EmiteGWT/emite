@@ -45,9 +45,9 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, MessageReceivedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getName());
-	
+
 	public static final String KEY = "RoomChatStateManager";
-	
+
 	/*
 	 * REUSING ChatStateManager.ChatState
 	 * http://xmpp.org/extensions/xep-0085.html#bizrules-groupchat # A client
@@ -65,10 +65,10 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 
 	private final EventBus eventBus;
 	private final RoomChat room;
-	
+
 	private final Map<XmppURI, ChatState> othersState;
 	private ChatState ownState;
-	
+
 	private final int inactiveDelay = 120 * 1000; // 2 minutes
 	private final int pauseDelay = 10 * 1000; // 10 secondes
 
@@ -79,7 +79,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 			return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
 		}
 	};
-	
+
 	/**
 	 * From http://xmpp.org/extensions/xep-0085.html#bizrules-syntax
 	 * <ul>
@@ -123,7 +123,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 		room.addBeforeMessageSentHandler(this);
 		room.addMessageReceivedHandler(this);
 	}
-	
+
 	@Override
 	public void onBeforeMessageSent(final BeforeMessageSentEvent event) {
 		// Only Messages are listened not presence events
@@ -143,7 +143,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 			inactiveTimer.schedule(inactiveDelay);
 		}
 	}
-	
+
 	@Override
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		final Message message = event.getMessage();

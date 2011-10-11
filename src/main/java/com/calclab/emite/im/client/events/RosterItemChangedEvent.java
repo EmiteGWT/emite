@@ -34,7 +34,7 @@ public class RosterItemChangedEvent extends ChangedEvent<RosterItemChangedEvent.
 	public interface Handler {
 		void onRosterItemChanged(RosterItemChangedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final RosterItem rosterItem;

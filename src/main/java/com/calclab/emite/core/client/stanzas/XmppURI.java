@@ -159,7 +159,7 @@ public class XmppURI implements HasJID {
 	public int hashCode() {
 		return representation.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj == null)

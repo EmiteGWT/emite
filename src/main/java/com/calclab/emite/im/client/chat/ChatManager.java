@@ -52,7 +52,7 @@ public interface ChatManager<C extends Chat> {
 	 * @return
 	 */
 	C openChat(ChatProperties properties, boolean createIfNotFound);
-	
+
 	/**
 	 * Close the given conversation. If a conversation is closed, a new
 	 * onChatCreated event will be throw when opened

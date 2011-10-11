@@ -70,12 +70,13 @@ public interface XmppSession {
 	HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
 
 	/**
-	 * Add a handler to track session status changes. If sendCurrent is true, the
-	 * handler will receive the current session status just after been added.
+	 * Add a handler to track session status changes. If sendCurrent is true,
+	 * the handler will receive the current session status just after been
+	 * added.
 	 * 
 	 * @param sendCurrent
-	 *            if true, the current session status will be sent to the handler
-	 *            just after addition
+	 *            if true, the current session status will be sent to the
+	 *            handler just after addition
 	 * @param handler
 	 *            the handler itself
 	 * 

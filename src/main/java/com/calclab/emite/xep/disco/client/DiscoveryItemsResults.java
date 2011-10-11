@@ -34,7 +34,7 @@ import com.calclab.emite.core.client.xml.XMLPacket;
  * @see http://xmpp.org/extensions/xep-0030.html#items
  */
 public class DiscoveryItemsResults {
-	
+
 	private List<Item> items;
 	private final XMLPacket result;
 

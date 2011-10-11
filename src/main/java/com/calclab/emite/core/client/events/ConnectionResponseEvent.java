@@ -27,7 +27,7 @@ public class ConnectionResponseEvent extends Event<ConnectionResponseEvent.Handl
 	public interface Handler {
 		void onConnectionResponse(ConnectionResponseEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final String response;

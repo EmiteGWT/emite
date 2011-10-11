@@ -30,7 +30,7 @@ public class PacketSentEvent extends Event<PacketSentEvent.Handler> {
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
-	
+
 	private final XMLPacket packet;
 
 	public PacketSentEvent(final XMLPacket packet) {
@@ -47,10 +47,10 @@ public class PacketSentEvent extends Event<PacketSentEvent.Handler> {
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onStanzaSent(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + packet;

@@ -26,7 +26,7 @@ import com.calclab.emite.im.client.roster.RosterItem;
 import com.google.web.bindery.event.shared.Event;
 
 public class RosterRetrievedEvent extends Event<RosterRetrievedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRosterRetrieved(RosterRetrievedEvent event);
 	}

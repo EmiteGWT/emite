@@ -23,11 +23,11 @@ package com.calclab.emite.xep.muc.client;
 import com.google.web.bindery.event.shared.Event;
 
 public class RoomInvitationReceivedEvent extends Event<RoomInvitationReceivedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRoomInvitationReceived(RoomInvitationReceivedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final RoomInvitation roomInvitation;
@@ -39,7 +39,7 @@ public class RoomInvitationReceivedEvent extends Event<RoomInvitationReceivedEve
 	public RoomInvitation getRoomInvitation() {
 		return roomInvitation;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

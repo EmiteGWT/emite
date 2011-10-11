@@ -50,9 +50,9 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 			public void onIQSuccess(final IQ iq) {
 				handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 			}
 		});
 	}
@@ -67,9 +67,9 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 			public void onIQSuccess(final IQ iq) {
 				handler.onStorageResponse(new PrivateStorageResponseEvent(iq));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 			}
 		});
 	}

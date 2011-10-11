@@ -23,7 +23,7 @@ package com.calclab.emite.xep.muc.client;
 import com.calclab.emite.core.client.events.ChangedEvent;
 
 public class OccupantChangedEvent extends ChangedEvent<OccupantChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onOccupantChanged(OccupantChangedEvent event);
 	}
@@ -40,7 +40,7 @@ public class OccupantChangedEvent extends ChangedEvent<OccupantChangedEvent.Hand
 	public Occupant getOccupant() {
 		return occupant;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

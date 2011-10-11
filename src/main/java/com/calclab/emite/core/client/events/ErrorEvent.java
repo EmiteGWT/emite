@@ -29,7 +29,7 @@ import com.google.web.bindery.event.shared.Event;
  * and getErrorStanza methods returns something different from NoPacket.INSTANCE
  */
 public class ErrorEvent extends Event<ErrorEvent.Handler> {
-	
+
 	public interface Handler {
 		void onError(ErrorEvent event);
 	}
@@ -45,7 +45,7 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 		this.errorType = errorType;
 		this.description = description;
 		this.stanza = stanza;
-		this.error = stanza != null ? stanza.getXML().getFirstChild("error") : null;
+		error = stanza != null ? stanza.getXML().getFirstChild("error") : null;
 	}
 
 	public String getDescription() {
@@ -74,7 +74,7 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 	public Stanza getStanza() {
 		return stanza;
 	}
-	
+
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;

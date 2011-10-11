@@ -133,24 +133,24 @@ import com.google.inject.Singleton;
 public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.ClosingHandler {
 
 	private static final Logger logger = Logger.getLogger(AutoConfigBoot.class.getName());
-	
+
 	private static final String PARAM_AUTOCONFIG = "emite.autoConfig";
-	
+
 	/**
 	 * Meta key to store the session behaviour
 	 */
 	private static final String PARAM_SESSION = "emite.session";
-	
+
 	/**
 	 * Meta key to store the httpBase parameter in bosh configuration
 	 */
-	private	static final String PARAM_HTTPBASE = "emite.httpBase";
-	
+	private static final String PARAM_HTTPBASE = "emite.httpBase";
+
 	/**
 	 * Meta key to store the host param in bosh configuration
 	 */
 	private static final String PARAM_HOST = "emite.host";
-	
+
 	/**
 	 * Meta key to store tue user JID in session login
 	 */
@@ -187,34 +187,34 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	private static final String PARAM_BOSH_HOLD = "emite.bosh.hold";
 
 	private static final String PAUSE_COOKIE = "emite.cookies.pause";
-	
+
 	private static final String LOGIN = "login";
 	private static final String RESUME = "resume";
 	private static final String RESUME_OR_LOGIN = "resumeOrLogin";
 	private static final String LOGOUT = "logout";
-	
+
 	private final XmppConnection connection;
 	private final XmppSession session;
 	private String sessionBehaviour;
-	
+
 	@Inject
 	protected AutoConfigBoot(final XmppConnection connection, final XmppSession session) {
 		this.connection = connection;
 		this.session = session;
-		
+
 		Scheduler.get().scheduleDeferred(this);
 		Window.addWindowClosingHandler(this);
 	}
-	
+
 	@Override
 	public final void execute() {
 		logger.fine("Checking auto config");
 		if (!PageAssist.getMetaBoolean(PARAM_AUTOCONFIG, true))
 			return;
-		
+
 		sessionBehaviour = PageAssist.getMetaString(PARAM_SESSION, RESUME_OR_LOGIN);
 		configureFromMeta();
-		
+
 		if (LOGIN.equals(sessionBehaviour)) {
 			loginFromMeta();
 		} else if (RESUME.equals(sessionBehaviour)) {
@@ -225,7 +225,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 			}
 		}
 	}
-	
+
 	@Override
 	public final void onWindowClosing(final Window.ClosingEvent event) {
 		if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
@@ -239,7 +239,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 			closeSession();
 		}
 	}
-	
+
 	/**
 	 * Will configure the given connection if PARAM_HTTPBASE <b>and</b>
 	 * PARAM_HOST is present as html meta tags in the current html page
@@ -261,12 +261,12 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 
 		if (hostName == null)
 			return false;
-		
+
 		logger.info("CONNECTION PARAMS: " + httpBase + ", " + hostName);
 		connection.setSettings(new ConnectionSettings(httpBase, hostName, routeHost, routePort, secure, wait, hold));
 		return true;
 	}
-	
+
 	/**
 	 * Will try to login session if PARAM_JID and PARAM_PASSWORD are present. <br/>
 	 * PARAM_PASSWORD is optional if PARAM_JID value is set to 'anonymous'
@@ -289,7 +289,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Pause a session and serializes the stream settings in a cookie
 	 * 
@@ -346,19 +346,19 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		session.resume(user, stream);
 		return true;
 	}
-	
+
 	private final void closeSession() {
 		Cookies.removeCookie(PAUSE_COOKIE);
 		session.logout();
 	}
-	
+
 	/**
-	 * An extension to provide serialize/restore from HashMap to String in order to
-	 * store information in the browser's cookies.
+	 * An extension to provide serialize/restore from HashMap to String in order
+	 * to store information in the browser's cookies.
 	 */
 	protected static class SerializableMap extends HashMap<String, String> {
 		private static final long serialVersionUID = 1L;
-		
+
 		public static SerializableMap restore(final String serialized) {
 			final SerializableMap map = new SerializableMap();
 			final int total = serialized.length() - 1;

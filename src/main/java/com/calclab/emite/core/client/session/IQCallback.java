@@ -24,5 +24,6 @@ import com.calclab.emite.core.client.stanzas.IQ;
 
 public interface IQCallback {
 	void onIQSuccess(IQ iq);
+
 	void onIQFailure(IQ iq);
 }

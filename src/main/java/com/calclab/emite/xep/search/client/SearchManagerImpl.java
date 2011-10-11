@@ -40,9 +40,9 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class SearchManagerImpl implements SearchManager {
-	
+
 	private static final String SHOULD_BE_CONNECTED = "You should be connected before use this service.";
-	
+
 	private final XmppSession session;
 	private XmppURI host;
 
@@ -58,9 +58,9 @@ public class SearchManagerImpl implements SearchManager {
 			public void onIQSuccess(final IQ iq) {
 				listener.onSuccess(processFieldsResults(session.getCurrentUserURI(), iq.getChild("query", "jabber:iq:search")));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				// TODO
 				listener.onFailure(null);
 			}
@@ -72,27 +72,27 @@ public class SearchManagerImpl implements SearchManager {
 		requestGenericSearchFields(new IQCallback() {
 			@Override
 			public void onIQSuccess(final IQ iq) {
-				XMLPacket xSearch = iq.getChild("x", "jabber:x:data");
+				final XMLPacket xSearch = iq.getChild("x", "jabber:x:data");
 				if (xSearch != null) {
 					listener.onSuccess(new Form(xSearch));
 					return;
 				}
-				
+
 				// This is not a extended search. Try to create a form
 				// with returned fields
 				final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(), iq.getChild("query", "jabber:iq:search"));
 				final Form form = new Form(Form.Type.form);
 				form.addInstruction(fieldResults.getInstructions());
 				for (final String fieldName : fieldResults.getFieldNames()) {
-					Field field = new Field(FieldType.TEXT_SINGLE);
+					final Field field = new Field(FieldType.TEXT_SINGLE);
 					field.setVar(fieldName);
 					form.addField(field);
 				}
 				listener.onSuccess(form);
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				// TODO
 				listener.onFailure(null);
 			}
@@ -101,14 +101,14 @@ public class SearchManagerImpl implements SearchManager {
 
 	@Override
 	public void search(final Form searchForm, final ResultListener<Form> listener) {
-		searchGeneric(Arrays.asList((XMLPacket)searchForm), new IQCallback() {
+		searchGeneric(Arrays.asList((XMLPacket) searchForm), new IQCallback() {
 			@Override
 			public void onIQSuccess(final IQ iq) {
 				listener.onSuccess(new Form(iq.getXML()));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				// TODO
 				listener.onFailure(null);
 			}
@@ -128,9 +128,9 @@ public class SearchManagerImpl implements SearchManager {
 			public void onIQSuccess(final IQ iq) {
 				listener.onSuccess(processResults(session.getCurrentUserURI(), iq.getChild("query", "jabber:iq:search")));
 			}
-			
+
 			@Override
-			public void onIQFailure(IQ iq) {
+			public void onIQFailure(final IQ iq) {
 				// TODO
 				listener.onFailure(null);
 			}

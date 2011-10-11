@@ -24,11 +24,11 @@ import com.calclab.emite.core.client.stanzas.IQ;
 import com.google.web.bindery.event.shared.Event;
 
 public class IQReceivedEvent extends Event<IQReceivedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onIQReceived(IQReceivedEvent event);
 	}
-	
+
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final IQ iq;
@@ -47,10 +47,10 @@ public class IQReceivedEvent extends Event<IQReceivedEvent.Handler> {
 	}
 
 	@Override
-	protected void dispatch(Handler handler) {
+	protected void dispatch(final Handler handler) {
 		handler.onIQReceived(this);
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return super.toDebugString() + iq;

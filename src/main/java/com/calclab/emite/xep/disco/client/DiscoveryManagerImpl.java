@@ -35,10 +35,10 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
 public class DiscoveryManagerImpl implements DiscoveryManager {
-	
+
 	private final EventBus eventBus;
 	private final XmppSession session;
-	
+
 	private final Map<XmppURI, DiscoveryInfoResults> infoResults;
 	private final Map<XmppURI, DiscoveryItemsResults> itemsResults;
 
@@ -46,7 +46,7 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 	public DiscoveryManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = eventBus;
 		this.session = session;
-		
+
 		infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();
 		itemsResults = new HashMap<XmppURI, DiscoveryItemsResults>();
 	}
@@ -86,16 +86,16 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 				public void onIQSuccess(final IQ iq) {
 					final DiscoveryInfoResults infoResult = new DiscoveryInfoResults(iq);
 					infoResults.put(targetUri, infoResult);
-					
+
 					final DiscoveryInfoResultEvent event = new DiscoveryInfoResultEvent(infoResult);
 					if (handler != null) {
 						handler.onDiscoveryInfoResult(event);
 					}
 					eventBus.fireEventFromSource(event, this);
 				}
-				
+
 				@Override
-				public void onIQFailure(IQ iq) {
+				public void onIQFailure(final IQ iq) {
 					final DiscoveryInfoResultEvent event = new DiscoveryInfoResultEvent(iq.getChild("error", "http://jabber.org/protocol/disco#info"));
 					if (handler != null) {
 						handler.onDiscoveryInfoResult(event);
@@ -122,16 +122,16 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 				public void onIQSuccess(final IQ iq) {
 					final DiscoveryItemsResults itemsResult = new DiscoveryItemsResults(iq);
 					itemsResults.put(targetUri, itemsResult);
-					
+
 					final DiscoveryItemsResultEvent event = new DiscoveryItemsResultEvent(itemsResult);
 					if (handler != null) {
 						handler.onDiscoveryItemsResult(event);
 					}
 					eventBus.fireEventFromSource(event, this);
 				}
-				
+
 				@Override
-				public void onIQFailure(IQ iq) {
+				public void onIQFailure(final IQ iq) {
 					final DiscoveryItemsResultEvent event = new DiscoveryItemsResultEvent(iq.getChild("error", "http://jabber.org/protocol/disco#items"));
 					if (handler != null) {
 						handler.onDiscoveryItemsResult(event);

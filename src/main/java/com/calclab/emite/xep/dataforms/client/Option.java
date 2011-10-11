@@ -54,7 +54,7 @@ public class Option implements HasXML {
 	public void setValue(final String value) {
 		xml.setChildText("value", value);
 	}
-	
+
 	@Override
 	public XMLPacket getXML() {
 		return xml;

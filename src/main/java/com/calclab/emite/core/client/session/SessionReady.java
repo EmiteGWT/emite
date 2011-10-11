@@ -20,7 +20,6 @@
 
 package com.calclab.emite.core.client.session;
 
-
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.inject.Inject;
@@ -41,7 +40,7 @@ public class SessionReady implements SessionStatusChangedEvent.Handler {
 
 		handler = session.addSessionStatusChangedHandler(true, this);
 	}
-	
+
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		if (event.is(SessionStatus.loggedIn)) {

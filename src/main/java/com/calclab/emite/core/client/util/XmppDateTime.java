@@ -35,9 +35,9 @@ import com.google.gwt.i18n.client.TimeZone;
  * http://xmpp.org/extensions/xep-0082.html
  */
 public class XmppDateTime {
-	
+
 	private static final Logger logger = Logger.getLogger(XmppDateTime.class.getName());
-	
+
 	/*
 	 * CCYY-MM-DDThh:mm:ss[.sss]TZD
 	 */
@@ -74,7 +74,7 @@ public class XmppDateTime {
 			return noMillisDtf.parse(date);
 		}
 	}
-	
+
 	private XmppDateTime() {
 	}
 }

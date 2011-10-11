@@ -126,7 +126,7 @@ public class Field implements HasXML {
 	public void setVar(final String var) {
 		xml.setAttribute("var", var);
 	}
-	
+
 	@Override
 	public XMLPacket getXML() {
 		return xml;

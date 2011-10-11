@@ -24,8 +24,8 @@ import java.util.Collection;
 
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
+import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -69,7 +69,7 @@ public interface RoomChat extends Chat {
 	HandlerRegistration addRoomInvitationSentHandler(RoomInvitationSentEvent.Handler handler);
 
 	HandlerRegistration addRoomSubjectChangedHandler(RoomSubjectChangedEvent.Handler handler);
-	
+
 	/**
 	 * Find an occupant with the given occupant uri
 	 * 
@@ -139,7 +139,7 @@ public interface RoomChat extends Chat {
 	 * @param show
 	 */
 	void setStatus(final String statusMessage, final Show show);
-	
+
 	/**
 	 * Request a subject change on the given room
 	 * 

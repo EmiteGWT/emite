@@ -143,6 +143,7 @@ public class Form implements HasXML {
 		xml.setAttribute("type", type.toString());
 	}
 
+	@Override
 	public XMLPacket getXML() {
 		return xml;
 	}

@@ -27,13 +27,13 @@ import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.core.client.xml.XMLUtils;
 
 public abstract class Stanza implements HasXML {
-	
+
 	protected final XMLPacket xml;
 
 	protected Stanza(final XMLPacket xml) {
 		this.xml = xml;
 	}
-	
+
 	protected Stanza(final String name) {
 		this(XMLUtils.createPacket(name));
 	}
@@ -41,11 +41,11 @@ public abstract class Stanza implements HasXML {
 	protected Stanza(final String name, final String namespace) {
 		this(XMLUtils.createPacket(name, namespace));
 	}
-	
+
 	public String getId() {
 		return xml.getAttribute("id");
 	}
-	
+
 	public void setId(final String id) {
 		xml.setAttribute("id", id);
 	}
@@ -55,7 +55,7 @@ public abstract class Stanza implements HasXML {
 	}
 
 	public void setFrom(final XmppURI from) {
-		xml.setAttribute("from", (from != null ? from.toString() : null));
+		xml.setAttribute("from", from != null ? from.toString() : null);
 	}
 
 	public XmppURI getTo() {
@@ -63,9 +63,10 @@ public abstract class Stanza implements HasXML {
 	}
 
 	public void setTo(final XmppURI to) {
-		xml.setAttribute("to", (to != null ? to.toString() : null));
+		xml.setAttribute("to", to != null ? to.toString() : null);
 	}
-	
+
+	@Override
 	public final XMLPacket getXML() {
 		return xml;
 	}

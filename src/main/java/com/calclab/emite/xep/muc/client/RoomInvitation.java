@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.ChatProperties;
 
 public class RoomInvitation {
-	
+
 	private final String reason;
 	private final ChatProperties chatProperties;
 

@@ -30,7 +30,7 @@ import com.google.web.bindery.event.shared.Event;
  * 
  */
 public class RoomSubjectChangedEvent extends Event<RoomSubjectChangedEvent.Handler> {
-	
+
 	public interface Handler {
 		void onRoomSubjectChanged(RoomSubjectChangedEvent event);
 	}

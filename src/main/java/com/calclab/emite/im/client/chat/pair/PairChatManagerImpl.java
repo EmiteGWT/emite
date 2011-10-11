@@ -40,12 +40,12 @@ public class PairChatManagerImpl extends ChatManagerBoilerplate<PairChat> implem
 	public PairChatManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, @Named("Pair") final ChatSelectionStrategy strategy) {
 		super(eventBus, session, strategy);
 	}
-	
+
 	@Override
-	protected void fireChanged(ChangeType type, PairChat chat) {
+	protected void fireChanged(final ChangeType type, final PairChat chat) {
 		eventBus.fireEventFromSource(new PairChatChangedEvent(type, chat), this);
 	}
-	
+
 	@Override
 	public HandlerRegistration addPairChatChangedHandler(final PairChatChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(PairChatChangedEvent.TYPE, this, handler);

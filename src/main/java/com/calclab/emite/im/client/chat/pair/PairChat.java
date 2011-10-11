@@ -23,8 +23,8 @@ package com.calclab.emite.im.client.chat.pair;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Message.Type;
-import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.google.web.bindery.event.shared.EventBus;
@@ -40,9 +40,9 @@ import com.google.web.bindery.event.shared.EventBus;
  * @see Chat
  */
 public class PairChat extends ChatBoilerplate {
-	
+
 	private static final String PAIRCHAT_THREAD_PROP = "pairchat.thread";
-	
+
 	private final String id;
 
 	/**
@@ -88,9 +88,9 @@ public class PairChat extends ChatBoilerplate {
 	public String toString() {
 		return id;
 	}
-	
+
 	@Override
-	protected void setStatus(ChatStatus chatStatus) {
+	protected void setStatus(final ChatStatus chatStatus) {
 		// TODO added for testing
 		super.setStatus(chatStatus);
 	}
