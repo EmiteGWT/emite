@@ -39,14 +39,16 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	private final Element element;
 
 	protected XMLPacketImplGWT(final String name) {
-		document = XMLParser.createDocument();
-		element = document.createElement(name);
+		this(name, null);
 	}
 
 	protected XMLPacketImplGWT(final String name, final String namespace) {
 		document = XMLParser.createDocument();
 		element = document.createElement(name);
-		element.setAttribute("xmlns", namespace);
+		if (namespace != null) {
+			element.setAttribute("xmlns", namespace);
+		}
+		document.appendChild(element);
 	}
 
 	protected XMLPacketImplGWT(final Element element) {
@@ -71,6 +73,11 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			return null;
 
 		return new XMLPacketImplGWT((Element) parent);
+	}
+	
+	@Override
+	public XMLPacket getFirstParent() {
+		return new XMLPacketImplGWT(document.getDocumentElement());
 	}
 
 	@Override

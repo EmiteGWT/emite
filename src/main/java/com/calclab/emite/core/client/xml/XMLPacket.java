@@ -30,6 +30,8 @@ public interface XMLPacket extends HasXML {
 	String getNamespace();
 
 	XMLPacket getParent();
+	
+	XMLPacket getFirstParent();
 
 	Map<String, String> getAttributes();
 
