@@ -29,6 +29,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.VCardResponseTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -100,7 +101,8 @@ public class VCardManagerTests {
 	@Test
 	public void shouldSendRetrievalRequest() {
 		manager.requestOwnVCard(null);
-		final IQ iq = new IQ(IQ.Type.get).With("from", "test@domain");
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.setFrom(XmppURI.uri("test@domain"));
 		iq.addChild("vCard", "vcard-temp");
 		session.verifyIQSent(iq);
 	}
@@ -122,7 +124,7 @@ public class VCardManagerTests {
 		final VCardResponseTestHandler handler = new VCardResponseTestHandler();
 		manager.requestOwnVCard(handler);
 		session.verifyIQSent(new IQ(Type.get));
-		session.answer(vcard);
+		session.answerSuccess(new IQ(XMLBuilder.fromXML(vcard)));
 		assertTrue(handler.isCalledOnce());
 		assertTrue(handler.getLastVCardResponse().hasVCard());
 		assertNotNull(handler.getLastVCardResponse().getVCard().getNickName());

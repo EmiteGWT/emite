@@ -28,16 +28,16 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 public class VCardResponseTests {
 
 	@Test
 	public void shouldParseEmptyVCard() {
 		final String VCARD_EMPTY = "<iq id='v1' to='stpeter@jabber.org/roundabout' type='result'>\n" + "<vCard xmlns='vcard-temp' /></iq>";
-		final IPacket result = TigaseXMLService.toPacket(VCARD_EMPTY);
+		final XMLPacket result = XMLBuilder.fromXML(VCARD_EMPTY);
 		final VCardResponse response = new VCardResponse(result);
 		assertEquals(IQ.Type.result, response.getType());
 		assertFalse(response.hasVCard());
@@ -48,7 +48,7 @@ public class VCardResponseTests {
 	public void shouldParseItemNotFound() {
 		final String ITEM_NOT_FOUND = "<iq id='v1'\n" + "    to='stpeter@jabber.org/roundabout'\n" + "    type='error'>\n" + "  <vCard xmlns='vcard-temp'/>\n"
 				+ "  <error type='cancel'>\n" + "    <item-not-found xmlns='urn:ietf:params:xml:ns:xmpp-stanzas'/>\n" + "  </error>\n" + "</iq>";
-		final IPacket result = TigaseXMLService.toPacket(ITEM_NOT_FOUND);
+		final XMLPacket result = XMLBuilder.fromXML(ITEM_NOT_FOUND);
 		final VCardResponse response = new VCardResponse(result);
 		assertEquals(IQ.Type.error, response.getType());
 		assertTrue(response.isError());
@@ -58,7 +58,7 @@ public class VCardResponseTests {
 	public void shouldParseReturnsVCard() {
 		final String VCARD_RESPONSE = "<iq id='v1' to='stpeter@jabber.org/roundabout' type='result'>\n"
 				+ "<vCard xmlns='vcard-temp'><FN>Peter Saint-Andre</FN></vCard></iq>";
-		final IPacket result = TigaseXMLService.toPacket(VCARD_RESPONSE);
+		final XMLPacket result = XMLBuilder.fromXML(VCARD_RESPONSE);
 		final VCardResponse response = new VCardResponse(result);
 		assertEquals(IQ.Type.result, response.getType());
 		assertTrue(response.isSuccess());

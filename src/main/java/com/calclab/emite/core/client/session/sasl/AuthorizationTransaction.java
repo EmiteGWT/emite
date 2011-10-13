@@ -44,7 +44,7 @@ public class AuthorizationTransaction {
 	}
 
 	public XmppURI getXmppUri() {
-		return credentials.getXmppUri();
+		return credentials.getUri();
 	}
 
 	public void setStatus(final Status status) {

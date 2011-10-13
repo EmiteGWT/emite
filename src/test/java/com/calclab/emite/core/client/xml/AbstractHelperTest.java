@@ -18,25 +18,26 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.core.client.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import org.junit.Assert;
 
-import org.junit.Test;
+import com.calclab.emite.core.client.xml.PacketTestSuite.Helper;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.stanzas.IQ;
-
-public class IQTest {
-
-	@Test
-	public void shoudAddQuery() {
-		final IQ iq = new IQ(IQ.Type.get);
-		iq.addQuery("xmlns:query");
-		final IPacket query = iq.getFirstChild("query");
-		assertNotSame(NoPacket.INSTANCE, query);
-		assertEquals("xmlns:query", query.getAttribute("xmlns"));
+public abstract class AbstractHelperTest implements Helper {
+	@Override
+	public void assertEquals(final Object expected, final Object actual) {
+		Assert.assertEquals(expected, actual);
 	}
+
+	@Override
+	public void assertTrue(final String message, final boolean condition) {
+		Assert.assertTrue(message, condition);
+	}
+
+	@Override
+	public void log(final String message) {
+		// do nothing
+	}
+
 }

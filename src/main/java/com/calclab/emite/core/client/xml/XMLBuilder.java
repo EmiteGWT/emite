@@ -20,14 +20,25 @@
 
 package com.calclab.emite.core.client.xml;
 
+import com.google.gwt.xml.client.XMLParser;
+import com.google.gwt.xml.client.impl.DOMParseException;
+
 public final class XMLBuilder implements HasXML {
 	
+	public static final XMLPacket fromXML(final String xml) {
+		try {
+			return new XMLPacketImplGWT(XMLParser.parse(xml).getDocumentElement());
+		} catch (final DOMParseException e) {
+			return null;
+		}
+	}
+	
 	public static final XMLBuilder create(final String name) {
-		return new XMLBuilder(XMLUtils.createPacket(name));
+		return new XMLBuilder(new XMLPacketImplGWT(name));
 	}
 	
 	public static final XMLBuilder create(final String name, final String namespace) {
-		return new XMLBuilder(XMLUtils.createPacket(name, namespace));
+		return new XMLBuilder(new XMLPacketImplGWT(name, namespace));
 	}
 	
 	private final XMLPacket xml;
@@ -61,14 +72,16 @@ public final class XMLBuilder implements HasXML {
 	
 	public XMLBuilder parent() {
 		final XMLPacket parent = xml.getParent();
-		if (parent != null)
-			return new XMLBuilder(parent);
-		
-		return null;
+		return parent != null ? new XMLBuilder(parent) : this;
 	}
 	
 	public XMLPacket getXML() {
 		return xml.getFirstParent();
+	}
+	
+	@Override
+	public String toString() {
+		return getXML().toString();
 	}
 	
 }

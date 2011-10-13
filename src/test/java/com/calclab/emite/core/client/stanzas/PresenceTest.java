@@ -18,17 +18,17 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.core.client.stanzas;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 
 public class PresenceTest {
 
@@ -36,9 +36,9 @@ public class PresenceTest {
 	public void shouldGetPriority() {
 		Presence presence = new Presence();
 		assertEquals(0, presence.getPriority());
-		presence = new Presence(new Packet("presence").With(new Packet("priority").WithText("5")));
+		presence = new Presence(XMLBuilder.create("presence").childText("priority", "5").getXML());
 		assertEquals(5, presence.getPriority());
-		presence = new Presence(new Packet("presence").With(new Packet("priority").WithText("not valid")));
+		presence = new Presence(XMLBuilder.create("presence").childText("priority", "not valid").getXML());
 		assertEquals(0, presence.getPriority());
 	}
 
@@ -46,9 +46,9 @@ public class PresenceTest {
 	public void shouldGetShow() {
 		Presence presence = new Presence();
 		assertEquals(Show.notSpecified, presence.getShow());
-		presence = new Presence(new Packet("presence").With(new Packet("show").WithText(Show.chat.toString())));
+		presence = new Presence(XMLBuilder.create("presence").childText("show", Show.chat.toString()).getXML());
 		assertEquals(Show.chat, presence.getShow());
-		presence = new Presence(new Packet("presence").With(new Packet("show").WithText("not valid show")));
+		presence = new Presence(XMLBuilder.create("presence").childText("show", "not valid show").getXML());
 		assertEquals(Show.unknown, presence.getShow());
 	}
 
@@ -56,7 +56,7 @@ public class PresenceTest {
 	public void shouldGetStatus() {
 		Presence presence = new Presence();
 		assertNull(presence.getStatus());
-		presence = new Presence(new Packet("presence").With(new Packet("status").WithText("the status")));
+		presence = new Presence(XMLBuilder.create("presence").childText("status", "the status").getXML());
 		assertEquals("the status", presence.getStatus());
 	}
 
@@ -64,9 +64,9 @@ public class PresenceTest {
 	public void shouldGetType() {
 		Presence presence = new Presence();
 		assertEquals(null, presence.getType());
-		presence = new Presence(new Packet("presence").With("type", Type.probe.toString()));
+		presence = new Presence(XMLBuilder.create("presence").attribute("type", Type.probe.toString()).getXML());
 		assertEquals(Type.probe, presence.getType());
-		presence = new Presence(new Packet("presence").With("type", "not valid"));
+		presence = new Presence(XMLBuilder.create("presence").attribute("type", "not valid").getXML());
 		assertEquals(Type.error, presence.getType());
 	}
 
@@ -123,7 +123,7 @@ public class PresenceTest {
 	public void shouldSetType() {
 		final Presence presence = new Presence();
 		for (final Type type : Type.values()) {
-			presence.setType(type.toString());
+			presence.setType(type);
 			assertEquals(type, presence.getType());
 		}
 	}

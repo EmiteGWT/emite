@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.datetime;
+package com.calclab.emite.core.client.util;
 
 import java.util.Date;
 

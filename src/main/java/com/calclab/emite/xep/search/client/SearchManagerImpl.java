@@ -30,8 +30,8 @@ import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
@@ -119,9 +119,7 @@ public class SearchManagerImpl implements SearchManager {
 	public void search(final HashMap<String, String> query, final ResultListener<List<SearchResultItem>> listener) {
 		final List<XMLPacket> queryPacket = new ArrayList<XMLPacket>();
 		for (final String field : query.keySet()) {
-			final XMLPacket child = XMLUtils.createPacket(field);
-			child.setText(query.get(field));
-			queryPacket.add(child);
+			queryPacket.add(XMLBuilder.create(field).text(query.get(field)).getXML());
 		}
 		searchGeneric(queryPacket, new IQCallback() {
 			@Override

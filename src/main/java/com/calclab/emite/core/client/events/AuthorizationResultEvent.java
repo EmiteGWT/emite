@@ -62,7 +62,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	}
 
 	public XmppURI getXmppUri() {
-		return credentials.getXmppUri();
+		return credentials.getUri();
 	}
 
 	public boolean isSuccess() {
@@ -76,7 +76,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 
 	@Override
 	public String toDebugString() {
-		final String value = success ? " Success - " + credentials.getXmppUri() : " Failed!";
+		final String value = success ? " Success - " + credentials.getUri() : " Failed!";
 		return super.toDebugString() + value;
 	}
 

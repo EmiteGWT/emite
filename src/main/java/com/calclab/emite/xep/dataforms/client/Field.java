@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * XEP-0004 Field element : A data form of type "form", "submit", or "result"
@@ -38,7 +38,7 @@ public class Field implements HasXML {
 	private final XMLPacket xml;
 
 	public Field() {
-		this(XMLUtils.createPacket("field"));
+		xml = XMLBuilder.create("field").getXML();
 	}
 
 	public Field(final XMLPacket xml) {

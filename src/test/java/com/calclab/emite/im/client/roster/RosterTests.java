@@ -37,6 +37,7 @@ import org.junit.Test;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.RosterItemChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.RosterRetrievedTestHandler;
@@ -79,7 +80,7 @@ public class RosterTests {
 	@Test
 	public void shouldFindRosterItemByJID() {
 		shouldRequestRosterOnLogin();
-		session.answer(serverRoster());
+		session.answerSuccess(serverRoster());
 
 		final RosterItem item = roster.getItemByJID(uri("romeo@example.net"));
 		assertNotNull(item);
@@ -92,7 +93,7 @@ public class RosterTests {
 		roster.addRosterRetrievedHandler(handler);
 
 		shouldRequestRosterOnLogin();
-		session.answer(new IQ(Type.error));
+		session.answerFailure(new IQ(Type.error));
 		assertTrue(handler.isNotCalled());
 	}
 
@@ -102,7 +103,7 @@ public class RosterTests {
 		roster.addRosterRetrievedHandler(handler);
 
 		shouldRequestRosterOnLogin();
-		session.answer(serverRoster());
+		session.answerSuccess(serverRoster());
 		assertTrue(handler.isCalledOnce());
 	}
 
@@ -194,7 +195,7 @@ public class RosterTests {
 	@Test
 	public void shouldRetrieveItemsByGroup() {
 		shouldRequestRosterOnLogin();
-		session.answer(serverRoster());
+		session.answerSuccess(serverRoster());
 		assertEquals(2, roster.getItemsByGroup("Friends").size());
 		assertEquals(1, roster.getItemsByGroup("Work").size());
 		assertEquals(1, roster.getItemsByGroup("X").size());
@@ -203,7 +204,7 @@ public class RosterTests {
 	@Test
 	public void shouldRetrieveTheGroups() {
 		shouldRequestRosterOnLogin();
-		session.answer(serverRoster());
+		session.answerSuccess(serverRoster());
 		final Set<String> groups = roster.getGroupNames();
 		assertNotNull(groups);
 		assertEquals(4, groups.size());
@@ -244,10 +245,10 @@ public class RosterTests {
 		return array;
 	}
 
-	private String serverRoster() {
-		return "<iq to='juliet@example.com/balcony' type='result'><query xmlns='jabber:iq:roster'>"
+	private IQ serverRoster() {
+		return new IQ(XMLBuilder.fromXML("<iq to='juliet@example.com/balcony' type='result'><query xmlns='jabber:iq:roster'>"
 				+ "<item jid='romeo@example.net' name='R' subscription='both'><group>Friends</group><group>X</group></item>"
 				+ "<item jid='mercutio@example.org' name='M' subscription='from'> <group>Friends</group></item>"
-				+ "<item jid='benvolio@example.org' name='B' subscription='both'><group>Work</group></item>" + "</query></iq>";
+				+ "<item jid='benvolio@example.org' name='B' subscription='both'><group>Work</group></item></query></iq>"));
 	}
 }

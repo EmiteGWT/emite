@@ -21,8 +21,8 @@
 package com.calclab.emite.xep.dataforms.client;
 
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * A XEP-0004 field option
@@ -32,7 +32,7 @@ public class Option implements HasXML {
 	private final XMLPacket xml;
 
 	public Option() {
-		this(XMLUtils.createPacket("option"));
+		xml = XMLBuilder.create("option").getXML();
 	}
 
 	protected Option(final XMLPacket xml) {

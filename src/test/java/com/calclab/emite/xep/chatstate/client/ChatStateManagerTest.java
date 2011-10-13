@@ -117,7 +117,7 @@ public class ChatStateManagerTest {
 		session.receives("<message from='other@domain/other' to='self@domain/res' type='chat'>"
 				+ "<active xmlns='http://jabber.org/protocol/chatstates'/></message>");
 		final Message message = new Message("test message", OTHER, MYSELF);
-		message.addChild(ChatStateHook.ChatState.active.toString(), ChatStateHook.XMLNS);
+		message.getXML().addChild(ChatStateHook.ChatState.active.toString(), "http://jabber.org/protocol/chatstates");
 		chatStateHook.setOwnState(ChatStateHook.ChatState.composing);
 		session.verifySent(message.toString() + "<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<composing xmlns='http://jabber.org/protocol/chatstates'/></message>");

@@ -18,23 +18,19 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xtesting.services;
+package com.calclab.emite.core.client.xml;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.AbstractHelperTest;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.PacketTestSuite;
-
-public class TigasePacketTest {
-
+public class PacketTest {
 	@Test
 	public void testPacket() {
 		PacketTestSuite.runPacketTests(new AbstractHelperTest() {
 			@Override
-			public IPacket createPacket(final String name) {
-				return new TigasePacket(name);
+			public XMLPacket createPacket(final String name) {
+				return XMLBuilder.create(name).getXML();
 			}
 		});
 	}
+
 }

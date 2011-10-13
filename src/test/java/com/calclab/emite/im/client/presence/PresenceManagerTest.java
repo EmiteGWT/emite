@@ -32,7 +32,6 @@ import com.calclab.emite.core.client.session.SessionReady;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
-import com.calclab.emite.core.client.stanzas.Presence.Type;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.OwnPresenceChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -52,7 +51,10 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldBroadcastPresenceIfLoggedin() {
 		session.setLoggedIn("myself@domain");
-		manager.changeOwnPresence(Presence.build("this is my new status", Show.away));
+		final Presence newOwn = new Presence();
+		newOwn.setStatus("this is my new status");
+		newOwn.setShow(Show.away);
+		manager.changeOwnPresence(newOwn);
 		session.verifySent("<presence><show>away</show>" + "<status>this is my new status</status></presence>");
 		final Presence current = manager.getOwnPresence();
 		assertEquals(Show.away, current.getShow());
@@ -64,7 +66,10 @@ public class PresenceManagerTest {
 		session.setLoggedIn(uri("myself@domain"));
 		final OwnPresenceChangedTestHandler handler = new OwnPresenceChangedTestHandler();
 		manager.addOwnPresenceChangedHandler(handler);
-		manager.changeOwnPresence(Presence.build("status", Show.away));
+		final Presence newOwn = new Presence();
+		newOwn.setStatus("status");
+		newOwn.setShow(Show.away);
+		manager.changeOwnPresence(newOwn);
 		assertTrue(handler.isCalledOnce());
 		assertEquals("status", handler.getCurrentPresence().getStatus());
 		assertEquals(Show.away, handler.getCurrentPresence().getShow());
@@ -78,10 +83,13 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldResetOwnPresenceWhenLoggedOut() {
 		session.setLoggedIn(uri("myself@domain"));
-		manager.changeOwnPresence(Presence.build("status", Show.away));
+		final Presence newOwn = new Presence();
+		newOwn.setStatus("status");
+		newOwn.setShow(Show.away);
+		manager.changeOwnPresence(newOwn);
 		assertEquals("status", manager.getOwnPresence().getStatus());
 		session.logout();
-		assertEquals(Type.unavailable, manager.getOwnPresence().getType());
+		assertEquals(Presence.Type.unavailable, manager.getOwnPresence().getType());
 	}
 
 	@Test
@@ -101,7 +109,9 @@ public class PresenceManagerTest {
 	@Test
 	public void shouldSendPresenceIfLoggedIn() {
 		session.setLoggedIn(uri("myself@domain"));
-		manager.changeOwnPresence(new Presence().With(Presence.Show.dnd));
+		final Presence newOwn = new Presence();
+		newOwn.setShow(Show.dnd);
+		manager.changeOwnPresence(newOwn);
 		session.verifySent("<presence><show>dnd</show></presence>");
 
 	}

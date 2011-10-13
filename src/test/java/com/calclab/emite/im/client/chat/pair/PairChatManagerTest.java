@@ -32,7 +32,6 @@ import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
-import com.calclab.emite.xep.chatstate.client.ChatStateHook;
 import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.PairChatChangedTestHandler;
@@ -43,7 +42,7 @@ public class PairChatManagerTest extends AbstractChatManagerTest<PairChatManager
 	@Test
 	public void chatStateDontFireOnChatCreatedButMustAfterOpenChat() {
 		final Message message = new Message(null, MYSELF, OTHER);
-		message.addChild("gone", ChatStateHook.XMLNS);
+		message.getXML().addChild("gone", "http://jabber.org/protocol/chatstates");
 
 		final PairChatChangedTestHandler handler = addChatCreatedHandler();
 		session.receives(message);

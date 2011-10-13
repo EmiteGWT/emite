@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * 
@@ -66,7 +66,7 @@ public class Form implements HasXML {
 	}
 
 	public Form(final Type type) {
-		this(XMLUtils.createPacket("x", "jabber:x:data"));
+		xml = XMLBuilder.create("x", "jabber:x:data").getXML();
 		setType(type);
 	}
 

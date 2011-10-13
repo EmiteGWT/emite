@@ -24,14 +24,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 
 public class FeatureTest {
-
 	@Test
 	public void shouldParsePacket() {
-		final IPacket packet = new Packet("feature").With("var", "protocol");
+		final XMLPacket packet = XMLBuilder.create("feature").attribute("var", "protocol").getXML();
 		final Feature feature = Feature.fromPacket(packet);
 		assertEquals("protocol", feature.var);
 	}

@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
@@ -100,7 +101,9 @@ public class RoomTest extends AbstractChatTest<RoomChatImpl> {
 		room.addRoomSubjectChangedHandler(handler);
 
 		final XmppURI occupantURI = uri("someone@domain/res");
-		eventBus.fireEvent(new MessageReceivedEvent(new Message(null, uri("room@domain"), occupantURI).Subject("the subject")));
+		final Message subject = new Message(null, uri("room@domain"), occupantURI);
+		subject.setSubject("the subject");
+		eventBus.fireEvent(new MessageReceivedEvent(subject));
 		assertEquals(1, handler.getCalledTimes());
 
 		assertEquals(occupantURI, handler.getLastEvent().getOccupantUri());
@@ -157,7 +160,7 @@ public class RoomTest extends AbstractChatTest<RoomChatImpl> {
 				+ "<item affiliation='owner' role='moderator' jid='" + userUri + "' /><status code='201'/></x></presence>");
 		session.verifyIQSent("<iq to='" + room.getJID() + "' type='set'>" + "<query xmlns='http://jabber.org/protocol/muc#owner'>"
 				+ "<x xmlns='jabber:x:data' type='submit'/></query></iq>");
-		session.answerSuccess();
+		session.answerSuccess(new IQ(IQ.Type.result));
 	}
 
 }

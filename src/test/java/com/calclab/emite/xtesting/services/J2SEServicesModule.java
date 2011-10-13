@@ -20,7 +20,6 @@
 
 package com.calclab.emite.xtesting.services;
 
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.services.ConnectorCallback;
 import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
@@ -28,22 +27,12 @@ import com.calclab.emite.core.client.services.Services;
 
 public class J2SEServicesModule implements Services {
 	private final HttpConnector connector;
-
 	private final ThreadScheduler scheduler;
-	private final TigaseXMLService xmler;
 
 	public J2SEServicesModule() {
 		connector = new HttpConnector();
 		scheduler = new ThreadScheduler();
-		xmler = new TigaseXMLService();
 	}
-
-	/*
-	 * public void onInstall(final Container container) {
-	 * container.removeProvider(Services.class);
-	 * container.registerProvider(null, Services.class, new Provider<Services>()
-	 * { public Services get() { return J2SEServicesModule.this; } }); }
-	 */
 
 	@Override
 	public void schedule(final int msecs, final ScheduledAction action) {
@@ -53,11 +42,6 @@ public class J2SEServicesModule implements Services {
 	@Override
 	public void send(final String httpBase, final String xml, final ConnectorCallback listener) throws ConnectorException {
 		connector.send(httpBase, xml, listener);
-	}
-
-	@Override
-	public IPacket toXML(final String xml) {
-		return xmler.toXML(xml);
 	}
 
 }

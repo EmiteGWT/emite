@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.xml;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,9 +37,9 @@ public class PacketRendererTest {
 	 */
 	@Test
 	public void testToStringIPacket() {
-		final Packet testPacket = new Packet("test");
-		final Packet testChild = new Packet("child");
-		final Packet testChildWithText = new Packet("childWithText");
+		final XMLPacket testPacket = XMLBuilder.create("test").getXML();
+		final XMLPacket testChild = XMLBuilder.create("child").getXML();
+		final XMLPacket testChildWithText = XMLBuilder.create("childWithText").getXML();
 
 		testChildWithText.setText("\"<&>'");
 
@@ -48,12 +48,10 @@ public class PacketRendererTest {
 		testPacket.addChild(testChild);
 		testPacket.addChild(testChildWithText);
 
-		final String result = PacketRenderer.toString(testPacket);
-
 		// We should probably do something cleverer here really as the xml may
 		// not necessarily always have to come out the same to still be correct
 		assertEquals("XML has not been rendered as expected",
-				"<test attr=\"&quot;&lt;&amp;&gt;&#39;\"><child /><childWithText>&quot;&lt;&amp;&gt;&#39;</childWithText></test>", result);
+				"<test attr=\"&quot;&lt;&amp;&gt;&#39;\"><child /><childWithText>&quot;&lt;&amp;&gt;&#39;</childWithText></test>", testPacket.toString());
 	}
 
 }

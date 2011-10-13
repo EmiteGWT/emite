@@ -53,7 +53,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireGone() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("gone", ChatStateHook.XMLNS);
+		message.getXML().addChild("gone", "http://jabber.org/protocol/chatstates");
 		chatStateHook.onMessageReceived(new MessageReceivedEvent(message));
 		assertEquals(ChatState.gone, stateHandler.getLastChatState());
 	}
@@ -61,7 +61,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossing() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("composing", ChatStateHook.XMLNS);
+		message.getXML().addChild("composing", "http://jabber.org/protocol/chatstates");
 		chatStateHook.onMessageReceived(new MessageReceivedEvent(message));
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}
@@ -69,7 +69,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossingAsGmailDo() {
 		final Message message = new Message(null, OTHER, MYSELF);
-		message.addChild("cha:composing", ChatStateHook.XMLNS);
+		message.getXML().addChild("cha:composing", "http://jabber.org/protocol/chatstates");
 		chatStateHook.onMessageReceived(new MessageReceivedEvent(message));
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}
@@ -77,7 +77,7 @@ public class ChatStateTest {
 	@Test
 	public void shouldFireOtherCompossingToWithoutResource() {
 		final Message message = new Message(null, OTHER.getJID(), MYSELF);
-		message.addChild("cha:composing", ChatStateHook.XMLNS);
+		message.getXML().addChild("cha:composing", "http://jabber.org/protocol/chatstates");
 		chatStateHook.onMessageReceived(new MessageReceivedEvent(message));
 		assertEquals(ChatState.composing, stateHandler.getLastChatState());
 	}

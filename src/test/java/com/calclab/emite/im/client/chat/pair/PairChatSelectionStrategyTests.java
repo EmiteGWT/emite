@@ -29,11 +29,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.pair.PairChatSelectionStrategy;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class PairChatSelectionStrategyTests {
 
@@ -69,7 +69,7 @@ public class PairChatSelectionStrategyTests {
 	/* Based on real facts ;) */
 	@Test
 	public void shouldNotInitiateCreationIfMessageHasInvitation() {
-		final IPacket stanza = TigaseXMLService.toPacket("<message to='test1@localhost' " + "from='room@conference.localhost' xmlns='jabber:client' "
+		final XMLPacket stanza = XMLBuilder.fromXML("<message to='test1@localhost' " + "from='room@conference.localhost' xmlns='jabber:client' "
 				+ "type='normal'><x xmlns='http://jabber.org/protocol/muc#user'>" + "<invite from='test1@localhost/emite-1291918896669'><reason />"
 				+ "</invite></x><x jid='room@conference.localhost' " + "xmlns='jabber:x:conference' />"
 				+ "<body>test1@localhost/emite-1291918896669 invites you to the room room@conference.localhost</body></message>");

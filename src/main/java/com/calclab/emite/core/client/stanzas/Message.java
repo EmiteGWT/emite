@@ -42,8 +42,18 @@ public class Message extends Stanza {
 	}
 
 	public Message(final String body) {
+		this(body, null, null);
+	}
+	
+	public Message(final String body, final XmppURI to) {
+		this(body, to, null);
+	}
+	
+	public Message(final String body, final XmppURI to, final XmppURI from) {
 		this();
 		setBody(body);
+		setTo(to);
+		setFrom(from);
 	}
 
 	public String getBody() {

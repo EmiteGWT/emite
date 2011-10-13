@@ -33,7 +33,9 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xep.dataforms.client.Field;
 import com.calclab.emite.xep.dataforms.client.FieldType;
 import com.calclab.emite.xep.dataforms.client.Form;
@@ -64,7 +66,7 @@ public class SearchManagerTest {
 		final ResultListener<SearchFields> result = Mockito.mock(ResultListener.class);
 		manager.requestSearchFields(result);
 		session.verifyIQSent("<iq type='get' from='romeo@montague.net/home' to='search.service'" + "xml:lang='en'> <query xmlns='jabber:iq:search'/> </iq>");
-		session.answer(XEP_0055_2_1_SAMPLE_2);
+		session.answerSuccess(new IQ(XMLBuilder.fromXML(XEP_0055_2_1_SAMPLE_2)));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<SearchFields>() {
 			@Override
@@ -87,7 +89,7 @@ public class SearchManagerTest {
 	public void shouldRequestAndReceiveSearchForm() {
 		final ResultListener<Form> result = Mockito.mock(ResultListener.class);
 		manager.requestSearchForm(result);
-		session.answer(XEP_0055_3_SAMPLE_7);
+		session.answerSuccess(new IQ(XMLBuilder.fromXML(XEP_0055_3_SAMPLE_7)));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<Form>() {
 			@Override
@@ -105,7 +107,7 @@ public class SearchManagerTest {
 	public void shouldRequestAndReceiveSearchFormWhenNoFormReturned() {
 		final ResultListener<Form> result = Mockito.mock(ResultListener.class);
 		manager.requestSearchForm(result);
-		session.answer(XEP_0055_2_1_SAMPLE_2);
+		session.answerSuccess(new IQ(XMLBuilder.fromXML(XEP_0055_2_1_SAMPLE_2)));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<Form>() {
 			@Override
@@ -123,8 +125,8 @@ public class SearchManagerTest {
 	public void shouldReturnAnEmptyListIfNotResultFounded() {
 		final ResultListener<List<SearchResultItem>> result = Mockito.mock(ResultListener.class);
 		manager.search(new HashMap<String, String>(), result);
-		session.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
-				+ "<query xmlns='jabber:iq:search'/></iq>");
+		session.answerSuccess(new IQ(XMLBuilder.fromXML("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
+				+ "<query xmlns='jabber:iq:search'/></iq>")));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<List<SearchResultItem>>() {
 			@Override
@@ -146,10 +148,10 @@ public class SearchManagerTest {
 
 		session.verifyIQSent("<iq type='set' from='romeo@montague.net/home' to='search.service' xml:lang='en'>"
 				+ "<query xmlns='jabber:iq:search'> <last>Capulet</last> </query></iq>");
-		session.answer("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
+		session.answerSuccess(new IQ(XMLBuilder.fromXML("<iq type='result' from='characters.shakespeare.lit' to='romeo@montague.net/home' id='search2' xml:lang='en'>"
 				+ "<query xmlns='jabber:iq:search'><item jid='juliet@capulet.com'>" + "<first>Juliet</first><last>Capulet</last><nick>JuliC</nick>"
 				+ "<email>juliet@shakespeare.lit</email></item>" + "<item jid='tybalt@shakespeare.lit'><first>Tybalt</first>"
-				+ "<last>Capulet</last><nick>ty</nick>" + "<email>tybalt@shakespeare.lit</email></item></query></iq>");
+				+ "<last>Capulet</last><nick>ty</nick>" + "<email>tybalt@shakespeare.lit</email></item></query></iq>")));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<List<SearchResultItem>>() {
 			@Override
@@ -176,7 +178,7 @@ public class SearchManagerTest {
 	 */
 	public void testSearchUsingForms() {
 		final Form form = new Form(Form.Type.submit);
-		form.addField(new Field(FieldType.HIDDEN).Var("FORM_TYPE").Value(SearchManagerImpl.IQ_SEARCH));
+		form.addField(new Field(FieldType.HIDDEN).Var("FORM_TYPE").Value("jabber:iq:search"));
 		form.addField(new Field().Var("x-gender").Value("male"));
 		final ResultListener<Form> result = Mockito.mock(ResultListener.class);
 		manager.search(form, result);
@@ -185,7 +187,7 @@ public class SearchManagerTest {
 				+ "<query xmlns='jabber:iq:search'><x xmlns='jabber:x:data' type='submit'>"
 				+ "<field type='hidden' var='FORM_TYPE'><value>jabber:iq:search</value>"
 				+ "</field><field var='x-gender'><value>male</value></field></x></query></iq>");
-		session.answer("<iq type='result'     from='characters.shakespeare.lit'    to='juliet@capulet.com/balcony'    id='search4'    xml:lang='en'>  <query xmlns='jabber:iq:search'>    <x xmlns='jabber:x:data' type='result'>      <field type='hidden' var='FORM_TYPE'>        <value>jabber:iq:search</value>      </field>      <reported>        <field var='first' label='Given Name' type='text-single'/>        <field var='last' label='Family Name' type='text-single'/>        <field var='jid' label='Jabber ID' type='jid-single'/>        <field var='x-gender' label='Gender' type='list-single'/>      </reported>      <item>        <field var='first'><value>Benvolio</value></field>        <field var='last'><value>Montague</value></field>        <field var='jid'><value>benvolio@montague.net</value></field>        <field var='x-gender'><value>male</value></field>      </item>      <item>        <field var='first'><value>Romeo</value></field>        <field var='last'><value>Montague</value></field>        <field var='jid'><value>romeo@montague.net</value></field>        <field var='x-gender'><value>male</value></field>      </item>    </x>  </query></iq>");
+		session.answerSuccess(new IQ(XMLBuilder.fromXML("<iq type='result'     from='characters.shakespeare.lit'    to='juliet@capulet.com/balcony'    id='search4'    xml:lang='en'>  <query xmlns='jabber:iq:search'>    <x xmlns='jabber:x:data' type='result'>      <field type='hidden' var='FORM_TYPE'>        <value>jabber:iq:search</value>      </field>      <reported>        <field var='first' label='Given Name' type='text-single'/>        <field var='last' label='Family Name' type='text-single'/>        <field var='jid' label='Jabber ID' type='jid-single'/>        <field var='x-gender' label='Gender' type='list-single'/>      </reported>      <item>        <field var='first'><value>Benvolio</value></field>        <field var='last'><value>Montague</value></field>        <field var='jid'><value>benvolio@montague.net</value></field>        <field var='x-gender'><value>male</value></field>      </item>      <item>        <field var='first'><value>Romeo</value></field>        <field var='last'><value>Montague</value></field>        <field var='jid'><value>romeo@montague.net</value></field>        <field var='x-gender'><value>male</value></field>      </item>    </x>  </query></iq>")));
 		Mockito.verify(result, Mockito.never()).onFailure(Matchers.anyString());
 		Mockito.verify(result).onSuccess(Matchers.argThat(new ArgumentMatcher<Form>() {
 			@Override

@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.core.client.stanzas;
 
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
@@ -27,15 +27,15 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.MatcherFactory;
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Message.Type;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 
 public class MessageTest {
 	@Test
 	public void shouldAddSubject() {
-		final Message message = new Message("message", uri("user2@domain/r"), uri("user1@domain/r")).Subject("the subject");
+		final Message message = new Message("message", uri("user2@domain/r"), uri("user1@domain/r"));
+		message.setSubject("the subject");
 		assertEquals("the subject", message.getSubject());
 	}
 
@@ -43,14 +43,14 @@ public class MessageTest {
 	public void shouldNotAddBodyIfNotSpecified() {
 		final Message message = new Message();
 		assertNull(message.getBody());
-		assertEquals(0, message.getChildren(MatcherFactory.byName("body")).size());
-		final Message message2 = new Message(null, uri("other@domain"), uri("me@domain"), Message.Type.chat);
-		assertEquals(0, message2.getChildren(MatcherFactory.byName("body")).size());
+		assertEquals(0, message.getXML().getChildren("body").size());
+		final Message message2 = new Message(null, uri("other@domain"), uri("me@domain"));
+		assertEquals(0, message2.getXML().getChildren("body").size());
 	}
 
 	@Test
 	public void shouldRetrieveSubject() {
-		final Message message = new Message(new Packet("message").With(new Packet("subject", null).WithText("the subject")));
+		final Message message = new Message(XMLBuilder.create("message").childText("subject", "the subject").getXML());
 		assertEquals("the subject", message.getSubject());
 	}
 
@@ -62,13 +62,13 @@ public class MessageTest {
 
 	@Test
 	public void shouldReturnUnkownType() {
-		final Message message = new Message(new Packet("message").With("type", "invalid-here"));
+		final Message message = new Message(XMLBuilder.create("message").attribute("type", "invalid-here").getXML());
 		assertSame(Type.normal, message.getType());
 	}
 
 	@Test
 	public void shouldTypeNotSpecifiedType() {
-		final Message message = new Message(new Packet("message"));
+		final Message message = new Message(XMLBuilder.create("message").getXML());
 		final Type type = message.getType();
 		assertSame(Type.normal, type);
 	}

@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.core.client.stanzas;
 
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;

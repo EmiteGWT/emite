@@ -26,10 +26,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.NoPacket;
-import com.calclab.emite.core.client.stanzas.BasicStanza;
+import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.gwt.junit.client.GWTTestCase;
 
 public class DelayManagerImplGwtTest extends GWTTestCase {
@@ -41,13 +40,13 @@ public class DelayManagerImplGwtTest extends GWTTestCase {
 
 	@Test
 	public void testShouldGiveDelay() {
-		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+		final Stanza stanza = new Stanza("name", "xmlns");
 
 		final XmppURI uri = uri("name@domain/resource");
 		stanza.setTo(uri);
-		assertEquals("name@domain/resource", stanza.getToAsString());
+		assertEquals("name@domain/resource", stanza.getTo().toString());
 		stanza.setTo((XmppURI) null);
-		final IPacket delayNode = stanza.addChild("delay");
+		final XMLPacket delayNode = stanza.getXML().addChild("delay");
 		delayNode.setAttribute("xmlns", "urn:xmpp:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "1980-04-15T17:15:02.159+01:00");
@@ -62,13 +61,13 @@ public class DelayManagerImplGwtTest extends GWTTestCase {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testShouldGiveDelayLegacyFormat() {
-		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+		final Stanza stanza = new Stanza("name", "xmlns");
 
 		final XmppURI uri = uri("name@domain/resource");
 		stanza.setTo(uri);
-		assertEquals("name@domain/resource", stanza.getToAsString());
-		stanza.setTo((XmppURI) null);
-		final IPacket delayNode = stanza.addChild("x");
+		assertEquals("name@domain/resource", stanza.getTo().toString());
+		stanza.setTo(null);
+		final XMLPacket delayNode = stanza.getXML().addChild("x");
 		delayNode.setAttribute("xmlns", "jabber:x:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "19800415T15:15:02");
@@ -84,20 +83,20 @@ public class DelayManagerImplGwtTest extends GWTTestCase {
 
 	@Test
 	public void testShouldSetTextToChild() {
-		final BasicStanza stanza = new BasicStanza("name", "xmlns");
-		stanza.setTextToChild("child", "value");
-		assertEquals("value", stanza.getFirstChild("child").getText());
-		stanza.setTextToChild("child", null);
-		assertSame(NoPacket.INSTANCE, stanza.getFirstChild("child"));
+		final Stanza stanza = new Stanza("name", "xmlns");
+		stanza.getXML().setChildText("child", "value");
+		assertEquals("value", stanza.getXML().getChildText("child"));
+		stanza.getXML().setChildText("child", null);
+		assertNull(stanza.getXML().getFirstChild("child"));
 	}
 
 	@Test
 	public void testShouldSetTo() {
-		final BasicStanza stanza = new BasicStanza("name", "xmlns");
+		final Stanza stanza = new Stanza("name", "xmlns");
 
 		stanza.setTo(uri("name@domain/resource"));
-		assertEquals("name@domain/resource", stanza.getToAsString());
-		stanza.setTo((XmppURI) null);
-		assertNull(stanza.getToAsString());
+		assertEquals("name@domain/resource", stanza.getTo().toString());
+		stanza.setTo(null);
+		assertNull(stanza.getTo());
 	}
 }

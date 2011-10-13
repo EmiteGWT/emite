@@ -18,25 +18,33 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.stanzas;
 
+import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-public class NoPacketTest {
+public class BasicStanzaTest {
 
 	@Test
-	public void testNoPacket() {
-		final IPacket noPacket = NoPacket.INSTANCE;
-		assertSame(noPacket, noPacket.addChild("node", "xmlns"));
-		assertNull(noPacket.getText());
-		assertSame(noPacket, noPacket.getFirstChild("anyChildren"));
-		assertEquals(0, noPacket.getChildren().size());
-		assertEquals(0, noPacket.getChildren(MatcherFactory.byName("anyChildren")).size());
-		assertFalse(noPacket.removeChild(new Packet("some")));
+	public void shouldSetTextToChild() {
+		final Stanza stanza = new Stanza("name", "xmlns");
+		stanza.getXML().setChildText("child", "value");
+		assertEquals("value", stanza.getXML().getFirstChild("child").getText());
+		stanza.getXML().setChildText("child", null);
+		assertSame(null, stanza.getXML().getFirstChild("child"));
+	}
+
+	@Test
+	public void shouldSetTo() {
+		final Stanza stanza = new Stanza("name", "xmlns");
+
+		stanza.setTo(uri("name@domain/resource"));
+		assertEquals("name@domain/resource", stanza.getTo().toString());
+		stanza.setTo(null);
+		assertNull(stanza.getTo());
 	}
 }

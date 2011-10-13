@@ -26,11 +26,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.matchers.EmiteAsserts;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class RosterItemTests {
 
@@ -40,7 +38,7 @@ public class RosterItemTests {
 		item.addToGroup("group1");
 		item.addToGroup("group2");
 		EmiteAsserts.assertPacketLike("<item jid='name@domain' name='TheName'>" + "<group>group1</group><group>group2</group></item>",
-				item.addStanzaTo(new Packet("all")));
+				item.addStanzaTo(XMLBuilder.create("all").getXML()));
 	}
 
 	@Test
@@ -53,7 +51,7 @@ public class RosterItemTests {
 
 	@Test
 	public void shouldParseStanza() {
-		final RosterItem item = RosterItem.parse(p("<item jid='romeo@example.net' ask='subscribe' name='R' subscription='both'>"
+		final RosterItem item = RosterItem.parse(XMLBuilder.fromXML("<item jid='romeo@example.net' ask='subscribe' name='R' subscription='both'>"
 				+ "<group>Friends</group><group>X</group></item>"));
 		assertEquals("R", item.getName());
 		assertEquals("R", item.getName());
@@ -63,8 +61,4 @@ public class RosterItemTests {
 		assertTrue(item.getGroups().contains("X"));
 	}
 
-	private IPacket p(final String xml) {
-		final IPacket packet = TigaseXMLService.toPacket(xml);
-		return packet;
-	}
 }

@@ -24,23 +24,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 
 /**
  * XEP-0004 Item and Results abstract class for
  * "3.2 Multiple Items in Form Results"
  */
-public class AbstractItem implements HasXML {
+public abstract class AbstractItem implements HasXML {
 
 	protected final XMLPacket xml;
+	
+	public AbstractItem(final String name) {
+		xml = XMLBuilder.create(name).getXML();
+	}
 
 	public AbstractItem(final XMLPacket xml) {
 		this.xml = xml;
-	}
-
-	public AbstractItem(final String name) {
-		this(XMLUtils.createPacket(name));
 	}
 
 	public void addField(final Field field) {
@@ -59,4 +59,5 @@ public class AbstractItem implements HasXML {
 	public XMLPacket getXML() {
 		return xml;
 	}
+
 }

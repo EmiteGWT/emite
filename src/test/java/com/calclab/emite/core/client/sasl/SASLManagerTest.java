@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.sasl;
+package com.calclab.emite.core.client.sasl;
 
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertFalse;
@@ -29,12 +29,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.session.sasl.SASLManagerImpl;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
@@ -75,22 +75,22 @@ public class SASLManagerTest {
 
 	@Test
 	public void shouldSendAnonymousIfAnonymousProvided() {
-		manager.sendAuthorizationRequest(credentials(Credentials.ANONYMOUS, null));
-		final IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "ANONYMOUS");
+		manager.sendAuthorizationRequest(Credentials.createAnonymous());
+		final XMLPacket packet = XMLBuilder.create("auth", "urn:ietf:params:xml:ns:xmpp-sasl").attribute("mechanism", "ANONYMOUS").getXML();
 		assertTrue(connection.hasSent(packet));
 	}
 
 	@Test
 	public void shouldSendPlainAuthorizationUnlessAnonymous() {
 		manager.sendAuthorizationRequest(credentials(uri("node@domain/resource"), "password"));
-		final IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN");
+		final XMLPacket packet = XMLBuilder.create("auth", "urn:ietf:params:xml:ns:xmpp-sasl").attribute("mechanism", "PLAIN").getXML();
 		assertTrue(connection.hasSent(packet));
 	}
 
 	@Test
 	public void shouldSendPlainAuthorizationWithoutNode() {
 		manager.sendAuthorizationRequest(credentials(uri("domain/resource"), ""));
-		final IPacket packet = new Packet("auth", "urn:ietf:params:xml:ns:xmpp-sasl").With("mechanism", "PLAIN");
+		final XMLPacket packet = XMLBuilder.create("auth", "urn:ietf:params:xml:ns:xmpp-sasl").attribute("mechanism", "PLAIN").getXML();
 		assertTrue(connection.hasSent(packet));
 	}
 

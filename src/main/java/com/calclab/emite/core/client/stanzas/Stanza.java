@@ -23,23 +23,23 @@ package com.calclab.emite.core.client.stanzas;
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 
-public abstract class Stanza implements HasXML {
+public class Stanza implements HasXML {
 
 	protected final XMLPacket xml;
 
-	protected Stanza(final XMLPacket xml) {
+	public Stanza(final XMLPacket xml) {
 		this.xml = xml;
 	}
 
-	protected Stanza(final String name) {
-		this(XMLUtils.createPacket(name));
+	public Stanza(final String name) {
+		this(XMLBuilder.create(name).getXML());
 	}
 
-	protected Stanza(final String name, final String namespace) {
-		this(XMLUtils.createPacket(name, namespace));
+	public Stanza(final String name, final String namespace) {
+		this(XMLBuilder.create(name, namespace).getXML());
 	}
 
 	public String getId() {

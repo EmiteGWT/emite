@@ -20,20 +20,19 @@
 
 package com.calclab.emite.xtesting;
 
-import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.roster.RosterItem;
 
 public class XmppRosterHelper {
 	public static void setRosterItems(final XmppSessionTester session, final RosterItem... items) {
 		session.setStatus(SessionStatus.loggedIn);
-		final IQ iq = new IQ(Type.result);
-		final IPacket query = iq.addQuery("jabber:iq:roster");
+		final IQ iq = new IQ(IQ.Type.result);
+		final XMLPacket query = iq.addChild("query", "jabber:iq:roster");
 		for (final RosterItem item : items) {
 			item.addStanzaTo(query);
 		}
-		session.answer(iq);
+		session.answerSuccess(iq);
 	}
 }

@@ -27,8 +27,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.AvatarVCardTestHandler;
 import com.calclab.emite.xtesting.handlers.HashPresenceReceivedTestHandler;
@@ -48,8 +49,9 @@ public class AvatarManagerTest {
 	public void managerShouldListenPresenceWithPhoto() {
 		final HashPresenceReceivedTestHandler handler = new HashPresenceReceivedTestHandler();
 		avatarManager.addHashPresenceReceviedHandler(handler);
-		final Presence presence = new Presence(XmppURI.uri("juliet@capulet.com/balcony"));
-		presence.addChild("x", "vcard-temp:x:update").addChild("photo", null).setText("sha1-hash-of-image");
+		final Presence presence = new Presence();
+		presence.setFrom(uri("juliet@capulet.com/balcony"));
+		presence.getXML().addChild("x", "vcard-temp:x:update").setChildText("photo", "sha1-hash-of-image");
 		session.receives(presence);
 		assertTrue(handler.isCalledOnce());
 		assertEquals(presence, handler.getLastPresence());
@@ -62,7 +64,7 @@ public class AvatarManagerTest {
 		avatarManager.setVCardAvatar(photo);
 		session.verifyIQSent("<iq type='set'><vCard prodid='-//HandGen//NONSGML vGen v1.0//EN' " + "version='2.0' xmlns='vcard-temp' xdbns='vcard-temp'>"
 				+ "<PHOTO><BINVAL>some base64 encoded photo</BINVAL></PHOTO></vCard></iq>");
-		session.answerSuccess();
+		session.answerSuccess(new IQ(IQ.Type.result));
 		// User's Server Acknowledges Publish:
 		// <iq to='juliet@capulet.com' type='result' id='vc1'/>
 	}
@@ -73,10 +75,10 @@ public class AvatarManagerTest {
 		avatarManager.addAvatarVCardReceivedHandler(handler);
 
 		session.setLoggedIn(uri("romeo@montague.net/orchard"));
-		avatarManager.requestVCard(XmppURI.uri("juliet@capulet.com"));
+		avatarManager.requestVCard(uri("juliet@capulet.com"));
 		session.verifyIQSent("<iq to='juliet@capulet.com' type='get'><vCard xmlns='vcard-temp'/></iq>");
-		session.answer("<iq from='juliet@capulet.com' to='romeo@montague.net/orchard' type='result'>"
-				+ "<vCard xmlns='vcard-temp'><PHOTO><TYPE>image/jpeg</TYPE>" + "<BINVAL>Base64-encoded-avatar-file-here!</BINVAL></PHOTO></vCard></iq>");
+		session.answerSuccess(new IQ(XMLBuilder.fromXML("<iq from='juliet@capulet.com' to='romeo@montague.net/orchard' type='result'>"
+				+ "<vCard xmlns='vcard-temp'><PHOTO><TYPE>image/jpeg</TYPE>" + "<BINVAL>Base64-encoded-avatar-file-here!</BINVAL></PHOTO></vCard></iq>")));
 		assertTrue(handler.isCalledOnce());
 	}
 }

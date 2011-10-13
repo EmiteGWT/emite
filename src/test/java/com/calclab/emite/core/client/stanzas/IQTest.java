@@ -18,29 +18,24 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.stanzas;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-public class TextUtilsTest {
+import com.calclab.emite.core.client.stanzas.IQ;
+import com.calclab.emite.core.client.xml.XMLPacket;
+
+public class IQTest {
 
 	@Test
-	public void matchDemoEmail() {
-		final String email = "test100@emitedemo.ourproject.org";
-		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
-	}
-
-	@Test
-	public void matchLocalhostEmail() {
-		final String email = "me@localhost";
-		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
-	}
-
-	@Test
-	public void matchSimpleEmail() {
-		final String email = "me@example.com";
-		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
+	public void shoudAddQuery() {
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.addChild("query", "xmlns:query");
+		final XMLPacket query = iq.getChild("query", "xmlns:query");
+		assertNotNull(query);
+		assertEquals("xmlns:query", query.getAttribute("xmlns"));
 	}
 }

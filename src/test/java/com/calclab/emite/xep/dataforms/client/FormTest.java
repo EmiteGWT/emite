@@ -27,11 +27,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.NoPacket;
 import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.calclab.emite.xep.dataforms.client.Form.Type;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.xep.dataforms.client.Form;
 import com.calclab.emite.xtesting.XmppSessionTester;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class FormTest {
 
@@ -210,7 +209,7 @@ public class FormTest {
 
 	@Test
 	public void testTypeForm() {
-		final Form form = new Form(Type.form).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Required(true));
+		final Form form = new Form(Form.Type.form).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Required(true));
 		form.setTitle("Joogle Search");
 		form.addInstruction("Fill out this form to search for information!");
 		session.send(form);
@@ -218,7 +217,7 @@ public class FormTest {
 	}
 
 	private Form parse(final String xml) {
-		return new Form(TigaseXMLService.toPacket(xml));
+		return new Form(XMLBuilder.fromXML(xml));
 	}
 
 }

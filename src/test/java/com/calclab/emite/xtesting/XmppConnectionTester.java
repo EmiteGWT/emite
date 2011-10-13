@@ -21,22 +21,23 @@
 package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.calclab.emite.core.client.conn.XmppConnectionBoilerplate;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
-import com.calclab.emite.core.client.events.StanzaReceivedEvent;
-import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.events.PacketReceivedEvent;
+import com.calclab.emite.core.client.events.PacketSentEvent;
+import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class XmppConnectionTester extends XmppConnectionBoilerplate {
 
-	private final TigaseXMLService xmler;
-	private final ArrayList<IPacket> sent;
-	private final ArrayList<IPacket> received;
+	private final List<XMLPacket> sent;
+	private final List<XMLPacket> received;
 	private boolean isConnected;
 	private boolean paused;
 	private boolean streamRestarted;
@@ -44,9 +45,8 @@ public class XmppConnectionTester extends XmppConnectionBoilerplate {
 
 	public XmppConnectionTester() {
 		super(new SimpleEventBus());
-		xmler = new TigaseXMLService();
-		sent = new ArrayList<IPacket>();
-		received = new ArrayList<IPacket>();
+		sent = new ArrayList<XMLPacket>();
+		received = new ArrayList<XMLPacket>();
 	}
 
 	@Override
@@ -72,9 +72,9 @@ public class XmppConnectionTester extends XmppConnectionBoilerplate {
 		return false;
 	}
 
-	public boolean hasSent(final IPacket packet) {
+	public boolean hasSent(final XMLPacket packet) {
 		final IsPacketLike matcher = new IsPacketLike(packet);
-		for (final IPacket stanza : sent) {
+		for (final XMLPacket stanza : sent) {
 			if (matcher.matches(stanza, System.out))
 				return true;
 		}
@@ -96,13 +96,13 @@ public class XmppConnectionTester extends XmppConnectionBoilerplate {
 		return null;
 	}
 
-	public void receives(final IPacket stanza) {
+	public void receives(final XMLPacket stanza) {
 		received.add(stanza);
-		eventBus.fireEvent(new StanzaReceivedEvent(stanza));
+		eventBus.fireEvent(new PacketReceivedEvent(stanza));
 	}
 
 	public void receives(final String stanza) {
-		receives(xmler.toXML(stanza));
+		receives(XMLBuilder.fromXML(stanza));
 	}
 
 	@Override
@@ -120,13 +120,13 @@ public class XmppConnectionTester extends XmppConnectionBoilerplate {
 	}
 
 	@Override
-	public void send(final IPacket packet) {
-		sent.add(packet);
-		eventBus.fireEventFromSource(new StanzaSentEvent(packet), this);
+	public void send(final HasXML packet) {
+		sent.add(packet.getXML());
+		eventBus.fireEventFromSource(new PacketSentEvent(packet.getXML()), this);
 	}
 
 	public void send(final String stanza) {
-		send(xmler.toXML(stanza));
+		send(XMLBuilder.fromXML(stanza));
 	}
 
 	@Override

@@ -18,19 +18,29 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.packet;
+package com.calclab.emite.core.client.util;
+
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class PacketTest {
+public class TextUtilsTest {
+
 	@Test
-	public void testPacket() {
-		PacketTestSuite.runPacketTests(new AbstractHelperTest() {
-			@Override
-			public IPacket createPacket(final String name) {
-				return new Packet(name);
-			}
-		});
+	public void matchDemoEmail() {
+		final String email = "test100@emitedemo.ourproject.org";
+		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
 	}
 
+	@Test
+	public void matchLocalhostEmail() {
+		final String email = "me@localhost";
+		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
+	}
+
+	@Test
+	public void matchSimpleEmail() {
+		final String email = "me@example.com";
+		assertTrue(email.matches(TextUtils.EMAIL_REGEXP));
+	}
 }

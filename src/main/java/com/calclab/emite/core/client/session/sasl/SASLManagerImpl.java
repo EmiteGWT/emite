@@ -25,8 +25,8 @@ import com.calclab.emite.core.client.events.AuthorizationResultEvent;
 import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.util.Base64Utils;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -84,16 +84,11 @@ public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler
 	// TODO: Add DIGEST-MD5 auth
 
 	private static XMLPacket createAnonymousAuthorization() {
-		final XMLPacket auth = XMLUtils.createPacket("auth", XMLNS);
-		auth.setAttribute("mechanism", "ANONYMOUS");
-		return auth;
+		return XMLBuilder.create("auth", XMLNS).attribute("mechanism", "ANONYMOUS").getXML();
 	}
 
 	private static XMLPacket createPlainAuthorization(final Credentials credentials) {
-		final XMLPacket auth = XMLUtils.createPacket("auth", XMLNS);
-		auth.setAttribute("mechanism", "PLAIN");
-		auth.setText(encodePlain(credentials.getXmppUri().getHost(), credentials.getXmppUri().getNode(), credentials.getPassword()));
-		return auth;
+		return XMLBuilder.create("auth", XMLNS).attribute("mechanism", "PLAIN").text(encodePlain(credentials.getUri().getHost(), credentials.getUri().getNode(), credentials.getPassword())).getXML();
 	}
 
 	private static String encodePlain(final String domain, final String userName, final String password) {

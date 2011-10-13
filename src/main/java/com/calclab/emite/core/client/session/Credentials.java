@@ -48,7 +48,7 @@ public class Credentials {
 		this.password = password;
 	}
 
-	public final XmppURI getXmppUri() {
+	public final XmppURI getUri() {
 		return uri;
 	}
 

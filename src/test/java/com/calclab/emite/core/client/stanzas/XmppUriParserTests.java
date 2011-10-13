@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.stanzas;
+package com.calclab.emite.core.client.stanzas;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,42 +26,40 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.stanzas.XmppUriParser;
-
 public class XmppUriParserTests {
 
 	@Test
 	public void shouldGetDomain() {
-		assertEquals("host", XmppUriParser.getDomain("name@host"));
-		assertEquals("host.com.net", XmppUriParser.getDomain("name@host.com.net"));
-		assertEquals("host.com.net", XmppUriParser.getDomain("name@host.com.net/res"));
+		assertEquals("host", XmppURIParser.getDomain("name@host"));
+		assertEquals("host.com.net", XmppURIParser.getDomain("name@host.com.net"));
+		assertEquals("host.com.net", XmppURIParser.getDomain("name@host.com.net/res"));
 	}
 
 	@Test
 	public void shouldGetNode() {
-		assertEquals("name", XmppUriParser.getNode("name@host"));
-		assertEquals("name", XmppUriParser.getNode("xmpp:name@host"));
+		assertEquals("name", XmppURIParser.getNode("name@host"));
+		assertEquals("name", XmppURIParser.getNode("xmpp:name@host"));
 	}
 
 	@Test
 	public void shouldGetResource() {
-		assertEquals("res", XmppUriParser.getResource("name@host/res"));
-		assertEquals("res", XmppUriParser.getResource("host/res"));
+		assertEquals("res", XmppURIParser.getResource("name@host/res"));
+		assertEquals("res", XmppURIParser.getResource("host/res"));
 	}
 
 	@Test
 	public void shouldValidateDomain() {
-		assertFalse(XmppUriParser.isValidDomain("simple"));
-		assertTrue(XmppUriParser.isValidDomain("simple.net"));
-		assertTrue(XmppUriParser.isValidDomain("localhost"));
+		assertFalse(XmppURIParser.isValidDomain("simple"));
+		assertTrue(XmppURIParser.isValidDomain("simple.net"));
+		assertTrue(XmppURIParser.isValidDomain("localhost"));
 	}
 
 	@Test
 	public void shouldValidateJID() {
-		assertTrue(XmppUriParser.isValidJid("name@localhost"));
-		assertTrue(XmppUriParser.isValidJid("name@host.ext"));
-		assertFalse(XmppUriParser.isValidJid("name@host"));
-		assertFalse(XmppUriParser.isValidJid("name"));
-		assertFalse(XmppUriParser.isValidJid("name@host.net/name"));
+		assertTrue(XmppURIParser.isValidJid("name@localhost"));
+		assertTrue(XmppURIParser.isValidJid("name@host.ext"));
+		assertFalse(XmppURIParser.isValidJid("name@host"));
+		assertFalse(XmppURIParser.isValidJid("name"));
+		assertFalse(XmppURIParser.isValidJid("name@host.net/name"));
 	}
 }

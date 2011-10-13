@@ -21,11 +21,11 @@
 package com.calclab.emite.xtesting.handlers;
 
 import com.calclab.emite.core.client.events.BeforeStanzaSentEvent;
-import com.calclab.emite.core.client.packet.IPacket;
+import com.calclab.emite.core.client.stanzas.Stanza;
 
 public class BeforeStanzaSentTestHandler extends TestHandler<BeforeStanzaSentEvent> implements BeforeStanzaSentEvent.Handler {
 
-	public IPacket getLastStanza() {
+	public Stanza getLastStanza() {
 		return hasEvent() ? getLastEvent().getStanza() : null;
 	}
 

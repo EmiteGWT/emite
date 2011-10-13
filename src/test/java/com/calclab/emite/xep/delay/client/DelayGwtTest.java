@@ -26,9 +26,9 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
+import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.gwt.junit.client.GWTTestCase;
 
 public class DelayGwtTest extends GWTTestCase {
@@ -42,7 +42,7 @@ public class DelayGwtTest extends GWTTestCase {
 	public void testShouldCalculateDelay() {
 
 		final XmppURI uri = uri("name@domain/resource");
-		final IPacket delayNode = new Packet("delay", "urn:xmpp:delay");
+		final XMLPacket delayNode = XMLBuilder.create("delay", "urn:xmpp:delay").getXML();
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "1980-04-15T17:15:02.159+01:00");
 		final Delay delay = new Delay(delayNode);
@@ -57,7 +57,7 @@ public class DelayGwtTest extends GWTTestCase {
 	public void testShouldCalculateDelayLegacyFormat() {
 
 		final XmppURI uri = uri("name@domain/resource");
-		final IPacket delayNode = new Packet("x", "jabber:x:delay");
+		final XMLPacket delayNode = XMLBuilder.create("x", "jabber:x:delay").getXML();
 		delayNode.setAttribute("xmlns", "jabber:x:delay");
 		delayNode.setAttribute("from", "name@domain/resource");
 		delayNode.setAttribute("stamp", "19800415T17:15:02");

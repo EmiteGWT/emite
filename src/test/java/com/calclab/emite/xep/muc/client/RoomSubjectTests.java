@@ -72,7 +72,9 @@ public class RoomSubjectTests {
 	public void shouldHandleRoomSubjectChangeEvents() {
 		final RoomSubjectChangedTestHandler handler = new RoomSubjectChangedTestHandler();
 		room.addRoomSubjectChangedHandler(handler);
-		eventBus.fireEventFromSource(new MessageReceivedEvent(new Message(null, roomUri, occupantUri).Subject("The subject")), room);
+		final Message subject = new Message(null, roomUri, occupantUri);
+		subject.setSubject("The subject");
+		eventBus.fireEventFromSource(new MessageReceivedEvent(subject), room);
 		assertEquals(1, handler.getCalledTimes());
 		assertEquals("The subject", handler.getLastEvent().getSubject());
 	}

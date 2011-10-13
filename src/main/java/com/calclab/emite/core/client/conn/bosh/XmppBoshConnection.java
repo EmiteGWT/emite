@@ -35,8 +35,8 @@ import com.calclab.emite.core.client.services.ConnectorException;
 import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
 import com.calclab.emite.core.client.xml.HasXML;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.core.client.xml.XMLUtils;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -102,7 +102,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 						// fireError("Bad status: " + statusCode);
 						onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
 					} else {
-						final XMLPacket response = XMLUtils.fromXML(content);
+						final XMLPacket response = XMLBuilder.fromXML(content);
 						if (response != null && "body".equals(response.getTagName())) {
 							clearErrors();
 							eventBus.fireEventFromSource(new ConnectionResponseEvent(content), this);
@@ -227,7 +227,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 
 	private void createBodyIfNeeded() {
 		if (getCurrentBody() == null) {
-			final XMLPacket body = XMLUtils.createPacket("body", "http://jabber.org/protocol/httpbind");
+			final XMLPacket body = XMLBuilder.create("body", "http://jabber.org/protocol/httpbind").getXML();
 			body.setAttribute("rid", getStreamSettings().getNextRid());
 			if (getStreamSettings() != null) {
 				body.setAttribute("sid", getStreamSettings().sid);
@@ -237,7 +237,7 @@ public class XmppBoshConnection extends XmppConnectionBoilerplate {
 	}
 
 	private void createInitialBody(final ConnectionSettings userSettings) {
-		final XMLPacket body = XMLUtils.createPacket("body", "http://jabber.org/protocol/httpbind");
+		final XMLPacket body = XMLBuilder.create("body", "http://jabber.org/protocol/httpbind").getXML();
 		body.setAttribute("content", "text/xml; charset=utf-8");
 		body.setAttribute("xml:lang", "en");
 		body.setAttribute("xmlns:xmpp", "urn:xmpp:xbosh");

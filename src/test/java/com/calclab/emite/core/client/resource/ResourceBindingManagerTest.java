@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.resource;
+package com.calclab.emite.core.client.resource;
 
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
@@ -61,7 +61,7 @@ public class ResourceBindingManagerTest {
 				+ "<jid>somenode@example.com/someresource</jid></bind></iq>");
 
 		assertNotNull(currentEvent);
-		assertEquals(uri("somenode@example.com/someresource"), currentEvent.getXmppUri());
+		assertEquals(uri("somenode@example.com/someresource"), currentEvent.getUri());
 	}
 
 	@Test

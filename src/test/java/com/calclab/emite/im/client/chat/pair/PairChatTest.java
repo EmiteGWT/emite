@@ -110,7 +110,10 @@ public class PairChatTest extends AbstractChatTest<PairChat> {
 
 	@Test
 	public void shouldSendValidChatMessages() {
-		pairChat.send(new Message("this is the body", uri("to@uri"), uri("from@uri")).Thread("otherThread").Type(Message.Type.groupchat));
+		final Message msg = new Message("this is the body", uri("to@uri"), uri("from@uri"));
+		msg.setType(Message.Type.groupchat);
+		msg.setThread("otherThread");
+		pairChat.send(msg);
 		session.verifySent("<message from='self@domain/res' to='other@domain/other' type='chat'>"
 				+ "<body>this is the body</body><thread>theThread</thread></message>");
 	}

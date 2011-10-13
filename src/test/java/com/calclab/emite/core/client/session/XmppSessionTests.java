@@ -18,7 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.xmpp.session;
+package com.calclab.emite.core.client.session;
 
 import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
@@ -34,13 +34,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
-import com.calclab.emite.core.client.packet.Packet;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSessionImpl;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.calclab.emite.xtesting.handlers.BeforeStanzaSentTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
@@ -66,7 +66,7 @@ public class XmppSessionTests {
 	@Test
 	public void shouldConnectOnLogin() {
 		assertFalse(connection.isConnected());
-		session.login(uri("name@domain/resource"), "password");
+		session.login(new Credentials(uri("name@domain/resource"), "password"));
 		assertTrue(connection.isConnected());
 	}
 
@@ -79,7 +79,7 @@ public class XmppSessionTests {
 		eventBus.fireEvent(new SessionRequestResultEvent(uri("user@domain")));
 		final BeforeStanzaSentTestHandler handler = new BeforeStanzaSentTestHandler();
 		session.addBeforeStanzaSentHandler(handler);
-		final Packet packet = new Packet("message");
+		final Message packet = new Message();
 		session.send(packet);
 		assertTrue(handler.isCalledOnce());
 		assertSame(packet, handler.getLastEvent().getStanza());
@@ -90,7 +90,7 @@ public class XmppSessionTests {
 		final MessageReceivedTestHandler handler = new MessageReceivedTestHandler();
 		session.addMessageReceivedHandler(handler);
 		final Message message = new Message("message");
-		connection.receives(message);
+		connection.receives(message.getXML());
 		assertTrue(handler.isCalledOnce());
 	}
 
@@ -98,7 +98,7 @@ public class XmppSessionTests {
 	public void shouldEventPresences() {
 		final PresenceReceivedTestHandler handler = new PresenceReceivedTestHandler();
 		session.addPresenceReceivedHandler(handler);
-		connection.receives(new Packet("presence"));
+		connection.receives(XMLBuilder.create("presence").getXML());
 		assertTrue(handler.isCalledOnce());
 	}
 
