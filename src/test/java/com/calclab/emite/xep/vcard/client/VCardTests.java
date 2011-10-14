@@ -29,12 +29,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.calclab.emite.core.client.xml.IPacket;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xep.vcard.client.VCardTelephone.Place;
 import com.calclab.emite.xep.vcard.client.VCardTelephone.Service;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
 
 public class VCardTests {
 

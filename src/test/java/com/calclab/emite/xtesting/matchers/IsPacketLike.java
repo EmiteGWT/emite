@@ -62,7 +62,7 @@ public class IsPacketLike {
 		if (expected.getTagName().equals(actual.getTagName())) {
 			final Map<String, String> atts = expected.getAttributes();
 			for (final String name : atts.keySet()) {
-				if (!expected.hasAttribute(name) || !actual.hasAttribute(name, expected.getAttribute(name)))
+				if (expected.getAttribute(name) != null || !expected.getAttribute(name).equals(actual.getAttribute(name)))
 					return fail("attribute " + name, expected.getAttribute(name), actual.getAttribute(name));
 			}
 		} else

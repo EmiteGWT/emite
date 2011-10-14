@@ -70,5 +70,10 @@ public class Stanza implements HasXML {
 	public final XMLPacket getXML() {
 		return xml;
 	}
+	
+	@Override
+	public String toString() {
+		return xml.toString();
+	}
 
 }

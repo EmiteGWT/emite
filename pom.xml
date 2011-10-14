@@ -27,13 +27,6 @@
 		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>tigase</id>
-			<name>Tigase Repository</name>
-			<url>http://maven.tigase.org</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
@@ -65,12 +58,6 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.8.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>tigase</groupId>
-			<artifactId>tigase-xmltools</artifactId>
-			<version>3.0.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

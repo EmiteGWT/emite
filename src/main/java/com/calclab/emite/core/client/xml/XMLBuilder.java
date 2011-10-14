@@ -20,17 +20,10 @@
 
 package com.calclab.emite.core.client.xml;
 
-import com.google.gwt.xml.client.XMLParser;
-import com.google.gwt.xml.client.impl.DOMParseException;
-
 public final class XMLBuilder implements HasXML {
 	
 	public static final XMLPacket fromXML(final String xml) {
-		try {
-			return new XMLPacketImplGWT(XMLParser.parse(xml).getDocumentElement());
-		} catch (final DOMParseException e) {
-			return null;
-		}
+		return XMLPacketImplGWT.fromString(xml);
 	}
 	
 	public static final XMLBuilder create(final String name) {

@@ -32,6 +32,7 @@ import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
+import com.google.gwt.xml.client.impl.DOMParseException;
 
 public final class XMLPacketImplGWT implements XMLPacket {
 
@@ -294,6 +295,14 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	@Override
 	public XMLPacket getXML() {
 		return this;
+	}
+	
+	public static XMLPacket fromString(final String xml) {
+		try {
+			return new XMLPacketImplGWT(XMLParser.parse(xml).getDocumentElement());
+		} catch (final DOMParseException e) {
+			return null;
+		}
 	}
 
 	// TODO: does this work on all browsers?

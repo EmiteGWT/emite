@@ -152,7 +152,7 @@ public class FormTest {
 
 	@Test
 	public void testFormReportedAndItems() {
-		final Form form = new Form(Type.result);
+		final Form form = new Form(Form.Type.result);
 		form.setTitle("Joogle Search: verona");
 		form.addToReported(new Field().Var("name"));
 		form.addToReported(new Field().Var("url"));
@@ -171,7 +171,7 @@ public class FormTest {
 
 	@Test
 	public void testFormResult() {
-		final Form form = new Form(Type.result);
+		final Form form = new Form(Form.Type.result);
 		form.WithField(new Field(FieldType.HIDDEN).Var("FORM_TYPE").Value("jabber:bot"));
 		form.WithField(new Field(FieldType.TEXT_SINGLE).Var("botname").Value("The Jabber Google Bot"));
 		form.WithField(new Field(FieldType.BOOLEAN).Var("public").Value("0"));
@@ -185,7 +185,7 @@ public class FormTest {
 
 	@Test
 	public void testFormSearch() {
-		final Form form = new Form(Type.submit).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Value("verona"));
+		final Form form = new Form(Form.Type.submit).WithField(new Field(FieldType.TEXT_SINGLE).Var("search_request").Value("verona"));
 		session.send(form);
 		session.verifySent(parse(XEP_0004_5_2_SAMPLE_7).x());
 	}
