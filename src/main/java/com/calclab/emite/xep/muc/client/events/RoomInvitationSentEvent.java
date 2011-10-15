@@ -18,27 +18,35 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.events.ChangedEvent;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-public class OccupantChangedEvent extends ChangedEvent<OccupantChangedEvent.Handler> {
+import com.calclab.emite.core.client.uri.XmppURI;
+import com.google.web.bindery.event.shared.Event;
+
+public class RoomInvitationSentEvent extends Event<RoomInvitationSentEvent.Handler> {
 
 	public interface Handler {
-		void onOccupantChanged(OccupantChangedEvent event);
+		void onRoomInvitationSent(RoomInvitationSentEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final Occupant occupant;
+	private final XmppURI userJid;
+	private final String reasonText;
 
-	protected OccupantChangedEvent(final ChangeType changeType, final Occupant occupant) {
-		super(changeType);
-		this.occupant = occupant;
+	public RoomInvitationSentEvent(final XmppURI userJid, final String reasonText) {
+		this.userJid = checkNotNull(userJid);
+		this.reasonText = checkNotNull(reasonText);
 	}
 
-	public Occupant getOccupant() {
-		return occupant;
+	public XmppURI getUserJid() {
+		return userJid;
+	}
+
+	public String getReasonText() {
+		return reasonText;
 	}
 
 	@Override
@@ -47,13 +55,8 @@ public class OccupantChangedEvent extends ChangedEvent<OccupantChangedEvent.Hand
 	}
 
 	@Override
-	public String toDebugString() {
-		return super.toDebugString() + occupant;
-	}
-
-	@Override
 	protected void dispatch(final Handler handler) {
-		handler.onOccupantChanged(this);
+		handler.onRoomInvitationSent(this);
 	}
 
 }

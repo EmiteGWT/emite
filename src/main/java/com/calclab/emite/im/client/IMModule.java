@@ -45,6 +45,7 @@ import com.google.inject.name.Names;
  * @see http://www.xmpp.org/rfcs/rfc3921.html
  */
 public class IMModule extends AbstractGinModule {
+
 	@Override
 	protected void configure() {
 		bind(PairChatManager.class).to(PairChatManagerImpl.class).asEagerSingleton();

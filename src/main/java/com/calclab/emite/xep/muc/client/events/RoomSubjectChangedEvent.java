@@ -18,26 +18,51 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
-public class RoomInvitationReceivedEvent extends Event<RoomInvitationReceivedEvent.Handler> {
+/**
+ * An event to inform about room subject changes
+ * 
+ * @author dani
+ * 
+ */
+public class RoomSubjectChangedEvent extends Event<RoomSubjectChangedEvent.Handler> {
 
 	public interface Handler {
-		void onRoomInvitationReceived(RoomInvitationReceivedEvent event);
+		void onRoomSubjectChanged(RoomSubjectChangedEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final RoomInvitation roomInvitation;
+	private final XmppURI occupantUri;
+	private final String subject;
 
-	protected RoomInvitationReceivedEvent(final RoomInvitation roomInvitation) {
-		this.roomInvitation = roomInvitation;
+	public RoomSubjectChangedEvent(final XmppURI occupantUri, final String subject) {
+		this.occupantUri = checkNotNull(occupantUri);
+		this.subject = checkNotNull(subject);
 	}
 
-	public RoomInvitation getRoomInvitation() {
-		return roomInvitation;
+	/**
+	 * Get modificator's occupant (room and nick) uri
+	 * 
+	 * @return
+	 */
+	public XmppURI getOccupantUri() {
+		return occupantUri;
+	}
+
+	/**
+	 * The new subject
+	 * 
+	 * @return
+	 */
+	public String getSubject() {
+		return subject;
 	}
 
 	@Override
@@ -47,7 +72,7 @@ public class RoomInvitationReceivedEvent extends Event<RoomInvitationReceivedEve
 
 	@Override
 	protected void dispatch(final Handler handler) {
-		handler.onRoomInvitationReceived(this);
+		handler.onRoomSubjectChanged(this);
 	}
 
 }

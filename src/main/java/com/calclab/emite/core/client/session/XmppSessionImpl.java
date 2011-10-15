@@ -20,11 +20,15 @@
 
 package com.calclab.emite.core.client.session;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import javax.annotation.Nullable;
 
 import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -43,7 +47,7 @@ import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Stanza;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -66,18 +70,19 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	private final XmppConnection connection;
 	private final SASLManager saslManager;
 
-	private int iqId;
 	private final Map<String, IQCallback> iqHandlers;
 	private final List<Stanza> queuedStanzas;
 	private SessionStatus status;
-	private Credentials credentials;
-	private XmppURI userUri;
+	
+	@Nullable private Credentials credentials;
+	@Nullable private XmppURI userUri;
+	private int iqId;
 
 	@Inject
 	public XmppSessionImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection, final SASLManager saslManager) {
-		this.eventBus = eventBus;
-		this.connection = connection;
-		this.saslManager = saslManager;
+		this.eventBus = checkNotNull(eventBus);
+		this.connection = checkNotNull(connection);
+		this.saslManager = checkNotNull(saslManager);
 
 		iqHandlers = new HashMap<String, IQCallback>();
 		queuedStanzas = new ArrayList<Stanza>();
@@ -102,11 +107,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public void onPacketReceived(final PacketReceivedEvent event) {
 		final XMLPacket stanza = event.getPacket();
 		final String name = stanza.getTagName();
-		if (name.equals("message")) {
+		if ("message".equals(name)) {
 			eventBus.fireEventFromSource(new MessageReceivedEvent(new Message(stanza)), this);
-		} else if (name.equals("presence")) {
+		} else if ("presence".equals(name)) {
 			eventBus.fireEventFromSource(new PresenceReceivedEvent(new Presence(stanza)), this);
-		} else if (name.equals("iq")) {
+		} else if ("iq".equals(name)) {
 			final String type = stanza.getAttribute("type");
 			if ("get".equals(type) || "set".equals(type)) {
 				eventBus.fireEventFromSource(new IQReceivedEvent(new IQ(stanza)), this);
@@ -161,9 +166,9 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	}
 
 	@Override
-	public HandlerRegistration addSessionStatusChangedHandler(final boolean sendCurrent, final SessionStatusChangedEvent.Handler handler) {
+	public HandlerRegistration addSessionStatusChangedHandler(final SessionStatusChangedEvent.Handler handler, final boolean sendCurrent) {
 		if (sendCurrent) {
-			handler.onSessionStatusChanged(new SessionStatusChangedEvent(getStatus()));
+			handler.onSessionStatusChanged(new SessionStatusChangedEvent(status));
 		}
 
 		return eventBus.addHandlerToSource(SessionStatusChangedEvent.TYPE, this, handler);
@@ -181,9 +186,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 	@Override
 	public void setStatus(final SessionStatus newStatus) {
-		if (SessionStatus.ready.equals(newStatus)) {
+		checkNotNull(newStatus);
+		
+		if (SessionStatus.isReady(newStatus)) {
 			sendQueuedStanzas();
-		} else if (SessionStatus.disconnected.equals(newStatus)) {
+		} else if (SessionStatus.isDisconnected(newStatus)) {
 			userUri = null;
 		}
 		if (!status.equals(newStatus)) {
@@ -204,8 +211,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 	@Override
 	public void login(final Credentials credentials) {
-		logger.info("XmppSessionLogic - login");
-		if (getStatus() == SessionStatus.disconnected) {
+		if (status == SessionStatus.disconnected) {
 			setStatus(SessionStatus.connecting);
 			connection.connect();
 			this.credentials = credentials;
@@ -214,7 +220,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 	@Override
 	public void logout() {
-		if (getStatus() != SessionStatus.disconnected && userUri != null) {
+		if (status != SessionStatus.disconnected && userUri != null) {
 			// TODO : To be reviewed, preventing unavailable presences to be sent
 			// so that only the 'terminate' is sent
 			// Unavailable are handled automatically by the server
@@ -325,7 +331,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 	@Override
 	public String toString() {
-		return "Session " + userUri + " in " + getStatus().toString() + " " + queuedStanzas.size() + " queued stanzas con=" + connection.toString();
+		return "Session " + userUri + " in " + status.toString() + " " + queuedStanzas.size() + " queued stanzas con=" + connection.toString();
 	}
 
 }

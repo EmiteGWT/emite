@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.presence;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
@@ -27,7 +29,7 @@ import com.calclab.emite.core.client.session.SessionReady;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.OwnPresenceChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -50,15 +52,15 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 
 	@Inject
 	public PresenceManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final SessionReady sessionReady) {
-		this.eventBus = eventBus;
-		this.session = session;
+		this.eventBus = checkNotNull(eventBus);
+		this.session = checkNotNull(session);
 		ownPresence = INITIAL_PRESENCE;
 
 		sessionReady.disable();
 
 		// Upon connecting to the server and becoming an active resource, a
 		// client SHOULD request the roster before sending initial presence
-		session.addSessionStatusChangedHandler(false, this);
+		session.addSessionStatusChangedHandler(this, true);
 		session.addPresenceReceivedHandler(this);
 	}
 

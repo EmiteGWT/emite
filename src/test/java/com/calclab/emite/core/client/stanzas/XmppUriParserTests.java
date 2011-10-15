@@ -26,6 +26,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.calclab.emite.core.client.uri.XmppURIParser;
+
 public class XmppUriParserTests {
 
 	@Test

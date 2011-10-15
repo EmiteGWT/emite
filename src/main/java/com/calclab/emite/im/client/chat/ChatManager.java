@@ -20,9 +20,9 @@
 
 package com.calclab.emite.im.client.chat;
 
-import java.util.Collection;
+import java.util.Set;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 
 /**
  * Create and manage chat conversations.
@@ -85,6 +85,6 @@ public interface ChatManager<C extends Chat> {
 	 */
 	C getChat(XmppURI uri);
 
-	Collection<C> getChats();
+	Set<C> getChats();
 
 }

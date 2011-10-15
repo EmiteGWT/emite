@@ -20,7 +20,11 @@
 
 package com.calclab.emite.core.client.session;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+
+import com.calclab.emite.core.client.uri.XmppURI;
 
 public class Credentials {
 
@@ -34,13 +38,10 @@ public class Credentials {
 	}
 
 	private final XmppURI uri;
-	private final String password;
+	@Nullable private final String password;
 
 	public Credentials(final XmppURI uri, final String password) {
-		if (uri == null)
-			throw new NullPointerException("uri can't be null in LoginCredentials");
-
-		if (uri.getResource() == null) {
+		if (checkNotNull(uri).getResource() == null) {
 			this.uri = XmppURI.uri(uri.getNode(), uri.getHost(), "emite-" + System.currentTimeMillis());
 		} else {
 			this.uri = uri;
@@ -52,11 +53,12 @@ public class Credentials {
 		return uri;
 	}
 
+	@Nullable
 	public final String getPassword() {
 		return password;
 	}
 
 	public boolean isAnoymous() {
-		return ANONYMOUS.getNode().equals(uri.getNode()) && ANONYMOUS.getHost().equals(uri.getHost());
+		return uri.equalsNoResource(ANONYMOUS) && password == null;
 	}
 }

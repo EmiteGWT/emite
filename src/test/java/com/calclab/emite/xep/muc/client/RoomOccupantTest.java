@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

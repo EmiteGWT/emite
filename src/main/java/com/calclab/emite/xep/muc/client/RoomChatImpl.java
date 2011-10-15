@@ -34,13 +34,17 @@ import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Stanza;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.util.XmppDateTime;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.chat.ChatBoilerplate;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSentEvent;
+import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
+import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 

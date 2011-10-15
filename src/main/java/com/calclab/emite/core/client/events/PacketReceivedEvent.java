@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class PacketReceivedEvent extends Event<PacketReceivedEvent.Handler> {
 	private final XMLPacket packet;
 
 	public PacketReceivedEvent(final XMLPacket packet) {
-		this.packet = packet;
+		this.packet = checkNotNull(packet);
 	}
 
 	public XMLPacket getPacket() {

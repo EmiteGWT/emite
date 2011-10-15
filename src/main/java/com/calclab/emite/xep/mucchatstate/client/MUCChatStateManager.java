@@ -24,8 +24,8 @@ import java.util.logging.Logger;
 
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.muc.client.RoomChat;
-import com.calclab.emite.xep.muc.client.RoomChatChangedEvent;
 import com.calclab.emite.xep.muc.client.RoomChatManager;
+import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;

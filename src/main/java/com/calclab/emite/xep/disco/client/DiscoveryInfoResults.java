@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.xml.XMLPacket;
@@ -39,7 +40,7 @@ import com.calclab.emite.core.client.xml.XMLPacket;
  */
 public class DiscoveryInfoResults {
 
-	private HashMap<String, Feature> features;
+	private Map<String, Feature> features;
 	private List<Identity> identities;
 
 	private final XMLPacket result;
@@ -77,7 +78,7 @@ public class DiscoveryInfoResults {
 		return identities;
 	}
 
-	private static HashMap<String, Feature> processFeatures(final List<XMLPacket> children) {
+	private static Map<String, Feature> processFeatures(final List<XMLPacket> children) {
 		final HashMap<String, Feature> features = new HashMap<String, Feature>();
 		for (final XMLPacket child : children) {
 			final Feature feature = Feature.fromPacket(child);

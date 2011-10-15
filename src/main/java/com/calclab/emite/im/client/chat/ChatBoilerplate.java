@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.chat;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.ErrorEvent;
@@ -28,7 +30,7 @@ import com.calclab.emite.core.client.events.MessageSentEvent;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Message.Type;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -42,13 +44,11 @@ public abstract class ChatBoilerplate implements Chat, MessageReceivedEvent.Hand
 	protected final ChatProperties properties;
 
 	protected ChatBoilerplate(final EventBus eventBus, final XmppSession session, final ChatProperties properties) {
-		assert properties.getStatus() != null : "Status can't be null in chats";
+		this.eventBus = checkNotNull(eventBus);
+		this.session = checkNotNull(session);
+		this.properties = checkNotNull(properties);
 
-		this.eventBus = eventBus;
-		this.session = session;
-		this.properties = properties;
-
-		setPreviousChatStatus(getStatus());
+		setPreviousChatStatus(checkNotNull(properties.getStatus()));
 
 		addMessageReceivedHandler(this);
 	}

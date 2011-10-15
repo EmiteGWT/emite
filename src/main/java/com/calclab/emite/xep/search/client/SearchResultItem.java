@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.search.client;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**

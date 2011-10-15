@@ -26,7 +26,7 @@ import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.MessageSentEvent;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 

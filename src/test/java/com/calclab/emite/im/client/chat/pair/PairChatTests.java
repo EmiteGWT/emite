@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;

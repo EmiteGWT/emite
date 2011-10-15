@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.Message;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class MessageSentEvent extends Event<MessageSentEvent.Handler> {
 	private final Message message;
 
 	public MessageSentEvent(final Message message) {
-		this.message = message;
+		this.message = checkNotNull(message);
 	}
 
 	public Message getMessage() {

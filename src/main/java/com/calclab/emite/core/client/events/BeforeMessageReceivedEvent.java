@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.Message;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class BeforeMessageReceivedEvent extends Event<BeforeMessageReceivedEvent
 	private final Message message;
 
 	public BeforeMessageReceivedEvent(final Message message) {
-		this.message = message;
+		this.message = checkNotNull(message);
 	}
 
 	public Message getMessage() {

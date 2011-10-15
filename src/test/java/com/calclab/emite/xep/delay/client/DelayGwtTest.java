@@ -20,13 +20,13 @@
 
 package com.calclab.emite.xep.delay.client;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 
 import java.util.Date;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.gwt.junit.client.GWTTestCase;

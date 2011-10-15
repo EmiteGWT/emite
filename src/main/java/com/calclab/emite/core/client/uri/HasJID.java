@@ -18,35 +18,21 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.stanzas;
+package com.calclab.emite.core.client.uri;
 
-import java.util.HashMap;
+import com.calclab.emite.im.client.roster.RosterItem;
 
-public final class XmppURIFactory {
+/**
+ * Interface which provides a standard method for accessing the JID from an
+ * object which encapsulates one (such as {@link XmppURI} and {@link RosterItem}
+ * ).
+ */
+public interface HasJID {
 
-	private static final HashMap<String, XmppURI> cache = new HashMap<String, XmppURI>();
-
-	protected static final XmppURI parse(final String xmppUri) {
-		if (xmppUri == null || xmppUri.length() == 0)
-			return null;
-
-		final String uri = XmppURIParser.removePrefix(xmppUri);
-		XmppURI cached = cache.get(uri);
-		if (cached == null) {
-			cached = XmppURIParser.parse(uri);
-			cache.put(uri, cached);
-		}
-		return cached;
-	}
-
-	protected static final XmppURI cache(final XmppURI xmppURI) {
-		if (xmppURI != null) {
-			cache.put(xmppURI.toString(), xmppURI);
-		}
-		return xmppURI;
-	}
-
-	private XmppURIFactory() {
-	}
-
+	/**
+	 * Gets the Jabber ID (JID) from this object.
+	 * 
+	 * @return the JID.
+	 */
+	XmppURI getJID();
 }

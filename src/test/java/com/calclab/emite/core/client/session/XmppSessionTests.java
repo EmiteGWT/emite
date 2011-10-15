@@ -20,7 +20,7 @@
 
 package com.calclab.emite.core.client.session;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -39,7 +39,7 @@ import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSessionImpl;
 import com.calclab.emite.core.client.session.sasl.SASLManager;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.calclab.emite.xtesting.handlers.BeforeStanzaSentTestHandler;

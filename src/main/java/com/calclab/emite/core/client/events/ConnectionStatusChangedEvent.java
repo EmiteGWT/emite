@@ -20,6 +20,10 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.client.conn.ConnectionStatus;
 import com.google.web.bindery.event.shared.Event;
 
@@ -32,11 +36,11 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
 	private final ConnectionStatus status;
-	private final String description;
+	@Nullable private final String description;
 	private final int value;
 
 	public ConnectionStatusChangedEvent(final ConnectionStatus status) {
-		this(status, null, 0);
+		this(status, "", 0);
 	}
 
 	public ConnectionStatusChangedEvent(final ConnectionStatus status, final String description) {
@@ -44,8 +48,7 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 	}
 
 	public ConnectionStatusChangedEvent(final ConnectionStatus status, final String description, final int value) {
-		assert status != null : "status can't be null in ConnectionStatusChangedEvent";
-		this.status = status;
+		this.status = checkNotNull(status, "status can't be null in ConnectionStatusChangedEvent");
 		this.description = description;
 		this.value = value;
 	}
@@ -54,7 +57,7 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 		return status;
 	}
 
-	public String getDescription() {
+	@Nullable public String getDescription() {
 		return description;
 	}
 

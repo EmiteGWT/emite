@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.web.bindery.event.shared.Event;
 
 public class ConnectionResponseEvent extends Event<ConnectionResponseEvent.Handler> {
@@ -33,7 +35,7 @@ public class ConnectionResponseEvent extends Event<ConnectionResponseEvent.Handl
 	private final String response;
 
 	public ConnectionResponseEvent(final String response) {
-		this.response = response;
+		this.response = checkNotNull(response);
 	}
 
 	@Override

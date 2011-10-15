@@ -27,8 +27,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.VCardResponseTestHandler;

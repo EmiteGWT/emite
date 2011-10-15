@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
@@ -38,7 +39,7 @@ import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
@@ -56,7 +57,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	private final XmppSession session;
 
 	private boolean rosterReady = false;
-	private final HashMap<String, RosterGroup> groups;
+	private final Map<String, RosterGroup> groups;
 	private final RosterGroup all;
 
 	@Inject
@@ -67,7 +68,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 		groups = new HashMap<String, RosterGroup>();
 		all = new RosterGroup(eventBus, null);
 
-		session.addSessionStatusChangedHandler(true, this);
+		session.addSessionStatusChangedHandler(this, true);
 		session.addPresenceReceivedHandler(this);
 		session.addIQReceivedHandler(this);
 	}

@@ -20,7 +20,11 @@
 
 package com.calclab.emite.core.client.browser;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.logging.Logger;
+
+import javax.annotation.Nullable;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -45,7 +49,8 @@ public class PageAssist {
 	 *            the 'id' value of the desired meta tag
 	 * @return the value of the attribute 'value' or null if not found
 	 */
-	public static final String getMetaString(final String id, final String defaultValue) {
+	public static final String getMeta(final String id, @Nullable final String defaultValue) {
+		checkNotNull(id);
 		final NodeList<Element> elements = Document.get().getElementsByTagName("meta");
 		for (int i = 0; i < elements.getLength(); i++) {
 			final Element candidate = elements.getItem(i);
@@ -69,8 +74,8 @@ public class PageAssist {
 	 *         exist
 	 * @see PageAssist#getMeta(String)
 	 */
-	public static int getMetaInteger(final String id, final int defaultValue) {
-		final String metaValue = getMetaString(id, null);
+	public static int getMeta(final String id, final int defaultValue) {
+		final String metaValue = getMeta(id, null);
 
 		if (metaValue == null)
 			return defaultValue;
@@ -95,8 +100,8 @@ public class PageAssist {
 	 *         "false" otherwise the defaultValue.
 	 * @see PageAssist#getMeta(String)
 	 */
-	public static final boolean getMetaBoolean(final String id, final boolean defaultValue) {
-		final String metaValue = getMetaString(id, null);
+	public static final boolean getMeta(final String id, final boolean defaultValue) {
+		final String metaValue = getMeta(id, null);
 
 		if (metaValue == null)
 			return defaultValue;

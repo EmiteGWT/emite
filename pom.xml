@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calclab</groupId>
 	<artifactId>emite</artifactId>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Emite</name>
 	<description>A pure Google Web Toolkit XMPP library</description>
@@ -39,6 +39,11 @@
 			<artifactId>gin</artifactId>
 			<version>1.5.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-gwt</artifactId>
+			<version>10.0.1</version>
 		</dependency>
 
 		<!-- Test dependencies -->
@@ -78,8 +83,8 @@
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<excludes>
-                        <exclude>**/VCard*.java</exclude> <!-- TODO: VCard is a mess right now. To be done later -->
-                    </excludes>
+						<exclude>**/VCard*.java</exclude> <!-- TODO: VCard is a mess right now. To be done later -->
+					</excludes>
 				</configuration>
 			</plugin>
 

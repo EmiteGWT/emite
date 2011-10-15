@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.im.client.chat.ChatStatus;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,8 +36,7 @@ public class ChatStatusChangedEvent extends Event<ChatStatusChangedEvent.Handler
 	private final ChatStatus status;
 
 	public ChatStatusChangedEvent(final ChatStatus status) {
-		assert status != null : "Status in SessionStatusChanged can't be null";
-		this.status = status;
+		this.status = checkNotNull(status);
 	}
 
 	public ChatStatus getStatus() {

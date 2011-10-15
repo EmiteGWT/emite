@@ -20,8 +20,12 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.client.session.Credentials;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
 public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Handler> {
@@ -32,7 +36,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final Credentials credentials;
+	@Nullable private final Credentials credentials;
 	private final boolean success;
 
 	/**
@@ -49,7 +53,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 	 *            the uri of the authorized user
 	 */
 	public AuthorizationResultEvent(final Credentials credentials) {
-		this(credentials, true);
+		this(checkNotNull(credentials), true);
 	}
 
 	private AuthorizationResultEvent(final Credentials credentials, final boolean success) {
@@ -57,11 +61,16 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 		this.success = success;
 	}
 
+	@Nullable
 	public Credentials getCredentials() {
 		return credentials;
 	}
 
+	@Nullable
 	public XmppURI getXmppUri() {
+		if (credentials == null)
+			return null;
+		
 		return credentials.getUri();
 	}
 

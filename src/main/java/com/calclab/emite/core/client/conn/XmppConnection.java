@@ -128,7 +128,7 @@ public interface XmppConnection {
 	 * 
 	 * @param packet
 	 */
-	void send(final HasXML packet);
+	void send(HasXML packet);
 
 	/**
 	 * Set the connection settings. This method MUST be called before connect.

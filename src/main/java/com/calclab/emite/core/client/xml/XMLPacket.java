@@ -20,8 +20,10 @@
 
 package com.calclab.emite.core.client.xml;
 
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 public interface XMLPacket extends HasXML {
 
@@ -29,15 +31,17 @@ public interface XMLPacket extends HasXML {
 
 	String getNamespace();
 
+	@Nullable
 	XMLPacket getParent();
-	
+
 	XMLPacket getFirstParent();
 
-	Map<String, String> getAttributes();
+	ImmutableMap<String, String> getAttributes();
 
+	@Nullable
 	String getAttribute(String name);
 
-	void setAttribute(String name, String value);
+	void setAttribute(String name, @Nullable String value);
 
 	boolean hasChild(String name);
 
@@ -49,19 +53,22 @@ public interface XMLPacket extends HasXML {
 
 	XMLPacket addChild(HasXML child);
 
+	@Nullable
 	XMLPacket getFirstChild(String name);
 
+	@Nullable
 	XMLPacket getFirstChild(String name, String namespace);
 
+	@Nullable
 	XMLPacket getFirstChild(XMLMatcher matcher);
 
-	List<XMLPacket> getChildren();
+	ImmutableList<XMLPacket> getChildren();
 
-	List<XMLPacket> getChildren(String name);
+	ImmutableList<XMLPacket> getChildren(String name);
 
-	List<XMLPacket> getChildren(String name, String namespace);
+	ImmutableList<XMLPacket> getChildren(String name, String namespace);
 
-	List<XMLPacket> getChildren(XMLMatcher matcher);
+	ImmutableList<XMLPacket> getChildren(XMLMatcher matcher);
 
 	void removeChild(HasXML child);
 

@@ -20,7 +20,9 @@
 
 package com.calclab.emite.im.client.events;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.web.bindery.event.shared.Event;
 
 public class SubscriptionRequestReceivedEvent extends Event<SubscriptionRequestReceivedEvent.Handler> {
@@ -35,8 +37,8 @@ public class SubscriptionRequestReceivedEvent extends Event<SubscriptionRequestR
 	private final XmppURI from;
 
 	public SubscriptionRequestReceivedEvent(final XmppURI from, final String nick) {
-		this.from = from;
-		this.nick = nick;
+		this.from = checkNotNull(from);
+		this.nick = checkNotNull(nick);
 	}
 
 	public XmppURI getFrom() {

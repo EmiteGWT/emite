@@ -24,7 +24,7 @@ import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.events.SubscriptionRequestReceivedEvent;

@@ -20,19 +20,22 @@
 
 package com.calclab.emite.core.client.session.sasl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.session.Credentials;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 
 public class AuthorizationTransaction {
 	public static enum Status {
 		succeed, failed, notStarted, waitingForAuthorization
 	}
 
-	private Status status;
 	private final Credentials credentials;
+	private Status status;
 
 	public AuthorizationTransaction(final Credentials credentials) {
-		this.credentials = credentials;
+		this.credentials = checkNotNull(credentials);
+		status = Status.notStarted;
 	}
 
 	public Credentials getCredentials() {
@@ -48,7 +51,7 @@ public class AuthorizationTransaction {
 	}
 
 	public void setStatus(final Status status) {
-		this.status = status;
+		this.status = checkNotNull(status);
 	}
 
 }

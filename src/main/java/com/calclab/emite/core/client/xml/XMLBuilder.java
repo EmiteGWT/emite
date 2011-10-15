@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.xml;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public final class XMLBuilder implements HasXML {
 	
 	public static final XMLPacket fromXML(final String xml) {
@@ -37,7 +39,7 @@ public final class XMLBuilder implements HasXML {
 	private final XMLPacket xml;
 	
 	private XMLBuilder(final XMLPacket xml) {
-		this.xml = xml;
+		this.xml = checkNotNull(xml);
 	}
 	
 	public XMLBuilder attribute(final String name, final String value) {

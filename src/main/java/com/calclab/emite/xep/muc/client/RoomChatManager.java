@@ -20,8 +20,10 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationReceivedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**

@@ -18,38 +18,29 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.stanzas.Stanza;
-import com.calclab.emite.core.client.xml.XMLPacket;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.calclab.emite.xep.muc.client.RoomInvitation;
 import com.google.web.bindery.event.shared.Event;
 
-/**
- * An event to know when an invitation to a room is going to be send.
- * 
- */
-public class BeforeRoomInvitationSentEvent extends Event<BeforeRoomInvitationSentEvent.Handler> {
+public class RoomInvitationReceivedEvent extends Event<RoomInvitationReceivedEvent.Handler> {
 
 	public interface Handler {
-		void onBeforeRoomInvitationSent(BeforeRoomInvitationSentEvent event);
+		void onRoomInvitationReceived(RoomInvitationReceivedEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final Stanza message;
-	private final XMLPacket invitePacket;
+	private final RoomInvitation roomInvitation;
 
-	protected BeforeRoomInvitationSentEvent(final Stanza message, final XMLPacket invitePacket) {
-		this.message = message;
-		this.invitePacket = invitePacket;
+	public RoomInvitationReceivedEvent(final RoomInvitation roomInvitation) {
+		this.roomInvitation = checkNotNull(roomInvitation);
 	}
 
-	public Stanza getMessage() {
-		return message;
-	}
-
-	public XMLPacket getInvitePacket() {
-		return invitePacket;
+	public RoomInvitation getRoomInvitation() {
+		return roomInvitation;
 	}
 
 	@Override
@@ -59,7 +50,7 @@ public class BeforeRoomInvitationSentEvent extends Event<BeforeRoomInvitationSen
 
 	@Override
 	protected void dispatch(final Handler handler) {
-		handler.onBeforeRoomInvitationSent(this);
+		handler.onRoomInvitationReceived(this);
 	}
 
 }

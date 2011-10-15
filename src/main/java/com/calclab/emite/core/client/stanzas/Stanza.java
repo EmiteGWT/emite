@@ -20,8 +20,10 @@
 
 package com.calclab.emite.core.client.stanzas;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.HasXML;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
@@ -31,7 +33,7 @@ public class Stanza implements HasXML {
 	protected final XMLPacket xml;
 
 	public Stanza(final XMLPacket xml) {
-		this.xml = xml;
+		this.xml = checkNotNull(xml);
 	}
 
 	public Stanza(final String name) {
@@ -70,7 +72,7 @@ public class Stanza implements HasXML {
 	public final XMLPacket getXML() {
 		return xml;
 	}
-	
+
 	@Override
 	public String toString() {
 		return xml.toString();

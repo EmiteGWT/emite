@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.google.web.bindery.event.shared.Event;
 
@@ -39,9 +41,13 @@ public class RequestFailedEvent extends Event<RequestFailedEvent.Handler> {
 	private final IQ iq;
 
 	public RequestFailedEvent(final String requestType, final String description, final IQ iq) {
-		this.requestType = requestType;
-		this.description = description;
-		this.iq = iq;
+		this.requestType = checkNotNull(requestType);
+		this.description = checkNotNull(description);
+		this.iq = checkNotNull(iq);
+	}
+
+	public String getRequestType() {
+		return requestType;
 	}
 
 	public String getDescription() {
@@ -50,10 +56,6 @@ public class RequestFailedEvent extends Event<RequestFailedEvent.Handler> {
 
 	public IQ getIq() {
 		return iq;
-	}
-
-	public String getRequestType() {
-		return requestType;
 	}
 
 	@Override

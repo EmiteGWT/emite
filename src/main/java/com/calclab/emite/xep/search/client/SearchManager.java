@@ -23,7 +23,7 @@ package com.calclab.emite.xep.search.client;
 import java.util.HashMap;
 import java.util.List;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form;
 
 /**

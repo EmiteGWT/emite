@@ -21,9 +21,9 @@
 package com.calclab.emite.im.client.chat;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Map;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 
 /**
  * The properties of a chat. One property is required (the uri), some other are
@@ -33,7 +33,7 @@ import com.calclab.emite.core.client.stanzas.XmppURI;
  * The properties are the id used to find a chat in a pool of chats.
  */
 public class ChatProperties {
-	private final HashMap<String, Object> data;
+	private final Map<String, Object> data;
 	private final XmppURI uri;
 	private XmppURI initiatorUri;
 	private ChatStatus status;
@@ -56,7 +56,7 @@ public class ChatProperties {
 	public ChatProperties(final XmppURI uri, final ChatProperties properties) {
 		this(uri, null, null, properties);
 
-		for (final Entry<String, Object> entry : properties.data.entrySet()) {
+		for (final Map.Entry<String, Object> entry : properties.data.entrySet()) {
 			setData(entry.getKey(), entry.getValue());
 		}
 	}
@@ -86,7 +86,7 @@ public class ChatProperties {
 	public ChatProperties(final XmppURI uri, final XmppURI initiatorUri, final ChatStatus status, final ChatProperties properties) {
 		this(uri, initiatorUri, status);
 
-		for (final Entry<String, Object> entry : properties.data.entrySet()) {
+		for (final Map.Entry<String, Object> entry : properties.data.entrySet()) {
 			setData(entry.getKey(), entry.getValue());
 		}
 	}

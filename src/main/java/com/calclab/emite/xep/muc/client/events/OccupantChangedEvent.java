@@ -18,49 +18,30 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
-import com.google.web.bindery.event.shared.Event;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * An event to inform about room subject changes
- * 
- * @author dani
- * 
- */
-public class RoomSubjectChangedEvent extends Event<RoomSubjectChangedEvent.Handler> {
+import com.calclab.emite.core.client.events.ChangedEvent;
+import com.calclab.emite.xep.muc.client.Occupant;
+
+public class OccupantChangedEvent extends ChangedEvent<OccupantChangedEvent.Handler> {
 
 	public interface Handler {
-		void onRoomSubjectChanged(RoomSubjectChangedEvent event);
+		void onOccupantChanged(OccupantChangedEvent event);
 	}
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final XmppURI occupantUri;
-	private final String subject;
+	private final Occupant occupant;
 
-	public RoomSubjectChangedEvent(final XmppURI occupantUri, final String subject) {
-		this.occupantUri = occupantUri;
-		this.subject = subject;
+	public OccupantChangedEvent(final ChangeType changeType, final Occupant occupant) {
+		super(changeType);
+		this.occupant = checkNotNull(occupant);
 	}
 
-	/**
-	 * Get modificator's occupant (room and nick) uri
-	 * 
-	 * @return
-	 */
-	public XmppURI getOccupantUri() {
-		return occupantUri;
-	}
-
-	/**
-	 * The new subject
-	 * 
-	 * @return
-	 */
-	public String getSubject() {
-		return subject;
+	public Occupant getOccupant() {
+		return occupant;
 	}
 
 	@Override
@@ -69,8 +50,13 @@ public class RoomSubjectChangedEvent extends Event<RoomSubjectChangedEvent.Handl
 	}
 
 	@Override
+	public String toDebugString() {
+		return super.toDebugString() + occupant;
+	}
+
+	@Override
 	protected void dispatch(final Handler handler) {
-		handler.onRoomSubjectChanged(this);
+		handler.onOccupantChanged(this);
 	}
 
 }

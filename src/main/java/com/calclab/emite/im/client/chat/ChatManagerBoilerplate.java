@@ -20,8 +20,12 @@
 
 package com.calclab.emite.im.client.chat;
 
-import java.util.Collection;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nullable;
 
 import com.calclab.emite.core.client.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
@@ -30,7 +34,7 @@ import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.web.bindery.event.shared.EventBus;
 
 public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatManager<C>, SessionStatusChangedEvent.Handler, MessageReceivedEvent.Handler {
@@ -39,20 +43,20 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 	protected final XmppSession session;
 	protected final ChatSelectionStrategy strategy;
 
-	protected final HashSet<C> chats;
-	private XmppURI currentChatUser;
+	protected final Set<C> chats;
+	@Nullable private XmppURI currentChatUser;
 
 	protected ChatManagerBoilerplate(final EventBus eventBus, final XmppSession session, final ChatSelectionStrategy strategy) {
-		this.eventBus = eventBus;
-		this.session = session;
-		this.strategy = strategy;
+		this.eventBus = checkNotNull(eventBus);
+		this.session = checkNotNull(session);
+		this.strategy = checkNotNull(strategy);
 
 		chats = new HashSet<C>();
 
 		session.addMessageReceivedHandler(this);
 
 		// Control chat status when the user logout and login again
-		session.addSessionStatusChangedHandler(true, this);
+		session.addSessionStatusChangedHandler(this, true);
 	}
 
 	@Override
@@ -111,7 +115,7 @@ public abstract class ChatManagerBoilerplate<C extends Chat> implements ChatMana
 	}
 
 	@Override
-	public Collection<C> getChats() {
+	public Set<C> getChats() {
 		return chats;
 	}
 

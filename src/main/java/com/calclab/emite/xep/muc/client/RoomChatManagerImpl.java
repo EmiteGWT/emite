@@ -21,6 +21,7 @@
 package com.calclab.emite.xep.muc.client;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
@@ -28,12 +29,14 @@ import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.chat.ChatManagerBoilerplate;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.chat.ChatStatus;
+import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationReceivedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -50,7 +53,7 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 
 	private static final String HISTORY_OPTIONS_PROP = "history.options";
 
-	private final HashMap<XmppURI, RoomChat> roomsByJID;
+	private final Map<XmppURI, RoomChat> roomsByJID;
 	private HistoryOptions defaultHistoryOptions;
 
 	@Inject
@@ -95,14 +98,19 @@ public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implem
 	public void onMessageReceived(final MessageReceivedEvent event) {
 		super.onMessageReceived(event);
 		final Message message = event.getMessage();
-		final XMLPacket child = message.getXML().getFirstChild("x", "http://jabber.org/protocol/muc#user").getFirstChild("invite");
-		if (child != null) {
-			// We extract the chat properties from the message
-			final ChatProperties chatProperties = strategy.extractProperties(message);
+		final XMLPacket x = message.getXML().getFirstChild("x", "http://jabber.org/protocol/muc#user");
+		if (x == null)
+			return;
+		
+		final XMLPacket invite = x.getFirstChild("invite");
+		if (invite == null)
+			return;
+		
+		// We extract the chat properties from the message
+		final ChatProperties chatProperties = strategy.extractProperties(message);
 
-			final RoomInvitation invitation = new RoomInvitation(XmppURI.uri(child.getAttribute("from")), message.getFrom(), child.getChildText("reason"), chatProperties);
-			eventBus.fireEventFromSource(new RoomInvitationReceivedEvent(invitation), this);
-		}
+		final RoomInvitation invitation = new RoomInvitation(XmppURI.uri(invite.getAttribute("from")), message.getFrom(), invite.getChildText("reason"), chatProperties);
+		eventBus.fireEventFromSource(new RoomInvitationReceivedEvent(invitation), this);
 	}
 
 	@Override

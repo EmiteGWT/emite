@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLMatcher;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;

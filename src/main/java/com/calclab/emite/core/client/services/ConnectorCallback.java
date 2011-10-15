@@ -27,7 +27,7 @@ package com.calclab.emite.core.client.services;
  * 
  */
 public interface ConnectorCallback {
-	void onError(String request, Throwable throwable);
+	void onResponseError(String request, Throwable throwable);
 
 	void onResponseReceived(int statusCode, String content, String originalRequest);
 }

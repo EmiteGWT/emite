@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.events.ChangedEvent;
 import com.calclab.emite.im.client.roster.RosterGroup;
 
@@ -35,7 +37,7 @@ public class RosterGroupChangedEvent extends ChangedEvent<RosterGroupChangedEven
 
 	public RosterGroupChangedEvent(final ChangeType changeType, final RosterGroup rosterGroup) {
 		super(changeType);
-		this.rosterGroup = rosterGroup;
+		this.rosterGroup = checkNotNull(rosterGroup);
 	}
 
 	public RosterGroup getRosterGroup() {

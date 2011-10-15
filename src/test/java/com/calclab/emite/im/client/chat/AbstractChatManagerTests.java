@@ -26,7 +26,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.session.SessionStatus;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 

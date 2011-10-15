@@ -25,8 +25,12 @@ import java.util.Collection;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.Chat;
+import com.calclab.emite.xep.muc.client.events.BeforeRoomInvitationSentEvent;
+import com.calclab.emite.xep.muc.client.events.OccupantChangedEvent;
+import com.calclab.emite.xep.muc.client.events.RoomInvitationSentEvent;
+import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**

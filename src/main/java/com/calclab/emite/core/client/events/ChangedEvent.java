@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.web.bindery.event.shared.Event;
 
 /**
@@ -41,8 +43,7 @@ public abstract class ChangedEvent<H> extends Event<H> {
 	private final ChangeType changeType;
 
 	protected ChangedEvent(final ChangeType changeType) {
-		assert changeType != null : "Change type can't be null in ChangedEvent";
-		this.changeType = changeType;
+		this.changeType = checkNotNull(changeType);
 	}
 
 	public ChangeType getChangeType() {

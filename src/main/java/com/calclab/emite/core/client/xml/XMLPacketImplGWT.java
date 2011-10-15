@@ -20,11 +20,11 @@
 
 package com.calclab.emite.core.client.xml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.gwt.xml.client.Attr;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
@@ -75,25 +75,27 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 		return new XMLPacketImplGWT((Element) parent);
 	}
-	
+
 	@Override
 	public XMLPacket getFirstParent() {
 		return new XMLPacketImplGWT(document.getDocumentElement());
 	}
 
 	@Override
-	public Map<String, String> getAttributes() {
-		final Map<String, String> result = new HashMap<String, String>();
+	public ImmutableMap<String, String> getAttributes() {
+		final ImmutableMap.Builder<String, String> result = ImmutableMap.builder();
 		final NamedNodeMap attribs = element.getAttributes();
 		for (int i = 0; i < attribs.getLength(); i++) {
 			final Attr attrib = (Attr) attribs.item(i);
 			result.put(attrib.getName(), attrib.getValue());
 		}
-		return result;
+		return result.build();
 	}
 
 	@Override
 	public String getAttribute(final String name) {
+		checkNotNull(name);
+
 		if (!element.hasAttribute(name))
 			return null;
 
@@ -102,6 +104,8 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public void setAttribute(final String name, final String value) {
+		checkNotNull(name);
+
 		if (value != null) {
 			element.setAttribute(name, value);
 		} else {
@@ -126,7 +130,7 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public XMLPacket addChild(final String name, final String namespace) {
-		final Element newElement = document.createElement(name);
+		final Element newElement = document.createElement(checkNotNull(name));
 		if (namespace != null) {
 			newElement.setAttribute("xmlns", namespace);
 		}
@@ -136,6 +140,8 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public XMLPacket addChild(final HasXML child) {
+		checkArgument(checkNotNull(child.getXML()) instanceof XMLPacketImplGWT);
+
 		final Element newElement = (Element) document.importNode(((XMLPacketImplGWT) child.getXML()).element, true);
 		element.appendChild(newElement);
 		return new XMLPacketImplGWT(newElement);
@@ -148,6 +154,8 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public XMLPacket getFirstChild(final String name, final String namespace) {
+		checkNotNull(name);
+
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			final Node node = nodes.item(i);
@@ -172,6 +180,8 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public XMLPacket getFirstChild(final XMLMatcher matcher) {
+		checkNotNull(matcher);
+
 		for (final XMLPacket packet : getChildren()) {
 			if (matcher.matches(packet))
 				return packet;
@@ -181,18 +191,21 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	}
 
 	@Override
-	public List<XMLPacket> getChildren() {
+	public ImmutableList<XMLPacket> getChildren() {
 		return getChildren("*", "*");
 	}
 
 	@Override
-	public List<XMLPacket> getChildren(final String name) {
+	public ImmutableList<XMLPacket> getChildren(final String name) {
 		return getChildren(name, "*");
 	}
 
 	@Override
-	public List<XMLPacket> getChildren(final String name, final String namespace) {
-		final List<XMLPacket> result = new ArrayList<XMLPacket>();
+	public ImmutableList<XMLPacket> getChildren(final String name, final String namespace) {
+		checkNotNull(name);
+		checkNotNull(namespace);
+
+		final ImmutableList.Builder<XMLPacket> result = ImmutableList.builder();
 
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
@@ -213,12 +226,14 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			result.add(new XMLPacketImplGWT(element));
 		}
 
-		return result;
+		return result.build();
 	}
 
 	@Override
-	public List<XMLPacket> getChildren(final XMLMatcher matcher) {
-		final List<XMLPacket> result = new ArrayList<XMLPacket>();
+	public ImmutableList<XMLPacket> getChildren(final XMLMatcher matcher) {
+		checkNotNull(matcher);
+		
+		final ImmutableList.Builder<XMLPacket> result = ImmutableList.builder();
 
 		for (final XMLPacket packet : getChildren()) {
 			if (matcher.matches(packet)) {
@@ -226,14 +241,14 @@ public final class XMLPacketImplGWT implements XMLPacket {
 			}
 		}
 
-		return result;
+		return result.build();
 	}
 
 	@Override
 	public void removeChild(final HasXML child) {
-		if (child instanceof XMLPacketImplGWT) {
-			element.removeChild(((XMLPacketImplGWT) child.getXML()).element);
-		}
+		checkArgument(child.getXML() instanceof XMLPacketImplGWT);
+		
+		element.removeChild(((XMLPacketImplGWT) child.getXML()).element);
 	}
 
 	@Override
@@ -296,7 +311,7 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	public XMLPacket getXML() {
 		return this;
 	}
-	
+
 	public static XMLPacket fromString(final String xml) {
 		try {
 			return new XMLPacketImplGWT(XMLParser.parse(xml).getDocumentElement());

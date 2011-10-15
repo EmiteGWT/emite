@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.session.SessionStatus;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,8 +36,7 @@ public class SessionStatusChangedEvent extends Event<SessionStatusChangedEvent.H
 	private final SessionStatus status;
 
 	public SessionStatusChangedEvent(final SessionStatus status) {
-		assert status != null : "Status in SessionStatusChangedEvent can't be null";
-		this.status = status;
+		this.status = checkNotNull(status);
 	}
 
 	public SessionStatus getStatus() {

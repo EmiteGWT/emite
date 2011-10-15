@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.session;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.inject.Inject;
@@ -36,9 +38,9 @@ public class SessionReady implements SessionStatusChangedEvent.Handler {
 
 	@Inject
 	public SessionReady(final XmppSession session) {
-		this.session = session;
+		this.session = checkNotNull(session);
 
-		handler = session.addSessionStatusChangedHandler(true, this);
+		handler = session.addSessionStatusChangedHandler(this, true);
 	}
 
 	@Override

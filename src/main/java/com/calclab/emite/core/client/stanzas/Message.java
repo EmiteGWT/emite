@@ -20,6 +20,7 @@
 
 package com.calclab.emite.core.client.stanzas;
 
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 
 public class Message extends Stanza {

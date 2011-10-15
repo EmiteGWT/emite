@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class IQReceivedEvent extends Event<IQReceivedEvent.Handler> {
 	private final IQ iq;
 
 	public IQReceivedEvent(final IQ iq) {
-		this.iq = iq;
+		this.iq = checkNotNull(iq);
 	}
 
 	public IQ getIQ() {

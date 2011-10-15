@@ -83,7 +83,7 @@ public class ServicesImplGWT implements Services, Window.ClosingHandler {
 				public void onError(final Request req, final Throwable throwable) {
 					logger.severe("GWT CONNECTOR ERROR: " + throwable.getMessage());
 					requests.remove(req);
-					listener.onError(request, throwable);
+					listener.onResponseError(request, throwable);
 				}
 
 				@Override

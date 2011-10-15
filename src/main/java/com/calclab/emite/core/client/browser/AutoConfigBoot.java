@@ -20,7 +20,8 @@
 
 package com.calclab.emite.core.client.browser;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -30,7 +31,7 @@ import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.session.XmppSession;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
@@ -199,8 +200,8 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 
 	@Inject
 	protected AutoConfigBoot(final XmppConnection connection, final XmppSession session) {
-		this.connection = connection;
-		this.session = session;
+		this.connection = checkNotNull(connection);
+		this.session = checkNotNull(session);
 
 		Scheduler.get().scheduleDeferred(this);
 		Window.addWindowClosingHandler(this);
@@ -209,10 +210,10 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	@Override
 	public final void execute() {
 		logger.fine("Checking auto config");
-		if (!PageAssist.getMetaBoolean(PARAM_AUTOCONFIG, true))
+		if (!PageAssist.getMeta(PARAM_AUTOCONFIG, true))
 			return;
 
-		sessionBehaviour = PageAssist.getMetaString(PARAM_SESSION, RESUME_OR_LOGIN);
+		sessionBehaviour = PageAssist.getMeta(PARAM_SESSION, RESUME_OR_LOGIN);
 		configureFromMeta();
 
 		if (LOGIN.equals(sessionBehaviour)) {
@@ -251,13 +252,13 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	 */
 	private final boolean configureFromMeta() {
 		logger.info("Configuring connection...");
-		final String httpBase = PageAssist.getMetaString(PARAM_HTTPBASE, "/http-bind");
-		final String hostName = PageAssist.getMetaString(PARAM_HOST, null);
-		final String routeHost = PageAssist.getMetaString(PARAM_ROUTE_HOST, hostName);
-		final int routePort = PageAssist.getMetaInteger(PARAM_ROUTE_PORT, 5222);
-		final boolean secure = PageAssist.getMetaBoolean(PARAM_SECURE, true);
-		final int wait = PageAssist.getMetaInteger(PARAM_BOSH_WAIT, ConnectionSettings.DEFAULT_WAIT);
-		final int hold = PageAssist.getMetaInteger(PARAM_BOSH_HOLD, ConnectionSettings.DEFAULT_HOLD);
+		final String httpBase = PageAssist.getMeta(PARAM_HTTPBASE, "/http-bind");
+		final String hostName = PageAssist.getMeta(PARAM_HOST, null);
+		final String routeHost = PageAssist.getMeta(PARAM_ROUTE_HOST, hostName);
+		final int routePort = PageAssist.getMeta(PARAM_ROUTE_PORT, 5222);
+		final boolean secure = PageAssist.getMeta(PARAM_SECURE, true);
+		final int wait = PageAssist.getMeta(PARAM_BOSH_WAIT, ConnectionSettings.DEFAULT_WAIT);
+		final int hold = PageAssist.getMeta(PARAM_BOSH_HOLD, ConnectionSettings.DEFAULT_HOLD);
 
 		if (hostName == null)
 			return false;
@@ -277,8 +278,8 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	 */
 	private final boolean loginFromMeta() {
 		logger.info("Loging in from meta data...");
-		final String userJID = PageAssist.getMetaString(PARAM_JID, null);
-		final String password = PageAssist.getMetaString(PARAM_PASSWORD, null);
+		final String userJID = PageAssist.getMeta(PARAM_JID, null);
+		final String password = PageAssist.getMeta(PARAM_PASSWORD, null);
 		if (userJID != null && password != null) {
 			final XmppURI jid = uri(userJID);
 			session.login(new Credentials(jid, password));

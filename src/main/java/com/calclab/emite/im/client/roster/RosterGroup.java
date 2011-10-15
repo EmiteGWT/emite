@@ -26,9 +26,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -44,7 +46,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 	private final EventBus eventBus;
 
 	private final String name;
-	private final HashMap<XmppURI, RosterItem> itemsByJID;
+	private final Map<XmppURI, RosterItem> itemsByJID;
 
 	/**
 	 * Creates a new roster group. If name is null, its supposed to be the
@@ -102,8 +104,8 @@ public class RosterGroup implements Iterable<RosterItem> {
 	 * @see RosterItemsOrder
 	 * 
 	 */
-	public ArrayList<RosterItem> getItemList(final Comparator<RosterItem> comparator) {
-		final ArrayList<RosterItem> list = new ArrayList<RosterItem>(getItems());
+	public List<RosterItem> getItemList(final Comparator<RosterItem> comparator) {
+		final List<RosterItem> list = new ArrayList<RosterItem>(getItems());
 		if (comparator != null) {
 			Collections.sort(list, comparator);
 		}

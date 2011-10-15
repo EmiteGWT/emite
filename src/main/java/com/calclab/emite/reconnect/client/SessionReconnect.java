@@ -42,9 +42,9 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 
 	private final XmppSession session;
 
-	private boolean shouldReconnect;
 	private Credentials lastSuccessfulCredentials;
 	protected int reconnectionAttempts;
+	private boolean shouldReconnect;
 
 	@Inject
 	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
@@ -54,9 +54,9 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 		reconnectionAttempts = 0;
 		logger.info("RECONNECT BEHAVIOUR");
 
-		saslManager.addAuthorizationResultHandler(this);
-		session.addSessionStatusChangedHandler(true, this);
 		connection.addConnectionStatusChangedHandler(this);
+		session.addSessionStatusChangedHandler(this, true);
+		saslManager.addAuthorizationResultHandler(this);
 	}
 
 	@Override

@@ -20,6 +20,10 @@
 
 package com.calclab.emite.core.client.session.sasl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.AuthorizationResultEvent;
 import com.calclab.emite.core.client.events.PacketReceivedEvent;
@@ -27,6 +31,7 @@ import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.util.Base64Utils;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.common.base.Ascii;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -36,26 +41,24 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 @Singleton
 public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler {
 
-	private static final String SEP = new String(new char[] { 0 });
 	private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
 
 	private final EventBus eventBus;
 	private final XmppConnection connection;
 
-	private Credentials currentCredentials;
+	@Nullable private Credentials currentCredentials;
 
 	@Inject
 	public SASLManagerImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection) {
-		this.eventBus = eventBus;
-		this.connection = connection;
+		this.eventBus = checkNotNull(eventBus);
+		this.connection = checkNotNull(connection);
 
 		connection.addStanzaReceivedHandler(this);
 	}
 
 	@Override
 	public void onPacketReceived(final PacketReceivedEvent event) {
-		final XMLPacket stanza = event.getPacket();
-		final String name = stanza.getTagName();
+		final String name = event.getPacket().getTagName();
 		if ("failure".equals(name)) { // & XMLNS
 			eventBus.fireEventFromSource(new AuthorizationResultEvent(), this);
 		} else if ("success".equals(name)) {
@@ -92,7 +95,7 @@ public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler
 	}
 
 	private static String encodePlain(final String domain, final String userName, final String password) {
-		final String auth = userName + "@" + domain + SEP + userName + SEP + password;
+		final String auth = userName + '@' + domain + Ascii.NUL + userName + Ascii.NUL + password;
 		return Base64Utils.toBase64(auth.getBytes());
 	}
 

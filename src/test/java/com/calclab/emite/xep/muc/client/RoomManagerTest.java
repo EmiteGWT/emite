@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -30,8 +30,8 @@ import org.junit.Test;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.core.client.stanzas.XmppURI;
 import com.calclab.emite.core.client.stanzas.IQ.Type;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.xep.muc.client.Occupant.Affiliation;

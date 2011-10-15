@@ -28,7 +28,7 @@ import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.stanzas.Stanza;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
@@ -82,7 +82,7 @@ public interface XmppSession {
 	 * 
 	 * @return a way to remove the handler
 	 */
-	HandlerRegistration addSessionStatusChangedHandler(boolean sendCurrent, SessionStatusChangedEvent.Handler handler);
+	HandlerRegistration addSessionStatusChangedHandler(SessionStatusChangedEvent.Handler handler, boolean sendCurrent);
 
 	/**
 	 * Returns the current user xmpp uri

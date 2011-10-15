@@ -20,6 +20,8 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class ChatStateChangedEvent extends Event<ChatStateChangedEvent.Handler> 
 	private final ChatState chatState;
 
 	protected ChatStateChangedEvent(final ChatState chatState) {
-		this.chatState = chatState;
+		this.chatState = checkNotNull(chatState);
 	}
 
 	public ChatState getChatState() {

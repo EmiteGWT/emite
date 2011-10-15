@@ -20,13 +20,13 @@
 
 package com.calclab.emite.im.client.chat;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageReceivedTestHandler;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;

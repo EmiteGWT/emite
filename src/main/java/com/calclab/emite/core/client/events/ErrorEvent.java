@@ -20,6 +20,10 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.google.web.bindery.event.shared.Event;
@@ -38,12 +42,12 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 
 	private final String errorType;
 	private final String description;
-	private final Stanza stanza;
-	private final XMLPacket error;
+	@Nullable private final Stanza stanza;
+	@Nullable private final XMLPacket error;
 
 	public ErrorEvent(final String errorType, final String description, final Stanza stanza) {
-		this.errorType = errorType;
-		this.description = description;
+		this.errorType = checkNotNull(errorType);
+		this.description = checkNotNull(description);
 		this.stanza = stanza;
 		error = stanza != null ? stanza.getXML().getFirstChild("error") : null;
 	}
@@ -58,7 +62,7 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 	 * @return the error stanza of NoPacket.INSTANCE if none
 	 * @see http://xmpp.org/rfcs/rfc3920.html#rfc.section.4.7
 	 */
-	public XMLPacket getError() {
+	@Nullable public XMLPacket getError() {
 		return error;
 	}
 
@@ -71,7 +75,7 @@ public class ErrorEvent extends Event<ErrorEvent.Handler> {
 	 * 
 	 * @return never null: NoPacket.INSTANCE if the is a client side error
 	 */
-	public Stanza getStanza() {
+	@Nullable public Stanza getStanza() {
 		return stanza;
 	}
 

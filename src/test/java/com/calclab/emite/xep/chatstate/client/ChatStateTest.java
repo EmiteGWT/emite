@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;

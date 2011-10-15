@@ -20,13 +20,13 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
 import com.calclab.emite.im.client.chat.pair.PairChatSelectionStrategy;

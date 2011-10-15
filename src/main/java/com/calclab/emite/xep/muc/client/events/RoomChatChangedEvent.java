@@ -18,9 +18,12 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.xep.muc.client;
+package com.calclab.emite.xep.muc.client.events;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.calclab.emite.core.client.events.ChangedEvent;
+import com.calclab.emite.xep.muc.client.RoomChat;
 
 public class RoomChatChangedEvent extends ChangedEvent<RoomChatChangedEvent.Handler> {
 
@@ -32,10 +35,9 @@ public class RoomChatChangedEvent extends ChangedEvent<RoomChatChangedEvent.Hand
 
 	private final RoomChat chat;
 
-	protected RoomChatChangedEvent(final ChangeType changeType, final RoomChat chat) {
+	public RoomChatChangedEvent(final ChangeType changeType, final RoomChat chat) {
 		super(changeType);
-		assert chat != null : "RoomChat can't be null in PairChatChangedEvent";
-		this.chat = chat;
+		this.chat = checkNotNull(chat);
 	}
 
 	public RoomChat getChat() {

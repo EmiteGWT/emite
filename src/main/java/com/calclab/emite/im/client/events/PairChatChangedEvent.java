@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.events.ChangedEvent;
 import com.calclab.emite.im.client.chat.pair.PairChat;
 
@@ -35,8 +37,7 @@ public class PairChatChangedEvent extends ChangedEvent<PairChatChangedEvent.Hand
 
 	public PairChatChangedEvent(final ChangeType changeType, final PairChat chat) {
 		super(changeType);
-		assert chat != null : "PairChat can't be null in PairChatChangedEvent";
-		this.chat = chat;
+		this.chat = checkNotNull(chat);
 	}
 
 	public PairChat getChat() {

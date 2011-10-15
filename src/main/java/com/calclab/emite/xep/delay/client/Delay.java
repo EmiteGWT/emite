@@ -22,7 +22,7 @@ package com.calclab.emite.xep.delay.client;
 
 import java.util.Date;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.util.XmppDateTime;
 import com.calclab.emite.core.client.xml.XMLPacket;
 

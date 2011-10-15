@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,8 +36,7 @@ public class PresenceReceivedEvent extends Event<PresenceReceivedEvent.Handler> 
 	private final Presence presence;
 
 	public PresenceReceivedEvent(final Presence presence) {
-		assert presence != null : "Presence can't be null in PresenceEvent";
-		this.presence = presence;
+		this.presence = checkNotNull(presence);
 	}
 
 	public Presence getPresence() {

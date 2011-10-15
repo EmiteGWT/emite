@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,20 +36,20 @@ public class OwnPresenceChangedEvent extends Event<OwnPresenceChangedEvent.Handl
 
 	public static final Type<Handler> TYPE = new Type<Handler>();
 
-	private final Presence currentPresence;
 	private final Presence oldPresence;
+	private final Presence currentPresence;
 
 	public OwnPresenceChangedEvent(final Presence oldPresence, final Presence currentPresence) {
-		this.oldPresence = oldPresence;
-		this.currentPresence = currentPresence;
-	}
-
-	public Presence getCurrentPresence() {
-		return currentPresence;
+		this.oldPresence = checkNotNull(oldPresence);
+		this.currentPresence = checkNotNull(currentPresence);
 	}
 
 	public Presence getOldPresence() {
 		return oldPresence;
+	}
+
+	public Presence getCurrentPresence() {
+		return currentPresence;
 	}
 
 	@Override

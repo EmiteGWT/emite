@@ -20,6 +20,8 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.logging.Logger;
 
 import com.calclab.emite.im.client.chat.pair.PairChat;
@@ -48,7 +50,7 @@ public class ChatStateManager implements PairChatChangedEvent.Handler {
 
 	@Inject
 	public ChatStateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
-		this.eventBus = eventBus;
+		this.eventBus = checkNotNull(eventBus);
 
 		chatManager.addPairChatChangedHandler(this);
 	}

@@ -20,7 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.SubscriptionRequestReceivedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 

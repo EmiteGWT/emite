@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collection;
 
 import com.calclab.emite.im.client.roster.RosterItem;
@@ -36,7 +38,7 @@ public class RosterRetrievedEvent extends Event<RosterRetrievedEvent.Handler> {
 	private final Collection<RosterItem> rosterItems;
 
 	public RosterRetrievedEvent(final Collection<RosterItem> rosterItems) {
-		this.rosterItems = rosterItems;
+		this.rosterItems = checkNotNull(rosterItems);
 	}
 
 	public Collection<RosterItem> getRosterItems() {

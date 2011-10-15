@@ -20,17 +20,18 @@
 
 package com.calclab.emite.im.client.roster;
 
-import static com.calclab.emite.core.client.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.client.uri.XmppURI.uri;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import com.calclab.emite.core.client.stanzas.HasJID;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Presence.Show;
 import com.calclab.emite.core.client.stanzas.Presence.Type;
-import com.calclab.emite.core.client.stanzas.XmppURI;
+import com.calclab.emite.core.client.uri.HasJID;
+import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
 
 /**
@@ -77,7 +78,7 @@ public class RosterItem implements HasJID {
 		return subscriptionState;
 	}
 
-	final ArrayList<String> groups;
+	final List<String> groups;
 	final XmppURI jid;
 	String name;
 	String status;
@@ -85,7 +86,7 @@ public class RosterItem implements HasJID {
 
 	private SubscriptionState subscriptionState;
 	private final Type ask;
-	private final HashSet<String> availableResources;
+	private final Set<String> availableResources;
 
 	/**
 	 * Create a RosterItem object
@@ -157,7 +158,7 @@ public class RosterItem implements HasJID {
 	 * 
 	 * @return
 	 */
-	HashSet<String> getAvailableResources() {
+	Set<String> getAvailableResources() {
 		return availableResources;
 	}
 

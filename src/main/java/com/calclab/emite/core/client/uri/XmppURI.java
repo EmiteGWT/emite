@@ -18,7 +18,16 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.stanzas;
+package com.calclab.emite.core.client.uri;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.concurrent.ConcurrentMap;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.MapMaker;
 
 /**
  * Defines a XMPP URI.
@@ -29,6 +38,10 @@ package com.calclab.emite.core.client.stanzas;
  * 
  */
 public class XmppURI implements HasJID {
+	
+	// TODO: replace with Cache when available in GWT
+	@SuppressWarnings("deprecation")
+	private static final ConcurrentMap<String, XmppURI> cache = new MapMaker().makeComputingMap(new XmppURIParser());
 
 	/**
 	 * Parse the string and return a JID (a uri without resource)
@@ -48,10 +61,11 @@ public class XmppURI implements HasJID {
 	 *            the string to be parsed
 	 * @return a XmppURI object if the string is a valid XmppURI string, null
 	 *         otherwise
+	 * @throws ExecutionException 
 	 * 
 	 */
 	public static XmppURI uri(final String xmppUri) {
-		return XmppURIFactory.parse(xmppUri);
+		return cache.get(xmppUri);
 	}
 
 	/**
@@ -67,15 +81,14 @@ public class XmppURI implements HasJID {
 	 */
 
 	public static XmppURI uri(final String node, final String host, final String resource) {
-		final XmppURI xmppURI = new XmppURI(node, host, resource);
-		XmppURIFactory.cache(xmppURI);
-		return xmppURI;
+		final XmppURI result = new XmppURI(node, host, resource);
+		cache.putIfAbsent(result.toString(), result);
+		return result;
 	}
 
 	private final String host;
-	private final String node;
-	private final String representation;
-	private final String resource;
+	@Nullable private final String node;
+	@Nullable private final String resource;
 
 	/**
 	 * 
@@ -87,11 +100,9 @@ public class XmppURI implements HasJID {
 	 * 
 	 */
 	private XmppURI(final String node, final String host, final String resource) {
-		assert host != null : "Host can't be null";
-		this.node = node != null ? node.toLowerCase() : node;
-		this.host = host.toLowerCase();
-		this.resource = resource != null ? resource : null;
-		representation = (this.node != null ? this.node + "@" : "") + this.host + (this.resource != null ? "/" + this.resource : "");
+		this.host = checkNotNull(host, "Host can't be null").toLowerCase();
+		this.node = node;
+		this.resource = resource;
 	}
 
 	/**
@@ -119,29 +130,17 @@ public class XmppURI implements HasJID {
 	}
 
 	/**
-	 * @return true if this uri has node, false otherwise
-	 */
-	public boolean hasNode() {
-		return node != null;
-	}
-
-	/**
 	 * @return uri's node
 	 */
+	@Nullable
 	public String getNode() {
 		return node;
 	}
 
 	/**
-	 * @return true if this uri has resource, false otherwise
-	 */
-	public boolean hasResource() {
-		return resource != null;
-	}
-
-	/**
 	 * @return uri's resource
 	 */
+	@Nullable
 	public String getResource() {
 		return resource;
 	}
@@ -157,30 +156,37 @@ public class XmppURI implements HasJID {
 
 	@Override
 	public int hashCode() {
-		return representation.hashCode();
+		return Objects.hashCode(host, node, resource);
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (obj == null)
-			return false;
-		if (obj == this)
-			return true;
-		return representation.equals(((XmppURI) obj).representation);
+		if (obj instanceof XmppURI) {
+			final XmppURI other = (XmppURI) obj;
+			
+			return Objects.equal(host, other.host) && Objects.equal(node, other.node) && Objects.equal(resource, other.resource);
+		}
+		return false;
 	}
 
 	public boolean equalsNoResource(final XmppURI other) {
-		if (other == null)
-			return false;
-		if (this == other)
-			return true;
-		if (node == null && other.node != null)
-			return false;
-		return host.equals(other.host) && (node == null || node.equals(other.node));
+		return Objects.equal(host, other.host) && Objects.equal(node, other.node);
 	}
 
 	@Override
 	public String toString() {
-		return representation;
+		final StringBuilder builder = new StringBuilder();
+
+		if (node != null) {
+			builder.append(node);
+			builder.append('@');
+		}
+		builder.append(this.host);
+		if (resource != null) {
+			builder.append('/');
+			builder.append(resource);
+		}
+
+		return builder.toString();
 	}
 }

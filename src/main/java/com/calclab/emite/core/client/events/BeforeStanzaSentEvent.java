@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client.events;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.core.client.stanzas.Stanza;
 import com.google.web.bindery.event.shared.Event;
 
@@ -34,7 +36,7 @@ public class BeforeStanzaSentEvent extends Event<BeforeStanzaSentEvent.Handler> 
 	private final Stanza packet;
 
 	public BeforeStanzaSentEvent(final Stanza packet) {
-		this.packet = packet;
+		this.packet = checkNotNull(packet);
 	}
 
 	public Stanza getStanza() {
