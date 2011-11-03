@@ -18,20 +18,10 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.im.client.chat.pair;
-
-import com.calclab.emite.im.client.chat.ChatManager;
-import com.calclab.emite.im.client.events.PairChatChangedEvent;
-import com.google.web.bindery.event.shared.HandlerRegistration;
-
-public interface PairChatManager extends ChatManager<PairChat> {
-
-	/**
-	 * Add a handler to track chat changes. The following changes can occur from
-	 * a default chat manager: created, opened, closed
-	 * 
-	 * @param handler
-	 */
-	HandlerRegistration addPairChatChangedHandler(PairChatChangedEvent.Handler handler);
-
-}
+/**
+ * Emite reconnect module.
+ * <p>
+ * When installing this module, Emite will try to reconnect again with same
+ * credentials when the connection is closed
+ */
+package com.calclab.emite.reconnect.client;

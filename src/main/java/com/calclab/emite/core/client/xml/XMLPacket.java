@@ -49,7 +49,7 @@ public interface XMLPacket extends HasXML {
 
 	XMLPacket addChild(String name);
 
-	XMLPacket addChild(String name, String namespace);
+	XMLPacket addChild(String name, @Nullable String namespace);
 
 	XMLPacket addChild(HasXML child);
 
@@ -82,6 +82,6 @@ public interface XMLPacket extends HasXML {
 
 	void setChildText(String name, String text);
 
-	void setChildText(String name, String namespace, String text);
+	void setChildText(String name, @Nullable String namespace, String text);
 
 }

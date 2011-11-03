@@ -20,13 +20,13 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.uri.XmppURI;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -43,12 +43,12 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 	private final Map<XmppURI, DiscoveryItemsResults> itemsResults;
 
 	@Inject
-	public DiscoveryManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
+	protected DiscoveryManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = eventBus;
 		this.session = session;
 
-		infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();
-		itemsResults = new HashMap<XmppURI, DiscoveryItemsResults>();
+		infoResults = Maps.newHashMap();
+		itemsResults = Maps.newHashMap();
 	}
 
 	@Override

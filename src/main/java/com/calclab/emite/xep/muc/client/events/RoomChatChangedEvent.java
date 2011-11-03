@@ -46,7 +46,7 @@ public class RoomChatChangedEvent extends ChangedEvent<RoomChatChangedEvent.Hand
 
 	@Override
 	public String toDebugString() {
-		return super.toDebugString() + chat.getURI();
+		return super.toDebugString() + chat.getRoomURI();
 	}
 
 	@Override

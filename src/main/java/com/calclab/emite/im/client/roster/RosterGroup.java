@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +31,7 @@ import java.util.Map;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
+import com.google.common.collect.Maps;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -60,7 +60,7 @@ public class RosterGroup implements Iterable<RosterItem> {
 	public RosterGroup(final EventBus eventBus, final String groupName) {
 		this.eventBus = eventBus;
 		name = groupName;
-		itemsByJID = new HashMap<XmppURI, RosterItem>();
+		itemsByJID = Maps.newHashMap();
 	}
 
 	public HandlerRegistration addRosterItemChangedHandler(final RosterItemChangedEvent.Handler handler) {

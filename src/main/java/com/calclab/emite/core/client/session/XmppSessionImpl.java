@@ -22,8 +22,6 @@ package com.calclab.emite.core.client.session;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -49,6 +47,8 @@ import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.stanzas.Stanza;
 import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -79,13 +79,13 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	private int iqId;
 
 	@Inject
-	public XmppSessionImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection, final SASLManager saslManager) {
+	protected XmppSessionImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection, final SASLManager saslManager) {
 		this.eventBus = checkNotNull(eventBus);
 		this.connection = checkNotNull(connection);
 		this.saslManager = checkNotNull(saslManager);
 
-		iqHandlers = new HashMap<String, IQCallback>();
-		queuedStanzas = new ArrayList<Stanza>();
+		iqHandlers = Maps.newHashMap();
+		queuedStanzas = Lists.newArrayList();
 		status = SessionStatus.disconnected;
 
 		connection.addConnectionStatusChangedHandler(this);

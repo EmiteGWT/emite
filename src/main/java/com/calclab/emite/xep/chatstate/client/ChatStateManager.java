@@ -22,11 +22,13 @@ package com.calclab.emite.xep.chatstate.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
-import com.calclab.emite.im.client.chat.pair.PairChat;
-import com.calclab.emite.im.client.chat.pair.PairChatManager;
+import com.calclab.emite.im.client.chat.PairChat;
+import com.calclab.emite.im.client.chat.PairChatManager;
 import com.calclab.emite.im.client.events.PairChatChangedEvent;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -39,51 +41,47 @@ import com.google.web.bindery.event.shared.EventBus;
  * This implementation is limited to chat conversations. Chat state in MUC rooms
  * are not supported to avoid multicast of occupant states (in a BOSH medium can
  * be a problem).
- * 
  */
 @Singleton
-public class ChatStateManager implements PairChatChangedEvent.Handler {
+public final class ChatStateManager implements PairChatChangedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(ChatStateManager.class.getName());
 
 	private final EventBus eventBus;
+	private final Map<PairChat, ChatStateHook> hooks;
 
 	@Inject
-	public ChatStateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
+	protected ChatStateManager(@Named("emite") final EventBus eventBus, final PairChatManager chatManager) {
 		this.eventBus = checkNotNull(eventBus);
+		this.hooks = Maps.newHashMap();
 
 		chatManager.addPairChatChangedHandler(this);
 	}
 
 	@Override
-	public void onPairChatChanged(final PairChatChangedEvent event) {
+	public final void onPairChatChanged(final PairChatChangedEvent event) {
 		if (event.isCreated()) {
-			getChatState(event.getChat());
+			getChatStateHook(event.getChat());
 		} else if (event.isClosed()) {
 			final PairChat chat = event.getChat();
-			logger.finer("Removing chat state to chat: " + chat.getID());
-			final ChatStateHook chatStateHook = (ChatStateHook) chat.getProperties().getData(ChatStateHook.KEY);
-			if (chatStateHook != null && chatStateHook.getOtherState() != ChatStateHook.ChatState.gone) {
+			logger.finer("Removing chat state from chat: " + chat.toString());
+			final ChatStateHook hook = hooks.get(chat);
+			if (hook != null && hook.getOtherState() != ChatStateHook.ChatState.gone) {
 				// We are closing, then we send the gone state
-				chatStateHook.setOwnState(ChatStateHook.ChatState.gone);
+				hook.setOwnState(ChatStateHook.ChatState.gone);
 			}
-			chat.getProperties().setData(ChatStateHook.KEY, null);
+			hooks.remove(chat);
 		}
 	}
 
-	public ChatStateHook getChatState(final PairChat chat) {
-		ChatStateHook chatStateManager = (ChatStateHook) chat.getProperties().getData(ChatStateHook.KEY);
-		if (chatStateManager == null) {
-			chatStateManager = createChatState(chat);
+	public final ChatStateHook getChatStateHook(final PairChat chat) {
+		ChatStateHook hook = hooks.get(checkNotNull(chat));
+		if (hook == null) {
+			logger.finer("Adding chat state to chat: " + chat.toString());
+			hook = new ChatStateHook(eventBus, chat);
+			hooks.put(chat, hook);
 		}
-		return chatStateManager;
-	}
-
-	private ChatStateHook createChatState(final PairChat chat) {
-		logger.finer("Adding chat state to chat: " + chat.getID());
-		final ChatStateHook chatStateManager = new ChatStateHook(eventBus, chat);
-		chat.getProperties().setData(ChatStateHook.KEY, chatStateManager);
-		return chatStateManager;
+		return hook;
 	}
 
 }

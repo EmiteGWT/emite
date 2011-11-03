@@ -38,7 +38,7 @@ public class XmppBoshConnectionTests {
 
 	public XmppBoshConnectionTests() {
 		services = new ServicesTester();
-		connection = new XmppBoshConnection(new SimpleEventBus(), new ServicesTester());
+		connection = new XmppBoshConnection(new SimpleEventBus());
 	}
 
 	@Test

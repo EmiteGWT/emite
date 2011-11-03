@@ -22,7 +22,6 @@ package com.calclab.emite.im.client.presence;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.calclab.emite.core.client.events.ErrorEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
 import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.client.session.SessionReady;
@@ -51,7 +50,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	private Presence ownPresence;
 
 	@Inject
-	public PresenceManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final SessionReady sessionReady) {
+	protected PresenceManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final SessionReady sessionReady) {
 		this.eventBus = checkNotNull(eventBus);
 		this.session = checkNotNull(session);
 		ownPresence = INITIAL_PRESENCE;
@@ -66,14 +65,14 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
-		if (event.is(SessionStatus.rosterReady)) {
+		if (SessionStatus.rosterReady.equals(event.getStatus())) {
 			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(null, session.getCurrentUserURI(), null);
 			session.send(initialPresence);
 			setOwnPresence(initialPresence);
 			session.setStatus(SessionStatus.ready);
-		} else if (event.is(SessionStatus.loggingOut)) {
+		} else if (SessionStatus.loggingOut.equals(event.getStatus())) {
 			sendUnavailablePresence(session.getCurrentUserURI());
-		} else if (event.is(SessionStatus.disconnected)) {
+		} else if (SessionStatus.disconnected.equals(event.getStatus())) {
 			setOwnPresence(INITIAL_PRESENCE);
 		}
 	}
@@ -84,8 +83,6 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 		final Presence.Type type = presence.getType();
 		if (Presence.Type.probe.equals(type)) {
 			session.send(ownPresence);
-		} else if (Presence.Type.error.equals(type)) {
-			eventBus.fireEventFromSource(new ErrorEvent("presenceError", "we received an error presence", presence), this);
 		}
 	}
 

@@ -20,14 +20,14 @@
 
 package com.calclab.emite.xep.disco.client;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.calclab.emite.core.client.stanzas.IQ;
 import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * A discovery info result object.
@@ -79,7 +79,7 @@ public class DiscoveryInfoResults {
 	}
 
 	private static Map<String, Feature> processFeatures(final List<XMLPacket> children) {
-		final HashMap<String, Feature> features = new HashMap<String, Feature>();
+		final Map<String, Feature> features = Maps.newHashMap();
 		for (final XMLPacket child : children) {
 			final Feature feature = Feature.fromPacket(child);
 			features.put(feature.var, feature);
@@ -88,7 +88,7 @@ public class DiscoveryInfoResults {
 	}
 
 	private static List<Identity> processIdentity(final List<XMLPacket> children) {
-		final List<Identity> identities = new ArrayList<Identity>();
+		final List<Identity> identities = Lists.newArrayList();
 		for (final XMLPacket child : children) {
 			identities.add(Identity.fromPacket(child));
 		}

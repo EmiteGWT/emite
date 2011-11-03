@@ -20,8 +20,9 @@
 
 package com.calclab.emite.xep.muc.client;
 
+import java.util.Collection;
+
 import com.calclab.emite.core.client.uri.XmppURI;
-import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationReceivedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -31,14 +32,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * 
  * @see ChatManager
  */
-public interface RoomChatManager extends ChatManager<RoomChat> {
-	/**
-	 * Accepts a room invitation event
-	 * 
-	 * @param invitation
-	 *            the invitation event to be accepted
-	 */
-	RoomChat acceptRoomInvitation(RoomInvitation invitation);
+public interface RoomChatManager {
 
 	/**
 	 * Add a handler to track chat changes. The following changes can occur from
@@ -55,15 +49,34 @@ public interface RoomChatManager extends ChatManager<RoomChat> {
 	 * @return
 	 */
 	HandlerRegistration addRoomInvitationReceivedHandler(RoomInvitationReceivedEvent.Handler handler);
-
+	
 	/**
-	 * Obtain the default history options applied to all new rooms
+	 * Accepts a room invitation event
 	 * 
+	 * @param invitation
+	 *            the invitation event to be accepted
+	 */
+	RoomChat acceptRoomInvitation(RoomInvitation invitation, HistoryOptions historyOptions);
+	
+	/**
+	 * The same as getChat, but it fire ChatChanged(opened) event if the chat is
+	 * found or created
+	 * 
+	 * @param uri
 	 * @return
 	 */
-	HistoryOptions getDefaultHistoryOptions();
-
-	RoomChat open(final XmppURI uri, HistoryOptions historyOptions);
-
-	void setDefaultHistoryOptions(HistoryOptions historyOptions);
+	RoomChat openRoom(XmppURI uri, HistoryOptions historyOptions);
+	
+	/**
+	 * Same as getChat(new ChatProperties(uri), false);
+	 * 
+	 * Here for compatibility reasons.
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	RoomChat getRoom(XmppURI uri);
+	
+	Collection<RoomChat> getRooms();
+	
 }

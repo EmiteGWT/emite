@@ -20,16 +20,13 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.inject.name.Names;
 
 public class MucModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
 		bind(RoomChatManager.class).to(RoomChatManagerImpl.class).asEagerSingleton();
-		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Room")).to(RoomChatSelectionStrategy.class);
 	}
 
 }

@@ -33,7 +33,7 @@ import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.ChatErrors;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
-import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.PairChat;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;

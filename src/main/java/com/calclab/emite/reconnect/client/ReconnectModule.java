@@ -23,8 +23,7 @@ package com.calclab.emite.reconnect.client;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 /**
- * When installing this module, emite will try to reconnect again with same
- * credentials when connection is closed
+ * Emite reconnect GIN module
  */
 public class ReconnectModule extends AbstractGinModule {
 

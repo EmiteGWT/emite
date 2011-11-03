@@ -20,12 +20,15 @@
 
 package com.calclab.emite.xep.mucchatstate.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Map;
 import java.util.logging.Logger;
 
-import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.xep.muc.client.RoomChat;
 import com.calclab.emite.xep.muc.client.RoomChatManager;
 import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -41,38 +44,40 @@ import com.google.web.bindery.event.shared.EventBus;
  * 
  */
 @Singleton
-public class MUCChatStateManager implements RoomChatChangedEvent.Handler {
+public final class MUCChatStateManager implements RoomChatChangedEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(MUCChatStateManager.class.getName());
 
 	private final EventBus eventBus;
+	private final Map<RoomChat, MUCChatStateHook> hooks;
 
 	@Inject
-	public MUCChatStateManager(@Named("emite") final EventBus eventBus, final RoomChatManager chatManager) {
-		this.eventBus = eventBus;
+	protected MUCChatStateManager(@Named("emite") final EventBus eventBus, final RoomChatManager chatManager) {
+		this.eventBus = checkNotNull(eventBus);
+		hooks = Maps.newHashMap();
+		
 		chatManager.addRoomChatChangedHandler(this);
 	}
 
 	@Override
-	public void onRoomChatChanged(final RoomChatChangedEvent event) {
+	public final void onRoomChatChanged(final RoomChatChangedEvent event) {
+		final RoomChat room = event.getChat();
 		if (event.isCreated()) {
-			getRoomOccupantsChatStateManager(event.getChat());
+			getRoomStateHook(room);
 		} else if (event.isClosed()) {
-			final Chat chat = event.getChat();
-			logger.finer("Removing chat state to chat: " + chat.getID());
-			chat.getProperties().setData(RoomChatStateManager.KEY, null);
+			logger.finer("Removing chat state to chat: " + room.toString());
+			hooks.remove(room);
 		}
 	}
 
-	public RoomChatStateManager getRoomOccupantsChatStateManager(final RoomChat room) {
-		RoomChatStateManager stateManager = (RoomChatStateManager) room.getProperties().getData(RoomChatStateManager.KEY);
-		if (stateManager == null) {
-			logger.finer("Adding chat state to chat: " + room.getID());
-			stateManager = new RoomChatStateManager(eventBus, room);
-			room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
-			return stateManager;
+	public final MUCChatStateHook getRoomStateHook(final RoomChat room) {
+		MUCChatStateHook hook = hooks.get(room);
+		if (hook == null) {
+			logger.finer("Adding chat state to chat: " + room.toString());
+			hook = new MUCChatStateHook(eventBus, room);
+			hooks.put(room, hook);
 		}
-		return stateManager;
+		return hook;
 	}
 
 }

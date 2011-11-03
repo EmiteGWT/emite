@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xep.search.client;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form;
@@ -81,12 +81,12 @@ public interface SearchManager {
 	 * Perform a simple search
 	 * 
 	 * @param query
-	 *            A HashMap with names and values
+	 *            A Map with names and values
 	 * @param onResult
 	 *            A SearchResult with a list of returned items
 	 * 
 	 * @see SearchResult
 	 */
-	void search(HashMap<String, String> query, ResultListener<List<SearchResultItem>> listener);
+	void search(Map<String, String> query, ResultListener<List<SearchResultItem>> listener);
 
 }

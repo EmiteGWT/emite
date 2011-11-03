@@ -36,7 +36,7 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 	private final XmppSession session;
 
 	@Inject
-	public PrivateStorageManagerImpl(final XmppSession session) {
+	protected PrivateStorageManagerImpl(final XmppSession session) {
 		this.session = session;
 	}
 

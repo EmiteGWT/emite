@@ -45,7 +45,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 	private final XmppRoster roster;
 
 	@Inject
-	public SubscriptionManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final XmppRoster roster) {
+	protected SubscriptionManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final XmppRoster roster) {
 		this.eventBus = eventBus;
 		this.session = session;
 		this.roster = roster;
@@ -58,7 +58,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
 		if (presence.getType() == Type.subscribe) {
-			final XMLPacket nick = presence.getXML().getFirstChild("nick", "http://jabber.org/protocol/nick");
+			final XMLPacket nick = presence.getExtension("nick", "http://jabber.org/protocol/nick");
 			eventBus.fireEventFromSource(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()), this);
 		}
 	}

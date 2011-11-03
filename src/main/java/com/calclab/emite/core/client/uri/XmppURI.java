@@ -25,6 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.MapMaker;
@@ -37,7 +38,8 @@ import com.google.common.collect.MapMaker;
  * <code>XMPP- = ["xmpp:"] node "@" host[ "/" resource]</code>
  * 
  */
-public class XmppURI implements HasJID {
+@Immutable
+public final class XmppURI implements HasJID {
 	
 	// TODO: replace with Cache when available in GWT
 	@SuppressWarnings("deprecation")
@@ -61,27 +63,28 @@ public class XmppURI implements HasJID {
 	 *            the string to be parsed
 	 * @return a XmppURI object if the string is a valid XmppURI string, null
 	 *         otherwise
-	 * @throws ExecutionException 
-	 * 
 	 */
 	public static XmppURI uri(final String xmppUri) {
-		return cache.get(xmppUri);
+		try {
+			return cache.get(xmppUri);
+		} catch (final NullPointerException e) {
+			return null;
+		}
 	}
 
 	/**
 	 * Create a new XmppURI object with the given attributes
 	 * 
 	 * @param node
-	 *            the node of the uri
+	 *            the node of the URI
 	 * @param host
-	 *            the host of the uri
+	 *            the host of the URI
 	 * @param resource
-	 *            the resource of the uri
+	 *            the resource of the URI
 	 * @return a XmppURI object, never null
 	 */
-
 	public static XmppURI uri(final String node, final String host, final String resource) {
-		final XmppURI result = new XmppURI(node, host, resource);
+		XmppURI result = new XmppURI(node, host, resource);
 		cache.putIfAbsent(result.toString(), result);
 		return result;
 	}
@@ -90,17 +93,8 @@ public class XmppURI implements HasJID {
 	@Nullable private final String node;
 	@Nullable private final String resource;
 
-	/**
-	 * 
-	 * @param jid
-	 * @param resource
-	 *            <code> resource      = *( unreserved / escaped )
-                reserved      = ";" / "/" / "?" / ":" / "@" / "&" / "=" / "+" /
-                "$" / "," / "[" / "]" </code>
-	 * 
-	 */
-	private XmppURI(final String node, final String host, final String resource) {
-		this.host = checkNotNull(host, "Host can't be null").toLowerCase();
+	protected XmppURI(final String node, final String host, final String resource) {
+		this.host = checkNotNull(host);
 		this.node = node;
 		this.resource = resource;
 	}
@@ -111,21 +105,21 @@ public class XmppURI implements HasJID {
 	 * @return the JID of this URI
 	 */
 	@Override
-	public XmppURI getJID() {
+	public final XmppURI getJID() {
 		return uri(node, host, null);
 	}
 
 	/**
 	 * @return the uri's host
 	 */
-	public String getHost() {
+	public final String getHost() {
 		return host;
 	}
 
 	/**
 	 * @return a new XmppURI object with the same host as this one
 	 */
-	public XmppURI getHostURI() {
+	public final XmppURI getHostURI() {
 		return uri(null, host, null);
 	}
 
@@ -133,7 +127,7 @@ public class XmppURI implements HasJID {
 	 * @return uri's node
 	 */
 	@Nullable
-	public String getNode() {
+	public final String getNode() {
 		return node;
 	}
 
@@ -141,7 +135,7 @@ public class XmppURI implements HasJID {
 	 * @return uri's resource
 	 */
 	@Nullable
-	public String getResource() {
+	public final String getResource() {
 		return resource;
 	}
 
@@ -150,17 +144,17 @@ public class XmppURI implements HasJID {
 	 * 
 	 * @return an never null short name representation
 	 */
-	public String getShortName() {
+	public final String getShortName() {
 		return node == null ? host : node;
 	}
 
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		return Objects.hashCode(host, node, resource);
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (obj instanceof XmppURI) {
 			final XmppURI other = (XmppURI) obj;
 			
@@ -169,12 +163,12 @@ public class XmppURI implements HasJID {
 		return false;
 	}
 
-	public boolean equalsNoResource(final XmppURI other) {
+	public final boolean equalsNoResource(final XmppURI other) {
 		return Objects.equal(host, other.host) && Objects.equal(node, other.node);
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		final StringBuilder builder = new StringBuilder();
 
 		if (node != null) {

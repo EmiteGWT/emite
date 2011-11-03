@@ -45,7 +45,7 @@ public class SessionReady implements SessionStatusChangedEvent.Handler {
 
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
-		if (event.is(SessionStatus.loggedIn)) {
+		if (SessionStatus.rosterReady.equals(event.getStatus())) {
 			session.send(new Presence());
 			session.setStatus(SessionStatus.ready);
 		}

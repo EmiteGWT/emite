@@ -67,6 +67,10 @@ public class Stanza implements HasXML {
 	public void setTo(final XmppURI to) {
 		xml.setAttribute("to", to != null ? to.toString() : null);
 	}
+	
+	public XMLPacket getExtension(final String name, final String namespace) {
+		return xml.getFirstChild(name, namespace);
+	}
 
 	@Override
 	public final XMLPacket getXML() {

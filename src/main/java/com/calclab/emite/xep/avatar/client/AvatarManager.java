@@ -33,9 +33,6 @@ import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
-/**
- * XEP-0153: vCard-Based Avatars (Version 1.0)
- */
 @Singleton
 public class AvatarManager implements PresenceReceivedEvent.Handler {
 	private static final String VCARD = "vCard";
@@ -48,7 +45,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 	private final XmppSession session;
 
 	@Inject
-	public AvatarManager(@Named("emite") final EventBus eventBus, final XmppSession session) {
+	protected AvatarManager(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = eventBus;
 		this.session = session;
 

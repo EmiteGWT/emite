@@ -22,8 +22,6 @@ package com.calclab.emite.im.client.roster;
 
 import static com.calclab.emite.core.client.uri.XmppURI.uri;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +31,8 @@ import com.calclab.emite.core.client.stanzas.Presence.Type;
 import com.calclab.emite.core.client.uri.HasJID;
 import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * Represents a item (contact) in the Roster. Usually you don't create this
@@ -105,8 +105,8 @@ public class RosterItem implements HasJID {
 		this.jid = jid.getJID();
 		this.subscriptionState = subscriptionState;
 		this.name = name;
-		groups = new ArrayList<String>();
-		availableResources = new HashSet<String>();
+		groups = Lists.newArrayList();
+		availableResources = Sets.newHashSet();
 		show = Show.unknown;
 		status = null;
 	}
@@ -256,7 +256,7 @@ public class RosterItem implements HasJID {
 	 * 
 	 * @param availableResources
 	 */
-	void setAvaialableResources(final HashSet<String> availableResources) {
+	void setAvaialableResources(final Set<String> availableResources) {
 		this.availableResources.clear();
 		this.availableResources.addAll(availableResources);
 	}

@@ -18,16 +18,8 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.services;
+package com.calclab.emite.core.client.util;
 
-/**
- * A connector callback interface to interact with a Connector
- * 
- * @author dani
- * 
- */
-public interface ConnectorCallback {
-	void onResponseError(String request, Throwable throwable);
-
-	void onResponseReceived(int statusCode, String content, String originalRequest);
+public interface ScheduledAction {
+	void run();
 }

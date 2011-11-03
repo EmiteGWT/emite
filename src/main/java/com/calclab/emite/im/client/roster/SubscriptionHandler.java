@@ -26,7 +26,7 @@ import com.google.inject.Singleton;
 
 /**
  * A little utility to handle subscriptions automatically. This component is not
- * created by default, so you have to explicity create:
+ * created by default, so you have to explicitly create:
  * 
  * <pre>
  * SubscriptionHandler handler = Suco.get(SubscriptionHandler.class);

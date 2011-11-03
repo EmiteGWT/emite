@@ -18,12 +18,7 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.services;
-
-public interface Services {
-
-	void schedule(int msecs, ScheduledAction action);
-
-	void send(String httpBase, String request, ConnectorCallback listener) throws ConnectorException;
-
-}
+/**
+ * Event classes for the Core module.
+ */
+package com.calclab.emite.core.client.events;

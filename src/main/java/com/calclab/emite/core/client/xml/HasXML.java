@@ -20,8 +20,17 @@
 
 package com.calclab.emite.core.client.xml;
 
+/**
+ * Interface which provides a standard method for accessing the
+ * {@link XMLPacket} from an object which encapsulates one.
+ */
 public interface HasXML {
 
+	/**
+	 * Gets the XML packet from this object.
+	 * 
+	 * @return the XML packet
+	 */
 	XMLPacket getXML();
 
 }

@@ -27,9 +27,6 @@ import com.google.web.bindery.event.shared.Event;
 
 /**
  * An event to inform about room subject changes
- * 
- * @author dani
- * 
  */
 public class RoomSubjectChangedEvent extends Event<RoomSubjectChangedEvent.Handler> {
 

@@ -22,52 +22,63 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.Date;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * http://xmpp.org/extensions/xep-0045.html#enter-history
- * 
- * @author Rémi
  */
-public class HistoryOptions {
-
-	public static final String KEY = "RoomHistoryOptions";
+@Immutable
+public final class HistoryOptions {
 
 	/**
 	 * Limit the total number of characters in the history to "X" (where the
 	 * character count is the characters of the complete XML stanzas, not only
 	 * their XML character data).
 	 */
-	public int maxchars;
+	private final int maxChars;
 
 	/**
 	 * Limit the total number of messages in the history to "X".
-	 * 
 	 */
-
-	public int maxstanzas;
+	private final int maxStanzas;
+	
 	/**
 	 * Send only the messages received in the last "X" seconds.
-	 * 
 	 */
-	public long seconds;
+	private final long seconds;
 
 	/**
 	 * Send only the messages received since the datetime specified (which MUST
 	 * conform to the DateTime profile specified in XMPP Date and Time Profiles
 	 * [13]).
-	 * 
 	 */
-	public Date since;
+	private final Date since;
 
 	public HistoryOptions() {
 		this(-1, -1, -1, null);
 	}
 
-	public HistoryOptions(final int maxchars, final int maxstanzas, final long l, final Date since) {
-		super();
-		this.maxchars = maxchars;
-		this.maxstanzas = maxstanzas;
-		seconds = l;
+	public HistoryOptions(final int maxChars, final int maxStanzas, final long seconds, final Date since) {
+		this.maxChars = maxChars;
+		this.maxStanzas = maxStanzas;
+		this.seconds = seconds;
 		this.since = since;
+	}
+
+	public final int getMaxChars() {
+		return maxChars;
+	}
+
+	public final int getMaxStanzas() {
+		return maxStanzas;
+	}
+
+	public final long getSeconds() {
+		return seconds;
+	}
+
+	public final Date getSince() {
+		return since;
 	}
 
 }

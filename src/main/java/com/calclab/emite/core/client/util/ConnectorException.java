@@ -18,8 +18,11 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.services;
+package com.calclab.emite.core.client.util;
 
-public interface ScheduledAction {
-	void run();
+@SuppressWarnings("serial")
+public class ConnectorException extends Exception {
+	public ConnectorException(final String message) {
+		super(message);
+	}
 }

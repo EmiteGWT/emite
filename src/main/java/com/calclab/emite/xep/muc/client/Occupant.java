@@ -20,7 +20,9 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import com.calclab.emite.core.client.stanzas.Presence.Show;
+import javax.annotation.Nullable;
+
+import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.uri.HasJID;
 import com.calclab.emite.core.client.uri.XmppURI;
 
@@ -32,7 +34,7 @@ import com.calclab.emite.core.client.uri.XmppURI;
  * 
  * @see http://xmpp.org/extensions/xep-0045.html
  */
-public class Occupant implements HasJID {
+public final class Occupant implements HasJID {
 
 	public static enum Affiliation {
 		admin, member, none, owner
@@ -42,21 +44,49 @@ public class Occupant implements HasJID {
 		moderator, participant, unknown, visitor
 	}
 
+	private final XmppURI occupantUri;
+	private final XmppURI userUri;
+	
 	private Affiliation affiliation;
 	private Role role;
-	private final XmppURI occupantUri;
-	private Show show;
-	private String statusMessage;
-	private final XmppURI userUri;
+	private Presence.Show show;
+	@Nullable private String statusMessage;
 
-	public Occupant(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Show show, final String statusMessage) {
-		assert occupantUri != null : "Occupant uri can't be null in occupant";
+	public Occupant(final XmppURI occupantUri, final XmppURI userUri, final String affiliation, final String role, final Presence.Show show, final String statusMessage) {
 		this.userUri = userUri;
 		this.occupantUri = occupantUri;
+		
 		setAffiliation(affiliation);
 		setRole(role);
 		setShow(show);
-		setStatusMessage(statusMessage);
+		this.statusMessage = statusMessage;
+	}
+	
+	/**
+	 * Get the occupant uri (the room jid and the nick as resource)
+	 * 
+	 * @return
+	 */
+	public final XmppURI getOccupantUri() {
+		return occupantUri;
+	}
+	
+	/**
+	 * Gets the user uri associated to this occupant
+	 * 
+	 * @return
+	 */
+	public final XmppURI getUserUri() {
+		return userUri;
+	}
+	
+	/**
+	 * Get the nick of this occupant
+	 * 
+	 * @return
+	 */
+	public final String getNick() {
+		return occupantUri.getResource();
 	}
 
 	/**
@@ -64,55 +94,11 @@ public class Occupant implements HasJID {
 	 * 
 	 * @return
 	 */
-	public Affiliation getAffiliation() {
+	public final Affiliation getAffiliation() {
 		return affiliation;
 	}
 
-	/**
-	 * Get the nick of this occupant
-	 * 
-	 * @return
-	 */
-	public String getNick() {
-		return occupantUri.getResource();
-	}
-
-	/**
-	 * Get the occupant uri (the room jid and the nick as resource)
-	 * 
-	 * @return
-	 */
-	public XmppURI getOccupantUri() {
-		return occupantUri;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public Show getShow() {
-		return show;
-	}
-
-	/**
-	 * Get the occupant status message
-	 * 
-	 * @return
-	 */
-	public String getStatusMessage() {
-		return statusMessage;
-	}
-
-	/**
-	 * Gets the user uri associated to this occupant
-	 * 
-	 * @return
-	 */
-	public XmppURI getUserUri() {
-		return userUri;
-	}
-
-	public void setAffiliation(final String affiliation) {
+	public final void setAffiliation(final String affiliation) {
 		try {
 			this.affiliation = Affiliation.valueOf(affiliation);
 		} catch (final IllegalArgumentException e) {
@@ -122,7 +108,11 @@ public class Occupant implements HasJID {
 		}
 	}
 
-	public void setRole(final String role) {
+	public final Role getRole() {
+		return role;
+	}
+	
+	public final void setRole(final String role) {
 		try {
 			this.role = Role.valueOf(role);
 		} catch (final IllegalArgumentException e) {
@@ -132,26 +122,30 @@ public class Occupant implements HasJID {
 		}
 	}
 
-	public void setShow(final Show show) {
+	public final Presence.Show getShow() {
+		return show;
+	}
+	
+	public final void setShow(final Presence.Show show) {
 		this.show = show;
 	}
 
-	public void setShow(final String show) {
-		try {
-			this.show = Show.valueOf(show);
-		} catch (final IllegalArgumentException e) {
-			this.show = Show.unknown;
-		} catch (final NullPointerException e) {
-			this.show = Show.unknown;
-		}
+	/**
+	 * Get the occupant status message
+	 * 
+	 * @return
+	 */
+	@Nullable
+	public final String getStatusMessage() {
+		return statusMessage;
 	}
 
-	public void setStatusMessage(final String statusMessage) {
+	public final void setStatusMessage(@Nullable final String statusMessage) {
 		this.statusMessage = statusMessage;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return occupantUri.toString() + "(" + affiliation + "," + role + "," + show + "," + statusMessage + ")";
 	}
 
@@ -159,7 +153,7 @@ public class Occupant implements HasJID {
 	 * {@inheritDoc}. In this case this method will return the user's jid.
 	 */
 	@Override
-	public XmppURI getJID() {
+	public final XmppURI getJID() {
 		return getUserUri().getJID();
 	}
 }

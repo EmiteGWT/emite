@@ -23,7 +23,7 @@ package com.calclab.emite.core.client.browser;
 import static com.calclab.emite.core.client.uri.XmppURI.uri;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.calclab.emite.core.client.conn.ConnectionSettings;
@@ -32,6 +32,10 @@ import com.calclab.emite.core.client.conn.bosh.StreamSettings;
 import com.calclab.emite.core.client.session.Credentials;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.uri.XmppURI;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
@@ -39,96 +43,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * In order to remove the (bosh) configuration from the source code and to
- * reduce the boiler plate code, some of the parameters and behaviours of the
- * Emite library can be specified using <meta> tags inside <html> files.
- * 
- * <h3>1. Install</h3>
- * 
- * Simply add this line:
- * 
- * <pre>
- * &lt;inherits name=&quot;com.calclab.emite.browser.EmiteBrowser&quot; /&gt;
- * </pre>
- * 
- * To your module's .gwt.xml file
- * 
- * <h3>2. Usage<h3>
- * <h4>2.1 Bosh configuration</h4>
- * You can configure your bosh configuration settings adding this lines inside
- * the head tag of your html file:
- * 
- * <pre>
- * &lt;meta name=&quot;emite.httpBase&quot; content=&quot;proxy&quot; /&gt;
- * &lt;meta name=&quot;emite.host&quot; content=&quot;localhost&quot; /&gt;
- * </pre>
- * 
- * This is completly equivalent to write this configuration code:
- * 
- * <pre>
- * Suco.get(Connection.class).setSettings(new BoshSettings(&quot;proxy&quot;, &quot;localhost&quot;));
- * </pre>
- * 
- * So, if you install this module and add those meta tags inside the html file
- * you don't longer need to writa that configuration code anymore.
- * 
- * <h4>2.2 Login and logout</h4>
- * 
- * To make BrowserModule to login and logout when enter and exits the page
- * respectively this meta tag should be placed in the html file:
- * 
- * <pre>
- * &lt;meta name=&quot;emite.session&quot; content=&quot;login&quot; /&gt;
- * </pre>
- * 
- * In order this feature to work you have to specify the user's jid and password
- * (plain text at this moment, more to come):
- * 
- * <pre>
- * &lt;meta name=&quot;emite.user&quot; content=&quot;test2@localhost&quot; /&gt;
- * &lt;meta name=&quot;emite.password&quot; content=&quot;test2&quot; /&gt;
- * </pre>
- * 
- * Automatic logout only (when page closed) is possible using the the "logout"
- * content value in this meta tag. If this option is choosen, there's no need to
- * specify user or password.
- * 
- * <h4>2.3 Pause and resume</h4>
- * 
- * To make BrowserModule pause and resume the session when enter and exit the
- * page respectively, this meta tag should be use: *
- * 
- * <pre>
- * &lt;meta name=&quot;emite.session&quot; content=&quot;resume&quot; /&gt;
- * </pre>
- * 
- * BrowserModule will pause the session and serialize it on a browser's cookie.
- * It will try to resume the session if the cookie is present.
- * 
- * <h4>2.4 Resume or login</h4>
- * 
- * To make BrowserModule to pause the session when the user leaves the page and
- * to resume the session or login if resume fails, this meta tag should be
- * placed in your html file:
- * 
- * <pre>
- * &lt;meta name=&quot;emite.session&quot; content=&quot;resumeOrLogin&quot; /&gt;
- * </pre>
- * 
- * 
- * <b>WARNING: this is work in progress and currently COMPLETLY UNSECURE. We
- * will implement the ability to encode the passwords... but is NOT currently
- * implemented. But...</b>
- * 
- * You can force an ANONYMOUS login (much more secure, but usually not enough)
- * with the following line:
- * 
- * <pre>
- * &lt;meta name=&quot;emite.user&quot; content=&quot;anonymous&quot; /&gt;
- * </pre>
- * 
- * Remember that <b>emite</b> won't autologin if a session was previously
- * paused.
+ * Loads configuration settings from the html page.
  */
 @Singleton
 public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.ClosingHandler {
@@ -138,61 +53,67 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	private static final String PARAM_AUTOCONFIG = "emite.autoConfig";
 
 	/**
-	 * Meta key to store the session behaviour
+	 * Meta key to store the session behavior
 	 */
 	private static final String PARAM_SESSION = "emite.session";
 
 	/**
-	 * Meta key to store the httpBase parameter in bosh configuration
+	 * Meta key to store the httpBase parameter
 	 */
 	private static final String PARAM_HTTPBASE = "emite.httpBase";
 
 	/**
-	 * Meta key to store the host param in bosh configuration
+	 * Meta key to store the host parameter
 	 */
 	private static final String PARAM_HOST = "emite.host";
 
 	/**
-	 * Meta key to store tue user JID in session login
+	 * Meta key to store the user JID
 	 */
 	private static final String PARAM_JID = "emite.user";
 
 	/**
-	 * Meta key to store the user password in session login
+	 * Meta key to store the user password
 	 */
 	private static final String PARAM_PASSWORD = "emite.password";
 
 	/**
-	 * Meta key to store the route host param in bosh configuration
+	 * Meta key to store the route host parameter
 	 */
 	private static final String PARAM_ROUTE_HOST = "emite.routeHost";
 
 	/**
-	 * Meta key to store the route host port number param in bosh configuration
+	 * Meta key to store the route port number parameter
 	 */
 	private static final String PARAM_ROUTE_PORT = "emite.routePort";
 
 	/**
-	 * Meta key to store the secure param in bosh configuration
+	 * Meta key to store the secure parameter
 	 */
 	private static final String PARAM_SECURE = "emite.secure";
 
 	/**
-	 * Meta key to store the "wait" BOSH parameter
+	 * Meta key to store the wait parameter
 	 */
 	private static final String PARAM_BOSH_WAIT = "emite.bosh.wait";
 
 	/**
-	 * Meta key to store the "hold" BOSH parameter
+	 * Meta key to store the hold parameter
 	 */
 	private static final String PARAM_BOSH_HOLD = "emite.bosh.hold";
 
+	/**
+	 * Name of the cookie to store the paused session
+	 */
 	private static final String PAUSE_COOKIE = "emite.cookies.pause";
 
 	private static final String LOGIN = "login";
 	private static final String RESUME = "resume";
 	private static final String RESUME_OR_LOGIN = "resumeOrLogin";
 	private static final String LOGOUT = "logout";
+	
+	private static final Joiner.MapJoiner cookieJoiner = Joiner.on(",").withKeyValueSeparator("=");
+	private static final Splitter.MapSplitter cookieSplitter = Splitter.on(",").withKeyValueSeparator("=");
 
 	private final XmppConnection connection;
 	private final XmppSession session;
@@ -245,9 +166,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	 * Will configure the given connection if PARAM_HTTPBASE <b>and</b>
 	 * PARAM_HOST is present as html meta tags in the current html page
 	 * 
-	 * @param connection
-	 *            The connection to be configured
-	 * @return true if the configuration is perfomed (PARAM_HTTPBASE and
+	 * @return true if the configuration is performed (PARAM_HTTPBASE and
 	 *         PARAM_HOST are present), false otherwise
 	 */
 	private final boolean configureFromMeta() {
@@ -260,7 +179,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		final int wait = PageAssist.getMeta(PARAM_BOSH_WAIT, ConnectionSettings.DEFAULT_WAIT);
 		final int hold = PageAssist.getMeta(PARAM_BOSH_HOLD, ConnectionSettings.DEFAULT_HOLD);
 
-		if (hostName == null)
+		if (Strings.isNullOrEmpty(httpBase) || Strings.isNullOrEmpty(hostName))
 			return false;
 
 		logger.info("CONNECTION PARAMS: " + httpBase + ", " + hostName);
@@ -272,8 +191,6 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	 * Will try to login session if PARAM_JID and PARAM_PASSWORD are present. <br/>
 	 * PARAM_PASSWORD is optional if PARAM_JID value is set to 'anonymous'
 	 * 
-	 * @param session
-	 *            the session to be logged in
 	 * @return true if meta parameters value are presents, false otherwise
 	 */
 	private final boolean loginFromMeta() {
@@ -294,8 +211,6 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	/**
 	 * Pause a session and serializes the stream settings in a cookie
 	 * 
-	 * @param session
-	 *            the session to be paused
 	 * @return true if the session is paused (if the session was ready), false
 	 *         otherwise
 	 */
@@ -306,7 +221,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 			return false;
 
 		final String user = session.getCurrentUserURI().toString();
-		final SerializableMap map = new SerializableMap();
+		final Map<String, String> map = Maps.newHashMap();
 		map.put("rid", "" + stream.rid);
 		map.put("sid", stream.sid);
 		map.put("wait", stream.wait);
@@ -314,7 +229,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		map.put("maxPause", stream.getMaxPauseString());
 		map.put("user", user);
 
-		final String serialized = map.serialize();
+		final String serialized = cookieJoiner.join(map);
 		Cookies.setCookie(PAUSE_COOKIE, serialized);
 		logger.finer("Pausing session: " + serialized);
 		return true;
@@ -323,8 +238,6 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	/**
 	 * Try to resume the given session.
 	 * 
-	 * @param session
-	 *            the session to be resumed
 	 * @return true if the cookie is present (and therefore the session is
 	 *         resumed), false otherwise. True doesn't mean the sessions is
 	 *         <b>succesfully</b> resumed.
@@ -336,7 +249,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 
 		logger.finer("Resume session: " + pause);
 		Cookies.removeCookie(PAUSE_COOKIE);
-		final SerializableMap map = SerializableMap.restore(pause);
+		final Map<String, String> map = cookieSplitter.split(pause);
 		final StreamSettings stream = new StreamSettings();
 		stream.rid = Integer.parseInt(map.get("rid"));
 		stream.sid = map.get("sid");
@@ -353,39 +266,4 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 		session.logout();
 	}
 
-	/**
-	 * An extension to provide serialize/restore from HashMap to String in order
-	 * to store information in the browser's cookies.
-	 */
-	protected static class SerializableMap extends HashMap<String, String> {
-		private static final long serialVersionUID = 1L;
-
-		public static SerializableMap restore(final String serialized) {
-			final SerializableMap map = new SerializableMap();
-			final int total = serialized.length() - 1;
-			String key, value;
-			int begin, end, next;
-			next = -1;
-
-			do {
-				begin = next + 1;
-				end = serialized.indexOf('#', begin + 1);
-				next = serialized.indexOf('#', end + 1);
-				key = serialized.substring(begin, end);
-				value = serialized.substring(end + 1, next);
-				map.put(key, value);
-			} while (next < total);
-
-			return map;
-		}
-
-		public String serialize() {
-			final StringBuilder builder = new StringBuilder();
-			for (final String key : keySet()) {
-				builder.append(key).append("#").append(get(key)).append("#");
-			}
-			return builder.toString();
-		}
-
-	}
 }

@@ -37,7 +37,7 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 	private final DiscoveryManager discoveryManager;
 
 	@Inject
-	public RoomDiscoveryManagerImpl(final DiscoveryManager discoveryManager) {
+	protected RoomDiscoveryManagerImpl(final DiscoveryManager discoveryManager) {
 		this.discoveryManager = discoveryManager;
 	}
 
@@ -46,7 +46,7 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 		discoveryManager.sendItemsQuery(targetUri, new DiscoveryItemsResultEvent.Handler() {
 			@Override
 			public void onDiscoveryItemsResult(final DiscoveryItemsResultEvent event) {
-				final ArrayList<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
+				final List<ExistingRoom> roomItems = new ArrayList<ExistingRoom>();
 				if (event.hasResult()) {
 					final List<Item> items = event.getResults().getItems();
 					for (final Item item : items) {

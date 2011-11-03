@@ -155,6 +155,7 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	@Override
 	public XMLPacket getFirstChild(final String name, final String namespace) {
 		checkNotNull(name);
+		checkNotNull(namespace);
 
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
@@ -253,14 +254,15 @@ public final class XMLPacketImplGWT implements XMLPacket {
 
 	@Override
 	public String getText() {
+		final StringBuilder result = new StringBuilder();
 		final NodeList nodes = element.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			final Node child = nodes.item(i);
 			if (child.getNodeType() == Node.TEXT_NODE)
-				return child.getNodeValue();
+				result.append(child.getNodeValue());
 		}
 
-		return null;
+		return result.toString();
 	}
 
 	@Override

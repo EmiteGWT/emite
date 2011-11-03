@@ -22,8 +22,8 @@ package com.calclab.emite.xep.search.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.calclab.emite.core.client.session.IQCallback;
 import com.calclab.emite.core.client.session.SessionStatus;
@@ -47,7 +47,7 @@ public class SearchManagerImpl implements SearchManager {
 	private XmppURI host;
 
 	@Inject
-	public SearchManagerImpl(final XmppSession session) {
+	protected SearchManagerImpl(final XmppSession session) {
 		this.session = session;
 	}
 
@@ -116,7 +116,7 @@ public class SearchManagerImpl implements SearchManager {
 	}
 
 	@Override
-	public void search(final HashMap<String, String> query, final ResultListener<List<SearchResultItem>> listener) {
+	public void search(final Map<String, String> query, final ResultListener<List<SearchResultItem>> listener) {
 		final List<XMLPacket> queryPacket = new ArrayList<XMLPacket>();
 		for (final String field : query.keySet()) {
 			queryPacket.add(XMLBuilder.create(field).text(query.get(field)).getXML());

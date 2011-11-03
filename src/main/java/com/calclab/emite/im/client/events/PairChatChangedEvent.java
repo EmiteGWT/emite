@@ -23,7 +23,7 @@ package com.calclab.emite.im.client.events;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.calclab.emite.core.client.events.ChangedEvent;
-import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.PairChat;
 
 public class PairChatChangedEvent extends ChangedEvent<PairChatChangedEvent.Handler> {
 

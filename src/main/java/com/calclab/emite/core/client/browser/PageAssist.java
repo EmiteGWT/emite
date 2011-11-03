@@ -39,7 +39,7 @@ public class PageAssist {
 	private static final Logger logger = Logger.getLogger(PageAssist.class.getName());
 
 	/**
-	 * Get the value of meta information writen in the html page. The meta
+	 * Get the value of meta information written in the html page. The meta
 	 * information is a html tag with name of meta usually placed inside the the
 	 * head section with two attributes: id and content. For example:
 	 * 
@@ -47,6 +47,8 @@ public class PageAssist {
 	 * 
 	 * @param id
 	 *            the 'id' value of the desired meta tag
+	 * @param defaultValue
+	 *            the default value to return if the meta is not found
 	 * @return the value of the attribute 'value' or null if not found
 	 */
 	public static final String getMeta(final String id, @Nullable final String defaultValue) {
@@ -70,9 +72,10 @@ public class PageAssist {
 	 * 
 	 * @param id
 	 *            the 'id' value of the desired meta tag
+	 * @param defaultValue
+	 *            the default value to return if the meta is not found
 	 * @return the int value of the meta tag, null if it is invalid or doesn't
 	 *         exist
-	 * @see PageAssist#getMeta(String)
 	 */
 	public static int getMeta(final String id, final int defaultValue) {
 		final String metaValue = getMeta(id, null);
@@ -98,7 +101,6 @@ public class PageAssist {
 	 *            <code>"true"</code> nor <code>"false"</code>
 	 * @return true if the given meta is "true", false if the given meta is
 	 *         "false" otherwise the defaultValue.
-	 * @see PageAssist#getMeta(String)
 	 */
 	public static final boolean getMeta(final String id, final boolean defaultValue) {
 		final String metaValue = getMeta(id, null);

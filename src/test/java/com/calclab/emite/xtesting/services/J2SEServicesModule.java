@@ -20,26 +20,33 @@
 
 package com.calclab.emite.xtesting.services;
 
-import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
-import com.calclab.emite.core.client.services.ScheduledAction;
-import com.calclab.emite.core.client.services.Services;
+import com.calclab.emite.core.client.util.ConnectorCallback;
+import com.calclab.emite.core.client.util.ConnectorException;
+import com.calclab.emite.core.client.util.ScheduledAction;
 
-public class J2SEServicesModule implements Services {
+public class J2SEServicesModule {
 	private final HttpConnector connector;
-	private final ThreadScheduler scheduler;
 
 	public J2SEServicesModule() {
 		connector = new HttpConnector();
-		scheduler = new ThreadScheduler();
 	}
 
-	@Override
 	public void schedule(final int msecs, final ScheduledAction action) {
-		scheduler.schedule(msecs, action);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				synchronized (this) {
+					try {
+						Thread.sleep(msecs);
+						action.run();
+					} catch (final InterruptedException e) {
+						throw new RuntimeException(e.toString());
+					}
+				}
+			}
+		}).start();
 	}
 
-	@Override
 	public void send(final String httpBase, final String xml, final ConnectorCallback listener) throws ConnectorException {
 		connector.send(httpBase, xml, listener);
 	}

@@ -30,7 +30,7 @@ import org.mockito.Mockito;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.uri.XmppURI;
-import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.PairChat;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xtesting.handlers.ChatStateChangedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;

@@ -35,7 +35,7 @@ public class PrivacyListsManager {
 	private final XmppSession session;
 
 	@Inject
-	public PrivacyListsManager(final XmppSession session) {
+	protected PrivacyListsManager(final XmppSession session) {
 		this.session = session;
 	}
 

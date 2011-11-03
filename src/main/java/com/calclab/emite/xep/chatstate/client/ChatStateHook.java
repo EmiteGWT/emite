@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import com.calclab.emite.core.client.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.stanzas.Message;
-import com.calclab.emite.im.client.chat.pair.PairChat;
+import com.calclab.emite.im.client.chat.PairChat;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -36,8 +36,6 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(ChatStateHook.class.getName());
-
-	public static final String KEY = "ChatStateHook";
 
 	public static enum ChatState {
 		active, composing, pause, inactive, gone
@@ -54,7 +52,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 	private ChatState ownState;
 	private ChatState otherState;
 
-	public ChatStateHook(final EventBus eventBus, final PairChat chat) {
+	protected ChatStateHook(final EventBus eventBus, final PairChat chat) {
 		this.eventBus = eventBus;
 		this.chat = chat;
 

@@ -20,8 +20,6 @@
 
 package com.calclab.emite.xep.mucchatstate.client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -34,6 +32,8 @@ import com.calclab.emite.core.client.xml.XMLMatcher;
 import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.xep.chatstate.client.ChatStateHook.ChatState;
 import com.calclab.emite.xep.muc.client.RoomChat;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gwt.user.client.Timer;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -42,9 +42,9 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * XEP-0085: Chat State Notifications
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
-public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, MessageReceivedEvent.Handler {
+public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, MessageReceivedEvent.Handler {
 
-	private static final Logger logger = Logger.getLogger(RoomChatStateManager.class.getName());
+	private static final Logger logger = Logger.getLogger(MUCChatStateHook.class.getName());
 
 	public static final String KEY = "RoomChatStateManager";
 
@@ -57,7 +57,8 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 
 	private final static List<String> stateString;
 	static {
-		stateString = new ArrayList<String>(4);
+		// FIXME
+		stateString = Lists.newArrayListWithCapacity(4);
 		for (final ChatState s : ChatState.values()) {
 			stateString.add(s.name());
 		}
@@ -70,7 +71,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 	private ChatState ownState;
 
 	private final int inactiveDelay = 120 * 1000; // 2 minutes
-	private final int pauseDelay = 10 * 1000; // 10 secondes
+	private final int pauseDelay = 10 * 1000; // 10 seconds
 
 	private static final XMLMatcher bodySubjectThreadMatchter = new XMLMatcher() {
 		@Override
@@ -115,10 +116,10 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 		}
 	};
 
-	public RoomChatStateManager(final EventBus eventBus, final RoomChat room) {
+	protected MUCChatStateHook(final EventBus eventBus, final RoomChat room) {
 		this.eventBus = eventBus;
 		this.room = room;
-		othersState = new HashMap<XmppURI, ChatState>();
+		othersState = Maps.newHashMap();
 
 		room.addBeforeMessageSentHandler(this);
 		room.addMessageReceivedHandler(this);
@@ -178,7 +179,7 @@ public class RoomChatStateManager implements BeforeMessageSentEvent.Handler, Mes
 			ownState = chatState;
 			logger.finer("Setting own status to: " + chatState.toString());
 			final Message message = new Message();
-			message.setTo(room.getURI());
+			message.setTo(room.getRoomURI());
 			message.getXML().addChild(chatState.toString(), "http://jabber.org/protocol/chatstates");
 			room.send(message);
 		}

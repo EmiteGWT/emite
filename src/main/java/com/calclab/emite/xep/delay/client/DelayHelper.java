@@ -48,5 +48,8 @@ public class DelayHelper {
 
 		return new Delay(delayPacket);
 	}
+	
+	private DelayHelper() {
+	}
 
 }

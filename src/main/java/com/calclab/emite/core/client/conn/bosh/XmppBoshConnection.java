@@ -33,10 +33,10 @@ import com.calclab.emite.core.client.events.ConnectionStatusChangedEvent;
 import com.calclab.emite.core.client.events.PacketReceivedEvent;
 import com.calclab.emite.core.client.events.PacketSentEvent;
 import com.calclab.emite.core.client.events.StanzaSentEvent;
-import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
-import com.calclab.emite.core.client.services.ScheduledAction;
-import com.calclab.emite.core.client.services.Services;
+import com.calclab.emite.core.client.util.ConnectorCallback;
+import com.calclab.emite.core.client.util.ConnectorException;
+import com.calclab.emite.core.client.util.Platform;
+import com.calclab.emite.core.client.util.ScheduledAction;
 import com.calclab.emite.core.client.xml.HasXML;
 import com.calclab.emite.core.client.xml.XMLBuilder;
 import com.calclab.emite.core.client.xml.XMLPacket;
@@ -47,7 +47,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * A Bosh connection implementation.
+ * A BOSH connection implementation.
  * 
  * @see XmppConnection
  */
@@ -57,7 +57,6 @@ public class XmppBoshConnection implements XmppConnection, ConnectorCallback {
 	private static final Logger logger = Logger.getLogger(XmppBoshConnection.class.getName());
 
 	private final EventBus eventBus;
-	private final Services services;
 
 	private int errors;
 	private boolean active;
@@ -69,9 +68,8 @@ public class XmppBoshConnection implements XmppConnection, ConnectorCallback {
 	private XMLPacket currentBody;
 
 	@Inject
-	public XmppBoshConnection(@Named("emite") final EventBus eventBus, final Services services) {
+	protected XmppBoshConnection(@Named("emite") final EventBus eventBus) {
 		this.eventBus = checkNotNull(eventBus);
-		this.services = checkNotNull(services);
 	}
 
 	@Override
@@ -116,7 +114,7 @@ public class XmppBoshConnection implements XmppConnection, ConnectorCallback {
 		} else {
 			final int scedTime = RetryControl.retry(e);
 			eventBus.fireEventFromSource(new ConnectionStatusChangedEvent(ConnectionStatus.waitingForRetry, "The connection will try to re-connect in " + scedTime + " milliseconds.", scedTime), this);
-			services.schedule(scedTime, new ScheduledAction() {
+			Platform.schedule(scedTime, new ScheduledAction() {
 				@Override
 				public void run() {
 					logger.info("Error retry: " + e);
@@ -266,7 +264,7 @@ public class XmppBoshConnection implements XmppConnection, ConnectorCallback {
 				sendBody(false);
 			} else {
 				final long currentRID = stream.rid;
-				services.schedule(300, new ScheduledAction() {
+				Platform.schedule(300, new ScheduledAction() {
 					@Override
 					public void run() {
 						if (currentBody == null && stream.rid == currentRID) {
@@ -346,7 +344,7 @@ public class XmppBoshConnection implements XmppConnection, ConnectorCallback {
 	private void send(final String request) {
 		try {
 			activeConnections++;
-			services.send(settings.httpBase, request, this);
+			Platform.send(settings.httpBase, request, this);
 			stream.lastRequestTime = System.currentTimeMillis();
 		} catch (final ConnectorException e) {
 			activeConnections--;

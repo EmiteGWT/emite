@@ -29,51 +29,61 @@ import com.calclab.emite.core.client.xml.HasXML;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * A connection to a xmpp server
+ * A connection to a XMPP server
  */
 public interface XmppConnection {
 
 	/**
-	 * Add a handler to know when a response (text) arrived from server
+	 * Add a handler to know when a response (text) arrived from server.
 	 * 
 	 * @param handler
-	 * @return
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when the status of the connection has changed
+	 * Add a handler to know when the status of the connection has changed.
 	 * 
 	 * @param handler
-	 * @return
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addConnectionStatusChangedHandler(ConnectionStatusChangedEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a stanza has arrived from the server
+	 * Add a handler to know when a stanza has arrived from the server.
 	 * 
 	 * @param handler
-	 * @return
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addStanzaReceivedHandler(PacketReceivedEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a stanza has been sent to the server
+	 * Add a handler to know when a stanza has been sent to the server.
 	 * 
 	 * @param handler
-	 * @return
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addStanzaSentHandler(StanzaSentEvent.Handler handler);
 
 	/**
-	 * Connect to the server
+	 * Connect to the server.
 	 * 
-	 * @see setSettings
+	 * Connection settings must be set before calling this method.
+	 * 
+	 * @see #setSettings
 	 */
 	void connect();
 
 	/**
-	 * Disconnect to the server
+	 * Disconnect from the server
 	 */
 	void disconnect();
 
@@ -127,6 +137,7 @@ public interface XmppConnection {
 	 * Send a packet into the connection channel
 	 * 
 	 * @param packet
+	 *            the packet to be sent
 	 */
 	void send(HasXML packet);
 

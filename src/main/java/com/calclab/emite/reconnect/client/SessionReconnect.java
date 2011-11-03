@@ -47,7 +47,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 	private boolean shouldReconnect;
 
 	@Inject
-	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
+	protected SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
 		this.session = session;
 
 		shouldReconnect = false;
@@ -69,9 +69,9 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
-		if (event.is(SessionStatus.connecting)) {
+		if (SessionStatus.connecting.equals(event.getStatus())) {
 			shouldReconnect = false;
-		} else if (event.is(SessionStatus.disconnected) && shouldReconnect) {
+		} else if (SessionStatus.isDisconnected(event.getStatus()) && shouldReconnect) {
 			if (lastSuccessfulCredentials != null) {
 				final double seconds = Math.pow(2, reconnectionAttempts - 1);
 				new Timer() {
@@ -86,7 +86,7 @@ public class SessionReconnect implements ConnectionStatusChangedEvent.Handler, S
 				}.schedule((int) (1000 * seconds));
 				logger.info("Reconnecting in " + seconds + " seconds.");
 			}
-		} else if (event.is(SessionStatus.ready)) {
+		} else if (SessionStatus.isReady(event.getStatus())) {
 			logger.finer("CLEAR RECONNECTION ATTEMPS");
 			reconnectionAttempts = 0;
 		}

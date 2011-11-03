@@ -32,8 +32,8 @@ import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.im.client.chat.AbstractChatTest;
 import com.calclab.emite.im.client.chat.ChatProperties;
 import com.calclab.emite.im.client.chat.ChatStatus;
-import com.calclab.emite.im.client.chat.pair.PairChat;
-import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
+import com.calclab.emite.im.client.chat.PairChat;
+import com.calclab.emite.im.client.chat.PairChatManagerImpl;
 import com.calclab.emite.xtesting.handlers.ChatStatusChangedTestHandler;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 

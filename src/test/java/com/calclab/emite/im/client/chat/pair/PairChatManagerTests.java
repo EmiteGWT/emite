@@ -30,7 +30,7 @@ import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.im.client.chat.AbstractChatManagerTests;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatStatus;
-import com.calclab.emite.im.client.chat.pair.PairChatManagerImpl;
+import com.calclab.emite.im.client.chat.PairChatManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
 import com.calclab.emite.xtesting.handlers.MessageReceivedTestHandler;
 import com.google.web.bindery.event.shared.SimpleEventBus;

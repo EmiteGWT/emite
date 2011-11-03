@@ -49,7 +49,7 @@ public class SASLManagerImpl implements SASLManager, PacketReceivedEvent.Handler
 	@Nullable private Credentials currentCredentials;
 
 	@Inject
-	public SASLManagerImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection) {
+	protected SASLManagerImpl(@Named("emite") final EventBus eventBus, final XmppConnection connection) {
 		this.eventBus = checkNotNull(eventBus);
 		this.connection = checkNotNull(connection);
 

@@ -27,7 +27,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 /**
  * Handles the user's presence state. Provides event to know when it changes.
  * 
- * Its responsable of send the initial presence after session login.
+ * Its responsible of send the initial presence after session login.
  * 
  * @see http://xmpp.org/rfcs/rfc3921.html#presence
  */

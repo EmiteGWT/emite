@@ -20,9 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,6 +42,8 @@ import com.calclab.emite.core.client.xml.XMLPacket;
 import com.calclab.emite.im.client.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.client.events.RosterItemChangedEvent;
 import com.calclab.emite.im.client.events.RosterRetrievedEvent;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -61,11 +61,11 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	private final RosterGroup all;
 
 	@Inject
-	public XmppRosterImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
+	protected XmppRosterImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = eventBus;
 		this.session = session;
 
-		groups = new HashMap<String, RosterGroup>();
+		groups = Maps.newHashMap();
 		all = new RosterGroup(eventBus, null);
 
 		session.addSessionStatusChangedHandler(this, true);
@@ -75,7 +75,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
-		if (event.is(SessionStatus.loggedIn)) {
+		if (SessionStatus.loggedIn.equals(event.getStatus())) {
 			reRequestRoster();
 		}
 	}
@@ -199,7 +199,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 
 	@Override
 	public Collection<RosterItem> getItems() {
-		return new ArrayList<RosterItem>(all.getItems());
+		return Lists.newArrayList(all.getItems());
 	}
 
 	@Override
@@ -366,7 +366,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	}
 
 	private void removeItem(final RosterItem item) {
-		final ArrayList<String> groupsToRemove = new ArrayList<String>();
+		final List<String> groupsToRemove = Lists.newArrayList();
 		for (final String groupName : getGroupNames()) {
 			final RosterGroup group = getRosterGroup(groupName);
 			group.remove(item.getJID());
@@ -414,7 +414,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 		}
 
 		// And remove the item from any groups it may still be in
-		final ArrayList<String> groupsToRemove = new ArrayList<String>();
+		final List<String> groupsToRemove = Lists.newArrayList();
 
 		for (final RosterGroup rosterGroup : getRosterGroups()) {
 			if (rosterGroup.getName() != null && !newGroups.contains(rosterGroup.getName()) && rosterGroup.hasItem(item.getJID())) {

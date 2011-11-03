@@ -33,7 +33,7 @@ import com.calclab.emite.xtesting.handlers.BeforeMessageSentTestHandler;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public abstract class AbstractChatTest<C extends ChatBoilerplate> {
+public abstract class AbstractChatTest<C extends AbstractChat> {
 	protected final EventBus eventBus;
 	protected final XmppSessionTester session;
 	protected static final XmppURI USER_URI = uri("self@domain/res");

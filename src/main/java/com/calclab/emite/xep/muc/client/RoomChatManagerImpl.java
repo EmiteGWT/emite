@@ -20,23 +20,27 @@
 
 package com.calclab.emite.xep.muc.client;
 
-import java.util.HashMap;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.client.events.MessageReceivedEvent;
 import com.calclab.emite.core.client.events.PresenceReceivedEvent;
+import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.client.session.SessionStatus;
 import com.calclab.emite.core.client.session.XmppSession;
 import com.calclab.emite.core.client.stanzas.Message;
 import com.calclab.emite.core.client.stanzas.Presence;
 import com.calclab.emite.core.client.uri.XmppURI;
 import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.im.client.chat.ChatManagerBoilerplate;
-import com.calclab.emite.im.client.chat.ChatProperties;
-import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
-import com.calclab.emite.im.client.chat.ChatStatus;
 import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
 import com.calclab.emite.xep.muc.client.events.RoomInvitationReceivedEvent;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -49,128 +53,126 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see RoomChatManager
  */
 @Singleton
-public class RoomChatManagerImpl extends ChatManagerBoilerplate<RoomChat> implements RoomChatManager, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
+public final class RoomChatManagerImpl implements RoomChatManager, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler, MessageReceivedEvent.Handler {
 
-	private static final String HISTORY_OPTIONS_PROP = "history.options";
-
+	private final EventBus eventBus;
+	private final XmppSession session;
 	private final Map<XmppURI, RoomChat> roomsByJID;
-	private HistoryOptions defaultHistoryOptions;
 
+	@Nullable private XmppURI currentChatUser;
+	
 	@Inject
-	public RoomChatManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy) {
-		super(eventBus, session, strategy);
-		roomsByJID = new HashMap<XmppURI, RoomChat>();
+	protected RoomChatManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
+		this.eventBus = checkNotNull(eventBus);
+		this.session = checkNotNull(session);
+		roomsByJID = Maps.newHashMap();
+		
+		// Control chat status when the user logout and login again
+		session.addSessionStatusChangedHandler(this, true);
 
 		// Forward the presence messages to the room event bus
 		session.addPresenceReceivedHandler(this);
 
-		// Check if the incomming message is a room invitation to the user
-		// TODO: ChatManagerBoilerplate already has a onMessageReceived
-		//session.addMessageReceivedHandler(this);
+		// Check if the incoming message is a room invitation to the user
+		session.addMessageReceivedHandler(this);
 	}
 
 	@Override
-	public HandlerRegistration addRoomChatChangedHandler(final RoomChatChangedEvent.Handler handler) {
+	public final HandlerRegistration addRoomChatChangedHandler(final RoomChatChangedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RoomChatChangedEvent.TYPE, this, handler);
 	}
-
+	
 	@Override
-	protected void fireChanged(final ChangeType type, final RoomChat chat) {
-		eventBus.fireEventFromSource(new RoomChatChangedEvent(type, chat), this);
-	}
-
-	@Override
-	public void onPresenceReceived(final PresenceReceivedEvent event) {
-		final Presence presence = event.getPresence();
-		final ChatProperties properties = strategy.extractProperties(presence);
-		RoomChat chat = getChat(properties, false);
-		if (chat == null && properties.shouldCreateNewChat()) {
-			// we need to create a chat for this incoming presence
-			properties.setInitiatorUri(properties.getUri());
-			chat = addNewChat(properties);
-		}
-		if (chat != null) {
-			eventBus.fireEventFromSource(new PresenceReceivedEvent(presence), chat);
-		}
-	}
-
-	@Override
-	public void onMessageReceived(final MessageReceivedEvent event) {
-		super.onMessageReceived(event);
-		final Message message = event.getMessage();
-		final XMLPacket x = message.getXML().getFirstChild("x", "http://jabber.org/protocol/muc#user");
-		if (x == null)
-			return;
-		
-		final XMLPacket invite = x.getFirstChild("invite");
-		if (invite == null)
-			return;
-		
-		// We extract the chat properties from the message
-		final ChatProperties chatProperties = strategy.extractProperties(message);
-
-		final RoomInvitation invitation = new RoomInvitation(XmppURI.uri(invite.getAttribute("from")), message.getFrom(), invite.getChildText("reason"), chatProperties);
-		eventBus.fireEventFromSource(new RoomInvitationReceivedEvent(invitation), this);
-	}
-
-	@Override
-	public RoomChat acceptRoomInvitation(final RoomInvitation invitation) {
-		final XmppURI roomURI = invitation.getRoomURI();
-		final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUserURI().getNode());
-
-		final ChatProperties properties = new ChatProperties(uri, invitation.getChatProperties());
-
-		return openChat(properties, true);
-	}
-
-	@Override
-	public HandlerRegistration addRoomInvitationReceivedHandler(final RoomInvitationReceivedEvent.Handler handler) {
+	public final HandlerRegistration addRoomInvitationReceivedHandler(final RoomInvitationReceivedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(RoomInvitationReceivedEvent.TYPE, this, handler);
 	}
 
 	@Override
-	public void close(final RoomChat whatToClose) {
-		final RoomChat room = roomsByJID.remove(whatToClose.getURI().getJID());
-		if (room != null) {
-			room.close();
-			super.close(room);
+	public final void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		if (SessionStatus.loggedIn.equals(event.getStatus())) {
+			final XmppURI currentUser = session.getCurrentUserURI();
+			if (currentChatUser == null) {
+				currentChatUser = currentUser;
+			}
+			if (currentUser.equalsNoResource(currentChatUser)) {
+				for (final RoomChat chat : roomsByJID.values()) {
+					chat.open(null);
+				}
+			}
+		} else if (SessionStatus.loggingOut.equals(event.getStatus()) || SessionStatus.disconnected.equals(event.getStatus())) {
+			// check both status: loggingOut is preferred, but not
+			// always fired (i.e. error)
+			for (final RoomChat chat : roomsByJID.values()) {
+				chat.close();
+			}
+		}
+	}
+	
+	@Override
+	public final void onMessageReceived(final MessageReceivedEvent event) {
+		final Message message = event.getMessage();
+		
+		final XMLPacket x = message.getExtension("x", "http://jabber.org/protocol/muc#user");
+		if (x != null && x.hasChild("invite")) {
+			final XMLPacket invite = x.getFirstChild("invite");
+			final RoomInvitation invitation = new RoomInvitation(XmppURI.uri(invite.getAttribute("from")), message.getFrom(), invite.getChildText("reason"));
+			eventBus.fireEventFromSource(new RoomInvitationReceivedEvent(invitation), this);
+			return;
+		}
+		
+		final RoomChat chat = getRoom(message.getFrom());
+		if (chat != null) {
+			chat.receiveMessage(message);
+		}
+	}
+	
+	@Override
+	public final void onPresenceReceived(final PresenceReceivedEvent event) {
+		final Presence presence = event.getPresence();
+		final RoomChat chat = getRoom(presence.getFrom());
+		if (chat != null) {
+			chat.receivePresence(presence);
 		}
 	}
 
 	@Override
-	public RoomChat getChat(final XmppURI uri) {
+	public final RoomChat acceptRoomInvitation(final RoomInvitation invitation, @Nullable final HistoryOptions historyOptions) {
+		final XmppURI roomURI = invitation.getRoomURI();
+		final XmppURI uri = XmppURI.uri(roomURI.getNode(), roomURI.getHost(), session.getCurrentUserURI().getNode());
+
+		return openRoom(uri, historyOptions);
+	}
+
+	@Override
+	public final RoomChat openRoom(final XmppURI uri, final HistoryOptions historyOptions) {
+		RoomChat chat = getRoom(uri);
+		if (chat == null) {
+			chat = new RoomChat(eventBus, session, this, uri, session.getCurrentUserURI());
+			roomsByJID.put(uri.getJID(), chat);
+			eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.created, chat), this);
+		}
+		
+		chat.open(historyOptions);
+		eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.opened, chat), this);
+		return chat;
+	}
+
+	protected final boolean closeRoom(final RoomChat room) {
+		if (roomsByJID.remove(room.getRoomURI().getJID()) == null)
+			return false;
+		
+		eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.closed, room), this);
+		return true;
+	}
+
+	@Override
+	public final RoomChat getRoom(final XmppURI uri) {
 		return roomsByJID.get(uri.getJID());
 	}
 
 	@Override
-	public HistoryOptions getDefaultHistoryOptions() {
-		return defaultHistoryOptions;
+	public final Collection<RoomChat> getRooms() {
+		return Collections.unmodifiableCollection(roomsByJID.values());
 	}
-
-	@Override
-	public RoomChat open(final XmppURI uri, final HistoryOptions historyOptions) {
-		final ChatProperties properties = new ChatProperties(uri);
-		properties.setData(HISTORY_OPTIONS_PROP, historyOptions);
-		return openChat(properties, true);
-	}
-
-	@Override
-	public void setDefaultHistoryOptions(final HistoryOptions defaultHistoryOptions) {
-		this.defaultHistoryOptions = defaultHistoryOptions;
-	}
-
-	@Override
-	protected void addChat(final RoomChat chat) {
-		final XmppURI jid = chat.getURI().getJID();
-		roomsByJID.put(jid, chat);
-		super.addChat(chat);
-	}
-
-	@Override
-	protected RoomChat createChat(final ChatProperties properties) {
-		if (properties.getStatus() == null) {
-			properties.setStatus(ChatStatus.locked);
-		}
-		return new RoomChatImpl(eventBus, session, properties);
-	}
+	
 }

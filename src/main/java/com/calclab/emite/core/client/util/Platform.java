@@ -18,12 +18,12 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.client.services;
+package com.calclab.emite.core.client.util;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.google.common.collect.Lists;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -31,36 +31,31 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.Window.ClosingEvent;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
-@Singleton
-public class ServicesImplGWT implements Services, Window.ClosingHandler {
+public class Platform {
 
-	private static final Logger logger = Logger.getLogger(ServicesImplGWT.class.getName());
+	private static final Logger logger = Logger.getLogger(Platform.class.getName());
 
-	protected final List<Request> requests;
-
-	@Inject
-	protected ServicesImplGWT() {
-		requests = new ArrayList<Request>();
+	private static final List<Request> requests;
+	
+	static {
+		requests = Lists.newArrayList();
+		
 		// On close it cancels all the pending requests except the "terminate" request
-		Window.addWindowClosingHandler(this);
+		Window.addWindowClosingHandler(new Window.ClosingHandler() {
+			@Override
+			public void onWindowClosing(final Window.ClosingEvent event) {
+				int i = requests.size() - 2;
+				logger.finer("Cancelling " + (i + 1) + " pending requests.");
+				for (; i >= 0; i--) {
+					requests.get(i).cancel();
+				}
+				logger.finer("Cancelled all requests.");
+			}
+		});
 	}
 
-	@Override
-	public void onWindowClosing(final ClosingEvent event) {
-		int i = requests.size() - 2;
-		logger.finer("Cancelling " + (i + 1) + " pending requests.");
-		for (; i >= 0; i--) {
-			requests.get(i).cancel();
-		}
-		logger.finer("Cancelled all requests.");
-	}
-
-	@Override
-	public void schedule(final int msecs, final ScheduledAction action) {
+	public static final void schedule(final int msecs, final ScheduledAction action) {
 		new Timer() {
 			@Override
 			public void run() {
@@ -69,8 +64,7 @@ public class ServicesImplGWT implements Services, Window.ClosingHandler {
 		}.schedule(msecs);
 	}
 
-	@Override
-	public void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+	public static final void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, httpBase);
 		builder.setHeader("Content-Type", "text/xml; charset=utf-8");
 		builder.setHeader("Cache-Control", "no-cache");

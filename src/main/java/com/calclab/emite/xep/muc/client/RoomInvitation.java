@@ -20,38 +20,35 @@
 
 package com.calclab.emite.xep.muc.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.concurrent.Immutable;
+
 import com.calclab.emite.core.client.uri.XmppURI;
-import com.calclab.emite.im.client.chat.ChatProperties;
 
-public class RoomInvitation {
+@Immutable
+public final class RoomInvitation {
 
+	private final XmppURI invitor;
+	private final XmppURI roomURI;
 	private final String reason;
-	private final ChatProperties chatProperties;
 
 	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
-		chatProperties = new ChatProperties(roomURI, invitor, null);
+		this.invitor = checkNotNull(invitor);
+		this.roomURI = checkNotNull(roomURI);
 		this.reason = reason;
 	}
 
-	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason, final ChatProperties chatProperties) {
-		this.chatProperties = new ChatProperties(roomURI, invitor, null, chatProperties);
-		this.reason = reason;
+	public final XmppURI getRoomURI() {
+		return roomURI;
 	}
 
-	public ChatProperties getChatProperties() {
-		return chatProperties;
+	public final XmppURI getInvitor() {
+		return invitor;
 	}
 
-	public XmppURI getInvitor() {
-		return chatProperties.getInitiatorUri();
-	}
-
-	public String getReason() {
+	public final String getReason() {
 		return reason;
-	}
-
-	public XmppURI getRoomURI() {
-		return chatProperties.getUri();
 	}
 
 }

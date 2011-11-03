@@ -43,10 +43,6 @@ public class SessionStatusChangedEvent extends Event<SessionStatusChangedEvent.H
 		return status;
 	}
 
-	public boolean is(final SessionStatus status) {
-		return this.status.equals(status);
-	}
-
 	@Override
 	public Type<Handler> getAssociatedType() {
 		return TYPE;
