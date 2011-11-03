@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.xep.storage.client.PrivateStorageResponseEvent;
+import com.calclab.emite.xep.storage.PrivateStorageResponseEvent;
 
 public class PrivateStorageResponseTestHandler extends TestHandler<PrivateStorageResponseEvent> implements PrivateStorageResponseEvent.Handler {
 

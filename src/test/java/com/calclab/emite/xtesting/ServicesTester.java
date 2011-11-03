@@ -22,12 +22,12 @@ package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
 
-import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
-import com.calclab.emite.core.client.services.ScheduledAction;
-import com.calclab.emite.core.client.services.Services;
-import com.calclab.emite.core.client.xml.XMLBuilder;
-import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.services.ConnectorCallback;
+import com.calclab.emite.core.services.ConnectorException;
+import com.calclab.emite.core.services.ScheduledAction;
+import com.calclab.emite.core.services.Services;
 
 /**
  * Object of this classes are used to test against services

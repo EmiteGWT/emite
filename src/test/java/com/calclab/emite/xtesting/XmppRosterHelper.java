@@ -20,10 +20,10 @@
 
 package com.calclab.emite.xtesting;
 
-import com.calclab.emite.core.client.session.SessionStatus;
-import com.calclab.emite.core.client.stanzas.IQ;
-import com.calclab.emite.core.client.xml.XMLPacket;
-import com.calclab.emite.im.client.roster.RosterItem;
+import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.session.SessionStatus;
+import com.calclab.emite.core.stanzas.IQ;
+import com.calclab.emite.im.roster.RosterItem;
 
 public class XmppRosterHelper {
 	public static void setRosterItems(final XmppSessionTester session, final RosterItem... items) {

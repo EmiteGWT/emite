@@ -24,9 +24,9 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 
-import com.calclab.emite.core.client.xml.HasXML;
-import com.calclab.emite.core.client.xml.XMLBuilder;
-import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
 
 public class IsPacketLike {
 	public static IsPacketLike build(final String xml) {

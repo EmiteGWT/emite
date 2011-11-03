@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting;
 
-import com.calclab.emite.core.client.uri.XmppURI;
-import com.calclab.emite.im.client.roster.RosterItem;
+import com.calclab.emite.core.XmppURI;
+import com.calclab.emite.im.roster.RosterItem;
 
 public class RosterItemHelper {
 

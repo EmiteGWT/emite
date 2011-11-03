@@ -32,7 +32,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import com.calclab.emite.core.client.util.ConnectorCallback;
+import com.calclab.emite.base.util.ConnectorCallback;
 
 public class HttpConnector {
 

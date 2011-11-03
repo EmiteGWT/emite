@@ -23,14 +23,14 @@ package com.calclab.emite.xtesting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.calclab.emite.core.client.conn.ConnectionSettings;
-import com.calclab.emite.core.client.conn.bosh.StreamSettings;
-import com.calclab.emite.core.client.conn.bosh.XmppBoshConnection;
-import com.calclab.emite.core.client.events.PacketReceivedEvent;
-import com.calclab.emite.core.client.events.PacketSentEvent;
-import com.calclab.emite.core.client.xml.HasXML;
-import com.calclab.emite.core.client.xml.XMLBuilder;
-import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.conn.ConnectionSettings;
+import com.calclab.emite.core.conn.bosh.StreamSettings;
+import com.calclab.emite.core.conn.bosh.XmppBoshConnection;
+import com.calclab.emite.core.events.PacketReceivedEvent;
+import com.calclab.emite.core.events.PacketSentEvent;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 

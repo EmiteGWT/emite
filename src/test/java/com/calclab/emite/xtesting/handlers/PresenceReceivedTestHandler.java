@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.PresenceReceivedEvent;
-import com.calclab.emite.core.client.stanzas.Presence;
+import com.calclab.emite.core.events.PresenceReceivedEvent;
+import com.calclab.emite.core.stanzas.Presence;
 
 public class PresenceReceivedTestHandler extends TestHandler<PresenceReceivedEvent> implements PresenceReceivedEvent.Handler {
 

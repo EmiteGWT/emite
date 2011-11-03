@@ -23,9 +23,9 @@ package com.calclab.emite.xtesting.matchers;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.calclab.emite.core.client.xml.HasXML;
-import com.calclab.emite.core.client.xml.XMLBuilder;
-import com.calclab.emite.core.client.xml.XMLPacket;
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
 
 public class EmiteAsserts {
 

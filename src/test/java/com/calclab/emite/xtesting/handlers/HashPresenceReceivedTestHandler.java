@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.stanzas.Presence;
-import com.calclab.emite.xep.avatar.client.HashPresenceReceivedEvent;
+import com.calclab.emite.core.stanzas.Presence;
+import com.calclab.emite.xep.avatar.HashPresenceReceivedEvent;
 
 public class HashPresenceReceivedTestHandler extends TestHandler<HashPresenceReceivedEvent> implements HashPresenceReceivedEvent.Handler {
 

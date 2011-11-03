@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.xep.disco.client.DiscoveryInfoResultEvent;
+import com.calclab.emite.xep.disco.DiscoveryInfoResultEvent;
 
 public class DiscoveryInfoResultTestHandler extends TestHandler<DiscoveryInfoResultEvent> implements DiscoveryInfoResultEvent.Handler {
 

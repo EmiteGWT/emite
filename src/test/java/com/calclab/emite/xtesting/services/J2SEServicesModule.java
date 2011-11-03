@@ -20,9 +20,9 @@
 
 package com.calclab.emite.xtesting.services;
 
-import com.calclab.emite.core.client.util.ConnectorCallback;
-import com.calclab.emite.core.client.util.ConnectorException;
-import com.calclab.emite.core.client.util.ScheduledAction;
+import com.calclab.emite.base.util.ConnectorCallback;
+import com.calclab.emite.base.util.ConnectorException;
+import com.calclab.emite.base.util.ScheduledAction;
 
 public class J2SEServicesModule {
 	private final HttpConnector connector;

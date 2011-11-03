@@ -20,9 +20,9 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.events.PairChatChangedEvent;
+import com.calclab.emite.core.events.ChangedEvent.ChangeType;
+import com.calclab.emite.im.chat.Chat;
+import com.calclab.emite.im.events.PairChatChangedEvent;
 
 public class PairChatChangedTestHandler extends TestHandler<PairChatChangedEvent> implements PairChatChangedEvent.Handler {
 

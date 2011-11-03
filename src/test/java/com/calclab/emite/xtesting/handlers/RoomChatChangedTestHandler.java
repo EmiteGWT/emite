@@ -20,9 +20,9 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.ChangedEvent.ChangeType;
-import com.calclab.emite.xep.muc.client.RoomChat;
-import com.calclab.emite.xep.muc.client.events.RoomChatChangedEvent;
+import com.calclab.emite.core.events.ChangedEvent.ChangeType;
+import com.calclab.emite.xep.muc.RoomChat;
+import com.calclab.emite.xep.muc.events.RoomChatChangedEvent;
 
 public class RoomChatChangedTestHandler extends TestHandler<RoomChatChangedEvent> implements RoomChatChangedEvent.Handler {
 

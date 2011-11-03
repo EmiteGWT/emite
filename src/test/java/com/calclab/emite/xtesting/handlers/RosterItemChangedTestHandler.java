@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.im.client.events.RosterItemChangedEvent;
-import com.calclab.emite.im.client.roster.RosterItem;
+import com.calclab.emite.im.events.RosterItemChangedEvent;
+import com.calclab.emite.im.roster.RosterItem;
 
 public class RosterItemChangedTestHandler extends TestHandler<RosterItemChangedEvent> implements RosterItemChangedEvent.Handler {
 

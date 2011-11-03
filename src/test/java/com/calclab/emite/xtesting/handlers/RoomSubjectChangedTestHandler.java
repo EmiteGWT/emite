@@ -20,7 +20,7 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.xep.muc.client.events.RoomSubjectChangedEvent;
+import com.calclab.emite.xep.muc.events.RoomSubjectChangedEvent;
 
 public class RoomSubjectChangedTestHandler extends TestHandler<RoomSubjectChangedEvent> implements RoomSubjectChangedEvent.Handler {
 

@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.im.client.chat.ChatStatus;
-import com.calclab.emite.im.client.events.ChatStatusChangedEvent;
+import com.calclab.emite.im.chat.ChatStatus;
+import com.calclab.emite.im.events.ChatStatusChangedEvent;
 
 public class ChatStatusChangedTestHandler extends TestHandler<ChatStatusChangedEvent> implements ChatStatusChangedEvent.Handler {
 	

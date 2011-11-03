@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.SessionStatusChangedEvent;
-import com.calclab.emite.core.client.session.SessionStatus;
+import com.calclab.emite.core.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.session.SessionStatus;
 
 public class SessionStateChangedTestHandler extends TestHandler<SessionStatusChangedEvent> implements SessionStatusChangedEvent.Handler {
 	public SessionStatus getLastSessionStatus() {

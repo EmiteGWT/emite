@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.BeforeStanzaSentEvent;
-import com.calclab.emite.core.client.stanzas.Stanza;
+import com.calclab.emite.core.events.BeforeStanzaSentEvent;
+import com.calclab.emite.core.stanzas.Stanza;
 
 public class BeforeStanzaSentTestHandler extends TestHandler<BeforeStanzaSentEvent> implements BeforeStanzaSentEvent.Handler {
 

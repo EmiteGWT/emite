@@ -20,8 +20,8 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.stanzas.Message;
+import com.calclab.emite.core.events.MessageReceivedEvent;
+import com.calclab.emite.core.stanzas.Message;
 
 public class MessageReceivedTestHandler extends TestHandler<MessageReceivedEvent> implements MessageReceivedEvent.Handler {
 
