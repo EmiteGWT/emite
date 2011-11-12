@@ -132,7 +132,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	public void onIQReceived(final IQReceivedEvent event) {
 		final IQ iq = event.getIQ();
 		if (iq.isType(IQ.Type.set)) {
-			final XMLPacket query = iq.getChild("query", "jabber:iq:roster");
+			final XMLPacket query = iq.getQuery("jabber:iq:roster");
 			if (query != null) {
 				for (final XMLPacket child : query.getChildren()) {
 					handleItemChanged(RosterItem.parse(child));
@@ -308,7 +308,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 				public void onIQSuccess(final IQ iq) {
 					clearGroupAll();
 
-					for (final XMLPacket child : iq.getChild("query", "jabber:iq:roster").getChildren()) {
+					for (final XMLPacket child : iq.getQuery("jabber:iq:roster").getChildren()) {
 						final RosterItem item = RosterItem.parse(child);
 						storeItem(item);
 					}

@@ -134,9 +134,8 @@ public class Presence extends Stanza {
 		setType(type);
 	}
 
-	public Presence(final Type type, final XmppURI from, final XmppURI to) {
+	public Presence(final Type type, final XmppURI to) {
 		this(type);
-		setFrom(from);
 		setTo(to);
 	}
 

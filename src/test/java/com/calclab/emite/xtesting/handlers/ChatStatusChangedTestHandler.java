@@ -23,7 +23,7 @@ package com.calclab.emite.xtesting.handlers;
 import com.calclab.emite.im.chat.ChatStatus;
 import com.calclab.emite.im.events.ChatStatusChangedEvent;
 
-public class ChatStatusChangedTestHandler extends TestHandler<ChatStatusChangedEvent> implements ChatStatusChangedEvent.Handler {
+public class ChatStatusChangedTestHandler extends TestHandler<ChatStatusChangedEvent> implements DiscoveryItemsCallback.Handler {
 	
 	public ChatStatus getLastChatStatus() {
 		return hasEvent() ? getLastEvent().getStatus() : null;

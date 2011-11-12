@@ -82,6 +82,11 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	}
 
 	@Override
+	public final boolean hasAttribute(final String name) {
+		return element.hasAttribute(checkNotNull(name));
+	}
+
+	@Override
 	public ImmutableMap<String, String> getAttributes() {
 		final ImmutableMap.Builder<String, String> result = ImmutableMap.builder();
 		final NamedNodeMap attribs = element.getAttributes();

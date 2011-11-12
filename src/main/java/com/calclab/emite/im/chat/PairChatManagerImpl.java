@@ -29,9 +29,9 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.calclab.emite.core.XmppURI;
+import com.calclab.emite.core.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.events.SessionStatusChangedEvent;
-import com.calclab.emite.core.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.session.SessionStatus;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.Message;
@@ -118,13 +118,11 @@ public final class PairChatManagerImpl implements PairChatManager, SessionStatus
 		}
 		
 		chat.open();
-		eventBus.fireEventFromSource(new PairChatChangedEvent(ChangeType.opened, chat), this);
 		return chat;
 	}
 
-	protected final void closeChat(final PairChat chat) {
-		chats.remove(chat);
-		eventBus.fireEventFromSource(new PairChatChangedEvent(ChangeType.closed, chat), this);
+	protected final boolean closeChat(final PairChat chat) {
+		return chats.remove(chat);
 	}
 	
 	@Override

@@ -86,7 +86,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 			@Override
 			public void onIQSuccess(final IQ received) {
 				if (received.getXML().hasChild(VCARD, "vcard-temp") && session.getCurrentUserURI().equals(received.getTo())) {
-					final XMLPacket photo = received.getChild(VCARD, "vcard-temp").getFirstChild(PHOTO);
+					final XMLPacket photo = received.getExtension(VCARD, "vcard-temp").getFirstChild(PHOTO);
 					final String photoType = photo.getChildText(TYPE);
 					final String photoBinval = photo.getChildText(BINVAL);
 					final AvatarVCard avatar = new AvatarVCard(received.getFrom(), null, photoType, photoBinval);

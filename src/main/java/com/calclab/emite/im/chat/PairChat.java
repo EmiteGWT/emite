@@ -21,6 +21,7 @@
 package com.calclab.emite.im.chat;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import javax.annotation.Nullable;
 
@@ -29,8 +30,10 @@ import com.calclab.emite.core.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.events.MessageSentEvent;
+import com.calclab.emite.core.events.ChangedEvent.ChangeType;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.Message;
+import com.calclab.emite.im.events.PairChatChangedEvent;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -127,37 +130,24 @@ public final class PairChat {
 		return eventBus.addHandlerToSource(MessageSentEvent.TYPE, this, handler);
 	}
 	
-	protected void open() {
-		if (session.isReady()) {
+	protected final void open() {
+		if (!isReady() && session.isReady()) {
 			status = ChatStatus.ready;
+			eventBus.fireEventFromSource(new PairChatChangedEvent(ChangeType.opened, this), chatManager);
 		}
 	}
 	
 	/**
 	 * Close a chat. This method is normally called by the chat manager
 	 */
-	public void close() {
-		this.status = ChatStatus.locked;
-		chatManager.closeChat(this);
-	}
-
-	/**
-	 * Return true if the chat is ready to be used
-	 * 
-	 * @return
-	 */
-	public boolean isReady() {
-		return ChatStatus.ready.equals(status);
-	}
-
-	public String getThread() {
-		return thread;
+	public final void close() {
+		if (isReady()) {
+			status = ChatStatus.locked;
+			chatManager.closeChat(this);
+			eventBus.fireEventFromSource(new PairChatChangedEvent(ChangeType.closed, this), chatManager);
+		}
 	}
 	
-	public void setThread(final String thread) {
-		this.thread = thread;
-	}
-
 	/**
 	 * Send a message to the uri of this chat
 	 * 
@@ -166,7 +156,10 @@ public final class PairChat {
 	 * @throws RuntimeException
 	 *             if chat status != ready
 	 */
-	public void send(final Message message) {
+	public final void send(final Message message) {
+		checkState(isReady(), "This chat is not ready");
+		checkNotNull(message);
+		
 		message.setTo(uri);
 		message.setType(Message.Type.chat);
 		message.setThread(thread);
@@ -175,6 +168,23 @@ public final class PairChat {
 		session.send(message);
 		eventBus.fireEventFromSource(new MessageSentEvent(message), this);
 	}
+
+	/**
+	 * Return true if the chat is ready to be used
+	 * 
+	 * @return
+	 */
+	public final boolean isReady() {
+		return ChatStatus.ready.equals(status);
+	}
+
+	public final String getThread() {
+		return thread;
+	}
+	
+	public final void setThread(final String thread) {
+		this.thread = checkNotNull(thread);
+	}
 	
 	/**
 	 * Returns this conversation URI. If this conversation is a normal chat, the
@@ -182,7 +192,7 @@ public final class PairChat {
 	 * 
 	 * @return the conversation's URI
 	 */
-	public XmppURI getURI() {
+	public final XmppURI getURI() {
 		return uri;
 	}
 	
@@ -191,7 +201,7 @@ public final class PairChat {
 	 * 
 	 * @return
 	 */
-	public XmppURI getInitiatorUri() {
+	public final XmppURI getInitiatorUri() {
 		return initiatorUri;
 	}
 	
@@ -200,12 +210,12 @@ public final class PairChat {
 	 * 
 	 * @return Return true if you started the conversation. False otherwise
 	 */
-	public boolean isInitiatedByMe() {
+	public final boolean isInitiatedByMe() {
 		return initiatorUri.equals(session.getCurrentUserURI());
 	}
 	
 	@Override
-	public String toString() {
+	public final String toString() {
 		return "Chat: " + uri.toString() + "-" + thread;
 	}
 

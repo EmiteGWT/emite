@@ -20,116 +20,149 @@
 
 package com.calclab.emite.xep.dataforms;
 
-import java.util.ArrayList;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 /**
  * XEP-0004 Field element : A data form of type "form", "submit", or "result"
  * SHOULD contain at least one <field/> element; a data form of type "cancel"
  * SHOULD NOT contain any <field/> elements.
  */
+public final class Field implements HasXML {
 
-public class Field implements HasXML {
-
-	private final XMLPacket xml;
-
+	public static enum Type {
+		BOOLEAN, FIXED, HIDDEN, JID_MULTI, JID_SINGLE, LIST_MULTI, LIST_SINGLE, TEXT_MULTI, TEXT_PRIVATE, TEXT_SINGLE;
+		
+		public static final Type fromString(final String str) {
+			if ("boolean".equals(str))
+				return BOOLEAN;
+			
+			return Type.valueOf(str.replace('-', '_').toUpperCase());
+		}
+		
+		@Override
+		public final String toString() {
+			return this.name().replace('_', '-').toLowerCase();
+		}
+	}
+	
+	@Nullable private Type type;
+	@Nullable private String label;
+	@Nullable private String var;
+	
+	@Nullable private String desc;
+	private boolean required;
+	
+	private final List<String> values;
+	private final List<Option> options;
+	
 	public Field() {
-		xml = XMLBuilder.create("field").getXML();
+		values = Lists.newArrayList();
+		options = Lists.newArrayList();
 	}
 
-	public Field(final XMLPacket xml) {
-		this.xml = xml;
+	@Nullable
+	public final Type getType() {
+		return type;
 	}
-
-	public Field(final String type) {
-		this();
-		setType(type);
+	
+	public final void setType(@Nullable final Type type) {
+		this.type = type;
 	}
-
-	public void addOption(final Option option) {
-		xml.addChild(option);
+	
+	@Nullable
+	public final String getLabel() {
+		return label;
 	}
-
-	/**
-	 * Fields of type list-multi, jid-multi, text-multi, and hidden MAY contain
-	 * more than one <value/> and this field is only for the other types
-	 */
-	public void addValue(final String value) {
-		xml.setChildText("value", value);
+	
+	public final void setLabel(@Nullable final String label) {
+		this.label = label;
 	}
-
-	public String getDesc() {
-		return xml.getChildText("desc");
+	
+	@Nullable
+	public final String getVar() {
+		return var;
 	}
-
-	public String getLabel() {
-		return xml.getAttribute("label");
+	
+	public final void setVar(@Nullable String var) {
+		this.var = var;
 	}
-
-	public List<Option> getOptions() {
-		final List<Option> options = new ArrayList<Option>();
-		for (final XMLPacket optionPacket : xml.getChildren("option")) {
-			options.add(new Option(optionPacket));
-		}
-		return options;
+	
+	@Nullable
+	public final String getDesc() {
+		return desc;
 	}
-
-	public String getType() {
-		return xml.getAttribute("type");
+	
+	public final void setDesc(@Nullable String desc) {
+		this.desc = desc;
 	}
-
-	public List<String> getValues() {
-		final List<String> values = new ArrayList<String>();
-		for (final XMLPacket valuePacket : xml.getChildren("value")) {
-			values.add(valuePacket.getText());
-		}
+	
+	public final boolean isRequired() {
+		return required;
+	}
+	
+	public final void setRequired(boolean required) {
+		this.required = required;
+	}
+	
+	public final List<String> getValues() {
 		return values;
 	}
-
-	public String getVar() {
-		return xml.getAttribute("var");
+	
+	public final void addValue(final String value) {
+		values.add(checkNotNull(value));
 	}
-
-	public boolean isRequired() {
-		return xml.getFirstChild("required") != null;
+	
+	public final List<Option> getOptions() {
+		return options;
 	}
-
-	public void setDesc(final String desc) {
-		xml.setChildText("desc", desc);
-	}
-
-	/**
-	 * The <field/> element MAY possess a 'label' attribute that defines a
-	 * human-readable name for the field.
-	 */
-
-	public void setLabel(final String label) {
-		xml.setAttribute("label", label);
-	}
-
-	public void setRequired(final boolean required) {
-		xml.setChildText("required", required ? "" : null);
-	}
-
-	/**
-	 * element SHOULD possess a 'type' attribute that defines the data "type" of
-	 * the field data (if no 'type' is specified, the default is "text-single")
-	 */
-	public void setType(final String type) {
-		xml.setAttribute("type", type);
-	}
-
-	public void setVar(final String var) {
-		xml.setAttribute("var", var);
+	
+	public final void addOption(final Option option) {
+		options.add(checkNotNull(option));
 	}
 
 	@Override
-	public XMLPacket getXML() {
-		return xml;
+	public final XMLPacket getXML() {
+		final XMLBuilder builder = XMLBuilder.create("field");
+		
+		if (type != null) {
+			builder.attribute("type", type.toString());
+		}
+		
+		if (!Strings.isNullOrEmpty(label)) {
+			builder.attribute("label", label);
+		}
+		
+		if (!Strings.isNullOrEmpty(var)) {
+			builder.attribute("var", var);
+		}
+		
+		if (!Strings.isNullOrEmpty(desc)) {
+			builder.childText("desc", desc);
+		}
+		
+		if (required) {
+			builder.child("required").parent();
+		}
+		
+		for (final String value : values) {
+			builder.childText("value", value);
+		}
+		
+		for (final Option option : options) {
+			builder.child(option);
+		}
+		
+		return builder.getXML();
 	}
 
 }

@@ -30,7 +30,7 @@ import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.xep.disco.DiscoveryInfoResults;
-import com.calclab.emite.xep.disco.DiscoveryItemsResults;
+import com.calclab.emite.xep.disco.DiscoveryItemsResult;
 import com.calclab.emite.xep.disco.DiscoveryManager;
 import com.calclab.emite.xep.disco.DiscoveryManagerImpl;
 import com.calclab.emite.xtesting.XmppSessionTester;
@@ -88,7 +88,7 @@ public class DiscoveryManagerTest {
 		session.answerSuccess(DISCO_ITEMS_RESULT);
 		assertTrue(handler.isCalledOnce());
 		assertTrue(handler.getLastEvent().hasResult());
-		final DiscoveryItemsResults result = handler.getLastEvent().getResults();
+		final DiscoveryItemsResult result = handler.getLastEvent().getResults();
 		assertEquals(8, result.getItems().size());
 	}
 }

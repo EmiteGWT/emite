@@ -22,7 +22,7 @@ package com.calclab.emite.xtesting.handlers;
 
 import com.calclab.emite.xep.disco.DiscoveryItemsResultEvent;
 
-public class DiscoveryItemsResultTestHandler extends TestHandler<DiscoveryItemsResultEvent> implements DiscoveryItemsResultEvent.Handler {
+public class DiscoveryItemsResultTestHandler extends TestHandler<DiscoveryItemsResultEvent> implements DiscoveryItemsCallback.Handler {
 
 	@Override
 	public void onDiscoveryItemsResult(final DiscoveryItemsResultEvent event) {

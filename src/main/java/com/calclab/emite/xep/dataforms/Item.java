@@ -20,24 +20,46 @@
 
 package com.calclab.emite.xep.dataforms;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.collect.Lists;
 
 /**
- * 
  * XEP-0004 Item for "3.2 Multiple Items in Form Results"
- * 
  */
-public class Item extends AbstractItem {
+public final class Item implements HasXML {
 
+	private final List<Field> fields;
+	
 	/**
 	 * Each of these elements MUST contain one or more <field/> children.
 	 */
 	public Item() {
-		super("item");
+		fields = Lists.newArrayList();
 	}
-
-	public Item(final XMLPacket packet) {
-		super(packet);
+	
+	public final List<Field> getFields() {
+		return fields;
 	}
-
+	
+	public final void addField(final Field field) {
+		fields.add(checkNotNull(field));
+	}
+	
+	@Override
+	public final XMLPacket getXML() {
+		XMLBuilder builder = XMLBuilder.create("item");
+		
+		for (final Field field : fields) {
+			builder.child(field);
+		}
+		
+		return builder.getXML();
+	}
+	
 }

@@ -28,6 +28,7 @@ import java.util.Map;
 import com.calclab.emite.base.util.XmppDateTime;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.events.BeforeMessageReceivedEvent;
 import com.calclab.emite.core.events.BeforeMessageSentEvent;
@@ -42,6 +43,7 @@ import com.calclab.emite.core.stanzas.Presence;
 import com.calclab.emite.core.stanzas.Stanza;
 import com.calclab.emite.xep.muc.events.BeforeRoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.events.OccupantChangedEvent;
+import com.calclab.emite.xep.muc.events.RoomChatChangedEvent;
 import com.calclab.emite.xep.muc.events.RoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.events.RoomSubjectChangedEvent;
 import com.google.common.collect.Maps;
@@ -59,9 +61,9 @@ public final class RoomChat {
 		ready, locked;
 	}
 	
+	private final RoomChatManagerImpl roomManager;
 	private final EventBus eventBus;
 	private final XmppSession session;
-	private final RoomChatManagerImpl roomManager;
 	
 	private final XmppURI roomUri;
 	private final XmppURI initiatorUri;
@@ -71,19 +73,10 @@ public final class RoomChat {
 	
 	private RoomStatus status;
 	
-	/**
-	 * Create a new room with the given properties. Room are created by
-	 * RoomManagers
-	 * 
-	 * @param session
-	 *            the session
-	 * @param roomURI
-	 *            the room uri with the nick specified in the resource part
-	 */
-	protected RoomChat(final EventBus eventBus, final XmppSession session, final RoomChatManagerImpl roomManager, final XmppURI roomUri, final XmppURI initiatorUri) {
+	protected RoomChat(final RoomChatManagerImpl roomManager, final EventBus eventBus, final XmppSession session, final XmppURI roomUri, final XmppURI initiatorUri) {
+		this.roomManager = checkNotNull(roomManager);
 		this.eventBus = checkNotNull(eventBus);
 		this.session = checkNotNull(session);
-		this.roomManager = checkNotNull(roomManager);
 		this.roomUri = checkNotNull(roomUri);
 		this.initiatorUri = checkNotNull(initiatorUri);
 
@@ -99,19 +92,37 @@ public final class RoomChat {
 		if (Presence.Type.unavailable.equals(type)) {
 			removeOccupant(occupantURI);
 			if (occupantURI.equalsNoResource(session.getCurrentUserURI())) {
-				close();
+				status = RoomStatus.locked;
+				roomManager.closeRoom(this);
+				eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.closed, this), roomManager);
 			}
 		} else if (!Presence.Type.error.equals(type)) {
-			for (final XMLPacket child : presence.getXML().getChildren("x", "http://jabber.org/protocol/muc#user")) {
-				final XMLPacket item = child.getFirstChild("item");
+			final XMLPacket xmuc = presence.getExtension("x", XmppNamespaces.MUC_USER);
+			if (xmuc != null) {
+				final XMLPacket item = xmuc.getFirstChild("item");
 				final String affiliation = item.getAttribute("affiliation");
 				final String role = item.getAttribute("role");
 				final XmppURI userUri = XmppURI.uri(item.getAttribute("jid"));
 				setOccupantPresence(userUri, occupantURI, affiliation, role, presence.getShow(), presence.getStatus());
-				if (isNewRoom(child)) {
-					requestCreateInstantRoom();
+				if (hasStatus(xmuc, 201)) {
+					final IQ iq = new IQ(IQ.Type.set);
+					iq.setTo(roomUri.getJID());
+					iq.addChild("query", XmppNamespaces.MUC_OWNER).addChild("x", "jabber:x:data").setAttribute("type", "submit");
+
+					session.sendIQ("rooms", iq, new IQCallback() {
+						@Override
+						public void onIQSuccess(final IQ iq) {
+							status = RoomStatus.ready;
+							eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.opened, RoomChat.this), roomManager);
+						}
+
+						@Override
+						public void onIQFailure(final IQ iq) {
+						}
+					});
 				} else {
-					setStatus(RoomStatus.ready);
+					status = RoomStatus.ready;
+					eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.opened, this), roomManager);
 				}
 			}
 		}
@@ -241,11 +252,17 @@ public final class RoomChat {
 		}
 	}
 
-	public void close() {
+	protected void open(final HistoryOptions historyOptions) {
+		session.send(createEnterPresence(historyOptions));
+	}
+
+	public void close(final String exitStatus) {
 		if (RoomStatus.ready.equals(status)) {
-			session.send(new Presence(Presence.Type.unavailable, null, roomUri));
-			setStatus(RoomStatus.locked);
-			roomManager.closeRoom(this);
+			final Presence exitPresence = new Presence(Presence.Type.unavailable, roomUri);
+			if (exitStatus != null) {
+				exitPresence.setStatus(exitStatus);
+			}
+			session.send(exitPresence);
 		}
 	}
 
@@ -264,10 +281,6 @@ public final class RoomChat {
 	public boolean isUserMessage(final Message message) {
 		final String resource = message.getFrom().getResource();
 		return resource != null && !"".equals(resource);
-	}
-
-	protected void open(final HistoryOptions historyOptions) {
-		session.send(createEnterPresence(historyOptions));
 	}
 	
 	// TODO: check occupants affiliation to see if the user can do that!!
@@ -296,7 +309,7 @@ public final class RoomChat {
 		presence.setStatus(statusMessage);
 		presence.setShow(show);
 		presence.setTo(roomUri);
-		// presence.addChild("x", "http://jabber.org/protocol/muc");
+		// presence.addChild("x", XmppNamespaces.MUC);
 		// presence.setPriority(0);
 		session.send(presence);
 	}
@@ -331,7 +344,7 @@ public final class RoomChat {
 	public void sendInvitationTo(final XmppURI userJid, final String reasonText) {
 		final Stanza message = new Message();
 		message.setTo(roomUri.getJID());
-		final XMLPacket invite = message.getXML().addChild("x", "http://jabber.org/protocol/muc#user").addChild("invite");
+		final XMLPacket invite = message.getXML().addChild("x", XmppNamespaces.MUC_USER).addChild("invite");
 		invite.setAttribute("to", userJid.toString());
 		invite.setChildText("reason", reasonText);
 		
@@ -340,17 +353,6 @@ public final class RoomChat {
 		eventBus.fireEventFromSource(new RoomInvitationSentEvent(userJid, reasonText), this);
 	}
 	
-	/**
-	 * Set the current chat status
-	 * 
-	 * @param chatStatus
-	 */
-	private void setStatus(final RoomStatus status) {
-		if (!status.equals(this.status)) {
-			this.status = status;
-		}
-	}
-
 	/**
 	 * Get the chats uri. Is the other side of the conversation in a PairChat,
 	 * or the room uri in a RoomChat
@@ -427,8 +429,8 @@ public final class RoomChat {
 	 * @return
 	 */
 	private Presence createEnterPresence(final HistoryOptions historyOptions) {
-		final Presence presence = new Presence(null, null, roomUri);
-		final XMLPacket x = presence.getXML().addChild("x", "http://jabber.org/protocol/muc");
+		final Presence presence = new Presence(null, roomUri);
+		final XMLPacket x = presence.getXML().addChild("x", XmppNamespaces.MUC);
 		presence.setPriority(0);
 		if (historyOptions != null) {
 			final XMLPacket h = x.addChild("history");
@@ -448,26 +450,13 @@ public final class RoomChat {
 		return presence;
 	}
 
-	private static boolean isNewRoom(final XMLPacket xtension) {
-		final String code = xtension.getFirstChild("status").getAttribute("code");
-		return code != null && code.equals("201");
-	}
-
-	private void requestCreateInstantRoom() {
-		final IQ iq = new IQ(IQ.Type.set);
-		iq.setTo(roomUri.getJID());
-		iq.addChild("query", "http://jabber.org/protocol/muc#owner").addChild("x", "jabber:x:data").setAttribute("type", "submit");
-
-		session.sendIQ("rooms", iq, new IQCallback() {
-			@Override
-			public void onIQSuccess(final IQ iq) {
-				setStatus(RoomStatus.ready);
-			}
-
-			@Override
-			public void onIQFailure(final IQ iq) {
-			}
-		});
+	private static boolean hasStatus(final XMLPacket xtension, final int code) {
+		for (final XMLPacket child : xtension.getChildren("status")) {
+			if (String.valueOf(code).equals(child.getAttribute("code")))
+				return true;
+		}
+		
+		return false;
 	}
 
 	private Occupant setOccupantPresence(final XmppURI userUri, final XmppURI occupantUri, final String affiliation, final String role, final Presence.Show show, final String statusMessage) {

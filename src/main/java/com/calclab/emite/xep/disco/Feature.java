@@ -20,18 +20,47 @@
 
 package com.calclab.emite.xep.disco;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.concurrent.Immutable;
+
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.base.Objects;
 
-public class Feature {
+@Immutable
+public final class Feature implements HasXML {
 
-	public static Feature fromPacket(final XMLPacket packet) {
-		return new Feature(packet.getAttribute("var"));
+	private final String var;
+
+	protected Feature(final String var) {
+		this.var = checkNotNull(var);
 	}
-
-	public final String var;
-
-	public Feature(final String var) {
-		this.var = var;
+	
+	public final String getVar() {
+		return var;
 	}
-
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(var);
+	}
+	
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof Feature) {
+			final Feature other = (Feature) obj;
+			
+			return var.equals(other.var);
+		}
+		
+		return super.equals(obj);
+	}
+	
+	@Override
+	public final XMLPacket getXML() {
+		return XMLBuilder.create("feature").attribute("var", var).getXML();
+	}
+	
 }

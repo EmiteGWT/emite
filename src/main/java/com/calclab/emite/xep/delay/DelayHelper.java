@@ -24,9 +24,6 @@ import com.calclab.emite.base.xml.XMLMatcher;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.stanzas.Stanza;
 
-/**
- * Some utility methods related to delays and stanzas
- */
 public class DelayHelper {
 	/**
 	 * Get delay from stanza (if present)

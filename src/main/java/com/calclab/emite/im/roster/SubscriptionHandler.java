@@ -20,6 +20,8 @@
 
 package com.calclab.emite.im.roster;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.calclab.emite.im.events.SubscriptionRequestReceivedEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -33,12 +35,12 @@ import com.google.inject.Singleton;
  * handler.setBehaviour(Behaviour.acceptAll);
  * </pre>
  * 
- * The default behaviour is none: do nothing
+ * The default behavior is none: do nothing
  */
 @Singleton
 public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Handler {
 
-	public static enum Behaviour {
+	public static enum Behavior {
 		/** do nothing **/
 		none,
 		/** accept all subscription request **/
@@ -48,33 +50,33 @@ public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Han
 	}
 
 	private final SubscriptionManager manager;
-
-	private Behaviour behaviour = Behaviour.none;
+	private Behavior behavior;
 
 	@Inject
-	public SubscriptionHandler(final SubscriptionManager manager) {
-		this.manager = manager;
+	protected SubscriptionHandler(final SubscriptionManager manager) {
+		this.manager = checkNotNull(manager);
+		this.behavior = Behavior.none;
 
 		manager.addSubscriptionRequestReceivedHandler(this);
 	}
 
 	@Override
 	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
-		if (behaviour == Behaviour.acceptAll) {
+		if (behavior == Behavior.acceptAll) {
 			manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
-		} else if (behaviour == Behaviour.refuseAll) {
+		} else if (behavior == Behavior.refuseAll) {
 			manager.refuseSubscriptionRequest(event.getFrom());
 		}
 	}
 
 	/**
-	 * Change the behaviour
+	 * Change the behavior
 	 * 
 	 * @param behaviour
-	 *            the desired new behaviour
+	 *            the desired new behavior
 	 */
-	public void setBehaviour(final Behaviour behaviour) {
-		this.behaviour = behaviour;
+	public void setBehavior(final Behavior behavior) {
+		this.behavior = checkNotNull(behavior);
 	}
 
 }

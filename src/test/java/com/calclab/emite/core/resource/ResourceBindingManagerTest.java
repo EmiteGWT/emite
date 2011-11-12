@@ -50,7 +50,7 @@ public class ResourceBindingManagerTest {
 	@Test
 	public void shouldEventIfBindedSucceed() {
 		currentEvent = null;
-		manager.addResourceBindResultHandler(new ResourceBindResultEvent.Handler() {
+		manager.addResourceBindResultHandler(new DiscoveryItemsCallback.Handler() {
 			@Override
 			public void onResourceBindResult(ResourceBindResultEvent event) {
 				currentEvent = event;

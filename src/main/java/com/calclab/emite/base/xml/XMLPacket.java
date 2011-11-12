@@ -36,6 +36,8 @@ public interface XMLPacket extends HasXML {
 
 	XMLPacket getFirstParent();
 
+	boolean hasAttribute(String name);
+
 	ImmutableMap<String, String> getAttributes();
 
 	@Nullable

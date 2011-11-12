@@ -301,7 +301,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			@Override
 			public void onIQSuccess(final IQ iq) {
 				setStatus(SessionStatus.binded);
-				requestSession(XmppURI.uri(iq.getChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").getChildText("jid")));
+				requestSession(XmppURI.uri(iq.getExtension("bind", "urn:ietf:params:xml:ns:xmpp-bind").getChildText("jid")));
 			}
 
 			@Override

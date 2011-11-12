@@ -29,7 +29,7 @@ import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.stanzas.Message;
 import com.calclab.emite.im.chat.PairChat;
 import com.calclab.emite.im.chat.PairChatManagerImpl;
-import com.calclab.emite.im.chat.PairChatSelectionStrategy;
+import com.calclab.emite.im.chat.PairChat;
 import com.calclab.emite.xep.chatstate.ChatStateHook;
 import com.calclab.emite.xep.chatstate.ChatStateManager;
 import com.calclab.emite.xep.chatstate.ChatStateHook.ChatState;

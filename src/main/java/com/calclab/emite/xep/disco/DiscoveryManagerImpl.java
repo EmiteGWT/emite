@@ -20,126 +20,143 @@
 
 package com.calclab.emite.xep.disco;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Map;
 
+import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
+import com.calclab.emite.core.events.IQReceivedEvent;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.IQ;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class DiscoveryManagerImpl implements DiscoveryManager {
-
+public final class DiscoveryManagerImpl implements DiscoveryManager, IQReceivedEvent.Handler {
+	
 	private final EventBus eventBus;
 	private final XmppSession session;
 
-	private final Map<XmppURI, DiscoveryInfoResults> infoResults;
-	private final Map<XmppURI, DiscoveryItemsResults> itemsResults;
+	private final Map<XmppURI, ImmutableSet<Item>> itemCache;
+	private final Map<XmppURI, ImmutableSet<Feature>> featureCache;
+	private final Map<XmppURI, ImmutableSet<Identity>> identityCache;
 
 	@Inject
 	protected DiscoveryManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
-		this.eventBus = eventBus;
-		this.session = session;
+		this.eventBus = checkNotNull(eventBus);
+		this.session = checkNotNull(session);
 
-		infoResults = Maps.newHashMap();
-		itemsResults = Maps.newHashMap();
+		itemCache = Maps.newHashMap();
+		featureCache = Maps.newHashMap();
+		identityCache = Maps.newHashMap();
+		
+		session.addIQReceivedHandler(this);
+	}
+	
+	@Override
+	public void onIQReceived(IQReceivedEvent event) {
+		final IQ iq = event.getIQ();
+		
+		if (IQ.Type.get.equals(iq.getType()) && iq.getQuery(XmppNamespaces.DISCO_INFO) != null) {
+			// TODO
+		} else if (IQ.Type.get.equals(iq.getType()) && iq.getQuery(XmppNamespaces.DISCO_ITEMS) != null) {
+			// TODO
+		}
 	}
 
 	@Override
-	public HandlerRegistration addDiscoveryInfoResultHandler(final DiscoveryInfoResultEvent.Handler handler) {
-		return eventBus.addHandlerToSource(DiscoveryInfoResultEvent.TYPE, this, handler);
+	public final void sendInfoQuery(final XmppURI targetUri, final DiscoveryInfoCallback handler) {
+		sendInfoQuery(targetUri, handler, false);
 	}
-
-	@Override
-	public void areFeaturesSupported(final XmppURI targetUri, final FeatureSupportedHandler callback, final String... featuresName) {
-		sendInfoQuery(targetUri, new DiscoveryInfoResultEvent.Handler() {
+		
+	public final void sendInfoQuery(final XmppURI targetUri, final DiscoveryInfoCallback handler, final boolean useCache) {	
+		if (useCache && featureCache.containsKey(targetUri) && identityCache.containsKey(targetUri)) {
+			handler.onDiscoveryInfoResult(featureCache.get(targetUri), identityCache.get(targetUri));
+			return;
+		}
+		
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.setTo(targetUri);
+		iq.addChild("query", XmppNamespaces.DISCO_INFO);
+		
+		session.sendIQ("disco", iq, new IQCallback() {
 			@Override
-			public void onDiscoveryInfoResult(final DiscoveryInfoResultEvent event) {
-				if (event.hasResult()) {
-					callback.onFeaturesSupported(event.getResults().areFeaturedSupported(featuresName));
-				} else {
-					callback.onFeaturesSupported(false);
-				}
+			public void onIQSuccess(final IQ iq) {
+				final ImmutableSet<Feature> features = parseFeatures(iq.getQuery(XmppNamespaces.DISCO_INFO));
+				final ImmutableSet<Identity> identities = parseIdentities(iq.getQuery(XmppNamespaces.DISCO_INFO));
+				featureCache.put(targetUri, features);
+				identityCache.put(targetUri, identities);
+				handler.onDiscoveryInfoResult(features, identities);
+			}
+
+			@Override
+			public void onIQFailure(final IQ iq) {
+				featureCache.remove(targetUri);
+				identityCache.remove(targetUri);
+				handler.onDiscoveryInfoError(iq.getExtension("error", XmppNamespaces.DISCO_INFO));
 			}
 		});
 	}
 
 	@Override
-	public void sendInfoQuery(final XmppURI targetUri, final DiscoveryInfoResultEvent.Handler handler) {
-		final DiscoveryInfoResults cached = infoResults.get(targetUri);
-		if (cached != null) {
-			if (handler != null) {
-				handler.onDiscoveryInfoResult(new DiscoveryInfoResultEvent(cached));
-			}
-		} else {
-			final IQ iq = new IQ(IQ.Type.get);
-			iq.setTo(targetUri);
-			iq.addChild("query", "http://jabber.org/protocol/disco#info");
-			session.sendIQ("disco", iq, new IQCallback() {
-				@Override
-				public void onIQSuccess(final IQ iq) {
-					final DiscoveryInfoResults infoResult = new DiscoveryInfoResults(iq);
-					infoResults.put(targetUri, infoResult);
-
-					final DiscoveryInfoResultEvent event = new DiscoveryInfoResultEvent(infoResult);
-					if (handler != null) {
-						handler.onDiscoveryInfoResult(event);
-					}
-					eventBus.fireEventFromSource(event, this);
-				}
-
-				@Override
-				public void onIQFailure(final IQ iq) {
-					final DiscoveryInfoResultEvent event = new DiscoveryInfoResultEvent(iq.getChild("error", "http://jabber.org/protocol/disco#info"));
-					if (handler != null) {
-						handler.onDiscoveryInfoResult(event);
-					}
-					eventBus.fireEventFromSource(event, this);
-				}
-			});
+	public final void sendItemsQuery(final XmppURI targetUri, final DiscoveryItemsCallback handler) {
+		sendItemsQuery(targetUri, handler, false);
+	}
+	
+	public final void sendItemsQuery(final XmppURI targetUri, final DiscoveryItemsCallback handler, final boolean useCache) {
+		if (useCache && itemCache.containsKey(targetUri)) {
+			handler.onDiscoveryItemsResult(itemCache.get(targetUri));
+			return;
 		}
+		
+		final IQ iq = new IQ(IQ.Type.get);
+		iq.setTo(targetUri);
+		iq.addChild("query", XmppNamespaces.DISCO_ITEMS);
+		
+		session.sendIQ("disco", iq, new IQCallback() {
+			@Override
+			public void onIQSuccess(final IQ iq) {
+				final ImmutableSet<Item> items = parseItems(iq.getQuery(XmppNamespaces.DISCO_ITEMS));
+				itemCache.put(targetUri, items);
+				handler.onDiscoveryItemsResult(items);
+			}
+
+			@Override
+			public void onIQFailure(final IQ iq) {
+				itemCache.remove(targetUri);
+				handler.onDiscoveryItemsError(iq.getExtension("error", XmppNamespaces.DISCO_ITEMS));
+			}
+		});
+	}
+	
+	private static final ImmutableSet<Item> parseItems(final XMLPacket query) {
+		final ImmutableSet.Builder<Item> builder = ImmutableSet.builder();
+		for (final XMLPacket child : query.getChildren("item")) {
+			builder.add(new Item(XmppURI.uri(child.getAttribute("jid")), child.getAttribute("name"), child.getAttribute("node")));
+		}
+		return builder.build();
 	}
 
-	@Override
-	public void sendItemsQuery(final XmppURI targetUri, final DiscoveryItemsResultEvent.Handler handler) {
-		final DiscoveryItemsResults cached = itemsResults.get(targetUri);
-		if (cached != null) {
-			if (handler != null) {
-				handler.onDiscoveryItemsResult(new DiscoveryItemsResultEvent(cached));
-			}
-		} else {
-			final IQ iq = new IQ(IQ.Type.get);
-			iq.setTo(targetUri);
-			iq.addChild("query", "http://jabber.org/protocol/disco#items");
-			session.sendIQ("disco", iq, new IQCallback() {
-				@Override
-				public void onIQSuccess(final IQ iq) {
-					final DiscoveryItemsResults itemsResult = new DiscoveryItemsResults(iq);
-					itemsResults.put(targetUri, itemsResult);
-
-					final DiscoveryItemsResultEvent event = new DiscoveryItemsResultEvent(itemsResult);
-					if (handler != null) {
-						handler.onDiscoveryItemsResult(event);
-					}
-					eventBus.fireEventFromSource(event, this);
-				}
-
-				@Override
-				public void onIQFailure(final IQ iq) {
-					final DiscoveryItemsResultEvent event = new DiscoveryItemsResultEvent(iq.getChild("error", "http://jabber.org/protocol/disco#items"));
-					if (handler != null) {
-						handler.onDiscoveryItemsResult(event);
-					}
-					eventBus.fireEventFromSource(event, this);
-				}
-			});
+	private static final ImmutableSet<Feature> parseFeatures(final XMLPacket query) {
+		final ImmutableSet.Builder<Feature> builder = ImmutableSet.builder();
+		for (final XMLPacket child : query.getChildren("feature")) {
+			builder.add(new Feature(child.getAttribute("var")));
 		}
+		return builder.build();
 	}
-
+	
+	private static final ImmutableSet<Identity> parseIdentities(final XMLPacket query) {
+		final ImmutableSet.Builder<Identity> builder = ImmutableSet.builder();
+		for (final XMLPacket child : query.getChildren("identity")) {
+			builder.add(new Identity(child.getAttribute("category"), child.getAttribute("type"), child.getAttribute("name")));
+		}
+		return builder.build();
+	}
 }

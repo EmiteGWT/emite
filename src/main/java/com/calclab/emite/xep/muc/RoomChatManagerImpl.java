@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.events.PresenceReceivedEvent;
@@ -103,7 +104,7 @@ public final class RoomChatManagerImpl implements RoomChatManager, SessionStatus
 			// check both status: loggingOut is preferred, but not
 			// always fired (i.e. error)
 			for (final RoomChat chat : roomsByJID.values()) {
-				chat.close();
+				chat.close(null);
 			}
 		}
 	}
@@ -112,7 +113,7 @@ public final class RoomChatManagerImpl implements RoomChatManager, SessionStatus
 	public final void onMessageReceived(final MessageReceivedEvent event) {
 		final Message message = event.getMessage();
 		
-		final XMLPacket x = message.getExtension("x", "http://jabber.org/protocol/muc#user");
+		final XMLPacket x = message.getExtension("x", XmppNamespaces.MUC_USER);
 		if (x != null && x.hasChild("invite")) {
 			final XMLPacket invite = x.getFirstChild("invite");
 			final RoomInvitation invitation = new RoomInvitation(XmppURI.uri(invite.getAttribute("from")), message.getFrom(), invite.getChildText("reason"));
@@ -147,22 +148,17 @@ public final class RoomChatManagerImpl implements RoomChatManager, SessionStatus
 	public final RoomChat openRoom(final XmppURI uri, final HistoryOptions historyOptions) {
 		RoomChat chat = getRoom(uri);
 		if (chat == null) {
-			chat = new RoomChat(eventBus, session, this, uri, session.getCurrentUserURI());
+			chat = new RoomChat(this, eventBus, session, uri, session.getCurrentUserURI());
 			roomsByJID.put(uri.getJID(), chat);
 			eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.created, chat), this);
 		}
 		
 		chat.open(historyOptions);
-		eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.opened, chat), this);
 		return chat;
 	}
 
 	protected final boolean closeRoom(final RoomChat room) {
-		if (roomsByJID.remove(room.getRoomURI().getJID()) == null)
-			return false;
-		
-		eventBus.fireEventFromSource(new RoomChatChangedEvent(ChangeType.closed, room), this);
-		return true;
+		return roomsByJID.remove(room.getRoomURI().getJID()) != null;
 	}
 
 	@Override

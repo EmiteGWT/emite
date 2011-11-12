@@ -20,43 +20,55 @@
 
 package com.calclab.emite.xep.dataforms;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.collect.Lists;
 
 /**
  * A XEP-0004 field option
  */
-public class Option implements HasXML {
+public final class Option implements HasXML {
 
-	private final XMLPacket xml;
+	@Nullable private String label;
+	private final List<String> values;
 
 	public Option() {
-		xml = XMLBuilder.create("option").getXML();
+		values = Lists.newArrayList();
 	}
-
-	protected Option(final XMLPacket xml) {
-		this.xml = xml;
+	
+	@Nullable
+	public final String getLabel() {
+		return label;
 	}
-
-	public String getLabel() {
-		return xml.getAttribute("label");
+	
+	public final void setLabel(@Nullable final String label) {
+		this.label = label;
 	}
-
-	public void setLabel(final String label) {
-		xml.setAttribute("label", label);
+	
+	public final List<String> getValues() {
+		return values;
 	}
-
-	public String getValue() {
-		return xml.getChildText("value");
-	}
-
-	public void setValue(final String value) {
-		xml.setChildText("value", value);
+	
+	public final void addValue(final String value) {
+		values.add(checkNotNull(value));
 	}
 
 	@Override
-	public XMLPacket getXML() {
-		return xml;
+	public final XMLPacket getXML() {
+		final XMLBuilder builder = XMLBuilder.create("option");
+		
+		builder.attribute("label", label);
+		for (final String value : values) {
+			builder.childText("value", value);
+		}
+		
+		return builder.getXML();
 	}
 }

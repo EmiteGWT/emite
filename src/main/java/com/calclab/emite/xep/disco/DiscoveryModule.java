@@ -22,17 +22,6 @@ package com.calclab.emite.xep.disco;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
-/**
- * Implements XEP-0030: Service Discovery
- * 
- * This specification defines an XMPP protocol extension for discovering
- * information about other XMPP entities
- * 
- * @see http://www.xmpp.org/extensions/xep-0030.html
- * 
- *      NOT IMPLEMENTED
- * 
- */
 public class DiscoveryModule extends AbstractGinModule {
 
 	@Override

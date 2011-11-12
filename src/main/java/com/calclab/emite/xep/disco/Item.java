@@ -20,7 +20,16 @@
 
 package com.calclab.emite.xep.disco;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppURI;
+import com.google.common.base.Objects;
 
 /**
  * Each <item/> element MUST possess 'jid' attribute and MAY possess:
@@ -29,19 +38,52 @@ import com.calclab.emite.base.xml.XMLPacket;
  * <li>a 'node' attribute specifying a hierarchical structure.</li>
  * </ul>
  */
-public class Item {
+@Immutable
+public final class Item implements HasXML {
 
-	public static Item fromPacket(final XMLPacket packet) {
-		return new Item(packet.getAttribute("jid"), packet.getAttribute("name"), packet.getAttribute("node"));
-	}
+	private final XmppURI jid;
+	@Nullable private final String name;
+	@Nullable private final String node;
 
-	public final String jid;
-	public final String name;
-	public final String node;
-
-	public Item(final String jid, final String name, final String node) {
-		this.jid = jid;
+	protected Item(final XmppURI jid, @Nullable final String name, @Nullable final String node) {
+		this.jid = checkNotNull(jid);
 		this.name = name;
 		this.node = node;
 	}
+	
+	public final XmppURI getJID() {
+		return jid;
+	}
+	
+	@Nullable
+	public final String getName() {
+		return name;
+	}
+	
+	@Nullable
+	public final String getNode() {
+		return node;
+	}
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(jid, name, node);
+	}
+	
+	@Override
+	public final boolean equals(final Object obj) {
+		if (obj instanceof Item) {
+			final Item other = (Item) obj;
+			
+			return jid.equals(other.jid) && Objects.equal(name, other.name) && Objects.equal(node, other.node);
+		}
+		
+		return super.equals(obj);
+	}
+	
+	@Override
+	public final XMLPacket getXML() {
+		return XMLBuilder.create("item").attribute("jid", jid.toString()).attribute("name", name).attribute("node", node).getXML();
+	}
+	
 }

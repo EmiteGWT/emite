@@ -20,26 +20,48 @@
 
 package com.calclab.emite.xep.dataforms;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.collect.Lists;
 
 /**
- * 
  * XEP-0004 Reported element for "3.2 Multiple Items in Form Results", which can
  * be understood as a "table header" describing the data to follow. The
  * <reported/> element defines the data format for the result items by
  * specifying the fields to be expected for each item; for this reason, the
  * <field/> elements SHOULD possess a 'type' attribute and 'label' attribute in
  * addition to the 'var' attribute, and SHOULD NOT contain a <value/> element.
- * 
  */
-public class Reported extends AbstractItem {
+public class Reported implements HasXML {
 
+	private final List<Field> fields;
+	
 	public Reported() {
-		super("reported");
+		fields = Lists.newArrayList();
 	}
-
-	public Reported(final XMLPacket packet) {
-		super(packet);
+	
+	public final List<Field> getFields() {
+		return fields;
 	}
-
+	
+	public final void addField(final Field field) {
+		fields.add(checkNotNull(field));
+	}
+	
+	@Override
+	public final XMLPacket getXML() {
+		XMLBuilder builder = XMLBuilder.create("reported");
+		
+		for (final Field field : fields) {
+			builder.child(field);
+		}
+		
+		return builder.getXML();
+	}
+	
 }

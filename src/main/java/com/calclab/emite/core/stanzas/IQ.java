@@ -74,7 +74,7 @@ public class IQ extends Stanza {
 		return xml.addChild(name, xmlns);
 	}
 
-	public XMLPacket getChild(final String name, final String xmlns) {
-		return xml.getFirstChild(name, xmlns);
+	public XMLPacket getQuery(final String xmlns) {
+		return getExtension("query", xmlns);
 	}
 }

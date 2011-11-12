@@ -20,20 +20,88 @@
 
 package com.calclab.emite.xep.dataforms;
 
-import java.util.ArrayList;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 /**
- * 
  * XEP-0004 Form
- * 
  */
-public class Form implements HasXML {
+public final class Form implements HasXML {
 
+	public static final Form fromXML(final XMLPacket xml) {
+		checkArgument("x".equals(xml.getTagName()) && XmppNamespaces.DATA_FORM.equals(xml.getNamespace()));
+		
+		final Form form = new Form(Type.valueOf(xml.getAttribute("type")));
+		form.setTitle(xml.getChildText("title"));
+		
+		for (final XMLPacket xmlInstructions : xml.getChildren("instructions")) {
+			form.addInstruction(xmlInstructions.getText());
+		}
+		
+		if (xml.hasChild("reported")) {
+			final XMLPacket xmlReported = xml.getFirstChild("reported");
+			
+			final Reported reported = new Reported();
+			for (final XMLPacket xmlField : xmlReported.getChildren("field")) {
+				reported.addField(parseField(xmlField));
+			}
+		}
+		
+		if (xml.hasChild("item")) {
+			final XMLPacket xmlItem = xml.getFirstChild("item");
+			
+			final Item item = new Item();
+			for (final XMLPacket xmlField : xmlItem.getChildren("field")) {
+				item.addField(parseField(xmlField));
+			}
+		}
+		
+		for (final XMLPacket xmlField : xml.getChildren("field")) {
+			form.addField(parseField(xmlField));
+		}
+		
+		return null;
+	}
+	
+	private static final Field parseField(final XMLPacket xml) {
+		final Field field = new Field();
+		
+		if (xml.hasAttribute("type")) {
+			field.setType(Field.Type.fromString(xml.getAttribute("type")));
+		}
+		
+		field.setLabel(xml.getAttribute("label"));
+		field.setVar(xml.getAttribute("var"));
+		field.setDesc(xml.getChildText("desc"));
+		field.setRequired(xml.hasChild("required"));
+		
+		for (final XMLPacket xmlValue : xml.getChildren("value")) {
+			field.addValue(xmlValue.getText());
+		}
+		
+		for (final XMLPacket xmlOption : xml.getChildren("option")) {
+			final Option option = new Option();
+			option.setLabel(xmlOption.getAttribute("label"));
+			for (final XMLPacket xmlValue : xml.getChildren("value")) {
+				option.addValue(xmlValue.getText());
+			}
+			field.addOption(option);
+		}
+		
+		return field;
+	}
+	
 	public static enum Type {
 		/**
 		 * The form-processing entity is asking the form-submitting entity to
@@ -58,94 +126,99 @@ public class Form implements HasXML {
 		 */
 		result
 	}
-
-	private final XMLPacket xml;
-
-	public Form(final XMLPacket xml) {
-		this.xml = xml;
-	}
-
+	
+	private Type type;
+	@Nullable private String title;
+	@Nullable private Reported reported;
+	
+	private final List<String> instructions;
+	private final List<Item> items;
+	private final List<Field> fields;
+	
 	public Form(final Type type) {
-		xml = XMLBuilder.create("x", "jabber:x:data").getXML();
-		setType(type);
+		this.type = checkNotNull(type);
+		
+		instructions = Lists.newArrayList();
+		items = Lists.newArrayList();
+		fields = Lists.newArrayList();
 	}
-
-	public String getTitle() {
-		return xml.getChildText("title");
+	
+	public final Type getType() {
+		return type;
 	}
-
-	public void setTitle(final String title) {
-		xml.setChildText("title", title);
+	
+	public final void setType(final Type type) {
+		this.type = checkNotNull(type);
 	}
-
-	public List<String> getInstructions() {
-		final List<String> instructions = new ArrayList<String>();
-		for (final XMLPacket instruction : xml.getChildren("instructions")) {
-			instructions.add(instruction.getText());
-		}
+	
+	@Nullable
+	public final String getTitle() {
+		return title;
+	}
+	
+	public final void setTitle(@Nullable final String title) {
+		this.title = title;
+	}
+	
+	@Nullable
+	public final Reported getReported() {
+		return reported;
+	}
+	
+	public final void setReported(@Nullable final Reported reported) {
+		this.reported = reported;
+	}
+	
+	public final List<String> getInstructions() {
 		return instructions;
 	}
-
-	public void addInstruction(final String instruction) {
-		xml.addChild("instructions").setText(instruction);
+	
+	public final void addInstruction(final String instruction) {
+		instructions.add(checkNotNull(instruction));
 	}
-
-	public List<Field> getFields() {
-		final List<Field> fields = new ArrayList<Field>();
-		for (final XMLPacket fieldPacket : xml.getChildren("field")) {
-			fields.add(new Field(fieldPacket));
-		}
-		return fields;
-	}
-
-	public void addField(final Field field) {
-		xml.addChild(field);
-	}
-
-	public List<Item> getItems() {
-		final List<Item> items = new ArrayList<Item>();
-		for (final XMLPacket itemPacket : xml.getChildren("item")) {
-			items.add(new Item(itemPacket));
-		}
+	
+	public final List<Item> getItems() {
 		return items;
 	}
-
-	public void addItem(final Item item) {
-		xml.addChild(item);
+	
+	public final void addItem(final Item item) {
+		items.add(checkNotNull(item));
 	}
-
-	/**
-	 * In some contexts (e.g., the results of a search request), it may be
-	 * necessary to communicate multiple items. Therefore, a data form of type
-	 * "result" MAY contain two child elements not described in the basic syntax
-	 * above: 1. One and only <reported/> element, which can be understood as a
-	 * "table header" describing the data to follow. 2. Zero or more <item/>
-	 * elements, which can be understood as "table cells" containing data (if
-	 * any) that matches the request.
-	 */
-	public Reported getReported() {
-		return new Reported(xml.getFirstChild("reported"));
+	
+	public final List<Field> getFields() {
+		return fields;
 	}
-
-	public void addReported(final Field field) {
-		XMLPacket reportedPacket = xml.getFirstChild("reported");
-		if (reportedPacket == null) {
-			reportedPacket = xml.addChild("reported");
-		}
-		reportedPacket.addChild(field);
+	
+	public final void addField(final Field field) {
+		fields.add(checkNotNull(field));
 	}
-
-	public Type getType() {
-		return Type.valueOf(xml.getAttribute("type"));
-	}
-
-	public void setType(final Type type) {
-		xml.setAttribute("type", type.toString());
-	}
-
+	
 	@Override
-	public XMLPacket getXML() {
-		return xml;
+	public final XMLPacket getXML() {
+		final XMLBuilder builder = XMLBuilder.create("x", "jabber:x:data");
+		builder.attribute("type", type.toString());
+		
+		if (!Strings.isNullOrEmpty(title)) {
+			builder.childText("title", title);
+		}
+		
+		for (final String instruction : instructions) {
+			builder.child("instructions").text(instruction);
+		}
+		
+		if (reported != null) {
+			builder.child(reported);
+		}
+		
+		for (final Item item : items) {
+			builder.child(item);
+		}
+		
+		for (final Field field : fields) {
+			builder.child(field);
+		}
+		
+		return builder.getXML();
 	}
 
 }

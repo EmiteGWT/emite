@@ -66,7 +66,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
 		if (SessionStatus.rosterReady.equals(event.getStatus())) {
-			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence(null, session.getCurrentUserURI(), null);
+			final Presence initialPresence = ownPresence != INITIAL_PRESENCE ? ownPresence : new Presence((Presence.Type)null);
 			session.send(initialPresence);
 			setOwnPresence(initialPresence);
 			session.setStatus(SessionStatus.ready);
@@ -80,8 +80,7 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	@Override
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
-		final Presence.Type type = presence.getType();
-		if (Presence.Type.probe.equals(type)) {
+		if (Presence.Type.probe.equals(presence.getType())) {
 			session.send(ownPresence);
 		}
 	}

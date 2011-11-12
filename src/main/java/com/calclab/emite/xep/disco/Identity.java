@@ -20,27 +20,66 @@
 
 package com.calclab.emite.xep.disco;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.google.common.base.Objects;
 
 /**
  * Each <identity/> element MUST possess 'category' and 'type' attributes
  * specifying the category and type for the entity, and MAY possess a 'name'
  * attribute specifying a natural-language name for the entity
- * 
- * 
  */
-public class Identity {
-	public static Identity fromPacket(final XMLPacket packet) {
-		return new Identity(packet.getAttribute("category"), packet.getAttribute("type"), packet.getAttribute("name"));
-	}
+@Immutable
+public final class Identity implements HasXML {
+	
+	private final String category;
+	private final String type;
+	@Nullable private final String name;
 
-	public final String category;
-	public final String type;
-	public final String name;
-
-	public Identity(final String category, final String type, final String name) {
-		this.category = category;
-		this.type = type;
+	protected Identity(final String category, final String type, @Nullable final String name) {
+		this.category = checkNotNull(category);
+		this.type = checkNotNull(type);
 		this.name = name;
 	}
+	
+	public final String getCategory() {
+		return category;
+	}
+	
+	public final String getType() {
+		return type;
+	}
+	
+	@Nullable
+	public final String getName() {
+		return name;
+	}
+	
+	@Override
+	public final int hashCode() {
+		return Objects.hashCode(category, type, name);
+	}
+	
+	@Override
+	public final boolean equals(Object obj) {
+		if (obj instanceof Identity) {
+			final Identity other = (Identity) obj;
+			
+			return category.equals(other.category) && type.equals(other.type) && Objects.equal(name, other.name);
+		}
+		
+		return super.equals(obj);
+	}
+	
+	@Override
+	public final XMLPacket getXML() {
+		return XMLBuilder.create("identity").attribute("category", category).attribute("type", type).attribute("name", name).getXML();
+	}
+	
 }

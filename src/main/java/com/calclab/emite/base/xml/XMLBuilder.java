@@ -47,6 +47,11 @@ public final class XMLBuilder implements HasXML {
 		return this;
 	}
 	
+	public XMLBuilder child(final HasXML child) {
+		xml.addChild(child);
+		return this;
+	}
+	
 	public XMLBuilder child(final String name) {
 		return new XMLBuilder(xml.addChild(name));
 	}
