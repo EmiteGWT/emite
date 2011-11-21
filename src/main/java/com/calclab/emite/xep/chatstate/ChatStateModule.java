@@ -22,6 +22,9 @@ package com.calclab.emite.xep.chatstate;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
+/**
+ * Emite Chat State GIN module
+ */
 public class ChatStateModule extends AbstractGinModule {
 
 	@Override

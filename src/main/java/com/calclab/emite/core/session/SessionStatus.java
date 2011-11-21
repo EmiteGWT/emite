@@ -61,7 +61,7 @@ public enum SessionStatus {
 	 * this status.
 	 */
 	ready,
-
+	
 	/**
 	 * We are logging out. Last oportunity to send stanzas (i.e: last presence).
 	 * session.getCurrentUser() returns the current user;
@@ -73,7 +73,7 @@ public enum SessionStatus {
 	 * "resuming" and "ready" (not loggedIn)
 	 */
 	resume,
-
+	
 	/**
 	 * The session is binded
 	 */

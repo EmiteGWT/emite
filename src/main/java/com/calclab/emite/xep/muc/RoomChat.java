@@ -41,6 +41,7 @@ import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.core.stanzas.Message;
 import com.calclab.emite.core.stanzas.Presence;
 import com.calclab.emite.core.stanzas.Stanza;
+import com.calclab.emite.xep.dataforms.Form;
 import com.calclab.emite.xep.muc.events.BeforeRoomInvitationSentEvent;
 import com.calclab.emite.xep.muc.events.OccupantChangedEvent;
 import com.calclab.emite.xep.muc.events.RoomChatChangedEvent;
@@ -107,7 +108,7 @@ public final class RoomChat {
 				if (hasStatus(xmuc, 201)) {
 					final IQ iq = new IQ(IQ.Type.set);
 					iq.setTo(roomUri.getJID());
-					iq.addChild("query", XmppNamespaces.MUC_OWNER).addChild("x", "jabber:x:data").setAttribute("type", "submit");
+					iq.addQuery(XmppNamespaces.MUC_OWNER).addChild(new Form(Form.Type.submit));
 
 					session.sendIQ("rooms", iq, new IQCallback() {
 						@Override

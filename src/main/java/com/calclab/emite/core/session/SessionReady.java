@@ -24,35 +24,39 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.calclab.emite.core.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.stanzas.Presence;
-import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * A simple component that sets the session ready after logged in. This
- * component is removed if InstantMessagingModule used.
+ * A simple component that sets the session ready after logging in.
+ * 
+ * This component is disabled if PresenceManager is used.
  */
-public class SessionReady implements SessionStatusChangedEvent.Handler {
+public final class SessionReady implements SessionStatusChangedEvent.Handler {
 
-	private final XmppSession session;
-	private final HandlerRegistration handler;
+	private static boolean enabled = true;
+	
+	/**
+	 * Disable this component.
+	 * 
+	 * This method is meant to be called by PresenceManager.
+	 */
+	public static final void disable() {
+		enabled = false;
+	}
+	
+	private final XmppSessionImpl session;
 
-	@Inject
-	public SessionReady(final XmppSession session) {
+	protected SessionReady(final XmppSessionImpl session) {
 		this.session = checkNotNull(session);
 
-		handler = session.addSessionStatusChangedHandler(this, true);
+		session.addSessionStatusChangedHandler(this, true);
 	}
 
 	@Override
 	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
-		if (SessionStatus.rosterReady.equals(event.getStatus())) {
+		if (enabled && SessionStatus.rosterReady.equals(event.getStatus())) {
 			session.send(new Presence());
 			session.setStatus(SessionStatus.ready);
 		}
-	}
-
-	public void disable() {
-		handler.removeHandler();
 	}
 
 }

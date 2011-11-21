@@ -24,9 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
-import com.calclab.emite.base.xml.XMLPacket;
 import com.google.common.collect.Lists;
 
 /**
@@ -37,7 +35,7 @@ import com.google.common.collect.Lists;
  * <field/> elements SHOULD possess a 'type' attribute and 'label' attribute in
  * addition to the 'var' attribute, and SHOULD NOT contain a <value/> element.
  */
-public class Reported implements HasXML {
+public class Reported {
 
 	private final List<Field> fields;
 	
@@ -53,15 +51,14 @@ public class Reported implements HasXML {
 		fields.add(checkNotNull(field));
 	}
 	
-	@Override
-	public final XMLPacket getXML() {
-		XMLBuilder builder = XMLBuilder.create("reported");
+	protected final void build(final XMLBuilder builder) {
+		builder.child("reported");
 		
 		for (final Field field : fields) {
-			builder.child(field);
+			field.build(builder);
 		}
 		
-		return builder.getXML();
+		builder.parent();
 	}
 	
 }

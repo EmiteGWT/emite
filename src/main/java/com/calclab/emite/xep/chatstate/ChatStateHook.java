@@ -22,6 +22,7 @@ package com.calclab.emite.xep.chatstate;
 
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.stanzas.Message;
@@ -33,7 +34,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * XEP-0085: Chat State Notifications
  * http://www.xmpp.org/extensions/xep-0085.html (Version: 1.2)
  */
-public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
+public final class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessageSentEvent.Handler {
 
 	private static final Logger logger = Logger.getLogger(ChatStateHook.class.getName());
 
@@ -66,6 +67,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 
 		for (final ChatState chatState : ChatState.values()) {
 			final String typeSt = chatState.toString();
+			// TODO: check namespace
 			if (message.getXML().hasChild(typeSt) || message.getXML().hasChild("cha:" + typeSt)) {
 				otherState = chatState;
 				if (negotiationStatus.equals(NegotiationStatus.notStarted)) {
@@ -98,7 +100,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 				}
 			}
 			if (!alreadyWithState) {
-				message.getXML().addChild(ChatState.active.toString(), "http://jabber.org/protocol/chatstates");
+				message.getXML().addChild(ChatState.active.toString(), XmppNamespaces.CHATSTATES);
 			}
 			break;
 		case rejected:
@@ -142,7 +144,7 @@ public class ChatStateHook implements MessageReceivedEvent.Handler, BeforeMessag
 	private void sendStateMessage(final ChatState chatState) {
 		final Message message = new Message();
 		message.setTo(chat.getURI());
-		message.getXML().addChild(chatState.toString(), "http://jabber.org/protocol/chatstates");
+		message.getXML().addChild(chatState.toString(), XmppNamespaces.CHATSTATES);
 		chat.send(message);
 	}
 

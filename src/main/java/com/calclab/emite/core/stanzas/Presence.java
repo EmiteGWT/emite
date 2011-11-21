@@ -20,195 +20,165 @@
 
 package com.calclab.emite.core.stanzas;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.XmppURI;
 
 /**
- * A Presence stanza
+ * A Presence stanza.
+ * 
+ * @see <a href="http://xmpp.org/rfcs/rfc6121.html#presence-syntax">RFC 6121 - Section 4.7</a>
  */
 public class Presence extends Stanza {
 
 	/**
+	 * Possible <i>type</i> values for messages.
 	 * 
-	 * 2.2.2.1. Show
+	 * @see <a href="http://xmpp.org/rfcs/rfc6121.html#presence-syntax-type">RFC 6121 - Section 4.7.1</a>
+	 */
+	public static enum Type {
+		error, probe, subscribe, subscribed, unavailable, unsubscribe, unsubscribed;
+	}
+	
+	/**
+	 * Possible <i>show</i> values for messages.
 	 * 
-	 * <p>
-	 * If 'show' element is notSpecified, the entity is assumed to be online and
-	 * available.
-	 * </p>
-	 * 
-	 * <p>
-	 * If provided, the XML character data value MUST be one of the following
-	 * (additional availability types could be defined through a
-	 * properly-namespaced child element of the presence stanza):
-	 * </p>
-	 * 
-	 * @see http://xmpp.org/rfcs/rfc3920.html
-	 * @see http://www.xmpp.org/rfcs/rfc3921.html#stanzas
+	 * @see <a href="http://xmpp.org/rfcs/rfc6121.html#presence-syntax-children-show">RFC 6121 - Section 4.7.2.1</a>
 	 */
 	public static enum Show {
-		/** The entity or resource is temporarily away */
-		away,
-		/** The entity or resource is actively interested in chatting */
-		chat,
-		/** The entity or resource is busy (dnd = "Do Not Disturb") */
-		dnd,
-		/**
-		 * The entity or resource is away for an extended period (xa =
-		 * "eXtended Away")
-		 */
-		xa,
-		/**
-		 * If 'show' element is notSpecified, the entity is assumed to be online
-		 * and available
-		 */
-		notSpecified,
-		/**
-		 * Unknown
-		 */
-		unknown
+		away, chat, dnd, xa;
 	}
 
 	/**
-	 * 2.2.1. Types of Presence
+	 * Creates a new presence from a XML packet.
 	 * 
-	 * <p>
-	 * The 'type' attribute of a presence stanza is OPTIONAL. A presence stanza
-	 * that does not possess a 'type' attribute is used to signal to the server
-	 * that the sender is online and available for communication. If included,
-	 * the 'type' attribute specifies a lack of availability, a request to
-	 * manage a subscription to another entity's presence, a request for another
-	 * entity's current presence, or an error related to a previously-sent
-	 * presence stanza. If included, the 'type' attribute MUST have one of the
-	 * following values:
-	 * </p>
+	 * No checks are done to the packet, so it's only meant for internal use.
+	 * 
+	 * @param xml the XML packet for this presence
 	 */
-	public static enum Type {
-		/**
-		 * error -- An error has occurred regarding processing or delivery of a
-		 * previously-sent presence stanza.
-		 */
-		error,
-		/**
-		 * probe -- A request for an entity's current presence; SHOULD be
-		 * generated only by a server on behalf of a user.
-		 */
-		probe,
-		/**
-		 * subscribe -- The sender wishes to subscribe to the recipient's
-		 * presence.
-		 */
-		subscribe,
-		/**
-		 * subscribed -- The sender has allowed the recipient to receive their
-		 * presence.
-		 */
-		subscribed,
-		/**
-		 * unavailable -- Events that the entity is no longer available for
-		 * communication.
-		 */
-		unavailable,
-		/**
-		 * unsubscribe -- The sender is unsubscribing from another entity's
-		 * presence.
-		 */
-		unsubscribe,
-		/**
-		 * unsubscribed -- The subscription request has been denied or a
-		 * previously-granted subscription has been cancelled.
-		 */
-		unsubscribed
+	public Presence(final XMLPacket xml) {
+		super(xml);
 	}
 
-	public Presence(final XMLPacket stanza) {
-		super(stanza);
-	}
-
+	/**
+	 * Create a new presence.
+	 */
 	public Presence() {
 		super("presence");
 	}
 
+	/**
+	 * Create a new presence with the given type.
+	 * 
+	 * @param type the type for the new presence
+	 */
 	public Presence(final Type type) {
 		this();
 		setType(type);
 	}
 
+	/**
+	 * Create a new presence with the given type and recipient.
+	 * 
+	 * @param type the type for the new presence
+	 * @param to the recipient for the new presence
+	 */
 	public Presence(final Type type, final XmppURI to) {
 		this(type);
 		setTo(to);
 	}
-
+	
 	/**
-	 * Get the priority of the presence
+	 * Returns the <i>type</i> attribute for this presence.
 	 * 
-	 * @return The priority (1-10), 0 if not specified
+	 * @return the type for this presence, or {@code null} if available
 	 */
-	public int getPriority() {
-		int value = 0;
-		final String priority = xml.getChildText("priority");
-		if (priority != null) {
-			try {
-				value = Integer.parseInt(priority);
-			} catch (final NumberFormatException e) {
-				value = 0;
-			}
-		}
-		return value;
-	}
-
-	/**
-	 * Return the show of the presence
-	 * 
-	 * @return The show, never null
-	 */
-	public Show getShow() {
-		final String value = xml.getChildText("show");
+	@Nullable
+	public final Type getType() {
 		try {
-			return value != null ? Show.valueOf(value) : Show.notSpecified;
-		} catch (final IllegalArgumentException e) {
-			return Show.unknown;
+			return Type.valueOf(xml.getAttribute("type"));
+		} catch (final Exception e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Sets a new <i>type</i> attribute for this presence.
+	 * 
+	 * @param type the new type for this presence
+	 */
+	public final void setType(@Nullable final Type type) {
+		xml.setAttribute("type", type != null ? type.toString() : null);
+	}
+
+	/**
+	 * Returns the <i>show</i> value for this presence.
+	 * 
+	 * @return the show for this presence, or {@code null} if none
+	 */
+	@Nullable
+	public final Show getShow() {
+		try {
+			return Show.valueOf(xml.getChildText("show"));
+		} catch (final Exception e) {
+			return null;
 		}
 	}
 
 	/**
-	 * Return the status of the presence.
+	 * Sets a new <i>show</i> value for this presence.
 	 * 
-	 * @return The status, null if not specified
+	 * @param show the new show for this presence
 	 */
-	public String getStatus() {
+	public final void setShow(@Nullable final Show show) {
+		xml.setChildText("show", show != null ? show.toString() : null);
+	}
+	
+	/**
+	 * Returns the <i>status</i> value for this presence.
+	 * 
+	 * @return the status for this presence, or {@code null} if none
+	 */
+	@Nullable
+	public final String getStatus() {
 		return xml.getChildText("status");
 	}
 
 	/**
-	 * Get the presence's type. If null returned, available (status) is supposed
+	 * Sets a new <i>status</i> value for this presence.
 	 * 
-	 * @return The type, can return null (means available)
-	 * @see http://www.xmpp.org/rfcs/rfc3921.html#presence
+	 * @param status the new status for this presence
 	 */
-	public Type getType() {
-		final String type = xml.getAttribute("type");
+	public final void setStatus(@Nullable final String status) {
+		xml.setChildText("status", status);
+	}
+	
+	/**
+	 * Returns the <i>priority</i> value for this presence.
+	 * 
+	 * @return the priority for this presence
+	 */
+	public final int getPriority() {
 		try {
-			return type != null ? Type.valueOf(type) : null;
-		} catch (final IllegalArgumentException e) {
-			return Type.error;
+			return Integer.parseInt(xml.getChildText("priority"));
+		} catch (final Exception e) {
+			return 0;
 		}
 	}
 
-	public void setPriority(final int value) {
-		xml.setChildText("priority", String.valueOf(value >= 0 ? value : 0));
-	}
-
-	public void setShow(final Show value) {
-		xml.setChildText("show", value != null && value != Show.notSpecified && value != Show.unknown ? value.toString() : null);
-	}
-
-	public void setStatus(final String statusMessage) {
-		xml.setChildText("status", statusMessage);
-	}
-
-	public void setType(final Type type) {
-		xml.setAttribute("type", type != null ? type.toString() : null);
+	/**
+	 * Sets a new <i>priority</i> value for this presence.
+	 * 
+	 * The priority must be ranged between -128 and 127.
+	 * 
+	 * @param priority the new priority for this presence
+	 */
+	public final void setPriority(final int priority) {
+		checkArgument(priority >= -128 && priority <= 127, "Priority is out of range");
+		xml.setChildText("priority", String.valueOf(priority >= 0 ? priority : 0));
 	}
 
 }

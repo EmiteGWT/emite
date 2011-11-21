@@ -32,9 +32,7 @@ import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.events.AuthorizationResultEvent;
-import com.calclab.emite.core.session.Credentials;
-import com.calclab.emite.core.session.sasl.SASLManager;
-import com.calclab.emite.core.session.sasl.SASLManagerImpl;
+import com.calclab.emite.core.session.SASLManager;
 import com.calclab.emite.xtesting.XmppConnectionTester;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
@@ -46,7 +44,7 @@ public class SASLManagerTest {
 	@Before
 	public void beforeTests() {
 		connection = new XmppConnectionTester();
-		manager = new SASLManagerImpl(new SimpleEventBus(), connection);
+		manager = new SASLManager(new SimpleEventBus(), connection);
 		authEvent = null;
 		
 		manager.addAuthorizationResultHandler(new AuthorizationResultEvent.Handler() {

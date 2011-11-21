@@ -48,7 +48,7 @@ public class ConnectionStatusChangedEvent extends Event<ConnectionStatusChangedE
 	}
 
 	public ConnectionStatusChangedEvent(final ConnectionStatus status, final String description, final int value) {
-		this.status = checkNotNull(status, "status can't be null in ConnectionStatusChangedEvent");
+		this.status = checkNotNull(status);
 		this.description = description;
 		this.value = value;
 	}

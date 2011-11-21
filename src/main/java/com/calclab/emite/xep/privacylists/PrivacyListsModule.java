@@ -23,11 +23,7 @@ package com.calclab.emite.xep.privacylists;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 /**
- * Future implementation of: http://www.xmpp.org/extensions/xep-0016.html
- * 
- * Only one component: PrivacyListManager
- * 
- * @see PrivacyListsManager
+ * Emite Privacy Lists GIN module
  */
 public class PrivacyListsModule extends AbstractGinModule {
 

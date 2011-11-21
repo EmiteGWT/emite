@@ -24,14 +24,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.calclab.emite.base.xml.XMLMatcher;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.events.BeforeMessageSentEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.stanzas.Message;
 import com.calclab.emite.xep.chatstate.ChatStateHook.ChatState;
 import com.calclab.emite.xep.muc.RoomChat;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gwt.user.client.Timer;
@@ -46,15 +47,12 @@ public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, Message
 
 	private static final Logger logger = Logger.getLogger(MUCChatStateHook.class.getName());
 
-	public static final String KEY = "RoomChatStateManager";
-
 	/*
 	 * REUSING ChatStateManager.ChatState
 	 * http://xmpp.org/extensions/xep-0085.html#bizrules-groupchat # A client
 	 * SHOULD NOT generate <gone/> notifications. # A client SHOULD ignore
 	 * <gone/> notifications received from other room occupants.
 	 */
-
 	private final static List<String> stateString;
 	static {
 		// FIXME
@@ -73,9 +71,9 @@ public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, Message
 	private final int inactiveDelay = 120 * 1000; // 2 minutes
 	private final int pauseDelay = 10 * 1000; // 10 seconds
 
-	private static final XMLMatcher bodySubjectThreadMatchter = new XMLMatcher() {
+	private static final Predicate<XMLPacket> bodySubjectThreadMatchter = new Predicate<XMLPacket>() {
 		@Override
-		public boolean matches(final XMLPacket packet) {
+		public boolean apply(final XMLPacket packet) {
 			final String nn = packet.getTagName();
 			return "body".equals(nn) || "subject".equals(nn) || "thread".equals(nn);
 		}
@@ -138,7 +136,7 @@ public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, Message
 
 			logger.finer("Setting own status to: " + ownState + " because we send a body or a subject");
 			ownState = ChatState.active;
-			message.getXML().addChild(ChatState.active.toString(), "http://jabber.org/protocol/chatstates");
+			message.getXML().addChild(ChatState.active.toString(), XmppNamespaces.CHATSTATES);
 		}
 		if (ownState != ChatState.inactive) {
 			inactiveTimer.schedule(inactiveDelay);
@@ -180,7 +178,7 @@ public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, Message
 			logger.finer("Setting own status to: " + chatState.toString());
 			final Message message = new Message();
 			message.setTo(room.getRoomURI());
-			message.getXML().addChild(chatState.toString(), "http://jabber.org/protocol/chatstates");
+			message.getXML().addChild(chatState.toString(), XmppNamespaces.CHATSTATES);
 			room.send(message);
 		}
 		if (ownState == ChatState.composing) {
@@ -189,11 +187,10 @@ public class MUCChatStateHook implements BeforeMessageSentEvent.Handler, Message
 	}
 
 	private static ChatState getStateFromMessage(final Message message) {
-		final XMLPacket stateNode = message.getXML().getFirstChild(new XMLMatcher() {
+		final XMLPacket stateNode = message.getXML().getFirstChild(new Predicate<XMLPacket>() {
 			@Override
-			public boolean matches(final XMLPacket packet) {
-				final boolean vn = stateString.contains(packet.getTagName());
-				return vn;
+			public boolean apply(final XMLPacket packet) {
+				return stateString.contains(packet.getTagName());
 				/*
 				 * Namespaces don't work String ns =
 				 * message.getAttribute("xmlns"); ns = (ns != null ? ns :

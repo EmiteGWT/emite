@@ -20,89 +20,133 @@
 
 package com.calclab.emite.core.stanzas;
 
-import com.calclab.emite.base.xml.XMLPacket;
-import com.calclab.emite.core.XmppURI;
+import javax.annotation.Nullable;
 
+import com.calclab.emite.base.xml.XMLPacket;
+
+/**
+ * A Message stanza.
+ * 
+ * @see <a href="http://xmpp.org/rfcs/rfc6121.html#message-syntax">RFC 6121 - Section 5.2</a>
+ */
 public class Message extends Stanza {
 
+	/**
+	 * Possible <i>type</i> values for messages.
+	 * 
+	 * @see <a href="http://xmpp.org/rfcs/rfc6121.html#message-syntax-type">RFC 6121 - Section 5.2.2</a>
+	 */
 	public static enum Type {
-		chat, error, groupchat, headlines, normal
+		chat, error, groupchat, headline, normal;
 	}
 
 	/**
-	 * Create a message by delegation. Not for normal use
+	 * Creates a new message from a XML packet.
 	 * 
-	 * @param iPacket
+	 * No checks are done to the packet, so it's only meant for internal use.
+	 * 
+	 * @param xml the XML packet for this message
 	 */
 	public Message(final XMLPacket xml) {
 		super(xml);
 	}
 
+	/**
+	 * Create a new message.
+	 */
 	public Message() {
 		super("message");
 	}
 
+	/**
+	 * Create a new message with the given body.
+	 * 
+	 * @param body the body for the new message
+	 */
 	public Message(final String body) {
-		this(body, null, null);
-	}
-	
-	public Message(final String body, final XmppURI to) {
-		this(body, to, null);
-	}
-	
-	public Message(final String body, final XmppURI to, final XmppURI from) {
 		this();
 		setBody(body);
-		setTo(to);
-		setFrom(from);
 	}
-
-	public String getBody() {
-		return xml.getChildText("body");
-	}
-
-	public void setBody(final String msg) {
-		xml.setChildText("body", msg);
-	}
-
-	public String getSubject() {
-		return xml.getChildText("subject");
-	}
-
-	public void setSubject(final String subject) {
-		xml.setChildText("subject", subject);
-	}
-
-	public String getThread() {
-		return xml.getChildText("thread");
-	}
-
-	public void setThread(final String thread) {
-		xml.setChildText("thread", thread);
-	}
-
+	
 	/**
-	 * An IM application SHOULD support all of the foregoing message types; if
-	 * an application receives a message with no 'type' attribute or the
-	 * application does not understand the value of the 'type' attribute
-	 * provided, it MUST consider the message to be of type "normal" (i.e.,
-	 * "normal" is the default). The "error" type MUST be generated only in
-	 * response to an error related to a message received from another entity.
+	 * Returns the <i>type</i> attribute for this message.
 	 * 
-	 * @see http://www.xmpp.org/rfcs/rfc3921.html#stanzas-message-type
-	 * @return
+	 * If type is not set or is not valid, {@link Type#normal} will be returned.
+	 * 
+	 * @return the type for this message
 	 */
-	public Type getType() {
-		final String type = xml.getAttribute("type");
+	public final Type getType() {
 		try {
-			return type != null ? Type.valueOf(type) : Type.normal;
-		} catch (final IllegalArgumentException e) {
+			return Type.valueOf(xml.getAttribute("type"));
+		} catch (final Exception e) {
 			return Type.normal;
 		}
 	}
 
-	public void setType(final Type type) {
+	/**
+	 * Sets a new <i>type</i> attribute for this message.
+	 * 
+	 * @param type the new type for this message
+	 */
+	public final void setType(@Nullable final Type type) {
 		xml.setAttribute("type", type != null ? type.toString() : null);
+	}
+
+	/**
+	 * Returns the <i>body</i> attribute for this stanza.
+	 * 
+	 * @return the body for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final String getBody() {
+		return xml.getChildText("body");
+	}
+
+	/**
+	 * Sets a new <i>body</i> attribute for this stanza.
+	 * 
+	 * @param body the new body for this stanza
+	 */
+	public final void setBody(@Nullable final String body) {
+		xml.setChildText("body", body);
+	}
+
+	/**
+	 * Returns the <i>subject</i> attribute for this stanza.
+	 * 
+	 * @return the subject for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final String getSubject() {
+		return xml.getChildText("subject");
+	}
+
+	/**
+	 * Sets a new <i>subject</i> attribute for this stanza.
+	 * 
+	 * @param subject the new subject for this stanza
+	 */
+	public final void setSubject(@Nullable final String subject) {
+		xml.setChildText("subject", subject);
+	}
+
+	/**
+	 * Returns the <i>thread</i> attribute for this stanza.
+	 * 
+	 * @return the thread for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final String getThread() {
+		return xml.getChildText("thread");
+	}
+
+	/**
+	 * Sets a new <i>thread</i> attribute for this stanza.
+	 * 
+	 * @param thread the new thread for this stanza
+	 */
+	public final void setThread(@Nullable final String thread) {
+		xml.setChildText("thread", thread);
 	}
 
 }

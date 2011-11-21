@@ -49,7 +49,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * The default implementation of RoomManager. See RoomManager for javadoc.
+ * The default implementation of RoomChatManager.
  * 
  * @see RoomChatManager
  */

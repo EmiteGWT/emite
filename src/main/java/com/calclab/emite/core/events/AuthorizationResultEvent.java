@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import javax.annotation.Nullable;
 
 import com.calclab.emite.core.XmppURI;
-import com.calclab.emite.core.session.Credentials;
+import com.calclab.emite.core.sasl.Credentials;
 import com.google.web.bindery.event.shared.Event;
 
 public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Handler> {
@@ -66,14 +66,6 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 		return credentials;
 	}
 
-	@Nullable
-	public XmppURI getXmppUri() {
-		if (credentials == null)
-			return null;
-		
-		return credentials.getUri();
-	}
-
 	public boolean isSuccess() {
 		return success;
 	}
@@ -85,7 +77,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 
 	@Override
 	public String toDebugString() {
-		final String value = success ? " Success - " + credentials.getUri() : " Failed!";
+		final String value = success ? " Success" : " Failed!";
 		return super.toDebugString() + value;
 	}
 

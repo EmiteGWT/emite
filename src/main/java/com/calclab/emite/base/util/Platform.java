@@ -23,6 +23,9 @@ package com.calclab.emite.base.util;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.AsyncResult;
 import com.google.common.collect.Lists;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -32,6 +35,11 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 
+/**
+ * Methods with a special GWT implementation.
+ * 
+ * TODO: create Java versions of these methods.
+ */
 public final class Platform {
 
 	private static final Logger logger = Logger.getLogger(Platform.class.getName());
@@ -55,6 +63,12 @@ public final class Platform {
 		});
 	}
 	
+	/**
+	 * Schedule an action to run in the future.
+	 * 
+	 * @param msecs delay before running the action (in milliseconds)
+	 * @param action the action to run
+	 */
 	public static final void schedule(final int msecs, final ScheduledAction action) {
 		new Timer() {
 			@Override
@@ -64,7 +78,14 @@ public final class Platform {
 		}.schedule(msecs);
 	}
 
-	public static final void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
+	/**
+	 * Send a BOSH HTTP request to a server.
+	 * 
+	 * @param httpBase the base URL to send the request
+	 * @param request the request contents
+	 * @param callback a callback to process the response
+	 */
+	public static final void sendXML(final String httpBase, final XMLPacket request, final AsyncResult<XMLPacket> callback) {
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, httpBase);
 		builder.setHeader("Content-Type", "text/xml; charset=utf-8");
 		builder.setHeader("Cache-Control", "no-cache");
@@ -72,26 +93,37 @@ public final class Platform {
 		// TODO : Hard coded timeout to 6s, but we should set it to the wait + a delta
 		// builder.setTimeoutMillis(6000);
 		try {
-			final Request req = builder.sendRequest(request, new RequestCallback() {
+			final Request req = builder.sendRequest(request.toString(), new RequestCallback() {
+				@Override
+				public void onResponseReceived(final Request req, final Response res) {
+					requests.remove(req);
+					if (res.getStatusCode() != Response.SC_OK) {
+						callback.onError(new RequestException("Invalid status "+res.getStatusCode()+": "+res.getStatusText()));
+						return;
+					}
+					
+					final XMLPacket response = XMLBuilder.fromXML(res.getText());
+					if (response == null || !"body".equals(response.getTagName())){
+						callback.onError(new RequestException("Bad response: " + res.getText()));
+						return;
+					}
+					
+					callback.onSuccess(response);
+				}
+				
 				@Override
 				public void onError(final Request req, final Throwable throwable) {
 					logger.severe("GWT CONNECTOR ERROR: " + throwable.getMessage());
 					requests.remove(req);
-					listener.onResponseError(request, throwable);
-				}
-
-				@Override
-				public void onResponseReceived(final Request req, final Response res) {
-					requests.remove(req);
-					listener.onResponseReceived(res.getStatusCode(), res.getText(), request);
+					callback.onError(throwable);
 				}
 			});
 			requests.add(req);
 		} catch (final RequestException e) {
-			throw new ConnectorException(e.getMessage());
+			callback.onError(e);
 		} catch (final Exception e) {
 			logger.severe("Some GWT connector exception: " + e.getMessage());
-			throw new ConnectorException(e.getMessage());
+			callback.onError(e);
 		}
 	}
 	

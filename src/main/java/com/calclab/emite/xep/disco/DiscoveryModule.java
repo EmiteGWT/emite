@@ -22,6 +22,9 @@ package com.calclab.emite.xep.disco;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
+/**
+ * Emite Discovery GIN module
+ */
 public class DiscoveryModule extends AbstractGinModule {
 
 	@Override

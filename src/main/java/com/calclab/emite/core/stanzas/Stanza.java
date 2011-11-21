@@ -23,62 +23,143 @@ package com.calclab.emite.core.stanzas;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.calclab.emite.core.XmppURI.uri;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.XmppURI;
 
-public class Stanza implements HasXML {
+/**
+ * Represents an XMPP Stanza.
+ * 
+ * Basic stanzas have <i>id</i>, <i>from</i> and <i>to</i> attributes,
+ * as well as support for XML extensions.
+ */
+public abstract class Stanza implements HasXML {
 
+	/**
+	 * Holds the XML packet associated with this stanza.
+	 */
 	protected final XMLPacket xml;
 
-	public Stanza(final XMLPacket xml) {
+	/**
+	 * Creates a new stanza from an XML packet.
+	 * 
+	 * No checks are done to the packet, so it's only meant for internal use.
+	 * 
+	 * @param xml the XML packet for this stanza
+	 */
+	protected Stanza(final XMLPacket xml) {
 		this.xml = checkNotNull(xml);
 	}
 
-	public Stanza(final String name) {
+	/**
+	 * Create a new stanza with the given tag name.
+	 * 
+	 * @param name the tag name for this stanza
+	 */
+	protected Stanza(final String name) {
 		this(XMLBuilder.create(name).getXML());
 	}
 
-	public Stanza(final String name, final String namespace) {
+	/**
+	 * Creates a new stanza with the given tag name and namespace.
+	 * 
+	 * @param name the tag name for this stanza
+	 * @param namespace the namespace for this stanza
+	 */
+	protected Stanza(final String name, final String namespace) {
 		this(XMLBuilder.create(name, namespace).getXML());
 	}
 
-	public String getId() {
+	/**
+	 * Returns the <i>id</i> attribute for this stanza.
+	 * 
+	 * @return the ID for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final String getId() {
 		return xml.getAttribute("id");
 	}
 
-	public void setId(final String id) {
+	/**
+	 * Sets a new <i>id</i> attribute for this stanza.
+	 * 
+	 * @param id the new ID for this stanza
+	 */
+	public final void setId(@Nullable final String id) {
 		xml.setAttribute("id", id);
 	}
 
-	public XmppURI getFrom() {
+	/**
+	 * Returns the <i>from</i> attribute for this stanza.
+	 * 
+	 * @return the sender for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final XmppURI getFrom() {
 		return uri(xml.getAttribute("from"));
 	}
 
-	public void setFrom(final XmppURI from) {
+	/**
+	 * Sets a new <i>from</i> attribute for this stanza.
+	 * 
+	 * @param from the new sender for this stanza
+	 */
+	public final void setFrom(@Nullable final XmppURI from) {
 		xml.setAttribute("from", from != null ? from.toString() : null);
 	}
 
-	public XmppURI getTo() {
+	/**
+	 * Returns the <i>to</i> attribute for this stanza.
+	 * 
+	 * @return the recipient for this stanza, or {@code null} if none
+	 */
+	@Nullable
+	public final XmppURI getTo() {
 		return uri(xml.getAttribute("to"));
 	}
 
-	public void setTo(final XmppURI to) {
+	/**
+	 * Sets a new <i>to</i> attribute for this stanza.
+	 * 
+	 * @param to the new recipient for this stanza
+	 */
+	public final void setTo(@Nullable final XmppURI to) {
 		xml.setAttribute("to", to != null ? to.toString() : null);
 	}
 	
-	public XMLPacket getExtension(final String name, final String namespace) {
+	/**
+	 * Retrieves a XML extension from this packet.
+	 * 
+	 * @param name the name of the extension
+	 * @param namespace the namespace of the extension
+	 * @return the XML extension, or {@code null} if not found
+	 */
+	@Nullable
+	public final XMLPacket getExtension(final String name, final String namespace) {
 		return xml.getFirstChild(name, namespace);
 	}
-
+	
+	/**
+	 * Adds a new XML extension to this packet.
+	 * 
+	 * @param name the name of the extension
+	 * @param namespace the namespace of the extension
+	 * @return the new XML extension
+	 */
+	public final XMLPacket addExtension(final String name, final String namespace) {
+		return xml.addChild(name, namespace);
+	}
+	
 	@Override
 	public final XMLPacket getXML() {
 		return xml;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return xml.toString();
 	}
 

@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.calclab.emite.core.conn.ConnectionSettings;
-import com.calclab.emite.core.conn.bosh.XmppBoshConnection;
+import com.calclab.emite.core.conn.XmppConnectionBosh;
 import com.calclab.emite.xtesting.ServicesTester;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.google.web.bindery.event.shared.SimpleEventBus;
@@ -34,11 +34,11 @@ import com.google.web.bindery.event.shared.SimpleEventBus;
 public class XmppBoshConnectionTests {
 
 	private final ServicesTester services;
-	private final XmppBoshConnection connection;
+	private final XmppConnectionBosh connection;
 
 	public XmppBoshConnectionTests() {
 		services = new ServicesTester();
-		connection = new XmppBoshConnection(new SimpleEventBus());
+		connection = new XmppConnectionBosh(new SimpleEventBus());
 	}
 
 	@Test

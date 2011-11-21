@@ -20,7 +20,11 @@
 
 package com.calclab.emite.core.conn;
 
+/**
+ * XMPP connection status
+ */
 public enum ConnectionStatus {
+	
 	/**
 	 * The connection is now connected
 	 */
@@ -37,4 +41,8 @@ public enum ConnectionStatus {
 	 * The connection will try to re-connect in the given milliseconds
 	 */
 	waitingForRetry;
+	
+	private ConnectionStatus() {
+	}
+	
 }

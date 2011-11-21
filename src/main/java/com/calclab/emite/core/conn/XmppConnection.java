@@ -20,28 +20,18 @@
 
 package com.calclab.emite.core.conn;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.HasXML;
-import com.calclab.emite.core.conn.bosh.StreamSettings;
-import com.calclab.emite.core.events.ConnectionResponseEvent;
 import com.calclab.emite.core.events.ConnectionStatusChangedEvent;
 import com.calclab.emite.core.events.PacketReceivedEvent;
-import com.calclab.emite.core.events.StanzaSentEvent;
+import com.calclab.emite.core.events.PacketSentEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 /**
- * A connection to a XMPP server
+ * A connection to a XMPP server.
  */
 public interface XmppConnection {
-
-	/**
-	 * Add a handler to know when a response (text) arrived from server.
-	 * 
-	 * @param handler
-	 *            the handler
-	 * @return the handler registration, can be stored in order to remove the
-	 *         handler later
-	 */
-	HandlerRegistration addConnectionResponseHandler(ConnectionResponseEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when the status of the connection has changed.
@@ -61,7 +51,7 @@ public interface XmppConnection {
 	 * @return the handler registration, can be stored in order to remove the
 	 *         handler later
 	 */
-	HandlerRegistration addStanzaReceivedHandler(PacketReceivedEvent.Handler handler);
+	HandlerRegistration addPacketReceivedHandler(PacketReceivedEvent.Handler handler);
 
 	/**
 	 * Add a handler to know when a stanza has been sent to the server.
@@ -71,14 +61,14 @@ public interface XmppConnection {
 	 * @return the handler registration, can be stored in order to remove the
 	 *         handler later
 	 */
-	HandlerRegistration addStanzaSentHandler(StanzaSentEvent.Handler handler);
+	HandlerRegistration addPacketSentHandler(PacketSentEvent.Handler handler);
 
 	/**
 	 * Connect to the server.
 	 * 
 	 * Connection settings must be set before calling this method.
 	 * 
-	 * @see #setSettings
+	 * @see #setSettings(ConnectionSettings)
 	 */
 	void connect();
 
@@ -89,21 +79,22 @@ public interface XmppConnection {
 
 	/**
 	 * Obtain the stream settings. This is the actual object used in the
-	 * connection and should not be changed
+	 * connection and should not be changed.
 	 * 
 	 * @return the current stream settings
 	 */
+	@Nullable
 	StreamSettings getStreamSettings();
 
 	/**
-	 * A way to know if the connection has errors
+	 * Check if the connection has errors.
 	 * 
 	 * @return true if the connection has errors
 	 */
 	boolean hasErrors();
 
 	/**
-	 * A way know if the connection is connected
+	 * Check if the connection is connected.
 	 * 
 	 * @return true if is connected
 	 */
@@ -111,21 +102,24 @@ public interface XmppConnection {
 
 	/**
 	 * Pause the connection and return a stream settings object that can be
-	 * serialized to restore the session
+	 * serialized to restore the session.
 	 * 
-	 * @return StreamSettings object if the connection if a stream is present
-	 *         (the connection is active), null otherwise
+	 * @return StreamSettings object if a stream is present, null otherwise
 	 */
+	@Nullable
 	StreamSettings pause();
 
 	/**
-	 * A way to restart the stream. Usually you don't need this method
+	 * Restart the stream.
+	 * 
+	 * Usually you don't need this method.
 	 */
 	void restartStream();
 
 	/**
-	 * The opposite to the pause method. Usually used to pause the session
-	 * between web page changes
+	 * The opposite to the pause method.
+	 * 
+	 * Used to pause the session between web page changes.
 	 * 
 	 * @param settings
 	 *            the paused stream settings
@@ -134,7 +128,7 @@ public interface XmppConnection {
 	boolean resume(StreamSettings settings);
 
 	/**
-	 * Send a packet into the connection channel
+	 * Send a packet into the connection channel.
 	 * 
 	 * @param packet
 	 *            the packet to be sent
@@ -142,12 +136,16 @@ public interface XmppConnection {
 	void send(HasXML packet);
 
 	/**
-	 * Set the connection settings. This method MUST be called before connect.
-	 * You can use the BrowserModule to configure the connection via html meta
+	 * Set the connection settings.
+	 * 
+	 * This method MUST be called before calling {@link #connect()}.
+	 * 
+	 * You can use the BrowserModule to configure the connection via HTML meta
 	 * tags (recommended)
 	 * 
 	 * @param settings
-	 *            The connection settings
+	 *            the connection settings
 	 */
 	void setSettings(ConnectionSettings settings);
+	
 }

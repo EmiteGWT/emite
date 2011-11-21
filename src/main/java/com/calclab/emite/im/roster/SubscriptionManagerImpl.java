@@ -21,6 +21,7 @@
 package com.calclab.emite.im.roster;
 
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.events.PresenceReceivedEvent;
 import com.calclab.emite.core.session.XmppSession;
@@ -58,7 +59,7 @@ public class SubscriptionManagerImpl implements SubscriptionManager, PresenceRec
 	public void onPresenceReceived(final PresenceReceivedEvent event) {
 		final Presence presence = event.getPresence();
 		if (presence.getType() == Type.subscribe) {
-			final XMLPacket nick = presence.getExtension("nick", "http://jabber.org/protocol/nick");
+			final XMLPacket nick = presence.getExtension("nick", XmppNamespaces.NICK);
 			eventBus.fireEventFromSource(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()), this);
 		}
 	}

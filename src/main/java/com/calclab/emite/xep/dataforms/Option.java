@@ -26,15 +26,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
-import com.calclab.emite.base.xml.XMLPacket;
 import com.google.common.collect.Lists;
 
 /**
  * A XEP-0004 field option
  */
-public final class Option implements HasXML {
+public final class Option {
 
 	@Nullable private String label;
 	private final List<String> values;
@@ -60,15 +58,14 @@ public final class Option implements HasXML {
 		values.add(checkNotNull(value));
 	}
 
-	@Override
-	public final XMLPacket getXML() {
-		final XMLBuilder builder = XMLBuilder.create("option");
+	protected final void build(final XMLBuilder builder) {
+		builder.child("option");
 		
 		builder.attribute("label", label);
 		for (final String value : values) {
 			builder.childText("value", value);
 		}
 		
-		return builder.getXML();
+		builder.parent();
 	}
 }

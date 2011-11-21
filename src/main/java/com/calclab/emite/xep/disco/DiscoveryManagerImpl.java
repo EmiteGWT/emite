@@ -28,7 +28,7 @@ import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
 import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
-import com.calclab.emite.core.events.IQReceivedEvent;
+import com.calclab.emite.core.events.IQRequestReceivedEvent;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.IQ;
 import com.google.common.collect.ImmutableSet;
@@ -39,7 +39,7 @@ import com.google.inject.name.Named;
 import com.google.web.bindery.event.shared.EventBus;
 
 @Singleton
-public final class DiscoveryManagerImpl implements DiscoveryManager, IQReceivedEvent.Handler {
+public final class DiscoveryManagerImpl implements DiscoveryManager, IQRequestReceivedEvent.Handler {
 	
 	private final EventBus eventBus;
 	private final XmppSession session;
@@ -57,11 +57,11 @@ public final class DiscoveryManagerImpl implements DiscoveryManager, IQReceivedE
 		featureCache = Maps.newHashMap();
 		identityCache = Maps.newHashMap();
 		
-		session.addIQReceivedHandler(this);
+		session.addIQRequestReceivedHandler(this);
 	}
 	
 	@Override
-	public void onIQReceived(IQReceivedEvent event) {
+	public void onIQRequestReceived(IQRequestReceivedEvent event) {
 		final IQ iq = event.getIQ();
 		
 		if (IQ.Type.get.equals(iq.getType()) && iq.getQuery(XmppNamespaces.DISCO_INFO) != null) {
@@ -84,7 +84,7 @@ public final class DiscoveryManagerImpl implements DiscoveryManager, IQReceivedE
 		
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.setTo(targetUri);
-		iq.addChild("query", XmppNamespaces.DISCO_INFO);
+		iq.addQuery(XmppNamespaces.DISCO_INFO);
 		
 		session.sendIQ("disco", iq, new IQCallback() {
 			@Override
@@ -118,7 +118,7 @@ public final class DiscoveryManagerImpl implements DiscoveryManager, IQReceivedE
 		
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.setTo(targetUri);
-		iq.addChild("query", XmppNamespaces.DISCO_ITEMS);
+		iq.addQuery(XmppNamespaces.DISCO_ITEMS);
 		
 		session.sendIQ("disco", iq, new IQCallback() {
 			@Override

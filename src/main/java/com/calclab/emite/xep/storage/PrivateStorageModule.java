@@ -23,7 +23,7 @@ package com.calclab.emite.xep.storage;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 /**
- * Implements XEP http://xmpp.org/extensions/xep-0049.html
+ * Emite Private Storage GIN module
  */
 public class PrivateStorageModule extends AbstractGinModule {
 

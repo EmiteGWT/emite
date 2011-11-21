@@ -45,9 +45,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+/**
+ * Java 6 implementation of XMLPacket.
+ */
 public final class XMLPacketImpl implements XMLPacket {
 
 	private static final DocumentBuilder docBuilder;
@@ -222,11 +226,11 @@ public final class XMLPacketImpl implements XMLPacket {
 	}
 
 	@Override
-	public XMLPacket getFirstChild(final XMLMatcher matcher) {
+	public XMLPacket getFirstChild(final Predicate<XMLPacket> matcher) {
 		checkNotNull(matcher);
 
 		for (final XMLPacket packet : getChildren()) {
-			if (matcher.matches(packet))
+			if (matcher.apply(packet))
 				return packet;
 		}
 
@@ -273,13 +277,13 @@ public final class XMLPacketImpl implements XMLPacket {
 	}
 
 	@Override
-	public ImmutableList<XMLPacket> getChildren(final XMLMatcher matcher) {
+	public ImmutableList<XMLPacket> getChildren(final Predicate<XMLPacket> matcher) {
 		checkNotNull(matcher);
 		
 		final ImmutableList.Builder<XMLPacket> result = ImmutableList.builder();
 
 		for (final XMLPacket packet : getChildren()) {
-			if (matcher.matches(packet)) {
+			if (matcher.apply(packet)) {
 				result.add(packet);
 			}
 		}
@@ -338,6 +342,12 @@ public final class XMLPacketImpl implements XMLPacket {
 		return this;
 	}
 
+	/**
+	 * Parses a string into a XMLPacket.
+	 * 
+	 * @param xml the string to parse
+	 * @return the resulting packet
+	 */
 	public static XMLPacket fromString(final String xml) {
 		try {
 			final Document doc = docBuilder.parse(new InputSource(new StringReader(xml)));

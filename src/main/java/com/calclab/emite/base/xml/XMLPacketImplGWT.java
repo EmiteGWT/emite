@@ -23,6 +23,10 @@ package com.calclab.emite.base.xml;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gwt.xml.client.Attr;
@@ -34,6 +38,9 @@ import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import com.google.gwt.xml.client.impl.DOMParseException;
 
+/**
+ * GWT implementation of XMLPacket
+ */
 public final class XMLPacketImplGWT implements XMLPacket {
 
 	private final Document document;
@@ -43,7 +50,7 @@ public final class XMLPacketImplGWT implements XMLPacket {
 		this(name, null);
 	}
 
-	protected XMLPacketImplGWT(final String name, final String namespace) {
+	protected XMLPacketImplGWT(final String name, @Nullable final String namespace) {
 		document = XMLParser.createDocument();
 		element = document.createElement(name);
 		if (namespace != null) {
@@ -185,11 +192,11 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	}
 
 	@Override
-	public XMLPacket getFirstChild(final XMLMatcher matcher) {
+	public XMLPacket getFirstChild(final Predicate<XMLPacket> matcher) {
 		checkNotNull(matcher);
 
 		for (final XMLPacket packet : getChildren()) {
-			if (matcher.matches(packet))
+			if (matcher.apply(packet))
 				return packet;
 		}
 
@@ -236,13 +243,13 @@ public final class XMLPacketImplGWT implements XMLPacket {
 	}
 
 	@Override
-	public ImmutableList<XMLPacket> getChildren(final XMLMatcher matcher) {
+	public ImmutableList<XMLPacket> getChildren(final Predicate<XMLPacket> matcher) {
 		checkNotNull(matcher);
 		
 		final ImmutableList.Builder<XMLPacket> result = ImmutableList.builder();
 
 		for (final XMLPacket packet : getChildren()) {
-			if (matcher.matches(packet)) {
+			if (matcher.apply(packet)) {
 				result.add(packet);
 			}
 		}
@@ -294,7 +301,7 @@ public final class XMLPacketImplGWT implements XMLPacket {
 				element.removeChild(child);
 			}
 		}
-		if (text != null) {
+		if (!Strings.isNullOrEmpty(text)) {
 			element.appendChild(document.createTextNode(text));
 		}
 	}
@@ -319,6 +326,12 @@ public final class XMLPacketImplGWT implements XMLPacket {
 		return this;
 	}
 
+	/**
+	 * Parses a string into a XMLPacket.
+	 * 
+	 * @param xml the string to parse
+	 * @return the resulting packet
+	 */
 	public static XMLPacket fromString(final String xml) {
 		try {
 			return new XMLPacketImplGWT(XMLParser.parse(xml).getDocumentElement());

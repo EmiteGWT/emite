@@ -22,6 +22,7 @@ package com.calclab.emite.xep.muc;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.calclab.emite.core.XmppURI;
@@ -31,7 +32,7 @@ public final class RoomInvitation {
 
 	private final XmppURI invitor;
 	private final XmppURI roomURI;
-	private final String reason;
+	@Nullable private final String reason;
 
 	public RoomInvitation(final XmppURI invitor, final XmppURI roomURI, final String reason) {
 		this.invitor = checkNotNull(invitor);
@@ -47,6 +48,7 @@ public final class RoomInvitation {
 		return invitor;
 	}
 
+	@Nullable
 	public final String getReason() {
 		return reason;
 	}

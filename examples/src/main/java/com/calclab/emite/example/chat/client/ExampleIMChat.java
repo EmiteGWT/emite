@@ -20,15 +20,15 @@
 
 package com.calclab.emite.example.chat.client;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.XmppURI.uri;
 
-import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.events.MessageReceivedEvent;
-import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.pair.PairChat;
-import com.calclab.emite.im.client.chat.pair.PairChatManager;
+import com.calclab.emite.browser.PageAssist;
+import com.calclab.emite.core.events.MessageReceivedEvent;
+import com.calclab.emite.core.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.session.XmppSession;
+import com.calclab.emite.core.stanzas.Message;
+import com.calclab.emite.im.chat.PairChat;
+import com.calclab.emite.im.chat.PairChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -40,7 +40,10 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ExampleIMChat implements EntryPoint, SessionStateChangedEvent.Handler, MessageReceivedEvent.Handler {
+/**
+ * A simple IM client
+ */
+public class ExampleIMChat implements EntryPoint, SessionStatusChangedEvent.Handler, MessageReceivedEvent.Handler {
 
 	private static final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
 	
@@ -55,31 +58,31 @@ public class ExampleIMChat implements EntryPoint, SessionStateChangedEvent.Handl
 		createUI();
 
 		log("Example IM Chat");
-		final String self = PageAssist.getMeta("emite.user");
+		final String self = PageAssist.getMeta("emite.user", null);
 		log("Current user: " + self);
-		final String user = PageAssist.getMeta("emite.chat");
+		final String user = PageAssist.getMeta("emite.chat", null);
 		log("Chat with user: " + user);
 
-		session.addSessionStateChangedHandler(true, this);
+		session.addSessionStatusChangedHandler(this, true);
 
 		input.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(final ChangeEvent event) {
 				final String msg = input.getText();
 				log("Message sent: " + msg);
-				final PairChat chat = chatManager.open(uri(user));
+				final PairChat chat = chatManager.openChat(uri(user));
 				chat.send(new Message(msg));
 				input.setText("");
 			}
 		});
 
-		final PairChat chat = chatManager.open(uri(user));
+		final PairChat chat = chatManager.openChat(uri(user));
 		chat.addMessageReceivedHandler(this);
 	}
 	
 	@Override
-	public void onSessionStateChanged(final SessionStateChangedEvent event) {
-		log("Current state: " + event.getState().toString());
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		log("Current status: " + event.getStatus().toString());
 	}
 	
 	@Override

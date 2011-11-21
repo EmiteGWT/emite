@@ -26,9 +26,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
-import com.calclab.emite.base.xml.XMLPacket;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
@@ -37,7 +35,7 @@ import com.google.common.collect.Lists;
  * SHOULD contain at least one <field/> element; a data form of type "cancel"
  * SHOULD NOT contain any <field/> elements.
  */
-public final class Field implements HasXML {
+public final class Field {
 
 	public static enum Type {
 		BOOLEAN, FIXED, HIDDEN, JID_MULTI, JID_SINGLE, LIST_MULTI, LIST_SINGLE, TEXT_MULTI, TEXT_PRIVATE, TEXT_SINGLE;
@@ -130,9 +128,8 @@ public final class Field implements HasXML {
 		options.add(checkNotNull(option));
 	}
 
-	@Override
-	public final XMLPacket getXML() {
-		final XMLBuilder builder = XMLBuilder.create("field");
+	protected final void build(final XMLBuilder builder) {
+		builder.child("field");
 		
 		if (type != null) {
 			builder.attribute("type", type.toString());
@@ -159,10 +156,10 @@ public final class Field implements HasXML {
 		}
 		
 		for (final Option option : options) {
-			builder.child(option);
+			option.build(builder);
 		}
 		
-		return builder.getXML();
+		builder.parent();
 	}
 
 }

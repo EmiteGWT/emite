@@ -21,14 +21,10 @@
 package com.calclab.emite.core;
 
 import com.calclab.emite.base.LoggingEventBus;
-import com.calclab.emite.core.browser.AutoConfigBoot;
 import com.calclab.emite.core.conn.XmppConnection;
-import com.calclab.emite.core.conn.bosh.XmppBoshConnection;
-import com.calclab.emite.core.session.SessionReady;
+import com.calclab.emite.core.conn.XmppConnectionBosh;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.session.XmppSessionImpl;
-import com.calclab.emite.core.session.sasl.SASLManager;
-import com.calclab.emite.core.session.sasl.SASLManagerImpl;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
@@ -43,12 +39,8 @@ public class EmiteCoreModule extends AbstractGinModule {
 	protected void configure() {
 		bind(EventBus.class).annotatedWith(Names.named("emite")).to(LoggingEventBus.class).in(Singleton.class);
 
-		bind(XmppConnection.class).to(XmppBoshConnection.class);
+		bind(XmppConnection.class).to(XmppConnectionBosh.class);
 		bind(XmppSession.class).to(XmppSessionImpl.class);
-		bind(SASLManager.class).to(SASLManagerImpl.class);
-
-		bind(SessionReady.class).asEagerSingleton();
-		bind(AutoConfigBoot.class).asEagerSingleton();
 	}
 
 }

@@ -20,14 +20,17 @@
 
 package com.calclab.emite.core.session;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.IQCallback;
 import com.calclab.emite.core.XmppURI;
-import com.calclab.emite.core.conn.bosh.StreamSettings;
-import com.calclab.emite.core.events.BeforeStanzaSentEvent;
-import com.calclab.emite.core.events.IQReceivedEvent;
+import com.calclab.emite.core.conn.StreamSettings;
+import com.calclab.emite.core.events.IQRequestReceivedEvent;
+import com.calclab.emite.core.events.IQResponseReceivedEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.events.PresenceReceivedEvent;
 import com.calclab.emite.core.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.sasl.Credentials;
 import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.core.stanzas.Stanza;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -37,153 +40,152 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * receive stanzas. It also allows you to pause and resume the session.
  */
 public interface XmppSession {
-	/**
-	 * Add a handler to know when a stanza is going to be send. Allows to modify
-	 * a stanza before is sent to the server.
-	 * 
-	 * @param handler
-	 * @return a way to remove the handler
-	 */
-	HandlerRegistration addBeforeStanzaSentHandler(BeforeStanzaSentEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a IQ has been received
+	 * Add a handler to know when an IQ request has been received.
 	 * 
 	 * @param handler
-	 * @return a way to remove the handler
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
-	HandlerRegistration addIQReceivedHandler(IQReceivedEvent.Handler handler);
+	HandlerRegistration addIQRequestReceivedHandler(IQRequestReceivedEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a Message has been received
+	 * Add a handler to know when an IQ response has been received.
 	 * 
 	 * @param handler
-	 * @return a way to remove the handler
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
+	 */
+	HandlerRegistration addIQResponseReceivedHandler(IQResponseReceivedEvent.Handler handler);
+
+	/**
+	 * Add a handler to know when a Message has been received.
+	 * 
+	 * @param handler
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addMessageReceivedHandler(MessageReceivedEvent.Handler handler);
 
 	/**
-	 * Add a handler to know when a Presence has been received
+	 * Add a handler to know when a Presence has been received.
 	 * 
 	 * @param handler
-	 * @return a way to remove the handler
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
 
 	/**
-	 * Add a handler to track session status changes. If sendCurrent is true,
-	 * the handler will receive the current session status just after been
-	 * added.
+	 * Add a handler to track session status changes.
 	 * 
-	 * @param sendCurrent
-	 *            if true, the current session status will be sent to the
-	 *            handler just after addition
+	 * If sendCurrent is true, the handler will receive the current session
+	 * status just after been added.
+	 * 
 	 * @param handler
-	 *            the handler itself
-	 * 
-	 * @return a way to remove the handler
+	 *            the handler
+	 * @param sendCurrent
+	 *            if {@code true}, the current status will be sent to the
+	 *            handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
 	 */
 	HandlerRegistration addSessionStatusChangedHandler(SessionStatusChangedEvent.Handler handler, boolean sendCurrent);
 
 	/**
-	 * Returns the current user xmpp uri
+	 * Returns the current user URI.
 	 * 
-	 * @return the current user xmpp uri
+	 * @return the current user URI, or {@code null} if not available
 	 */
+	@Nullable
 	XmppURI getCurrentUserURI();
 
 	/**
-	 * Returns the current status
+	 * Returns the current session status.
 	 * 
-	 * @return The current status as enum
+	 * @return The current session status.
 	 */
+	// FIXME: isn't isReady() enough?
 	SessionStatus getStatus();
 
 	/**
-	 * Set the current session's status
+	 * Set the session status.
 	 * 
 	 * @param status
-	 *            the current session status
-	 * @see SessionStatus
+	 *            the new session status
 	 */
+	// FIXME: This should not be public
 	void setStatus(SessionStatus status);
 
 	/**
-	 * Check if the session is ready to send stanzas
+	 * Check if the session is ready to send stanzas.
+	 * 
+	 * @return {@code true} if the session is ready, {@code false} otherwise
 	 */
 	boolean isReady();
 
 	/**
-	 * Check whenever or not the session is in the given status
+	 * Start a login process with the given credentials.
 	 * 
-	 * @param expectedStatus
-	 *            the expected status of the session
-	 * @return true if the expected status is the actual status
-	 */
-	boolean isStatus(SessionStatus expectedStatus);
-
-	/**
-	 * <p>
-	 * Start a login process with the current credentials. Use onLoggedIn method
-	 * to know when you are really logged in. If the uri doesn't provide a
-	 * resource, the session will generate one.
-	 * <p>
-	 * You can use LoginCredentials.ANONYMOUS and to perform an anonumous login.
-	 * </p>
+	 * You can use {@link Credentials#ANONYMOUS} to perform an anonymous login.
 	 * 
-	 * @param credentials
+	 * @param credentials the credentials to use at login
 	 */
 	void login(Credentials credentials);
 
 	/**
-	 * Start a logout process in the current session. Use obnLoggedOut to know
-	 * when you are really logged out.
+	 * Start a logout process in the current session.
 	 */
 	void logout();
 
 	/**
-	 * Call this method to pause the session. You can use the given object
-	 * object (or other with the same data) to resume the session later.
+	 * Pause the current session.
 	 * 
-	 * @see http://www.xmpp.org/extensions/xep-0124.html#inactive
-	 * @see XmppSession.resume
-	 * @return The StreamSettings object if the session was ready, null
-	 *         otherwise
+	 * You can use the returned object information to resume the session later.
+	 * 
+	 * @see #resume(XmppURI, StreamSettings)
+	 * @return the StreamSettings if the session was ready, {@code null} otherwise
 	 */
+	@Nullable
 	StreamSettings pause();
 
 	/**
-	 * Call this method to resume a session.
+	 * Resume a previously paused session.
 	 * 
-	 * @see http://www.xmpp.org/extensions/xep-0124.html#inactive
-	 * @see XmppSession.pause
+	 * @see #pause()
 	 * @param userURI
-	 *            the previous session user's uri
+	 *            the user URI for the session
 	 * @param settings
 	 *            the stream settings given by the pause method
 	 */
 	void resume(XmppURI userURI, StreamSettings settings);
 
 	/**
-	 * Send a stanza to the server. This method overrides the "from" uri
-	 * attribute.
+	 * Send a stanza to the server.
+	 * 
+	 * This method overrides the "from" uri attribute.
 	 * 
 	 * <b>All the stanzas sent using this method BEFORE the LoggedIn status are
 	 * queued and sent AFTER Ready status.</b>
 	 * 
-	 * @see sendIQ
 	 * @param stanza
 	 *            the stanza to be sent
 	 */
-	void send(final Stanza stanza);
+	void send(Stanza stanza);
 
 	/**
-	 * A helper method that allows to send a IQ stanza and attach a listener to
-	 * the response. This method overrides (if present) the given IQ id using
-	 * the category provided and a internal sequential number. This method also
-	 * overrides (if present) the given 'from' attribute
+	 * Send a IQ stanza and attach a listener to the response.
 	 * 
-	 * If the listener is null, the IQ is sent but no callback called
+	 * This method overrides (if present) the given IQ id using the provided
+	 * category and an internal sequential number. This method also overrides
+	 * (if present) the given 'from' attribute.
+	 * 
+	 * If the listener is null, the IQ is sent but no callback called.
 	 * 
 	 * <b>All the stanzas sent using this method BEFORE the LoggedIn status are
 	 * queued and sent AFTER Ready status.</b>
@@ -193,12 +195,12 @@ public interface XmppSession {
 	 *            generate a sequential and uniqe id for the IQ
 	 * @param iq
 	 *            the IQ stanza to be sent
-	 * @param handler
+	 * @param iqHandler
 	 *            the handler called when a IQ of type "result" arrives to the
 	 *            server. After the invocation, the handler is discarded. It CAN
 	 *            be null
 	 * 
 	 */
-	void sendIQ(final String category, final IQ iq, final IQCallback iqHandler);
+	void sendIQ(String category, IQ iq, @Nullable IQCallback iqHandler);
 
 }

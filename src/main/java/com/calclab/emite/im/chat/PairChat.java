@@ -45,7 +45,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * with a chat panel in the UI). If no thread is specified, we join all messages
  * in one chat.
  * 
- * @see Chat
+ * @see PairChatManager
  */
 public final class PairChat {
 	
@@ -64,10 +64,15 @@ public final class PairChat {
 	@Nullable private String thread;
 
 	/**
-	 * Create a new pair chat. Pair chats are created by PairChatManager
+	 * Create a new pair chat.
 	 * 
-	 * @param session
-	 * @param properties
+	 * Pair chats are created by PairChatManager.
+	 * 
+	 * @param chatManager the pair chat manager
+	 * @param eventBus the event bus
+	 * @param session the XMPP Session for this PairChat
+	 * @param uri the URI for this PairChat
+	 * @param initiatorUri the URI that initiated this PairChat
 	 */
 	protected PairChat(final PairChatManagerImpl chatManager, final EventBus eventBus, final XmppSession session, final XmppURI uri, final XmppURI initiatorUri) {
 		this.chatManager = checkNotNull(chatManager);
@@ -113,6 +118,7 @@ public final class PairChat {
 	 * 
 	 * @param handler
 	 *            the message handler
+	 * @return 
 	 */
 	public final HandlerRegistration addBeforeMessageSentHandler(final BeforeMessageSentEvent.Handler handler) {
 		return eventBus.addHandlerToSource(BeforeMessageSentEvent.TYPE, this, handler);

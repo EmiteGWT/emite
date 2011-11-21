@@ -23,7 +23,7 @@ package com.calclab.emite.xep.vcard;
 import com.google.gwt.inject.client.AbstractGinModule;
 
 /**
- * Implements http://xmpp.org/extensions/xep-0054.html
+ * Emite VCard GIN module
  */
 public class VCardModule extends AbstractGinModule {
 

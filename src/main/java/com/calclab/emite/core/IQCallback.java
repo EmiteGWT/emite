@@ -22,8 +22,22 @@ package com.calclab.emite.core;
 
 import com.calclab.emite.core.stanzas.IQ;
 
+/**
+ * Callback for IQ requests.
+ */
 public interface IQCallback {
+	
+	/**
+	 * Called when the request succeeds.
+	 * 
+	 * @param iq the result IQ
+	 */
 	void onIQSuccess(IQ iq);
 
+	/**
+	 * Called when the request fails.
+	 * 
+	 * @param iq the error IQ
+	 */
 	void onIQFailure(IQ iq);
 }

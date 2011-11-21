@@ -25,7 +25,11 @@ import java.util.logging.Logger;
 import com.google.web.bindery.event.shared.Event;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-// FIXME: For testing only. To be removed.
+/**
+ * An EventBus that logs all fired events.
+ * 
+ * FIXME: For testing only. To be removed.
+ */
 public class LoggingEventBus extends SimpleEventBus {
 
 	private static final Logger logger = Logger.getLogger("EventBus");

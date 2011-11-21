@@ -27,14 +27,14 @@ import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.conn.ConnectionSettings;
-import com.calclab.emite.core.conn.bosh.StreamSettings;
-import com.calclab.emite.core.conn.bosh.XmppBoshConnection;
+import com.calclab.emite.core.conn.StreamSettings;
+import com.calclab.emite.core.conn.XmppConnectionBosh;
 import com.calclab.emite.core.events.PacketReceivedEvent;
 import com.calclab.emite.core.events.PacketSentEvent;
 import com.calclab.emite.xtesting.matchers.IsPacketLike;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public class XmppConnectionTester extends XmppBoshConnection {
+public class XmppConnectionTester extends XmppConnectionBosh {
 
 	private final List<XMLPacket> sent;
 	private final List<XMLPacket> received;

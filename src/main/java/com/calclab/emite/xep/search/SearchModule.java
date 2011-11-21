@@ -22,6 +22,9 @@ package com.calclab.emite.xep.search;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
+/**
+ * Emite Search GIN module
+ */
 public class SearchModule extends AbstractGinModule {
 
 	@Override

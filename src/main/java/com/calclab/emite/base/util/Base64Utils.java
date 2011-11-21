@@ -19,7 +19,7 @@ package com.calclab.emite.base.util;
  * A utility to decode and encode byte arrays as Strings, using only "safe"
  * characters.
  */
-public class Base64Utils {
+public final class Base64Utils {
 
 	/**
 	 * An array mapping size but values to the characters that will be used to
@@ -50,11 +50,11 @@ public class Base64Utils {
 	 * Decode a base64 string into a byte array.
 	 * 
 	 * @param data
-	 *            the encoded data.
-	 * @return a byte array.
+	 *            the encoded data
+	 * @return a byte array
 	 * @see #fromBase64(String)
 	 */
-	public static byte[] fromBase64(final String data) {
+	public static final byte[] fromBase64(final String data) {
 		if (data == null)
 			return null;
 
@@ -101,20 +101,6 @@ public class Base64Utils {
 	}
 
 	/**
-	 * Decode a base64 string into a long value.
-	 */
-	public static long longFromBase64(final String value) {
-		int pos = 0;
-		long longVal = base64Values[value.charAt(pos++)];
-		final int len = value.length();
-		while (pos < len) {
-			longVal <<= 6;
-			longVal |= base64Values[value.charAt(pos++)];
-		}
-		return longVal;
-	}
-
-	/**
 	 * Converts a byte array into a base 64 encoded string. Null is encoded as
 	 * null, and an empty array is encoded as an empty string. Otherwise, the
 	 * byte data is read 3 bytes at a time, with bytes off the end of the array
@@ -126,7 +112,7 @@ public class Base64Utils {
 	 *            a byte array, which may be null or empty
 	 * @return a String
 	 */
-	public static String toBase64(final byte[] data) {
+	public static final String toBase64(final byte[] data) {
 		if (data == null)
 			return null;
 
@@ -160,42 +146,6 @@ public class Base64Utils {
 		}
 
 		return new String(chars);
-	}
-
-	/**
-	 * Return a string containing a base-64 encoded version of the given long
-	 * value. Leading groups of all zero bits are omitted.
-	 */
-	public static String toBase64(final long value) {
-		// Convert to ints early to avoid need for long ops
-		final int low = (int) (value & 0xffffffff);
-		final int high = (int) (value >> 32);
-
-		final StringBuilder sb = new StringBuilder();
-		boolean haveNonZero = base64Append(sb, high >> 28 & 0xf, false);
-		haveNonZero = base64Append(sb, high >> 22 & 0x3f, haveNonZero);
-		haveNonZero = base64Append(sb, high >> 16 & 0x3f, haveNonZero);
-		haveNonZero = base64Append(sb, high >> 10 & 0x3f, haveNonZero);
-		haveNonZero = base64Append(sb, high >> 4 & 0x3f, haveNonZero);
-		final int v = (high & 0xf) << 2 | low >> 30 & 0x3;
-		haveNonZero = base64Append(sb, v, haveNonZero);
-		haveNonZero = base64Append(sb, low >> 24 & 0x3f, haveNonZero);
-		haveNonZero = base64Append(sb, low >> 18 & 0x3f, haveNonZero);
-		haveNonZero = base64Append(sb, low >> 12 & 0x3f, haveNonZero);
-		base64Append(sb, low >> 6 & 0x3f, haveNonZero);
-		base64Append(sb, low & 0x3f, true);
-
-		return sb.toString();
-	}
-
-	private static boolean base64Append(final StringBuilder sb, final int digit, boolean haveNonZero) {
-		if (digit > 0) {
-			haveNonZero = true;
-		}
-		if (haveNonZero) {
-			sb.append(base64Chars[digit]);
-		}
-		return haveNonZero;
 	}
 
 	private Base64Utils() {

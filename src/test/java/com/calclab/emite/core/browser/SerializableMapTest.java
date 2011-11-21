@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.calclab.emite.core.browser.AutoConfigBoot.SerializableMap;
+import com.calclab.emite.browser.AutoConfigBoot.SerializableMap;
 
 public class SerializableMapTest {
 

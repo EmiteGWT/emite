@@ -35,6 +35,6 @@
  * applications, which may be layered on top of the core by sending
  * application-specific data qualified by particular XML namespaces [XML-NAMES]
  * 
- * @see <a href="http://xmpp.org/rfcs/rfc3920.html">RFC 3920</a>
+ * @see <a href="http://xmpp.org/rfcs/rfc6120.html">RFC 6120</a>
  */
 package com.calclab.emite.core;

@@ -20,30 +20,38 @@
 
 package com.calclab.emite.xep.delay;
 
-import com.calclab.emite.base.xml.XMLMatcher;
+import java.util.Date;
+
+import javax.annotation.Nullable;
+
+import com.calclab.emite.base.util.XmppDateTime;
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.stanzas.Stanza;
 
-public class DelayHelper {
+/**
+ * Helper methods for obtaining delay information from stanzas.
+ */
+public final class DelayHelper {
+
 	/**
-	 * Get delay from stanza (if present)
+	 * Get delay stamp from stanza.
 	 * 
 	 * @param stanza
 	 *            the stanza to get the delay from
-	 * @return the delay object if present, null otherwise
+	 * @return the date stamp if present, {@code null} otherwise
 	 */
-	public static Delay getDelay(final Stanza stanza) {
-		final XMLPacket delayPacket = stanza.getXML().getFirstChild(new XMLMatcher() {
-			@Override
-			public boolean matches(final XMLPacket packet) {
-				return "x".equals(packet.getTagName()) && "jabber:x:delay".equals(packet.getNamespace()) || "delay".equals(packet.getTagName()) && "urn:xmpp:delay".equals(packet.getNamespace());
-			}
-		});
-
-		if (delayPacket == null)
-			return null;
-
-		return new Delay(delayPacket);
+	@Nullable
+	public static final Date getDelayStamp(final Stanza stanza) {
+		XMLPacket x = stanza.getExtension("delay", XmppNamespaces.DELAY);
+		if (x != null)
+			return XmppDateTime.parseXMPPDateTime(x.getAttribute("stamp"));
+		
+		x = stanza.getExtension("x", XmppNamespaces.DELAY_LEGACY);
+		if (x != null)
+			return XmppDateTime.parseLegacyFormatXMPPDateTime(x.getAttribute("stamp"));
+		
+		return null;
 	}
 	
 	private DelayHelper() {

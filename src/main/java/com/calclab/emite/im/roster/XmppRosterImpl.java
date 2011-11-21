@@ -27,8 +27,9 @@ import java.util.Set;
 
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
-import com.calclab.emite.core.events.IQReceivedEvent;
+import com.calclab.emite.core.events.IQRequestReceivedEvent;
 import com.calclab.emite.core.events.PresenceReceivedEvent;
 import com.calclab.emite.core.events.RequestFailedEvent;
 import com.calclab.emite.core.events.SessionStatusChangedEvent;
@@ -37,8 +38,6 @@ import com.calclab.emite.core.session.SessionStatus;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.core.stanzas.Presence;
-import com.calclab.emite.core.stanzas.IQ.Type;
-import com.calclab.emite.core.stanzas.Presence.Show;
 import com.calclab.emite.im.events.RosterGroupChangedEvent;
 import com.calclab.emite.im.events.RosterItemChangedEvent;
 import com.calclab.emite.im.events.RosterRetrievedEvent;
@@ -51,7 +50,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 @Singleton
-public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler, IQReceivedEvent.Handler {
+public final class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler, IQRequestReceivedEvent.Handler {
 
 	private final EventBus eventBus;
 	private final XmppSession session;
@@ -70,7 +69,7 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 
 		session.addSessionStatusChangedHandler(this, true);
 		session.addPresenceReceivedHandler(this);
-		session.addIQReceivedHandler(this);
+		session.addIQRequestReceivedHandler(this);
 	}
 
 	@Override
@@ -102,12 +101,10 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 					item.setAvailable(true, resource);
 				}
 			}
-			final Show showReceived = presence.getShow();
-			final Show newShow = showReceived == null ? Show.notSpecified : showReceived;
-
-			if (!newShow.equals(item.getShow())) {
+			
+			if (!presence.getShow().equals(item.getShow())) {
 				hasChanged = true;
-				item.setShow(newShow);
+				item.setShow(presence.getShow());
 			}
 
 			if (item.getStatus() == null && presence.getStatus() != null || item.getStatus() != null && !item.getStatus().equals(presence.getStatus())) {
@@ -129,10 +126,10 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	}
 
 	@Override
-	public void onIQReceived(final IQReceivedEvent event) {
+	public void onIQRequestReceived(final IQRequestReceivedEvent event) {
 		final IQ iq = event.getIQ();
-		if (iq.isType(IQ.Type.set)) {
-			final XMLPacket query = iq.getQuery("jabber:iq:roster");
+		if (IQ.Type.set.equals(iq.getType())) {
+			final XMLPacket query = iq.getQuery(XmppNamespaces.ROSTER);
 			if (query != null) {
 				for (final XMLPacket child : query.getChildren()) {
 					handleItemChanged(RosterItem.parse(child));
@@ -240,8 +237,8 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	public void requestRemoveItem(final XmppURI jid) {
 		final RosterItem item = getItemByJID(jid.getJID());
 		if (item != null) {
-			final IQ iq = new IQ(Type.set);
-			final XMLPacket itemNode = iq.addChild("query", "jabber:iq:roster").addChild("item", null);
+			final IQ iq = new IQ(IQ.Type.set);
+			final XMLPacket itemNode = iq.addQuery(XmppNamespaces.ROSTER).addChild("item", null);
 			itemNode.setAttribute("subscription", "remove");
 			itemNode.setAttribute("jid", item.getJID().toString());
 
@@ -261,8 +258,8 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	@Override
 	public void requestUpdateItem(final RosterItem item) {
 		if (getItemByJID(item.getJID()) != null) {
-			final IQ iq = new IQ(Type.set);
-			item.addStanzaTo(iq.addChild("query", "jabber:iq:roster"));
+			final IQ iq = new IQ(IQ.Type.set);
+			item.addStanzaTo(iq.addQuery(XmppNamespaces.ROSTER));
 
 			session.sendIQ("roster", iq, new IQCallback() {
 				@Override
@@ -279,8 +276,8 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 
 	@Override
 	public void requestUpdateItems(final Collection<RosterItem> items) {
-		final IQ iq = new IQ(Type.set);
-		final XMLPacket rosterQuery = iq.addChild("query", "jabber:iq:roster");
+		final IQ iq = new IQ(IQ.Type.set);
+		final XMLPacket rosterQuery = iq.addQuery(XmppNamespaces.ROSTER);
 		for (final RosterItem item : items) {
 			item.addStanzaTo(rosterQuery);
 		}
@@ -301,14 +298,14 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	public void reRequestRoster() {
 		if (session.getCurrentUserURI() != null) {
 			final IQ iq = new IQ(IQ.Type.get);
-			iq.addChild("query", "jabber:iq:roster");
+			iq.addQuery(XmppNamespaces.ROSTER);
 
 			session.sendIQ("roster", iq, new IQCallback() {
 				@Override
 				public void onIQSuccess(final IQ iq) {
 					clearGroupAll();
 
-					for (final XMLPacket child : iq.getQuery("jabber:iq:roster").getChildren()) {
+					for (final XMLPacket child : iq.getQuery(XmppNamespaces.ROSTER).getChildren()) {
 						final RosterItem item = RosterItem.parse(child);
 						storeItem(item);
 					}
@@ -331,8 +328,8 @@ public class XmppRosterImpl implements XmppRoster, SessionStatusChangedEvent.Han
 	private void addOrUpdateItem(final XmppURI jid, final String name, final SubscriptionState subscriptionState, final String... groups) {
 		final RosterItem item = new RosterItem(jid, subscriptionState, name, null);
 		item.setGroups(groups);
-		final IQ iq = new IQ(Type.set);
-		item.addStanzaTo(iq.addChild("query", "jabber:iq:roster"));
+		final IQ iq = new IQ(IQ.Type.set);
+		item.addStanzaTo(iq.addQuery(XmppNamespaces.ROSTER));
 
 		session.sendIQ("roster", iq, new IQCallback() {
 			@Override

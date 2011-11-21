@@ -20,6 +20,16 @@
 
 package com.calclab.emite.base.util;
 
+/**
+ * An action to be run in the future.
+ * 
+ * @see Platform#schedule
+ */
 public interface ScheduledAction {
+	
+	/**
+	 * Called when this action runs.
+	 */
 	void run();
+
 }

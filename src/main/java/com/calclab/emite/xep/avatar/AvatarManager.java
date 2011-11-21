@@ -80,7 +80,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 	public void requestVCard(final XmppURI otherJID) {
 		final IQ iq = new IQ(IQ.Type.get);
 		iq.setTo(otherJID);
-		iq.addChild(VCARD, XMLNS);
+		iq.addExtension(VCARD, XMLNS);
 
 		session.sendIQ("avatar", iq, new IQCallback() {
 			@Override
@@ -104,7 +104,7 @@ public class AvatarManager implements PresenceReceivedEvent.Handler {
 
 	public void setVCardAvatar(final String photoBinary) {
 		final IQ iq = new IQ(IQ.Type.set);
-		final XMLPacket vcard = iq.addChild(VCARD, XMLNS);
+		final XMLPacket vcard = iq.addExtension(VCARD, XMLNS);
 		vcard.setAttribute("xdbns", XMLNS);
 		vcard.setAttribute("prodid", "-//HandGen//NONSGML vGen v1.0//EN");
 		vcard.setAttribute("version", "2.0");

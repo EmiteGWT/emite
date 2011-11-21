@@ -27,46 +27,45 @@ import java.util.concurrent.ConcurrentMap;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.google.common.base.Function;
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 import com.google.common.collect.MapMaker;
 
 /**
  * Defines a XMPP URI.
  * 
- * http://www.xmpp.org/drafts/attic/draft-saintandre-xmpp-uri-00.html
+ * <code>[ node "@" ] domain [ "/" resource ]</code>
  * 
- * <code>XMPP- = ["xmpp:"] node "@" host[ "/" resource]</code>
- * 
+ * @see <a href="http://xmpp.org/rfcs/rfc6122.html">RFC 6122</a>
  */
 @Immutable
 public final class XmppURI {
 	
 	// TODO: replace with Cache when available in GWT
 	@SuppressWarnings("deprecation")
-	private static final ConcurrentMap<String, XmppURI> cache = new MapMaker().makeComputingMap(new XmppURIParser());
+	private static final ConcurrentMap<String, XmppURI> cache = new MapMaker().makeComputingMap(XmppURIParser.INSTANCE);
 
 	/**
-	 * Parse the string and return a JID (a uri without resource)
+	 * Parse a string and return a JID (the URI without resource).
 	 * 
 	 * @param jid
 	 *            the string to be parsed
-	 * @return a XmppURI object if the jid is a valid JID string, null otherwise
+	 * @return a JID if it is a valid JID string, {@code null} otherwise
 	 */
-	public static XmppURI jid(final String jid) {
-		return uri(jid).getJID();
+	@Nullable
+	public static final XmppURI jid(final String jid) {
+		final XmppURI uri = uri(jid);
+		return uri != null ? uri : null;
 	}
 
 	/**
-	 * Parse a string and return a complete XmppURI object
+	 * Parse a string and return a URI.
 	 * 
 	 * @param xmppUri
 	 *            the string to be parsed
-	 * @return a XmppURI object if the string is a valid XmppURI string, null
-	 *         otherwise
+	 * @return a URI if it is a valid URI string, {@code null} otherwise
 	 */
-	public static XmppURI uri(final String xmppUri) {
+	@Nullable
+	public static final XmppURI uri(final String xmppUri) {
 		try {
 			return cache.get(xmppUri);
 		} catch (final NullPointerException e) {
@@ -75,7 +74,7 @@ public final class XmppURI {
 	}
 
 	/**
-	 * Create a new XmppURI object with the given attributes
+	 * Create a new URI object with the given attributes.
 	 * 
 	 * @param node
 	 *            the node of the URI
@@ -83,10 +82,10 @@ public final class XmppURI {
 	 *            the host of the URI
 	 * @param resource
 	 *            the resource of the URI
-	 * @return a XmppURI object, never null
+	 * @return a URI object
 	 */
-	public static XmppURI uri(final String node, final String host, final String resource) {
-		XmppURI result = new XmppURI(node, host, resource);
+	public static final XmppURI uri(@Nullable final String node, final String host, @Nullable final String resource) {
+		final XmppURI result = new XmppURI(node, host, resource);
 		cache.putIfAbsent(result.toString(), result);
 		return result;
 	}
@@ -95,37 +94,43 @@ public final class XmppURI {
 	@Nullable private final String node;
 	@Nullable private final String resource;
 
-	protected XmppURI(final String node, final String host, final String resource) {
+	protected XmppURI(@Nullable final String node, final String host, @Nullable final String resource) {
 		this.host = checkNotNull(host);
 		this.node = node;
 		this.resource = resource;
 	}
 
 	/**
-	 * Returns the JID of this URI (a XmppURI without resource)
+	 * Returns the JID for this URI (the URI without resource).
 	 * 
-	 * @return the JID of this URI
+	 * @return the JID for this URI
 	 */
 	public final XmppURI getJID() {
 		return uri(node, host, null);
 	}
 
 	/**
-	 * @return the uri's host
+	 * Returns the host for this URI.
+	 * 
+	 * @return the host for this URI
 	 */
 	public final String getHost() {
 		return host;
 	}
 
 	/**
-	 * @return a new XmppURI object with the same host as this one
+	 * A new URI with the host part only.
+	 * 
+	 * @return a new URI with the same host as this one
 	 */
 	public final XmppURI getHostURI() {
 		return uri(null, host, null);
 	}
 
 	/**
-	 * @return uri's node
+	 * Returns the node for this URI.
+	 * 
+	 * @return the node for this URI
 	 */
 	@Nullable
 	public final String getNode() {
@@ -133,7 +138,9 @@ public final class XmppURI {
 	}
 
 	/**
-	 * @return uri's resource
+	 * Returns the resource for this URI.
+	 * 
+	 * @return the resource for this URI
 	 */
 	@Nullable
 	public final String getResource() {
@@ -141,12 +148,12 @@ public final class XmppURI {
 	}
 
 	/**
-	 * Return the node or the host if node is null
+	 * Return the node or the host if node is {@code null}.
 	 * 
-	 * @return an never null short name representation
+	 * @return a short name representation
 	 */
 	public final String getShortName() {
-		return node == null ? host : node;
+		return node != null ? node : host;
 	}
 
 	@Override
@@ -164,6 +171,12 @@ public final class XmppURI {
 		return false;
 	}
 
+	/**
+	 * Compares two JIDs, ignoring the resource.
+	 * 
+	 * @param other the URI to compare to this one
+	 * @return {@code true} if both JIDs are equal, {@code false} otherwise
+	 */
 	public final boolean equalsNoResource(final XmppURI other) {
 		return Objects.equal(host, other.host) && Objects.equal(node, other.node);
 	}
@@ -176,7 +189,7 @@ public final class XmppURI {
 			builder.append(node);
 			builder.append('@');
 		}
-		builder.append(this.host);
+		builder.append(host);
 		if (resource != null) {
 			builder.append('/');
 			builder.append(resource);
@@ -185,43 +198,4 @@ public final class XmppURI {
 		return builder.toString();
 	}
 	
-	/**
-	 * A XmppURI parser and validator
-	 */
-	private static class XmppURIParser implements Function<String, XmppURI> {
-		
-		// TODO: Add Stringprep support.
-
-		@Override
-		public XmppURI apply(final String uri) {
-			if (Strings.isNullOrEmpty(uri))
-				return null;
-
-			String node = null;
-			String domain = null;
-			String resource = null;
-
-			final int atIndex = uri.indexOf('@') + 1;
-			if (atIndex > 0) {
-				node = uri.substring(0, atIndex - 1);
-				if (node.length() == 0)
-					return null;
-			}
-
-			final int barIndex = uri.indexOf('/', atIndex);
-			if (atIndex == barIndex)
-				return null;
-			if (barIndex > 0) {
-				domain = uri.substring(atIndex, barIndex);
-				resource = uri.substring(barIndex + 1);
-			} else {
-				domain = uri.substring(atIndex);
-			}
-			if (domain.length() == 0)
-				return null;
-
-			return new XmppURI(node, domain, resource);
-		}
-
-	}
 }

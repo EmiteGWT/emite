@@ -33,15 +33,15 @@ import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
 import com.calclab.emite.core.XmppURI;
+import com.calclab.emite.core.conn.StreamSettings;
 import com.calclab.emite.core.conn.XmppConnection;
-import com.calclab.emite.core.conn.bosh.StreamSettings;
 import com.calclab.emite.core.events.IQReceivedEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
 import com.calclab.emite.core.events.PresenceReceivedEvent;
-import com.calclab.emite.core.session.Credentials;
+import com.calclab.emite.core.sasl.Credentials;
+import com.calclab.emite.core.session.SASLManager;
 import com.calclab.emite.core.session.SessionStatus;
 import com.calclab.emite.core.session.XmppSessionImpl;
-import com.calclab.emite.core.session.sasl.SASLManagerImpl;
 import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.core.stanzas.Message;
 import com.calclab.emite.core.stanzas.Presence;
@@ -83,7 +83,7 @@ public class XmppSessionTester extends XmppSessionImpl {
 	 *            optional user to login
 	 */
 	public XmppSessionTester(final XmppURI user) {
-		super(eventBus, connection, new SASLManagerImpl(eventBus, connection));
+		super(eventBus, connection, new SASLManager(eventBus, connection));
 		sent = new ArrayList<Stanza>();
 		if (user != null) {
 			setLoggedIn(user);

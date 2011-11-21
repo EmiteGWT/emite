@@ -20,23 +20,47 @@
 
 package com.calclab.emite.core.conn;
 
-public class ConnectionSettings {
-	public static int MAX_REQUESTS = 2;
-	public static int DEFAULT_WAIT = 60;
-	public static int DEFAULT_HOLD = 1;
+import javax.annotation.concurrent.Immutable;
 
-	public final String httpBase;
-	public final String hostName;
-	public final String routeHost;
-	public final int routePort;
-	public final boolean secure;
-	public final int wait;
-	public final int hold;
+/**
+ * BOSH connection settings.
+ */
+@Immutable
+public final class ConnectionSettings {
+	
+	/**
+	 * Maximum number of open BOSH requests.
+	 */
+	public static final int MAX_REQUESTS = 2;
 
+	private final String httpBase;
+	private final String hostName;
+	private final String routeHost;
+	private final int routePort;
+	private final boolean secure;
+	private final int wait;
+	private final int hold;
+
+	/**
+	 * Create new connection settings with default values.
+	 * 
+	 * @param hostName host name of the XMPP server
+	 */
 	public ConnectionSettings(final String hostName) {
-		this("/http-bind", hostName, hostName, 5222, true, DEFAULT_WAIT, DEFAULT_HOLD);
+		this("/http-bind", hostName, hostName, 5222, true, 60, 1);
 	}
 
+	/**
+	 * Create new connection settings.
+	 * 
+	 * @param httpBase BOSH URL
+	 * @param hostName host name of the XMPP server
+	 * @param routeHost host name of the routing XMPP server
+	 * @param routePort port of the routing XMPP server
+	 * @param secure use secure connection
+	 * @param wait wait time (in seconds) before responding to a request
+	 * @param hold maximum number of waiting requests
+	 */
 	public ConnectionSettings(final String httpBase, final String hostName, final String routeHost, final int routePort, final boolean secure, final int wait, final int hold) {
 		this.httpBase = httpBase;
 		this.hostName = hostName;
@@ -46,4 +70,54 @@ public class ConnectionSettings {
 		this.wait = wait;
 		this.hold = hold;
 	}
+
+	/**
+	 * @return httpBase
+	 */
+	public final String getHttpBase() {
+		return httpBase;
+	}
+
+	/**
+	 * @return hostName
+	 */
+	public final String getHostName() {
+		return hostName;
+	}
+
+	/**
+	 * @return routeHost
+	 */
+	public final String getRouteHost() {
+		return routeHost;
+	}
+
+	/**
+	 * @return routePort
+	 */
+	public final int getRoutePort() {
+		return routePort;
+	}
+
+	/**
+	 * @return secure
+	 */
+	public final boolean isSecure() {
+		return secure;
+	}
+
+	/**
+	 * @return wait
+	 */
+	public final int getWait() {
+		return wait;
+	}
+
+	/**
+	 * @return hold
+	 */
+	public final int getHold() {
+		return hold;
+	}
+	
 }

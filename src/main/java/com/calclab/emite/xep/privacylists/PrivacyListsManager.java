@@ -21,6 +21,7 @@
 package com.calclab.emite.xep.privacylists;
 
 import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.IQ;
@@ -53,7 +54,7 @@ public class PrivacyListsManager {
 	 */
 	public void blockUserBasedOnJID(final String listName, final XmppURI uri, final int order) {
 		final IQ iq = new IQ(IQ.Type.set);
-		final XMLPacket list = iq.addChild("query", "jabber:iq:privacy").addChild("list", null);
+		final XMLPacket list = iq.addQuery(XmppNamespaces.PRIVACY).addChild("list", null);
 		list.setAttribute("name", listName);
 		final XMLPacket item = list.addChild("item", null);
 		item.setAttribute("type", "jid");

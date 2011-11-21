@@ -24,15 +24,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.List;
 
-import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.base.xml.XMLBuilder;
-import com.calclab.emite.base.xml.XMLPacket;
 import com.google.common.collect.Lists;
 
 /**
  * XEP-0004 Item for "3.2 Multiple Items in Form Results"
  */
-public final class Item implements HasXML {
+public final class Item {
 
 	private final List<Field> fields;
 	
@@ -51,15 +49,14 @@ public final class Item implements HasXML {
 		fields.add(checkNotNull(field));
 	}
 	
-	@Override
-	public final XMLPacket getXML() {
-		XMLBuilder builder = XMLBuilder.create("item");
+	protected final void build(final XMLBuilder builder) {
+		builder.child("item");
 		
 		for (final Field field : fields) {
-			builder.child(field);
+			field.build(builder);
 		}
 		
-		return builder.getXML();
+		builder.parent();
 	}
 	
 }

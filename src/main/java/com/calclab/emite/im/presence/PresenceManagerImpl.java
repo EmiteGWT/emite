@@ -40,7 +40,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see PresenceManager
  */
 @Singleton
-public class PresenceManagerImpl implements PresenceManager, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler {
+public final class PresenceManagerImpl implements PresenceManager, SessionStatusChangedEvent.Handler, PresenceReceivedEvent.Handler {
 
 	static final Presence INITIAL_PRESENCE = new Presence(Presence.Type.unavailable);
 
@@ -50,12 +50,12 @@ public class PresenceManagerImpl implements PresenceManager, SessionStatusChange
 	private Presence ownPresence;
 
 	@Inject
-	protected PresenceManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session, final SessionReady sessionReady) {
+	protected PresenceManagerImpl(@Named("emite") final EventBus eventBus, final XmppSession session) {
 		this.eventBus = checkNotNull(eventBus);
 		this.session = checkNotNull(session);
 		ownPresence = INITIAL_PRESENCE;
 
-		sessionReady.disable();
+		SessionReady.disable();
 
 		// Upon connecting to the server and becoming an active resource, a
 		// client SHOULD request the roster before sending initial presence

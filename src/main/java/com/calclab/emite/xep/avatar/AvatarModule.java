@@ -22,6 +22,9 @@ package com.calclab.emite.xep.avatar;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
+/**
+ * Emite Avatar GIN module
+ */
 public class AvatarModule extends AbstractGinModule {
 
 	@Override

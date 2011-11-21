@@ -20,15 +20,15 @@
 
 package com.calclab.emite.example.chat.client;
 
-import com.calclab.emite.browser.client.BrowserModule;
-import com.calclab.emite.core.client.CoreModule;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.im.client.ImModule;
-import com.calclab.emite.im.client.chat.pair.PairChatManager;
+import com.calclab.emite.browser.EmiteBrowserModule;
+import com.calclab.emite.core.EmiteCoreModule;
+import com.calclab.emite.core.session.XmppSession;
+import com.calclab.emite.im.EmiteIMModule;
+import com.calclab.emite.im.chat.PairChatManager;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-@GinModules({ CoreModule.class, ImModule.class, BrowserModule.class })
+@GinModules({ EmiteCoreModule.class, EmiteIMModule.class, EmiteBrowserModule.class })
 interface ExampleIMChatGinjector extends Ginjector {
 	XmppSession getXmppSession();
 

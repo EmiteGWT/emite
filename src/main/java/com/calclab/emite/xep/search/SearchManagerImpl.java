@@ -28,6 +28,7 @@ import java.util.Map;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.session.SessionStatus;
 import com.calclab.emite.core.session.XmppSession;
@@ -38,7 +39,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class SearchManagerImpl implements SearchManager {
+public final class SearchManagerImpl implements SearchManager {
 
 	private static final String SHOULD_BE_CONNECTED = "You should be connected before use this service.";
 
@@ -55,7 +56,7 @@ public class SearchManagerImpl implements SearchManager {
 		requestGenericSearchFields(new IQCallback() {
 			@Override
 			public void onIQSuccess(final IQ iq) {
-				listener.onSuccess(processFieldsResults(session.getCurrentUserURI(), iq.getQuery("jabber:iq:search")));
+				listener.onSuccess(processFieldsResults(session.getCurrentUserURI(), iq.getQuery(XmppNamespaces.SEARCH)));
 			}
 
 			@Override
@@ -71,7 +72,7 @@ public class SearchManagerImpl implements SearchManager {
 		requestGenericSearchFields(new IQCallback() {
 			@Override
 			public void onIQSuccess(final IQ iq) {
-				final XMLPacket xSearch = iq.getExtension("x", "jabber:x:data");
+				final XMLPacket xSearch = iq.getExtension("x", XmppNamespaces.DATA);
 				if (xSearch != null) {
 					listener.onSuccess(Form.fromXML(xSearch));
 					return;
@@ -79,7 +80,7 @@ public class SearchManagerImpl implements SearchManager {
 
 				// This is not a extended search. Try to create a form
 				// with returned fields
-				final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(), iq.getQuery("jabber:iq:search"));
+				final SearchFields fieldResults = processFieldsResults(session.getCurrentUserURI(), iq.getQuery(XmppNamespaces.SEARCH));
 				final Form form = new Form(Form.Type.form);
 				form.addInstruction(fieldResults.getInstructions());
 				for (final String fieldName : fieldResults.getFieldNames()) {
@@ -124,7 +125,7 @@ public class SearchManagerImpl implements SearchManager {
 		searchGeneric(queryPacket, new IQCallback() {
 			@Override
 			public void onIQSuccess(final IQ iq) {
-				listener.onSuccess(processResults(session.getCurrentUserURI(), iq.getQuery("jabber:iq:search")));
+				listener.onSuccess(processResults(session.getCurrentUserURI(), iq.getQuery(XmppNamespaces.SEARCH)));
 			}
 
 			@Override
@@ -167,7 +168,7 @@ public class SearchManagerImpl implements SearchManager {
 			final IQ iq = new IQ(IQ.Type.get);
 			iq.setTo(host);
 			iq.getXML().setAttribute("xml:lang", "en");
-			iq.addChild("query", "jabber:iq:search");
+			iq.addQuery(XmppNamespaces.SEARCH);
 
 			session.sendIQ("search", iq, callback);
 		} else
@@ -179,7 +180,7 @@ public class SearchManagerImpl implements SearchManager {
 			final IQ iq = new IQ(IQ.Type.set);
 			iq.setTo(host);
 			iq.getXML().setAttribute("xml:lang", "en");
-			final XMLPacket queryPacket = iq.addChild("query", "jabber:iq:search");
+			final XMLPacket queryPacket = iq.addQuery(XmppNamespaces.SEARCH);
 			for (final XMLPacket child : queryChilds) {
 				queryPacket.addChild(child);
 			}

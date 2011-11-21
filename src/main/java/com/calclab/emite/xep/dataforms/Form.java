@@ -38,69 +38,6 @@ import com.google.common.collect.Lists;
  * XEP-0004 Form
  */
 public final class Form implements HasXML {
-
-	public static final Form fromXML(final XMLPacket xml) {
-		checkArgument("x".equals(xml.getTagName()) && XmppNamespaces.DATA_FORM.equals(xml.getNamespace()));
-		
-		final Form form = new Form(Type.valueOf(xml.getAttribute("type")));
-		form.setTitle(xml.getChildText("title"));
-		
-		for (final XMLPacket xmlInstructions : xml.getChildren("instructions")) {
-			form.addInstruction(xmlInstructions.getText());
-		}
-		
-		if (xml.hasChild("reported")) {
-			final XMLPacket xmlReported = xml.getFirstChild("reported");
-			
-			final Reported reported = new Reported();
-			for (final XMLPacket xmlField : xmlReported.getChildren("field")) {
-				reported.addField(parseField(xmlField));
-			}
-		}
-		
-		if (xml.hasChild("item")) {
-			final XMLPacket xmlItem = xml.getFirstChild("item");
-			
-			final Item item = new Item();
-			for (final XMLPacket xmlField : xmlItem.getChildren("field")) {
-				item.addField(parseField(xmlField));
-			}
-		}
-		
-		for (final XMLPacket xmlField : xml.getChildren("field")) {
-			form.addField(parseField(xmlField));
-		}
-		
-		return null;
-	}
-	
-	private static final Field parseField(final XMLPacket xml) {
-		final Field field = new Field();
-		
-		if (xml.hasAttribute("type")) {
-			field.setType(Field.Type.fromString(xml.getAttribute("type")));
-		}
-		
-		field.setLabel(xml.getAttribute("label"));
-		field.setVar(xml.getAttribute("var"));
-		field.setDesc(xml.getChildText("desc"));
-		field.setRequired(xml.hasChild("required"));
-		
-		for (final XMLPacket xmlValue : xml.getChildren("value")) {
-			field.addValue(xmlValue.getText());
-		}
-		
-		for (final XMLPacket xmlOption : xml.getChildren("option")) {
-			final Option option = new Option();
-			option.setLabel(xmlOption.getAttribute("label"));
-			for (final XMLPacket xmlValue : xml.getChildren("value")) {
-				option.addValue(xmlValue.getText());
-			}
-			field.addOption(option);
-		}
-		
-		return field;
-	}
 	
 	public static enum Type {
 		/**
@@ -195,8 +132,7 @@ public final class Form implements HasXML {
 	
 	@Override
 	public final XMLPacket getXML() {
-		final XMLBuilder builder = XMLBuilder.create("x", "jabber:x:data");
-		builder.attribute("type", type.toString());
+		final XMLBuilder builder = XMLBuilder.create("x", XmppNamespaces.DATA).attribute("type", type.toString());
 		
 		if (!Strings.isNullOrEmpty(title)) {
 			builder.childText("title", title);
@@ -207,18 +143,81 @@ public final class Form implements HasXML {
 		}
 		
 		if (reported != null) {
-			builder.child(reported);
+			reported.build(builder);
 		}
 		
 		for (final Item item : items) {
-			builder.child(item);
+			item.build(builder);
 		}
 		
 		for (final Field field : fields) {
-			builder.child(field);
+			field.build(builder);
 		}
 		
 		return builder.getXML();
+	}
+	
+	public static final Form fromXML(final XMLPacket xml) {
+		checkArgument("x".equals(xml.getTagName()) && XmppNamespaces.DATA.equals(xml.getNamespace()));
+		
+		final Form form = new Form(Type.valueOf(xml.getAttribute("type")));
+		form.setTitle(xml.getChildText("title"));
+		
+		for (final XMLPacket xmlInstructions : xml.getChildren("instructions")) {
+			form.addInstruction(xmlInstructions.getText());
+		}
+		
+		if (xml.hasChild("reported")) {
+			final XMLPacket xmlReported = xml.getFirstChild("reported");
+			
+			final Reported reported = new Reported();
+			for (final XMLPacket xmlField : xmlReported.getChildren("field")) {
+				reported.addField(parseField(xmlField));
+			}
+		}
+		
+		if (xml.hasChild("item")) {
+			final XMLPacket xmlItem = xml.getFirstChild("item");
+			
+			final Item item = new Item();
+			for (final XMLPacket xmlField : xmlItem.getChildren("field")) {
+				item.addField(parseField(xmlField));
+			}
+		}
+		
+		for (final XMLPacket xmlField : xml.getChildren("field")) {
+			form.addField(parseField(xmlField));
+		}
+		
+		return null;
+	}
+	
+	private static final Field parseField(final XMLPacket xml) {
+		final Field field = new Field();
+		
+		if (xml.hasAttribute("type")) {
+			field.setType(Field.Type.fromString(xml.getAttribute("type")));
+		}
+		
+		field.setLabel(xml.getAttribute("label"));
+		field.setVar(xml.getAttribute("var"));
+		field.setDesc(xml.getChildText("desc"));
+		field.setRequired(xml.hasChild("required"));
+		
+		for (final XMLPacket xmlValue : xml.getChildren("value")) {
+			field.addValue(xmlValue.getText());
+		}
+		
+		for (final XMLPacket xmlOption : xml.getChildren("option")) {
+			final Option option = new Option();
+			option.setLabel(xmlOption.getAttribute("label"));
+			for (final XMLPacket xmlValue : xml.getChildren("value")) {
+				option.addValue(xmlValue.getText());
+			}
+			field.addOption(option);
+		}
+		
+		return field;
 	}
 
 }

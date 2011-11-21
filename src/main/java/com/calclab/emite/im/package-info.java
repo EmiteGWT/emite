@@ -21,13 +21,13 @@
 /**
  * Emite IM module.
  * <p>
- * Implementation of the RFC-3921 (Extensible Messaging and Presence Protocol
+ * Implementation of the RFC-6121 (Extensible Messaging and Presence Protocol
  * (XMPP): Instant Messaging and Presence)
  * <p>
  * This module implements the extensions to and applications of the core
  * features of XMPP that provide the basic functionality expected of an instant
  * messaging (IM) and presence application.
  * 
- * @see <a href="http://www.xmpp.org/rfcs/rfc3921.html">RFC 3921</a>
+ * @see <a href="http://www.xmpp.org/rfcs/rfc6121.html">RFC 6121</a>
  */
 package com.calclab.emite.im;

@@ -106,7 +106,6 @@ public class RosterItem {
 		this.name = name;
 		groups = Lists.newArrayList();
 		availableResources = Sets.newHashSet();
-		show = Show.unknown;
 		status = null;
 	}
 

@@ -22,6 +22,9 @@ package com.calclab.emite.xep.mucchatstate;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
+/**
+ * Emite MUC Chat State GIN module
+ */
 public class MUCChatStateModule extends AbstractGinModule {
 
 	@Override

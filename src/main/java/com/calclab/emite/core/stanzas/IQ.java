@@ -20,61 +20,88 @@
 
 package com.calclab.emite.core.stanzas;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.XMLPacket;
 
+/**
+ * An Info/Query stanza.
+ * 
+ * @see <a href="http://xmpp.org/rfcs/rfc6120.html#stanzas-semantics-iq">RFC 6120 - Section 8.2.3</a>
+ */
 public class IQ extends Stanza {
 
+	/**
+	 * Possible <i>type</i> values for IQs.
+	 * 
+	 * @see <a href="http://xmpp.org/rfcs/rfc6120.html#stanzas-semantics-iq">RFC 6120 - Section 8.2.3</a>
+	 */
 	public static enum Type {
-		error, get, result, set
+		get, set, result, error;
 	}
 
-	public static Type getType(final XMLPacket packet) {
-		try {
-			return Type.valueOf(packet.getAttribute("type"));
-		} catch (final IllegalArgumentException e) {
-			return null;
-		}
+	/**
+	 * Creates a new IQ from a XML packet.
+	 * 
+	 * No checks are done to the packet, so it's only meant for internal use.
+	 * 
+	 * @param xml the XML packet for this IQ
+	 */
+	public IQ(final XMLPacket xml) {
+		super(xml);
 	}
 
-	public static boolean isSuccess(final XMLPacket iq) {
-		return "result".equals(iq.getAttribute("type"));
-	}
-
-	public static boolean isType(final Type type, final XMLPacket iq) {
-		return type.toString().equals(iq.getAttribute("type"));
-	}
-
-	public IQ(final XMLPacket stanza) {
-		super(stanza);
-	}
-
+	/**
+	 * Create a new IQ with the given type.
+	 * 
+	 * @param type the type for the new IQ
+	 */
 	public IQ(final Type type) {
 		super("iq");
 		setType(type);
 	}
 
-	public boolean isType(final Type type) {
-		return type.equals(getType());
-	}
-
-	public Type getType() {
-		final String type = xml.getAttribute("type");
+	/**
+	 * Returns the <i>type</i> attribute for this IQ.
+	 * 
+	 * @return the type for this stanza, or {@code null} if not found
+	 */
+	@Nullable
+	public final Type getType() {
 		try {
-			return type != null ? Type.valueOf(type) : null;
+			return Type.valueOf(xml.getAttribute("type"));
 		} catch (final IllegalArgumentException e) {
 			return null;
 		}
 	}
 
-	public void setType(final Type type) {
-		xml.setAttribute("type", type != null ? type.toString() : null);
+	/**
+	 * Sets a new <i>type</i> attribute for this IQ.
+	 * 
+	 * @param type the new type for this IQ
+	 */
+	public final void setType(final Type type) {
+		xml.setAttribute("type", type.toString());
 	}
 
-	public XMLPacket addChild(final String name, final String xmlns) {
-		return xml.addChild(name, xmlns);
+	/**
+	 * Retrieves the query from this IQ.
+	 * 
+	 * @param namespace the namespace of the query
+	 * @return the query, or {@code null} if not found
+	 */
+	@Nullable
+	public final XMLPacket getQuery(final String namespace) {
+		return getExtension("query", namespace);
 	}
-
-	public XMLPacket getQuery(final String xmlns) {
-		return getExtension("query", xmlns);
+	
+	/**
+	 * Adds a new query to this packet.
+	 * 
+	 * @param namespace the namespace of the query
+	 * @return the new query
+	 */
+	public final XMLPacket addQuery(final String namespace) {
+		return addExtension("query", namespace);
 	}
 }

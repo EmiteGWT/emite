@@ -22,6 +22,7 @@ package com.calclab.emite.xep.storage;
 
 import com.calclab.emite.base.xml.HasXML;
 import com.calclab.emite.core.IQCallback;
+import com.calclab.emite.core.XmppNamespaces;
 import com.calclab.emite.core.session.XmppSession;
 import com.calclab.emite.core.stanzas.IQ;
 import com.google.inject.Inject;
@@ -43,7 +44,7 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 	@Override
 	public void retrieve(final HasXML data, final PrivateStorageResponseEvent.Handler handler) {
 		final IQ iq = new IQ(IQ.Type.get);
-		iq.addChild("query", "jabber:iq:private").addChild(data);
+		iq.addQuery(XmppNamespaces.PRIVATE).addChild(data);
 
 		session.sendIQ("priv", iq, new IQCallback() {
 			@Override
@@ -60,7 +61,7 @@ public class PrivateStorageManagerImpl implements PrivateStorageManager {
 	@Override
 	public void store(final HasXML data, final PrivateStorageResponseEvent.Handler handler) {
 		final IQ iq = new IQ(IQ.Type.set);
-		iq.addChild("query", "jabber:iq:private").addChild(data);
+		iq.addQuery(XmppNamespaces.PRIVATE).addChild(data);
 
 		session.sendIQ("priv", iq, new IQCallback() {
 			@Override
