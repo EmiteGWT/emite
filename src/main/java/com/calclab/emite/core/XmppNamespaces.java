@@ -37,6 +37,8 @@ public final class XmppNamespaces {
 	/** {@value} */
 	public static final String ROSTER = "jabber:iq:roster";
 	/** {@value} */
+	public static final String REGISTER = "jabber:iq:register";
+	/** {@value} */
 	public static final String SEARCH = "jabber:iq:search";
 	/** {@value} */
 	public static final String PRIVATE = "jabber:iq:private";

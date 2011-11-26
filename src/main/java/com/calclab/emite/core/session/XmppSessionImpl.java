@@ -65,6 +65,11 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 @Singleton
 public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler, PacketReceivedEvent.Handler {
 
+	private static enum SessionMode {
+		// TODO
+		offline, login, register, ready;
+	}
+	
 	private static final Logger logger = Logger.getLogger(XmppSessionImpl.class.getName());
 
 	private final EventBus eventBus;
@@ -75,6 +80,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 
 	private final List<Stanza> queuedStanzas;
 	private SessionStatus status;
+	private SessionMode mode;
 	
 	@Nullable private Credentials credentials;
 	@Nullable private XmppURI userUri;
@@ -86,6 +92,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		
 		queuedStanzas = Lists.newArrayList();
 		status = SessionStatus.disconnected;
+		mode = SessionMode.offline;
 		
 		saslManager = new SASLManager(eventBus, connection);
 		iqManager = new IQManager(this);
@@ -181,7 +188,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		checkNotNull(newStatus);
 		
 		if (SessionStatus.isReady(newStatus)) {
-			sendQueuedStanzas();
+			logger.finer("Sending queued stanzas...");
+			for (final Stanza packet : queuedStanzas) {
+				send(packet, true);
+			}
+			queuedStanzas.clear();
 		} else if (SessionStatus.isDisconnected(newStatus)) {
 			userUri = null;
 		}
@@ -263,14 +274,6 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		iqManager.sendIQRequest(category, iq, handler, false);
 	}
 
-	private void sendQueuedStanzas() {
-		logger.finer("Sending queued stanzas...");
-		for (final Stanza packet : queuedStanzas) {
-			send(packet, true);
-		}
-		queuedStanzas.clear();
-	}
-
 	private void bindResource(@Nullable final String resource) {
 		final IQ iq = new IQ(IQ.Type.set);
 		
@@ -304,7 +307,6 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			@Override
 			public void onIQSuccess(final IQ iq) {
 				userUri = iq.getTo();
-				logger.info("SESSION LOGGED IN");
 				setStatus(SessionStatus.loggedIn);
 			}
 

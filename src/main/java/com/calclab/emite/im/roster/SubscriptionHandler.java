@@ -38,7 +38,7 @@ import com.google.inject.Singleton;
  * The default behavior is none: do nothing
  */
 @Singleton
-public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Handler {
+public final class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Handler {
 
 	public static enum Behavior {
 		/** do nothing **/
@@ -48,35 +48,35 @@ public class SubscriptionHandler implements SubscriptionRequestReceivedEvent.Han
 		/** refuses all subscription request **/
 		refuseAll
 	}
-
+	
+	private static Behavior behavior = Behavior.none;
+	
+	/**
+	 * Change the behavior.
+	 * 
+	 * @param behavior
+	 *            the desired new behavior
+	 */
+	public static final void setBehavior(final Behavior behavior) {
+		SubscriptionHandler.behavior = checkNotNull(behavior);
+	}
+	
 	private final SubscriptionManager manager;
-	private Behavior behavior;
 
 	@Inject
 	protected SubscriptionHandler(final SubscriptionManager manager) {
 		this.manager = checkNotNull(manager);
-		this.behavior = Behavior.none;
 
 		manager.addSubscriptionRequestReceivedHandler(this);
 	}
 
 	@Override
 	public void onSubscriptionRequestReceived(final SubscriptionRequestReceivedEvent event) {
-		if (behavior == Behavior.acceptAll) {
+		if (Behavior.acceptAll.equals(behavior)) {
 			manager.approveSubscriptionRequest(event.getFrom(), event.getNick());
-		} else if (behavior == Behavior.refuseAll) {
+		} else if (Behavior.refuseAll.equals(behavior)) {
 			manager.refuseSubscriptionRequest(event.getFrom());
 		}
-	}
-
-	/**
-	 * Change the behavior
-	 * 
-	 * @param behaviour
-	 *            the desired new behavior
-	 */
-	public void setBehavior(final Behavior behavior) {
-		this.behavior = checkNotNull(behavior);
 	}
 
 }

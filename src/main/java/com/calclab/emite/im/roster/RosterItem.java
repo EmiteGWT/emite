@@ -28,8 +28,6 @@ import java.util.Set;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.stanzas.Presence;
-import com.calclab.emite.core.stanzas.Presence.Show;
-import com.calclab.emite.core.stanzas.Presence.Type;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -57,8 +55,8 @@ public class RosterItem {
 		return item;
 	}
 
-	private static Type parseAsk(final String ask) {
-		Type type;
+	private static Presence.Type parseAsk(final String ask) {
+		Presence.Type type;
 		try {
 			type = Presence.Type.valueOf(ask);
 		} catch (final Exception e) {
@@ -84,7 +82,7 @@ public class RosterItem {
 	Presence.Show show;
 
 	private SubscriptionState subscriptionState;
-	private final Type ask;
+	private final Presence.Type ask;
 	private final Set<String> availableResources;
 
 	/**
@@ -99,7 +97,7 @@ public class RosterItem {
 	 * @param ask
 	 * 
 	 */
-	public RosterItem(final XmppURI jid, final SubscriptionState subscriptionState, final String name, final Type ask) {
+	public RosterItem(final XmppURI jid, final SubscriptionState subscriptionState, final String name, final Presence.Type ask) {
 		this.ask = ask;
 		this.jid = jid.getJID();
 		this.subscriptionState = subscriptionState;
@@ -146,7 +144,7 @@ public class RosterItem {
 	 * 
 	 * @return the ask status
 	 */
-	public Type getAsk() {
+	public Presence.Type getAsk() {
 		return ask;
 	}
 
