@@ -20,6 +20,7 @@
 
 package com.calclab.emite.im.client.roster;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -31,7 +32,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * @see http://www.xmpp.org/rfcs/rfc3921.html#sub
  * @see http://www.xmpp.org/rfcs/rfc3921.html#int
  */
-public interface SubscriptionManager {
+public interface SubscriptionManager   extends MultiInstance {
 
 	/**
 	 * Add a handler to know when a subscription request has arrived

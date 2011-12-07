@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.NoPacket;
@@ -53,14 +55,15 @@ public class SearchManagerImpl implements SearchManager {
 	public static final String IQ_SEARCH = "jabber:iq:search";
 	private static final String XML_LANG = "xml:lang";
 	private static final String SEARCH_CATEGORY = "search";
-	private final XmppSession session;
+	private XmppSession session;
 	private final PacketMatcher filterQuery;
 
 	private XmppURI host;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public SearchManagerImpl(final XmppSession session) {
-		this.session = session;
+	public SearchManagerImpl(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {		
+		this.loginXmppMap = loginXmppMap;
 		filterQuery = MatcherFactory.byNameAndXMLNS("query", IQ_SEARCH);
 	}
 
@@ -203,5 +206,11 @@ public class SearchManagerImpl implements SearchManager {
 			});
 		} else
 			throw new RuntimeException(SHOULD_BE_CONNECTED);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {		    	
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);   		
+		this.session = loginXmpp.xmppSession;
 	}
 }

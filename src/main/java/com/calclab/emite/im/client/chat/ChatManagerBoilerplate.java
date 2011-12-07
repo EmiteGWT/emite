@@ -21,8 +21,10 @@
 package com.calclab.emite.im.client.chat;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 
+import com.calclab.emite.core.client.LoginXmpp;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.EventBusFactory;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
@@ -31,12 +33,14 @@ import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public abstract class ChatManagerBoilerplate implements ChatManager {
 
-	protected final XmppSession session;
+public abstract class ChatManagerBoilerplate implements ChatManager { 
+
+    protected  XmppSession session;
 	protected ChatSelectionStrategy strategy;
 	protected final HashSet<Chat> chats;
 	protected final EmiteEventBus managerEventBus;
+	protected HashMap <String, LoginXmpp> loginXmppMap = null;
 
 	public ChatManagerBoilerplate(final XmppSession session, final ChatSelectionStrategy strategy) {
 		this.session = session;
@@ -44,6 +48,20 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
 		managerEventBus = EventBusFactory.create("chatManager");
 		chats = new HashSet<Chat>();
 	}
+
+    public ChatManagerBoilerplate(ChatSelectionStrategy strategy) {
+    	this.strategy = strategy;
+    	chats = new HashSet<Chat>();
+    	this.managerEventBus = EventBusFactory.create("chatManager");    
+	}
+    
+	@Override
+	public void setInstanceId(String instanceId) {
+		
+    	//loginXmppMap = GinjectorHolder.getGinjector().getLoginXmppMap();
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);		
+    	this.session = loginXmpp.xmppSession;
+    }
 
 	@Override
 	public HandlerRegistration addChatChangedHandler(final ChatChangedHandler handler) {
@@ -70,5 +88,7 @@ public abstract class ChatManagerBoilerplate implements ChatManager {
 		assert strategy != null : "The ChatSelectionStrategy can't be null!";
 		this.strategy = strategy;
 	}
+	
+
 
 }

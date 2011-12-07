@@ -31,6 +31,8 @@ public class GwtEmiteEventBus extends HandlerManager implements EmiteEventBus {
 	
 	private final String eventBusName;
 
+	private String instanceId; 
+
 	GwtEmiteEventBus(final String eventBusName) {
 		super(null);
 		this.eventBusName = eventBusName;
@@ -41,6 +43,11 @@ public class GwtEmiteEventBus extends HandlerManager implements EmiteEventBus {
 	public void fireEvent(final GwtEvent<?> event) {
 		logger.finer("[" + eventBusName + "] " + event.toDebugString());
 		super.fireEvent(event);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		this.instanceId = instanceId;		
 	}
 
 }

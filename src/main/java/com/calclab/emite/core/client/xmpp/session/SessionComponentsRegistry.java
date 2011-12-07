@@ -23,6 +23,7 @@ package com.calclab.emite.core.client.xmpp.session;
 import java.util.HashSet;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -33,8 +34,8 @@ import com.google.inject.Singleton;
  * 
  * All the providers registered are called when the XmppSession is created
  */
-@Singleton
-public class SessionComponentsRegistry {
+//@Singleton
+public class SessionComponentsRegistry  implements MultiInstance {
 
 	private static final Logger logger = Logger.getLogger(SessionComponentsRegistry.class.getName());
 	
@@ -67,5 +68,11 @@ public class SessionComponentsRegistry {
 		}
 		providers.clear();
 		componentsCreated = true;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		// TODO Auto-generated method stub
+		
 	}
 }

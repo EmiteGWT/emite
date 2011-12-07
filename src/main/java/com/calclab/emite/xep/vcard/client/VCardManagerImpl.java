@@ -20,6 +20,10 @@
 
 package com.calclab.emite.xep.vcard.client;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -38,11 +42,12 @@ import com.google.inject.Singleton;
 @Singleton
 public class VCardManagerImpl implements VCardManager {
 	private static final String ID_PREFIX = "vcard";
-	private final XmppSession session;
+	private XmppSession session;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public VCardManagerImpl(final XmppSession session) {
-		this.session = session;
+	public VCardManagerImpl(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap = loginXmppMap;
 	}
 
 	@Override
@@ -100,5 +105,11 @@ public class VCardManagerImpl implements VCardManager {
 			handler.onVCardResponse(event);
 		}
 		session.getEventBus().fireEvent(event);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);    	    	
+		this.session = loginXmpp.xmppSession;
 	}
 }

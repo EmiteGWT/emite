@@ -20,12 +20,13 @@
 
 package com.calclab.emite.core.client.events;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public interface EmiteEventBus {
+public interface EmiteEventBus  extends MultiInstance {
 	<H extends EventHandler> HandlerRegistration addHandler(Type<H> type, H handler);
 
 	void fireEvent(GwtEvent<?> event);

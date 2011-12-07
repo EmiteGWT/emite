@@ -20,6 +20,11 @@
 
 package com.calclab.emite.xep.storage.client;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.core.client.xmpp.stanzas.IQ;
@@ -31,15 +36,16 @@ import com.google.inject.Inject;
 /**
  * Implements http://xmpp.org/extensions/xep-0049.html
  */
-public class PrivateStorageManager {
+public class PrivateStorageManager   implements MultiInstance {
 	private static final String XMLNS = "jabber:iq:private";
 	private static final String ID = "priv";
 
-	private final XmppSession session;
+	private XmppSession session;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public PrivateStorageManager(final XmppSession session) {
-		this.session = session;
+	public PrivateStorageManager(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap = loginXmppMap;
 	}
 
 	public void retrieve(final SimpleStorageData data, final PrivateStorageResponseHandler handler) {
@@ -68,5 +74,10 @@ public class PrivateStorageManager {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		this.session = loginXmppMap.get(instanceId).xmppSession;		
 	}
 }

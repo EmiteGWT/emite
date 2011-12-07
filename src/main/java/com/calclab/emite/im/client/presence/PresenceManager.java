@@ -20,6 +20,7 @@
 
 package com.calclab.emite.im.client.presence;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.Presence;
 import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -31,7 +32,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * 
  * @see http://xmpp.org/rfcs/rfc3921.html#presence
  */
-public interface PresenceManager {
+public interface PresenceManager  extends MultiInstance {
 	/**
 	 * Adds a handler to know when the current user's presence changed
 	 * 

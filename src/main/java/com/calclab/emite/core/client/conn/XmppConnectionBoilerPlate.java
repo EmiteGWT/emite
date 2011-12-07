@@ -38,7 +38,7 @@ public abstract class XmppConnectionBoilerPlate implements XmppConnection {
 
 	private static final Logger logger = Logger.getLogger(XmppConnectionBoilerPlate.class.getName());
 	
-	protected final EmiteEventBus eventBus;
+	protected  EmiteEventBus eventBus;
 	private int errors;
 	private boolean active;
 	private StreamSettings stream;

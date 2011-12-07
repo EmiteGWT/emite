@@ -38,8 +38,12 @@ public class SessionReady {
 	private boolean enabled;
 
 	@Inject
-	public SessionReady(final XmppSession session) {
-		enabled = true;
+	public SessionReady() {
+
+	}
+
+	public void setSession(final XmppSession session) {
+				enabled = true;
 
 		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
 			@Override
@@ -51,7 +55,7 @@ public class SessionReady {
 					}
 				}
 			}
-		});
+		});		
 	}
 
 	public void setEnabled(final boolean enabled) {

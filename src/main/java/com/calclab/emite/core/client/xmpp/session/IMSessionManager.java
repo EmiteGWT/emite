@@ -20,6 +20,11 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -35,24 +40,17 @@ import com.google.inject.Singleton;
  * 
  * @see http://www.xmpp.org/extensions/xep-0206.html#preconditions-sasl
  */
-@Singleton
-public class IMSessionManager {
-	private final XmppConnection connection;
+//@Singleton
+public class IMSessionManager   implements MultiInstance {
+    private XmppConnection connection;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
-	@Inject
-	public IMSessionManager(final XmppConnection connection) {
-		this.connection = connection;
+    @Inject
+    public IMSessionManager(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+    	this.loginXmppMap = loginXmppMap;
+    }
 
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket stanza = event.getStanza();
-				if ("im-session-request".equals(stanza.getAttribute("id"))) {
-					connection.getEventBus().fireEvent(new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Request the session
@@ -66,5 +64,22 @@ public class IMSessionManager {
 		iq.Includes("session", "urn:ietf:params:xml:ns:xmpp-session");
 
 		connection.send(iq);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		this.connection = loginXmpp.xmppConnection;  
+
+		connection.addStanzaReceivedHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(final StanzaEvent event) {
+				final IPacket stanza = event.getStanza();
+				if ("im-session-request".equals(stanza.getAttribute("id"))) {
+					connection.getEventBus().fireEvent(new SessionRequestResultEvent(XmppURI.uri(stanza.getAttribute("to"))));
+				}
+			}
+		});
+		
 	}
 }

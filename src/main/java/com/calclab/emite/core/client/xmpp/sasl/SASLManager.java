@@ -20,6 +20,11 @@
 
 package com.calclab.emite.core.client.xmpp.sasl;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -30,36 +35,22 @@ import com.calclab.emite.core.client.xmpp.session.Credentials;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-@Singleton
-public class SASLManager {
+//@Singleton
+public class SASLManager implements MultiInstance {
 	private static final String SEP = new String(new char[] { 0 });
 	private static final String XMLNS = "urn:ietf:params:xml:ns:xmpp-sasl";
 
-	private final XmppConnection connection;
+	private  XmppConnection connection;
 	private final DecoderRegistry decoders;
-	private final EmiteEventBus eventBus;
+	private  EmiteEventBus eventBus;
 	private Credentials currentCredentials;
+	private final HashMap<String, LoginXmpp> loginXmppMap;
 
-	@Inject
-	public SASLManager(final XmppConnection connection, final DecoderRegistry decoders) {
-		this.connection = connection;
-		eventBus = connection.getEventBus();
-		this.decoders = decoders;
-
-		connection.addStanzaReceivedHandler(new StanzaHandler() {
-			@Override
-			public void onStanza(final StanzaEvent event) {
-				final IPacket stanza = event.getStanza();
-				final String name = stanza.getName();
-				if ("failure".equals(name)) { // & XMLNS
-					eventBus.fireEvent(new AuthorizationResultEvent());
-				} else if ("success".equals(name)) {
-					eventBus.fireEvent(new AuthorizationResultEvent(currentCredentials));
-				}
-				currentCredentials = null;
-			}
-		});
-	}
+    @Inject
+    public SASLManager(final DecoderRegistry decoders, final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+    	this.loginXmppMap = loginXmppMap;
+    	this.decoders = decoders;
+    }
 
 	/**
 	 * Add a handler to know when an authorization transaction has a result
@@ -98,6 +89,30 @@ public class SASLManager {
 	private String encodeForPlainMethod(final String domain, final String userName, final String password) {
 		final String auth = userName + "@" + domain + SEP + userName + SEP + password;
 		return Base64Coder.encodeString(auth);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		this.connection = loginXmpp.xmppConnection;    	
+		eventBus = connection.getEventBus();
+		
+		connection.addStanzaReceivedHandler(new StanzaHandler() {
+			@Override
+			public void onStanza(final StanzaEvent event) {
+				final IPacket stanza = event.getStanza();
+				final String name = stanza.getName();
+				if ("failure".equals(name)) { // & XMLNS
+					eventBus.fireEvent(new AuthorizationResultEvent());
+				} else if ("success".equals(name)) {
+					eventBus.fireEvent(new AuthorizationResultEvent(currentCredentials));
+				}
+				//Ted Gulesserian: Check - this used to be commented in my code
+				currentCredentials = null;
+			}
+		});
+		
 	}
 
 }

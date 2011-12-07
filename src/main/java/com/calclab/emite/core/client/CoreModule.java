@@ -20,6 +20,8 @@
 
 package com.calclab.emite.core.client;
 
+import java.util.HashMap;
+
 import com.calclab.emite.core.client.bosh.XmppBoshConnection;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.events.EmiteEventBus;
@@ -58,16 +60,23 @@ public class CoreModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
 		bind(Services.class).to(GWTServices.class).in(Singleton.class);
-		bind(XmppConnection.class).to(XmppBoshConnection.class).in(Singleton.class);
-		bind(XmppSession.class).to(XmppSessionLogic.class).in(Singleton.class);
-		bind(IMSessionManager.class).in(Singleton.class);
-		bind(SASLManager.class).in(Singleton.class);
-		bind(ResourceBindingManager.class).in(Singleton.class);
-		bind(SessionComponentsRegistry.class).in(Singleton.class);
+		bind(XmppConnection.class).to(XmppBoshConnection.class);//.in(Singleton.class);
+		bind(XmppSession.class).to(XmppSessionLogic.class);//.in(Singleton.class);
+		bind(IMSessionManager.class);//.in(Singleton.class);
+		bind(SASLManager.class);//.in(Singleton.class);
+		bind(ResourceBindingManager.class);//.in(Singleton.class);
+		bind(SessionComponentsRegistry.class);//.in(Singleton.class);
+		bind(LoginXmpp.class);
 	}
 
+    @Provides @Singleton @LoginXmppMap    
+    HashMap <String, LoginXmpp> provideLoginXmppMap() {
+    	HashMap<String, LoginXmpp> loginXmppMap = new HashMap<String, LoginXmpp>();
+    	return loginXmppMap;
+    }
+
 	@Provides
-	@Singleton
+	//@Singleton
 	EmiteEventBus provideEmiteEventBus() {
 		return EventBusFactory.create("emite");
 	}

@@ -23,6 +23,7 @@ package com.calclab.emite.xep.search.client;
 import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.session.ResultListener;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.dataforms.client.Form;
@@ -34,7 +35,7 @@ import com.calclab.emite.xep.dataforms.client.Form;
  * 
  * @see http://xmpp.org/extensions/xep-0055.html
  */
-public interface SearchManager {
+public interface SearchManager  extends MultiInstance {
 
 	/**
 	 * Set the host service where send the requests. Usually you send all the

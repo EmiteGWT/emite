@@ -20,6 +20,7 @@
 
 package com.calclab.emite.xep.disco.client;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.events.DiscoveryInfoResultHandler;
 import com.calclab.emite.xep.disco.client.events.DiscoveryItemsResultHandler;
@@ -30,7 +31,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * 
  * @see http://xmpp.org/extensions/xep-0030.html
  */
-public interface DiscoveryManager {
+public interface DiscoveryManager  extends MultiInstance {
 
 	/**
 	 * Adds a handler to know when a discovery information result has arrived

@@ -20,6 +20,11 @@
 
 package com.calclab.emite.xep.muc.client;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -30,10 +35,20 @@ import com.google.inject.Provider;
  * @see SessionComponentsRegistry
  * 
  */
-public class MucComponents {
+public class MucComponents implements MultiInstance {
+
+	final Provider<RoomManager> provider;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public MucComponents(final SessionComponentsRegistry registry, final Provider<RoomManager> provider) {
-		registry.addProvider(provider);
+	public MucComponents(final Provider<RoomManager> provider,final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap = loginXmppMap;
+		this.provider = provider;			
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);		
+    	loginXmpp.registry.addProvider(provider);		
 	}
 }

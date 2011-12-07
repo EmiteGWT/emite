@@ -20,6 +20,7 @@
 
 package com.calclab.emite.core.client.xmpp.session;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.events.IQHandler;
@@ -36,7 +37,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * The most important object in Xmpp emite module. You can login, send and
  * receive stanzas. It also allows you to pause and resume the session.
  */
-public interface XmppSession {
+public interface XmppSession extends MultiInstance {
 	/**
 	 * Add a handler to know when a stanza is going to be send. Allows to modify
 	 * a stanza before is sent to the server.
@@ -216,4 +217,5 @@ public interface XmppSession {
 	 * @see SessionStates
 	 */
 	public void setSessionState(String state);
+	public void setInstanceId(String intanceId);
 }

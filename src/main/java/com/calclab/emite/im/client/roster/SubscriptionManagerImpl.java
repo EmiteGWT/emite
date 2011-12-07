@@ -20,6 +20,10 @@
 
 package com.calclab.emite.im.client.roster;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -40,46 +44,16 @@ import com.google.inject.Singleton;
 /**
  * @see SubscriptionManager
  */
-@Singleton
+//@Singleton
 public class SubscriptionManagerImpl implements SubscriptionManager {
 	protected static final PacketMatcher FILTER_NICK = MatcherFactory.byNameAndXMLNS("nick", "http://jabber.org/protocol/nick");
-	private final XmppSession session;
-	private final XmppRoster roster;
+    private  XmppSession session;
+    private  XmppRoster roster;
+	private final HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public SubscriptionManagerImpl(final XmppSession session, final XmppRoster roster) {
-		this.session = session;
-		this.roster = roster;
-
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				if (presence.getType() == Type.subscribe) {
-					final IPacket nick = presence.getFirstChild(FILTER_NICK);
-					session.getEventBus().fireEvent(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()));
-				}
-			}
-		});
-
-		// use bind instead of roster for better testing
-		RosterItemChangedEvent.bind(session.getEventBus(), new RosterItemChangedHandler() {
-			@Override
-			public void onRosterItemChanged(final RosterItemChangedEvent event) {
-				if (event.isAdded()) {
-					final RosterItem item = event.getRosterItem();
-					if (item.getSubscriptionState() == SubscriptionState.none) {
-						// && item.getAsk() == Type.subscribe) {
-						requestSubscribe(item.getJID());
-						item.setSubscriptionState(SubscriptionState.nonePendingIn);
-					} else if (item.getSubscriptionState() == SubscriptionState.from) {
-						approveSubscriptionRequest(item.getJID(), item.getName());
-						item.setSubscriptionState(SubscriptionState.fromPendingOut);
-					}
-				}
-			}
-		});
-
+	public SubscriptionManagerImpl(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap= loginXmppMap;
 	}
 
 	@Override
@@ -119,6 +93,45 @@ public class SubscriptionManagerImpl implements SubscriptionManager {
 	@Override
 	public void unsubscribe(final XmppURI jid) {
 		session.send(new Presence(Type.unsubscribe, session.getCurrentUserURI().getJID(), jid.getJID()));
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		
+		this.session = loginXmpp.xmppSession;
+		this.roster = loginXmpp.xmppRoster;
+
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
+				if (presence.getType() == Type.subscribe) {
+					final IPacket nick = presence.getFirstChild(FILTER_NICK);
+					session.getEventBus().fireEvent(new SubscriptionRequestReceivedEvent(presence.getFrom(), nick.getText()));
+				}
+			}
+		});
+
+		// use bind instead of roster for better testing
+		RosterItemChangedEvent.bind(session.getEventBus(), new RosterItemChangedHandler() {
+			@Override
+			public void onRosterItemChanged(final RosterItemChangedEvent event) {
+				if (event.isAdded()) {
+					final RosterItem item = event.getRosterItem();
+					if (item.getSubscriptionState() == SubscriptionState.none) {
+						// && item.getAsk() == Type.subscribe) {
+						requestSubscribe(item.getJID());
+						item.setSubscriptionState(SubscriptionState.nonePendingIn);
+					} else if (item.getSubscriptionState() == SubscriptionState.from) {
+						approveSubscriptionRequest(item.getJID(), item.getName());
+						item.setSubscriptionState(SubscriptionState.fromPendingOut);
+					}
+				}
+			}
+		});
+		
 	}
 
 }

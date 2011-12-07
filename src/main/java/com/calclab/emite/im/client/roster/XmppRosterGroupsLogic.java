@@ -35,10 +35,16 @@ public abstract class XmppRosterGroupsLogic extends XmppRosterBoilerplate {
 	protected final HashMap<String, RosterGroup> groups;
 	private final RosterGroup all;
 
-	public XmppRosterGroupsLogic(final XmppSession session) {
-		super(session);
+	public XmppRosterGroupsLogic() {
+		//super(session);
 		groups = new HashMap<String, RosterGroup>();
 		all = new RosterGroup(null);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		super.setInstanceId(instanceId);
+		//this.instanceId = instanceId;		
 	}
 
 	protected RosterGroup addGroup(final String groupName) {

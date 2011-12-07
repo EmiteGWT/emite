@@ -22,8 +22,11 @@ package com.calclab.emite.im.client.roster;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.events.ChangedEvent.ChangeTypes;
 import com.calclab.emite.core.client.events.IQEvent;
 import com.calclab.emite.core.client.events.IQHandler;
@@ -52,90 +55,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-@Singleton
+//@Singleton
 public class XmppRosterLogic extends XmppRosterGroupsLogic {
 
 	private static final PacketMatcher ROSTER_QUERY_FILTER = MatcherFactory.byNameAndXMLNS("query", "jabber:iq:roster");
 
 	@Inject
-	public XmppRosterLogic(final XmppSession session) {
-		super(session);
-
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				if (event.is(SessionStates.loggedIn)) {
-					reRequestRoster();
-				}
-			}
-		});
-
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				final RosterItem item = getItemByJID(presence.getFrom());
-				if (item != null) {
-					setPresence(presence, item);
-				}
-			}
-
-			private void setPresence(final Presence presence, final RosterItem item) {
-				final Presence.Type type = presence.getType();
-				final String resource = presence.getFrom().getResource();
-
-				boolean hasChanged = false;
-
-				final boolean wasAvailable = item.getAvailableResources().contains(resource);
-
-				if (type == Presence.Type.unavailable) {
-					if (wasAvailable) {
-						hasChanged = true;
-						item.setAvailable(false, resource);
-					}
-				} else {
-					if (!wasAvailable) {
-						hasChanged = true;
-						item.setAvailable(true, resource);
-					}
-				}
-				final Show showReceived = presence.getShow();
-				final Show newShow = showReceived == null ? Show.notSpecified : showReceived;
-
-				if (!newShow.equals(item.getShow())) {
-					hasChanged = true;
-					item.setShow(newShow);
-				}
-
-				if (item.getStatus() == null && presence.getStatus() != null || item.getStatus() != null && !item.getStatus().equals(presence.getStatus())) {
-					hasChanged = true;
-					item.setStatus(presence.getStatus());
-				}
-
-				if (hasChanged) {
-					final RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
-					eventBus.fireEvent(event);
-					fireItemChangedInGroups(event);
-				}
-			}
-
-		});
-
-		session.addIQReceivedHandler(new IQHandler() {
-			@Override
-			public void onPacket(final IQEvent event) {
-				final IQ iq = event.getIQ();
-				if (iq.isType(IQ.Type.set)) {
-					final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
-					if (query != NoPacket.INSTANCE) {
-						for (final IPacket child : query.getChildren()) {
-							handleItemChanged(RosterItem.parse(child));
-						}
-					}
-					session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
-				}
-			}
-		});
+    public XmppRosterLogic(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap = loginXmppMap;
 	}
 
 	@Override
@@ -346,5 +273,88 @@ public class XmppRosterLogic extends XmppRosterGroupsLogic {
 		for (final String groupName : item.getGroups()) {
 			addToGroup(item, groupName);
 		}
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		
+		super.setInstanceId(instanceId);
+
+		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
+			@Override
+			public void onStateChanged(final StateChangedEvent event) {
+				if (event.is(SessionStates.loggedIn)) {
+					reRequestRoster();
+				}
+			}
+		});
+
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
+				final RosterItem item = getItemByJID(presence.getFrom());
+				if (item != null) {
+					setPresence(presence, item);
+				}
+			}
+
+			private void setPresence(final Presence presence, final RosterItem item) {
+				final Presence.Type type = presence.getType();
+				final String resource = presence.getFrom().getResource();
+
+				boolean hasChanged = false;
+
+				final boolean wasAvailable = item.getAvailableResources().contains(resource);
+
+				if (type == Presence.Type.unavailable) {
+					if (wasAvailable) {
+						hasChanged = true;
+						item.setAvailable(false, resource);
+					}
+				} else {
+					if (!wasAvailable) {
+						hasChanged = true;
+						item.setAvailable(true, resource);
+					}
+				}
+				final Show showReceived = presence.getShow();
+				final Show newShow = showReceived == null ? Show.notSpecified : showReceived;
+
+				if (!newShow.equals(item.getShow())) {
+					hasChanged = true;
+					item.setShow(newShow);
+				}
+
+				if (item.getStatus() == null && presence.getStatus() != null || item.getStatus() != null && !item.getStatus().equals(presence.getStatus())) {
+					hasChanged = true;
+					item.setStatus(presence.getStatus());
+				}
+
+				if (hasChanged) {
+					final RosterItemChangedEvent event = new RosterItemChangedEvent(ChangeTypes.modified, item);
+					eventBus.fireEvent(event);
+					fireItemChangedInGroups(event);
+				}
+			}
+
+		});
+
+		session.addIQReceivedHandler(new IQHandler() {
+			@Override
+			public void onPacket(final IQEvent event) {
+				final IQ iq = event.getIQ();
+				if (iq.isType(IQ.Type.set)) {
+					final IPacket query = iq.getFirstChild(ROSTER_QUERY_FILTER);
+					if (query != NoPacket.INSTANCE) {
+						for (final IPacket child : query.getChildren()) {
+							handleItemChanged(RosterItem.parse(child));
+						}
+					}
+					session.send(new IQ(Type.result).With("to", iq.getFromAsString()).With("id", iq.getId()));
+				}
+			}
+		});
+		
 	}
 }

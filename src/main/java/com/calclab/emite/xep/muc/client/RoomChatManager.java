@@ -22,6 +22,8 @@ package com.calclab.emite.xep.muc.client;
 
 import java.util.HashMap;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.events.MessageEvent;
 import com.calclab.emite.core.client.events.MessageHandler;
 import com.calclab.emite.core.client.events.PresenceEvent;
@@ -60,17 +62,19 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	private final HashMap<XmppURI, Room> roomsByJID;
 	private HistoryOptions defaultHistoryOptions;
 
+	/*
 	public RoomChatManager(final XmppSession session) {
 		this(session, new RoomChatSelectionStrategy());
 	}
+	*/
 
 	@Inject
-	public RoomChatManager(final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy) {
-		super(session, strategy);
+	public RoomChatManager(final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy,  final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {		
+		//super(session, strategy);
+		super(strategy);
+		this.loginXmppMap = loginXmppMap;
 		roomsByJID = new HashMap<XmppURI, Room>();
 
-		forwardPresenceToRooms();
-		handleRoomInvitations();
 	}
 
 	@Override
@@ -158,8 +162,8 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 					// We extract the chat properties from the message
 					final ChatProperties chatProperties = strategy.extractProperties(message);
 
-					final RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(), invitationStanza
-							.getFirstChild("reason").getText(), chatProperties);
+					final RoomInvitation invitation = new RoomInvitation(invitationStanza.getFrom(), message.getFrom(), 
+						  invitationStanza.getFirstChild("reason").getText(), chatProperties);
 					session.getEventBus().fireEvent(new RoomInvitationEvent(invitation));
 				}
 			}
@@ -179,5 +183,13 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 			properties.setState(ChatStates.locked);
 		}
 		return new RoomChat(session, properties);
+	}
+	@Override
+	public void setInstanceId(String instanceId) {
+
+		super.setInstanceId(instanceId);
+		
+		forwardPresenceToRooms();
+		handleRoomInvitations();
 	}
 }

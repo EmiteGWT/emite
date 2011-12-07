@@ -31,8 +31,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class GWTServices implements Services {
 	
+	String instanceId;
+	
 	@Inject
 	public GWTServices() {
+
 	}
 
 	@Override
@@ -58,6 +61,12 @@ public class GWTServices implements Services {
 	@Override
 	public IPacket toXML(final String xml) {
 		return GWTXMLService.toXML(xml);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		this.instanceId = instanceId;
+		
 	}
 
 }

@@ -258,4 +258,10 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
     {
        return connection;
     }
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		// TODO Auto-generated method stub
+		
+	}
 }

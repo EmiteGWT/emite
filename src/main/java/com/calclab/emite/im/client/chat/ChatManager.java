@@ -22,6 +22,7 @@ package com.calclab.emite.im.client.chat;
 
 import java.util.Collection;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -32,7 +33,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * There are one implementation for one-to-one conversations (PairChatManager)
  * and many-to-many conversations (RoomManagerImpl)
  */
-public interface ChatManager {
+public interface ChatManager   extends MultiInstance {
 
 	/**
 	 * Add a handler to track chat changes. The following changes can ocurr from
