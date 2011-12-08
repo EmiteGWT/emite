@@ -25,6 +25,7 @@ import com.calclab.emite.xep.chatstate.client.StateManager;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.muc.client.MucComponents;
 import com.calclab.emite.xep.muc.client.RoomManager;
+import com.calclab.emite.xep.mucchatstate.client.MUCChatStateManager;
 import com.calclab.emite.xep.mucdisco.client.RoomDiscoveryManager;
 import com.calclab.emite.xep.search.client.SearchManager;
 import com.calclab.emite.xep.storage.client.PrivateStorageManager;
@@ -75,6 +76,7 @@ public class LoginXmpp implements  MultiInstance{
 	public SearchManager searchManager; //Converted from Singleton
 	public ChatStateComponents chatStateComponents;  //Singleton
 	public MucComponents mucComponents; //Singleton
+	public MUCChatStateManager mucChatStateManager;
 	
 	
 	//XmppInjector ginjector = GWT.create(XmppInjector.class);
@@ -91,7 +93,7 @@ public class LoginXmpp implements  MultiInstance{
 			SubscriptionManager subscriptionManager, SubscriptionHandler subscriptionHandler,
 			ImComponents imComponents,  XmppRoster xmppRoster, RoomManager roomManager, DiscoveryManager discoveryManager, RoomDiscoveryManager roomDiscoveryManager,
 			PrivateStorageManager privateStorageManager, VCardManager vCardManager, SearchManager searchManager, StateManager stateManager, 
-			ChatStateComponents chatStateComponents, MucComponents mucComponents
+			ChatStateComponents chatStateComponents, MucComponents mucComponents, MUCChatStateManager mucChatStateManager
 			//ChatSelectionStrategy chatSelectionStrategy,		
 			
 			)  {
@@ -127,6 +129,7 @@ public class LoginXmpp implements  MultiInstance{
 		this.mucComponents = mucComponents;
 		
 		this.stateManager = stateManager;
+		this.mucChatStateManager = mucChatStateManager;
 		
 	}
 
@@ -152,7 +155,9 @@ public class LoginXmpp implements  MultiInstance{
 		
 		//Registry adder
 		mucComponents.setInstanceId(instanceId);
-		roomManager.setInstanceId(instanceId);		
+		roomManager.setInstanceId(instanceId);	
+		
+		mucChatStateManager.setInstanceId(instanceId);
 		
 		discoveryManager.setInstanceId(instanceId);
 		roomDiscoveryManager.setInstanceId(instanceId);

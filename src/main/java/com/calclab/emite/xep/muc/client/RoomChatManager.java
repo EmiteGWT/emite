@@ -69,7 +69,7 @@ public class RoomChatManager extends AbstractChatManager implements RoomManager 
 	*/
 
 	@Inject
-	public RoomChatManager(final XmppSession session, @Named("Room") final ChatSelectionStrategy strategy,  final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {		
+	public RoomChatManager(@Named("Room") final ChatSelectionStrategy strategy,  final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {		
 		//super(session, strategy);
 		super(strategy);
 		this.loginXmppMap = loginXmppMap;

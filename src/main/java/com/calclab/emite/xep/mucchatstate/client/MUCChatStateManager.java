@@ -20,8 +20,12 @@
 
 package com.calclab.emite.xep.mucchatstate.client;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
@@ -38,25 +42,15 @@ import com.google.inject.Inject;
  * forearmed.
  * 
  */
-public class MUCChatStateManager {
+public class MUCChatStateManager implements MultiInstance {
 	
 	private static final Logger logger = Logger.getLogger(MUCChatStateManager.class.getName());
+	private HashMap<String, LoginXmpp> loginXmppMap;
 	
 	@Inject
-	public MUCChatStateManager(final RoomManager chatManager) {
+	public MUCChatStateManager( final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
 
-		chatManager.addChatChangedHandler(new ChatChangedHandler() {
-			@Override
-			public void onChatChanged(final ChatChangedEvent event) {
-				if (event.isCreated()) {
-					getRoomOccupantsChatStateManager((Room) event.getChat());
-				} else if (event.isClosed()) {
-					final Chat chat = event.getChat();
-					logger.finer("Removing chat state to chat: " + chat.getID());
-					chat.getProperties().setData(RoomChatStateManager.KEY, null);
-				}
-			}
-		});
+		this.loginXmppMap = loginXmppMap;
 	}
 
 	public RoomChatStateManager getRoomOccupantsChatStateManager(final Room room) {
@@ -73,6 +67,29 @@ public class MUCChatStateManager {
 		final RoomChatStateManager stateManager = new RoomChatStateManager(room);
 		room.getProperties().setData(RoomChatStateManager.KEY, stateManager);
 		return stateManager;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+	
+		
+		final RoomManager chatManager;
+		
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);		
+		chatManager = loginXmpp.roomManager;
+		
+		chatManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(final ChatChangedEvent event) {
+				if (event.isCreated()) {
+					getRoomOccupantsChatStateManager((Room) event.getChat());
+				} else if (event.isClosed()) {
+					final Chat chat = event.getChat();
+					logger.finer("Removing chat state to chat: " + chat.getID());
+					chat.getProperties().setData(RoomChatStateManager.KEY, null);
+				}
+			}
+		});
 	}
 
 }
