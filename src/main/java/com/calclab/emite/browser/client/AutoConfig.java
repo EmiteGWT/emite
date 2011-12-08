@@ -20,8 +20,11 @@
 
 package com.calclab.emite.browser.client;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -57,9 +60,15 @@ public class AutoConfig {
 	private final XmppSession session;
 
 	@Inject
-	public AutoConfig(final XmppConnection connection, final XmppSession session) {
-		this.connection = connection;
-		this.session = session;
+	public AutoConfig(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, LoginXmpp loginXmpp) {		
+		
+		String instanceId = PageAssist.getMeta("emite.user"); //Should match hablar.loginId
+		loginXmpp.setInstanceId(instanceId);
+		loginXmppMap.put(instanceId, loginXmpp);
+		
+		this.connection = loginXmpp.xmppConnection;
+		this.session = loginXmpp.xmppSession;
+		
 		initialize();
 	}
 
