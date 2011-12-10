@@ -21,8 +21,11 @@
 package com.calclab.emite.core.client.xmpp.session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
@@ -54,98 +57,27 @@ import com.google.inject.Singleton;
  * 
  * @see XmppSession
  */
-@Singleton
+//@Singleton
 public class XmppSessionLogic extends XmppSessionBoilerPlate {
 	
 	private static final Logger logger = Logger.getLogger(XmppSessionLogic.class.getName());
 	
 	private XmppURI userUri;
-	private final XmppConnection connection;
-	private final IQManager iqManager;
-	private final ArrayList<IPacket> queuedStanzas;
+	private XmppConnection connection;
+	private IQManager iqManager;
+	private ArrayList<IPacket> queuedStanzas;
 	private Credentials credentials;
-	private final SessionComponentsRegistry registry;
+	private SessionComponentsRegistry registry;
+	private HashMap<String, LoginXmpp> loginXmppMap;
+	private SASLManager saslManager;
+	ResourceBindingManager bindingManager;
+	IMSessionManager iMSessionManager;
+	LoginXmpp loginXmpp = null;
 
 	@Inject
-	public XmppSessionLogic(final XmppConnection connection, final SASLManager saslManager, final ResourceBindingManager bindingManager,
-			final IMSessionManager iMSessionManager, final SessionComponentsRegistry registry) {
-		super(connection.getEventBus());
-		this.registry = registry;
-		this.connection = connection;
-		iqManager = new IQManager();
-		queuedStanzas = new ArrayList<IPacket>();
-
-	connection.addStanzaReceivedHandler(new StanzaHandler() {
-	    @Override
-	    public void onStanza(final StanzaEvent event) {
-		final IPacket stanza = event.getStanza();
-		final String name = stanza.getName();
-		if (name.equals("message")) {
-		    eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
-		} else if (name.equals("presence")) {
-		    eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
-		} else if (name.equals("iq")) {
-		    final String type = stanza.getAttribute("type");
-		    if ("get".equals(type) || "set".equals(type)) {
-			eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
-		    } else {
-			iqManager.handle(stanza);
-		    }
-		} else if (credentials != null && ("stream:features".equals(name)||"features".equals(name)) && stanza.hasChild("mechanisms")) {
-		    setSessionState(SessionStates.connecting);
-		    saslManager.sendAuthorizationRequest(credentials);
-		    credentials = null;
-		}
-	    }
-	});
-
-		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
-			@Override
-			public void onStateChanged(final ConnectionStateChangedEvent event) {
-				if (event.is(ConnectionState.error)) {
-					logger.severe("Connection error: " + event.getDescription());
-					setSessionState(SessionStates.error);
-				} else if (event.is(ConnectionState.disconnected)) {
-					setSessionState(SessionStates.disconnected);
-				}
-			}
-		});
-
-		// Do not use manager, in order to be able to mock on testing
-		AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
-			@Override
-			public void onAuthorization(final AuthorizationResultEvent event) {
-				if (event.isSucceed()) {
-					setSessionState(SessionStates.authorized);
-					connection.restartStream();
-					bindingManager.bindResource(event.getXmppUri().getResource());
-				} else {
-					setSessionState(SessionStates.notAuthorized);
-					disconnect();
-				}
-			}
-		});
-
-		// Do not use manager, in order to be able to mock on testing
-		ResourceBindResultEvent.bind(eventBus, new ResourceBindResultHandler() {
-			@Override
-			public void onBinded(final ResourceBindResultEvent event) {
-				setSessionState(SessionStates.binded);
-				iMSessionManager.requestSession(event.getXmppUri());
-			}
-		});
-
-		// Do not use manager, in order to be able to mock on testing
-		SessionRequestResultEvent.bind(eventBus, new SessionRequestResultHandler() {
-			@Override
-			public void onSessionRequestResult(final SessionRequestResultEvent event) {
-				if (event.isSucceed()) {
-					setLoggedIn(event.getXmppUri());
-				} else {
-					disconnect();
-				}
-			}
-		});
+	public XmppSessionLogic(@LoginXmppMap HashMap <String, LoginXmpp> loginXmppMap) {
+	    super(null);	    
+	    this.loginXmppMap = loginXmppMap;
 	}
 
 	@Override
@@ -261,7 +193,91 @@ public class XmppSessionLogic extends XmppSessionBoilerPlate {
 
 	@Override
 	public void setInstanceId(String instanceId) {
-		// TODO Auto-generated method stub
+		
+		loginXmpp = loginXmppMap.get(instanceId);	
+		
+		eventBus = loginXmpp.eventBus;		
+		
+		registry = loginXmpp.registry;
+		connection = loginXmpp.xmppConnection;
+		saslManager = loginXmpp.saslManager;
+		bindingManager = loginXmpp.bindingManager;
+		iMSessionManager = loginXmpp.iMSessionManager;
+		iqManager = new IQManager();
+		queuedStanzas = new ArrayList<IPacket>();
+		
+		
+	connection.addStanzaReceivedHandler(new StanzaHandler() {
+	    @Override
+	    public void onStanza(final StanzaEvent event) {
+		final IPacket stanza = event.getStanza();
+		final String name = stanza.getName();
+		if (name.equals("message")) {
+		    eventBus.fireEvent(new MessageReceivedEvent(new Message(stanza)));
+		} else if (name.equals("presence")) {
+		    eventBus.fireEvent(new PresenceReceivedEvent(new Presence(stanza)));
+		} else if (name.equals("iq")) {
+		    final String type = stanza.getAttribute("type");
+		    if ("get".equals(type) || "set".equals(type)) {
+			eventBus.fireEvent(new IQReceivedEvent(new IQ(stanza)));
+		    } else {
+			iqManager.handle(stanza);
+		    }
+		} else if (credentials != null && ("stream:features".equals(name)||"features".equals(name)) && stanza.hasChild("mechanisms")) {
+		    setSessionState(SessionStates.connecting);
+		    saslManager.sendAuthorizationRequest(credentials);
+		    credentials = null;
+		}
+	    }
+	});
+
+		connection.addConnectionStateChangedHandler(new ConnectionStateChangedHandler() {
+			@Override
+			public void onStateChanged(final ConnectionStateChangedEvent event) {
+				if (event.is(ConnectionState.error)) {
+					logger.severe("Connection error: " + event.getDescription());
+					setSessionState(SessionStates.error);
+				} else if (event.is(ConnectionState.disconnected)) {
+					setSessionState(SessionStates.disconnected);
+				}
+			}
+		});
+
+		// Do not use manager, in order to be able to mock on testing
+		AuthorizationResultEvent.bind(eventBus, new AuthorizationResultHandler() {
+			@Override
+			public void onAuthorization(final AuthorizationResultEvent event) {
+				if (event.isSucceed()) {
+					setSessionState(SessionStates.authorized);
+					connection.restartStream();
+					bindingManager.bindResource(event.getXmppUri().getResource());
+				} else {
+					setSessionState(SessionStates.notAuthorized);
+					disconnect();
+				}
+			}
+		});
+
+		// Do not use manager, in order to be able to mock on testing
+		ResourceBindResultEvent.bind(eventBus, new ResourceBindResultHandler() {
+			@Override
+			public void onBinded(final ResourceBindResultEvent event) {
+				setSessionState(SessionStates.binded);
+				iMSessionManager.requestSession(event.getXmppUri());
+			}
+		});
+
+		// Do not use manager, in order to be able to mock on testing
+		SessionRequestResultEvent.bind(eventBus, new SessionRequestResultHandler() {
+			@Override
+			public void onSessionRequestResult(final SessionRequestResultEvent event) {
+				if (event.isSucceed()) {
+					setLoggedIn(event.getXmppUri());
+				} else {
+					disconnect();
+				}
+			}
+		});
 		
 	}
 }

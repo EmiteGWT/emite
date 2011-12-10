@@ -56,13 +56,15 @@ public class AutoConfig {
 	private static final String PARAM_SESSION = "emite.session";
 	protected static final String LOGOUT = "logout";
 
-	private final XmppConnection connection;
-	private final XmppSession session;
+	private XmppConnection connection = null;
+	private XmppSession session = null;
 
 	@Inject
 	public AutoConfig(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, LoginXmpp loginXmpp) {		
 		
 		String instanceId = PageAssist.getMeta("emite.user"); //Should match hablar.loginId
+		
+		if (instanceId != null) {
 		loginXmpp.setInstanceId(instanceId);
 		loginXmppMap.put(instanceId, loginXmpp);
 		
@@ -70,6 +72,7 @@ public class AutoConfig {
 		this.session = loginXmpp.xmppSession;
 		
 		initialize();
+		}
 	}
 
 	private void initialize() {
