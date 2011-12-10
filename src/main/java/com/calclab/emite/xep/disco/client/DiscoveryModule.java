@@ -38,6 +38,6 @@ public class DiscoveryModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(DiscoveryManager.class).to(DiscoveryManagerImpl.class).in(Singleton.class);
+		bind(DiscoveryManager.class).to(DiscoveryManagerImpl.class);//.in(Singleton.class);
 	}
 }

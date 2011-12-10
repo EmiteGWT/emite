@@ -20,8 +20,12 @@
 
 package com.calclab.emite.xep.avatar.client;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.events.PresenceEvent;
 import com.calclab.emite.core.client.events.PresenceHandler;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -42,31 +46,19 @@ import com.google.inject.Inject;
 /**
  * XEP-0153: vCard-Based Avatars (Version 1.0)
  */
-public class AvatarManager {
+public class AvatarManager implements MultiInstance {
 	private static final PacketMatcher FILTER_X = MatcherFactory.byName("x");
 	private static final String VCARD = "vCard";
 	private static final String XMLNS = "vcard-temp";
 	private static final String PHOTO = "PHOTO";
 	private static final String TYPE = "TYPE";
 	private static final String BINVAL = "BINVAL";
-	private final XmppSession session;
+	private XmppSession session;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public AvatarManager(final XmppSession session) {
-		this.session = session;
-
-		session.addPresenceReceivedHandler(new PresenceHandler() {
-			@Override
-			public void onPresence(final PresenceEvent event) {
-				final Presence presence = event.getPresence();
-				final List<? extends IPacket> children = presence.getChildren(FILTER_X);
-				for (final IPacket child : children) {
-					if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
-						session.getEventBus().fireEvent(new HashPresenceReceivedEvent(presence));
-					}
-				}
-			}
-		});
+	public AvatarManager(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap){//final XmppSession session) {
+		this.loginXmppMap = loginXmppMap;
 
 	}
 
@@ -125,6 +117,26 @@ public class AvatarManager {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);		
+    	this.session = loginXmpp.xmppSession;
+
+		session.addPresenceReceivedHandler(new PresenceHandler() {
+			@Override
+			public void onPresence(final PresenceEvent event) {
+				final Presence presence = event.getPresence();
+				final List<? extends IPacket> children = presence.getChildren(FILTER_X);
+				for (final IPacket child : children) {
+					if (child.hasAttribute("xmlns", XMLNS + ":x:update")) {
+						session.getEventBus().fireEvent(new HashPresenceReceivedEvent(presence));
+					}
+				}
+			}
+		});
+		
 	}
 
 }

@@ -20,8 +20,12 @@
 
 package com.calclab.emite.reconnect.client;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedEvent.ConnectionState;
 import com.calclab.emite.core.client.conn.ConnectionStateChangedHandler;
@@ -37,19 +41,38 @@ import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 
-public class SessionReconnect {
+public class SessionReconnect implements MultiInstance {
 	
 	private static final Logger logger = Logger.getLogger(SessionReconnect.class.getName());
 	
 	private boolean shouldReconnect;
 	private Credentials lastSuccessfulCredentials;
 	protected int reconnectionAttempts;
+	
+
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
+	public SessionReconnect(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap){//final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
+		this.loginXmppMap = loginXmppMap;
+	}
+
+	private void shouldReconnect() {
+		shouldReconnect = true;
+		reconnectionAttempts++;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
 		shouldReconnect = false;
 		reconnectionAttempts = 0;
 		logger.info("RECONNECT BEHAVIOUR");
+		
+		LoginXmpp  loginXmpp = loginXmppMap.get(instanceId);
+		
+		final SASLManager saslManager = loginXmpp.saslManager;
+		final XmppSession session  = loginXmpp.xmppSession;
+		final XmppConnection connection  = loginXmpp.xmppConnection;
 
 		saslManager.addAuthorizationResultHandler(new AuthorizationResultHandler() {
 			@Override
@@ -93,11 +116,6 @@ public class SessionReconnect {
 				}
 			}
 		});
-
-	}
-
-	private void shouldReconnect() {
-		shouldReconnect = true;
-		reconnectionAttempts++;
+		
 	}
 }

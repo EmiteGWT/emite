@@ -20,6 +20,8 @@ import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.presence.PresenceManager;
 import com.calclab.emite.im.client.roster.SubscriptionHandler;
 import com.calclab.emite.im.client.roster.SubscriptionManager;
+import com.calclab.emite.reconnect.client.SessionReconnect;
+import com.calclab.emite.xep.avatar.client.AvatarManager;
 import com.calclab.emite.xep.chatstate.client.ChatStateComponents;
 import com.calclab.emite.xep.chatstate.client.StateManager;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
@@ -27,6 +29,7 @@ import com.calclab.emite.xep.muc.client.MucComponents;
 import com.calclab.emite.xep.muc.client.RoomManager;
 import com.calclab.emite.xep.mucchatstate.client.MUCChatStateManager;
 import com.calclab.emite.xep.mucdisco.client.RoomDiscoveryManager;
+import com.calclab.emite.xep.privacylists.client.PrivacyListsManager;
 import com.calclab.emite.xep.search.client.SearchManager;
 import com.calclab.emite.xep.storage.client.PrivateStorageManager;
 import com.calclab.emite.xep.vcard.client.VCardManager;
@@ -77,6 +80,10 @@ public class LoginXmpp implements  MultiInstance{
 	public ChatStateComponents chatStateComponents;  //Singleton
 	public MucComponents mucComponents; //Singleton
 	public MUCChatStateManager mucChatStateManager;
+	private PrivacyListsManager privacyListsManager;
+	private SessionReconnect reconnectModule;
+	private AvatarManager avatarManager;
+	
 	
 	
 	//XmppInjector ginjector = GWT.create(XmppInjector.class);
@@ -93,7 +100,10 @@ public class LoginXmpp implements  MultiInstance{
 			SubscriptionManager subscriptionManager, SubscriptionHandler subscriptionHandler,
 			ImComponents imComponents,  XmppRoster xmppRoster, RoomManager roomManager, DiscoveryManager discoveryManager, RoomDiscoveryManager roomDiscoveryManager,
 			PrivateStorageManager privateStorageManager, VCardManager vCardManager, SearchManager searchManager, StateManager stateManager, 
-			ChatStateComponents chatStateComponents, MucComponents mucComponents, MUCChatStateManager mucChatStateManager
+			ChatStateComponents chatStateComponents, MucComponents mucComponents, MUCChatStateManager mucChatStateManager, 
+			PrivacyListsManager privacyListsManager, 
+			SessionReconnect reconnectModule, 
+			AvatarManager avatarManager
 			//ChatSelectionStrategy chatSelectionStrategy,		
 			
 			)  {
@@ -130,6 +140,9 @@ public class LoginXmpp implements  MultiInstance{
 		
 		this.stateManager = stateManager;
 		this.mucChatStateManager = mucChatStateManager;
+		this.privacyListsManager = privacyListsManager;
+		this.reconnectModule = reconnectModule;
+		this.avatarManager = avatarManager;
 		
 	}
 
@@ -170,7 +183,10 @@ public class LoginXmpp implements  MultiInstance{
 		chatManager.setInstanceId(instanceId);
 		vCardManager.setInstanceId(instanceId);
 		searchManager.setInstanceId(instanceId);
+		reconnectModule.setInstanceId(instanceId);
 		
+		privacyListsManager.setInstanceId(instanceId);
+		avatarManager.setInstanceId(instanceId);
 	}
 	
 }

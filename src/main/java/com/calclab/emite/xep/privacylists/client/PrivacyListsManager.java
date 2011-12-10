@@ -20,6 +20,11 @@
 
 package com.calclab.emite.xep.privacylists.client;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.packet.IPacket;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
@@ -30,12 +35,15 @@ import com.google.inject.Inject;
 /**
  * Will (i hope!) implement http://www.xmpp.org/extensions/xep-0016.html
  */
-public class PrivacyListsManager {
-	private final XmppSession session;
+public class PrivacyListsManager implements MultiInstance {
+	private XmppSession session;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public PrivacyListsManager(final XmppSession session) {
-		this.session = session;
+	public PrivacyListsManager( final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		//this.session = session;
+		
+		this.loginXmppMap = loginXmppMap;
 	}
 
 	/**
@@ -64,5 +72,11 @@ public class PrivacyListsManager {
 			}
 		});
 
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {		
+		this.session =loginXmppMap.get(instanceId).xmppSession; 
+		
 	}
 }

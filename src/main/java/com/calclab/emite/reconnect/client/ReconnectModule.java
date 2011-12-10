@@ -31,7 +31,7 @@ public class ReconnectModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(SessionReconnect.class).in(Singleton.class);
+		bind(SessionReconnect.class);//.in(Singleton.class);
 	}
 
 }

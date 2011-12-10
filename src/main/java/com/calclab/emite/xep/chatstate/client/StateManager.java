@@ -48,7 +48,7 @@ public class StateManager  implements MultiInstance {
 	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public StateManager( final Provider<StateManager> provider, final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+	public StateManager(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
 
 		this.loginXmppMap = loginXmppMap;
 

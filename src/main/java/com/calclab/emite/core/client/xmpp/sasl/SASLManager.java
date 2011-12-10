@@ -109,7 +109,7 @@ public class SASLManager implements MultiInstance {
 					eventBus.fireEvent(new AuthorizationResultEvent(currentCredentials));
 				}
 				//Ted Gulesserian: Check - this used to be commented in my code
-				currentCredentials = null;
+				//currentCredentials = null;
 			}
 		});
 		

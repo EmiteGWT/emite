@@ -39,7 +39,7 @@ import com.google.inject.Singleton;
  * 
  * @see VCardManager
  */
-@Singleton
+//@Singleton
 public class VCardManagerImpl implements VCardManager {
 	private static final String ID_PREFIX = "vcard";
 	private XmppSession session;

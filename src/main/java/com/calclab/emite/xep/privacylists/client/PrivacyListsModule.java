@@ -34,7 +34,7 @@ public class PrivacyListsModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(PrivacyListsManager.class).in(Singleton.class);
+		bind(PrivacyListsManager.class);//.in(Singleton.class);
 	}
 
 }
