@@ -73,6 +73,7 @@ public class SessionComponentsRegistry  implements MultiInstance {
 	@Override
 	public void setInstanceId(String instanceId) {
 		// TODO Auto-generated method stub
+		// Ted Gulesserian - there is work to be done here. 
 		
 	}
 }

@@ -20,6 +20,7 @@
 
 package com.calclab.emite.im.client;
 
+import com.calclab.emite.browser.client.PageAssist;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.ChatSelectionStrategy;
 import com.calclab.emite.im.client.chat.PairChatManager;
@@ -53,7 +54,7 @@ public class ImModule extends AbstractGinModule {
 		bind(SubscriptionManager.class).to(SubscriptionManagerImpl.class);//.in(Singleton.class);
 		bind(SubscriptionHandler.class);//.in(Singleton.class);
 		bind(XmppRoster.class).to(XmppRosterLogic.class);//.in(Singleton.class);
-		//bind(ImComponents.class).asEagerSingleton(); //unneccessary
+		bind(ImComponents.class).asEagerSingleton(); //Maybe necessary for browsermodule			
 		bind(ChatSelectionStrategy.class).annotatedWith(Names.named("Pair")).to(PairChatSelectionStrategy.class).in(
 		Singleton.class);
 	}

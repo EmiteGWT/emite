@@ -31,6 +31,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * This class object auto-configures some emite components and behaviours based
@@ -60,14 +61,20 @@ public class AutoConfig {
 	private XmppSession session = null;
 
 	@Inject
-	public AutoConfig(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, LoginXmpp loginXmpp) {		
+	public AutoConfig(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, Provider<LoginXmpp> loginXmppProv) {		
 		
-		String instanceId = PageAssist.getMeta("emite.user"); //Should match hablar.loginId
+		String instanceId = PageAssist.getMeta("emite.user"); 		
 		
 		if (instanceId != null) {
+		
+		LoginXmpp loginXmpp;
+		if (loginXmppMap.get(instanceId)==null) {
+			loginXmpp = loginXmppProv.get();
 		loginXmpp.setInstanceId(instanceId);
 		loginXmppMap.put(instanceId, loginXmpp);
-		
+		} else {			
+			loginXmpp =loginXmppMap.get(instanceId);			
+		}
 		this.connection = loginXmpp.xmppConnection;
 		this.session = loginXmpp.xmppSession;
 		

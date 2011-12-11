@@ -49,11 +49,12 @@ public class ImComponents implements MultiInstance {
     Provider<SubscriptionHandler> subcriptionHandler;
     Provider<XmppRoster> xmppRoster;
 	HashMap <String, LoginXmpp>loginXmppMap;
+	private LoginXmpp loginXmpp;
 
 	@Inject
 	public ImComponents(final SessionComponentsRegistry registry, final Provider<ChatManager> chatManager, final Provider<PresenceManager> presenceManager,
 			final Provider<SubscriptionManager> subscriptionManager, final Provider<SubscriptionHandler> subcriptionHandler,
-			final Provider<XmppRoster> xmppRoster, @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+			final Provider<XmppRoster> xmppRoster, @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, LoginXmpp loginXmpp) {
 
     	this.chatManager = chatManager;
 		this.presenceManager = presenceManager;
@@ -61,6 +62,7 @@ public class ImComponents implements MultiInstance {
 		this.subcriptionHandler = subcriptionHandler;
 		this.xmppRoster = xmppRoster; 
 		this.loginXmppMap = loginXmppMap;
+		this.loginXmpp = loginXmpp;
 /*
 		registry.addProvider(chatManager);
 		registry.addProvider(presenceManager);
@@ -71,8 +73,8 @@ public class ImComponents implements MultiInstance {
 	}
 	@Override
 	public void setInstanceId(String instanceId) {
-    	
-    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		loginXmppMap.put(instanceId, loginXmpp);
+		loginXmpp.setInstanceId(instanceId);
     	
     	loginXmpp.registry.addProvider(chatManager);
     	loginXmpp.registry.addProvider(presenceManager);
