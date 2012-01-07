@@ -27,6 +27,7 @@ import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.AsyncResult;
 import com.google.common.collect.Lists;
+import com.google.common.net.HttpHeaders;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -87,9 +88,9 @@ public final class Platform {
 	 */
 	public static final void sendXML(final String httpBase, final XMLPacket request, final AsyncResult<XMLPacket> callback) {
 		final RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, httpBase);
-		builder.setHeader("Content-Type", "text/xml; charset=utf-8");
-		builder.setHeader("Cache-Control", "no-cache");
-		builder.setHeader("Pragma", "no-cache");
+		builder.setHeader(HttpHeaders.CONTENT_TYPE, "text/xml; charset=utf-8");
+		//builder.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+		//builder.setHeader(HttpHeaders.PRAGMA, "no-cache");
 		// TODO : Hard coded timeout to 6s, but we should set it to the wait + a delta
 		// builder.setTimeoutMillis(6000);
 		try {

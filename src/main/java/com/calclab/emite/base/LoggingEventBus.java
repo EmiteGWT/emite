@@ -36,13 +36,13 @@ public class LoggingEventBus extends SimpleEventBus {
 
 	@Override
 	public void fireEvent(final Event<?> event) {
-		logger.info("FIRE: " + event.toDebugString());
+		logger.finest("FIRE: " + event.toDebugString());
 		super.fireEvent(event);
 	}
 
 	@Override
 	public void fireEventFromSource(final Event<?> event, final Object source) {
-		logger.info("FIRE|" + source.toString() + ": " + event.toDebugString());
+		logger.finest("FIRE|" + source.toString() + ": " + event.toDebugString());
 		super.fireEventFromSource(event, source);
 	}
 }
