@@ -21,4 +21,7 @@
 /**
  * IM related events.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.im.events;
+
+import javax.annotation.ParametersAreNonnullByDefault;

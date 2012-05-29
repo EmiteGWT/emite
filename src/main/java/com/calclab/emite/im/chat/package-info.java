@@ -21,4 +21,7 @@
 /**
  * XMPP IM Chat.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.im.chat;
+
+import javax.annotation.ParametersAreNonnullByDefault;

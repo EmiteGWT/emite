@@ -23,6 +23,8 @@ package com.calclab.emite.base.util;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.AsyncResult;
@@ -53,7 +55,7 @@ public final class Platform {
 		// On close it cancels all the pending requests except the "terminate" request
 		Window.addWindowClosingHandler(new Window.ClosingHandler() {
 			@Override
-			public void onWindowClosing(final Window.ClosingEvent event) {
+			public void onWindowClosing(@Nullable final Window.ClosingEvent event) {
 				int i = requests.size() - 2;
 				logger.finer("Cancelling " + (i + 1) + " pending requests.");
 				for (; i >= 0; i--) {
@@ -96,7 +98,7 @@ public final class Platform {
 		try {
 			final Request req = builder.sendRequest(request.toString(), new RequestCallback() {
 				@Override
-				public void onResponseReceived(final Request req, final Response res) {
+				public void onResponseReceived(@Nullable final Request req, @Nullable final Response res) {
 					requests.remove(req);
 					if (res.getStatusCode() != Response.SC_OK) {
 						callback.onError(new RequestException("Invalid status "+res.getStatusCode()+": "+res.getStatusText()));
@@ -113,7 +115,7 @@ public final class Platform {
 				}
 				
 				@Override
-				public void onError(final Request req, final Throwable throwable) {
+				public void onError(@Nullable final Request req, @Nullable final Throwable throwable) {
 					logger.severe("GWT CONNECTOR ERROR: " + throwable.getMessage());
 					requests.remove(req);
 					callback.onError(throwable);

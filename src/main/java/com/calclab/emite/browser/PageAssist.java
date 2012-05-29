@@ -47,6 +47,7 @@ public final class PageAssist {
 	 *            the default value to return if the meta is not found
 	 * @return the value of the attribute 'value' or null if not found
 	 */
+	@Nullable
 	public static final String getMeta(final String id, @Nullable final String defaultValue) {
 		checkNotNull(id);
 		final NodeList<Element> elements = Document.get().getElementsByTagName("meta");

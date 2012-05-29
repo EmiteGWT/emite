@@ -23,4 +23,7 @@
  * 
  * @see <a href="http://www.xmpp.org/extensions/xep-0045.html">XEP-0045</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.xep.muc;
+
+import javax.annotation.ParametersAreNonnullByDefault;

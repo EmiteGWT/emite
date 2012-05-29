@@ -21,4 +21,7 @@
 /**
  * XMPP Session.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core.session;
+
+import javax.annotation.ParametersAreNonnullByDefault;

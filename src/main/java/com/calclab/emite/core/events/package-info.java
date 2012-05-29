@@ -21,4 +21,7 @@
 /**
  * Event classes for the Core module.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core.events;
+
+import javax.annotation.ParametersAreNonnullByDefault;

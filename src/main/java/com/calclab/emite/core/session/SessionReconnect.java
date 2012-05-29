@@ -43,6 +43,7 @@ public final class SessionReconnect implements ConnectionStatusChangedEvent.Hand
 	protected int reconnectionAttempts;
 	private boolean shouldReconnect;
 
+	@Inject
 	protected SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
 		this.session = session;
 

@@ -20,29 +20,24 @@
 
 package com.calclab.emite.base.util;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import java.util.LinkedList;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.base.digest.Digest;
 import com.calclab.emite.base.digest.SHA1Digest;
+import com.google.gwt.thirdparty.guava.common.collect.Lists;
 
 public final class KeySequencer {
-	private static final int DEFAULT_SIZE = 100;
-
+	
 	private static final Random random = new Random();
 	private static final Digest digest = new SHA1Digest();
 
 	private final LinkedList<String> keyList;
 
 	public KeySequencer() {
-		this(DEFAULT_SIZE);
-	}
-
-	public KeySequencer(final int size) {
-		keyList = new LinkedList<String>();
-		reset(size);
+		keyList = Lists.newLinkedList();
 	}
 
 	private static final String seed() {
@@ -56,11 +51,7 @@ public final class KeySequencer {
 	}
 
 	public final void reset() {
-		reset(DEFAULT_SIZE);
-	}
-
-	public final void reset(final int size) {
-		checkArgument(size > 0);
+		final int size = 10 + random.nextInt(40);
 
 		keyList.clear();
 		String current = seed();
@@ -74,7 +65,7 @@ public final class KeySequencer {
 		return !keyList.isEmpty();
 	}
 
-	public final String next() {
+	@Nullable public final String next() {
 		if (keyList.isEmpty())
 			return null;
 

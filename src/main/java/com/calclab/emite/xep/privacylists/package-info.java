@@ -23,4 +23,7 @@
  * 
  * @see <a href="http://xmpp.org/extensions/xep-0016.html">XEP-0016</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.xep.privacylists;
+
+import javax.annotation.ParametersAreNonnullByDefault;

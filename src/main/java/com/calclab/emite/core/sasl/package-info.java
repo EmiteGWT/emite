@@ -21,4 +21,7 @@
 /**
  * SASL authentication.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core.sasl;
+
+import javax.annotation.ParametersAreNonnullByDefault;

@@ -21,4 +21,7 @@
 /**
  * Utility methods related to delays and stanzas.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.xep.delay;
+
+import javax.annotation.ParametersAreNonnullByDefault;

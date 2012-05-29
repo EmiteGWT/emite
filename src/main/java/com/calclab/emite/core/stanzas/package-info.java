@@ -21,4 +21,7 @@
 /**
  * Basic XMPP stanzas.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core.stanzas;
+
+import javax.annotation.ParametersAreNonnullByDefault;

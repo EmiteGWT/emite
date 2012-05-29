@@ -21,4 +21,7 @@
 /**
  * Presence manager.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.im.presence;
+
+import javax.annotation.ParametersAreNonnullByDefault;

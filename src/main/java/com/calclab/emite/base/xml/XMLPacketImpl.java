@@ -23,9 +23,10 @@ package com.calclab.emite.base.xml;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
+import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,7 +44,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
@@ -81,7 +81,7 @@ public final class XMLPacketImpl implements XMLPacket {
 		this(name, null);
 	}
 
-	protected XMLPacketImpl(final String name, final String namespace) {
+	protected XMLPacketImpl(final String name, @Nullable final String namespace) {
 		document = docBuilder.newDocument();
 		if (namespace != null) {
 			element = document.createElementNS(namespace, name);
@@ -350,7 +350,7 @@ public final class XMLPacketImpl implements XMLPacket {
 	 */
 	public static XMLPacket fromString(final String xml) {
 		try {
-			final Document doc = docBuilder.parse(new InputSource(new StringReader(xml)));
+			final Document doc = docBuilder.parse(new ByteArrayInputStream(xml.getBytes()));
 			return new XMLPacketImpl(doc.getDocumentElement());
 		} catch (final Exception e) {
 			return null;

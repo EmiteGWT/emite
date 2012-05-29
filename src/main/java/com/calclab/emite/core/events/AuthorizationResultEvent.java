@@ -24,7 +24,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nullable;
 
-import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.sasl.Credentials;
 import com.google.web.bindery.event.shared.Event;
 
@@ -56,7 +55,7 @@ public class AuthorizationResultEvent extends Event<AuthorizationResultEvent.Han
 		this(checkNotNull(credentials), true);
 	}
 
-	private AuthorizationResultEvent(final Credentials credentials, final boolean success) {
+	private AuthorizationResultEvent(@Nullable final Credentials credentials, final boolean success) {
 		this.credentials = credentials;
 		this.success = success;
 	}

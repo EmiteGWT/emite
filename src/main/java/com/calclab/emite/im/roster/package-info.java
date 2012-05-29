@@ -21,4 +21,7 @@
 /**
  * XMPP Roster.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.im.roster;
+
+import javax.annotation.ParametersAreNonnullByDefault;

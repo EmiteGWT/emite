@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+import com.calclab.emite.base.util.KeySequencer;
 import com.calclab.emite.base.util.Platform;
 import com.calclab.emite.base.util.ScheduledAction;
 import com.calclab.emite.base.xml.HasXML;
@@ -56,6 +57,7 @@ public final class XmppConnectionBosh implements XmppConnection {
 	private static final Logger logger = Logger.getLogger(XmppConnectionBosh.class.getName());
 
 	private final EventBus eventBus;
+	private final KeySequencer keySequencer;
 	private final List<XMLPacket> currentRequests;
 	
 	@Nullable private ConnectionSettings settings;
@@ -69,6 +71,7 @@ public final class XmppConnectionBosh implements XmppConnection {
 	@Inject
 	protected XmppConnectionBosh(@Named("emite") final EventBus eventBus) {
 		this.eventBus = checkNotNull(eventBus);
+		keySequencer = new KeySequencer();
 		currentRequests = Lists.newArrayList();
 	}
 
@@ -180,7 +183,7 @@ public final class XmppConnectionBosh implements XmppConnection {
 		return "Bosh in " + (active ? "active" : "inactive") + " stream=" + stream;
 	}
 
-	private void continueConnection(final String ack) {
+	private void continueConnection(@Nullable final String ack) {
 		if (isConnected() && currentRequests.isEmpty()) {
 			if (currentBody != null) {
 				sendBody(false);
@@ -206,6 +209,11 @@ public final class XmppConnectionBosh implements XmppConnection {
 			return;
 		
 		currentBody = XMLBuilder.create("body", XmppNamespaces.HTTPBIND).getXML();
+		currentBody.setAttribute("key", keySequencer.next());
+		if (!keySequencer.hasNext()) {
+			keySequencer.reset();
+			currentBody.setAttribute("newkey", keySequencer.next());
+		}
 		currentBody.setAttribute("rid", stream.getNextRid());
 		if (stream != null) {
 			currentBody.setAttribute("sid", stream.sid);
@@ -213,6 +221,7 @@ public final class XmppConnectionBosh implements XmppConnection {
 	}
 
 	private void createInitialBody() {
+		keySequencer.reset();
 		currentBody = XMLBuilder.create("body", XmppNamespaces.HTTPBIND).getXML();
 		currentBody.setAttribute("content", "text/xml; charset=utf-8");
 		currentBody.setAttribute("xml:lang", "en");
@@ -221,6 +230,7 @@ public final class XmppConnectionBosh implements XmppConnection {
 		currentBody.setAttribute("ver", "1.6");
 		currentBody.setAttribute("ack", "1");
 		currentBody.setAttribute("secure", String.valueOf(settings.isSecure()));
+		currentBody.setAttribute("newkey", keySequencer.next());
 		currentBody.setAttribute("rid", stream.getNextRid());
 		currentBody.setAttribute("to", settings.getHostName());
 		if (settings.getRouteHost() != null) {

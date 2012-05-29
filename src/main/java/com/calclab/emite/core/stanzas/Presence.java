@@ -75,7 +75,7 @@ public class Presence extends Stanza {
 	 * 
 	 * @param type the type for the new presence
 	 */
-	public Presence(final Type type) {
+	public Presence(@Nullable final Type type) {
 		this();
 		setType(type);
 	}
@@ -86,7 +86,7 @@ public class Presence extends Stanza {
 	 * @param type the type for the new presence
 	 * @param to the recipient for the new presence
 	 */
-	public Presence(final Type type, final XmppURI to) {
+	public Presence(@Nullable final Type type, final XmppURI to) {
 		this(type);
 		setTo(to);
 	}

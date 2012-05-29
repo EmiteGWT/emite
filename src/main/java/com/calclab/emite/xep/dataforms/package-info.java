@@ -23,4 +23,7 @@
  * 
  * @see <a href="http://xmpp.org/extensions/xep-0085.html">XEP-0085</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.xep.dataforms;
+
+import javax.annotation.ParametersAreNonnullByDefault;

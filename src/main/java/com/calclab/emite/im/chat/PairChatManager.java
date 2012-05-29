@@ -22,6 +22,8 @@ package com.calclab.emite.im.chat;
 
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.im.events.PairChatChangedEvent;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -53,6 +55,7 @@ public interface PairChatManager {
 	 * @param uri
 	 * @return
 	 */
+	@Nullable
 	PairChat getChat(XmppURI uri);
 	
 	Collection<PairChat> getChats();

@@ -113,6 +113,7 @@ public final class XmppURI {
 	 *            the resource of the URI
 	 * @return a URI object
 	 */
+	@Nullable
 	public static final XmppURI uri(@Nullable final String node, final String host, @Nullable final String resource) {
 		try {
 			final String snode = node != null ? Stringprep.nodeprep(node) : null;
@@ -199,7 +200,7 @@ public final class XmppURI {
 	}
 
 	@Override
-	public final boolean equals(final Object obj) {
+	public final boolean equals(@Nullable final Object obj) {
 		if (obj instanceof XmppURI) {
 			final XmppURI other = (XmppURI) obj;
 			

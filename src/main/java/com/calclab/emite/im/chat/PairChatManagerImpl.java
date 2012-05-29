@@ -126,6 +126,7 @@ public final class PairChatManagerImpl implements PairChatManager, SessionStatus
 	}
 	
 	@Override
+	@Nullable
 	public final PairChat getChat(final XmppURI uri) {
 		for (final PairChat chat : chats) {
 			if (chat.getURI().equalsNoResource(uri))

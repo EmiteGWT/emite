@@ -37,4 +37,7 @@
  * 
  * @see <a href="http://xmpp.org/rfcs/rfc6120.html">RFC 6120</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core;
+
+import javax.annotation.ParametersAreNonnullByDefault;

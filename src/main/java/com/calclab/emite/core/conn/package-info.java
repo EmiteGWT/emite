@@ -21,4 +21,7 @@
 /**
  * XMPP Connection.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.core.conn;
+
+import javax.annotation.ParametersAreNonnullByDefault;

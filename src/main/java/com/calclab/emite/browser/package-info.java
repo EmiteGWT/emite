@@ -112,4 +112,7 @@
  * Remember that <b>emite</b> won't autologin if a session was previously
  * paused.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.browser;
+
+import javax.annotation.ParametersAreNonnullByDefault;

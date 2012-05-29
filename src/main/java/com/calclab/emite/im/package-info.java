@@ -30,4 +30,7 @@
  * 
  * @see <a href="http://www.xmpp.org/rfcs/rfc6121.html">RFC 6121</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.im;
+
+import javax.annotation.ParametersAreNonnullByDefault;

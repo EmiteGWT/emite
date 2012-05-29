@@ -21,4 +21,7 @@
 /**
  * XML parsing utilities.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.base.xml;
+
+import javax.annotation.ParametersAreNonnullByDefault;

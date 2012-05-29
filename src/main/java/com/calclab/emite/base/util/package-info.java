@@ -21,4 +21,7 @@
 /**
  * Emite utilities.
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.base.util;
+
+import javax.annotation.ParametersAreNonnullByDefault;

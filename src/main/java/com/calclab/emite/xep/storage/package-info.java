@@ -23,4 +23,7 @@
  * 
  * @see <a href="http://xmpp.org/extensions/xep-0049.html">XEP-0049</a>
  */
+@ParametersAreNonnullByDefault
 package com.calclab.emite.xep.storage;
+
+import javax.annotation.ParametersAreNonnullByDefault;

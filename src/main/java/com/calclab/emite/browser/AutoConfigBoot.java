@@ -151,7 +151,7 @@ public class AutoConfigBoot implements Scheduler.ScheduledCommand, Window.Closin
 	}
 
 	@Override
-	public final void onWindowClosing(final Window.ClosingEvent event) {
+	public final void onWindowClosing(@Nullable final Window.ClosingEvent event) {
 		if (RESUME.equals(sessionBehaviour) || RESUME_OR_LOGIN.equals(sessionBehaviour)) {
 			logger.info("PAUSING SESSION...");
 			pauseSession();

@@ -56,7 +56,7 @@ public final class Credentials {
 	 * @param uri the URI for these credentials
 	 * @param password the password for these credentials
 	 */
-	public Credentials(@Nullable final XmppURI uri, @Nullable final String password) {
+	public Credentials(final XmppURI uri, @Nullable final String password) {
 		this.uri = checkNotNull(uri);
 		this.password = password;
 	}
@@ -96,7 +96,7 @@ public final class Credentials {
 	}
 	
 	@Override
-	public final boolean equals(final Object obj) {
+	public final boolean equals(@Nullable final Object obj) {
 		if (obj instanceof Credentials) {
 			final Credentials other = (Credentials) obj;
 			
