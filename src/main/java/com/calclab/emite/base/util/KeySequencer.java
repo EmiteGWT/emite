@@ -25,9 +25,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.calclab.emite.base.digest.Digest;
-import com.calclab.emite.base.digest.SHA1Digest;
-import com.google.gwt.thirdparty.guava.common.collect.Lists;
+import com.calclab.emite.base.crypto.Digest;
+import com.calclab.emite.base.crypto.SHA1Digest;
+import com.google.common.collect.Lists;
 
 public final class KeySequencer {
 	

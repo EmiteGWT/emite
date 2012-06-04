@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2000-2010 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
- * and associated documentation files (the "Software"), to deal in the Software without restriction, 
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
  * <p>
@@ -18,7 +18,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.calclab.emite.base.digest;
+package com.calclab.emite.base.crypto;
 
 /**
  * implementation of MD5 as outlined in "Handbook of Applied Cryptography",
@@ -26,10 +26,11 @@ package com.calclab.emite.base.digest;
  */
 public final class MD5Digest extends AbstractDigest {
 	private static final int DIGEST_LENGTH = 16;
+	private static final int BYTE_LENGTH = 64;
 
 	private int H1, H2, H3, H4; // IV's
 
-	private int[] X = new int[16];
+	private final int[] X = new int[16];
 	private int xOff;
 
 	/**
@@ -63,6 +64,11 @@ public final class MD5Digest extends AbstractDigest {
 	@Override
 	public final int getDigestSize() {
 		return DIGEST_LENGTH;
+	}
+
+	@Override
+	public final int getByteLength() {
+		return BYTE_LENGTH;
 	}
 
 	@Override

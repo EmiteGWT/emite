@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2000-2010 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
- * and associated documentation files (the "Software"), to deal in the Software without restriction, 
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
  * <p>
@@ -18,21 +18,22 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.calclab.emite.base.digest;
+package com.calclab.emite.base.crypto;
 
 /**
  * implementation of SHA-1 as outlined in "Handbook of Applied Cryptography",
  * pages 346 - 349.
- * 
+ *
  * It is interesting to ponder why the, apart from the extra IV, the other
  * difference here from MD5 is the "endienness" of the word processing!
  */
 public final class SHA1Digest extends AbstractDigest {
 	private static final int DIGEST_LENGTH = 20;
+	private static final int BYTE_LENGTH = 64;
 
 	private int H1, H2, H3, H4, H5; // IV's
 
-	private int[] X = new int[80];
+	private final int[] X = new int[80];
 	private int xOff;
 
 	/**
@@ -67,6 +68,11 @@ public final class SHA1Digest extends AbstractDigest {
 	@Override
 	public final int getDigestSize() {
 		return DIGEST_LENGTH;
+	}
+
+	@Override
+	public final int getByteLength() {
+		return BYTE_LENGTH;
 	}
 
 	@Override
@@ -148,7 +154,7 @@ public final class SHA1Digest extends AbstractDigest {
 		// expand 16 word block into 80 word block.
 		//
 		for (int i = 16; i < 80; i++) {
-			int t = X[i - 3] ^ X[i - 8] ^ X[i - 14] ^ X[i - 16];
+			final int t = X[i - 3] ^ X[i - 8] ^ X[i - 14] ^ X[i - 16];
 			X[i] = rotateLeft(t, 1);
 		}
 

@@ -19,7 +19,7 @@ package com.calclab.emite.base.util;
  * A utility to decode and encode byte arrays as Strings, using only "safe"
  * characters.
  */
-public final class Base64Utils {
+public final class Base64 {
 
 	/**
 	 * An array mapping size but values to the characters that will be used to
@@ -148,6 +148,6 @@ public final class Base64Utils {
 		return new String(chars);
 	}
 
-	private Base64Utils() {
+	private Base64() {
 	}
 }

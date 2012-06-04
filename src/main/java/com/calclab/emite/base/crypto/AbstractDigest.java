@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2000-2010 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
  * <p>
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
- * and associated documentation files (the "Software"), to deal in the Software without restriction, 
- * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
  * subject to the following conditions:
  * <p>
@@ -18,16 +18,15 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.calclab.emite.base.digest;
+package com.calclab.emite.base.crypto;
 
 /**
  * base implementation of MD4 family style digest as outlined in
  * "Handbook of Applied Cryptography", pages 344 - 347.
  */
 abstract class AbstractDigest implements Digest {
-	private byte[] xBuf;
+	private final byte[] xBuf;
 	private int xBufOff;
-
 	private long byteCount;
 
 	/**
@@ -35,18 +34,18 @@ abstract class AbstractDigest implements Digest {
 	 */
 	protected AbstractDigest() {
 		xBuf = new byte[4];
-		xBufOff = 0;
+		reset();
 	}
-	
+
 	@Override
 	public final byte[] doHash(final byte[] input) {
 		reset();
 		update(input, 0, input.length);
-		byte[] out = new byte[getDigestSize()];
+		final byte[] out = new byte[getDigestSize()];
 		doFinal(out, 0);
 		return out;
 	}
-	
+
 	/**
 	 * Copy constructor. We are using copy constructors in place of the
 	 * Object.clone() interface as this interface is not supported by J2ME.
@@ -106,7 +105,7 @@ abstract class AbstractDigest implements Digest {
 	}
 
 	protected final void finish() {
-		long bitLength = (byteCount << 3);
+		final long bitLength = (byteCount << 3);
 
 		//
 		// add the pad bytes.

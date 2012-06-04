@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nullable;
 
-import com.calclab.emite.base.util.Base64Utils;
+import com.calclab.emite.base.util.Base64;
 import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.XmppNamespaces;
@@ -94,7 +94,7 @@ final class SASLManager implements PacketReceivedEvent.Handler {
 
 	private static String encodePlain(final XmppURI uri, final String password) {
 		final String auth = uri.getJID().toString() + Ascii.NUL + uri.getNode() + Ascii.NUL + password;
-		return Base64Utils.toBase64(auth.getBytes());
+		return Base64.toBase64(auth.getBytes());
 	}
 
 }
