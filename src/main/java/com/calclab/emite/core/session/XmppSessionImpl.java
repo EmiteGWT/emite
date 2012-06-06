@@ -27,6 +27,8 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+import com.calclab.emite.base.util.Base64;
+import com.calclab.emite.base.xml.XMLBuilder;
 import com.calclab.emite.base.xml.XMLPacket;
 import com.calclab.emite.core.IQCallback;
 import com.calclab.emite.core.XmppNamespaces;
@@ -44,6 +46,10 @@ import com.calclab.emite.core.events.PresenceReceivedEvent;
 import com.calclab.emite.core.events.SessionStatusChangedEvent;
 import com.calclab.emite.core.events.StanzaSentEvent;
 import com.calclab.emite.core.sasl.Credentials;
+import com.calclab.emite.core.sasl.PlainClient;
+import com.calclab.emite.core.sasl.SaslClient;
+import com.calclab.emite.core.sasl.SaslException;
+import com.calclab.emite.core.sasl.ScramSHA1Client;
 import com.calclab.emite.core.stanzas.IQ;
 import com.calclab.emite.core.stanzas.Message;
 import com.calclab.emite.core.stanzas.Presence;
@@ -63,7 +69,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
  * @see XmppSession
  */
 @Singleton
-public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEvent.Handler, AuthorizationResultEvent.Handler, PacketReceivedEvent.Handler {
+public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEvent.Handler, PacketReceivedEvent.Handler {
 
 	private static enum SessionMode {
 		// TODO
@@ -75,12 +81,12 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	private final EventBus eventBus;
 	private final XmppConnection connection;
 	
-	private final SASLManager saslManager;
 	private final IQManager iqManager;
 
 	private final List<Stanza> queuedStanzas;
 	private SessionStatus status;
 	private SessionMode mode;
+	private SaslClient saslClient;
 	
 	@Nullable private Credentials credentials;
 	@Nullable private XmppURI userUri;
@@ -94,13 +100,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		status = SessionStatus.disconnected;
 		mode = SessionMode.offline;
 		
-		saslManager = new SASLManager(eventBus, connection);
 		iqManager = new IQManager(this);
 		new SessionReady(this);
 
 		connection.addConnectionStatusChangedHandler(this);
 		connection.addPacketReceivedHandler(this);
-		saslManager.addAuthorizationResultHandler(this);
 	}
 
 	@Override
@@ -108,8 +112,10 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		if (event.is(ConnectionStatus.error)) {
 			logger.severe("Connection error: " + event.getDescription());
 			setStatus(SessionStatus.error);
+			mode = SessionMode.offline;
 		} else if (event.is(ConnectionStatus.disconnected)) {
 			setStatus(SessionStatus.disconnected);
+			mode = SessionMode.offline;
 		}
 	}
 
@@ -117,35 +123,88 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	public void onPacketReceived(final PacketReceivedEvent event) {
 		final XMLPacket stanza = event.getPacket();
 		final String name = stanza.getTagName();
-		if ("message".equals(name)) {
-			eventBus.fireEventFromSource(new MessageReceivedEvent(new Message(stanza)), this);
-		} else if ("presence".equals(name)) {
-			eventBus.fireEventFromSource(new PresenceReceivedEvent(new Presence(stanza)), this);
-		} else if ("iq".equals(name)) {
-			final IQ iq = new IQ(stanza);
-			final IQ.Type type = iq.getType();
-			if (IQ.Type.get.equals(type) || IQ.Type.set.equals(type)) {
-				eventBus.fireEventFromSource(new IQRequestReceivedEvent(iq), this);
-			} else if (IQ.Type.result.equals(type) || IQ.Type.error.equals(type)) {
-				eventBus.fireEventFromSource(new IQResponseReceivedEvent(iq), this);
+		final String xmlns = stanza.getNamespace();
+		
+		if (mode == SessionMode.login) {
+			if (("stream:features".equals(name) || "features".equals(name)) && stanza.hasChild("mechanisms", XmppNamespaces.SASL)) {
+				setStatus(SessionStatus.connecting);
+				
+				List<String> mechanisms = Lists.newArrayList();
+				for (final XMLPacket mechanism : stanza.getFirstChild("mechanisms", XmppNamespaces.SASL).getChildren("mechanism")) {
+					mechanisms.add(mechanism.getText());
+				}
+				
+				if (credentials.isAnoymous()) {
+					if (!mechanisms.contains("ANONYMOUS")) {
+						setStatus(SessionStatus.notAuthorized);
+						mode = SessionMode.offline;
+						connection.disconnect();
+					}
+					
+					connection.send(XMLBuilder.create("auth", XmppNamespaces.SASL).attribute("mechanism", "ANONYMOUS").getXML());
+					return;
+				}
+				
+				if (mechanisms.contains("SCRAM-SHA-1")) {
+					saslClient = new ScramSHA1Client(credentials);
+				}
+				else if (mechanisms.contains("PLAIN")) {
+					saslClient = new PlainClient(credentials);
+				}
+				else {
+					setStatus(SessionStatus.notAuthorized);
+					mode = SessionMode.offline;
+					connection.disconnect();
+				}
+				
+				final String encondedAuth = Base64.toBase64(saslClient.getInitialResponse());
+				connection.send(XMLBuilder.create("auth", XmppNamespaces.SASL).attribute("mechanism", saslClient.getMechanismName()).text(encondedAuth).getXML());
+			} else if ("challenge".equals(name) && XmppNamespaces.SASL.equals(xmlns)) {
+				final byte[] challenge = Base64.fromBase64(stanza.getText());
+				try {
+					final String encondedAuth = Base64.toBase64(saslClient.evaluateChallenge(challenge));
+					connection.send(XMLBuilder.create("response", XmppNamespaces.SASL).text(encondedAuth).getXML());
+				} catch (SaslException e) {
+					setStatus(SessionStatus.notAuthorized);
+					mode = SessionMode.offline;
+					connection.disconnect();
+				}
+			} else if ("success".equals(name) && XmppNamespaces.SASL.equals(xmlns)) {
+				final byte[] challenge = Base64.fromBase64(stanza.getText());
+				if (challenge != null) {
+					try {
+						saslClient.evaluateChallenge(challenge);
+					} catch (SaslException e) {
+						setStatus(SessionStatus.notAuthorized);
+						mode = SessionMode.offline;
+						connection.disconnect();
+						return;
+					}
+				}
+				setStatus(SessionStatus.authorized);
+				mode = SessionMode.ready;
+				eventBus.fireEventFromSource(new AuthorizationResultEvent(credentials), this);
+				connection.restartStream();
+				bindResource(credentials.isAnoymous() ? null : credentials.getURI().getResource());
+			} else if ("failure".equals(name) && XmppNamespaces.SASL.equals(xmlns)) {
+				setStatus(SessionStatus.notAuthorized);
+				mode = SessionMode.offline;
+				connection.disconnect();
 			}
-		} else if (credentials != null && ("stream:features".equals(name) || "features".equals(name)) && stanza.hasChild("mechanisms", XmppNamespaces.SASL)) {
-			setStatus(SessionStatus.connecting);
-			saslManager.sendAuthorizationRequest(credentials);
-			credentials = null;
-		}
-	}
-
-	@Override
-	public void onAuthorizationResult(final AuthorizationResultEvent event) {
-		if (event.isSuccess()) {
-			final Credentials credentials = event.getCredentials();
-			setStatus(SessionStatus.authorized);
-			connection.restartStream();
-			bindResource(credentials.isAnoymous() ? null : credentials.getURI().getResource());
 		} else {
-			setStatus(SessionStatus.notAuthorized);
-			connection.disconnect();
+			if ("message".equals(name)) {
+				eventBus.fireEventFromSource(new MessageReceivedEvent(new Message(stanza)), this);
+			} else if ("presence".equals(name)) {
+				eventBus.fireEventFromSource(new PresenceReceivedEvent(new Presence(stanza)), this);
+			} else if ("iq".equals(name)) {
+				final IQ iq = new IQ(stanza);
+				final IQ.Type type = iq.getType();
+				if (IQ.Type.get.equals(type) || IQ.Type.set.equals(type)) {
+					eventBus.fireEventFromSource(new IQRequestReceivedEvent(iq), this);
+				} else if (IQ.Type.result.equals(type) || IQ.Type.error.equals(type)) {
+					eventBus.fireEventFromSource(new IQResponseReceivedEvent(iq), this);
+				}
+			}
 		}
 	}
 
@@ -167,6 +226,11 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 	@Override
 	public HandlerRegistration addPresenceReceivedHandler(final PresenceReceivedEvent.Handler handler) {
 		return eventBus.addHandlerToSource(PresenceReceivedEvent.TYPE, this, handler);
+	}
+	
+	@Override
+	public HandlerRegistration addAuthorizationResultHandler(final AuthorizationResultEvent.Handler handler) {
+		return eventBus.addHandlerToSource(AuthorizationResultEvent.TYPE, this, handler);
 	}
 
 	@Override
@@ -218,8 +282,9 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		
 		if (status == SessionStatus.disconnected) {
 			setStatus(SessionStatus.connecting);
-			connection.connect();
+			mode = SessionMode.login;
 			this.credentials = credentials;
+			connection.connect();
 		}
 	}
 
@@ -233,6 +298,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 			userUri = null;
 			connection.disconnect();
 			setStatus(SessionStatus.disconnected);
+			mode = SessionMode.offline;
 		}
 	}
 
@@ -247,6 +313,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 		setStatus(SessionStatus.resume);
 		connection.resume(settings);
 		setStatus(SessionStatus.ready);
+		mode = SessionMode.ready;
 	}
 
 	@Override

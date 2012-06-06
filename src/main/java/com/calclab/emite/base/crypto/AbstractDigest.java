@@ -34,7 +34,6 @@ abstract class AbstractDigest implements Digest {
 	 */
 	protected AbstractDigest() {
 		xBuf = new byte[4];
-		reset();
 	}
 
 	@Override

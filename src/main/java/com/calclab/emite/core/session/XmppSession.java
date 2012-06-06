@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.calclab.emite.core.IQCallback;
 import com.calclab.emite.core.XmppURI;
 import com.calclab.emite.core.conn.StreamSettings;
+import com.calclab.emite.core.events.AuthorizationResultEvent;
 import com.calclab.emite.core.events.IQRequestReceivedEvent;
 import com.calclab.emite.core.events.IQResponseReceivedEvent;
 import com.calclab.emite.core.events.MessageReceivedEvent;
@@ -80,6 +81,16 @@ public interface XmppSession {
 	 *         handler later
 	 */
 	HandlerRegistration addPresenceReceivedHandler(PresenceReceivedEvent.Handler handler);
+	
+	/**
+	 * Add a handler to know when an authorization transaction has a result
+	 * 
+	 * @param handler
+	 *            the handler
+	 * @return the handler registration, can be stored in order to remove the
+	 *         handler later
+	 */
+	HandlerRegistration addAuthorizationResultHandler(AuthorizationResultEvent.Handler handler);
 
 	/**
 	 * Add a handler to track session status changes.

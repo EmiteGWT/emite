@@ -44,7 +44,7 @@ public final class SessionReconnect implements ConnectionStatusChangedEvent.Hand
 	private boolean shouldReconnect;
 
 	@Inject
-	protected SessionReconnect(final XmppConnection connection, final XmppSession session, final SASLManager saslManager) {
+	protected SessionReconnect(final XmppConnection connection, final XmppSession session) {
 		this.session = session;
 
 		shouldReconnect = false;
@@ -53,7 +53,7 @@ public final class SessionReconnect implements ConnectionStatusChangedEvent.Hand
 
 		connection.addConnectionStatusChangedHandler(this);
 		session.addSessionStatusChangedHandler(this, true);
-		saslManager.addAuthorizationResultHandler(this);
+		session.addAuthorizationResultHandler(this);
 	}
 
 	@Override

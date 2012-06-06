@@ -18,24 +18,10 @@
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.calclab.emite.core.sasl;
+/**
+ * Emite cryptographic utilities.
+ */
+@ParametersAreNonnullByDefault
+package com.calclab.emite.base.crypto;
 
-public class SaslException extends Exception {
-	
-	public SaslException() {
-        super();
-    }
-
-    public SaslException(String message) {
-        super(message);
-    }
-
-    public SaslException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public SaslException(Throwable cause) {
-        super(cause);
-    }
-
-}
+import javax.annotation.ParametersAreNonnullByDefault;
