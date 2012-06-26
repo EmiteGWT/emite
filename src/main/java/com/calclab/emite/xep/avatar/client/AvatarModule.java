@@ -27,7 +27,7 @@ public class AvatarModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(AvatarManager.class).in(Singleton.class);
+		bind(AvatarManager.class);//.in(Singleton.class);
 	}
 
 }

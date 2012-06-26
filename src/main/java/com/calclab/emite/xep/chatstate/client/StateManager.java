@@ -20,13 +20,18 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.im.client.chat.Chat;
 import com.calclab.emite.im.client.chat.ChatManager;
 import com.calclab.emite.im.client.chat.events.ChatChangedEvent;
 import com.calclab.emite.im.client.chat.events.ChatChangedHandler;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * XEP-0085: Chat State Notifications
@@ -37,30 +42,15 @@ import com.google.inject.Inject;
  * be a problem).
  * 
  */
-public class StateManager {
+public class StateManager  implements MultiInstance {
 	
 	private static final Logger logger = Logger.getLogger(StateManager.class.getName());
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public StateManager(final ChatManager chatManager) {
+	public StateManager(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
 
-		chatManager.addChatChangedHandler(new ChatChangedHandler() {
-			@Override
-			public void onChatChanged(final ChatChangedEvent event) {
-				if (event.isCreated()) {
-					getChatState(event.getChat());
-				} else if (event.isClosed()) {
-					final Chat chat = event.getChat();
-					logger.finer("Removing chat state to chat: " + chat.getID());
-					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
-					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
-						// We are closing, then we send the gone state
-						chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
-					}
-					chat.getProperties().setData(ChatStateManager.KEY, null);
-				}
-			}
-		});
+		this.loginXmppMap = loginXmppMap;
 
 	}
 
@@ -77,6 +67,32 @@ public class StateManager {
 		final ChatStateManager chatStateManager = new ChatStateManager(chat);
 		chat.getProperties().setData(ChatStateManager.KEY, chatStateManager);
 		return chatStateManager;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+
+	    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+	    	ChatManager chatManager = loginXmpp.chatManager;
+
+			chatManager.addChatChangedHandler(new ChatChangedHandler() {
+			@Override
+			public void onChatChanged(final ChatChangedEvent event) {
+				if (event.isCreated()) {
+					getChatState(event.getChat());
+				} else if (event.isClosed()) {
+					final Chat chat = event.getChat();
+					logger.finer("Removing chat state to chat: " + chat.getID());
+					final ChatStateManager chatStateManager = (ChatStateManager) chat.getProperties().getData(ChatStateManager.KEY);
+					if (chatStateManager != null && chatStateManager.getOtherState() != ChatStateManager.ChatState.gone) {
+						// We are closing, then we send the gone state
+						chatStateManager.setOwnState(ChatStateManager.ChatState.gone);
+					}
+					chat.getProperties().setData(ChatStateManager.KEY, null);
+				}
+			}
+		});
+		
 	}
 
 }

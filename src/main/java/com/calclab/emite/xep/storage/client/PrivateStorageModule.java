@@ -30,7 +30,7 @@ public class PrivateStorageModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(PrivateStorageManager.class).in(Singleton.class);
+		bind(PrivateStorageManager.class);//.in(Singleton.class);
 	}
 
 }

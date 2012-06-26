@@ -20,6 +20,11 @@
 
 package com.calclab.emite.im.client.roster;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedEvent;
 import com.calclab.emite.im.client.roster.events.SubscriptionRequestReceivedHandler;
 import com.google.inject.Inject;
@@ -36,8 +41,8 @@ import com.google.inject.Singleton;
  * 
  * The default behaviour is none: do nothing
  */
-@Singleton
-public class SubscriptionHandler {
+//@Singleton
+public class SubscriptionHandler   implements MultiInstance {
 
 	public static enum Behaviour {
 		/** do nothing **/
@@ -49,9 +54,29 @@ public class SubscriptionHandler {
 	}
 
 	private Behaviour behaviour;
+	private final HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public SubscriptionHandler(final SubscriptionManager manager) {
+	public SubscriptionHandler(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap= loginXmppMap;
+	}
+
+	/**
+	 * Change the behaviour
+	 * 
+	 * @param behaviour
+	 *            the desired new behaviour
+	 */
+	public void setBehaviour(final Behaviour behaviour) {
+		this.behaviour = behaviour;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		final SubscriptionManager manager = loginXmpp.subscriptionManager;
+
 		behaviour = Behaviour.none;
 
 		manager.addSubscriptionRequestReceivedHandler(new SubscriptionRequestReceivedHandler() {
@@ -64,17 +89,7 @@ public class SubscriptionHandler {
 				}
 			}
 		});
-
-	}
-
-	/**
-	 * Change the behaviour
-	 * 
-	 * @param behaviour
-	 *            the desired new behaviour
-	 */
-	public void setBehaviour(final Behaviour behaviour) {
-		this.behaviour = behaviour;
+		
 	}
 
 }

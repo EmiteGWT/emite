@@ -39,6 +39,18 @@ public abstract class AbstractChatManager extends ChatManagerBoilerplate {
 		forwardMessagesToChats();
 		controlSessionStatus();
 	}
+  
+	public AbstractChatManager(ChatSelectionStrategy strategy) {
+    	super(strategy);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+    	super.setInstanceId(instanceId);
+    	forwardMessagesToChats();
+    	controlSessionStatus();
+    }
 
 	@Override
 	public void close(final Chat chat) {

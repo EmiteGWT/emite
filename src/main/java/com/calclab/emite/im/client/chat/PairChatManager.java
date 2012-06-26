@@ -20,6 +20,10 @@
 
 package com.calclab.emite.im.client.chat;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -30,16 +34,24 @@ import com.google.inject.name.Named;
  * 
  * @see ChatManager
  */
-@Singleton
+//@Singleton
 public class PairChatManager extends AbstractChatManager {
 
+/*
 	public PairChatManager(final XmppSession session) {
 		this(session, new PairChatSelectionStrategy());
 	}
+*/
 
 	@Inject
-	public PairChatManager(final XmppSession session, @Named("Pair") final ChatSelectionStrategy strategy) {
-		super(session, strategy);
+	public PairChatManager(@Named("Pair") final ChatSelectionStrategy strategy,  final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {		
+		super( strategy);
+		this.loginXmppMap = loginXmppMap;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		super.setInstanceId(instanceId);
 	}
 
 	@Override

@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with Emite.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.calclab.emite.im.client.roster;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedEvent;
@@ -32,14 +34,14 @@ import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class XmppRosterBoilerplate implements XmppRoster {
 
-	protected final XmppSession session;
+	protected XmppSession session;
 	protected EmiteEventBus eventBus;
 	protected boolean rosterReady;
+	
+	protected HashMap<String, LoginXmpp> loginXmppMap;
 
-	public XmppRosterBoilerplate(final XmppSession session) {
-		this.session = session;
-		eventBus = session.getEventBus();
-		rosterReady = false;
+	public XmppRosterBoilerplate() {
+
 	}
 
 	@Override
@@ -62,4 +64,12 @@ public abstract class XmppRosterBoilerplate implements XmppRoster {
 		return rosterReady;
 	}
 
+	@Override
+	public void setInstanceId(String instanceId) {
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		this.session = loginXmpp.xmppSession;		
+		eventBus = session.getEventBus();
+		rosterReady = false;
+		
+	}
 }

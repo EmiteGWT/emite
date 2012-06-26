@@ -21,8 +21,11 @@
 package com.calclab.emite.xep.mucdisco.client;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.DiscoveryManager;
 import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
@@ -33,11 +36,12 @@ import com.google.inject.Inject;
 
 public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 
-	private final DiscoveryManager discoveryManager;
+	private DiscoveryManager discoveryManager;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public RoomDiscoveryManagerImpl(final DiscoveryManager discoveryManager) {
-		this.discoveryManager = discoveryManager;
+	public RoomDiscoveryManagerImpl(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		 this.loginXmppMap = loginXmppMap;
 	}
 
 	@Override
@@ -60,6 +64,14 @@ public class RoomDiscoveryManagerImpl implements RoomDiscoveryManager {
 	@Override
 	public void isMucSupported(final XmppURI targetUri, final FeatureSupportedCallback callback) {
 		discoveryManager.areFeaturesSupported(targetUri, callback, "http://jabber.org/protocol/muc");
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+    	
+    	this.discoveryManager = loginXmpp.discoveryManager;
+		
 	}
 
 }

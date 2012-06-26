@@ -20,9 +20,11 @@
 
 package com.calclab.emite.core.client.bosh;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.conn.ConnectionSettings;
 import com.calclab.emite.core.client.conn.StanzaSentEvent;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -36,80 +38,32 @@ import com.calclab.emite.core.client.services.ScheduledAction;
 import com.calclab.emite.core.client.services.Services;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.calclab.emite.core.client.LoginXmpp;
 
 /**
  * A Bosh connection implementation.
  * 
  * @see XmppConnection
  */
-@Singleton
+//@Singleton
 public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 	
 	private static final Logger logger = Logger.getLogger(XmppBoshConnection.class.getName());
 	
 	private int activeConnections;
-	private final Services services;
-	private final ConnectorCallback listener;
+    private  Services services;
+    private  ConnectorCallback listener;
 	private boolean shouldCollectResponses;
 	private final RetryControl retryControl = new RetryControl();
 
+    private String instanceId;
+	private HashMap<String, LoginXmpp> loginXmppMap;
+
+
 	@Inject
-	public XmppBoshConnection(final EmiteEventBus eventBus, final Services services) {
-		super(eventBus);
-		this.services = services;
-
-		listener = new ConnectorCallback() {
-
-			@Override
-			public void onError(final String request, final Throwable throwable) {
-				if (isActive()) {
-					final int e = incrementErrors();
-					logger.severe("Connection error #" + e + ": " + throwable.getMessage());
-					if (e > retryControl.maxRetries) {
-						fireError("Connection error: " + throwable.toString());
-						disconnect();
-					} else {
-						final int scedTime = retryControl.retry(e);
-						fireRetry(e, scedTime);
-						services.schedule(scedTime, new ScheduledAction() {
-							@Override
-							public void run() {
-								logger.info("Error retry: " + e);
-								send(request);
-							}
-						});
-					}
-				}
-			}
-
-			@Override
-			public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
-				clearErrors();
-				activeConnections--;
-				if (isActive()) {
-					// TODO: check if is the same code in other than FF and make
-					// tests
-					if (statusCode == 404) {
-						fireError("404 Connection Error (session removed ?!) : " + content);
-						disconnect();
-					} else if (statusCode != 200 && statusCode != 0) {
-						// setActive(false);
-						// fireError("Bad status: " + statusCode);
-						onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
-					} else {
-						final IPacket response = services.toXML(content);
-						if (response != null && "body".equals(response.getName())) {
-							clearErrors();
-							fireResponse(content);
-							handleResponse(response);
-						} else {
-							onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
-							// fireError("Bad response: " + content);
-						}
-					}
-				}
-			}
-		};
+    public XmppBoshConnection(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+    	super(null);
+    	this.loginXmppMap = loginXmppMap;
 	}
 
 	@Override
@@ -322,6 +276,77 @@ public class XmppBoshConnection extends XmppConnectionBoilerPlate {
 		} else {
 			logger.finer("Send body simply queued");
 		}
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {
+		// TODO Auto-generated method stub
+		
+		this.instanceId = instanceId;
+		
+		//eventBus.setInstanceId(instanceId);
+		//services.setInstanceId(instanceId);
+		
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		//this.connection = loginXmpp.xmppConnection;    	
+		
+		this.eventBus = loginXmpp.eventBus;
+		
+		logger.info("Creating XmppBoshConnection");
+		this.services = loginXmpp.services;
+
+		listener = new ConnectorCallback() {
+
+			@Override
+			public void onError(final String request, final Throwable throwable) {				
+				if (isActive()) {
+					final int e = incrementErrors();
+					logger.severe("Connection error #" + e + ": " + throwable.getMessage());
+					if (e > retryControl.maxRetries) {
+						fireError("Connection error: " + throwable.toString());
+						disconnect();
+					} else {
+						final int scedTime = retryControl.retry(e);
+						fireRetry(e, scedTime);
+						services.schedule(scedTime, new ScheduledAction() {
+							@Override
+							public void run() {
+								logger.info("Error retry: " + e);
+								send(request);
+							}
+						});
+					}
+				}
+			}
+
+			@Override
+			public void onResponseReceived(final int statusCode, final String content, final String originalRequest) {
+				clearErrors();
+				activeConnections--;
+				if (isActive()) {
+					// TODO: check if is the same code in other than FF and make
+					// tests
+					if (statusCode == 404) {
+						fireError("404 Connection Error (session removed ?!) : " + content);
+						disconnect();
+					} else if (statusCode != 200 && statusCode != 0) {
+						// setActive(false);
+						// fireError("Bad status: " + statusCode);
+						onError(originalRequest, new Exception("Bad status: " + statusCode + " " + content));
+					} else {
+						final IPacket response = services.toXML(content);
+						if (response != null && "body".equals(response.getName())) {
+							clearErrors();
+							fireResponse(content);
+							handleResponse(response);
+						} else {
+							onError(originalRequest, new Exception("Bad response: " + statusCode + " " + content));
+							// fireError("Bad response: " + content);
+						}
+					}
+				}
+			}
+		};
 	}
 
 }

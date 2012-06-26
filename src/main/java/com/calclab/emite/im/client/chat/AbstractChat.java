@@ -60,7 +60,7 @@ public abstract class AbstractChat extends ChatBoilerplate {
 	}
 
 	@Override
-	public void receive(final Message message) {
+	public void receive(Message message) {
 		chatEventBus.fireEvent(new BeforeReceiveMessageEvent(message));
 		chatEventBus.fireEvent(new MessageReceivedEvent(message));
 	}

@@ -20,6 +20,11 @@
 
 package com.calclab.emite.xep.chatstate.client;
 
+import java.util.HashMap;
+
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.session.SessionComponentsRegistry;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -29,9 +34,19 @@ import com.google.inject.Provider;
  * 
  * @see SessionComponentsRegistry
  */
-public class ChatStateComponents {
+public class ChatStateComponents  implements MultiInstance {
+	private HashMap<String, LoginXmpp> loginXmppMap;
+	private Provider<StateManager> provider;
+
 	@Inject
-	public ChatStateComponents(final SessionComponentsRegistry registry, final Provider<StateManager> provider) {
-		registry.addProvider(provider);
+	public ChatStateComponents(final SessionComponentsRegistry registry, final Provider<StateManager> provider, final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.provider = provider;
+		this.loginXmppMap = loginXmppMap;
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {		
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);   
+    	loginXmpp.registry.addProvider(provider);
 	}
 }

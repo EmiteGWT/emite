@@ -20,6 +20,7 @@
 
 package com.calclab.emite.xep.mucdisco.client;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
 
@@ -27,7 +28,7 @@ import com.calclab.emite.xep.disco.client.FeatureSupportedCallback;
  * Implements some discovery use cases from
  * http://xmpp.org/extensions/xep-0045.html
  */
-public interface RoomDiscoveryManager {
+public interface RoomDiscoveryManager  extends MultiInstance {
 
 	/**
 	 * Discover the room items of the given entity

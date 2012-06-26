@@ -20,14 +20,18 @@
 
 package com.calclab.emite.browser.client;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.conn.XmppConnection;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * This class object auto-configures some emite components and behaviours based
@@ -53,14 +57,29 @@ public class AutoConfig {
 	private static final String PARAM_SESSION = "emite.session";
 	protected static final String LOGOUT = "logout";
 
-	private final XmppConnection connection;
-	private final XmppSession session;
+	private XmppConnection connection = null;
+	private XmppSession session = null;
 
 	@Inject
-	public AutoConfig(final XmppConnection connection, final XmppSession session) {
-		this.connection = connection;
-		this.session = session;
+	public AutoConfig(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap, Provider<LoginXmpp> loginXmppProv) {		
+		
+		String instanceId = PageAssist.getMeta("emite.user"); 		
+		
+		if (instanceId != null) {
+		
+		LoginXmpp loginXmpp;
+		if (loginXmppMap.get(instanceId)==null) {
+			loginXmpp = loginXmppProv.get();
+		loginXmpp.setInstanceId(instanceId);
+		loginXmppMap.put(instanceId, loginXmpp);
+		} else {			
+			loginXmpp =loginXmppMap.get(instanceId);			
+		}
+		this.connection = loginXmpp.xmppConnection;
+		this.session = loginXmpp.xmppSession;
+		
 		initialize();
+		}
 	}
 
 	private void initialize() {

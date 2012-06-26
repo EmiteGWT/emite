@@ -20,6 +20,9 @@
 
 package com.calclab.emite.core.client.xmpp.resource;
 
+import java.util.HashMap;
+import com.calclab.emite.core.client.LoginXmppMap;
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.conn.StanzaEvent;
 import com.calclab.emite.core.client.conn.StanzaHandler;
 import com.calclab.emite.core.client.conn.XmppConnection;
@@ -28,15 +31,30 @@ import com.calclab.emite.core.client.xmpp.stanzas.IQ;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.calclab.emite.core.client.LoginXmpp;
 
-@Singleton
-public class ResourceBindingManager {
-
-	private final XmppConnection connection;
+//@Singleton
+public class ResourceBindingManager  implements MultiInstance {
+    private XmppConnection connection;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 
 	@Inject
-	public ResourceBindingManager(final XmppConnection connection) {
-		this.connection = connection;
+    public ResourceBindingManager( final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+    	this.loginXmppMap = loginXmppMap;
+	}
+
+	public void bindResource(final String resource) {
+		final IQ iq = new IQ(IQ.Type.set);
+		iq.setId("bind-resource");
+		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
+
+		connection.send(iq);
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {		
+		LoginXmpp loginXmpp = loginXmppMap.get(instanceId);
+		this.connection = loginXmpp.xmppConnection;    	
 
 		connection.addStanzaReceivedHandler(new StanzaHandler() {
 			@Override
@@ -48,15 +66,6 @@ public class ResourceBindingManager {
 				}
 			}
 		});
-
-	}
-
-	public void bindResource(final String resource) {
-		final IQ iq = new IQ(IQ.Type.set);
-		iq.setId("bind-resource");
-		iq.addChild("bind", "urn:ietf:params:xml:ns:xmpp-bind").addChild("resource", null).setText(resource);
-
-		connection.send(iq);
 	}
 
 }

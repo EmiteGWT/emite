@@ -34,13 +34,13 @@ import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public abstract class XmppSessionBoilerPlate implements XmppSession {
-	protected final EmiteEventBus eventBus;
+	protected EmiteEventBus eventBus;
 	private String state;
 
 	public XmppSessionBoilerPlate(final EmiteEventBus eventBus) {
 		this.eventBus = eventBus;
 		state = SessionStates.disconnected;
-	}
+	}	
 
 	@Override
 	public HandlerRegistration addBeforeSendStanzaHandler(final PacketHandler handler) {

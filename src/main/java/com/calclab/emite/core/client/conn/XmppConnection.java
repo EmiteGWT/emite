@@ -20,6 +20,7 @@
 
 package com.calclab.emite.core.client.conn;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.bosh.StreamSettings;
 import com.calclab.emite.core.client.events.EmiteEventBus;
 import com.calclab.emite.core.client.packet.IPacket;
@@ -28,7 +29,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 /**
  * A connection to a xmpp server
  */
-public interface XmppConnection {
+public interface XmppConnection   extends MultiInstance {
 
 	/**
 	 * Add a handler to know when a response (text) arrived from server

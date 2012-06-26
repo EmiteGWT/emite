@@ -23,13 +23,14 @@ package com.calclab.emite.im.client.roster;
 import java.util.Collection;
 import java.util.Set;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.im.client.roster.events.RosterGroupChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterItemChangedHandler;
 import com.calclab.emite.im.client.roster.events.RosterRetrievedHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
-public interface XmppRoster {
+public interface XmppRoster   extends MultiInstance {
 	/**
 	 * Adds a handler to know when a roster group has changed
 	 * 

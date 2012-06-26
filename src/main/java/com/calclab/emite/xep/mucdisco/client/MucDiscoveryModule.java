@@ -27,7 +27,7 @@ public class MucDiscoveryModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(RoomDiscoveryManager.class).to(RoomDiscoveryManagerImpl.class).in(Singleton.class);
+		bind(RoomDiscoveryManager.class).to(RoomDiscoveryManagerImpl.class);//.in(Singleton.class);
 	}
 
 }

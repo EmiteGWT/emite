@@ -27,8 +27,8 @@ public class ChatStateModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(StateManager.class).in(Singleton.class);
-		bind(ChatStateComponents.class).asEagerSingleton();
+		bind(StateManager.class);//.in(Singleton.class);
+		bind(ChatStateComponents.class);//.asEagerSingleton();
 	}
 
 }

@@ -20,6 +20,7 @@
 
 package com.calclab.emite.xep.vcard.client;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.xmpp.stanzas.XmppURI;
 import com.calclab.emite.xep.vcard.client.events.VCardResponseHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -28,7 +29,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
  * The manager to VCards. Implements http://xmpp.org/extensions/xep-0054.html
  * 
  */
-public interface VCardManager {
+public interface VCardManager  extends MultiInstance {
 
 	/**
 	 * Adds a handler to know when a VCardResponse is received

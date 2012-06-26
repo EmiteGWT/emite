@@ -22,6 +22,8 @@ package com.calclab.emite.xep.disco.client;
 
 import java.util.HashMap;
 
+import com.calclab.emite.core.client.LoginXmpp;
+import com.calclab.emite.core.client.LoginXmppMap;
 import com.calclab.emite.core.client.packet.MatcherFactory;
 import com.calclab.emite.core.client.packet.PacketMatcher;
 import com.calclab.emite.core.client.xmpp.session.IQResponseHandler;
@@ -37,14 +39,15 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.inject.Inject;
 
 public class DiscoveryManagerImpl implements DiscoveryManager {
-	private final XmppSession session;
+	private XmppSession session;
 	private final HashMap<XmppURI, DiscoveryInfoResults> infoResults;
 	private final HashMap<XmppURI, DiscoveryItemsResults> itemsResults;
+	private HashMap<String, LoginXmpp> loginXmppMap;
 	public static final PacketMatcher ERROR_MATCHER = MatcherFactory.byName("error");
 
 	@Inject
-	public DiscoveryManagerImpl(final XmppSession xmppSession) {
-		session = xmppSession;
+	public DiscoveryManagerImpl(final @LoginXmppMap  HashMap <String, LoginXmpp> loginXmppMap) {
+		this.loginXmppMap = loginXmppMap;
 		infoResults = new HashMap<XmppURI, DiscoveryInfoResults>();
 		itemsResults = new HashMap<XmppURI, DiscoveryItemsResults>();
 	}
@@ -126,6 +129,12 @@ public class DiscoveryManagerImpl implements DiscoveryManager {
 				}
 			});
 		}
+	}
+
+	@Override
+	public void setInstanceId(String instanceId) {		
+    	LoginXmpp loginXmpp = loginXmppMap.get(instanceId);		
+		this.session = loginXmpp.xmppSession;
 	}
 
 }

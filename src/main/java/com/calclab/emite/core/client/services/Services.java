@@ -20,9 +20,10 @@
 
 package com.calclab.emite.core.client.services;
 
+import com.calclab.emite.core.client.MultiInstance;
 import com.calclab.emite.core.client.packet.IPacket;
 
-public interface Services {
+public interface Services  extends MultiInstance {
 	long getCurrentTime();
 
 	void schedule(int msecs, ScheduledAction action);
