@@ -171,7 +171,7 @@ public class XmppSessionImpl implements XmppSession, ConnectionStatusChangedEven
 				}
 			} else if ("success".equals(name) && XmppNamespaces.SASL.equals(xmlns)) {
 				final byte[] challenge = Base64.fromBase64(stanza.getText());
-				if (challenge != null) {
+				if (challenge != null && challenge.length > 0) {
 					try {
 						saslClient.evaluateChallenge(challenge);
 					} catch (SaslException e) {
