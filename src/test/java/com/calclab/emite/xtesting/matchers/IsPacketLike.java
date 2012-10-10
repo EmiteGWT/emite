@@ -21,34 +21,34 @@
 package com.calclab.emite.xtesting.matchers;
 
 import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.calclab.emite.base.xml.HasXML;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
 
 public class IsPacketLike {
 	public static IsPacketLike build(final String xml) {
-		final IPacket packet = TigaseXMLService.toPacket(xml);
-		return new IsPacketLike(packet);
+		return new IsPacketLike(XMLBuilder.fromXML(xml));
 	}
 
-	private final IPacket original;
+	private final XMLPacket original;
 
-	public IsPacketLike(final IPacket expected) {
-		original = expected;
+	public IsPacketLike(final HasXML expected) {
+		original = expected.getXML();
 	}
 
-	public boolean matches(final IPacket actual, final PrintStream out) {
-		final String result = areEquals(original, actual);
+	public boolean matches(final HasXML actual, final PrintStream out) {
+		final String result = areEquals(original, actual.getXML());
 		out.print(result);
 		return result == null;
 	}
 
-	private String areContained(final IPacket expectedChild, final List<? extends IPacket> children) {
+	private String areContained(final XMLPacket expectedChild, final List<XMLPacket> children) {
 		final int total = children.size();
 		for (int index = 0; index < total; index++) {
-			final IPacket actual = children.get(index);
+			final XMLPacket actual = children.get(index);
 			final String result = areEquals(expectedChild, actual);
 			if (result == null)
 				return null;
@@ -56,26 +56,26 @@ public class IsPacketLike {
 		return fail("child is not contained in children", expectedChild.toString(), toString(children));
 	}
 
-	private String areEquals(final IPacket expected, final IPacket actual) {
+	private String areEquals(final XMLPacket expected, final XMLPacket actual) {
 		if (actual == null)
 			return fail("element", expected.toString(), "[null]");
-		if (expected.getName().equals(actual.getName())) {
-			final HashMap<String, String> atts = expected.getAttributes();
+		if (expected.getTagName().equals(actual.getTagName())) {
+			final Map<String, String> atts = expected.getAttributes();
 			for (final String name : atts.keySet()) {
-				if (!expected.hasAttribute(name) || !actual.hasAttribute(name, expected.getAttribute(name)))
+				if (expected.getAttribute(name) != null || !expected.getAttribute(name).equals(actual.getAttribute(name)))
 					return fail("attribute " + name, expected.getAttribute(name), actual.getAttribute(name));
 			}
 		} else
-			return fail("element name", expected.getName(), actual.getName());
+			return fail("element name", expected.getTagName(), actual.getTagName());
 
 		final String expectedText = expected.getText();
 		if (expectedText != null && !expectedText.equals(actual.getText()))
 			return fail("text value", expectedText, actual.getText());
 
-		final List<? extends IPacket> expChildren = expected.getChildren();
-		final List<? extends IPacket> actChildren = actual.getChildren();
+		final List<XMLPacket> expChildren = expected.getChildren();
+		final List<XMLPacket> actChildren = actual.getChildren();
 
-		for (final IPacket expectedChild : expChildren) {
+		for (final XMLPacket expectedChild : expChildren) {
 			final String result = areContained(expectedChild, actChildren);
 			if (result != null)
 				return result;
@@ -87,9 +87,9 @@ public class IsPacketLike {
 		return "failed on " + target + ". expected: " + expected + " but was " + actual;
 	}
 
-	private String toString(final List<? extends IPacket> children) {
-		final StringBuffer buffer = new StringBuffer("[");
-		for (final IPacket child : children) {
+	private String toString(final List<XMLPacket> children) {
+		final StringBuilder buffer = new StringBuilder("[");
+		for (final XMLPacket child : children) {
 			buffer.append(child.toString());
 		}
 		buffer.append("]");

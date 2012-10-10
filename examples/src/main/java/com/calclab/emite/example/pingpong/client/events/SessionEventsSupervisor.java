@@ -20,41 +20,43 @@
 
 package com.calclab.emite.example.pingpong.client.events;
 
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
+import com.calclab.emite.core.client.xmpp.session.SessionStateChangedEvent;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay.Style;
 import com.google.gwt.user.client.Timer;
 import com.google.inject.Inject;
 
-public class SessionEventsSupervisor {
+public class SessionEventsSupervisor implements SessionStateChangedEvent.Handler {
 
-	private long currentSessionLogin;
-	private int refreshTime;
+	private final XmppSession session;
+	private final PingPongDisplay display;
+	
+	private long currentSessionLogin = 0;
+	private int refreshTime = 1000;
 
 	@Inject
 	public SessionEventsSupervisor(final XmppSession session, final PingPongDisplay display) {
-		currentSessionLogin = 0;
-		refreshTime = 1000;
-
+		this.session = session;
+		this.display = display;
+		
 		// NO NEED OF LOGIN: BROWSER MODULE DOES THAT FOR US!!
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				display.print(("SESSION : " + event.getState()), Style.session);
-				if (event.is(SessionStates.ready)) {
-					currentSessionLogin = System.currentTimeMillis();
-					display.getCurrentUser().setText("Logged as: " + session.getCurrentUserURI());
-					trackSessionLength(session, display);
-				} else if (event.is(SessionStates.disconnected)) {
-					display.getCurrentUser().setText(" Not logged in");
-					currentSessionLogin = 0;
-					refreshTime = 1000;
-				}
-			}
-		});
+		session.addSessionStateChangedHandler(true, this);
+	}
+	
+	@Override
+	public void onSessionStateChanged(final SessionStateChangedEvent event) {
+		display.print(("SESSION : " + event.getState()), Style.session);
+		if (event.is(SessionState.ready)) {
+			currentSessionLogin = System.currentTimeMillis();
+			display.getCurrentUser().setText("Logged as: " + session.getCurrentUserURI());
+			trackSessionLength(session, display);
+		} else if (event.is(SessionState.disconnected)) {
+			display.getCurrentUser().setText(" Not logged in");
+			currentSessionLogin = 0;
+			refreshTime = 1000;
+		}
 	}
 
 	protected void trackSessionLength(final XmppSession session, final PingPongDisplay display) {

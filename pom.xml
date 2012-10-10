@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.calclab</groupId>
 	<artifactId>emite</artifactId>
-	<version>0.7-SNAPSHOT</version>
+	<version>0.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Emite</name>
 	<description>A pure Google Web Toolkit XMPP library</description>
@@ -19,45 +19,81 @@
 
 	<properties>
 		<!-- Convenience property to set the GWT version -->
-		<gwt.version>2.3.0</gwt.version>
+		<gwt.version>2.4.0</gwt.version>
+		<guava.version>12.0</guava.version>
 		<!-- GWT 2.2+ needs java 1.6 -->
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+		<maven.test.skip>true</maven.test.skip>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>tigase</id>
-			<name>Tigase Repository</name>
-			<url>http://maven.tigase.org</url>
-		</repository>
-	</repositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-user</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-dev</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-servlet</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject</groupId>
+				<artifactId>guice</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-assistedinject</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava-gwt</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava-testlib</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
 			<version>1.5.0</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava-gwt</artifactId>
 		</dependency>
 
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
+			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-dev</artifactId>
-			<version>${gwt.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -67,20 +103,23 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>tigase</groupId>
-			<artifactId>tigase-xmltools</artifactId>
-			<version>3.0.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.1.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guiceberry</groupId>
+			<artifactId>guiceberry</artifactId>
+			<version>3.1.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<!-- Generate compiled stuff in the folder used for developing mode -->
+		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
 		<plugins>
 			<!-- Compiler Plugin -->
 			<plugin>
@@ -89,19 +128,22 @@
 				<version>2.3.2</version>
 				<configuration>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<excludes>
+						<exclude>**/VCard*.java</exclude> <!-- TODO: VCard is a mess right now. To be done later -->
+					</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<!-- GWT Maven Plugin -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.version}-1</version>
+				<version>2.4.0</version>
 				<configuration>
 					<includes>**/*GwtTest.java</includes>
 					<mode>htmlunit</mode>
 					<htmlunit>IE6,IE7,FF3</htmlunit>
-   				</configuration>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -111,23 +153,23 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Surefire Plugin -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.9</version>
+				<version>2.11</version>
 				<configuration>
 					<excludes>
 						<exclude>**/*GwtTest.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<!-- Tell the jar plugin to also create a jar of all the test classes -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>2.3.2</version>
 				<executions>
 					<execution>
 						<id>test-jar</id>
@@ -138,7 +180,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Also create the source jar files -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -151,6 +193,32 @@
 						<goals>
 							<goal>jar-no-fork</goal>
 							<goal>test-jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<linksource>true</linksource>
+					<links>
+						<link>http://jsr-305.googlecode.com/svn/trunk/javadoc</link>
+						<link>http://docs.guava-libraries.googlecode.com/git-history/v${guava.version}/javadoc</link>
+						<link>http://google-web-toolkit.googlecode.com/svn/javadoc/2.4</link>
+						<link>http://google-gin.googlecode.com/svn/trunk/javadoc</link>
+						<link>http://google-guice.googlecode.com/git/javadoc</link>
+					</links>
+					<excludePackageNames>com.calclab.emite.xep.vcard</excludePackageNames>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-javadoc</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>

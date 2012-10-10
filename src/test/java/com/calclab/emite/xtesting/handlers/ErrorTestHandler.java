@@ -20,10 +20,9 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.events.ErrorEvent;
-import com.calclab.emite.core.client.events.ErrorHandler;
+import com.calclab.emite.core.events.ErrorEvent;
 
-public class ErrorTestHandler extends TestHandler<ErrorEvent> implements ErrorHandler {
+public class ErrorTestHandler extends TestHandler<ErrorEvent> implements DiscoveryItemsCallback.Handler {
 
 	@Override
 	public void onError(final ErrorEvent event) {

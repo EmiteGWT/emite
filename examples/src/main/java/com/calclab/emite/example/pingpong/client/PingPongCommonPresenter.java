@@ -21,7 +21,7 @@
 package com.calclab.emite.example.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.xmpp.session.SessionStates;
+import com.calclab.emite.core.client.xmpp.session.SessionState;
 import com.calclab.emite.core.client.xmpp.session.XmppSession;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay.Style;
 import com.calclab.emite.example.pingpong.client.events.ConnectionEventsSupervisor;
@@ -44,7 +44,7 @@ public class PingPongCommonPresenter {
 		display.addLoginClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(final ClickEvent event) {
-				if (session.isState(SessionStates.disconnected)) {
+				if (session.isState(SessionState.disconnected)) {
 					display.print("Logging in...", Style.info);
 					PageAssist.loginFromMeta(session);
 				} else {

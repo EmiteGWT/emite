@@ -22,12 +22,12 @@ package com.calclab.emite.xtesting;
 
 import java.util.ArrayList;
 
-import com.calclab.emite.core.client.packet.IPacket;
-import com.calclab.emite.core.client.services.ConnectorCallback;
-import com.calclab.emite.core.client.services.ConnectorException;
-import com.calclab.emite.core.client.services.ScheduledAction;
-import com.calclab.emite.core.client.services.Services;
-import com.calclab.emite.xtesting.services.TigaseXMLService;
+import com.calclab.emite.base.xml.XMLBuilder;
+import com.calclab.emite.base.xml.XMLPacket;
+import com.calclab.emite.core.services.ConnectorCallback;
+import com.calclab.emite.core.services.ConnectorException;
+import com.calclab.emite.core.services.ScheduledAction;
+import com.calclab.emite.core.services.Services;
 
 /**
  * Object of this classes are used to test against services
@@ -44,24 +44,16 @@ public class ServicesTester implements Services {
 			this.request = request;
 			this.listener = listener;
 		}
-
 	}
 
-	public static final TigaseXMLService xmler = TigaseXMLService.instance;
 	private final ArrayList<Request> requests;
 
 	public ServicesTester() {
 		requests = new ArrayList<Request>();
 	}
 
-	@Override
-	public long getCurrentTime() {
-		return 0;
-	}
-
-	public IPacket getSentPacket(final int index) {
-		final String request = requests.get(index).request;
-		return xmler.toXML(request);
+	public XMLPacket getSentPacket(final int index) {
+		return XMLBuilder.fromXML(requests.get(index).request);
 	}
 
 	public int requestSentCount() {
@@ -70,21 +62,12 @@ public class ServicesTester implements Services {
 
 	@Override
 	public void schedule(final int msecs, final ScheduledAction action) {
+		//empty
 	}
 
 	@Override
 	public void send(final String httpBase, final String request, final ConnectorCallback listener) throws ConnectorException {
 		requests.add(new Request(httpBase, request, listener));
-	}
-
-	@Override
-	public String toString(final IPacket packet) {
-		return xmler.toString(packet);
-	}
-
-	@Override
-	public IPacket toXML(final String xml) {
-		return xmler.toXML(xml);
 	}
 
 }

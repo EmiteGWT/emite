@@ -21,9 +21,6 @@
 package com.calclab.emite.example.pingpong.client;
 
 import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.events.EmiteEventBus;
-import com.calclab.emite.core.client.events.EventBusFactory;
-import com.calclab.emite.core.client.events.EventBusFactory.Factory;
 import com.calclab.emite.example.pingpong.client.PingPongDisplay.Style;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -31,16 +28,11 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class PingPongExamplesEntryPoint implements EntryPoint {
 
+	private static final PingPongGinjector ginjector = GWT.create(PingPongGinjector.class);
+	
 	@Override
 	public void onModuleLoad() {
-		final PingPongGinjector ginjector = GWT.create(PingPongGinjector.class);
 		final PingPongDisplay display = ginjector.getPingPongDisplay();
-		EventBusFactory.setFactory(new Factory() {
-			@Override
-			public EmiteEventBus create(final String eventBusName) {
-				return new DisplayEventBus(eventBusName, display);
-			}
-		});
 		ginjector.getPingPongCommonPresenter();
 
 		RootLayoutPanel.get().add(display.asWidget());
