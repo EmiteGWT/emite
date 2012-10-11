@@ -22,7 +22,9 @@ package com.calclab.emite.xtesting.handlers;
 
 import java.util.ArrayList;
 
-public abstract class TestHandler<T> {
+import com.google.web.bindery.event.shared.Event;
+
+public abstract class TestHandler<T extends Event<?>> {
 	private final ArrayList<T> events;
 
 	public TestHandler() {

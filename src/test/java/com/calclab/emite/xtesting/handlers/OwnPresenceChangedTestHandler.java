@@ -20,11 +20,10 @@
 
 package com.calclab.emite.xtesting.handlers;
 
-import com.calclab.emite.core.client.xmpp.stanzas.Presence;
-import com.calclab.emite.im.client.presence.events.OwnPresenceChangedEvent;
-import com.calclab.emite.im.client.presence.events.OwnPresenceChangedHandler;
+import com.calclab.emite.core.stanzas.Presence;
+import com.calclab.emite.im.events.OwnPresenceChangedEvent;
 
-public class OwnPresenceChangedTestHandler extends TestHandler<OwnPresenceChangedEvent> implements OwnPresenceChangedHandler {
+public class OwnPresenceChangedTestHandler extends TestHandler<OwnPresenceChangedEvent> implements OwnPresenceChangedEvent.Handler {
 
 	public Presence getCurrentPresence() {
 		return hasEvent() ? getLastEvent().getCurrentPresence() : null;

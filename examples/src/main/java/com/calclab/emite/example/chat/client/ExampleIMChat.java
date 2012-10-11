@@ -20,17 +20,15 @@
 
 package com.calclab.emite.example.chat.client;
 
-import static com.calclab.emite.core.client.xmpp.stanzas.XmppURI.uri;
+import static com.calclab.emite.core.XmppURI.uri;
 
-import com.calclab.emite.browser.client.PageAssist;
-import com.calclab.emite.core.client.events.MessageEvent;
-import com.calclab.emite.core.client.events.MessageHandler;
-import com.calclab.emite.core.client.events.StateChangedEvent;
-import com.calclab.emite.core.client.events.StateChangedHandler;
-import com.calclab.emite.core.client.xmpp.session.XmppSession;
-import com.calclab.emite.core.client.xmpp.stanzas.Message;
-import com.calclab.emite.im.client.chat.Chat;
-import com.calclab.emite.im.client.chat.ChatManager;
+import com.calclab.emite.browser.PageAssist;
+import com.calclab.emite.core.events.MessageReceivedEvent;
+import com.calclab.emite.core.events.SessionStatusChangedEvent;
+import com.calclab.emite.core.session.XmppSession;
+import com.calclab.emite.core.stanzas.Message;
+import com.calclab.emite.im.chat.PairChat;
+import com.calclab.emite.im.chat.PairChatManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -42,10 +40,17 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ExampleIMChat implements EntryPoint {
+/**
+ * A simple IM client
+ */
+public class ExampleIMChat implements EntryPoint, SessionStatusChangedEvent.Handler, MessageReceivedEvent.Handler {
 
+	private static final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
+	
+	private final XmppSession session = ginjector.getXmppSession();
+	private final PairChatManager chatManager = ginjector.getPairChatManager();
+	
 	private VerticalPanel output;
-
 	private TextBox input;
 
 	@Override
@@ -53,41 +58,36 @@ public class ExampleIMChat implements EntryPoint {
 		createUI();
 
 		log("Example IM Chat");
-		final String self = PageAssist.getMeta("emite.user");
+		final String self = PageAssist.getMeta("emite.user", null);
 		log("Current user: " + self);
-		final String user = PageAssist.getMeta("emite.chat");
+		final String user = PageAssist.getMeta("emite.chat", null);
 		log("Chat with user: " + user);
 
-		final ExampleIMChatGinjector ginjector = GWT.create(ExampleIMChatGinjector.class);
-		final XmppSession session = ginjector.getXmppSession();
+		session.addSessionStatusChangedHandler(this, true);
 
-		session.addSessionStateChangedHandler(true, new StateChangedHandler() {
-			@Override
-			public void onStateChanged(final StateChangedEvent event) {
-				final String state = event.getState();
-				log("Current state: " + state);
-			}
-		});
-
-		final ChatManager chatManager = ginjector.getChatManager();
 		input.addChangeHandler(new ChangeHandler() {
 			@Override
 			public void onChange(final ChangeEvent event) {
 				final String msg = input.getText();
 				log("Message sent: " + msg);
-				final Chat chat = chatManager.open(uri(user));
+				final PairChat chat = chatManager.openChat(uri(user));
 				chat.send(new Message(msg));
 				input.setText("");
 			}
 		});
 
-		final Chat chat = chatManager.open(uri(user));
-		chat.addMessageReceivedHandler(new MessageHandler() {
-			@Override
-			public void onMessage(final MessageEvent event) {
-				log("Message received: " + event.getMessage().getBody());
-			}
-		});
+		final PairChat chat = chatManager.openChat(uri(user));
+		chat.addMessageReceivedHandler(this);
+	}
+	
+	@Override
+	public void onSessionStatusChanged(final SessionStatusChangedEvent event) {
+		log("Current status: " + event.getStatus().toString());
+	}
+	
+	@Override
+	public void onMessageReceived(final MessageReceivedEvent event) {
+		log("Message received: " + event.getMessage().getBody());
 	}
 
 	private void createUI() {
